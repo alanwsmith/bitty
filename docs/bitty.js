@@ -28,12 +28,32 @@ class BittyJs extends HTMLElement {
     this.#data.activeMode = target.value;
   }
 
+  $htmlC() {
+    return this.#data.modes[this.#data.activeMode].c;
+  }
+
+  $htmlH() {
+    return this.#data.modes[this.#data.activeMode].h;
+  }
+
   $htmlL() {
     return this.#data.modes[this.#data.activeMode].l;
   }
 
   $htmlMode() {
     return this.#data.activeMode;
+  }
+
+  $valueC() {
+    return this.#data.modes[this.#data.activeMode].c;
+  }
+
+  $valueH() {
+    return this.#data.modes[this.#data.activeMode].h;
+  }
+
+  $valueL() {
+    return this.#data.modes[this.#data.activeMode].l;
   }
 
   constructor() {
@@ -105,7 +125,19 @@ class BittyJs extends HTMLElement {
     const els = document.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((r) => {
-        if (r.startsWith("html")) {
+        if (r.startsWith("value")) {
+          this.#receivers.push({
+            "key": r,
+            "f": () => {
+              try {
+                el.value = this[`$${r}`]();
+              } catch (error) {
+                console.error(error);
+                console.error(`Tried: $${r}`);
+              }
+            },
+          });
+        } else {
           this.#receivers.push({
             "key": r,
             "f": () => {

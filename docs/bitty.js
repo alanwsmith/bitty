@@ -1,9 +1,3 @@
-class ExampleAlfa {
-  constructor() {
-    console.log("this is example alfa");
-  }
-}
-
 function loadWrapper(name) {
   if (name === "ExampleAlfa") {
     return new ExampleAlfa();
@@ -12,7 +6,25 @@ function loadWrapper(name) {
   // the load doesn't work
 }
 
+class ExampleAlfa {
+  #batches = {};
+
+  constructor() {
+    console.log("this is example alfa");
+  }
+
+  get batches() {
+    return this.#batches;
+  }
+
+  $htmlClick() {
+    return "x";
+  }
+}
+
 class BittyJs extends HTMLElement {
+  #receivers = [];
+
   constructor() {
     super();
   }
@@ -20,12 +32,12 @@ class BittyJs extends HTMLElement {
   connectedCallback() {
     if (this.dataset.wrapper) {
       this.wrapper = loadWrapper(this.dataset.wrapper);
+      this.loadReceivers();
       this.addEventListeners();
     }
   }
 
   addEventListeners() {
-    console.log("asdf");
     this.addEventListener("input", (event) => {
       this.handleChange(event);
     });
@@ -34,8 +46,78 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addFunction(r, el) {
+    if (r.startsWith("value")) {
+      this.#receivers.push({
+        "key": r,
+        "f": () => {
+          try {
+            el.value = this.wrapper[`$${r}`]();
+          } catch (error) {
+            console.error(error);
+            console.error(`Tried: $${r}`);
+          }
+        },
+      });
+    } else {
+      this.#receivers.push({
+        "key": r,
+        "f": () => {
+          try {
+            el.innerHTML = this.wrapper[`$${r}`]();
+          } catch (error) {
+            console.error(error);
+            console.error(`Tried: $${r}`);
+          }
+        },
+      });
+    }
+  }
+
   handleChange(event) {
-    console.log(event);
+    if (event.target === undefined) {
+      return;
+    }
+    if (event.target.dataset === undefined) {
+      return;
+    }
+    // event.target.dataset.f.split("|").forEach((f) => {
+    //   this[`_${f}`](event.target);
+    // });
+
+    event.target.dataset.s.split("|").forEach((key) => {
+      if (key.startsWith("batch")) {
+        this.wrapper.batches[key].forEach((bKey) => {
+          this.#receivers.forEach((r) => {
+            if (r.key === bKey) {
+              r.f();
+            }
+          });
+        });
+      } else {
+        this.#receivers.forEach((r) => {
+          if (r.key === key) {
+            r.f();
+          }
+        });
+      }
+    });
+  }
+
+  loadReceivers() {
+    this.#receivers = [];
+    const els = this.querySelectorAll(`[data-r]`);
+    els.forEach((el) => {
+      el.dataset.r.split("|").forEach((r) => {
+        if (r.startsWith("batch")) {
+          this.wrapper.batches[r].forEach((key) => {
+            this.addFunction(key, el);
+          });
+        } else {
+          this.addFunction(r, el);
+        }
+      });
+    });
   }
 }
 
@@ -260,3 +342,29 @@ customElements.define("bitty-js", BittyJs);
 //     },
 //   },
 // };
+//
+// if (r.startsWith("value")) {
+//   this.#receivers.push({
+//     "key": r,
+//     "f": () => {
+//       try {
+//         el.value = this[`$${r}`]();
+//       } catch (error) {
+//         console.error(error);
+//         console.error(`Tried: $${r}`);
+//       }
+//     },
+//   });
+// } else {
+//   this.#receivers.push({
+//     "key": r,
+//     "f": () => {
+//       try {
+//         el.innerHTML = this[`$${r}`]();
+//       } catch (error) {
+//         console.error(error);
+//         console.error(`Tried: $${r}`);
+//       }
+//     },
+//   });
+// }

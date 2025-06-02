@@ -32,6 +32,10 @@ class BittyJs extends HTMLElement {
     return this.#data.modes[this.#data.activeMode].l;
   }
 
+  $htmlMode() {
+    return this.#data.activeMode;
+  }
+
   constructor() {
     super();
   }
@@ -83,8 +87,12 @@ class BittyJs extends HTMLElement {
           this.#receivers.push({
             "key": r,
             "f": () => {
-              // TODO: add try throw here
-              el.innerHTML = this[`$${r}`]();
+              try {
+                el.innerHTML = this[`$${r}`]();
+              } catch (error) {
+                console.error(error);
+                console.error(`Tried: $${r}`);
+              }
             },
           });
         }

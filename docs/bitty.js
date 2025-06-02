@@ -17,12 +17,9 @@ const exampleData = {
 class BittyJs extends HTMLElement {
   #data = {};
   #receivers = [];
-  #triggers = {
-    "$triggerModeSwitch": [
-      `$htmlC`,
-      `$htmlH`,
-      `$htmlL`,
-    ],
+
+  #batches = {
+    "batchLatest": ["htmlC", "htmlH", "htmlL"],
   };
 
   _handleSlider(target) {
@@ -95,13 +92,13 @@ class BittyJs extends HTMLElement {
       });
     });
     checkList.forEach((check) => {
-      if (!check.startsWith("$trigger")) {
+      if (!check.startsWith("$batch")) {
         if (this[check] === undefined) {
           console.error(`Missing Function: ${check}`);
         }
       } else {
-        if (this.#triggers[check] === undefined) {
-          console.error(`Missing Trigger: ${check}`);
+        if (this.#batches[check] === undefined) {
+          console.error(`Missing Batch: ${check}`);
         }
       }
     });
@@ -138,33 +135,71 @@ class BittyJs extends HTMLElement {
     const els = document.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((r) => {
-        if (r.startsWith("value")) {
-          this.#receivers.push({
-            "key": r,
-            "f": () => {
-              try {
-                el.value = this[`$${r}`]();
-              } catch (error) {
-                console.error(error);
-                console.error(`Tried: $${r}`);
-              }
-            },
+        if (r.startsWith("batch")) {
+          this.#batches[r].forEach((key) => {
+            this.addFunction(key, el);
           });
         } else {
-          this.#receivers.push({
-            "key": r,
-            "f": () => {
-              try {
-                el.innerHTML = this[`$${r}`]();
-              } catch (error) {
-                console.error(error);
-                console.error(`Tried: $${r}`);
-              }
-            },
-          });
+          this.addFunction(r, el);
         }
+
+        // } else if (r.startsWith("value")) {
+        //   this.#receivers.push({
+        //     "key": r,
+        //     "f": () => {
+        //       try {
+        //         el.value = this[`$${r}`]();
+        //       } catch (error) {
+        //         console.error(error);
+        //         console.error(`Tried: $${r}`);
+        //       }
+        //     },
+        //   });
+        // } else {
+        //   this.#receivers.push({
+        //     "key": r,
+        //     "f": () => {
+        //       try {
+        //         el.innerHTML = this[`$${r}`]();
+        //       } catch (error) {
+        //         console.error(error);
+        //         console.error(`Tried: $${r}`);
+        //       }
+        //     },
+        //   });
+        // }
       });
     });
+  }
+
+  addFunction(r, el) {
+    console.log(r);
+
+    if (r.startsWith("value")) {
+      this.#receivers.push({
+        "key": r,
+        "f": () => {
+          try {
+            el.value = this[`$${r}`]();
+          } catch (error) {
+            console.error(error);
+            console.error(`Tried: $${r}`);
+          }
+        },
+      });
+    } else {
+      this.#receivers.push({
+        "key": r,
+        "f": () => {
+          try {
+            el.innerHTML = this[`$${r}`]();
+          } catch (error) {
+            console.error(error);
+            console.error(`Tried: $${r}`);
+          }
+        },
+      });
+    }
   }
 }
 

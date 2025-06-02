@@ -1,3 +1,15 @@
+class ExampleAlfa {
+  constructor() {
+    console.log("this is example alfa");
+  }
+}
+
+function loadPayload(name) {
+  if (name === "ExampleAlfa") {
+    return new ExampleAlfa();
+  }
+}
+
 const exampleData = {
   "activeMode": "dark",
   "modes": {
@@ -83,11 +95,15 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
-    this.loadData();
-    this.doPreflightCheck();
-    this.loadReceivers();
-    this.addEventListeners();
-    this.init();
+    if (this.dataset.payload) {
+      this.payload = loadPayload(this.dataset.payload);
+    }
+
+    // this.loadData();
+    // this.doPreflightCheck();
+    // this.loadReceivers();
+    // this.addEventListeners();
+    // this.init();
   }
 
   addEventListeners() {
@@ -142,7 +158,7 @@ class BittyJs extends HTMLElement {
         this.#batches[key].forEach((bKey) => {
           this.#receivers.forEach((r) => {
             if (r.key === bKey) {
-              console.log(bKey);
+              //console.log(bKey);
               r.f();
             }
           });
@@ -167,7 +183,7 @@ class BittyJs extends HTMLElement {
           this.#batches[key].forEach((bKey) => {
             this.#receivers.forEach((r) => {
               if (r.key === bKey) {
-                console.log(bKey);
+                //console.log(bKey);
                 r.f();
               }
             });

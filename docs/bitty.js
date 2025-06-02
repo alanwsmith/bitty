@@ -41,6 +41,7 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
+    this.doPreflightCheck();
     this.loadReceivers();
     this.loadData();
     this.addEventListeners();
@@ -49,6 +50,27 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.addEventListener("input", (event) => {
       this.handleUpdate(event);
+    });
+  }
+
+  doPreflightCheck() {
+    const checkList = new Set();
+    ["r", "s"].forEach((key) => {
+      document.querySelectorAll(`[data-${key}]`).forEach((el) => {
+        el.dataset[key].split("|").forEach((d) => {
+          checkList.add(`$${d}`);
+        });
+      });
+    });
+    document.querySelectorAll(`[data-f]`).forEach((el) => {
+      el.dataset.f.split("|").forEach((d) => {
+        checkList.add(`_${d}`);
+      });
+    });
+    checkList.forEach((check) => {
+      if (this[check] === undefined) {
+        console.error(`Missing: ${check}`);
+      }
     });
   }
 

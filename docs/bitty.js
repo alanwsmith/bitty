@@ -25,7 +25,11 @@ class BittyJs extends HTMLElement {
   }
 
   _handleModeSwitch(target) {
-    console.log(target);
+    this.#data.activeMode = target.value;
+  }
+
+  $htmlL() {
+    return this.#data.modes[this.#data.activeMode].l;
   }
 
   constructor() {
@@ -60,7 +64,7 @@ class BittyJs extends HTMLElement {
     event.target.dataset.s.split("|").forEach((key) => {
       this.#receivers.forEach((r) => {
         if (r.key === key) {
-          console.log(key);
+          r.f();
         }
       });
     });
@@ -79,7 +83,8 @@ class BittyJs extends HTMLElement {
           this.#receivers.push({
             "key": r,
             "f": () => {
-              console.log("ahsdf");
+              // TODO: add try throw here
+              el.innerHTML = this[`$${r}`]();
             },
           });
         }

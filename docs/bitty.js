@@ -17,6 +17,13 @@ const exampleData = {
 class BittyJs extends HTMLElement {
   #data = {};
   #receivers = [];
+  #triggers = {
+    "$triggerModeSwitch": [
+      `$htmlC`,
+      `$htmlH`,
+      `$htmlL`,
+    ],
+  };
 
   _handleSlider(target) {
     const value = parseFloat(target.value);
@@ -88,8 +95,14 @@ class BittyJs extends HTMLElement {
       });
     });
     checkList.forEach((check) => {
-      if (this[check] === undefined) {
-        console.error(`Missing: ${check}`);
+      if (!check.startsWith("$trigger")) {
+        if (this[check] === undefined) {
+          console.error(`Missing Function: ${check}`);
+        }
+      } else {
+        if (this.#triggers[check] === undefined) {
+          console.error(`Missing Trigger: ${check}`);
+        }
       }
     });
   }
@@ -125,7 +138,8 @@ class BittyJs extends HTMLElement {
     const els = document.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((r) => {
-        if (r.startsWith("value")) {
+        if (r.startsWith("trigger")) {
+        } else if (r.startsWith("value")) {
           this.#receivers.push({
             "key": r,
             "f": () => {

@@ -1,5 +1,5 @@
 const exampleData = {
-  "activeMode": "light",
+  "activeMode": "dark",
   "modes": {
     "dark": {
       "c": 0.1,
@@ -20,7 +20,24 @@ class BittyJs extends HTMLElement {
 
   #batches = {
     "batchLatest": ["htmlC", "htmlH", "htmlL", "htmlMode"],
-    "batchModeChange": ["htmlC", "htmlH", "htmlL", "htmlMode"],
+    "batchModeChange": [
+      "htmlC",
+      "htmlH",
+      "htmlL",
+      "htmlMode",
+      "valueC",
+      "valueH",
+      "valueL",
+    ],
+    "batchInit": [
+      "htmlC",
+      "htmlH",
+      "htmlL",
+      "htmlMode",
+      "valueC",
+      "valueH",
+      "valueL",
+    ],
   };
 
   _handleSlider(target) {
@@ -70,6 +87,7 @@ class BittyJs extends HTMLElement {
     this.doPreflightCheck();
     this.loadReceivers();
     this.addEventListeners();
+    this.init();
   }
 
   addEventListeners() {
@@ -137,6 +155,32 @@ class BittyJs extends HTMLElement {
         });
       }
     });
+  }
+
+  init() {
+    if (this.dataset.init !== undefined) {
+      // TODO: Refactor this and the same part
+      // inside of handleUpdate to extract them
+      // into a single function
+      this.dataset.init.split("|").forEach((key) => {
+        if (key.startsWith("batch")) {
+          this.#batches[key].forEach((bKey) => {
+            this.#receivers.forEach((r) => {
+              if (r.key === bKey) {
+                console.log(bKey);
+                r.f();
+              }
+            });
+          });
+        } else {
+          this.#receivers.forEach((r) => {
+            if (r.key === key) {
+              r.f();
+            }
+          });
+        }
+      });
+    }
   }
 
   loadData() {

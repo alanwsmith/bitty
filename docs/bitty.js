@@ -142,39 +142,11 @@ class BittyJs extends HTMLElement {
         } else {
           this.addFunction(r, el);
         }
-
-        // } else if (r.startsWith("value")) {
-        //   this.#receivers.push({
-        //     "key": r,
-        //     "f": () => {
-        //       try {
-        //         el.value = this[`$${r}`]();
-        //       } catch (error) {
-        //         console.error(error);
-        //         console.error(`Tried: $${r}`);
-        //       }
-        //     },
-        //   });
-        // } else {
-        //   this.#receivers.push({
-        //     "key": r,
-        //     "f": () => {
-        //       try {
-        //         el.innerHTML = this[`$${r}`]();
-        //       } catch (error) {
-        //         console.error(error);
-        //         console.error(`Tried: $${r}`);
-        //       }
-        //     },
-        //   });
-        // }
       });
     });
   }
 
   addFunction(r, el) {
-    console.log(r);
-
     if (r.startsWith("value")) {
       this.#receivers.push({
         "key": r,

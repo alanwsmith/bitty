@@ -2,14 +2,14 @@ const exampleData = {
   "activeMode": "light",
   "modes": {
     "dark": {
-      "chroma": 0.1,
-      "hue": 200,
-      "lightness": 20,
+      "c": 0.1,
+      "h": 200,
+      "l": 20,
     },
     "light": {
-      "chroma": 0.1,
-      "hue": 200,
-      "lightness": 80,
+      "c": 0.1,
+      "h": 200,
+      "l": 80,
     },
   },
 };
@@ -19,7 +19,8 @@ class BittyJs extends HTMLElement {
   #receivers = [];
 
   #batches = {
-    "batchLatest": ["htmlC", "htmlH", "htmlL"],
+    "batchLatest": ["htmlC", "htmlH", "htmlL", "htmlMode"],
+    "batchModeChange": ["htmlC", "htmlH", "htmlL", "htmlMode"],
   };
 
   _handleSlider(target) {
@@ -65,9 +66,9 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
+    this.loadData();
     this.doPreflightCheck();
     this.loadReceivers();
-    this.loadData();
     this.addEventListeners();
   }
 
@@ -96,10 +97,11 @@ class BittyJs extends HTMLElement {
         if (this[check] === undefined) {
           console.error(`Missing Function: ${check}`);
         }
-      } else {
-        if (this.#batches[check] === undefined) {
-          console.error(`Missing Batch: ${check}`);
-        }
+        // TODO: Do preflight check for batches
+        // } else {
+        //   if (this.#batches[check] === undefined) {
+        //     console.error(`Missing Batch: ${check}`);
+        //   }
       }
     });
   }
@@ -118,16 +120,27 @@ class BittyJs extends HTMLElement {
       this[`_${f}`](event.target);
     });
     event.target.dataset.s.split("|").forEach((key) => {
-      this.#receivers.forEach((r) => {
-        if (r.key === key) {
-          r.f();
-        }
-      });
+      if (key.startsWith("batch")) {
+        this.#batches[key].forEach((bKey) => {
+          this.#receivers.forEach((r) => {
+            if (r.key === bKey) {
+              console.log(bKey);
+              r.f();
+            }
+          });
+        });
+      } else {
+        this.#receivers.forEach((r) => {
+          if (r.key === key) {
+            r.f();
+          }
+        });
+      }
     });
   }
 
   loadData() {
-    this.#data = exampleData;
+    this.#data = JSON.parse(JSON.stringify(exampleData));
   }
 
   loadReceivers() {

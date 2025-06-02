@@ -4,10 +4,12 @@ class ExampleAlfa {
   }
 }
 
-function loadPayload(name) {
+function loadWrapper(name) {
   if (name === "ExampleAlfa") {
     return new ExampleAlfa();
   }
+  // TODO: throw error here if
+  // the load doesn't work
 }
 
 class BittyJs extends HTMLElement {
@@ -16,15 +18,24 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.dataset.payload) {
-      this.payload = loadPayload(this.dataset.payload);
+    if (this.dataset.wrapper) {
+      this.wrapper = loadWrapper(this.dataset.wrapper);
+      this.addEventListeners();
     }
   }
 
   addEventListeners() {
+    console.log("asdf");
     this.addEventListener("input", (event) => {
-      this.handleUpdate(event);
+      this.handleChange(event);
     });
+    this.addEventListener("click", (event) => {
+      this.handleChange(event);
+    });
+  }
+
+  handleChange(event) {
+    console.log(event);
   }
 }
 

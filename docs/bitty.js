@@ -138,8 +138,7 @@ class BittyJs extends HTMLElement {
     const els = document.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((r) => {
-        if (r.startsWith("trigger")) {
-        } else if (r.startsWith("value")) {
+        if (r.startsWith("value")) {
           this.#receivers.push({
             "key": r,
             "f": () => {

@@ -1,14 +1,4 @@
 export class Wrapper {
-  #value = 0;
-
-  _increment(_) {
-    this.#value += 1;
-  }
-
-  $showValue(el, _) {
-    el.innerHTML = this.#value;
-  }
-
   init() {
     this.loadTemplate();
   }
@@ -22,14 +12,14 @@ export class Wrapper {
 
   template() {
     return `
-<div>Total from interal counter<br><span data-r="showValue"></div>
-
 <div>
   <bitty-js
     data-wrapper="./examples/nested-child.js"
     data-init="showValue"
     data-name="Counter 1"
   ></bitty-js>
+</div>
+<div>
   <bitty-js
     data-wrapper="./examples/nested-child.js"
     data-init="showValue"

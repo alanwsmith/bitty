@@ -78,7 +78,7 @@ class BittyJs extends HTMLElement {
   }
 
   isIgnored(name) {
-    console.log(this.dataset);
+    //console.log(this.dataset);
     if (this.dataset.ignore === undefined) {
       return false;
     }

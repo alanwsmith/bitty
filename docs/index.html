@@ -345,6 +345,38 @@
         </bitty-js>
       </div>
 
+      <h2>Example 10 - Element Access</h2>
+      <p>
+        Example of using the bridge to work on the bitty element from the
+        wrapper (in this case updating custom props)
+      </p>
+      <div class="make-two-columns">
+        <style>
+          :root {
+            --example-10-background: black;
+            --example-10-text: #888;
+          }
+          .example-10-output {
+            background-color: var(--example-10-background);
+            color: var(--example-10-text);
+          }
+        </style>
+
+        <bitty-js data-wrapper="./examples/example-10.js">
+          <div>
+            <button data-f="randomBackgroundColor">Background</button>
+          </div>
+          <div class="example-10-output">Example 10a Background</div>
+        </bitty-js>
+
+        <bitty-js data-wrapper="./examples/example-10.js">
+          <div>
+            <button data-f="randomBackgroundColor">Background</button>
+          </div>
+          <div class="example-10-output">Example 10b Background</div>
+        </bitty-js>
+      </div>
+
       <!-- xxxxxxxxxxxxxxxxxxxxxxxx -->
 
       <h2>Example 4 - Multiple Updates</h2>
@@ -480,9 +512,9 @@
           Customize the event listeners with <code>data-listeners</code> in the
           <code>bitty-js</code> component tag
         </li>
-        <li>TODO: Scope style properties</li>
+        <li>Updating root css style props</li>
+        <li>Scope style properties via the bridge</li>
         <li>TODO: class update</li>
-        <li>TODO: Document updating root styles</li>
         <li>TODO: attrs?</li>
         <li>
           TODO: batchX for receiving multiple signals without having to name
@@ -501,7 +533,6 @@
 
       <h2>Possible Enhancements</h2>
       <ul>
-        <li>Trigger for arbitrary functions? (is this necessary?)</li>
         <li>Add async handling</li>
         <li>
           Don't send update if data hasn't changed. (Gets into caching. Where

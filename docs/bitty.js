@@ -11,6 +11,7 @@ class BittyJs extends HTMLElement {
     if (this.dataset.wrapper) {
       import(this.dataset.wrapper).then((mod) => {
         this.wrapper = new mod.Wrapper();
+        this.wrapper.bridge = this;
         this.loadReceivers();
         // TODO: document that init happens before
         // listeners to avoid feedback when setting
@@ -25,7 +26,6 @@ class BittyJs extends HTMLElement {
 
   addEventListeners() {
     this.#listeners.forEach((listener) => {
-      console.log(listener);
       this.addEventListener(listener, (event) => {
         this.handleChange(event);
       });

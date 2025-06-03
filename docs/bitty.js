@@ -9,11 +9,12 @@ class BittyJs extends HTMLElement {
     if (this.dataset.wrapper) {
       import(this.dataset.wrapper).then((mod) => {
         this.wrapper = new mod.Wrapper();
+        this.loadReceivers();
+        this.init();
+        this.addEventListeners();
       });
-      this.loadReceivers();
-      this.addEventListeners();
     }
-    // TODO: error message here if something
+    // TODO: error messages if something
     // went wrong
   }
 
@@ -68,7 +69,6 @@ class BittyJs extends HTMLElement {
         this.wrapper[`_${f}`](event.target);
       });
     }
-
     if (event.target.dataset.s !== undefined) {
       event.target.dataset.s.split("|").forEach((key) => {
         if (key.startsWith("batch")) {
@@ -90,6 +90,33 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  init() {
+    if (this.dataset.init !== undefined) {
+      this.sendUpdates(this.dataset.init);
+    }
+  }
+
+  sendUpdates(updates) {
+    updates.split("|").forEach((key) => {
+      if (key.startsWith("batch")) {
+        this.wrapper.batches[key].forEach((bKey) => {
+          this.#receivers.forEach((r) => {
+            if (r.key === bKey) {
+              r.f();
+            }
+          });
+        });
+      } else {
+        this.#receivers.forEach((r) => {
+          if (r.key === key) {
+            //console.log(r);
+            r.f();
+          }
+        });
+      }
+    });
+  }
+
   loadReceivers() {
     this.#receivers = [];
     const els = this.querySelectorAll(`[data-r]`);
@@ -109,7 +136,34 @@ class BittyJs extends HTMLElement {
 
 customElements.define("bitty-js", BittyJs);
 
+//init() {
+//  if (this.dataset.init !== undefined) {
+//    // TODO: Refactor this and the same part
+//    // inside of handleUpdate to extract them
+//    // into a single function
+//    this.dataset.init.split("|").forEach((key) => {
+//      if (key.startsWith("batch")) {
+//        this.#batches[key].forEach((bKey) => {
+//          this.#receivers.forEach((r) => {
+//            if (r.key === bKey) {
+//              //console.log(bKey);
+//              r.f();
+//            }
+//          });
+//        });
+//      } else {
+//        this.#receivers.forEach((r) => {
+//          if (r.key === key) {
+//            r.f();
+//          }
+//        });
+//      }
+//    });
+//  }
+//}
+
 // this.loadData();
+//
 // this.doPreflightCheck();
 // this.loadReceivers();
 // this.addEventListeners();

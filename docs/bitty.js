@@ -1,17 +1,15 @@
 function loadWrapper(name) {
-  if (name === "ExampleAlfa") {
-    return new ExampleAlfa();
+  if (name === "Example1") {
+    return new Example1();
   }
   // TODO: throw error here if
   // the load doesn't work
 }
 
-class ExampleAlfa {
+class Example1 {
   #batches = {};
 
-  constructor() {
-    console.log("this is example alfa");
-  }
+  constructor() {}
 
   get batches() {
     return this.#batches;
@@ -31,9 +29,25 @@ class BittyJs extends HTMLElement {
 
   connectedCallback() {
     if (this.dataset.wrapper) {
-      this.wrapper = loadWrapper(this.dataset.wrapper);
-      this.loadReceivers();
-      this.addEventListeners();
+      import("./examples/example-1.js").then((mod) => {
+        this.wrapper = new mod.Wrapper();
+        //mod.ping();
+      });
+
+      // const mod = import("./exmaples/example-1.js").then((mod) => {
+      //   return mod;
+      // });
+      //mod.ping();
+
+      //import("./examples/example-1.js");
+      // const mod = import("./examples/example-1.js").then((mod) => {
+      //   mod.ping();
+      // });
+      //ping();
+      //const x = new Wrapper();
+      // this.wrapper = loadWrapper(this.dataset.wrapper);
+      // this.loadReceivers();
+      // this.addEventListeners();
     }
   }
 
@@ -85,23 +99,25 @@ class BittyJs extends HTMLElement {
     //   this[`_${f}`](event.target);
     // });
 
-    event.target.dataset.s.split("|").forEach((key) => {
-      if (key.startsWith("batch")) {
-        this.wrapper.batches[key].forEach((bKey) => {
+    if (event.target.dataset.s !== undefined) {
+      event.target.dataset.s.split("|").forEach((key) => {
+        if (key.startsWith("batch")) {
+          this.wrapper.batches[key].forEach((bKey) => {
+            this.#receivers.forEach((r) => {
+              if (r.key === bKey) {
+                r.f();
+              }
+            });
+          });
+        } else {
           this.#receivers.forEach((r) => {
-            if (r.key === bKey) {
+            if (r.key === key) {
               r.f();
             }
           });
-        });
-      } else {
-        this.#receivers.forEach((r) => {
-          if (r.key === key) {
-            r.f();
-          }
-        });
-      }
-    });
+        }
+      });
+    }
   }
 
   loadReceivers() {

@@ -669,7 +669,8 @@ export class Wires {
       </p>
       <ol>
         <li>[x] No build steps required</li>
-        <li>[x] Minimal API</li>
+        <li>[x] Single file usage</li>
+        <li>[x] Minimal API. Minimal boilerplate.</li>
         <li>As simple as possible. As complex as necessary.</li>
         <li>Limit scope to reactivity</li>
         <li>
@@ -736,23 +737,26 @@ export class Wires {
         <li>[x] <code>data-prep</code> to send functions for init</li>
         <li>[x] <code>data-b</code> to send batches</li>
         <li>[x] <code>data-batch</code> for the init version of batch send</li>
-        <li>[] Verify you can query arbitrary instances for their data</li>
         <li>[x] Parents can ignore children signals</li>
-        <li>TODO: Get data from component in wires for loading</li>
-        <li>TODO: Global receivers</li>
-        <li>TODO: Global senders?</li>
-        <li>TODO: Send signals from functions in the wires</li>
+        <li>[] Global senders</li>
+        <li>[] Global receivers</li>
+        <li>[] Query arbitrary instances for their data</li>
         <li>
-          [] bitty-js init happens after wires init so send signals can be sent
+          [x] Call <code>.init()</code> on <code>Wires</code> if available
+        </li>
+        <li>
+          [x] bitty-js init happens after wires init so send signals can be sent
           to templates the wires loads
         </li>
-        <li>TODO: Can load templates that are fully functional</li>
-        <li>TODO: Can load other web components</li>
-        <li>TODO: Loaded web components can use <code>bitty-js</code></li>
         <li>
-          TODO: I use <code>data-key</code>. It's a personal convention. Any
-          <code>data-*</code> would work. Multiple
-          <code>data-*</code> attributes can be sent as well
+          [x] Loading a template automatically adds call/sender/receiver
+          functionality to it
+        </li>
+        <li>[] Load other web components</li>
+        <li>[] Loaded web components can use <code>bitty-js</code></li>
+        <li>
+          [x] Arbitrary <code>data-*</code> attributes can be used to send data
+          to function calls.
         </li>
         <li>
           [x] Core bitty.js functionality comes in the stand alone component.
@@ -810,22 +814,12 @@ export class Wires {
         <li>
           TODO: throw error if the requested wires doesn't exist or doesn't load
         </li>
-      </ul>
-
-      <h2>Possible Enhancements</h2>
-      <ul>
-        <li>Add async handling</li>
         <li>
-          Don't send update if data hasn't changed. (Gets into caching. Where
-          dragons lie in wait). (e.g. in the color picker example events are
-          sent for both input and click when changing modes. Ideally only one of
-          those would be processed. Initial thinking is that that's something
-          the wires should handle themselves. Trying to roll it into bitty seems
-          like asking for pain.
+          [] Preflight check to make sure functions exist and provide warnings
+          if they don't
         </li>
-        <li>
-          Preflight check that execution, sending, and receiving functions exist
-        </li>
+        <li>[] Stress test with increasing numbers of instances and updates</li>
+        <li>[] Send signals from functions in the wires?</li>
       </ul>
 
       <h2>Out-Of-Scope</h2>
@@ -849,7 +843,6 @@ export class Wires {
         <li>OUT-OF-SCOPE: Debouncing events</li>
         <li>OUT-OF-SCOPE: Data storage</li>
         <li>OUT-OF-SCOPE: JSX</li>
-        <li>OUT-OF-SCOPE: Template Loading</li>
         <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
       </ul>
 
@@ -859,6 +852,7 @@ export class Wires {
           <h3>0.2.1</h3>
           <p>TBD</p>
           <ul>
+            <li>Load templates automatically</li>
             <li>
               TODO: Rename <code>data-f</code> to <code>data-c</code> (i.e.
               &quot;call&quot;)
@@ -924,6 +918,10 @@ export class Wires {
             <li>
               Order of operations is: function calls, batch calls, single send
               calls
+            </li>
+            <li>
+              Temporarily removed preflight check until global functionality is
+              defined
             </li>
           </ul>
         </li>
@@ -1018,6 +1016,9 @@ export class Wires {
             <li>
               Examples use parent page's CSS for styling. It confirms I'm happy
               with the choice to use the light DOM instead of the shadow DOM.
+            </li>
+            <li>
+              Set up initial preflight check to ensure functions are in place.
             </li>
           </ul>
         </li>

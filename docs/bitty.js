@@ -61,6 +61,11 @@ class BittyJs extends HTMLElement {
         }
       });
     }
+    // TODO: Document that batches go first
+    if (event.target.dataset.b !== undefined) {
+      const batch = this.wires.batches[event.target.dataset.b].join("|");
+      this.sendUpdates(batch, event);
+    }
     if (event.target.dataset.s !== undefined) {
       this.sendUpdates(event.target.dataset.s, event);
     }

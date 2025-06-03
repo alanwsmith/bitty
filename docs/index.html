@@ -88,10 +88,7 @@
         <li>
           <h2>Loading Initial State</h2>
           <div class="make-two-columns">
-            <bitty-js
-              data-wires="./examples/bravo.js"
-              data-init="displayCount"
-            >
+            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
               <button data-f="increment" data-s="displayCount">Click Me</button>
               <div data-r="displayCount"></div>
             </bitty-js>
@@ -101,10 +98,7 @@
         <li>
           <h2>Updating Self</h2>
           <div class="make-two-columns">
-            <bitty-js
-              data-wires="./examples/bravo.js"
-              data-init="displayCount"
-            >
+            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
               <button
                 data-f="increment"
                 data-s="displayCount"
@@ -364,6 +358,34 @@
           </div>
         </li>
 
+        <h2>Batch Updates</h2>
+        <div class="make-two-columns">
+          <bitty-js data-wires="./examples/batch-updates.js">
+            <div>
+              <label for="batch-update-input-slider">Input</label>
+              <input
+                type="range"
+                id="batch-updates-input-slider"
+                min="0"
+                max="100"
+                data-f="updateNumber"
+                data-b="checkNumbers"
+              />
+            </div>
+            <div>
+              <div>Greater that 10: <span data-r="check10"></span></div>
+              <div>Greater that 20: <span data-r="check20"></span></div>
+              <div>Greater that 30: <span data-r="check30"></span></div>
+              <div>Greater that 40: <span data-r="check40"></span></div>
+              <div>Greater that 50: <span data-r="check50"></span></div>
+              <div>Greater that 60: <span data-r="check60"></span></div>
+              <div>Greater that 70: <span data-r="check70"></span></div>
+              <div>Greater that 80: <span data-r="check80"></span></div>
+              <div>Greater that 90: <span data-r="check90"></span></div>
+            </div>
+          </bitty-js>
+        </div>
+
         <!-- end of examples -->
       </ol>
 
@@ -371,33 +393,6 @@
 
 
 
-      <h2>Example 7a - Batch Updates</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wires="./examples/example-7.js">
-          <div>
-            <label for="example-7a-input-slider">Slider 7a</label>
-            <input
-              type="range"
-              id="example-7a-input-slider"
-              min="0"
-              max="100"
-              data-f="updateNumber"
-              data-s="batchCheckNumber"
-            />
-          </div>
-          <div>
-            <div>Greater that 10: <span data-r="htmlCheck10"></span></div>
-            <div>Greater that 20: <span data-r="htmlCheck20"></span></div>
-            <div>Greater that 30: <span data-r="htmlCheck30"></span></div>
-            <div>Greater that 40: <span data-r="htmlCheck40"></span></div>
-            <div>Greater that 50: <span data-r="htmlCheck50"></span></div>
-            <div>Greater that 60: <span data-r="htmlCheck60"></span></div>
-            <div>Greater that 70: <span data-r="htmlCheck70"></span></div>
-            <div>Greater that 80: <span data-r="htmlCheck80"></span></div>
-            <div>Greater that 90: <span data-r="htmlCheck90"></span></div>
-          </div>
-        </bitty-js>
-      </div>
 
       <h2>Example 7b - Initial Batch Updates</h2>
       <div class="make-two-columns">
@@ -748,6 +743,10 @@ call init on wires after bridge is created
 
       <h2>Features</h2>
       <ul>
+        <li>TODO: Use: <code>data-b</code> to send batches</li>
+        <li>
+          TODO: Use: <code>data-batch</code> for the init version of batch send
+        </li>
         <li>TODO: Verify you can query arbitrary instances for their data</li>
         <li>TODO: Parents can ignore children signals</li>
         <li>TODO: Get data from component in wires for loading</li>
@@ -755,8 +754,8 @@ call init on wires after bridge is created
         <li>TODO: Global senders?</li>
         <li>TODO: Send signals from functions in the wires</li>
         <li>
-          [] bitty-js init happens after wires init so send signals can be
-          sent to templates the wires loads
+          [] bitty-js init happens after wires init so send signals can be sent
+          to templates the wires loads
         </li>
         <li>TODO: Can load templates that are fully functional</li>
         <li>TODO: Can load other web components</li>
@@ -813,8 +812,7 @@ call init on wires after bridge is created
           at the start.
         </li>
         <li>
-          TODO: throw error if the requested wires doesn't exist or doesn't
-          load
+          TODO: throw error if the requested wires doesn't exist or doesn't load
         </li>
       </ul>
 
@@ -826,8 +824,8 @@ call init on wires after bridge is created
           dragons lie in wait). (e.g. in the color picker example events are
           sent for both input and click when changing modes. Ideally only one of
           those would be processed. Initial thinking is that that's something
-          the wires should handle themselves. Trying to roll it into bitty
-          seems like asking for pain.
+          the wires should handle themselves. Trying to roll it into bitty seems
+          like asking for pain.
         </li>
         <li>
           Preflight check that execution, sending, and receiving functions exist

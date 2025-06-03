@@ -54,34 +54,93 @@
         reactivity to pages.
       </p>
 
-      <h2>Example 1 - Single Click</h2>
+      <h2>Example 1 - Updating HTML</h2>
 
-      <bitty-js data-wrapper="./examples/example-1.js">
-        <div data-r="htmlClick">Waiting</div>
-        <div><button data-s="htmlClick">Click me</button></div>
-      </bitty-js>
+      <div class="make-two-columns">
+        <bitty-js data-wrapper="./examples/example-1.js">
+          <button data-s="htmlClick">Click me</button>
+          <div data-r="htmlClick">Waiting...</div>
+        </bitty-js>
+      </div>
 
-      <h2>Example 2a - Counter</h2>
+      <h2>Example 2a - Storing State</h2>
 
-      <bitty-js data-wrapper="./examples/example-2.js">
-        <button data-f="increment" data-s="htmlCount" data-r="htmlCount">
-          No initial data value
-        </button>
-      </bitty-js>
+      <div class="make-two-columns">
+        <bitty-js data-wrapper="./examples/example-2.js">
+          <button data-f="increment" data-s="htmlCount">Click Me</button>
+          <div data-r="htmlCount">No initial state</div>
+        </bitty-js>
+      </div>
 
-      <h2>Example 2b - Init Data</h2>
+      <h2>Example 2b - Loading Initial State</h2>
 
-      <bitty-js data-wrapper="./examples/example-2.js" data-init="htmlCount">
-        <button data-f="increment" data-s="htmlCount" data-r="htmlCount">
-          -
-        </button>
-      </bitty-js>
+      <div class="make-two-columns">
+        <bitty-js data-wrapper="./examples/example-2.js" data-init="htmlCount">
+          <button data-f="increment" data-s="htmlCount">Click Me</button>
+          <div data-r="htmlCount">No initial state</div>
+        </bitty-js>
+      </div>
 
-      <h2>Example 3</h2>
+      <h2>Example 2c - Updating Self</h2>
+
+      <div class="make-two-columns">
+        <bitty-js data-wrapper="./examples/example-2.js" data-init="htmlCount">
+          <button data-f="increment" data-s="htmlCount" data-r="htmlCount">
+            >Click Me
+          </button>
+          <div></div>
+        </bitty-js>
+      </div>
+
+      <h2>Example 3 - Updating Values</h2>
 
       <bitty-js data-wrapper="./examples/example-3.js">
-        <div></div>
+        <div>
+          Mode:
+          <button data-f="switch" data-s="valueMode" data-key="alfa">
+            Alfa
+          </button>
+          <button data-f="switch" data-s="valueMode" data-key="bravo">
+            Bravo
+          </button>
+        </div>
+        <div>
+          <div>
+            <label for="example-3-slider">Mode Slider</label>
+          </div>
+          <input
+            type="range"
+            id="example-3-slider"
+            min="0"
+            max="100"
+            data-r="valueMode"
+          />
+        </div>
       </bitty-js>
+
+      <h2>Example 4 - Multiple Updates</h2>
+
+      <bitty-js data-wrapper="./examples/example-4.js">
+        <div>
+          Mode:
+          <button
+            data-f="switch"
+            data-s="valueMode|htmlMode"
+            data-key="charlie"
+          >
+            Charlie
+          </button>
+          <button data-f="switch" data-s="valueMode|htmlMode" data-key="delta">
+            Delta
+          </button>
+          <div>
+            <input type="text" id="example-4-text" data-r="valueMode" />
+            <label for="example-4-text" data-r="htmlMode">waiting</label>
+          </div>
+        </div>
+      </bitty-js>
+
+      <!-- xxxxxxxxxxxxxxxxxxxxxxxx -->
 
       <h2>Example</h2>
 

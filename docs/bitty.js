@@ -66,7 +66,12 @@ class BittyJs extends HTMLElement {
     }
     if (event.target.dataset.f !== undefined) {
       event.target.dataset.f.split("|").forEach((f) => {
-        this.wrapper[`_${f}`](event.target);
+        try {
+          this.wrapper[`_${f}`](event.target);
+        } catch (error) {
+          console.log(error);
+          console.error(`Tried: _${f}`);
+        }
       });
     }
     if (event.target.dataset.s !== undefined) {
@@ -109,7 +114,6 @@ class BittyJs extends HTMLElement {
       } else {
         this.#receivers.forEach((r) => {
           if (r.key === key) {
-            //console.log(r);
             r.f();
           }
         });

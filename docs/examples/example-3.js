@@ -1,11 +1,18 @@
 export class Wrapper {
-  #counter = 0;
+  #state = {
+    "activeMode": "alfa",
+    "values": {
+      "alfa": 20,
+      "bravo": 80,
+    },
+  };
 
-  _increment() {
-    this.#counter += 1;
+  _switch(target) {
+    this.#state.activeMode = target.dataset.key;
   }
 
-  $htmlCount() {
-    return this.#counter;
+  $valueMode() {
+    const activeMode = this.#state.activeMode;
+    return this.#state.values[activeMode];
   }
 }

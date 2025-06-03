@@ -9,7 +9,8 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
-        this.handleChange(event);
+        this.requestUpdate.call(this, event);
+        //this.handleChange(event);
       });
     });
   }
@@ -36,6 +37,7 @@ class BittyJs extends HTMLElement {
     if (this.dataset.wires) {
       import(this.dataset.wires).then((mod) => {
         this.wires = new mod.Wires();
+        this.requestUpdate = this.handleChange.bind(this);
         this.loadReceivers();
         this.init();
         this.addEventListeners();

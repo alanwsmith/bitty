@@ -1,10 +1,10 @@
-export class Wrapper {
+export class Wires {
   $showValue(el, _) {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;
     counters.forEach((counter) => {
-      if (counter.wrapper !== undefined) {
-        count += counter.wrapper.value;
+      if (counter.wires !== undefined) {
+        count += counter.wires.value;
       }
     });
     el.innerHTML = count;
@@ -29,13 +29,13 @@ export class Wrapper {
 <div>
   <div>Counter 1</div>
   <bitty-js
-    data-wrapper="./examples/nested-child-calc.js"
+    data-wires="./examples/nested-child-calc.js"
     data-init="showValue"
   ></bitty-js>
 
   <div>Counter 2</div>
   <bitty-js
-    data-wrapper="./examples/nested-child-calc.js"
+    data-wires="./examples/nested-child-calc.js"
     data-init="showValue"
   ></bitty-js>
 </div>

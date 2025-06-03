@@ -1,4 +1,4 @@
-export class Wrapper {
+export class Wires {
   #sliderHasBeenAdded = false;
   #value = 0;
 

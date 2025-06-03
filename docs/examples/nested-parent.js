@@ -1,4 +1,4 @@
-export class Wrapper {
+export class Wires {
   #value = 0;
 
   _increment(_) {
@@ -26,12 +26,12 @@ export class Wrapper {
 
 <div>
   <bitty-js
-    data-wrapper="./examples/nested-child.js"
+    data-wires="./examples/nested-child.js"
     data-init="showValue"
     data-name="Counter 1"
   ></bitty-js>
   <bitty-js
-    data-wrapper="./examples/nested-child.js"
+    data-wires="./examples/nested-child.js"
     data-init="showValue"
     data-name="Counter 2"
   ></bitty-js>

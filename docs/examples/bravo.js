@@ -1,4 +1,4 @@
-export class Wrapper {
+export class Wires {
   #counter = 0;
 
   _increment(_) {

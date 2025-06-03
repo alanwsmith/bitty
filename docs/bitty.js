@@ -6,10 +6,6 @@ class BittyJs extends HTMLElement {
   #listeners = ["click", "input"];
   #receivers = [];
 
-  pingx() {
-    console.log("pingx");
-  }
-
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
@@ -23,7 +19,7 @@ class BittyJs extends HTMLElement {
       "key": key,
       "f": (data) => {
         try {
-          this.wrapper[`$${key}`](el, data);
+          this.wires[`$${key}`](el, data);
         } catch (error) {
           console.error(error);
           console.error(`Tried: $${key}`);
@@ -37,13 +33,15 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.dataset.wrapper) {
-      import(this.dataset.wrapper).then((mod) => {
-        this.wrapper = new mod.Wrapper();
+    if (this.dataset.wires) {
+      import(this.dataset.wires).then((mod) => {
+        this.wires = new mod.Wires();
         this.loadReceivers();
         this.init();
         this.addEventListeners();
       });
+    } else {
+      console.error("Missing data-wires attribute");
     }
   }
 
@@ -55,7 +53,7 @@ class BittyJs extends HTMLElement {
       event.target.dataset.f.split("|").forEach((f) => {
         if (this.isIgnored(f) === false) {
           try {
-            this.wrapper[`_${f}`](event);
+            this.wires[`_${f}`](event);
           } catch (error) {
             console.log(error);
             console.error(`Tried: _${f}`);
@@ -69,9 +67,9 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
-    this.wrapper.bridge = this;
-    if (this.wrapper.init !== undefined) {
-      this.wrapper.init();
+    this.wires.bridge = this;
+    if (this.wires.init !== undefined) {
+      this.wires.init();
     }
     if (this.dataset.init !== undefined) {
       this.sendUpdates(this.dataset.init, null);
@@ -96,7 +94,7 @@ class BittyJs extends HTMLElement {
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((key) => {
         // if (key.startsWith("batch")) {
-        //   this.wrapper.batches[r].forEach((key) => {
+        //   this.wires.batches[r].forEach((key) => {
         //     this.addReceiver(key, el);
         //   });
         // } else {
@@ -110,7 +108,7 @@ class BittyJs extends HTMLElement {
     updates.split("|").forEach((key) => {
       if (this.isIgnored(key) === false) {
         // if (key.startsWith("batch")) {
-        //   this.wrapper.batches[key].forEach((bKey) => {
+        //   this.wires.batches[key].forEach((bKey) => {
         //     this.#receivers.forEach((r) => {
         //       const strippedKey = bKey.replace(/^\$/, "");
         //       if (r.key === strippedKey) {

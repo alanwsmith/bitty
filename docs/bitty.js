@@ -1,25 +1,3 @@
-function loadWrapper(name) {
-  if (name === "Example1") {
-    return new Example1();
-  }
-  // TODO: throw error here if
-  // the load doesn't work
-}
-
-class Example1 {
-  #batches = {};
-
-  constructor() {}
-
-  get batches() {
-    return this.#batches;
-  }
-
-  $htmlClick() {
-    return "x";
-  }
-}
-
 class BittyJs extends HTMLElement {
   #receivers = [];
 
@@ -35,6 +13,8 @@ class BittyJs extends HTMLElement {
       this.loadReceivers();
       this.addEventListeners();
     }
+    // TODO: error message here if something
+    // went wrong
   }
 
   addEventListeners() {
@@ -44,6 +24,8 @@ class BittyJs extends HTMLElement {
     this.addEventListener("click", (event) => {
       this.handleChange(event);
     });
+    // TODO: figure out what other
+    // listeners should be here
   }
 
   addFunction(r, el) {
@@ -81,9 +63,11 @@ class BittyJs extends HTMLElement {
     if (event.target.dataset === undefined) {
       return;
     }
-    // event.target.dataset.f.split("|").forEach((f) => {
-    //   this[`_${f}`](event.target);
-    // });
+    if (event.target.dataset.f !== undefined) {
+      event.target.dataset.f.split("|").forEach((f) => {
+        this.wrapper[`_${f}`](event.target);
+      });
+    }
 
     if (event.target.dataset.s !== undefined) {
       event.target.dataset.s.split("|").forEach((key) => {

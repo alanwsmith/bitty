@@ -1,8 +1,8 @@
 export class Wrapper {
-  #value;
+  #value = 15;
 
   _setValue(data) {
-    this.#value = event.target.value;
+    this.#value = data.target.value;
   }
 
   $setSliderA(el, _) {

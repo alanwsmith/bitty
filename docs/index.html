@@ -180,8 +180,8 @@
                   min="0"
                   max="100"
                   data-f="setValue"
-                  data-s="setSlider2"
-                  data-r="setSlider1"
+                  data-s="setSliderB"
+                  data-r="setSliderA"
                 />
               </div>
               <div>
@@ -192,8 +192,8 @@
                   min="0"
                   max="100"
                   data-f="setValue"
-                  data-s="setSlider1"
-                  data-r="setSlider2"
+                  data-s="setSliderA"
+                  data-r="setSliderB"
                 />
               </div>
             </bitty-js>
@@ -262,44 +262,64 @@
             </bitty-js>
           </div>
         </li>
+
+        <li>
+          <h2>Initializing Values</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="setSliderA|setSliderB"
+              data-wrapper="./examples/hotel.js"
+            >
+              <div>
+                <label for="init-slider-a">Slider A</label>
+                <input
+                  type="range"
+                  id="init-slider-a"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderB"
+                  data-r="setSliderA"
+                />
+              </div>
+              <div>
+                <label for="init-slider-b">Slider B</label>
+                <input
+                  type="range"
+                  id="init-slider-b"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderA"
+                  data-r="setSliderB"
+                />
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>TODO: Place later - Create Element</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="buttonValue"
+              data-wrapper="./examples/to-place-1.js"
+            >
+              <div>
+                <button data-f="makeSlider" data-r="buttonValue"></button>
+              </div>
+              <div>
+                <div>Output</div>
+                <div class="output"></div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
       </ol>
 
       <!--
 
 
-
-      <h2>Example 6 - Initializing Values</h2>
-      <div class="make-two-columns">
-        <bitty-js
-          data-init="valueSliderInit1|valueSliderInit2"
-          data-wrapper="./examples/example-6.js"
-        >
-          <div>
-            <label for="example-6-input-slider">Slider 6 - Charlie</label>
-            <input
-              type="range"
-              id="example-6-input-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider2"
-              data-r="valueSlider1|valueSliderInit1"
-            />
-          </div>
-          <div>
-            <label for="example-6-output-slider">Slider 6 - Delta</label>
-            <input
-              type="range"
-              id="example-6-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider1"
-              data-r="valueSlider2|valueSliderInit2"
-            />
-          </div>
-        </bitty-js>
-      </div>
 
       <h2>Example 7a - Batch Updates</h2>
       <div class="make-two-columns">
@@ -519,6 +539,79 @@
       </div>
 
 -->
+
+      <h2>Design Goals</h2>
+      <ol>
+        <li>[x] No build steps required</li>
+        <li>[x] Minimal API</li>
+        <li>
+          [x] Functionality defied by loading an arbitrary
+          <code>Wrapper</code> class
+        </li>
+        <li>
+          [x] Separation of concerts between function calls, sending signals,
+          and receiving signals
+        </li>
+        <li>
+          [x] Allow any standard manipulation of the receiving element (e.g. can
+          change innerHTML, value, classes, etc.)
+        </li>
+        <li>[x] Use naming conventions for all core functionality</li>
+        <li>[x] Style directly from the parent page</li>
+        <li>
+          [x] New elements participate in the function execution and signals
+        </li>
+        <li>[] Basic event throttling via request animation fame</li>
+        <li>[x] Provide synchronous function calls</li>
+        <li>[] Provide asynchronous function calls</li>
+        <li>[] Provide asynchronous await function calls</li>
+        <li>[] Provide asynchronous then function calls</li>
+        <li>[x] Provide synchronous signals</li>
+        <li>[] Provide asynchronous signals</li>
+        <li>[] Provide asynchronous await signals</li>
+        <li>[] Provide asynchronous then signals</li>
+        <li>
+          [x] Multiple instances work independently a single page by default
+        </li>
+        <li>
+          Wrapper components can communicate with their parent
+          <code>bitty-js</code> through a bridge (e.g. to run
+          <code>.querySelector()</code> calls on the
+          <code>bitty-js</code> element
+        </li>
+        <li>
+          TODO: Multiple instances on the same page can cross communicate with
+          and update each other
+        </li>
+        <li>
+          TODO: Set instance specific style variables from inside the component
+        </li>
+        <li>
+          Use values directly (i.e. don't have to call out to an external
+          function to update a slider value you just changes)
+        </li>
+        <li>TODO: Components can be nested</li>
+        <li>
+          MAYBE: Child components can communicate with parent through bridge
+        </li>
+        <li>
+          MAYBE: Parent components can communicate with children through bridge
+        </li>
+      </ol>
+
+      <h2>Out-Of-Scope</h2>
+      <ul>
+        <li>
+          OUT-OF-SCOPE: Preventing DOM updates if an event sends the same value
+          that's already set for an output
+        </li>
+        <li>OUT-OF-SCOPE: Routing between pages</li>
+        <li>
+          OUT-OF-SCOPE: Advanced throttling beyond request animation frame
+        </li>
+        <li>OUT-OF-SCOPE: Debouncing events</li>
+        <li>OUT-OF-SCOPE: Data storage</li>
+      </ul>
 
       <h2>TODO</h2>
       <pre>

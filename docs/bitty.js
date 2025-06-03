@@ -74,6 +74,7 @@ class BittyJs extends HTMLElement {
 
   loadReceivers() {
     this.#receivers = [];
+    console.log("loading receivers");
     const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((key) => {

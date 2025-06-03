@@ -36,9 +36,9 @@ class BittyJs extends HTMLElement {
     if (r.startsWith("value")) {
       this.#receivers.push({
         "key": r,
-        "f": () => {
+        "f": (event) => {
           try {
-            el.value = this.wrapper[`$${r}`]();
+            el.value = this.wrapper[`$${r}`](event);
           } catch (error) {
             console.error(error);
             console.error(`Tried: $${r}`);
@@ -48,9 +48,9 @@ class BittyJs extends HTMLElement {
     } else {
       this.#receivers.push({
         "key": r,
-        "f": () => {
+        "f": (event) => {
           try {
-            el.innerHTML = this.wrapper[`$${r}`]();
+            el.innerHTML = this.wrapper[`$${r}`](event);
           } catch (error) {
             console.error(error);
             console.error(`Tried: $${r}`);

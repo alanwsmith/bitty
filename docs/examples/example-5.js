@@ -1,8 +1,8 @@
 export class Wrapper {
   #number;
 
-  _updateNumber(target) {
-    this.#number = target.value;
+  _updateNumber(event) {
+    this.#number = event.target.value;
   }
 
   $htmlNumber(_) {

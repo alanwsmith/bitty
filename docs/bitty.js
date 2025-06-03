@@ -70,7 +70,7 @@ class BittyJs extends HTMLElement {
     if (event.target.dataset.f !== undefined) {
       event.target.dataset.f.split("|").forEach((f) => {
         try {
-          this.wrapper[`_${f}`](event.target);
+          this.wrapper[`_${f}`](event);
         } catch (error) {
           console.log(error);
           console.error(`Tried: _${f}`);
@@ -78,34 +78,34 @@ class BittyJs extends HTMLElement {
       });
     }
     if (event.target.dataset.s !== undefined) {
-      this.sendUpdates(event.target.dataset.s, event.target);
+      this.sendUpdates(event.target.dataset.s, event);
     }
   }
 
   init() {
     if (this.dataset.init !== undefined) {
-      this.sendUpdates(this.dataset.init, this);
+      this.sendUpdates(this.dataset.init, null);
     }
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
     }
   }
 
-  sendUpdates(updates, target) {
+  sendUpdates(updates, event) {
     updates.split("|").forEach((key) => {
       if (key.startsWith("batch")) {
         this.wrapper.batches[key].forEach((bKey) => {
           this.#receivers.forEach((r) => {
             const strippedKey = bKey.replace(/^\$/, "");
             if (r.key === strippedKey) {
-              r.f(target);
+              r.f(event);
             }
           });
         });
       } else {
         this.#receivers.forEach((r) => {
           if (r.key === key) {
-            r.f(target);
+            r.f(event);
           }
         });
       }

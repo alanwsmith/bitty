@@ -1,5 +1,5 @@
 export class Wrapper {
-  #number = 25;
+  #number = 75;
 
   #batches = {
     "batchCheckNumber": [
@@ -19,8 +19,8 @@ export class Wrapper {
     return this.#batches;
   }
 
-  _updateNumber(target) {
-    this.#number = parseInt(target.value, 10);
+  _updateNumber(event) {
+    this.#number = parseInt(event.target.value, 10);
   }
 
   $htmlCheck10(_) {

@@ -732,6 +732,7 @@ export class Wires {
 
       <h2>Features</h2>
       <ul>
+        <li>[] Throttling done by <code>.requestAnimationFrame()</code></li>
         <li>[] Improve error handling and messages</li>
         <li>[] Automatically load templates</li>
         <li>[x] <code>data-prep</code> to send functions for init</li>
@@ -757,6 +758,9 @@ export class Wires {
         <li>
           [x] Arbitrary <code>data-*</code> attributes can be used to send data
           to function calls.
+        </li>
+        <li>
+          [] Send/receive functions can access data from the triggering event
         </li>
         <li>
           [x] Core bitty.js functionality comes in the stand alone component.
@@ -806,13 +810,13 @@ export class Wires {
           TODO: Run a pre-flight check for all executing, sending, and receiving
           functions. Log an error to the console for any that are missing.
         </li>
-        <li>TODO: Request animation frame for throttling</li>
         <li>
           The data-init attribute on the main component tag sends those signals
           at the start.
         </li>
         <li>
-          TODO: throw error if the requested wires doesn't exist or doesn't load
+          [] Errors are thrown if the requested wires import doesn't exist or
+          doesn't load
         </li>
         <li>
           [] Preflight check to make sure functions exist and provide warnings
@@ -829,13 +833,10 @@ export class Wires {
       </p>
       <ul>
         <li>
-          OUT-OF-SCOPE: Batch receiving (as opposed to batch sending which is
-          included)
-        </li>
-        <li>
           OUT-OF-SCOPE: Preventing DOM updates if an event sends the same value
           that's already set for an output
         </li>
+        <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
         <li>OUT-OF-SCOPE: Routing between pages</li>
         <li>
           OUT-OF-SCOPE: Advanced throttling beyond request animation frame
@@ -843,7 +844,6 @@ export class Wires {
         <li>OUT-OF-SCOPE: Debouncing events</li>
         <li>OUT-OF-SCOPE: Data storage</li>
         <li>OUT-OF-SCOPE: JSX</li>
-        <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
       </ul>
 
       <h2>Release Notes</h2>
@@ -853,6 +853,7 @@ export class Wires {
           <p>TBD</p>
           <ul>
             <li>Load templates automatically</li>
+            <li>Add throttling via <code>.requestAnimationFrame()</code></li>
             <li>
               TODO: Rename <code>data-f</code> to <code>data-c</code> (i.e.
               &quot;call&quot;)

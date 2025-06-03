@@ -38,6 +38,8 @@ class BittyJs extends HTMLElement {
       import(this.dataset.wires).then((mod) => {
         this.wires = new mod.Wires();
         this.requestUpdate = this.handleChange.bind(this);
+        // Reminder: loadReceivers has to be in front of init
+        // because inits can send
         this.loadReceivers();
         this.init();
         this.addEventListeners();
@@ -65,6 +67,12 @@ class BittyJs extends HTMLElement {
 
   init() {
     this.wires.bridge = this;
+    if (this.wires.template !== undefined) {
+      const skeleton = document.createElement("template");
+      skeleton.innerHTML = this.wires.template();
+      this.append(skeleton.content.cloneNode(true));
+      this.loadReceivers();
+    }
     if (this.wires.init !== undefined) {
       this.wires.init();
     }

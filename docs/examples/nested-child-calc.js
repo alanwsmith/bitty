@@ -13,17 +13,6 @@ export class Wires {
     return this.#value;
   }
 
-  init() {
-    this.loadTemplate();
-  }
-
-  loadTemplate() {
-    const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.template();
-    this.bridge.append(skeleton.content.cloneNode(true));
-    this.bridge.loadReceivers();
-  }
-
   template() {
     return `
 <button data-c="increment" data-s="showValue" data-r="showValue"></button>`;

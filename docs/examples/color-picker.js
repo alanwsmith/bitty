@@ -60,17 +60,6 @@ export class Wires {
     return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
   }
 
-  init() {
-    this.loadTemplate();
-  }
-
-  loadTemplate() {
-    const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.template();
-    this.bridge.append(skeleton.content.cloneNode(true));
-    this.bridge.loadReceivers();
-  }
-
   textColorVar() {
     const modeKey = this.#data.activeMode === "light" ? "dark" : "light";
     let mode = this.#data.modes[modeKey];

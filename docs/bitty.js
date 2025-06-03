@@ -83,9 +83,9 @@ class BittyJs extends HTMLElement {
       const batch = this.wires.batches[this.dataset.batch].join("|");
       this.sendUpdates(batch, null);
     }
-    // if (this.dataset.listeners !== undefined) {
-    //   this.#listeners = this.dataset.listeners.split("|");
-    // }
+    if (this.dataset.listeners !== undefined) {
+      this.#listeners = this.dataset.listeners.split("|");
+    }
   }
 
   isIgnored(name) {

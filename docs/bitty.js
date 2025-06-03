@@ -75,23 +75,7 @@ class BittyJs extends HTMLElement {
       });
     }
     if (event.target.dataset.s !== undefined) {
-      event.target.dataset.s.split("|").forEach((key) => {
-        if (key.startsWith("batch")) {
-          this.wrapper.batches[key].forEach((bKey) => {
-            this.#receivers.forEach((r) => {
-              if (r.key === bKey) {
-                r.f();
-              }
-            });
-          });
-        } else {
-          this.#receivers.forEach((r) => {
-            if (r.key === key) {
-              r.f();
-            }
-          });
-        }
-      });
+      this.sendUpdates(event.target.dataset.s);
     }
   }
 

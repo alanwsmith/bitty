@@ -1,6 +1,5 @@
 export class Wrapper {
   $htmlGotInput(event) {
-    console.log(event);
-    return `Input at: ${Date.now()}`;
+    return `${event.type} at: ${Date.now()}`;
   }
 }

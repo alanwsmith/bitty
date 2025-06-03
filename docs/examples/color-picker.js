@@ -29,14 +29,14 @@ export class Wrapper {
 
   _handleMode(event) {
     this.#data.activeMode = event.target.value;
-    this.bridge.style.setProperty(
-      `--color-picker-background`,
-      this.backgroundColorVar(),
-    );
-    this.bridge.style.setProperty(
-      `--color-picker-text`,
-      this.textColorVar(),
-    );
+    this.updateStyles();
+  }
+
+  _handleSlider(event) {
+    const modeKey = this.#data.activeMode;
+    const key = event.target.dataset.key;
+    this.#data.modes[modeKey][key] = event.target.value;
+    this.updateStyles();
   }
 
   $valueC() {
@@ -52,13 +52,24 @@ export class Wrapper {
   }
 
   backgroundColorVar() {
+    const mode = this.#data.modes[this.#data.activeMode];
+    return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
+  }
+
+  textColorVar() {
     const modeKey = this.#data.activeMode === "light" ? "dark" : "light";
     let mode = this.#data.modes[modeKey];
     return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
   }
 
-  textColorVar() {
-    const mode = this.#data.modes[this.#data.activeMode];
-    return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
+  updateStyles() {
+    this.bridge.style.setProperty(
+      `--color-picker-background`,
+      this.backgroundColorVar(),
+    );
+    this.bridge.style.setProperty(
+      `--color-picker-text`,
+      this.textColorVar(),
+    );
   }
 }

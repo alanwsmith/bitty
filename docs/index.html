@@ -60,416 +60,602 @@
 
       <h2>Overview</h2>
       <p>
-        bitty.js is a tiny web component. It uses naming conventions add
-        reactivity to pages.
+        bitty.js is a tiny web component. It uses naming conventions to make
+        pages reactive.
       </p>
 
-      <h2>Example 1 - Updating HTML</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-1.js">
-          <button data-s="htmlClick">Click me</button>
-          <div data-r="htmlClick">Waiting...</div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 2a - Storing State</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-2.js">
-          <button data-f="increment" data-s="htmlCount">Click Me</button>
-          <div data-r="htmlCount">No initial state</div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 2b - Loading Initial State</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-2.js" data-init="htmlCount">
-          <button data-f="increment" data-s="htmlCount">Click Me</button>
-          <div data-r="htmlCount">No initial state</div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 2c - Updating Self</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-2.js" data-init="htmlCount">
-          <button data-f="increment" data-s="htmlCount" data-r="htmlCount">
-            >Click Me
-          </button>
-          <div></div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 3 - Updating Values</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-3.js">
-          <div>
-            <label for="example-3-input-slider">Input 3 Slider</label>
-            <input
-              type="range"
-              id="example-3-input-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider"
-            />
-          </div>
-          <div>
-            <label for="example-3-output-slider">Output 3 Slider</label>
-            <input
-              type="range"
-              id="example-3-slider"
-              min="0"
-              max="100"
-              data-r="valueSlider"
-            />
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 4 - Avoiding Feedback</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-4.js">
-          <div>
-            <label for="example-4-input-slider">Slider 4 Alfa</label>
-            <input
-              type="range"
-              id="example-4-input-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider2"
-              data-r="valueSlider1"
-            />
-          </div>
-          <div>
-            <label for="example-4-output-slider">Slider 4 Bravo</label>
-            <input
-              type="range"
-              id="example-4-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider1"
-              data-r="valueSlider2"
-            />
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 5a - Multiple Updates</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-5.js">
-          <div>
-            <label for="example-5a-input-slider">Input 5a Slider</label>
-            <input
-              type="range"
-              id="example-5a-input-slider"
-              min="0"
-              max="100"
-              data-f="updateNumber"
-              data-s="valueNumber|htmlNumber"
-            />
-          </div>
-          <div>
-            <label for="example-5a-output-slider">Output 5a Slider</label>
-            <input
-              type="range"
-              id="example-5a-slider"
-              min="0"
-              max="100"
-              data-r="valueNumber"
-            />
-            <div>Output 5a Text: <span data-r="htmlNumber">Waiting</span></div>
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 5b - Multiple Receivers</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-5.js">
-          <div>
-            <label for="example-5b-input-slider">Input 5b Slider</label>
-            <input
-              type="range"
-              id="example-5b-input-slider"
-              min="0"
-              max="100"
-              data-f="updateNumber"
-              data-s="htmlNumber"
-            />
-          </div>
-          <div>
-            <div>Copy 1: <span data-r="htmlNumber"></span></div>
-            <div>Copy 2: <span data-r="htmlNumber"></span></div>
-            <div>Copy 3: <span data-r="htmlNumber"></span></div>
-            <div>Copy 4: <span data-r="htmlNumber"></span></div>
-            <div>Copy 5: <span data-r="htmlNumber"></span></div>
-            <div>Copy 6: <span data-r="htmlNumber"></span></div>
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 6 - Initializing Values</h2>
-      <div class="make-two-columns">
-        <bitty-js
-          data-init="valueSliderInit1|valueSliderInit2"
-          data-wrapper="./examples/example-6.js"
-        >
-          <div>
-            <label for="example-6-input-slider">Slider 6 - Charlie</label>
-            <input
-              type="range"
-              id="example-6-input-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider2"
-              data-r="valueSlider1|valueSliderInit1"
-            />
-          </div>
-          <div>
-            <label for="example-6-output-slider">Slider 6 - Delta</label>
-            <input
-              type="range"
-              id="example-6-slider"
-              min="0"
-              max="100"
-              data-f="updateValue"
-              data-s="valueSlider1"
-              data-r="valueSlider2|valueSliderInit2"
-            />
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 7a - Batch Updates</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-7.js">
-          <div>
-            <label for="example-7a-input-slider">Slider 7a</label>
-            <input
-              type="range"
-              id="example-7a-input-slider"
-              min="0"
-              max="100"
-              data-f="updateNumber"
-              data-s="batchCheckNumber"
-            />
-          </div>
-          <div>
-            <div>Greater that 10: <span data-r="htmlCheck10"></span></div>
-            <div>Greater that 20: <span data-r="htmlCheck20"></span></div>
-            <div>Greater that 30: <span data-r="htmlCheck30"></span></div>
-            <div>Greater that 40: <span data-r="htmlCheck40"></span></div>
-            <div>Greater that 50: <span data-r="htmlCheck50"></span></div>
-            <div>Greater that 60: <span data-r="htmlCheck60"></span></div>
-            <div>Greater that 70: <span data-r="htmlCheck70"></span></div>
-            <div>Greater that 80: <span data-r="htmlCheck80"></span></div>
-            <div>Greater that 90: <span data-r="htmlCheck90"></span></div>
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 7b - Initial Batch Updates</h2>
-      <div class="make-two-columns">
-        <bitty-js
-          data-init="batchCheckNumber|valueNumber"
-          data-wrapper="./examples/example-7.js"
-        >
-          <div>
-            <label for="example-7b-input-slider">Slider 7</label>
-            <input
-              type="range"
-              id="example-7b-input-slider"
-              min="0"
-              max="100"
-              data-f="updateNumber"
-              data-s="batchCheckNumber"
-              data-r="valueNumber"
-            />
-          </div>
-          <div>
-            <div>Greater that 10: <span data-r="htmlCheck10"></span></div>
-            <div>Greater that 20: <span data-r="htmlCheck20"></span></div>
-            <div>Greater that 30: <span data-r="htmlCheck30"></span></div>
-            <div>Greater that 40: <span data-r="htmlCheck40"></span></div>
-            <div>Greater that 50: <span data-r="htmlCheck50"></span></div>
-            <div>Greater that 60: <span data-r="htmlCheck60"></span></div>
-            <div>Greater that 70: <span data-r="htmlCheck70"></span></div>
-            <div>Greater that 80: <span data-r="htmlCheck80"></span></div>
-            <div>Greater that 90: <span data-r="htmlCheck90"></span></div>
-          </div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 8 - Set Listeners</h2>
-      <div class="make-two-columns">
-        <bitty-js
-          data-listeners="mouseover|mouseout"
-          data-wrapper="./examples/example-8.js"
-        >
-          <button data-s="htmlGotInput">Mouse Instead of Click</button>
-          <div data-r="htmlGotInput">Waiting...</div>
-        </bitty-js>
-      </div>
-
-      <h2>Example 9a - Arbitrary Functions</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-9.js">
-          <div>
-            <button data-f="randomBackgroundColor">Background</button>
-            <button data-f="randomTextColor">Text</button>
-          </div>
-          <div class="example-9-output">changes these colors</div>
-          <style>
-            :root {
-              --example-9-background: black;
-              --example-9-text: #888;
-            }
-            .example-9-output {
-              background-color: var(--example-9-background);
-              color: var(--example-9-text);
-            }
-          </style>
-        </bitty-js>
-      </div>
-
-      <h2>Example 9b - Arbitrary Functions</h2>
-      <div class="make-two-columns">
-        <bitty-js data-wrapper="./examples/example-9.js">
-          <div>
-            <button data-f="randomBackgroundColor|randomTextColor">
-              Background and Text
-            </button>
-          </div>
-          <div class="example-9-output">changes these colors</div>
-          <style>
-            :root {
-              --example-9-background: black;
-              --example-9-text: #888;
-            }
-            .example-9-output {
-              background-color: var(--example-9-background);
-              color: var(--example-9-text);
-            }
-          </style>
-        </bitty-js>
-      </div>
-
-      <h2>Example 10 - Element Access</h2>
+      <h2>Status: Beta</h2>
       <p>
-        Example of using the bridge to work on the bitty element from the
-        wrapper (in this case updating custom props)
+        I'm still working on the initial feature set. Everything you see in the
+        examples below is working. More to come with the TODOs further below.
       </p>
-      <div class="make-two-columns">
-        <style>
-          :root {
-            --example-10-background: black;
-            --example-10-text: #888;
-          }
-          .example-10-output {
-            background-color: var(--example-10-background);
-            color: var(--example-10-text);
-          }
-        </style>
+      <p>
+        I'll move views of the source code into the examples soon. For now,
+        you'll need to peak at the .js files themselves to get and idea.
+      </p>
 
-        <bitty-js data-wrapper="./examples/example-10.js">
-          <div>
-            <button data-f="randomBackgroundColor">Background</button>
-          </div>
-          <div class="example-10-output">Example 10a Background</div>
-        </bitty-js>
+      <p>
+        Here's
+        <a href="https://github.com/alanwsmith/bitty-js/blob/main/docs/bitty.js"
+          >the bitty.js web component file</a
+        >.
+      </p>
+      <p>
+        Other files are in
+        <a href="https://github.com/alanwsmith/bitty-js/tree/main/docs/examples"
+          >the examples folder</a
+        >.
+      </p>
 
-        <bitty-js data-wrapper="./examples/example-10.js">
-          <div>
-            <button data-f="randomBackgroundColor">Background</button>
-          </div>
-          <div class="example-10-output">Example 10b Background</div>
-        </bitty-js>
-      </div>
+      <h2>Examples</h2>
 
-      <h2>Practical Example</h2>
-      <style>
-        .color-picker {
-          background-color: var(--color-picker-background);
-          color: var(--color-picker-text);
-        }
-      </style>
-      <div class="make-two-columns">
-        <bitty-js
-          data-init="batchSliders"
-          data-wrapper="./examples/color-picker.js"
-          class="color-picker"
-        >
-          <div>
-            <input
-              type="radio"
-              name="modeToggle"
-              id="mode-light"
-              data-f="handleMode"
-              data-s="batchSliders"
-              value="light"
-              checked
-            /><label for="mode-light">Light</label>
-            <input
-              type="radio"
-              name="modeToggle"
-              name="mode-selector"
-              id="mode-dark"
-              data-f="handleMode"
-              data-s="batchSliders"
-              value="dark"
-            /><label for="mode-dark">Dark</label>
+      <ol>
+        <li>
+          <h2>Updating HTML</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/alfa.js">
+              <button data-s="updateText">Click me</button>
+              <div data-r="updateText">Waiting<br />...</div>
+            </bitty-js>
           </div>
-          <div>
-            <label for="slider-l">Lightness</label>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="0.01"
-              id="slider-l"
-              data-f="handleSlider"
-              data-r="valueL"
-              data-key="l"
-            />
-            <label for="slider-c">Chroma</label>
-            <input
-              type="range"
-              min="0"
-              max="0.3"
-              step="0.00001"
-              id="slider-c"
-              data-f="handleSlider"
-              data-r="valueC"
-              data-key="c"
-            />
-            <label for="slider-h">Hue</label>
-            <input
-              type="range"
-              min="0"
-              max="360"
-              step="0.01"
-              id="slider-h"
-              data-f="handleSlider"
-              data-r="valueH"
-              data-key="h"
-            />
+        </li>
+
+        <li>
+          <h2>Storing State</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/bravo.js">
+              <button data-f="increment" data-s="displayCount">Click Me</button>
+              <div data-r="displayCount">No initial state</div>
+            </bitty-js>
           </div>
-        </bitty-js>
-      </div>
+        </li>
+
+        <li>
+          <h2>Loading Initial State</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
+              <button data-f="increment" data-s="displayCount">Click Me</button>
+              <div data-r="displayCount"></div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Updating Self</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
+              <button
+                data-f="increment"
+                data-s="displayCount"
+                data-r="displayCount"
+              >
+                >Click Me
+              </button>
+              <div></div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Update Classes</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/delta.js">
+              <div>
+                <button data-f="setColor" data-color="red" data-s="setClass">
+                  Red</button
+                ><br />
+                <button data-f="setColor" data-color="green" data-s="setClass">
+                  Green</button
+                ><br />
+                <button data-f="setColor" data-color="blue" data-s="setClass">
+                  Blue</button
+                ><br />
+              </div>
+              <div data-r="setClass">
+                Keep the hatch tight and the watch constant.
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Updating Values</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/charlie.js">
+              <div>
+                <label for="update-values-input-slider">Input Slider</label>
+                <input
+                  type="range"
+                  id="update-values-input-slider"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="sliderValue"
+                />
+              </div>
+              <div>
+                <label for="update-values-output-slider">Output Slider</label>
+                <input
+                  type="range"
+                  id="update-values-output-slider"
+                  min="0"
+                  max="100"
+                  data-r="sliderValue"
+                />
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Avoiding Feedback</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/echo.js">
+              <div>
+                <label for="avoid-feedback-slider-a">Slider A</label>
+                <input
+                  type="range"
+                  id="avoid-feedback-slider-a"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderB"
+                  data-r="setSliderA"
+                />
+              </div>
+              <div>
+                <label for="avoid-feedback-slider-b">Slider B</label>
+                <input
+                  type="range"
+                  id="avoid-feedback-slider-b"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderA"
+                  data-r="setSliderB"
+                />
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Sent Multiple Signals</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/foxtrot.js">
+              <div>
+                <label for="multiple-updates-input-slider">Input Slider</label>
+                <input
+                  type="range"
+                  id="multiple-updates-input-slider"
+                  min="0"
+                  max="100"
+                  data-f="setNumber"
+                  data-s="displayNumber|setNumberValue"
+                />
+              </div>
+              <div>
+                <label for="multiple-updates-output-slider"
+                  >Output Slider</label
+                >
+                <input
+                  type="range"
+                  id="multiple-updates-output-slider"
+                  min="0"
+                  max="100"
+                  data-r="setNumberValue"
+                />
+                <div>
+                  Output Text: <span data-r="displayNumber">Waiting</span>
+                </div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Use Multiple Receivers</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/golf.js">
+              <div>
+                <label for="multiple-receivers-input-slider"
+                  >Input Slider</label
+                >
+                <input
+                  type="range"
+                  id="multiple-receivers-input-slider"
+                  min="0"
+                  max="100"
+                  data-f="setNumber"
+                  data-s="displayNumber"
+                />
+              </div>
+              <div>
+                <div>Copy 1: <span data-r="displayNumber"></span></div>
+                <div>Copy 2: <span data-r="displayNumber"></span></div>
+                <div>Copy 3: <span data-r="displayNumber"></span></div>
+                <div>Copy 4: <span data-r="displayNumber"></span></div>
+                <div>Copy 5: <span data-r="displayNumber"></span></div>
+                <div>Copy 6: <span data-r="displayNumber"></span></div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Initializing Values</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="setSliderA|setSliderB"
+              data-wires="./examples/hotel.js"
+            >
+              <div>
+                <label for="init-slider-a">Slider A</label>
+                <input
+                  type="range"
+                  id="init-slider-a"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderB"
+                  data-r="setSliderA"
+                />
+              </div>
+              <div>
+                <label for="init-slider-b">Slider B</label>
+                <input
+                  type="range"
+                  id="init-slider-b"
+                  min="0"
+                  max="100"
+                  data-f="setValue"
+                  data-s="setSliderA"
+                  data-r="setSliderB"
+                />
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Create Element</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="buttonValue"
+              data-wires="./examples/create-element.js"
+            >
+              <div>
+                <button data-f="makeSlider" data-r="buttonValue"></button>
+              </div>
+              <div>
+                <div>Output</div>
+                <div class="output"></div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Call Wires init</h2>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/call-wires-init.js"></bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Template Loading Via Wires</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="showValue"
+              data-wires="./examples/template-loading.js"
+            ></bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Nested Components</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="showValue"
+              data-wires="./examples/nested-parent.js"
+            ></bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Nested Components with Ignore</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-wires="./examples/nested-parent-ignore.js"
+              data-ignore="increment"
+            ></bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Getting Data From Children</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-wires="./examples/nested-parent-calc.js"
+              data-ignore="increment"
+              data-init="showValue"
+            ></bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Batch Updates</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-init="setValue"
+              data-wires="./examples/batch-updates.js"
+            >
+              <div>
+                <label for="batch-update-input-slider">Input</label>
+                <input
+                  type="range"
+                  id="batch-updates-input-slider"
+                  min="0"
+                  max="100"
+                  data-f="updateNumber"
+                  data-b="checkNumbers"
+                  data-r="setValue"
+                />
+              </div>
+              <div>
+                <div>Greater that 10: <span data-r="check10"></span></div>
+                <div>Greater that 20: <span data-r="check20"></span></div>
+                <div>Greater that 30: <span data-r="check30"></span></div>
+                <div>Greater that 40: <span data-r="check40"></span></div>
+                <div>Greater that 50: <span data-r="check50"></span></div>
+                <div>Greater that 60: <span data-r="check60"></span></div>
+                <div>Greater that 70: <span data-r="check70"></span></div>
+                <div>Greater that 80: <span data-r="check80"></span></div>
+                <div>Greater that 90: <span data-r="check90"></span></div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Batch Initialization</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-batch="checkNumbers"
+              data-init="setValue"
+              data-wires="./examples/batch-updates.js"
+            >
+              <div>
+                <label for="batch-update-input-slider">Input</label>
+                <input
+                  type="range"
+                  id="batch-updates-input-slider"
+                  min="0"
+                  max="100"
+                  data-f="updateNumber"
+                  data-b="checkNumbers"
+                  data-r="setValue"
+                />
+              </div>
+              <div>
+                <div>Greater that 10: <span data-r="check10"></span></div>
+                <div>Greater that 20: <span data-r="check20"></span></div>
+                <div>Greater that 30: <span data-r="check30"></span></div>
+                <div>Greater that 40: <span data-r="check40"></span></div>
+                <div>Greater that 50: <span data-r="check50"></span></div>
+                <div>Greater that 60: <span data-r="check60"></span></div>
+                <div>Greater that 70: <span data-r="check70"></span></div>
+                <div>Greater that 80: <span data-r="check80"></span></div>
+                <div>Greater that 90: <span data-r="check90"></span></div>
+              </div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Customize Event Listeners</h2>
+          <div class="make-two-columns">
+            <bitty-js
+              data-listeners="mouseover|mouseout"
+              data-wires="./examples/set-listeners.js"
+            >
+              <button data-s="sawMouse">Mouse Instead of Click</button>
+              <div data-r="sawMouse">Waiting...</div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Element Access</h2>
+          <div class="make-two-columns">
+            <style>
+              .element-access-class {
+                background-color: var(--element-access-background);
+              }
+            </style>
+            <bitty-js data-wires="./examples/element-access.js">
+              <div>
+                <button data-f="randomizeBackground">
+                  Randomize Background
+                </button>
+              </div>
+              <div class="element-access-class">the quick fox</div>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Isolated Elements</h2>
+          <style>
+            .isolated-element {
+              background-color: var(--isolated-element-background);
+            }
+          </style>
+          <div class="make-two-columns">
+            <bitty-js data-wires="./examples/isolate-element.js">
+              <button data-f="randomizeBackground" class="isolated-element">
+                Randomize Background
+              </button>
+            </bitty-js>
+            <bitty-js data-wires="./examples/isolate-element.js">
+              <button data-f="randomizeBackground" class="isolated-element">
+                Randomize Background
+              </button>
+            </bitty-js>
+          </div>
+        </li>
+
+        <li>
+          <h2>Color Picker Example</h2>
+          <style>
+            .color-picker {
+              background-color: var(--color-picker-background);
+              color: var(--color-picker-text);
+            }
+          </style>
+          <div class="make-two-columns">
+            <bitty-js
+              data-prep="initMode"
+              data-batch="sliders"
+              data-wires="./examples/color-picker.js"
+              class="color-picker"
+            >
+            </bitty-js>
+          </div>
+        </li>
+
+        <!-- end of examples -->
+      </ol>
+
+      <h2>Questions</h2>
+      <ol>
+        <li>
+          Should there be other default listeners besides input and click?
+          (considered keyboard. it feels secondary)
+        </li>
+      </ol>
+
+      <h2>Design Goals</h2>
+      <ol>
+        <li>[x] No build steps required</li>
+        <li>[x] Minimal API</li>
+        <li>As simple as possible. As complex as necessary.</li>
+        <li>Limit scope to reactivity</li>
+        <li>
+          [x] Functionality defied by loading an arbitrary
+          <code>Wires</code> class
+        </li>
+        <li>
+          [x] Separation of concerts between function calls, sending signals,
+          and receiving signals
+        </li>
+        <li>
+          [x] Allow any standard manipulation of the receiving element (e.g. can
+          change innerHTML, value, classes, etc.)
+        </li>
+        <li>[x] Use naming conventions for all core functionality</li>
+        <li>[x] Style directly from the parent page</li>
+        <li>
+          [x] New elements participate in the function execution and signals
+        </li>
+        <li>[x] Rely on built-in functionality as much as possible</li>
+        <li>[] Basic event throttling via request animation fame</li>
+        <li>[x] Provide synchronous function calls</li>
+        <li>[] Provide asynchronous function calls</li>
+        <li>[] Provide asynchronous await function calls</li>
+        <li>[] Provide asynchronous then function calls</li>
+        <li>[x] Provide synchronous signals</li>
+        <li>[] Provide asynchronous signals</li>
+        <li>[] Provide asynchronous await signals</li>
+        <li>[] Provide asynchronous then signals</li>
+        <li>
+          [x] Multiple instances work independently a single page by default
+        </li>
+        <li>
+          Wires components can communicate with their parent
+          <code>bitty-js</code> through a bridge (e.g. to run
+          <code>.querySelector()</code> calls on the
+          <code>bitty-js</code> element
+        </li>
+        <li>
+          TODO: Multiple instances on the same page can cross communicate with
+          and update each other
+        </li>
+        <li>
+          TODO: Set instance specific style variables from inside the component
+        </li>
+        <li>
+          Use values directly (i.e. don't have to call out to an external
+          function to update a slider value you just changes)
+        </li>
+        <li>TODO: Components can be nested</li>
+        <li>
+          MAYBE: Child components can communicate with parent through bridge
+        </li>
+        <li>
+          MAYBE: Parent components can communicate with children through bridge
+        </li>
+        <li>Intuitive data passing</li>
+      </ol>
+
+      <h2>Out-Of-Scope</h2>
+      <p>
+        These items are not in scope for <code>bitty.js</code>. They are the
+        responsibility of <code>Wires</code> classes:
+      </p>
+      <ul>
+        <li>
+          OUT-OF-SCOPE: Batch receiving (as opposed to batch sending which is
+          included)
+        </li>
+        <li>
+          OUT-OF-SCOPE: Preventing DOM updates if an event sends the same value
+          that's already set for an output
+        </li>
+        <li>OUT-OF-SCOPE: Routing between pages</li>
+        <li>
+          OUT-OF-SCOPE: Advanced throttling beyond request animation frame
+        </li>
+        <li>OUT-OF-SCOPE: Debouncing events</li>
+        <li>OUT-OF-SCOPE: Data storage</li>
+        <li>OUT-OF-SCOPE: JSX</li>
+        <li>OUT-OF-SCOPE: Template Loading</li>
+        <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
+      </ul>
 
       <h2>Features</h2>
       <ul>
+        <li>Use: <code>data-prep</code> to send functions for init</li>
+        <li>Use: <code>data-b</code> to send batches</li>
+        <li>Use: <code>data-batch</code> for the init version of batch send</li>
+        <li>TODO: Verify you can query arbitrary instances for their data</li>
+        <li>TODO: Parents can ignore children signals</li>
+        <li>TODO: Get data from component in wires for loading</li>
+        <li>TODO: Global receivers</li>
+        <li>TODO: Global senders?</li>
+        <li>TODO: Send signals from functions in the wires</li>
+        <li>
+          [] bitty-js init happens after wires init so send signals can be sent
+          to templates the wires loads
+        </li>
+        <li>TODO: Can load templates that are fully functional</li>
+        <li>TODO: Can load other web components</li>
+        <li>TODO: Loaded web components can use <code>bitty-js</code></li>
+        <li>
+          TODO: I use <code>data-key</code>. It's a personal convention. Any
+          <code>data-*</code> would work. Multiple
+          <code>data-*</code> attributes can be sent as well
+        </li>
         <li>
           Core bitty.js functionality comes in the stand alone component.
           Specific behavior is defined by making a JavaScript module with a
-          <code>Wrapper</code> class in it.
+          <code>Wires</code> class in it.
         </li>
         <li>Based off a naming convention to wire everything together</li>
         <li>Multiple instances can be placed on a single page</li>
         <li>
           The component uses the light DOM. Page level CSS can be applied to
-          content inside the wrapper
+          content inside the wires
         </li>
         <li>htmlKey updates for innerHTML</li>
         <li>valueKey updates for form values</li>
@@ -507,8 +693,7 @@
           at the start.
         </li>
         <li>
-          TODO: throw error if the requested wrapper doesn't exist or doesn't
-          load
+          TODO: throw error if the requested wires doesn't exist or doesn't load
         </li>
       </ul>
 
@@ -520,8 +705,8 @@
           dragons lie in wait). (e.g. in the color picker example events are
           sent for both input and click when changing modes. Ideally only one of
           those would be processed. Initial thinking is that that's something
-          the wrappers should handle themselves. Trying to roll it into bitty
-          seems like asking for pain.
+          the wires should handle themselves. Trying to roll it into bitty seems
+          like asking for pain.
         </li>
         <li>
           Preflight check that execution, sending, and receiving functions exist

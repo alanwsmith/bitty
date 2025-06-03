@@ -1,9 +1,9 @@
-export class Wrapper {
+export class Wires {
   #batches = {
-    "batchSliders": [
-      "$valueC",
-      "$valueH",
-      "$valueL",
+    "sliders": [
+      "cValue",
+      "hValue",
+      "lValue",
     ],
   };
 
@@ -27,28 +27,32 @@ export class Wrapper {
     return this.#batches;
   }
 
-  _handleMode(event) {
-    this.#data.activeMode = event.target.value;
+  _handleMode(data) {
+    this.#data.activeMode = data.target.value;
     this.updateStyles();
   }
 
-  _handleSlider(event) {
+  _handleSlider(data) {
     const modeKey = this.#data.activeMode;
-    const key = event.target.dataset.key;
-    this.#data.modes[modeKey][key] = event.target.value;
+    const key = data.target.dataset.key;
+    this.#data.modes[modeKey][key] = data.target.value;
     this.updateStyles();
   }
 
-  $valueC() {
-    return this.#data.modes[this.#data.activeMode].c;
+  _initMode() {
+    this.updateStyles();
   }
 
-  $valueH() {
-    return this.#data.modes[this.#data.activeMode].h;
+  $cValue(el, _) {
+    el.value = this.#data.modes[this.#data.activeMode].c;
   }
 
-  $valueL() {
-    return this.#data.modes[this.#data.activeMode].l;
+  $hValue(el, _) {
+    el.value = this.#data.modes[this.#data.activeMode].h;
+  }
+
+  $lValue(el, _) {
+    el.value = this.#data.modes[this.#data.activeMode].l;
   }
 
   backgroundColorVar() {
@@ -56,10 +60,81 @@ export class Wrapper {
     return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
   }
 
+  init() {
+    this.loadTemplate();
+  }
+
+  loadTemplate() {
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = this.template();
+    this.bridge.append(skeleton.content.cloneNode(true));
+    this.bridge.loadReceivers();
+  }
+
   textColorVar() {
     const modeKey = this.#data.activeMode === "light" ? "dark" : "light";
     let mode = this.#data.modes[modeKey];
     return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
+  }
+
+  template() {
+    return `
+<div>
+  <input
+    type="radio"
+    name="modeToggle"
+    id="mode-light"
+    data-f="handleMode"
+    data-b="sliders"
+    value="light"
+    checked
+  /><label for="mode-light">Light</label>
+  <input
+    type="radio"
+    name="modeToggle"
+    name="mode-selector"
+    id="mode-dark"
+    data-f="handleMode"
+    data-b="sliders"
+    value="dark"
+  /><label for="mode-dark">Dark</label>
+</div>
+<div>
+  <label for="slider-l">Lightness</label>
+  <input
+    type="range"
+    min="0"
+    max="100"
+    step="0.01"
+    id="slider-l"
+    data-f="handleSlider"
+    data-r="lValue"
+    data-key="l"
+  />
+  <label for="slider-c">Chroma</label>
+  <input
+    type="range"
+    min="0"
+    max="0.3"
+    step="0.00001"
+    id="slider-c"
+    data-f="handleSlider"
+    data-r="cValue"
+    data-key="c"
+  />
+  <label for="slider-h">Hue</label>
+  <input
+    type="range"
+    min="0"
+    max="360"
+    step="0.01"
+    id="slider-h"
+    data-f="handleSlider"
+    data-r="hValue"
+    data-key="h"
+  />
+</div>
+    `;
   }
 
   updateStyles() {

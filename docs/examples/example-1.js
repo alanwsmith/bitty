@@ -1,10 +1,13 @@
 export class Wrapper {
-  constructor() {
-    console.log("example1");
-  }
-}
-//console.log("asdf");
+  #batches = {};
 
-export function ping() {
-  console.log("ping");
+  constructor() {}
+
+  get batches() {
+    return this.#batches;
+  }
+
+  $htmlClick() {
+    return "got a click.";
+  }
 }

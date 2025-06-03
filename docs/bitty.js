@@ -29,25 +29,11 @@ class BittyJs extends HTMLElement {
 
   connectedCallback() {
     if (this.dataset.wrapper) {
-      import("./examples/example-1.js").then((mod) => {
+      import(this.dataset.wrapper).then((mod) => {
         this.wrapper = new mod.Wrapper();
-        //mod.ping();
       });
-
-      // const mod = import("./exmaples/example-1.js").then((mod) => {
-      //   return mod;
-      // });
-      //mod.ping();
-
-      //import("./examples/example-1.js");
-      // const mod = import("./examples/example-1.js").then((mod) => {
-      //   mod.ping();
-      // });
-      //ping();
-      //const x = new Wrapper();
-      // this.wrapper = loadWrapper(this.dataset.wrapper);
-      // this.loadReceivers();
-      // this.addEventListeners();
+      this.loadReceivers();
+      this.addEventListeners();
     }
   }
 

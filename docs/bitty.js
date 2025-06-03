@@ -38,7 +38,7 @@ class BittyJs extends HTMLElement {
         this.wrapper = new mod.Wrapper();
         this.wrapper.bridge = this;
         this.loadReceivers();
-        // this.init();
+        this.init();
         this.addEventListeners();
       });
     }
@@ -61,6 +61,15 @@ class BittyJs extends HTMLElement {
     if (event.target.dataset.s !== undefined) {
       this.sendUpdates(event.target.dataset.s, event);
     }
+  }
+
+  init() {
+    if (this.dataset.init !== undefined) {
+      this.sendUpdates(this.dataset.init, null);
+    }
+    // if (this.dataset.listeners !== undefined) {
+    //   this.#listeners = this.dataset.listeners.split("|");
+    // }
   }
 
   loadReceivers() {

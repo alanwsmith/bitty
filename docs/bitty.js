@@ -49,11 +49,13 @@ class BittyJs extends HTMLElement {
     }
     if (event.target.dataset.f !== undefined) {
       event.target.dataset.f.split("|").forEach((f) => {
-        try {
-          this.wrapper[`_${f}`](event);
-        } catch (error) {
-          console.log(error);
-          console.error(`Tried: _${f}`);
+        if (this.isIgnored(f) === false) {
+          try {
+            this.wrapper[`_${f}`](event);
+          } catch (error) {
+            console.log(error);
+            console.error(`Tried: _${f}`);
+          }
         }
       });
     }
@@ -75,9 +77,17 @@ class BittyJs extends HTMLElement {
     // }
   }
 
+  isIgnored(name) {
+    console.log(this.dataset);
+    if (this.dataset.ignore === undefined) {
+      return false;
+    }
+    return this.dataset.ignore.split("|").includes(name);
+  }
+
   loadReceivers() {
     this.#receivers = [];
-    console.log("loading receivers");
+    // console.log("loading receivers");
     const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((key) => {
@@ -94,21 +104,24 @@ class BittyJs extends HTMLElement {
 
   sendUpdates(updates, data) {
     updates.split("|").forEach((key) => {
-      // if (key.startsWith("batch")) {
-      //   this.wrapper.batches[key].forEach((bKey) => {
-      //     this.#receivers.forEach((r) => {
-      //       const strippedKey = bKey.replace(/^\$/, "");
-      //       if (r.key === strippedKey) {
-      //         r.f(data);
-      //       }
-      //     });
-      //   });
-      // } else {
-      this.#receivers.forEach((receiver) => {
-        if (receiver.key === key) {
-          receiver.f(data);
-        }
-      });
+      if (this.isIgnored(key) === false) {
+        // if (key.startsWith("batch")) {
+        //   this.wrapper.batches[key].forEach((bKey) => {
+        //     this.#receivers.forEach((r) => {
+        //       const strippedKey = bKey.replace(/^\$/, "");
+        //       if (r.key === strippedKey) {
+        //         r.f(data);
+        //       }
+        //     });
+        //   });
+        // } else {
+        this.#receivers.forEach((receiver) => {
+          if (receiver.key === key) {
+            receiver.f(data);
+          }
+        });
+      }
+
       // }
     });
   }

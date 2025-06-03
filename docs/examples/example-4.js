@@ -1,15 +1,15 @@
 export class Wrapper {
-  #activeMode;
+  #sliderValue;
 
-  _switch(target) {
-    this.#activeMode = target.dataset.key;
+  _updateValue(target) {
+    this.#sliderValue = target.value;
   }
 
-  $htmlMode() {
-    return this.#activeMode;
+  $valueSlider1() {
+    return this.#sliderValue;
   }
 
-  $valueMode() {
-    return this.#activeMode;
+  $valueSlider2() {
+    return this.#sliderValue;
   }
 }

@@ -48,18 +48,16 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-
-    // if (event.target.dataset.f !== undefined) {
-    //   event.target.dataset.f.split("|").forEach((f) => {
-    //     try {
-    //       this.wrapper[`_${f}`](event);
-    //     } catch (error) {
-    //       console.log(error);
-    //       console.error(`Tried: _${f}`);
-    //     }
-    //   });
-    // }
-
+    if (event.target.dataset.f !== undefined) {
+      event.target.dataset.f.split("|").forEach((f) => {
+        try {
+          this.wrapper[`_${f}`](event);
+        } catch (error) {
+          console.log(error);
+          console.error(`Tried: _${f}`);
+        }
+      });
+    }
     if (event.target.dataset.s !== undefined) {
       this.sendUpdates(event.target.dataset.s, event);
     }
@@ -93,9 +91,9 @@ class BittyJs extends HTMLElement {
       //     });
       //   });
       // } else {
-      this.#receivers.forEach((r) => {
-        if (r.key === key) {
-          r.f(data);
+      this.#receivers.forEach((receiver) => {
+        if (receiver.key === key) {
+          receiver.f(data);
         }
       });
       // }

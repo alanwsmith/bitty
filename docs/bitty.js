@@ -50,18 +50,8 @@ class BittyJs extends HTMLElement {
       return;
     }
     if (event.target.dataset.f !== undefined) {
-      event.target.dataset.f.split("|").forEach((f) => {
-        if (this.isIgnored(f) === false) {
-          try {
-            this.wires[`_${f}`](event);
-          } catch (error) {
-            console.log(error);
-            console.error(`Tried: _${f}`);
-          }
-        }
-      });
+      this.runFunctions(event.target.dataset.f, event);
     }
-    // TODO: Document that batches go first
     if (event.target.dataset.b !== undefined) {
       const batch = this.wires.batches[event.target.dataset.b].join("|");
       this.sendUpdates(batch, event);
@@ -75,6 +65,9 @@ class BittyJs extends HTMLElement {
     this.wires.bridge = this;
     if (this.wires.init !== undefined) {
       this.wires.init();
+    }
+    if (this.dataset.prep !== undefined) {
+      this.runFunctions(this.dataset.prep, null);
     }
     if (this.dataset.init !== undefined) {
       this.sendUpdates(this.dataset.init, null);
@@ -109,6 +102,19 @@ class BittyJs extends HTMLElement {
         this.addReceiver(key, el);
         // }
       });
+    });
+  }
+
+  runFunctions(stringToSplit, event) {
+    stringToSplit.split("|").forEach((f) => {
+      if (this.isIgnored(f) === false) {
+        try {
+          this.wires[`_${f}`](event);
+        } catch (error) {
+          console.log(error);
+          console.error(`Tried: _${f}`);
+        }
+      }
     });
   }
 

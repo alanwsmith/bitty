@@ -8,8 +8,4 @@ export class Wrapper {
   $displayNumber(el, _) {
     el.innerHTML = this.#number;
   }
-
-  $setNumberValue(el, _) {
-    el.value = this.#number;
-  }
 }

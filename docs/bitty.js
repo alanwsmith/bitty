@@ -1,3 +1,4 @@
+// Version 0.1
 class BittyJs extends HTMLElement {
   #receivers = [];
 
@@ -90,7 +91,8 @@ class BittyJs extends HTMLElement {
       if (key.startsWith("batch")) {
         this.wrapper.batches[key].forEach((bKey) => {
           this.#receivers.forEach((r) => {
-            if (r.key === bKey) {
+            const strippedKey = bKey.replace(/^\$/, "");
+            if (r.key === strippedKey) {
               r.f();
             }
           });

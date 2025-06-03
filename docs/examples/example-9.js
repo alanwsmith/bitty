@@ -13,15 +13,14 @@ export class Wrapper {
     "lightsteelblue",
   ];
 
-  _randomBackground(event) {
+  _randomBackgroundColor(event) {
     document.body.style.setProperty(
       "--example-9-background",
       this.randomColor(),
     );
   }
 
-  _randomColor(event) {
-    console.log(this.randomColor());
+  _randomTextColor(event) {
     document.body.style.setProperty("--example-9-text", this.randomColor());
   }
 

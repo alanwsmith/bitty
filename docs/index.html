@@ -302,18 +302,40 @@
         </bitty-js>
       </div>
 
-      <h2>Example 9 - Arbitrary Functions</h2>
+      <h2>Example 9a - Arbitrary Functions</h2>
       <div class="make-two-columns">
         <bitty-js data-wrapper="./examples/example-9.js">
           <div>
-            <button data-f="randomBackground">Background</button>
-            <button data-f="randomColor">Text</button>
+            <button data-f="randomBackgroundColor">Background</button>
+            <button data-f="randomTextColor">Text</button>
           </div>
           <div class="example-9-output">changes these colors</div>
           <style>
             :root {
-              --example-9-background: red;
-              --example-9-text: blue;
+              --example-9-background: black;
+              --example-9-text: #888;
+            }
+            .example-9-output {
+              background-color: var(--example-9-background);
+              color: var(--example-9-text);
+            }
+          </style>
+        </bitty-js>
+      </div>
+
+      <h2>Example 9b - Arbitrary Functions</h2>
+      <div class="make-two-columns">
+        <bitty-js data-wrapper="./examples/example-9.js">
+          <div>
+            <button data-f="randomBackgroundColor|randomTextColor">
+              Background and Text
+            </button>
+          </div>
+          <div class="example-9-output">changes these colors</div>
+          <style>
+            :root {
+              --example-9-background: black;
+              --example-9-text: #888;
             }
             .example-9-output {
               background-color: var(--example-9-background);
@@ -458,8 +480,9 @@
           Customize the event listeners with <code>data-listeners</code> in the
           <code>bitty-js</code> component tag
         </li>
+        <li>TODO: Scope style properties</li>
         <li>TODO: class update</li>
-        <li>TODO: style update for root?</li>
+        <li>TODO: Document updating root styles</li>
         <li>TODO: attrs?</li>
         <li>
           TODO: batchX for receiving multiple signals without having to name

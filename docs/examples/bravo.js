@@ -5,7 +5,7 @@ export class Wrapper {
     this.#counter += 1;
   }
 
-  $displayCount(el, data) {
+  $displayCount(el, _) {
     el.innerHTML = this.#counter;
   }
 }

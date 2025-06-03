@@ -1,8 +1,8 @@
 export class Wrapper {
   #sliderValue;
 
-  _setValue(event) {
-    this.#sliderValue = event.target.value;
+  _setValue(data) {
+    this.#sliderValue = data.target.value;
   }
 
   $sliderValue(el, _) {

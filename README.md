@@ -1,6 +1,6 @@
 # bitty.js
 
-Tiny, reactive JavaScript for building web pages. 
+a tiny, reactive web component 
 
 Details at: [bitty-js.alanwsmith.com](https://bitty-js.alanwsmith.com/)
 

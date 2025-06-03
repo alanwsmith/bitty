@@ -240,7 +240,7 @@ export class Wires {
         <li>
           <h2>Loading Initial State</h2>
           <div class="make-two-columns">
-            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
+            <bitty-js data-wires="./examples/bravo.js" data-send="displayCount">
               <button data-f="increment" data-s="displayCount">Click Me</button>
               <div data-r="displayCount"></div>
             </bitty-js>
@@ -250,7 +250,7 @@ export class Wires {
         <li>
           <h2>Updating Self</h2>
           <div class="make-two-columns">
-            <bitty-js data-wires="./examples/bravo.js" data-init="displayCount">
+            <bitty-js data-wires="./examples/bravo.js" data-send="displayCount">
               <button
                 data-f="increment"
                 data-s="displayCount"
@@ -413,7 +413,7 @@ export class Wires {
           <h2>Initializing Values</h2>
           <div class="make-two-columns">
             <bitty-js
-              data-init="setSliderA|setSliderB"
+              data-send="setSliderA|setSliderB"
               data-wires="./examples/hotel.js"
             >
               <div>
@@ -448,7 +448,7 @@ export class Wires {
           <h2>Create Element</h2>
           <div class="make-two-columns">
             <bitty-js
-              data-init="buttonValue"
+              data-send="buttonValue"
               data-wires="./examples/create-element.js"
             >
               <div>
@@ -473,7 +473,7 @@ export class Wires {
           <h2>Template Loading Via Wires</h2>
           <div class="make-two-columns">
             <bitty-js
-              data-init="showValue"
+              data-send="showValue"
               data-wires="./examples/template-loading.js"
             ></bitty-js>
           </div>
@@ -483,7 +483,7 @@ export class Wires {
           <h2>Nested Components</h2>
           <div class="make-two-columns">
             <bitty-js
-              data-init="showValue"
+              data-send="showValue"
               data-wires="./examples/nested-parent.js"
             ></bitty-js>
           </div>
@@ -505,7 +505,7 @@ export class Wires {
             <bitty-js
               data-wires="./examples/nested-parent-calc.js"
               data-ignore="increment"
-              data-init="showValue"
+              data-send="showValue"
             ></bitty-js>
           </div>
         </li>
@@ -514,7 +514,7 @@ export class Wires {
           <h2>Batch Updates</h2>
           <div class="make-two-columns">
             <bitty-js
-              data-init="setValue"
+              data-send="setValue"
               data-wires="./examples/batch-updates.js"
             >
               <div>
@@ -549,7 +549,7 @@ export class Wires {
           <div class="make-two-columns">
             <bitty-js
               data-batch="checkNumbers"
-              data-init="setValue"
+              data-send="setValue"
               data-wires="./examples/batch-updates.js"
             >
               <div>
@@ -642,7 +642,7 @@ export class Wires {
           </style>
           <div class="make-two-columns">
             <bitty-js
-              data-prep="initMode"
+              data-call="initMode"
               data-batch="sliders"
               data-wires="./examples/color-picker.js"
               class="color-picker"
@@ -735,7 +735,7 @@ export class Wires {
         <li>[] Throttling done by <code>.requestAnimationFrame()</code></li>
         <li>[] Improve error handling and messages</li>
         <li>[] Automatically load templates</li>
-        <li>[x] <code>data-prep</code> to send functions for init</li>
+        <li>[x] <code>data-call</code> to send functions for init</li>
         <li>[x] <code>data-b</code> to send batches</li>
         <li>[x] <code>data-batch</code> for the init version of batch send</li>
         <li>[x] Parents can ignore children signals</li>
@@ -774,12 +774,12 @@ export class Wires {
           content inside the wires
         </li>
         <li>
-          [x] Initialize data with <code>data-init</code> which does a send
+          [x] Initialize data with <code>data-send</code> which does a send
           before the listeners are added
         </li>
         <li>
-          [x]: The <code>data-prep</code> runs functions before doing the send
-          events in <code>data-init</code>
+          [x]: The <code>data-call</code> runs functions before doing the send
+          events in <code>data-send</code>
         </li>
         <li>
           [x] Defaults to listening for <code>click</code> and
@@ -811,7 +811,7 @@ export class Wires {
           functions. Log an error to the console for any that are missing.
         </li>
         <li>
-          The data-init attribute on the main component tag sends those signals
+          The data-send attribute on the main component tag sends those signals
           at the start.
         </li>
         <li>
@@ -865,12 +865,12 @@ export class Wires {
               &quot;call&quot;)
             </li>
             <li>
-              TODO: Rename <code>data-prep</code> attribute on
+              Renamed <code>data-prep</code> attribute on
               <code>bitty-js</code> tag to <code>data-call</code> (i.e.
               &quot;call&quot;)
             </li>
             <li>
-              TODO: Rename <code>data-init</code> attribute on
+              Renamed <code>data-init</code> attribute on
               <code>bitty-js</code> tag to <code>data-send</code> so it matches
               <code>data-s</code> more closely.
             </li>
@@ -895,7 +895,7 @@ export class Wires {
               <code>Wires</code> class is how things are hooked up.).
             </li>
             <li>
-              Added <code>data-prep</code> attribute parsing to
+              Added <code>data-call</code> attribute parsing to
               <code>bitty-js</code> tag. It runs functions like
               <code>data-f</code> but does so prior to adding the event
               listeners to the element.
@@ -941,6 +941,13 @@ export class Wires {
               Created example with parent of child components pulling data from
               the children to do a calculation.
             </li>
+            <li>
+              Created example showing parent ignoring send signals from children
+            </li>
+            <li>
+              Created example showing on components loading a child component
+              via a template that becomes fully reactive
+            </li>
           </ul>
         </li>
 
@@ -984,7 +991,7 @@ export class Wires {
               Decided against using <code>data-f data-s and data-r</code> on the
               <code>bitty.js</code> tags. That would involved a lot of extra
               overhead in parsing to differentiate between the top level element
-              and the content it wraps. Using <code>data-init</code> instead as
+              and the content it wraps. Using <code>data-send</code> instead as
               a replacement for <code>data-f</code>. Others, TBD.
             </li>
             <li>
@@ -1016,7 +1023,7 @@ export class Wires {
               sent (i.e. verified feedback can be avoided).
             </li>
             <li>
-              Created example using <code>data-init</code> to load initial
+              Created example using <code>data-send</code> to load initial
               values.
             </li>
             <li>Created example that sends multiple signals</li>
@@ -1027,6 +1034,7 @@ export class Wires {
               Created example showing how to update global CSS
               variables/properties
             </li>
+            <li>Created example showing custom event listeners</li>
             <li>
               Created example showing how to update CSS variables/properties
               scoped to the content of individual <code>bitty-js</code> tags.

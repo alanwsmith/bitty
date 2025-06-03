@@ -66,11 +66,11 @@ class BittyJs extends HTMLElement {
     if (this.wires.init !== undefined) {
       this.wires.init();
     }
-    if (this.dataset.prep !== undefined) {
-      this.runFunctions(this.dataset.prep, null);
+    if (this.dataset.call !== undefined) {
+      this.runFunctions(this.dataset.call, null);
     }
-    if (this.dataset.init !== undefined) {
-      this.sendUpdates(this.dataset.init, null);
+    if (this.dataset.send !== undefined) {
+      this.sendUpdates(this.dataset.send, null);
     }
     if (this.dataset.batch !== undefined) {
       const batch = this.wires.batches[this.dataset.batch].join("|");

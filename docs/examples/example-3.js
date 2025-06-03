@@ -1,18 +1,11 @@
 export class Wrapper {
-  #state = {
-    "activeMode": "alfa",
-    "values": {
-      "alfa": 20,
-      "bravo": 80,
-    },
-  };
+  #sliderValue;
 
-  _switch(target) {
-    this.#state.activeMode = target.dataset.key;
+  _updateValue(target) {
+    this.#sliderValue = target.value;
   }
 
-  $valueMode() {
-    const activeMode = this.#state.activeMode;
-    return this.#state.values[activeMode];
+  $valueSlider() {
+    return this.#sliderValue;
   }
 }

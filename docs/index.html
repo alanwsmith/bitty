@@ -377,112 +377,82 @@
         </bitty-js>
       </div>
 
-      <!-- xxxxxxxxxxxxxxxxxxxxxxxx -->
+      <h2>Practical Example</h2>
+      <div class="make-two-columns">
+        <style>
+          .color-picker {
+            background-color: var(--color-picker-background);
+            color: var(--color-picker-text);
+          }
+        </style>
 
-      <h2>Example 4 - Multiple Updates</h2>
-      <bitty-js data-wrapper="./examples/example-4.js">
-        <div>
-          Mode:
-          <button
-            data-f="switch"
-            data-s="valueMode|htmlMode"
-            data-key="charlie"
-          >
-            Charlie
-          </button>
-          <button data-f="switch" data-s="valueMode|htmlMode" data-key="delta">
-            Delta
-          </button>
+        <bitty-js
+          data-init="batchSliders"
+          data-wrapper="./examples/color-picker.js"
+          class="color-picker"
+        >
           <div>
-            <input type="text" id="example-4-text" data-r="valueMode" />
-            <label for="example-4-text" data-r="htmlMode">waiting</label>
+            <input
+              type="radio"
+              name="modeToggle"
+              id="mode-light"
+              data-f="handleMode"
+              data-s="batchSliders"
+              value="light"
+              checked
+            /><label for="mode-light">Light</label>
+            <input
+              type="radio"
+              name="modeToggle"
+              name="mode-selector"
+              id="mode-dark"
+              data-f="handleMode"
+              data-s="batchSliders"
+              value="dark"
+            /><label for="mode-dark">Dark</label>
           </div>
-        </div>
-      </bitty-js>
-
-      <h2>Example</h2>
-
-      <div>
-        Latest value change:
-        <strong data-r="batchLatest"></strong>
-      </div>
-
-      <div>Active mode: <strong data-r="htmlMode"></strong></div>
-
-      <div>
-        <div>
-          <input
-            type="radio"
-            name="mode-selector"
-            id="mode-light"
-            data-f="handleModeSwitch"
-            data-s="batchModeChange"
-            value="light"
-            checked
-          /><label for="mode-light">Light</label>
-        </div>
-
-        <div>
-          <input
-            type="radio"
-            name="mode-selector"
-            id="mode-dark"
-            data-f="handleModeSwitch"
-            data-s="batchModeChange"
-            value="dark"
-          /><label for="mode-dark">Dark</label>
-        </div>
-      </div>
-
-      <div>
-        <label for="slider-l">Lightness</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="0.01"
-          id="slider-l"
-          name="slider-l"
-          data-f="handleSlider"
-          data-s="htmlL"
-          data-r="valueL"
-          data-key="l"
-        />
-        <span data-r="htmlL"></span>
-      </div>
-
-      <div>
-        <label for="slider-c">Chroma</label>
-        <input
-          type="range"
-          min="0"
-          max="0.3"
-          step="0.00001"
-          id="slider-c"
-          name="slider-c"
-          data-f="handleSlider"
-          data-s="htmlC"
-          data-r="valueC"
-          data-key="c"
-        />
-        <span data-r="htmlC"></span>
-      </div>
-
-      <div>
-        <label for="slider-h">Hue</label>
-        <input
-          type="range"
-          min="0"
-          max="360"
-          step="0.01"
-          id="slider-h"
-          name="slider-h"
-          data-f="handleSlider"
-          data-s="htmlH"
-          data-r="valueH"
-          data-key="h"
-        />
-        <span data-r="htmlH"></span>
+          <div>
+            <label for="slider-l">Lightness</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="0.01"
+              id="slider-l"
+              name="slider-l"
+              data-f="handleSlider"
+              data-s="htmlL"
+              data-r="valueL"
+              data-key="l"
+            />
+            <label for="slider-c">Chroma</label>
+            <input
+              type="range"
+              min="0"
+              max="0.3"
+              step="0.00001"
+              id="slider-c"
+              name="slider-c"
+              data-f="handleSlider"
+              data-s="htmlC"
+              data-r="valueC"
+              data-key="c"
+            />
+            <label for="slider-h">Hue</label>
+            <input
+              type="range"
+              min="0"
+              max="360"
+              step="0.01"
+              id="slider-h"
+              name="slider-h"
+              data-f="handleSlider"
+              data-s="htmlH"
+              data-r="valueH"
+              data-key="h"
+            />
+          </div>
+        </bitty-js>
       </div>
 
       <h2>Features</h2>
@@ -503,6 +473,10 @@
         <li>
           Initialize data with <code>data-init</code> which does a send before
           the listeners are added
+        </li>
+        <li>
+          TODO: make a <code>data-prep</code> that runs functions before doing
+          the send events in <code>data-init</code>
         </li>
         <li>
           Defaults to listening for <code>click</code> and
@@ -529,6 +503,10 @@
           The data-init attribute on the main component tag sends those signals
           at the start.
         </li>
+        <li>
+          TODO: throw error if the requested wrapper doesn't exist or doesn't
+          load
+        </li>
       </ul>
 
       <h2>Possible Enhancements</h2>
@@ -536,7 +514,11 @@
         <li>Add async handling</li>
         <li>
           Don't send update if data hasn't changed. (Gets into caching. Where
-          dragons lie in wait)
+          dragons lie in wait). (e.g. in the color picker example events are
+          sent for both input and click when changing modes. Ideally only one of
+          those would be processed. Initial thinking is that that's something
+          the wrappers should handle themselves. Trying to roll it into bitty
+          seems like asking for pain.
         </li>
         <li>
           Preflight check that execution, sending, and receiving functions exist

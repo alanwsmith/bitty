@@ -6,6 +6,10 @@ class BittyJs extends HTMLElement {
   #listeners = ["click", "input"];
   #receivers = [];
 
+  pingx() {
+    console.log("pingx");
+  }
+
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {

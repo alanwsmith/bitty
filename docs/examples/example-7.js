@@ -1,5 +1,5 @@
 export class Wrapper {
-  #number = 10;
+  #number = 25;
 
   #batches = {
     "batchCheckNumber": [
@@ -57,5 +57,9 @@ export class Wrapper {
 
   $htmlCheck90() {
     return this.#number > 90;
+  }
+
+  $valueNumber() {
+    return this.#number;
   }
 }

@@ -11,6 +11,9 @@ class BittyJs extends HTMLElement {
       import(this.dataset.wrapper).then((mod) => {
         this.wrapper = new mod.Wrapper();
         this.loadReceivers();
+        // TODO: document that init happens before
+        // listeners to avoid feedback when setting
+        // values
         this.init();
         this.addEventListeners();
       });

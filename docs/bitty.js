@@ -90,17 +90,10 @@ class BittyJs extends HTMLElement {
 
   loadReceivers() {
     this.#receivers = [];
-    // console.log("loading receivers");
     const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
       el.dataset.r.split("|").forEach((key) => {
-        // if (key.startsWith("batch")) {
-        //   this.wires.batches[r].forEach((key) => {
-        //     this.addReceiver(key, el);
-        //   });
-        // } else {
         this.addReceiver(key, el);
-        // }
       });
     });
   }
@@ -121,26 +114,49 @@ class BittyJs extends HTMLElement {
   sendUpdates(updates, data) {
     updates.split("|").forEach((key) => {
       if (this.isIgnored(key) === false) {
-        // if (key.startsWith("batch")) {
-        //   this.wires.batches[key].forEach((bKey) => {
-        //     this.#receivers.forEach((r) => {
-        //       const strippedKey = bKey.replace(/^\$/, "");
-        //       if (r.key === strippedKey) {
-        //         r.f(data);
-        //       }
-        //     });
-        //   });
-        // } else {
         this.#receivers.forEach((receiver) => {
           if (receiver.key === key) {
             receiver.f(data);
           }
         });
       }
-
-      // }
     });
   }
 }
 
 customElements.define("bitty-js", BittyJs);
+
+/* *************************************************
+ *
+ * MIT License
+ * https://bitty-js.alanwsmith.com/
+ *
+ * Copyright (c) 2025 Alan W. Smith
+ *
+ * Permission is hereby granted, free of charge, to
+ * any person obtaining a copy of this software and
+ * associated documentation files (the "Software"),
+ * to deal in the Software without restriction,
+ * including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is
+ * furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission
+ * notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
+ * OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+ * LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * ****************************************************/

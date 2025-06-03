@@ -22,7 +22,7 @@ export class Wrapper {
 
   template() {
     return `
-<div>Total from interal counter<br><span data-r="showValue"></div>
+<div>Total from internal counter<br><span data-r="showValue"></div>
 
 <div>
   <bitty-js

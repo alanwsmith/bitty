@@ -13,7 +13,7 @@ export class Wires {
     ],
   };
 
-  #number = 25;
+  #number = 75;
 
   get batches() {
     return this.#batches;
@@ -57,5 +57,9 @@ export class Wires {
 
   $check90(el, _) {
     el.innerHTML = this.#number > 90;
+  }
+
+  $setValue(el, _) {
+    el.value = this.#number;
   }
 }

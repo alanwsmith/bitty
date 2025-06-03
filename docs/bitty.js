@@ -36,7 +36,6 @@ class BittyJs extends HTMLElement {
     if (this.dataset.wrapper) {
       import(this.dataset.wrapper).then((mod) => {
         this.wrapper = new mod.Wrapper();
-        this.wrapper.bridge = this;
         this.loadReceivers();
         this.init();
         this.addEventListeners();
@@ -64,6 +63,10 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
+    this.wrapper.bridge = this;
+    if (this.wrapper.init !== undefined) {
+      this.wrapper.init();
+    }
     if (this.dataset.init !== undefined) {
       this.sendUpdates(this.dataset.init, null);
     }

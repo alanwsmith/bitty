@@ -25,6 +25,6 @@ export class Wires {
   template() {
     return `
 <div>${this.#name}</div>
-<button data-f="increment" data-s="showValue" data-r="showValue"></button>`;
+<button data-c="increment" data-s="showValue" data-r="showValue"></button>`;
   }
 }

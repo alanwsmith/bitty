@@ -26,7 +26,7 @@ export class Wires {
   This is a template loaded via the Wrapper. 
 It catches the component's init signal and is funnly functional
 </p>
-<button data-f="increment" data-s="showValue" data-r="showValue"></button>
+<button data-c="increment" data-s="showValue" data-r="showValue"></button>
 `;
   }
 }

@@ -49,8 +49,8 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-    if (event.target.dataset.f !== undefined) {
-      this.runFunctions(event.target.dataset.f, event);
+    if (event.target.dataset.c !== undefined) {
+      this.runFunctions(event.target.dataset.c, event);
     }
     if (event.target.dataset.b !== undefined) {
       const batch = this.wires.batches[event.target.dataset.b].join("|");

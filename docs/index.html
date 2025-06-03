@@ -663,6 +663,10 @@ export class Wires {
       </ol>
 
       <h2>Design Goals</h2>
+      <p class="small-font">
+        [NOTE: these are scratch notes. some of this will got to the features
+        list below]
+      </p>
       <ol>
         <li>[x] No build steps required</li>
         <li>[x] Minimal API</li>
@@ -725,39 +729,15 @@ export class Wires {
         <li>Intuitive data passing</li>
       </ol>
 
-      <h2>Out-Of-Scope</h2>
-      <p>
-        These items are not in scope for <code>bitty.js</code>. They are the
-        responsibility of <code>Wires</code> classes:
-      </p>
-      <ul>
-        <li>
-          OUT-OF-SCOPE: Batch receiving (as opposed to batch sending which is
-          included)
-        </li>
-        <li>
-          OUT-OF-SCOPE: Preventing DOM updates if an event sends the same value
-          that's already set for an output
-        </li>
-        <li>OUT-OF-SCOPE: Routing between pages</li>
-        <li>
-          OUT-OF-SCOPE: Advanced throttling beyond request animation frame
-        </li>
-        <li>OUT-OF-SCOPE: Debouncing events</li>
-        <li>OUT-OF-SCOPE: Data storage</li>
-        <li>OUT-OF-SCOPE: JSX</li>
-        <li>OUT-OF-SCOPE: Template Loading</li>
-        <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
-      </ul>
-
       <h2>Features</h2>
       <ul>
-        <li>TODO: Automatically load templates</li>
-        <li>Use: <code>data-prep</code> to send functions for init</li>
-        <li>Use: <code>data-b</code> to send batches</li>
-        <li>Use: <code>data-batch</code> for the init version of batch send</li>
-        <li>TODO: Verify you can query arbitrary instances for their data</li>
-        <li>TODO: Parents can ignore children signals</li>
+        <li>[] Improve error handling and messages</li>
+        <li>[] Automatically load templates</li>
+        <li>[x] <code>data-prep</code> to send functions for init</li>
+        <li>[x] <code>data-b</code> to send batches</li>
+        <li>[x] <code>data-batch</code> for the init version of batch send</li>
+        <li>[] Verify you can query arbitrary instances for their data</li>
+        <li>[x] Parents can ignore children signals</li>
         <li>TODO: Get data from component in wires for loading</li>
         <li>TODO: Global receivers</li>
         <li>TODO: Global senders?</li>
@@ -775,38 +755,45 @@ export class Wires {
           <code>data-*</code> attributes can be sent as well
         </li>
         <li>
-          Core bitty.js functionality comes in the stand alone component.
+          [x] Core bitty.js functionality comes in the stand alone component.
           Specific behavior is defined by making a JavaScript module with a
           <code>Wires</code> class in it.
         </li>
-        <li>Based off a naming convention to wire everything together</li>
-        <li>Multiple instances can be placed on a single page</li>
+        <li>[x] Based off a naming convention to wire everything together</li>
+        <li>[x] Multiple instances can be placed on a single page</li>
         <li>
-          The component uses the light DOM. Page level CSS can be applied to
+          [x] The component uses the light DOM. Page level CSS can be applied to
           content inside the wires
         </li>
-        <li>htmlKey updates for innerHTML</li>
-        <li>valueKey updates for form values</li>
         <li>
-          Initialize data with <code>data-init</code> which does a send before
-          the listeners are added
+          [x] Initialize data with <code>data-init</code> which does a send
+          before the listeners are added
         </li>
         <li>
-          TODO: make a <code>data-prep</code> that runs functions before doing
-          the send events in <code>data-init</code>
+          [x]: The <code>data-prep</code> runs functions before doing the send
+          events in <code>data-init</code>
         </li>
         <li>
-          Defaults to listening for <code>click</code> and
+          [x] Defaults to listening for <code>click</code> and
           <code>input</code> events.
         </li>
         <li>
-          Customize the event listeners with <code>data-listeners</code> in the
-          <code>bitty-js</code> component tag
+          [x] Customize the event listeners with <code>data-listeners</code> in
+          the <code>bitty-js</code> component tag
         </li>
-        <li>Updating root css style props</li>
-        <li>Scope style properties via the bridge</li>
-        <li>TODO: class update</li>
-        <li>TODO: attrs?</li>
+        <li>
+          [x] CSS style variables/properties can be updated at the page/root
+          level
+        </li>
+        <li>
+          [x] CSS style variables/properties can be updated scoped to the
+          individual <code>bitty-js</code> element instance
+        </li>
+        <li>[x] Classes can be updated</li>
+        <li>[x] .innerHTML can be updated</li>
+        <li>[x] .values can be updated</li>
+        <li>[] datasets can be updated</li>
+        <li>[] aria labels can be updated</li>
         <li>
           TODO: batchX for receiving multiple signals without having to name
           them all
@@ -839,6 +826,31 @@ export class Wires {
         <li>
           Preflight check that execution, sending, and receiving functions exist
         </li>
+      </ul>
+
+      <h2>Out-Of-Scope</h2>
+      <p>
+        These items are not in scope for <code>bitty.js</code>. They are the
+        responsibility of <code>Wires</code> classes:
+      </p>
+      <ul>
+        <li>
+          OUT-OF-SCOPE: Batch receiving (as opposed to batch sending which is
+          included)
+        </li>
+        <li>
+          OUT-OF-SCOPE: Preventing DOM updates if an event sends the same value
+          that's already set for an output
+        </li>
+        <li>OUT-OF-SCOPE: Routing between pages</li>
+        <li>
+          OUT-OF-SCOPE: Advanced throttling beyond request animation frame
+        </li>
+        <li>OUT-OF-SCOPE: Debouncing events</li>
+        <li>OUT-OF-SCOPE: Data storage</li>
+        <li>OUT-OF-SCOPE: JSX</li>
+        <li>OUT-OF-SCOPE: Template Loading</li>
+        <li>OUT-OF-SCOPE: Preventing infinite nesting attempts</li>
       </ul>
 
       <h2>Release Notes</h2>

@@ -6,7 +6,10 @@
     <title>bitty.js</title>
     <link rel="shortcut icon" href="/favicons/favicon.ico" />
     <meta property="og:title" content="bitty.js" />
-    <meta property="og:description" content="a tiny, reactive web component" />
+    <meta
+      property="og:description"
+      content="a tiny component for reactive pages"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
     <meta
@@ -36,7 +39,7 @@
       href="/favicons/safari-pinned-tab.svg"
       color="#5bbad5"
     />
-    <meta name="description" content="a tiny, reactive web component" />
+    <meta name="description" content="a tiny component for reactive page" />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
 
@@ -46,7 +49,7 @@
       <hgroup>
         <h1>bitty.js</h1>
         <div class="split-subtitle">
-          <div>a tiny, reactive web component</div>
+          <div>a tiny component for reactive pages</div>
           <div class="small-font">
             made by <a href="https://www.alanwsmith.com/">alan w smith</a>
           </div>
@@ -59,10 +62,7 @@
       </hgroup>
 
       <h2>Overview</h2>
-      <p>
-        bitty.js is a tiny web component. It uses naming conventions to make
-        pages reactive.
-      </p>
+      <p>bitty.js is a tiny web component. It makes reactive pages.</p>
 
       <h2>Status: Beta</h2>
       <p>
@@ -752,6 +752,7 @@ export class Wires {
 
       <h2>Features</h2>
       <ul>
+        <li>TODO: Automatically load templates</li>
         <li>Use: <code>data-prep</code> to send functions for init</li>
         <li>Use: <code>data-b</code> to send batches</li>
         <li>Use: <code>data-batch</code> for the init version of batch send</li>
@@ -837,6 +838,176 @@ export class Wires {
         </li>
         <li>
           Preflight check that execution, sending, and receiving functions exist
+        </li>
+      </ul>
+
+      <h2>Release Notes</h2>
+      <ul>
+        <li>
+          <h3>0.2.1</h3>
+          <p>TBD</p>
+          <ul>
+            <li>
+              TODO: Rename <code>data-f</code> to <code>data-c</code> (i.e.
+              &quot;call&quot;)
+            </li>
+            <li>
+              TODO: Rename <code>data-prep</code> attribute on
+              <code>bitty-js</code> tag to <code>data-call</code> (i.e.
+              &quot;call&quot;)
+            </li>
+            <li>
+              TODO: Rename <code>data-init</code> attribute on
+              <code>bitty-js</code> tag to <code>data-send</code> so it matches
+              <code>data-s</code> more closely.
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <h3>0.2.0</h3>
+          <p>2025-06-03</p>
+          <ul>
+            <li>
+              Rewrite to provide direct access to receiving elements. They are
+              fully accessible in the send/receive functions. (As compared to
+              the 0.1.0 approach which required explicitly defining what would
+              happen via an update (e.g. update <code>.innerHTML</code> or
+              <code>.value</code>).
+            </li>
+            <li>
+              Renamed <code>data-wrapper</code> and the target
+              <code>Wrapper</code> class to <code>data-wires</code> and
+              <code>Wires</code>. (<code>bitty.js</code> is the wrapper. The
+              <code>Wires</code> class is how things are hooked up.).
+            </li>
+            <li>
+              Added <code>data-prep</code> attribute parsing to
+              <code>bitty-js</code> tag. It runs functions like
+              <code>data-f</code> but does so prior to adding the event
+              listeners to the element.
+            </li>
+            <li>
+              Added <code>data-batch</code> attribute processing to
+              <code>bitty-js</code> tags. It operates like
+              <code>data-b</code> but fires before event listeners are added.
+            </li>
+            <li>
+              Added <code>data-ignore</code> attribute to allow components to
+              avoid calls to the named functions.
+            </li>
+            <li>
+              The <code>bitty-js</code> element looks for an
+              <code>.init()</code> method in the <code>Wires</code> class. If it
+              finds one it calls it during the initialization process.
+            </li>
+            <li>
+              Passing both the element and the triggering event to the
+              send/receive functions.
+            </li>
+            <li>
+              Moved to using <code>data-b</code> explicitly to separate block
+              calls from individual function calls.
+            </li>
+            <li>
+              Order of operations is: function calls, batch calls, single send
+              calls
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <h3>0.1.0</h3>
+          <p>2025-06-02</p>
+          <ul>
+            <li>Initial prototype.</li>
+            <li>
+              <code>&ltbitty-js&gt;</code> wraps elements to provide them with
+              reactive capabilities.
+            </li>
+            <li>
+              Basic <code>data-f</code>, <code>data-s</code>, and
+              <code>data-r</code>
+              in place to call functions, send, and receive updates,
+              respectively.
+            </li>
+            <li>
+              Functionality is loaded using <code>data-wrapper</code> to point
+              to a module to load. The module must export a
+              <code>Wrapper</code> class that gets loaded and used to provide
+              functions and send/receive callbacks.
+            </li>
+            <li>
+              Uses string prefixes to make determinations about how to handle
+              data through the send/receive channels (e.g.
+              <code>htmlSOMETHING</code>
+              updates <code>.innerHTML</code> of an element while
+              <code>valueSOMETHING</code> updates the <code>.value</code>).
+            </li>
+            <li>
+              Defined convention for functions. <code>data-f</code> maps to
+              functions in the <code>Wrapper</code> class that start with a
+              <code>_</code> (underscore). The <code>data-s</code> and
+              <code>data-r</code> attributes map to functions in the
+              <code>Wrapper</code> class that start with a
+              <code>$</code> (dollar sign).
+            </li>
+            <li>
+              Decided against using <code>data-f data-s and data-r</code> on the
+              <code>bitty.js</code> tags. That would involved a lot of extra
+              overhead in parsing to differentiate between the top level element
+              and the content it wraps. Using <code>data-init</code> instead as
+              a replacement for <code>data-f</code>. Others, TBD.
+            </li>
+            <li>
+              Set up <code>data-f="batchSOMETHIGN"</code> functionality to send
+              a single single that gets turned into multiple signals in the
+              <code>Wrapper</code>
+            </li>
+            <li>
+              Defined convention of using <code>.batches</code> to look for
+              batches. It must be a hash where the keys match the incoming
+              request and the value is an array of functions to run.
+            </li>
+            <li>
+              Defined <code>.bridge</code> to allow
+              <code>Wrapper</code> functions to access the parent
+              <code>bitty-js</code> element.
+            </li>
+            <li>
+              Scoped event listeners to the <code>bitty-js</code> elements
+            </li>
+            <li>
+              Set up <code>data-listeners</code> attribute on
+              <code>bitty-js</code> tags to override the default listeners
+              (which are <code>input</code> and <code>click</code>)
+            </li>
+            <li>Created example that stores its own state.</li>
+            <li>
+              Created example that updates an element with the same content it
+              sent (i.e. verified feedback can be avoided).
+            </li>
+            <li>
+              Created example using <code>data-init</code> to load initial
+              values.
+            </li>
+            <li>Created example that sends multiple signals</li>
+            <li>
+              Created example with multiple elements receiving the same signal
+            </li>
+            <li>
+              Created example showing how to update global CSS
+              variables/properties
+            </li>
+            <li>
+              Created example showing how to update CSS variables/properties
+              scoped to the content of individual <code>bitty-js</code> tags.
+            </li>
+            <li>
+              Examples use parent page's CSS for styling. It confirms I'm happy
+              with the choice to use the light DOM instead of the shadow DOM.
+            </li>
+          </ul>
         </li>
       </ul>
     </main>

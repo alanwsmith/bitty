@@ -13,7 +13,7 @@ export class Wires {
     return `
 <p>
   This is a template loaded via the Wrapper. 
-It catches the component's init signal and is fully functional
+  It catches the component's init signal and is fully functional
 </p>
 <button data-c="increment" data-s="showValue" data-r="showValue"></button>
 `;

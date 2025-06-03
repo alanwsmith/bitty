@@ -1,5 +1,4 @@
 export class Wires {
-  #name;
   #value = 0;
 
   _increment(_) {

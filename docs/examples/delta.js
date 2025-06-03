@@ -9,7 +9,7 @@ export class Wires {
   };
 
   _setColor(data) {
-    this.#data.activeColor = event.target.dataset.color;
+    this.#data.activeColor = data.target.dataset.color;
   }
 
   $setClass(el, _) {

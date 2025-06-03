@@ -5,11 +5,11 @@ export class Wrapper {
     this.#sliderValue = target.value;
   }
 
-  $valueSlider1() {
+  $valueSlider1(_) {
     return this.#sliderValue;
   }
 
-  $valueSlider2() {
+  $valueSlider2(_) {
     return this.#sliderValue;
   }
 }

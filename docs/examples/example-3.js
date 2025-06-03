@@ -5,7 +5,7 @@ export class Wrapper {
     this.#sliderValue = target.value;
   }
 
-  $valueSlider() {
+  $valueSlider(_) {
     return this.#sliderValue;
   }
 }

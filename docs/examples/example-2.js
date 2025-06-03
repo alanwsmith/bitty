@@ -1,11 +1,11 @@
 export class Wrapper {
   #counter = 0;
 
-  _increment() {
+  _increment(_) {
     this.#counter += 1;
   }
 
-  $htmlCount() {
+  $htmlCount(_) {
     return this.#counter;
   }
 }

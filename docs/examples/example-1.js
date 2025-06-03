@@ -1,5 +1,5 @@
 export class Wrapper {
-  $htmlClick() {
+  $htmlClick(_) {
     return `Clicked at: ${Date.now()}`;
   }
 }

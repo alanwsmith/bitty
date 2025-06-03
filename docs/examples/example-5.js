@@ -5,11 +5,11 @@ export class Wrapper {
     this.#number = target.value;
   }
 
-  $htmlNumber() {
+  $htmlNumber(_) {
     return this.#number;
   }
 
-  $valueNumber() {
+  $valueNumber(_) {
     return this.#number;
   }
 }

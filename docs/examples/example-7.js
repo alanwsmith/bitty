@@ -23,43 +23,43 @@ export class Wrapper {
     this.#number = parseInt(target.value, 10);
   }
 
-  $htmlCheck10() {
+  $htmlCheck10(_) {
     return this.#number > 10;
   }
 
-  $htmlCheck20() {
+  $htmlCheck20(_) {
     return this.#number > 20;
   }
 
-  $htmlCheck30() {
+  $htmlCheck30(_) {
     return this.#number > 30;
   }
 
-  $htmlCheck40() {
+  $htmlCheck40(_) {
     return this.#number > 40;
   }
 
-  $htmlCheck50() {
+  $htmlCheck50(_) {
     return this.#number > 50;
   }
 
-  $htmlCheck60() {
+  $htmlCheck60(_) {
     return this.#number > 60;
   }
 
-  $htmlCheck70() {
+  $htmlCheck70(_) {
     return this.#number > 70;
   }
 
-  $htmlCheck80() {
+  $htmlCheck80(_) {
     return this.#number > 80;
   }
 
-  $htmlCheck90() {
+  $htmlCheck90(_) {
     return this.#number > 90;
   }
 
-  $valueNumber() {
+  $valueNumber(_) {
     return this.#number;
   }
 }

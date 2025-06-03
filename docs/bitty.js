@@ -1,5 +1,6 @@
 // Version 0.1
 class BittyJs extends HTMLElement {
+  #listeners = ["click", "input"];
   #receivers = [];
 
   constructor() {
@@ -23,14 +24,12 @@ class BittyJs extends HTMLElement {
   }
 
   addEventListeners() {
-    this.addEventListener("input", (event) => {
-      this.handleChange(event);
+    this.#listeners.forEach((listener) => {
+      console.log(listener);
+      this.addEventListener(listener, (event) => {
+        this.handleChange(event);
+      });
     });
-    this.addEventListener("click", (event) => {
-      this.handleChange(event);
-    });
-    // TODO: figure out what other
-    // listeners should be here
   }
 
   addFunction(r, el) {
@@ -79,31 +78,34 @@ class BittyJs extends HTMLElement {
       });
     }
     if (event.target.dataset.s !== undefined) {
-      this.sendUpdates(event.target.dataset.s);
+      this.sendUpdates(event.target.dataset.s, event.target);
     }
   }
 
   init() {
     if (this.dataset.init !== undefined) {
-      this.sendUpdates(this.dataset.init);
+      this.sendUpdates(this.dataset.init, this);
+    }
+    if (this.dataset.listeners !== undefined) {
+      this.#listeners = this.dataset.listeners.split("|");
     }
   }
 
-  sendUpdates(updates) {
+  sendUpdates(updates, target) {
     updates.split("|").forEach((key) => {
       if (key.startsWith("batch")) {
         this.wrapper.batches[key].forEach((bKey) => {
           this.#receivers.forEach((r) => {
             const strippedKey = bKey.replace(/^\$/, "");
             if (r.key === strippedKey) {
-              r.f();
+              r.f(target);
             }
           });
         });
       } else {
         this.#receivers.forEach((r) => {
           if (r.key === key) {
-            r.f();
+            r.f(target);
           }
         });
       }

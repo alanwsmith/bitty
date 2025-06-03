@@ -119,7 +119,7 @@
       <div class="make-two-columns">
         <bitty-js data-wrapper="./examples/example-4.js">
           <div>
-            <label for="example-4-input-slider">Slider 4 - 1</label>
+            <label for="example-4-input-slider">Slider 4 Alfa</label>
             <input
               type="range"
               id="example-4-input-slider"
@@ -131,7 +131,7 @@
             />
           </div>
           <div>
-            <label for="example-4-output-slider">Slider 4 - 2</label>
+            <label for="example-4-output-slider">Slider 4 Bravo</label>
             <input
               type="range"
               id="example-4-slider"
@@ -205,7 +205,7 @@
           data-wrapper="./examples/example-6.js"
         >
           <div>
-            <label for="example-6-input-slider">Slider 6 - 1</label>
+            <label for="example-6-input-slider">Slider 6 - Charlie</label>
             <input
               type="range"
               id="example-6-input-slider"
@@ -217,7 +217,7 @@
             />
           </div>
           <div>
-            <label for="example-6-output-slider">Slider 6 - 2</label>
+            <label for="example-6-output-slider">Slider 6 - Delta</label>
             <input
               type="range"
               id="example-6-slider"
@@ -291,6 +291,19 @@
         </bitty-js>
       </div>
 
+      <h2>Example 8 - Set Listeners</h2>
+      <div class="make-two-columns">
+        <bitty-js
+          data-listeners="mouseover|mouseout"
+          data-wrapper="./examples/example-8.js"
+        >
+          <button data-s="htmlGotInput">Mouse Instead of Click</button>
+          <div data-r="htmlGotInput">Waiting...</div>
+        </bitty-js>
+      </div>
+
+      <!-- xxxxxxxxxxxxxxxxxxxxxxxx -->
+
       <h2>Example 4 - Multiple Updates</h2>
       <bitty-js data-wrapper="./examples/example-4.js">
         <div>
@@ -311,8 +324,6 @@
           </div>
         </div>
       </bitty-js>
-
-      <!-- xxxxxxxxxxxxxxxxxxxxxxxx -->
 
       <h2>Example</h2>
 
@@ -412,16 +423,19 @@
           The component uses the light DOM. Page level CSS can be applied to
           content inside the wrapper
         </li>
+        <li>htmlKey updates for innerHTML</li>
+        <li>valueKey updates for form values</li>
+        <li>
+          Initialize data with <code>data-init</code> which does a send before
+          the listeners are added
+        </li>
+        <li>TODO: pass in listeners to check for updates</li>
         <li>TODO: class update</li>
-        <li>TODO: style update</li>
+        <li>TODO: style update for root?</li>
+        <li>TODO: attrs?</li>
         <li>
           TODO: batchX for receiving multiple signals without having to name
           them all
-        </li>
-        <li>TODO: Convention for html, value for updating data</li>
-        <li>TODO: html and value are for direct receiving</li>
-        <li>
-          TODO:Trigger allows for groups TODO: confirm arbitrary functions
         </li>
         <li>
           TODO: Run a pre-flight check for all executing, sending, and receiving
@@ -436,10 +450,14 @@
 
       <h2>Possible Enhancements</h2>
       <ul>
+        <li>Trigger for arbitrary functions? (is this necessary?)</li>
         <li>Add async handling</li>
         <li>
           Don't send update if data hasn't changed. (Gets into caching. Where
           dragons lie in wait)
+        </li>
+        <li>
+          Preflight check that execution, sending, and receiving functions exist
         </li>
       </ul>
     </main>

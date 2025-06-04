@@ -8,7 +8,6 @@ serde = {version = "1.0.219", features = ["derive"] }
 syntect = { version = "5.2.0"}
 ---
 
-
 use anyhow::Result;
 use minijinja::{Environment, Value, context};
 use minijinja::syntax::SyntaxConfig;

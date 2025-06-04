@@ -68,7 +68,7 @@ Use the build-site.rs script to generate it
         for file in get_files(&PathBuf::from("build-input/html-snippets"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
-            let scrubbed = raw.replace("<!-- prettier-ignore -->\n", "");
+            let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
             let highlighted = highlight(&scrubbed, "HTML")?;
             let snippet = Snippet {
                 raw,
@@ -83,7 +83,7 @@ Use the build-site.rs script to generate it
         for file in get_files(&PathBuf::from("docs"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
-            let scrubbed = raw.replace("// deno-fmt-ignore-file\n", "");
+            let scrubbed = raw.trim().replace("// deno-fmt-ignore-file\n", "");
             let highlighted = highlight(&scrubbed, "JavaScript")?;
             let script = Script {
                 raw,

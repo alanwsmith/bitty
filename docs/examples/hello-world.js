@@ -6,6 +6,6 @@ export class Wires {
   }
 
   $showNumber(el, _) {
-    el.innerHTML = `Hello ${this.#number}`;
+    el.innerHTML = this.#number;
   }
 }

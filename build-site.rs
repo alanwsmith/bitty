@@ -30,6 +30,7 @@ struct Payload {
     snippets: BTreeMap<String, Snippet>,
 }
 
+
 #[derive(Debug, Deserialize, Serialize)]
 struct Snippet {
     raw: String,
@@ -41,6 +42,7 @@ struct Script {
     raw: String,
     highlighted: String,
 }
+
 
 
 impl Payload {

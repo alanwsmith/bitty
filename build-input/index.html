@@ -104,39 +104,73 @@
 
         <ul>
           <li><em>bitty.js</em> is a web component. Putting other tags 
-            inside a <code>&lt;bitty-js&gt;&lt;bitty-js&gt;</code> 
+            inside a <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code> 
             wrapper adds reactive functionality to them. 
           </li>
           <li><p>The <code>bitty-js</code> tag requires a
             <code>data-wires</code> attribute. The value
             is a path to a <code>.js</code> file that 
-            exports a class named <code>Wires</code>.
+            exports a class named <code>Wires</code>
+            that's responsible for supplying functionality 
+            for the component. 
           </p>
             <p>(<code>./examples/hello-world.js</code> in this case)</p>
           </li>
           <li>
-            <p>The reactive functionality is provided by three main <code>data-*</code>
-              attributes:</p>
+            <p>Tags can use three primary <code>data-*</code> attributes to enable reactivity 
+              once they're in
+              a <code>bitty-js</code> wrapper:
+            </p>
             <ul>
               <li><code>data-c</code><br>
                 Calls functions to update data
               </li>
               <li>
                 <code>data-s</code><br>
-                Sends a notification with the name of a 
-                function as the payload
+                Sends notifications of changes
               </li>
               <li>
                 <code>data-r</code><br>
-                Registers the element to receive updates
+                Registers an element to receive updates
                 when a corresponding <code>data-s</code>
-                notification happens.
+                notification happens
               </li>
             </ul>
           </li>
+          <li>
+            <p>Clicking the <code>button</code> produces this chain of events</p>
+            <ol>
+              <li>The <code>data-c=&quot;addOne&quot;</code> attribute triggers a synchronous call to 
+                the <code>_addOne</code> function from the <code>Wires</code> class. 
+              </li>
+              <li>
+                The <code>_addOne</code> function adds one to the private <code>#number</code>
+                in the <code>Wires</code> instance.
+              </li>
+              <li>
+                The <code>data-s=&quot;showNumber&quot;</code> value triggers a notification to any elements
+                registered to receive <em>showNumber</em> updates that a change occurred. 
+              </li>
+              <li>
+                Since the <code>span</code> has a <code>data-r</code> attribute with <code>showNumber</code>
+                it gets the update. 
+              </li>
+              <li>
+                The update is done via the corresponding <code>&showNumber</code> function in the <code>Wires</code>
+                instance. The function gets the element as an argument. It can do pretty much anything with it. 
+                In this case, that's updating the <code>.innerHMTL</code> with the value
+                 of the recently updated <code>#number</code>.
+              </li>
 
+            </ol>
+          </li>
         </ul>
 
+        <p>
+          There are other features (e.g. initialing data, batch 
+          updates, using templates, etc...), 
+          but the core functionality comes down to those three attributes.
+        </p>
 
 
       </details>

@@ -65,10 +65,11 @@ Use the build-site.rs script to generate it
     }
 
     pub fn load_html_snippets(&mut self) -> Result<()> {
-        for file in get_files_in_dir(&PathBuf::from("build-input/html-snippets"))?.iter() {
+        for file in get_files(&PathBuf::from("build-input/html-snippets"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
-            let highlighted = highlight(&raw, "HTML")?;
+            let scrubbed = raw.replace("<!-- prettier-ignore -->\n", "");
+            let highlighted = highlight(&scrubbed, "HTML")?;
             let snippet = Snippet {
                 raw,
                 highlighted
@@ -79,10 +80,11 @@ Use the build-site.rs script to generate it
     }
 
     pub fn load_scripts(&mut self) -> Result<()> {
-        for file in get_files_in_dir(&PathBuf::from("docs/examples"))?.iter() {
+        for file in get_files(&PathBuf::from("docs"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
-            let highlighted = highlight(&raw, "JavaScript")?;
+            let scrubbed = raw.replace("// deno-fmt-ignore-file\n", "");
+            let highlighted = highlight(&scrubbed, "JavaScript")?;
             let script = Script {
                 raw,
                 highlighted
@@ -127,8 +129,10 @@ fn get_env() -> Environment<'static> {
     env
 }
 
-pub fn get_files_in_dir(dir: &PathBuf) -> Result<Vec<PathBuf>> {
-    let files = fs::read_dir(dir)?
+pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
+    Ok(
+    fs::read_dir(dir)
+        .unwrap()
         .into_iter()
         .filter(|p| {
             if p.as_ref().unwrap().path().is_file() {
@@ -137,15 +141,19 @@ pub fn get_files_in_dir(dir: &PathBuf) -> Result<Vec<PathBuf>> {
                 false
             }
         })
-        .map(|p| p.as_ref().unwrap().path())
         .filter(|p| {
-            !p.file_name().unwrap().to_str().unwrap().starts_with(".")
+          match p.as_ref().unwrap().path().extension() {
+            Some(ext) => ext == extension,
+            None => false
+          }
         })
-        .collect();
-    Ok(files)
+        .filter_map(|p| match p.as_ref().unwrap().path().strip_prefix(".") {
+            Ok(_) => None,
+            Err(_) => Some(p.as_ref().unwrap().path()),
+        })
+        .collect()
+    )
 }
-
-
 
 
 fn highlight(code: &str, language: &str) -> Result<String> {

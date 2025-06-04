@@ -60,17 +60,6 @@ export class Wires {
     return `oklch(${mode.l}% ${mode.c} ${mode.h})`;
   }
 
-  init() {
-    this.loadTemplate();
-  }
-
-  loadTemplate() {
-    const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.template();
-    this.bridge.append(skeleton.content.cloneNode(true));
-    this.bridge.loadReceivers();
-  }
-
   textColorVar() {
     const modeKey = this.#data.activeMode === "light" ? "dark" : "light";
     let mode = this.#data.modes[modeKey];
@@ -84,7 +73,7 @@ export class Wires {
     type="radio"
     name="modeToggle"
     id="mode-light"
-    data-f="handleMode"
+    data-c="handleMode"
     data-b="sliders"
     value="light"
     checked
@@ -94,7 +83,7 @@ export class Wires {
     name="modeToggle"
     name="mode-selector"
     id="mode-dark"
-    data-f="handleMode"
+    data-c="handleMode"
     data-b="sliders"
     value="dark"
   /><label for="mode-dark">Dark</label>
@@ -107,7 +96,7 @@ export class Wires {
     max="100"
     step="0.01"
     id="slider-l"
-    data-f="handleSlider"
+    data-c="handleSlider"
     data-r="lValue"
     data-key="l"
   />
@@ -118,7 +107,7 @@ export class Wires {
     max="0.3"
     step="0.00001"
     id="slider-c"
-    data-f="handleSlider"
+    data-c="handleSlider"
     data-r="cValue"
     data-key="c"
   />
@@ -129,7 +118,7 @@ export class Wires {
     max="360"
     step="0.01"
     id="slider-h"
-    data-f="handleSlider"
+    data-c="handleSlider"
     data-r="hValue"
     data-key="h"
   />

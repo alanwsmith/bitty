@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.2.0
+// bitty.js  - Version 0.2.1
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
@@ -9,7 +9,8 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
-        this.handleChange(event);
+        this.requestUpdate.call(this, event);
+        //this.handleChange(event);
       });
     });
   }
@@ -36,6 +37,9 @@ class BittyJs extends HTMLElement {
     if (this.dataset.wires) {
       import(this.dataset.wires).then((mod) => {
         this.wires = new mod.Wires();
+        this.requestUpdate = this.handleChange.bind(this);
+        // Reminder: loadReceivers has to be in front of init
+        // because inits can send
         this.loadReceivers();
         this.init();
         this.addEventListeners();
@@ -49,8 +53,8 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-    if (event.target.dataset.f !== undefined) {
-      this.runFunctions(event.target.dataset.f, event);
+    if (event.target.dataset.c !== undefined) {
+      this.runFunctions(event.target.dataset.c, event);
     }
     if (event.target.dataset.b !== undefined) {
       const batch = this.wires.batches[event.target.dataset.b].join("|");
@@ -63,14 +67,20 @@ class BittyJs extends HTMLElement {
 
   init() {
     this.wires.bridge = this;
+    if (this.wires.template !== undefined) {
+      const skeleton = document.createElement("template");
+      skeleton.innerHTML = this.wires.template();
+      this.append(skeleton.content.cloneNode(true));
+      this.loadReceivers();
+    }
     if (this.wires.init !== undefined) {
       this.wires.init();
     }
-    if (this.dataset.prep !== undefined) {
-      this.runFunctions(this.dataset.prep, null);
+    if (this.dataset.call !== undefined) {
+      this.runFunctions(this.dataset.call, null);
     }
-    if (this.dataset.init !== undefined) {
-      this.sendUpdates(this.dataset.init, null);
+    if (this.dataset.send !== undefined) {
+      this.sendUpdates(this.dataset.send, null);
     }
     if (this.dataset.batch !== undefined) {
       const batch = this.wires.batches[this.dataset.batch].join("|");

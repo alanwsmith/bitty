@@ -10,17 +10,6 @@ export class Wires {
     el.innerHTML = count;
   }
 
-  init() {
-    this.loadTemplate();
-  }
-
-  loadTemplate() {
-    const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.template();
-    this.bridge.append(skeleton.content.cloneNode(true));
-    this.bridge.loadReceivers();
-  }
-
   template() {
     return `
 <div>
@@ -30,13 +19,13 @@ export class Wires {
   <div>Counter 1</div>
   <bitty-js
     data-wires="./examples/nested-child-calc.js"
-    data-init="showValue"
+    data-send="showValue"
   ></bitty-js>
 
   <div>Counter 2</div>
   <bitty-js
     data-wires="./examples/nested-child-calc.js"
-    data-init="showValue"
+    data-send="showValue"
   ></bitty-js>
 </div>
 `;

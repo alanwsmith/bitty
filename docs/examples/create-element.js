@@ -10,7 +10,7 @@ export class Wires {
     if (this.#sliderHasBeenAdded === false) {
       const slider = document.createElement("input");
       slider.type = "range";
-      slider.dataset.f = "setValue";
+      slider.dataset.c = "setValue";
       slider.dataset.s = "buttonValue";
       this.bridge.querySelector(".output").append(slider);
       this.#sliderHasBeenAdded = true;

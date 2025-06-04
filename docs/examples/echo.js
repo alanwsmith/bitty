@@ -2,7 +2,7 @@ export class Wires {
   #value;
 
   _setValue(data) {
-    this.#value = event.target.value;
+    this.#value = data.target.value;
   }
 
   $setSliderA(el, _) {

@@ -94,8 +94,7 @@
         <ol>
           <li>
             <p>
-              A <code>bitty-js</code> tag on the page with a <code>button</code> in it that
-              looks like this:
+              A <code>bitty-js</code> tag on the page with a <code>button</code> in it:
             </p>
             <pre class="code-block"><code>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-wires</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./examples/hello-world.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
@@ -111,7 +110,7 @@
           </li>
 
           <li>
-            <p>A <code>hello-world.js</code> file that looks like this:</p>
+            <p>A <code>hello-world.js</code> file:</p>
             <pre class="code-block"><code>
 <span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Wires </span><span style="color:#c0c5ce;">{</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  #</span><span style="color:#bf616a;">number </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;</span></span>
@@ -126,8 +125,47 @@
 <span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
           </code></pre>
           </li>
-
         </ol>
+
+        <h4>How It Works</h4>
+
+        <ul>
+          <li><em>bitty.js</em> is a web component. Putting other tags 
+            inside a <code>&lt;bitty-js&gt;&lt;bitty-js&gt;</code> 
+            wrapper adds reactive functionality to them. 
+          </li>
+          <li><p>The <code>bitty-js</code> tag requires a
+            <code>data-wires</code> attribute. The value
+            is a path to a <code>.js</code> file that 
+            exports a class named <code>Wires</code>.
+          </p>
+            <p>(<code>./examples/hello-world.js</code> in this case)</p>
+          </li>
+          <li>
+            <p>The reactive functionality is provided by three main <code>data-*</code>
+              attributes:</p>
+            <ul>
+              <li><code>data-c</code><br>
+                Calls functions to update data
+              </li>
+              <li>
+                <code>data-s</code><br>
+                Sends a notification with the name of a 
+                function as the payload
+              </li>
+              <li>
+                <code>data-r</code><br>
+                Registers the element to receive updates
+                when a corresponding <code>data-s</code>
+                notification happens.
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+
+
+
       </details>
 
       <details>
@@ -955,13 +993,14 @@ export class Wires {
         </li>
         <li>
           <h3>0.2.1</h3>
-          <p>TBD</p>
+          <p>2025-06-03</p>
           <ul>
             <li>
-              TODO: Made a Hello, World example that shows basic features.
+              Made a Hello, World example that shows basic features.
               (Compared to the single button press from the prior first
               example.)
             </li>
+              <li>Showing Hello, World code as part of the example</li>
             <li>Load templates automatically</li>
             <li>Throttling via <code>.requestAnimationFrame()</code></li>
             <li>

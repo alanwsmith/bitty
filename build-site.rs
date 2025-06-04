@@ -23,40 +23,65 @@ use syntect::parsing::SyntaxSet;
 use syntect::util::LinesWithEndings;
 
 
-
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
-    snippets: BTreeMap<String, Snippet>
+    scripts: BTreeMap<String, Script>,
+    snippets: BTreeMap<String, Snippet>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Snippet {
-    html: String,
+    raw: String,
     highlighted: String,
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Script {
+    raw: String,
+    highlighted: String,
+}
+
 
 impl Payload {
     pub fn new() -> Result<Payload> {
         let mut payload = Payload {
-            snippets: BTreeMap::new()
+            scripts: BTreeMap::new(),
+            snippets: BTreeMap::new(),
+
         };
         payload.load_html_snippets()?;
+        payload.load_scripts()?;
         Ok(payload)
     }
 
     pub fn load_html_snippets(&mut self) -> Result<()> {
         for file in get_files_in_dir(&PathBuf::from("build-input/html-snippets"))?.iter() {
             let name = file.file_name().unwrap().display().to_string();
-            let html = fs::read_to_string(file)?;
-            let highlighted = highlight(&html, "HTML")?;
+            let raw = fs::read_to_string(file)?;
+            let highlighted = highlight(&raw, "HTML")?;
             let snippet = Snippet {
-                html,
+                raw,
                 highlighted
             };
             self.snippets.insert(name.clone(), snippet);
         };
         Ok(())
     }
+
+    pub fn load_scripts(&mut self) -> Result<()> {
+        for file in get_files_in_dir(&PathBuf::from("docs/examples"))?.iter() {
+            let name = file.file_name().unwrap().display().to_string();
+            let raw = fs::read_to_string(file)?;
+            let highlighted = highlight(&raw, "JavaScript")?;
+            let script = Script {
+                raw,
+                highlighted
+            };
+            self.scripts.insert(name.clone(), script);
+        };
+        Ok(())
+    }
+
 }
 
 fn main() -> Result<()> {

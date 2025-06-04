@@ -10,7 +10,6 @@ class BittyJs extends HTMLElement {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
         this.requestUpdate.call(this, event);
-        //this.handleChange(event);
       });
     });
   }

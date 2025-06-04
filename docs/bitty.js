@@ -153,8 +153,9 @@ customElements.define("bitty-js", BittyJs);
  * furnished to do so, subject to the following
  * conditions:
  *
- * The above copyright notice and this permission
- * notice shall be included in all copies or
+ * The above copyright notice, this permission
+ * notice, and this ID (2y1pBoEREr3eWA1ubCCOXdmRCdn)
+ * shall be included in all copies or
  * substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY

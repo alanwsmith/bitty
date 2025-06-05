@@ -23,8 +23,8 @@ use syntect::util::LinesWithEndings;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
-    scripts: BTreeMap<String, Script>,
-    html: BTreeMap<String, Html>,
+    example_scripts: BTreeMap<String, Script>,
+    example_html: BTreeMap<String, Html>,
     reminder: String,
 }
 
@@ -54,8 +54,8 @@ Use the build-site.rs script to generate it
 -->"#.to_string();
 
         let mut payload = Payload {
-            scripts: BTreeMap::new(),
-            html: BTreeMap::new(),
+            example_scripts: BTreeMap::new(),
+            example_html: BTreeMap::new(),
             reminder,
         };
         payload.load_html_snippets()?;
@@ -73,7 +73,7 @@ Use the build-site.rs script to generate it
                 raw,
                 highlighted
             };
-            self.html.insert(name.clone(), html);
+            self.example_html.insert(name.clone(), html);
         };
         Ok(())
     }
@@ -88,7 +88,7 @@ Use the build-site.rs script to generate it
                 raw,
                 highlighted
             };
-            self.scripts.insert(name.clone(), script);
+            self.example_scripts.insert(name.clone(), script);
         };
         Ok(())
     }

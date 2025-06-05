@@ -162,13 +162,15 @@ class BittyJs extends HTMLElement {
         })
       }
     })
-    const text = out.join('\n\n')
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'));
     err.output.push(text)
+  }
 
-    // for (let helpIndex = 0; helpIndex < err.help.length; helpIndex
-    // if (err.help.length > 0) {
-    //   err.output.push('HELP THERSEKLEJRLKSEJRKLJESRLKJESKLR')
-    // }
+  assembleReplacedErrorText(err,content) {
+    return content
+      .replaceAll('__UUID__', this.dataset.uuid)
+      .replaceAll('__ERROR_ID__', err.id)
+      .trim()
   }
 
   error(id = 0, el = null, details = null) {

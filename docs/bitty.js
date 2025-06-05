@@ -35,6 +35,20 @@ Use an ID from the BittyJS #errors variable to classify this error.
 
 It's a bug if there's not an approprite classification. Please open an issue if you find an error without a clear mapping.`,
     },
+    {
+      "id": 1,
+      "kind": "A <bitty-js> tag is missing its 'data-bridge' attribute",
+      "description":
+        `Every <bitty-js></bitty-js> component requires a 'data-bridge' attribute that connects it to a '.js' module file that powers its functionality.
+
+The <bitty-js></bitty-js> element with the attribute:
+
+data-uuid="__UUID__"
+
+is missing its 'data-bridge' attribute.
+`,
+      "help": "",
+    },
   ];
 
   #listeners = ["click", "input"];
@@ -82,7 +96,10 @@ It's a bug if there's not an approprite classification. Please open an issue if 
   connectedCallback() {
     this.setId();
     this.setIds();
-    this.error("this is the error message", 0, this);
+    if (this.dataset.bridge) {
+    } else {
+      this.error(1);
+    }
 
     /*
     if (this.dataset.bridge) {
@@ -102,10 +119,12 @@ It's a bug if there's not an approprite classification. Please open an issue if 
     */
   }
 
-  error(details, id = 0, el = null) {
+  error(id = 0, el = null, details = null) {
     const err = this.#errors.find((err) => {
       return err.id === id;
     });
+    // TODO: throw an error if the error ID doesn't exist or breaks
+    // in some way.
     if (el === null) {
       err.elementKind = "No element was passed to the error function.";
       err.elementId = "No element was passed to the error function.";
@@ -125,16 +144,28 @@ It's a bug if there's not an approprite classification. Please open an issue if 
     } else {
       err.dumpMessage = "A dump of the bitty-js element is below.";
     }
+    if (details === null) {
+      err.details = "No additional details were passed to the error fuction";
+    } else {
+      err.details = details;
+    }
+    err.description = err.description.replaceAll("__UUID__", this.dataset.uuid);
 
     const output = `${this.#hashString}
 
-BITTY ERROR
+BITTY ERROR [ID: ${id}]
 
 ${this.#hashString}
 
-ERROR KIND:
+ERROR:
 
-${err.kind} [${id}]
+${err.kind}
+
+${this.#hashString}
+
+ERROR DESCRIPTION:
+
+${err.description}
 
 ${this.#hashString}
 
@@ -156,15 +187,9 @@ ${err.elementId}
 
 ${this.#hashString}
 
-ERROR DESCRIPTION:
-
-${err.description}
-
-${this.#hashString}
-
 ERROR DETAILS:
 
-${details}
+${err.details}
 
 ${this.#hashString}
 
@@ -294,7 +319,7 @@ ${err.dumpMessage}`;
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
         const uuid = self.crypto.randomUUID();
-        debug(`Setting ID to: ${uuid}`, el);
+        // debug(`Setting ID to: ${uuid}`, el);
         el.dataset.uuid = uuid;
       }
     });

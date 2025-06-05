@@ -33,7 +33,7 @@ NOTE TO THE DEVELOPER:
 
 Use an ID from the BittyJS #errors variable to classify this error. 
 
-It's a bug if there's not an approprite error. Please open an issue if you find an error without a clear classification ID.`,
+It's a bug if there's not an approprite classification. Please open an issue if you find an error without a clear mapping.`,
     }
 ];
 

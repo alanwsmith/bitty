@@ -116,7 +116,7 @@ class BittyJs extends HTMLElement {
     this.setIds()
     if (this.dataset.bridge) {
     } else {
-      this.error(3)
+      this.error(2)
     }
 
     /*
@@ -162,22 +162,29 @@ class BittyJs extends HTMLElement {
         })
       }
     })
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'));
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
     err.output.push(text)
   }
 
-  assembleReplacedErrorText(err,content) {
+  assembleReplacedErrorText(err, content) {
     return content
       .replaceAll('__UUID__', this.dataset.uuid)
       .replaceAll('__ERROR_ID__', err.id)
       .trim()
   }
 
-assembleErrorHeader(err) {
-  const out = [];
-  out.push(this.#hashString);
-  out.push(`BITTY ERROR [ID: ${err.id}]`);
-  err.output.push(out.join("\n\n"));
+  assembleErrorHeader(err) {
+    const out = []
+    out.push(this.#hashString)
+    out.push(`BITTY ERROR [ID: ${err.id}]`)
+    err.output.push(out.join('\n\n'))
+  }
+
+assemlbeErrorKind(err) {
+    const out = []
+    out.push("ERROR:")
+    out.push(this.assembleErrorText(err.kind))
+    err.output.push(out.join('\n\n'))
 }
 
 
@@ -195,10 +202,8 @@ assembleErrorHeader(err) {
     err.details = details
     err.output = []
 
-this.assembleErrorHeader(err);
-
-
-
+    this.assembleErrorHeader(err)
+    this.assemlbeErrorKind(err);
 
     // assemble the help text
     this.assembleErrorHelpText(err)
@@ -268,9 +273,8 @@ ${details}`
 
     const output = `${this.#hashString}
 
-BITTY ERROR [ID: ${id}]
 
-${this.#hashString}
+// TODO: Go down this list:
 
 ERROR:
 

@@ -1,3 +1,5 @@
+// deno-fmt-ignore-file
+
 export class Wires {
   $showValue(el, _) {
     const counters = this.bridge.querySelectorAll("bitty-js");

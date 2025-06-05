@@ -1,4 +1,7 @@
+// deno-fmt-ignore-file
+
 export class Wires {
+
   #batches = {
     "checkNumbers": [
       "check10",
@@ -62,4 +65,5 @@ export class Wires {
   $setValue(el, _) {
     el.value = this.#number;
   }
+
 }

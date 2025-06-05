@@ -1,4 +1,7 @@
+// deno-fmt-ignore-file
+
 export class Wires {
+
   #batches = {
     "sliders": [
       "cValue",
@@ -136,4 +139,5 @@ export class Wires {
       this.textColorVar(),
     );
   }
+
 }

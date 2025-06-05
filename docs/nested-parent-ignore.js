@@ -1,3 +1,5 @@
+// deno-fmt-ignore-file
+
 export class Wires {
   template() {
     return `

@@ -1,4 +1,7 @@
+// deno-fmt-ignore-file
+
 export class Wires {
+
   #sliderHasBeenAdded = false;
   #value = 0;
 
@@ -22,4 +25,5 @@ export class Wires {
   $buttonValue(el, _) {
     el.innerHTML = this.#value;
   }
+
 }

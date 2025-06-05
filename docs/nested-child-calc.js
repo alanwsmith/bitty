@@ -1,3 +1,5 @@
+// deno-fmt-ignore-file
+
 export class Wires {
   #value = 0;
 

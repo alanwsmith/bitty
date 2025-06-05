@@ -1,4 +1,7 @@
+// deno-fmt-ignore-file
+
 export class Wires {
+
   #counter = 0;
 
   _increment(_) {
@@ -8,4 +11,5 @@ export class Wires {
   $displayCount(el, _) {
     el.innerHTML = this.#counter;
   }
+
 }

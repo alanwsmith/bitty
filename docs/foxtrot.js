@@ -1,4 +1,7 @@
+// deno-fmt-ignore-file
+
 export class Wires {
+
   #number;
 
   _setNumber(event) {
@@ -12,4 +15,5 @@ export class Wires {
   $setNumberValue(el, _) {
     el.value = this.#number;
   }
+
 }

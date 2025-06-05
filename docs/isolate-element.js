@@ -1,3 +1,5 @@
+// deno-fmt-ignore-file
+
 export class Wires {
   #colors = [
     "slategray",

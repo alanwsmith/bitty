@@ -87,7 +87,7 @@
       <div
         class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
       >
-        [@ data.misc_html["hello-world-counter.html"].raw @]
+        [# [@ data.misc_html["hello-world-counter.html"].raw @] #]
       </div>
 
       <p>
@@ -330,7 +330,8 @@
       <details>
         <summary>Basic Examples</summary>
 
-        [! for example in data.examples !]
+        [! for example in data.examples !] [! if loop.index0 < 1 !]
+
         <div>
           <h3>[@ example.title @]</h3>
           <div class="make-two-columns">[@ example.raw_html @]</div>
@@ -340,7 +341,7 @@
             </code></pre>
           </div>
         </div>
-        [! endfor !] [@ data.reminder @]
+        [! endif !] [! endfor !] [@ data.reminder @]
       </details>
 
       <details>
@@ -810,6 +811,14 @@ export class Wires {
             [] Send signals from internal functions in the wires? (e.g. a type
             of redirect)
           </li>
+          <li>
+            [] Defined, ID based error messages. Each message contains a
+            description and, ideally help text
+          </li>
+          <li>
+            [] Documentation on adding custom errors (thinking they'll start
+            with 9000 so they can be integers but be safe from collisions)
+          </li>
         </ul>
       </details>
 
@@ -883,6 +892,44 @@ export class Wires {
             <ul>
               <li>
                 REMINDER: Bump version number in bitty.js file and set date here
+              </li>
+              <li>
+                Moved UUID generation for the <code>bitty-js</code> and all
+                <code>data-*</code> reactive elements to the first thing in
+                <code>connectedCallback()</code> to aid in error messaging.
+              </li>
+              <li>
+                Created an <code>#errors</code> private var to store error
+                messages and help by ID.
+              </li>
+              <li>
+                <p>
+                  Added <code>this.error()</code> for outputting errors. It
+                  takes two optional arguments: an ID and an Element. The ID
+                  maps to the IDs in <code>#errors</code>. They're used to add
+                  detail and help message to the error output.
+                </p>
+                <p>
+                  The ID defaults to <code>0</code> which is an unclassified
+                  error type. The message for that ID includes a note to the
+                  developer to use an ID to classify the error. I consider it a
+                  bug if an appropriate ID doesn't exist and request an issue be
+                  open to fix it.
+                </p>
+              </li>
+              <li>
+                <code>this.error()</code> takes two optional arguments: an ID
+                and an Element. The ID is used to map to the errors in
+                <code>#errors</code>
+              </li>
+              <li>
+                Added top level <code>debug</code> function that uses a
+                <code>debug</code> search query param from the
+                <code>window.location</code> to see if it should output
+              </li>
+              <li>
+                The <code>debug</code> function takes an optional element. It
+                dumps it to the console if one comes in
               </li>
               <li>
                 TODO: Moved examples into individual file sets to output code

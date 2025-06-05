@@ -1,8 +1,39 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.2.2
+// bitty.js  - Version 0.2.3
+/////////////////////////////////////////////////////
+
+function debug(payload, el=null) {
+  if (window && window.location && window.location.search){
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("debug")) {
+      if (el !== null) {
+        console.log(el);
+      }
+      console.log(payload);
+    }
+  }
+}
+
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
+  #errors = [
+    {
+      "id": 0,
+      "kind": "Not Classified",
+      "description": "An unclassified error occurred.",
+      "help": `Detailed help isn't available since this error is unclassified. 
+
+Use the line numbers from the error console to locate the source of the error and work from there.
+
+NOTE TO THE DEVELOPER: 
+
+Please use an ID from the BittyJS #errors variable to classify this error. 
+
+I consider it a bug if there's not an approprite error. Please open an issue if you find an error without a clear classification ID.`,
+    }
+];
+
   #listeners = ["click", "input"];
   #receivers = [];
 
@@ -15,6 +46,7 @@ class BittyJs extends HTMLElement {
   }
 
   addIds() {
+    debug("Adding IDs");
     if (this.dataset.uuid === undefined) {
       this.dataset.uuid = self.crypto.randomUUID();
     }
@@ -45,19 +77,107 @@ class BittyJs extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.dataset.wires) {
-      import(this.dataset.wires).then((mod) => {
-        this.wires = new mod.Wires();
-        this.requestUpdate = this.handleChange.bind(this);
+    this.setId();
+    this.setIds();
+    this.error("asdf", 0, this);
+
+/*
+    if (this.dataset.bridge) {
+      import(this.dataset.bridge).then((mod) => {
+        // this.wires = new mod.Wires();
+        // this.requestUpdate = this.handleChange.bind(this);
         // Reminder: loadReceivers has to be in front of init
         // because inits can use data-send
-        this.loadReceivers();
-        this.init();
-        this.addIds();
-        this.addEventListeners();
+        // this.loadReceivers();
+        // this.init();
+        // this.addIds();
+        // this.addEventListeners();
       });
     } else {
       console.error("Missing data-wires attribute");
+    }
+*/
+
+  }
+
+  error(payload, id = 0, el = null, fileName = null) {
+    const hashString = "#######################################";
+    const err = this.#errors.find((err) => { return err.id === id });
+    if (el === null) {
+      err.elementKind = "No element was passed to the error function.";
+      err.elementId =  "No element was passed to the error function.";
+    } else if (el !== null && el.dataset !== undefined && el.dataset.uuid !== undefined) {
+      err.elementKind = el.tagName;
+      err.elementId = el.dataset.uuid;
+    } else {
+      err.elementKind = el.tagName;
+      err.elementId = "An element was passed to the error function but it does not have a 'data-uuid' attribute.";
+    }
+    if (el !== null) {
+      err.dumpMessage = "Dumps of the bitty-js element and the element passed to the error function are below.";  
+    } else {
+      err.dumpMessage = "A dump of the bitty-js element is below.";
+    }
+
+    const output = `${hashString}
+ERROR FROM: 
+
+${err.fileName}
+
+${hashString}
+
+ERROR KIND:
+
+${err.kind} [${id}]
+
+${hashString}
+
+COMPONENT <bitty-js> UUID:
+
+${this.dataset.uuid}
+
+${hashString}
+
+ERROR ELEMENT KIND:
+
+${err.elementKind}
+
+${hashString}
+
+ERROR ELEMENT UUID:
+
+${err.elementId}
+
+${hashString}
+
+DESCRIPTION:
+
+${err.description}
+
+${hashString}
+
+FINDING THE ERROR:
+
+Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method. 
+
+Expand the error message in the console to see the extended error trace and associated line numbers. 
+
+${hashString}
+
+HELP:
+
+${err.help}
+
+${hashString}
+
+ELEMENT OUTPUT:
+
+${err.dumpMessage}`;
+
+    console.error(output);
+    console.error(this);
+    if (el !== null) {
+      console.error(el);
     }
   }
 
@@ -111,6 +231,7 @@ class BittyJs extends HTMLElement {
   }
 
   loadReceivers() {
+    debug("loading receivers");
     this.#receivers = [];
     const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
@@ -144,6 +265,27 @@ class BittyJs extends HTMLElement {
       }
     });
   }
+
+  setId() {
+    const uuid = self.crypto.randomUUID();
+    debug(`Setting bitty-js ID to: ${uuid}`);
+    this.dataset.uuid = uuid;
+  }
+
+  setIds() {
+    const selector = ["r", "c", "s", "call", "send", "b", "batch"]
+      .map((key) => { return `[data-${key}]`; })
+      .join(",");
+    const els = this.querySelectorAll(selector);
+    els.forEach((el) => {
+      if (el.dataset.uuid === undefined) { 
+        const uuid = self.crypto.randomUUID();
+        debug(`Setting ID to: ${uuid}`, el);
+        el.dataset.uuid = uuid;
+      }
+    });
+  }
+
 }
 
 customElements.define("bitty-js", BittyJs);

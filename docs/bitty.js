@@ -22,49 +22,50 @@ class BittyJs extends HTMLElement {
   #errors = [
     {
       id: 0,
-      kind: 'Not Classified',
-      description: 'An unclassified error occurred.',
+      kind: ['Not Classified'],
+      description: ['An unclassified error occurred.'],
       help: [
         [
           `Detailed help isn't available since this error is unclassified.`,
           `Use the line numbers from the error console to locate the source of the error and work from there.`,
         ],
       ],
-      note: [
-        `NOTE TO THE DEVELOPER:`,
+      developerNote: [
         ` Use an ID from the BittyJS #errors variable to classify this error.`,
         `It's a bug if there's not an approprite classification. Please open an issue if you find an error without a clear mapping.`,
       ],
     },
     {
       id: 1,
-      kind: 'Invalid Error ID',
-      description: `An attempt to call an error with an ID of '__ERROR_ID__' was made. That ID does not exist in '#errors'.`,
+      kind: ['Invalid Error ID'],
+      description: [
+        `An attempt to call an error with an ID of '__ERROR_ID__' was made. That ID does not exist in '#errors'.`,
+      ],
       help: [
-        [`Change the ID on that's avaialble in the '#errors' variable.`],
+        [`Change the ID to one that's avaialble in the '#errors' variable.`],
         [
-          `Create a custom error with the ID you're attempting to use. (NOTE: These IDs should be above 9000 by convention.`,
+          `Create a custom error with the ID you're attempting to use.`,
+          `NOTE: Custom error IDs should be above 9000 by convention.`,
         ],
       ],
-      note: [],
+      developerNote: [],
     },
     {
       id: 2,
-      kind: "A <bitty-js> tag is missing its 'data-bridge' attribute",
-      description: `Every <bitty-js></bitty-js> component requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.
-
-The <bitty-js></bitty-js> element with the attribute:
-
-data-uuid="__UUID__"
-
-is missing its 'data-bridge' attribute.
-`,
+      kind: ["A <bitty-js> tag is missing its 'data-bridge' attribute"],
+      description: [
+        `Every <bitty-js></bitty-js> component requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
+        `The <bitty-js></bitty-js> element with the attribute:`,
+        `data-uuid="__UUID__"`,
+        `is missing its 'data-bridge' attribute.`,
+      ],
       help: [
         [
           `Add a 'data-bridge' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
           `<bitty-js data-bridge="./path/to/module.js"></bitty-js>`,
         ],
       ],
+      developerNote: [],
     },
   ]
 
@@ -136,6 +137,10 @@ is missing its 'data-bridge' attribute.
     */
   }
 
+  assembleErrorText(content) {
+    return content.join('\n\n')
+  }
+
   assembleErrorHelpText(err) {
     const out = []
     err.help.forEach((options, index) => {
@@ -143,16 +148,22 @@ is missing its 'data-bridge' attribute.
         if (index === 0) {
           out.push('HELP:')
         }
+        out.push(this.assembleErrorText(options))
       } else {
         if (index === 0) {
           out.push('HELP OPTIONS:')
         }
-        options.forEach((option) => {
-          out.push(option)
+        options.forEach((option, optionIndex) => {
+          if (optionIndex === 0) {
+            out.push(`${index + 1}. ${option}`)
+          } else {
+            out.push(option)
+          }
         })
       }
     })
-    err.output.push(out.join('\n\n'))
+    const text = out.join('\n\n')
+    err.output.push(text)
 
     // for (let helpIndex = 0; helpIndex < err.help.length; helpIndex
     // if (err.help.length > 0) {
@@ -218,10 +229,11 @@ ${details}`
       err.dumpMessage = 'A dump of the bitty-js element is below.'
     }
 
-    err.description = err.description
-      .replaceAll('__UUID__', this.dataset.uuid)
-      .replaceAll('__ERROR_ID__', id)
-      .trim()
+    // err.description = err.description
+    //   .replaceAll('__UUID__', this.dataset.uuid)
+    //   .replaceAll('__ERROR_ID__', id)
+    //   .trim()
+
     // err.help = err.help
     //   .replaceAll('__UUID__', this.dataset.uuid)
     //   .replaceAll('__ERROR_ID__', id)

@@ -18,13 +18,13 @@ export class Wires {
 <div>
   <div>Counter 1</div>
   <bitty-js
-    data-wires="./examples/nested-child-calc.js"
+    data-wires="./nested-child-calc.js"
     data-send="showValue"
   ></bitty-js>
 
   <div>Counter 2</div>
   <bitty-js
-    data-wires="./examples/nested-child-calc.js"
+    data-wires="./nested-child-calc.js"
     data-send="showValue"
   ></bitty-js>
 </div>

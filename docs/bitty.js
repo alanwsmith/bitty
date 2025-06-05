@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.2.1
+// bitty.js  - Version 0.2.2
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
@@ -11,6 +11,18 @@ class BittyJs extends HTMLElement {
       this.addEventListener(listener, (event) => {
         this.requestUpdate.call(this, event);
       });
+    });
+  }
+
+  addIds() {
+    if (this.dataset.uuid === undefined) {
+      this.dataset.uuid = self.crypto.randomUUID();
+    }
+    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
+    els.forEach((el) => {
+      if (el.dataset.uuid === undefined) {
+        el.dataset.uuid = self.crypto.randomUUID();
+      }
     });
   }
 
@@ -38,9 +50,10 @@ class BittyJs extends HTMLElement {
         this.wires = new mod.Wires();
         this.requestUpdate = this.handleChange.bind(this);
         // Reminder: loadReceivers has to be in front of init
-        // because inits can send
+        // because inits can use data-send
         this.loadReceivers();
         this.init();
+        this.addIds();
         this.addEventListeners();
       });
     } else {
@@ -153,8 +166,9 @@ customElements.define("bitty-js", BittyJs);
  * furnished to do so, subject to the following
  * conditions:
  *
- * The above copyright notice and this permission
- * notice shall be included in all copies or
+ * The above copyright notice, this permission
+ * notice, and this ID (2y1pBoEREr3eWA1ubCCOXdmRCdn)
+ * shall be included in all copies or
  * substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY

@@ -101,6 +101,9 @@ class BittyJs extends HTMLElement {
     this.#receivers = [];
     const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
+      if (el.dataset.uuid === undefined) {
+        el.dataset.uuid = self.crypto.randomUUID();
+      }
       el.dataset.r.split("|").forEach((key) => {
         this.addReceiver(key, el);
       });

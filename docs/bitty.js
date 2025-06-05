@@ -17,6 +17,7 @@ function debug(payload, el=null) {
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
+  #hashString = "#######################################";
   #errors = [
     {
       "id": 0,
@@ -26,11 +27,13 @@ class BittyJs extends HTMLElement {
 
 Use the line numbers from the error console to locate the source of the error and work from there.
 
+${this.#hashString}
+
 NOTE TO THE DEVELOPER: 
 
-Please use an ID from the BittyJS #errors variable to classify this error. 
+Use an ID from the BittyJS #errors variable to classify this error. 
 
-I consider it a bug if there's not an approprite error. Please open an issue if you find an error without a clear classification ID.`,
+It's a bug if there's not an approprite error. Please open an issue if you find an error without a clear classification ID.`,
     }
 ];
 
@@ -100,17 +103,17 @@ I consider it a bug if there's not an approprite error. Please open an issue if 
 
   }
 
-  error(payload, id = 0, el = null, fileName = null) {
-    const hashString = "#######################################";
+  error(payload, id = 0, el = null) {
+    
     const err = this.#errors.find((err) => { return err.id === id });
     if (el === null) {
       err.elementKind = "No element was passed to the error function.";
       err.elementId =  "No element was passed to the error function.";
     } else if (el !== null && el.dataset !== undefined && el.dataset.uuid !== undefined) {
-      err.elementKind = el.tagName;
+      err.elementTagName = el.tagName;
       err.elementId = el.dataset.uuid;
     } else {
-      err.elementKind = el.tagName;
+      err.elementTagName = el.tagName;
       err.elementId = "An element was passed to the error function but it does not have a 'data-uuid' attribute.";
     }
     if (el !== null) {
@@ -119,42 +122,41 @@ I consider it a bug if there's not an approprite error. Please open an issue if 
       err.dumpMessage = "A dump of the bitty-js element is below.";
     }
 
-    const output = `${hashString}
-ERROR FROM: 
+    const output = `${this.#hashString}
 
-${err.fileName}
+BITTY ERROR
 
-${hashString}
+${this.#hashString}
 
 ERROR KIND:
 
 ${err.kind} [${id}]
 
-${hashString}
+${this.#hashString}
 
 COMPONENT <bitty-js> UUID:
 
 ${this.dataset.uuid}
 
-${hashString}
+${this.#hashString}
 
-ERROR ELEMENT KIND:
+ERROR ELEMENT TAG NAME:
 
-${err.elementKind}
+${err.elementTagName}
 
-${hashString}
+${this.#hashString}
 
 ERROR ELEMENT UUID:
 
 ${err.elementId}
 
-${hashString}
+${this.#hashString}
 
 DESCRIPTION:
 
 ${err.description}
 
-${hashString}
+${this.#hashString}
 
 FINDING THE ERROR:
 
@@ -162,13 +164,13 @@ Error consoles generally report lines numbers that an error occured on. The firs
 
 Expand the error message in the console to see the extended error trace and associated line numbers. 
 
-${hashString}
+${this.#hashString}
 
 HELP:
 
 ${err.help}
 
-${hashString}
+${this.#hashString}
 
 ELEMENT OUTPUT:
 

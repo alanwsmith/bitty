@@ -24,12 +24,12 @@ use syntect::util::LinesWithEndings;
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
     scripts: BTreeMap<String, Script>,
-    snippets: BTreeMap<String, Snippet>,
+    html: BTreeMap<String, Html>,
     reminder: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Snippet {
+struct Html {
     raw: String,
     highlighted: String,
 }
@@ -39,7 +39,6 @@ struct Script {
     raw: String,
     highlighted: String,
 }
-
 
 
 impl Payload {
@@ -56,7 +55,7 @@ Use the build-site.rs script to generate it
 
         let mut payload = Payload {
             scripts: BTreeMap::new(),
-            snippets: BTreeMap::new(),
+            html: BTreeMap::new(),
             reminder,
         };
         payload.load_html_snippets()?;
@@ -65,16 +64,16 @@ Use the build-site.rs script to generate it
     }
 
     pub fn load_html_snippets(&mut self) -> Result<()> {
-        for file in get_files(&PathBuf::from("build-input/html-snippets"), "html")?.iter() {
+        for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
             let highlighted = highlight(&scrubbed, "HTML")?;
-            let snippet = Snippet {
+            let html = Html {
                 raw,
                 highlighted
             };
-            self.snippets.insert(name.clone(), snippet);
+            self.html.insert(name.clone(), html);
         };
         Ok(())
     }

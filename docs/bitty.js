@@ -173,6 +173,14 @@ class BittyJs extends HTMLElement {
       .trim()
   }
 
+assembleErrorHeader(err) {
+  const out = [];
+  out.push(this.#hashString);
+  out.push(`BITTY ERROR [ID: ${err.id}]`);
+  err.output.push(out.join("\n\n"));
+}
+
+
   error(id = 0, el = null, details = null) {
     // load the error details
     let err = this.#errors.find((err) => {
@@ -186,6 +194,11 @@ class BittyJs extends HTMLElement {
     err.el = el
     err.details = details
     err.output = []
+
+this.assembleErrorHeader(err);
+
+
+
 
     // assemble the help text
     this.assembleErrorHelpText(err)
@@ -295,7 +308,7 @@ ELEMENT OUTPUT:
 
 ${err.dumpMessage}`
 
-    console.error(err.output.join(`\n${this.#hashString}\n`))
+    console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
 
     // console.error(output)
     // console.error(this)

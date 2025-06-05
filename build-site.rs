@@ -21,11 +21,23 @@ use syntect::html::{styled_line_to_highlighted_html, IncludeBackground};
 use syntect::parsing::SyntaxSet;
 use syntect::util::LinesWithEndings;
 
+
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Example {
+    raw_html: String,
+    raw_javascript: String,
+    highlighted_html: String,
+    highlighted_javascript: String,
+}
+
+
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
+    examples: Vec<Example>,
     example_scripts: BTreeMap<String, Script>,
-    example_html: BTreeMap<String, Html>,
-    example_names: Vec<String>,
+    // example_html: BTreeMap<String, Html>,
+    // example_names: Vec<String>,
     misc_html: BTreeMap<String, Html>,
     reminder: String,
 }
@@ -56,37 +68,33 @@ Use the build-site.rs script to generate it
 -->"#.to_string();
 
         let mut payload = Payload {
+            examples: vec![],
             example_scripts: BTreeMap::new(),
-            example_html: BTreeMap::new(),
-            example_names: vec![
-
-
-            ],
             misc_html: BTreeMap::new(),
             reminder,
         };
-        payload.load_example_html()?;
+        // payload.load_example_html()?;
         payload.load_misc_html()?;
         payload.load_example_scripts()?;
         Ok(payload)
     }
 
-    pub fn load_example_html(&mut self) -> Result<()> {
-        for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
-            let name = file.file_name().unwrap().display().to_string();
-            let base_name = file.file_stem().unwrap().display().to_string();
-            self.example_names.push(base_name);
-            let raw = fs::read_to_string(file)?;
-            let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
-            let highlighted = highlight(&scrubbed, "HTML")?;
-            let html = Html {
-                raw,
-                highlighted
-            };
-            self.example_html.insert(name.clone(), html);
-        };
-        Ok(())
-    }
+    // pub fn load_example_html(&mut self) -> Result<()> {
+    //     for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
+    //         let name = file.file_name().unwrap().display().to_string();
+    //         let base_name = file.file_stem().unwrap().display().to_string();
+    //         self.example_names.push(base_name);
+    //         let raw = fs::read_to_string(file)?;
+    //         let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+    //         let highlighted = highlight(&scrubbed, "HTML")?;
+    //         let html = Html {
+    //             raw,
+    //             highlighted
+    //         };
+    //         self.example_html.insert(name.clone(), html);
+    //     };
+    //     Ok(())
+    // }
 
     pub fn load_misc_html(&mut self) -> Result<()> {
         for file in get_files(&PathBuf::from("build-input/misc-html"), "html")?.iter() {

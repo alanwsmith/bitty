@@ -55,9 +55,8 @@ class BittyJs extends HTMLElement {
       kind: ["A <bitty-js> tag is missing its 'data-bridge' attribute"],
       description: [
         `Every <bitty-js></bitty-js> element requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
-        `The <bitty-js></bitty-js> element with the attribute:`,
-        `data-uuid="__UUID__"`,
-        `is missing its 'data-bridge' attribute.`,
+        `The 'data-bridge' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
+        `__UUID__`,
       ],
       help: [
         [
@@ -202,16 +201,24 @@ class BittyJs extends HTMLElement {
     err.output.push(text)
   }
 
+  assembleErrorComponent(err) {
+    const out = []
+    out.push(`COMPONENT UUID`)
+    out.push(
+      `The 'data-uuid' attribute of the <bitty-js></bitty-js> element associated with this error is:`
+    )
+    out.push(this.dataset.uuid)
+    out.push(
+      "NOTE: 'data-uuid' attriubtes are added dynamically. They should be visible in the 'Elements' view in your browser's deverloper console."
+    )
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
   assemlbeErrorDescription(err) {
     const out = []
     out.push('DESCRIPTION')
     out.push(this.assembleErrorText(err.description))
-    out.push(
-      "NOTE: data-uuid attriubtes are added dynamically. They should be visible in the 'Elements' deverloper console view"
-    )
-    out.push(
-      'BITTY_TODO: Make the display of the above data-uuid note dynamic so it only appears if a UUID is mentioned'
-    )
     const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
     err.output.push(text)
   }
@@ -260,30 +267,13 @@ class BittyJs extends HTMLElement {
     this.assembleErrorPrelude(err)
     this.assembleErrorFinding(err)
     this.assembleErrorDumpMessage(err)
+    this.assembleErrorComponent(err)
     this.assembleErrorId(err)
     this.assemlbeErrorDescription(err)
     this.assemlbeErrorAdditionalDetails(err)
-
     this.assembleErrorHelpText(err)
 
-    if (el === null) {
-      err.dumpMessage = ''
-    } else {
-      err.dumpMessage = ''
-      if (el.dataset !== undefined) {
-        if (el.dataset.uuid !== undefined) {
-        }
-      }
-    }
-
     const output = `${this.#hashString}
-
-
-// TODO: Go down this list:
-
-
-
-
 
 COMPONENT <bitty-js> UUID:
 
@@ -301,13 +291,6 @@ ${this.#hashString}
     // ERROR ELEMENT UUID:
 
     // ${err.elementId}
-
-
-FINDING THE ERROR:
-
-
-
-${this.#hashString}
 
 `
 

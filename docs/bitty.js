@@ -2,8 +2,8 @@
 // bitty.js  - Version 0.2.3
 /////////////////////////////////////////////////////
 
-function debug(payload, el=null) {
-  if (window && window.location && window.location.search){
+function debug(payload, el = null) {
+  if (window && window.location && window.location.search) {
     const params = new URLSearchParams(window.location.search);
     if (params.has("debug")) {
       if (el !== null) {
@@ -34,8 +34,8 @@ NOTE TO THE DEVELOPER:
 Use an ID from the BittyJS #errors variable to classify this error. 
 
 It's a bug if there's not an approprite classification. Please open an issue if you find an error without a clear mapping.`,
-    }
-];
+    },
+  ];
 
   #listeners = ["click", "input"];
   #receivers = [];
@@ -82,9 +82,9 @@ It's a bug if there's not an approprite classification. Please open an issue if 
   connectedCallback() {
     this.setId();
     this.setIds();
-    this.error("asdf", 0, this);
+    this.error("this is the error message", 0, this);
 
-/*
+    /*
     if (this.dataset.bridge) {
       import(this.dataset.bridge).then((mod) => {
         // this.wires = new mod.Wires();
@@ -99,25 +99,29 @@ It's a bug if there's not an approprite classification. Please open an issue if 
     } else {
       console.error("Missing data-wires attribute");
     }
-*/
-
+    */
   }
 
-  error(payload, id = 0, el = null) {
-    
-    const err = this.#errors.find((err) => { return err.id === id });
+  error(details, id = 0, el = null) {
+    const err = this.#errors.find((err) => {
+      return err.id === id;
+    });
     if (el === null) {
       err.elementKind = "No element was passed to the error function.";
-      err.elementId =  "No element was passed to the error function.";
-    } else if (el !== null && el.dataset !== undefined && el.dataset.uuid !== undefined) {
+      err.elementId = "No element was passed to the error function.";
+    } else if (
+      el !== null && el.dataset !== undefined && el.dataset.uuid !== undefined
+    ) {
       err.elementTagName = el.tagName;
       err.elementId = el.dataset.uuid;
     } else {
       err.elementTagName = el.tagName;
-      err.elementId = "An element was passed to the error function but it does not have a 'data-uuid' attribute.";
+      err.elementId =
+        "An element was passed to the error function but it does not have a 'data-uuid' attribute.";
     }
     if (el !== null) {
-      err.dumpMessage = "Dumps of the bitty-js element and the element passed to the error function are below.";  
+      err.dumpMessage =
+        "Dumps of the bitty-js element and the element passed to the error function are below.";
     } else {
       err.dumpMessage = "A dump of the bitty-js element is below.";
     }
@@ -152,9 +156,15 @@ ${err.elementId}
 
 ${this.#hashString}
 
-DESCRIPTION:
+ERROR DESCRIPTION:
 
 ${err.description}
+
+${this.#hashString}
+
+ERROR DETAILS:
+
+${details}
 
 ${this.#hashString}
 
@@ -276,18 +286,19 @@ ${err.dumpMessage}`;
 
   setIds() {
     const selector = ["r", "c", "s", "call", "send", "b", "batch"]
-      .map((key) => { return `[data-${key}]`; })
+      .map((key) => {
+        return `[data-${key}]`;
+      })
       .join(",");
     const els = this.querySelectorAll(selector);
     els.forEach((el) => {
-      if (el.dataset.uuid === undefined) { 
+      if (el.dataset.uuid === undefined) {
         const uuid = self.crypto.randomUUID();
         debug(`Setting ID to: ${uuid}`, el);
         el.dataset.uuid = uuid;
       }
     });
   }
-
 }
 
 customElements.define("bitty-js", BittyJs);

@@ -25,6 +25,7 @@ use syntect::util::LinesWithEndings;
 struct Payload {
     example_scripts: BTreeMap<String, Script>,
     example_html: BTreeMap<String, Html>,
+    misc_html: BTreeMap<String, Html>,
     reminder: String,
 }
 
@@ -56,14 +57,16 @@ Use the build-site.rs script to generate it
         let mut payload = Payload {
             example_scripts: BTreeMap::new(),
             example_html: BTreeMap::new(),
+            misc_html: BTreeMap::new(),
             reminder,
         };
-        payload.load_html_snippets()?;
-        payload.load_scripts()?;
+        payload.load_example_html()?;
+        payload.load_misc_html()?;
+        payload.load_example_scripts()?;
         Ok(payload)
     }
 
-    pub fn load_html_snippets(&mut self) -> Result<()> {
+    pub fn load_example_html(&mut self) -> Result<()> {
         for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
@@ -78,7 +81,22 @@ Use the build-site.rs script to generate it
         Ok(())
     }
 
-    pub fn load_scripts(&mut self) -> Result<()> {
+    pub fn load_misc_html(&mut self) -> Result<()> {
+        for file in get_files(&PathBuf::from("build-input/misc-html"), "html")?.iter() {
+            let name = file.file_name().unwrap().display().to_string();
+            let raw = fs::read_to_string(file)?;
+            let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+            let highlighted = highlight(&scrubbed, "HTML")?;
+            let html = Html {
+                raw,
+                highlighted
+            };
+            self.misc_html.insert(name.clone(), html);
+        };
+        Ok(())
+    }
+
+    pub fn load_example_scripts(&mut self) -> Result<()> {
         for file in get_files(&PathBuf::from("docs"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
@@ -153,7 +171,6 @@ pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
         .collect()
     )
 }
-
 
 fn highlight(code: &str, language: &str) -> Result<String> {
     let mut the_lines = vec![];

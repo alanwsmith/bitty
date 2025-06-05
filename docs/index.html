@@ -311,6 +311,7 @@ Use the build-site.rs script to generate it
               in our example).
             </p>
           </li>
+          <li>[TKTKTK: describe how the callback function is defined]</li>
           <li>
             <code>bitty-js</code> elements attach generic event listeners to
             themselves after creating the element lists. Events from our example
@@ -318,13 +319,12 @@ Use the build-site.rs script to generate it
           </li>
         </ul>
 
-        <h4>Clicking the <code>button</code> Tag</h4>
+        <h4>Clicking the <code>button</code></h4>
 
         <p>
           Four things happen when you click the button in our example. They
           occur in this order:
         </p>
-
         <ol>
           <li>
             The button fires a <em>click</em> event that gets picked up by the
@@ -337,51 +337,52 @@ Use the build-site.rs script to generate it
               <code>data-c</code> attribute. When it finds it, it uses the
               attribute's value (<code>addOne</code>) to call the
               <code>_addOne</code> function from the <code>Wires</code> class
-              export. (We'll look at that function's code a momentarily.)
+              export. We'll look at that function's code a momentarily.
             </p>
             <p>
-              The <code>_</code> (underscore) is prepended to the function name
-              automatically. It's part of the overall naming convention that's
-              details in the <em>Naming Convention</em> section below.
+              (NOTE: The <code>_</code> (underscore) is prepended to the
+              function name automatically. It's part of the overall naming
+              convention that's details in the
+              <em>Naming Convention</em> section below.)
             </p>
           </li>
-        </ol>
-        <ul>
+
           <li>
             <p>
-              Clicking the <code>button</code> produces this chain of events
+              After the <code>_addOne</code> function runs, the
+              <code>bitty-js</code> element looks back at the button element to
+              see if it has a <code>data-s</code> attribute.
             </p>
-            <ol>
-              <li>
-                The <code>data-c=&quot;addOne&quot;</code> attribute triggers a
-                synchronous call to the <code>_addOne</code> function from the
-                <code>Wires</code> class.
-              </li>
-              <li>
-                The <code>_addOne</code> function adds one to the private
-                <code>#number</code> in the <code>Wires</code> instance.
-              </li>
-              <li>
-                The <code>data-s=&quot;showNumber&quot;</code> value triggers a
-                notification to any elements registered to receive
-                <em>showNumber</em> updates that a change occurred.
-              </li>
-              <li>
-                Since the <code>span</code> has a <code>data-r</code> attribute
-                with <code>showNumber</code>
-                it gets the update.
-              </li>
-              <li>
-                The update is done via the corresponding
-                <code>&showNumber</code> function in the
-                <code>Wires</code> instance. The function gets the element as an
-                argument. It can do pretty much anything with it. In this case,
-                that's updating the <code>.innerHMTL</code> with the value of
-                the recently updated <code>#number</code>.
-              </li>
-            </ol>
+            <p>
+              When it finds it, it uses its value (<code>showNumber</code>) to
+              run through all the elements in the list with that name that was
+              assembled earlier with all the elements that have a
+              <code>data-r="showNumber"</code> attribute.
+            </p>
+            <p>
+              [TKTKTK: rephrase this and the earlier note to describe the list
+              as a list of receivers].
+            </p>
+            <p>
+              Each element in the list is run through the
+              <code>$showNumber</code> function from the
+              <code>Wires</code> export. As with the <code>_</code> on
+              <code>_addOne</code>, the <code>$</code> is prepended to call the
+              <code>$showNumber</code> function automatically as part of the
+              naming convention.
+            </p>
           </li>
-        </ul>
+          <li>
+            Since our button has a <code>data-r</code> attribute with the
+            <code>showNumber</code> value it goes through the function which
+            call runs an <code>.innerHTML</code> update on it to change the
+            value.
+          </li>
+        </ol>
+
+        <p>
+          With those steps completed, the button ends up with the new number
+        </p>
 
         <p>
           There are other features (e.g. initialing data, batch updates, using

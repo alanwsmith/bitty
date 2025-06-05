@@ -206,8 +206,23 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  assembleErrorDumpMessage(err) {
+    const out = []
+    if (err.el !== null) {
+      out.push('ELEMENT OUTPUTS')
+      out.push(
+        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are below.'
+      )
+    } else {
+      out.push('ELEMENT OUTPUT')
+      out.push('A dump of the <bitty-js></bitty-js> element is below.')
+    }
+
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
   error(id = 0, el = null, additionalDetails = null) {
-    // load the error details
     let err = this.#errors.find((err) => {
       return err.id === id
     })
@@ -225,39 +240,17 @@ class BittyJs extends HTMLElement {
     this.assemlbeErrorAdditionalDetails(err)
 
     this.assembleErrorHelpText(err)
-
+    this.assembleErrorDumpMessage(err)
 
     if (el === null) {
-      err.elementDetails = ''
-      err.dumpMessage = 'A dump of the <bitty-js></bitty-js> element is below.'
+      err.dumpMessage = ''
     } else {
-      err.dumpMessage =
-        'Dumps of the bitty-js element and the element passed to the error function are below.'
+      err.dumpMessage = ''
       if (el.dataset !== undefined) {
         if (el.dataset.uuid !== undefined) {
         }
       }
     }
-
-    // err.elementDetails = ''
-    //     } else if (el.dataset.uuid !== undefined) {
-    //       // Deprecte: elementTagName and elementId
-    //       err.elementTagName = el.tagName
-    //       err.elementId = el.dataset.uuid
-    //     } else {
-    //       // Deprecte: elementTagName and elementId
-    //       err.elementTagName = el.tagName
-    //       err.elementId =
-    //         "An element was passed to the error function but it does not have a 'data-uuid' attribute."
-    //     }
-
-    if (el !== null) {
-    } else {
-      err.dumpMessage = 'A dump of the bitty-js element is below.'
-    }
-
-
-
 
     const output = `${this.#hashString}
 

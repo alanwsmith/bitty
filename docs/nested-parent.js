@@ -14,12 +14,12 @@ export class Wires {
 <div>Total from internal counter<br><span data-r="showValue"></div>
 <div>
   <bitty-js
-    data-wires="./examples/nested-child.js"
+    data-wires="./nested-child.js"
     data-send="showValue"
     data-name="Counter 1"
   ></bitty-js>
   <bitty-js
-    data-wires="./examples/nested-child.js"
+    data-wires="./nested-child.js"
     data-send="showValue"
     data-name="Counter 2"
   ></bitty-js>

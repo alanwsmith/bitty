@@ -54,7 +54,7 @@ class BittyJs extends HTMLElement {
       id: 2,
       kind: ["A <bitty-js> tag is missing its 'data-bridge' attribute"],
       description: [
-        `Every <bitty-js></bitty-js> component requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
+        `Every <bitty-js></bitty-js> element requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
         `The <bitty-js></bitty-js> element with the attribute:`,
         `data-uuid="__UUID__"`,
         `is missing its 'data-bridge' attribute.`,
@@ -146,12 +146,12 @@ class BittyJs extends HTMLElement {
     err.help.forEach((options, index) => {
       if (err.help.length === 1) {
         if (index === 0) {
-          out.push('HELP:')
+          out.push('RECOMMENDATION')
         }
         out.push(this.assembleErrorText(options))
       } else {
         if (index === 0) {
-          out.push('HELP OPTIONS:')
+          out.push('RECOMMENDATION OPTIONS')
         }
         options.forEach((option, optionIndex) => {
           if (optionIndex === 0) {
@@ -177,18 +177,36 @@ class BittyJs extends HTMLElement {
     const out = []
     out.push(this.#hashString)
     out.push(`BITTY ERROR [ID: ${err.id}]`)
-    err.output.push(out.join('\n\n'))
+    out.push(this.assembleErrorText(err.kind))
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
   }
 
-assemlbeErrorKind(err) {
+  assemlbeErrorDescription(err) {
     const out = []
-    out.push("ERROR:")
-    out.push(this.assembleErrorText(err.kind))
-    err.output.push(out.join('\n\n'))
-}
+    out.push('DESCRIPTION')
+    out.push(this.assembleErrorText(err.description))
+    out.push(
+      "NOTE: data-uuid attriubtes are added dynamically. They should be visible in the 'Elements' deverloper console view"
+    )
+    out.push(
+      'BITTY_TODO: Make the display of the above data-uuid note dynamic so it only appears if a UUID is mentioned'
+    )
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
 
+  assemlbeErrorAdditionalDetails(err) {
+    if (err.additionalDetails !== null) {
+      const out = []
+      out.push('ADDITIONAL DETAILS')
+      out.push(err.additionalDetails)
+      const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
 
-  error(id = 0, el = null, details = null) {
+  error(id = 0, el = null, additionalDetails = null) {
     // load the error details
     let err = this.#errors.find((err) => {
       return err.id === id
@@ -199,26 +217,15 @@ assemlbeErrorKind(err) {
       })
     }
     err.el = el
-    err.details = details
+    err.additionalDetails = additionalDetails
     err.output = []
 
     this.assembleErrorHeader(err)
-    this.assemlbeErrorKind(err);
+    this.assemlbeErrorDescription(err)
+    this.assemlbeErrorAdditionalDetails(err)
 
-    // assemble the help text
     this.assembleErrorHelpText(err)
 
-    if (details === null) {
-      err.details = ''
-    } else {
-      err.details = `
-
-${this.#hashString}
-
-ERROR DETAILS:
-
-${details}`
-    }
 
     if (el === null) {
       err.elementDetails = ''
@@ -249,17 +256,24 @@ ${details}`
       err.dumpMessage = 'A dump of the bitty-js element is below.'
     }
 
-    // err.description = err.description
-    //   .replaceAll('__UUID__', this.dataset.uuid)
-    //   .replaceAll('__ERROR_ID__', id)
-    //   .trim()
 
-    // err.help = err.help
-    //   .replaceAll('__UUID__', this.dataset.uuid)
-    //   .replaceAll('__ERROR_ID__', id)
-    //   .trim()
 
-    // ${this.#hashString}
+
+    const output = `${this.#hashString}
+
+
+// TODO: Go down this list:
+
+
+
+
+
+COMPONENT <bitty-js> UUID:
+
+${this.dataset.uuid}
+${err.elementDetails}
+${this.#hashString}
+
 
     // ERROR ELEMENT TAG NAME:
 
@@ -271,34 +285,6 @@ ${details}`
 
     // ${err.elementId}
 
-    const output = `${this.#hashString}
-
-
-// TODO: Go down this list:
-
-ERROR:
-
-${err.kind}
-
-${this.#hashString}
-
-ERROR DESCRIPTION:
-
-${err.description}
-${err.details}
-${this.#hashString}
-
-HELP:
-
-${err.help}
-
-${this.#hashString}
-
-COMPONENT <bitty-js> UUID:
-
-${this.dataset.uuid}
-${err.elementDetails}
-${this.#hashString}
 
 FINDING THE ERROR:
 

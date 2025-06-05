@@ -54,7 +54,9 @@ class BittyJs extends HTMLElement {
     },
     {
       id: 2,
-      kind: ["A <bitty-js> tag is missing its 'data-bridge' attribute"],
+      kind: [
+        "A <bitty-js></bitty-js> element is missing its 'data-bridge' attribute",
+      ],
       description: [
         `Every <bitty-js></bitty-js> element requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
         `The 'data-bridge' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
@@ -68,7 +70,28 @@ class BittyJs extends HTMLElement {
       ],
       developerNote: [],
     },
+    {
+      id: 3,
+      kind: [`Could not load widget`],
+      description: [`The widget could not be loaded from the .js module file.`],
+      help: [
+        [
+          `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
+        ],
+        ['Make sure the class in your .js module file is being exported'],
+      ],
+      developerNote: [],
+    },
   ]
+
+  // sample to copy paste for new error message
+  // {
+  //   id: 2,
+  //   kind: [],
+  //   description: [],
+  //   help: [[`Help option`]],
+  //   developerNote: [],
+  // },
 
   addEventListeners() {
     this.#listeners.forEach((listener) => {
@@ -96,7 +119,7 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.wires[`$${key}`](el, data)
+          this.widget[`$${key}`](el, data)
         } catch (error) {
           console.error(error)
           console.error(`Tried: $${key}`)
@@ -148,7 +171,7 @@ class BittyJs extends HTMLElement {
     )
     out.push(this.dataset.uuid)
     out.push(
-      "NOTE: 'data-uuid' attriubtes are added dynamically. They should be visible in the 'Elements' view in your browser's deverloper console."
+      "NOTE: 'data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console."
     )
     const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
     err.output.push(text)
@@ -196,7 +219,7 @@ class BittyJs extends HTMLElement {
     const out = []
     out.push(`FINDING THE ERROR`)
     out.push(
-      `Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method.`
+      `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
     )
     out.push(
       `Expand the error message in the console to see the extended error trace and associated line numbers.`
@@ -216,7 +239,7 @@ class BittyJs extends HTMLElement {
   assembleErrorPrelude(err) {
     const out = []
     out.push(this.#hashString)
-    out.push(`A BITTY ERROR OCCURED`)
+    out.push(`A BITTY ERROR OCCURRED`)
     const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
     err.output.push(text)
   }
@@ -240,26 +263,27 @@ class BittyJs extends HTMLElement {
     this.setId()
     this.setIds()
     if (this.dataset.bridge) {
-    } else {
-      this.error(2, this)
-    }
-
-    /*
-    if (this.dataset.bridge) {
       import(this.dataset.bridge).then((mod) => {
-        // this.wires = new mod.Wires();
-        // this.requestUpdate = this.handleChange.bind(this);
-        // Reminder: loadReceivers has to be in front of init
-        // because inits can use data-send
-        // this.loadReceivers();
-        // this.init();
-        // this.addIds();
-        // this.addEventListeners();
-      });
+        try {
+          if (this.dataset.widget === undefined) {
+          this.widget = new mod.Widget()
+          } else {
+          this.widget = new mod[this.dataset.widget]()
+          }
+          this.requestUpdate = this.handleChange.bind(this)
+          // Reminder: loadReceivers has to be in front of init
+          // because inits can use data-send
+          this.loadReceivers()
+          this.init()
+          this.addIds()
+          this.addEventListeners()
+        } catch {
+          this.error(3)
+        }
+      })
     } else {
-      console.error("Missing data-wires attribute");
+      this.error(2)
     }
-    */
   }
 
   error(id = 0, el = null, additionalDetails = null) {
@@ -275,14 +299,16 @@ class BittyJs extends HTMLElement {
     err.additionalDetails = additionalDetails
     err.output = []
     this.assembleErrorPrelude(err)
+    this.assembleErrorId(err)
     this.assembleErrorFinding(err)
     this.assembleErrorDumpMessage(err)
-    this.assembleErrorId(err)
     this.assembleErrorComponent(err)
     this.assembleErrorElementDetails(err)
     this.assemlbeErrorDescription(err)
     this.assemlbeErrorAdditionalDetails(err)
     this.assembleErrorHelpText(err)
+    // TODO: Add developerNote
+    // TODO: Pull the source error message if there is on
     console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
     console.error(this)
     if (el !== null) {
@@ -298,7 +324,7 @@ class BittyJs extends HTMLElement {
       this.runFunctions(event.target.dataset.c, event)
     }
     if (event.target.dataset.b !== undefined) {
-      const batch = this.wires.batches[event.target.dataset.b].join('|')
+      const batch = this.widget.batches[event.target.dataset.b].join('|')
       this.sendUpdates(batch, event)
     }
     if (event.target.dataset.s !== undefined) {
@@ -307,15 +333,15 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
-    this.wires.bridge = this
-    if (this.wires.template !== undefined) {
+    this.widget.bridge = this
+    if (this.widget.template !== undefined) {
       const skeleton = document.createElement('template')
-      skeleton.innerHTML = this.wires.template()
+      skeleton.innerHTML = this.widget.template()
       this.append(skeleton.content.cloneNode(true))
       this.loadReceivers()
     }
-    if (this.wires.init !== undefined) {
-      this.wires.init()
+    if (this.widget.init !== undefined) {
+      this.widget.init()
     }
     if (this.dataset.call !== undefined) {
       this.runFunctions(this.dataset.call, null)
@@ -324,7 +350,7 @@ class BittyJs extends HTMLElement {
       this.sendUpdates(this.dataset.send, null)
     }
     if (this.dataset.batch !== undefined) {
-      const batch = this.wires.batches[this.dataset.batch].join('|')
+      const batch = this.widget.batches[this.dataset.batch].join('|')
       this.sendUpdates(batch, null)
     }
     if (this.dataset.listeners !== undefined) {
@@ -354,7 +380,7 @@ class BittyJs extends HTMLElement {
     stringToSplit.split('|').forEach((f) => {
       if (this.isIgnored(f) === false) {
         try {
-          this.wires[`_${f}`](event)
+          this.widget[`_${f}`](event)
         } catch (error) {
           console.log(error)
           console.error(`Tried: _${f}`)

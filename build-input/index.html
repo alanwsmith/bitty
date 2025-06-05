@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 [@ data.reminder @]
 
@@ -329,8 +329,7 @@
 
       <details>
         <summary>Basic Examples</summary>
-
-        [! for example in data.examples !] [! if loop.index0 < 1 !]
+        [# [! for example in data.examples !] [! if loop.index0 < 1 !]
 
         <div>
           <h3>[@ example.title @]</h3>
@@ -341,7 +340,7 @@
             </code></pre>
           </div>
         </div>
-        [! endif !] [! endfor !] [@ data.reminder @]
+        [! endif !] [! endfor !] [@ data.reminder @] #]
       </details>
 
       <details>
@@ -370,6 +369,7 @@
 
       <details>
         <summary>Color Picker Example</summary>
+        [#
         <style>
           .color-picker {
             background-color: var(--color-picker-background);
@@ -377,11 +377,9 @@
           }
         </style>
         <div class="make-two-columns">
-
-
-        [@ data.misc_html["color-picker.html"].raw @]
-
+          [@ data.misc_html["color-picker.html"].raw @]
         </div>
+        #]
       </details>
 
       <details>
@@ -648,7 +646,6 @@ export class Wires {
           populate as progress continues]
         </p>
       </details>
-
 
       <details>
         <summary>Default and Custom Errors</summary>
@@ -955,6 +952,20 @@ export class Wires {
               <li>
                 TODO: Moved examples into individual file sets to output code
                 samples along with the examples themselves.
+              </li>
+              <li>
+                Renamed <code>data-wires</code> to <code>data-bridge</code>.
+                Fits better and maps nicer to the <code>.bridge</code> coming
+                back in from the support class.
+              </li>
+              <li>
+                Added a <code>data-widget</code> attribute to the
+                <code>bitty-js</code> elements to allow using multiple classes
+                from inside a single supporting .js module file
+              </li>
+              <li>
+                Defaults to calling <code>new Widget()</code> automatically if a
+                <code>data-widget</code> is not defined.
               </li>
             </ul>
           </li>
@@ -1264,52 +1275,52 @@ export class Wires {
     <script type="module" src="components/github-stars-beta-1.js"></script>
     <script type="module">
       class DetailsWatcher {
-        #storageName = "openDetailsData";
-        #data;
+        #storageName = 'openDetailsData'
+        #data
 
         initTags() {
           this.details().forEach((tag, tagIndex) => {
             if (this.#data.has(tagIndex)) {
-              tag.open = true;
+              tag.open = true
             }
-            tag.addEventListener("toggle", (event) => {
-              if (event.newState === "open") {
-                this.#data.add(tagIndex);
+            tag.addEventListener('toggle', (event) => {
+              if (event.newState === 'open') {
+                this.#data.add(tagIndex)
               } else {
-                this.#data.delete(tagIndex);
+                this.#data.delete(tagIndex)
               }
-              this.saveState();
-            });
-          });
+              this.saveState()
+            })
+          })
         }
 
         details() {
-          return document.querySelectorAll("details");
+          return document.querySelectorAll('details')
         }
 
         loadState() {
-          const storage = localStorage.getItem(this.#storageName);
+          const storage = localStorage.getItem(this.#storageName)
           if (storage === null) {
-            this.#data = new Set();
+            this.#data = new Set()
           } else {
-            this.#data = new Set(JSON.parse(storage).data);
+            this.#data = new Set(JSON.parse(storage).data)
           }
         }
 
         run() {
-          this.loadState();
-          this.initTags();
+          this.loadState()
+          this.initTags()
         }
 
         saveState() {
           localStorage.setItem(
             this.#storageName,
-            JSON.stringify({ data: [...this.#data] }),
-          );
+            JSON.stringify({ data: [...this.#data] })
+          )
         }
       }
-      const dw = new DetailsWatcher();
-      dw.run();
+      const dw = new DetailsWatcher()
+      dw.run()
     </script>
   </body>
 </html>

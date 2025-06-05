@@ -1,6 +1,6 @@
 // deno-fmt-ignore-file
 
-export class Wires {
+export class Widget {
 
   #sliderHasBeenAdded = false;
   #value = 0;

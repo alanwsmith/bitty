@@ -1,8 +1,10 @@
 // deno-fmt-ignore-file
 
-class Wires {
+export class Widget {
+
   $updateText(el, _) {
     const ts = Date.now()
     el.innerHTML = `Clicked at:<br>${ts}`
   }
+
 }

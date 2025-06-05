@@ -1,6 +1,6 @@
 // deno-fmt-ignore-file
 
-export class Wires {
+export class Widget {
   $showValue(el, _) {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;
@@ -20,13 +20,13 @@ export class Wires {
 <div>
   <div>Counter 1</div>
   <bitty-js
-    data-wires="./nested-child-calc.js"
+    data-bridge="./nested-child-calc.js"
     data-send="showValue"
   ></bitty-js>
 
   <div>Counter 2</div>
   <bitty-js
-    data-wires="./nested-child-calc.js"
+    data-bridge="./nested-child-calc.js"
     data-send="showValue"
   ></bitty-js>
 </div>

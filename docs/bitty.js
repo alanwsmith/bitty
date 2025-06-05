@@ -75,6 +75,7 @@ class BittyJs extends HTMLElement {
       kind: [`Could not load widget`],
       description: [`The widget could not be loaded from the .js module file.`],
       help: [
+        [`TODO: Make note here about defauld call to Widget()`],
         [
           `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
         ],
@@ -266,9 +267,9 @@ class BittyJs extends HTMLElement {
       import(this.dataset.bridge).then((mod) => {
         try {
           if (this.dataset.widget === undefined) {
-          this.widget = new mod.Widget()
+            this.widget = new mod.Widget()
           } else {
-          this.widget = new mod[this.dataset.widget]()
+            this.widget = new mod[this.dataset.widget]()
           }
           this.requestUpdate = this.handleChange.bind(this)
           // Reminder: loadReceivers has to be in front of init

@@ -14,6 +14,18 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addIds() {
+    if (this.dataset.uuid === undefined) {
+      this.dataset.uuid = self.crypto.randomUUID();
+    }
+    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
+    els.forEach((el) => {
+      if (el.dataset.uuid === undefined) {
+        el.dataset.uuid = self.crypto.randomUUID();
+      }
+    });
+  }
+
   addReceiver(key, el) {
     this.#receivers.push({
       "key": key,
@@ -38,9 +50,10 @@ class BittyJs extends HTMLElement {
         this.wires = new mod.Wires();
         this.requestUpdate = this.handleChange.bind(this);
         // Reminder: loadReceivers has to be in front of init
-        // because inits can send
+        // because inits can use data-send
         this.loadReceivers();
         this.init();
+        this.addIds();
         this.addEventListeners();
       });
     } else {

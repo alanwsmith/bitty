@@ -3,6 +3,7 @@
 ---
 [dependencies]
 anyhow = "1.0.98"
+itertools = "0.14.0"
 minijinja = { version = "2.9.0", features = ["custom_syntax", "loader"] }
 serde = {version = "1.0.219", features = ["derive"] }
 syntect = { version = "5.2.0"}
@@ -20,15 +21,15 @@ use syntect::highlighting::{Style, ThemeSet};
 use syntect::html::{styled_line_to_highlighted_html, IncludeBackground};
 use syntect::parsing::SyntaxSet;
 use syntect::util::LinesWithEndings;
-
+use itertools::Itertools;
 
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Example {
-    raw_html: String,
-    raw_javascript: String,
     highlighted_html: String,
-    highlighted_javascript: String,
+    javascripts: Vec<String>,
+    raw_html: String,
+    title: String,
 }
 
 
@@ -74,9 +75,43 @@ Use the build-site.rs script to generate it
             reminder,
         };
         // payload.load_example_html()?;
+        payload.load_examples()?;
         payload.load_misc_html()?;
         payload.load_example_scripts()?;
         Ok(payload)
+    }
+
+    pub fn load_examples(&mut self) -> Result<()> {
+
+        for dir in get_dirs(&PathBuf::from("build-input/examples"))?.iter() {
+            let snippet_file = dir.join("snippet.html");
+            let data= fs::read_to_string(snippet_file)?;
+            let parts: Vec<_> = data.split("<!-- x -->").map(|x| x.trim()).collect();
+            let initial_html = parts[0];
+            let title = parts[1].to_string();
+            let raw_html = initial_html.trim().replace("<!-- prettier-ignore -->\n", "");
+            let highlighted_html = highlight(&raw_html, "HTML")?;
+            let javascripts = vec![];
+            let e = Example{
+                highlighted_html,
+                javascripts,
+                raw_html,
+                title,
+            };
+            let _ = &self.examples.push(e);
+
+        //     let name = file.file_name().unwrap().display().to_string();
+        //     let base_name = file.file_stem().unwrap().display().to_string();
+        //     self.example_names.push(base_name);
+        //     let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+        //     let html = Html {
+        //         raw,
+        //         highlighted
+        //     };
+        //     self.example_html.insert(name.clone(), html);
+        };
+
+        Ok(())
     }
 
     // pub fn load_example_html(&mut self) -> Result<()> {
@@ -159,6 +194,28 @@ fn get_env() -> Environment<'static> {
             .unwrap(),
     );
     env
+}
+
+
+pub fn get_dirs(dir: &PathBuf) -> Result<Vec<PathBuf>> {
+    Ok(
+    fs::read_dir(dir)
+        .unwrap()
+        .into_iter()
+        .filter(|p| {
+            if p.as_ref().unwrap().path().is_dir() {
+                true
+            } else {
+                false
+            }
+        })
+        .filter_map(|p| match p.as_ref().unwrap().path().strip_prefix(".") {
+            Ok(_) => None,
+            Err(_) => Some(p.as_ref().unwrap().path()),
+        })
+        .sorted()
+        .collect()
+    )
 }
 
 pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {

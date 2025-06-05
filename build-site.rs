@@ -25,6 +25,7 @@ use syntect::util::LinesWithEndings;
 struct Payload {
     example_scripts: BTreeMap<String, Script>,
     example_html: BTreeMap<String, Html>,
+    example_names: Vec<String>,
     misc_html: BTreeMap<String, Html>,
     reminder: String,
 }
@@ -57,6 +58,10 @@ Use the build-site.rs script to generate it
         let mut payload = Payload {
             example_scripts: BTreeMap::new(),
             example_html: BTreeMap::new(),
+            example_names: vec![
+
+
+            ],
             misc_html: BTreeMap::new(),
             reminder,
         };
@@ -69,6 +74,8 @@ Use the build-site.rs script to generate it
     pub fn load_example_html(&mut self) -> Result<()> {
         for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
+            let base_name = file.file_stem().unwrap().display().to_string();
+            self.example_names.push(base_name);
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
             let highlighted = highlight(&scrubbed, "HTML")?;

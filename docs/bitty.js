@@ -173,10 +173,30 @@ class BittyJs extends HTMLElement {
       .trim()
   }
 
-  assembleErrorHeader(err) {
+  assembleErrorFinding(err) {
+    const out = []
+    out.push(`FINDING THE ERROR`)
+    out.push(
+      `Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method.`
+    )
+    out.push(
+      `Expand the error message in the console to see the extended error trace and associated line numbers.`
+    )
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorPrelude(err) {
     const out = []
     out.push(this.#hashString)
-    out.push(`BITTY ERROR [ID: ${err.id}]`)
+    out.push(`A BITTY ERROR OCCURED`)
+    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorId(err) {
+    const out = []
+    out.push(`ERROR ID: ${err.id}`)
     out.push(this.assembleErrorText(err.kind))
     const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
     err.output.push(text)
@@ -211,11 +231,13 @@ class BittyJs extends HTMLElement {
     if (err.el !== null) {
       out.push('ELEMENT OUTPUTS')
       out.push(
-        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are below.'
+        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
       )
     } else {
       out.push('ELEMENT OUTPUT')
-      out.push('A dump of the <bitty-js></bitty-js> element is below.')
+      out.push(
+        'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+      )
     }
 
     const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
@@ -235,12 +257,14 @@ class BittyJs extends HTMLElement {
     err.additionalDetails = additionalDetails
     err.output = []
 
-    this.assembleErrorHeader(err)
+    this.assembleErrorPrelude(err)
+    this.assembleErrorFinding(err)
+    this.assembleErrorDumpMessage(err)
+    this.assembleErrorId(err)
     this.assemlbeErrorDescription(err)
     this.assemlbeErrorAdditionalDetails(err)
 
     this.assembleErrorHelpText(err)
-    this.assembleErrorDumpMessage(err)
 
     if (el === null) {
       err.dumpMessage = ''
@@ -281,23 +305,17 @@ ${this.#hashString}
 
 FINDING THE ERROR:
 
-Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method. 
 
-Expand the error message in the console to see the extended error trace and associated line numbers. 
 
 ${this.#hashString}
 
-ELEMENT OUTPUT:
-
-${err.dumpMessage}`
+`
 
     console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
-
-    // console.error(output)
-    // console.error(this)
-    // if (el !== null) {
-    //   console.error(el)
-    // }
+    console.error(this)
+    if (el !== null) {
+      console.error(el)
+    }
   }
 
   handleChange(event) {

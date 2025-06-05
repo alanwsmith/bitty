@@ -5,8 +5,8 @@ export class Widget {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;
     counters.forEach((counter) => {
-      if (counter.wires !== undefined) {
-        count += counter.wires.value;
+      if (counter.widget !== undefined) {
+        count += counter.widget.value;
       }
     });
     el.innerHTML = count;

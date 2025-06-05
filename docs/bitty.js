@@ -115,7 +115,7 @@ class BittyJs extends HTMLElement {
     this.setIds()
     if (this.dataset.bridge) {
     } else {
-      this.error(2)
+      this.error(2, this)
     }
 
     /*
@@ -215,6 +215,19 @@ class BittyJs extends HTMLElement {
     err.output.push(text)
   }
 
+  assembleErrorElementDetails(err) {
+    if (err.el !== null) {
+      const out = []
+      out.push('ERROR ELEMENT DETAILS')
+      out.push(
+        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`
+      )
+      out.push(err.el.dataset.uuid)
+      const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
+
   assemlbeErrorDescription(err) {
     const out = []
     out.push('DESCRIPTION')
@@ -246,7 +259,6 @@ class BittyJs extends HTMLElement {
         'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
       )
     }
-
     const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
     err.output.push(text)
   }
@@ -263,37 +275,15 @@ class BittyJs extends HTMLElement {
     err.el = el
     err.additionalDetails = additionalDetails
     err.output = []
-
     this.assembleErrorPrelude(err)
     this.assembleErrorFinding(err)
     this.assembleErrorDumpMessage(err)
-    this.assembleErrorComponent(err)
     this.assembleErrorId(err)
+    this.assembleErrorComponent(err)
+    this.assembleErrorElementDetails(err)
     this.assemlbeErrorDescription(err)
     this.assemlbeErrorAdditionalDetails(err)
     this.assembleErrorHelpText(err)
-
-    const output = `${this.#hashString}
-
-COMPONENT <bitty-js> UUID:
-
-${this.dataset.uuid}
-${err.elementDetails}
-${this.#hashString}
-
-
-    // ERROR ELEMENT TAG NAME:
-
-    // ${err.elementTagName}
-
-    // ${this.#hashString}
-
-    // ERROR ELEMENT UUID:
-
-    // ${err.elementId}
-
-`
-
     console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
     console.error(this)
     if (el !== null) {

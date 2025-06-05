@@ -19,6 +19,8 @@ function debug(payload, el = null) {
 class BittyJs extends HTMLElement {
   // TODO: Deprecate #hashString in favor of join approach
   #hashString = '#######################################'
+  #listeners = ['click', 'input']
+  #receivers = []
   #errors = [
     {
       id: 0,
@@ -68,9 +70,6 @@ class BittyJs extends HTMLElement {
     },
   ]
 
-  #listeners = ['click', 'input']
-  #receivers = []
-
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
@@ -106,6 +105,133 @@ class BittyJs extends HTMLElement {
     })
   }
 
+  assembleErrorHelpText(err) {
+    const out = []
+    err.help.forEach((options, index) => {
+      if (err.help.length === 1) {
+        if (index === 0) {
+          out.push('RECOMMENDATION')
+        }
+        out.push(this.assembleErrorText(options))
+      } else {
+        if (index === 0) {
+          out.push('RECOMMENDATION OPTIONS')
+        }
+        options.forEach((option, optionIndex) => {
+          if (optionIndex === 0) {
+            out.push(`${index + 1}. ${option}`)
+          } else {
+            out.push(option)
+          }
+        })
+      }
+    })
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assemlbeErrorAdditionalDetails(err) {
+    if (err.additionalDetails !== null) {
+      const out = []
+      out.push('ADDITIONAL DETAILS')
+      out.push(err.additionalDetails)
+      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
+
+  assembleErrorComponent(err) {
+    const out = []
+    out.push(`COMPONENT UUID`)
+    out.push(
+      `The 'data-uuid' attribute of the <bitty-js></bitty-js> element associated with this error is:`
+    )
+    out.push(this.dataset.uuid)
+    out.push(
+      "NOTE: 'data-uuid' attriubtes are added dynamically. They should be visible in the 'Elements' view in your browser's deverloper console."
+    )
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assemlbeErrorDescription(err) {
+    const out = []
+    out.push('DESCRIPTION')
+    out.push(this.assembleErrorText(err.description))
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorDumpMessage(err) {
+    const out = []
+    if (err.el !== null) {
+      out.push('ELEMENT OUTPUTS')
+      out.push(
+        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
+      )
+    } else {
+      out.push('ELEMENT OUTPUT')
+      out.push(
+        'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+      )
+    }
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorElementDetails(err) {
+    if (err.el !== null) {
+      const out = []
+      out.push('ERROR ELEMENT DETAILS')
+      out.push(
+        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`
+      )
+      out.push(err.el.dataset.uuid)
+      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
+
+  assembleErrorFinding(err) {
+    const out = []
+    out.push(`FINDING THE ERROR`)
+    out.push(
+      `Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method.`
+    )
+    out.push(
+      `Expand the error message in the console to see the extended error trace and associated line numbers.`
+    )
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorId(err) {
+    const out = []
+    out.push(`ERROR ID: ${err.id}`)
+    out.push(this.assembleErrorText(err.kind))
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorPrelude(err) {
+    const out = []
+    out.push(this.#hashString)
+    out.push(`A BITTY ERROR OCCURED`)
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assembleErrorReplacedText(err, content) {
+    return content
+      .replaceAll('__UUID__', this.dataset.uuid)
+      .replaceAll('__ERROR_ID__', err.id)
+      .trim()
+  }
+
+  assembleErrorText(content) {
+    return content.join('\n\n')
+  }
+
   constructor() {
     super()
   }
@@ -134,133 +260,6 @@ class BittyJs extends HTMLElement {
       console.error("Missing data-wires attribute");
     }
     */
-  }
-
-  assembleErrorText(content) {
-    return content.join('\n\n')
-  }
-
-  assembleErrorHelpText(err) {
-    const out = []
-    err.help.forEach((options, index) => {
-      if (err.help.length === 1) {
-        if (index === 0) {
-          out.push('RECOMMENDATION')
-        }
-        out.push(this.assembleErrorText(options))
-      } else {
-        if (index === 0) {
-          out.push('RECOMMENDATION OPTIONS')
-        }
-        options.forEach((option, optionIndex) => {
-          if (optionIndex === 0) {
-            out.push(`${index + 1}. ${option}`)
-          } else {
-            out.push(option)
-          }
-        })
-      }
-    })
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assembleReplacedErrorText(err, content) {
-    return content
-      .replaceAll('__UUID__', this.dataset.uuid)
-      .replaceAll('__ERROR_ID__', err.id)
-      .trim()
-  }
-
-  assembleErrorFinding(err) {
-    const out = []
-    out.push(`FINDING THE ERROR`)
-    out.push(
-      `Error consoles generally report lines numbers that an error occured on. The first number is the line where the 'console.error()' call that produced this message is. It's not usefule since it alwasy fires from the BittyJS class 'error()' method.`
-    )
-    out.push(
-      `Expand the error message in the console to see the extended error trace and associated line numbers.`
-    )
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assembleErrorPrelude(err) {
-    const out = []
-    out.push(this.#hashString)
-    out.push(`A BITTY ERROR OCCURED`)
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assembleErrorId(err) {
-    const out = []
-    out.push(`ERROR ID: ${err.id}`)
-    out.push(this.assembleErrorText(err.kind))
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assembleErrorComponent(err) {
-    const out = []
-    out.push(`COMPONENT UUID`)
-    out.push(
-      `The 'data-uuid' attribute of the <bitty-js></bitty-js> element associated with this error is:`
-    )
-    out.push(this.dataset.uuid)
-    out.push(
-      "NOTE: 'data-uuid' attriubtes are added dynamically. They should be visible in the 'Elements' view in your browser's deverloper console."
-    )
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assembleErrorElementDetails(err) {
-    if (err.el !== null) {
-      const out = []
-      out.push('ERROR ELEMENT DETAILS')
-      out.push(
-        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`
-      )
-      out.push(err.el.dataset.uuid)
-      const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-      err.output.push(text)
-    }
-  }
-
-  assemlbeErrorDescription(err) {
-    const out = []
-    out.push('DESCRIPTION')
-    out.push(this.assembleErrorText(err.description))
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
-
-  assemlbeErrorAdditionalDetails(err) {
-    if (err.additionalDetails !== null) {
-      const out = []
-      out.push('ADDITIONAL DETAILS')
-      out.push(err.additionalDetails)
-      const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-      err.output.push(text)
-    }
-  }
-
-  assembleErrorDumpMessage(err) {
-    const out = []
-    if (err.el !== null) {
-      out.push('ELEMENT OUTPUTS')
-      out.push(
-        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
-      )
-    } else {
-      out.push('ELEMENT OUTPUT')
-      out.push(
-        'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
-      )
-    }
-    const text = this.assembleReplacedErrorText(err, out.join('\n\n'))
-    err.output.push(text)
   }
 
   error(id = 0, el = null, additionalDetails = null) {

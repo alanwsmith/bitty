@@ -80,7 +80,8 @@
       [@ data.reminder @]
 
       <p>
-        Bitty is a web component. Wrapping it around elements makes them reactive.
+        Bitty is a web component. Wrapping it around elements makes them
+        reactive.
       </p>
       <p>
         This page has examples of all of bitty's features. The first is this
@@ -91,18 +92,20 @@
       >
         [@ data.misc_html["counter.html"].raw @]
       </div>
-      <p>The code looks like this:</p>
+      <p>The code for the example looks like this:</p>
 
-      <div>
+      <div class="two-column-example">
         <div>
+          <div>index.html</div>
           <pre
             class="code-block"
-          ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
+          ><code class="xsmall-font">[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
         </div>
         <div>
+          <div>counter.js</div>
           <pre
             class="code-block"
-          ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
+          ><code class="xsmall-font">[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
         </div>
       </div>
 
@@ -113,6 +116,7 @@
 
       <details>
         <summary>Quick-Start</summary>
+        <p>bitty is still under development. Quick-start instructions are on the way.</p>
         <p>[This is a place holder stub while the content is being written]</p>
       </details>
 
@@ -914,6 +918,10 @@ export class Wires {
             hard coded. they need to be moved to classes so the can switch
             between accessible colors for both light and dark mode)
           </li>
+          <li>
+            Debugging output shows the line number from the debug function
+            instead of where it was called from
+          </li>
         </ul>
       </details>
 
@@ -947,24 +955,28 @@ export class Wires {
         <ul>
           <li>
             <h3>Version: 0.2.3</h3>
-            <p>TBD</p>
+            <p>June 5, 2025</p>
 
             [@ data.reminder @]
 
-            <p>Lots of error handling work in this one</p>
+            <p>Lots of error handling work in this one.</p>
+
             <ul>
-              <li>
-                REMINDER: Bump version number in bitty.js file and set date here
-              </li>
               <li>
                 Moved UUID generation for the <code>bitty-js</code> and all
                 <code>data-*</code> reactive elements to the first thing in
                 <code>connectedCallback()</code> to aid in error messaging.
               </li>
               <li>
+                Made <code>connectedCallback()</code> and
+                <code>async</code> function to throw loading the widget module
+                into its own funcitoun
+              </li>
+              <li>
                 Created an <code>#errors</code> private var to store error
                 messages and help by ID.
               </li>
+              <li>Added the first few error messages</li>
               <li>
                 <p>
                   Added <code>this.error()</code> for outputting errors. It
@@ -994,18 +1006,20 @@ export class Wires {
                 </p>
               </li>
               <li>
-                <code>this.error()</code> takes two optional arguments: an ID
-                and an Element. The ID is used to map to the errors in
-                <code>#errors</code>
-              </li>
-              <li>
-                Added top level <code>debug</code> function that uses a
-                <code>debug</code> search query param from the
-                <code>window.location</code> to see if it should output
+                <p>
+                  Added top level <code>debug</code> function that uses a
+                  <code>debug</code> search query param from the
+                  <code>window.location</code> to see if it should output.
+                </p>
+                <p>
+                  Only thing I don't like about it is that it shows the
+                  function's line number instead of the line number from where
+                  it was called. Something to look into.
+                </p>
               </li>
               <li>
                 The <code>debug</code> function takes an optional element. It
-                dumps it to the console if one comes in
+                dumps it to the console if one comes in.
               </li>
               <li>
                 Renamed <code>data-wires</code> to <code>data-bridge</code>.
@@ -1013,14 +1027,17 @@ export class Wires {
                 back in from the support class.
               </li>
               <li>
-                Added a <code>data-widget</code> attribute to the
-                <code>bitty-js</code> elements to allow using multiple classes
-                from inside a single supporting .js module file
+                Set up to load the default class exported from a widget module
+                if no other class is defined (which happens with 'data-widget')
               </li>
               <li>
-                REVIEW: Defaults to calling
-                <code>new Widget()</code> automatically if a
-                <code>data-widget</code> is not defined.
+                Moved all examples to use a default class export instead of a
+                named class
+              </li>
+              <li>
+                Added a <code>data-widget</code> attribute to the
+                <code>bitty-js</code> elements to allow using multiple classes
+                from inside a single supporting .js module file.
               </li>
               <li>
                 <code>bitty-component-error</code> and
@@ -1035,6 +1052,11 @@ export class Wires {
             <p>June 4, 2025</p>
 
             [@ data.reminder @]
+
+            <p>
+              Added UUIDs for pending error handling. Shuffeld a bunch of stuff
+              around to make the examples look nicer.
+            </p>
 
             <ul>
               <li>
@@ -1104,6 +1126,11 @@ export class Wires {
 
             [@ data.reminder @]
 
+            <p>
+              Some more wiring and some support tools for making the demo/docs
+              site.
+            </p>
+
             <ul>
               <li>
                 Made a Hello, World example that shows basic features. (Compared
@@ -1139,6 +1166,8 @@ export class Wires {
             <p>June 3, 2025</p>
 
             [@ data.reminder @]
+
+            <p>Setting up a bunch of the basic wiring.</p>
 
             <ul>
               <li>
@@ -1217,6 +1246,8 @@ export class Wires {
             <p>June 2, 2025</p>
 
             [@ data.reminder @]
+
+            <p>Getting the project started.</p>
 
             <ul>
               <li>Initial prototype.</li>

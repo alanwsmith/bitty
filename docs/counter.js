@@ -8,10 +8,9 @@ export default class {
     this.#num += 1;
   }
 
-  $showNumber(el, _) {
+  $showNum(el, _) {
     el.innerHTML = this.#num;
   }
 
 }
-
 

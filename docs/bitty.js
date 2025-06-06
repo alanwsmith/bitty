@@ -339,6 +339,10 @@ class BittyJs extends HTMLElement {
   }
 
   error(id = 0, el = null, additionalDetails = null) {
+    this.classList.add("bitty-component-error");
+    if (el !== null) {
+      this.classList.add("bitty-element-error");
+    }
     let err = this.#errors.find((err) => {
       return err.id === id
     })

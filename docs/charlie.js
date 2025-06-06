@@ -1,4 +1,7 @@
-export class Wires {
+// deno-fmt-ignore-file
+
+export default class {
+
   #sliderValue;
 
   _setValue(data) {
@@ -8,4 +11,5 @@ export class Wires {
   $sliderValue(el, _) {
     el.value = this.#sliderValue;
   }
+
 }

@@ -1,4 +1,7 @@
-export class Wires {
+// deno-fmt-ignore-file
+
+export default class {
+
   #data = {
     "activeColor": null,
     "colors": [
@@ -21,4 +24,5 @@ export class Wires {
       }
     });
   }
+
 }

@@ -1,4 +1,6 @@
-export class Wires {
+// deno-fmt-ignore-file
+
+export default class {
   #value = 0;
 
   _increment(_) {

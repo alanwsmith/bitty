@@ -1,4 +1,7 @@
-export class Wires {
+// deno-fmt-ignore-file
+
+export default class {
+
   #number;
 
   _setNumber(event) {
@@ -8,4 +11,5 @@ export class Wires {
   $displayNumber(el, _) {
     el.innerHTML = this.#number;
   }
+
 }

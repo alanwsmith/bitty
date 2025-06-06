@@ -3,6 +3,7 @@
 ---
 [dependencies]
 anyhow = "1.0.98"
+itertools = "0.14.0"
 minijinja = { version = "2.9.0", features = ["custom_syntax", "loader"] }
 serde = {version = "1.0.219", features = ["derive"] }
 syntect = { version = "5.2.0"}
@@ -20,16 +21,30 @@ use syntect::highlighting::{Style, ThemeSet};
 use syntect::html::{styled_line_to_highlighted_html, IncludeBackground};
 use syntect::parsing::SyntaxSet;
 use syntect::util::LinesWithEndings;
+use itertools::Itertools;
+
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Example {
+    highlighted_html: String,
+    javascripts: Vec<String>,
+    raw_html: String,
+    title: String,
+}
+
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
-    scripts: BTreeMap<String, Script>,
-    snippets: BTreeMap<String, Snippet>,
+    examples: Vec<Example>,
+    example_scripts: BTreeMap<String, Script>,
+    // example_html: BTreeMap<String, Html>,
+    // example_names: Vec<String>,
+    misc_html: BTreeMap<String, Html>,
     reminder: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Snippet {
+struct Html {
     raw: String,
     highlighted: String,
 }
@@ -39,7 +54,6 @@ struct Script {
     raw: String,
     highlighted: String,
 }
-
 
 
 impl Payload {
@@ -55,31 +69,84 @@ Use the build-site.rs script to generate it
 -->"#.to_string();
 
         let mut payload = Payload {
-            scripts: BTreeMap::new(),
-            snippets: BTreeMap::new(),
+            examples: vec![],
+            example_scripts: BTreeMap::new(),
+            misc_html: BTreeMap::new(),
             reminder,
         };
-        payload.load_html_snippets()?;
-        payload.load_scripts()?;
+        // payload.load_example_html()?;
+        payload.load_examples()?;
+        payload.load_misc_html()?;
+        payload.load_example_scripts()?;
         Ok(payload)
     }
 
-    pub fn load_html_snippets(&mut self) -> Result<()> {
-        for file in get_files(&PathBuf::from("build-input/html-snippets"), "html")?.iter() {
+    pub fn load_examples(&mut self) -> Result<()> {
+
+        for dir in get_dirs(&PathBuf::from("build-input/examples"))?.iter() {
+            let snippet_file = dir.join("snippet.html");
+            let data= fs::read_to_string(snippet_file)?;
+            let parts: Vec<_> = data.split("<!-- x -->").map(|x| x.trim()).collect();
+            let initial_html = parts[0];
+            let title = parts[1].to_string();
+            let raw_html = initial_html.trim().replace("<!-- prettier-ignore -->\n", "");
+            let highlighted_html = highlight(&raw_html, "HTML")?;
+            let javascripts = vec![];
+            let e = Example{
+                highlighted_html,
+                javascripts,
+                raw_html,
+                title,
+            };
+            let _ = &self.examples.push(e);
+
+        //     let name = file.file_name().unwrap().display().to_string();
+        //     let base_name = file.file_stem().unwrap().display().to_string();
+        //     self.example_names.push(base_name);
+        //     let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+        //     let html = Html {
+        //         raw,
+        //         highlighted
+        //     };
+        //     self.example_html.insert(name.clone(), html);
+        };
+
+        Ok(())
+    }
+
+    // pub fn load_example_html(&mut self) -> Result<()> {
+    //     for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
+    //         let name = file.file_name().unwrap().display().to_string();
+    //         let base_name = file.file_stem().unwrap().display().to_string();
+    //         self.example_names.push(base_name);
+    //         let raw = fs::read_to_string(file)?;
+    //         let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+    //         let highlighted = highlight(&scrubbed, "HTML")?;
+    //         let html = Html {
+    //             raw,
+    //             highlighted
+    //         };
+    //         self.example_html.insert(name.clone(), html);
+    //     };
+    //     Ok(())
+    // }
+
+    pub fn load_misc_html(&mut self) -> Result<()> {
+        for file in get_files(&PathBuf::from("build-input/misc-html"), "html")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
             let highlighted = highlight(&scrubbed, "HTML")?;
-            let snippet = Snippet {
+            let html = Html {
                 raw,
                 highlighted
             };
-            self.snippets.insert(name.clone(), snippet);
+            self.misc_html.insert(name.clone(), html);
         };
         Ok(())
     }
 
-    pub fn load_scripts(&mut self) -> Result<()> {
+    pub fn load_example_scripts(&mut self) -> Result<()> {
         for file in get_files(&PathBuf::from("docs"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
@@ -89,7 +156,7 @@ Use the build-site.rs script to generate it
                 raw,
                 highlighted
             };
-            self.scripts.insert(name.clone(), script);
+            self.example_scripts.insert(name.clone(), script);
         };
         Ok(())
     }
@@ -129,6 +196,28 @@ fn get_env() -> Environment<'static> {
     env
 }
 
+
+pub fn get_dirs(dir: &PathBuf) -> Result<Vec<PathBuf>> {
+    Ok(
+    fs::read_dir(dir)
+        .unwrap()
+        .into_iter()
+        .filter(|p| {
+            if p.as_ref().unwrap().path().is_dir() {
+                true
+            } else {
+                false
+            }
+        })
+        .filter_map(|p| match p.as_ref().unwrap().path().strip_prefix(".") {
+            Ok(_) => None,
+            Err(_) => Some(p.as_ref().unwrap().path()),
+        })
+        .sorted()
+        .collect()
+    )
+}
+
 pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
     Ok(
     fs::read_dir(dir)
@@ -154,7 +243,6 @@ pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
         .collect()
     )
 }
-
 
 fn highlight(code: &str, language: &str) -> Result<String> {
     let mut the_lines = vec![];

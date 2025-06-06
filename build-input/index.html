@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 [@ data.reminder @]
 
@@ -11,7 +11,7 @@
     <meta property="og:title" content="bitty.js" />
     <meta
       property="og:description"
-      content="small component - big reactivity - vanilla js"
+      content="small component - big reactivity"
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
@@ -44,7 +44,7 @@
     />
     <meta
       name="description"
-      content="small component - bit reactivity - vanilla js"
+      content="small component - bit reactivity"
     />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
@@ -70,7 +70,7 @@
         <h1>bitty.js</h1>
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
-            small component - big reactivity - vanilla js
+            small component - big reactivity
           </div>
         </div>
       </hgroup>
@@ -79,21 +79,81 @@
 
       [@ data.reminder @]
 
-      <p>Bitty is a vanilla web component. It makes other elements reactive.</p>
       <p>
-        This page has examples covering the details. The first one is this
+        Bitty is a web component. Wrapping it around elements makes them
+        reactive.
+      </p>
+      <p>
+        This page has examples of all of bitty's features. The first is this
         counter. Click it to make the number go up.
       </p>
       <div
         class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
       >
-        [@ data.snippets["hello-world-counter.html"].raw @]
+        [@ data.misc_html["counter.html"].raw @]
       </div>
+      <p>
+        Everything works by mapping <code>data-*</code> attributes to functions.
+        For example, the counter's code looks like this:
+      </p>
+
+      <div class="two-column-example">
+        <div>
+          <div>index.html</div>
+          <pre
+            class="code-block"
+          ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
+        </div>
+        <div>
+          <div>counter.js</div>
+          <pre
+            class="code-block"
+          ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
+        </div>
+      </div>
+
+      <ul>
+        <li>
+          <code>data-bridge</code> connects the element to the
+          <code>counter.js</code> module
+        </li>
+        <li>
+          <code>data-r</code> registeres the button to receive updates when
+          <code>showNum</code> signals are sent
+        </li>
+        <li>
+          <code>data-c</code> calls the <code>_addOne</code> function when the
+          button is clicked (prepending the funciton name with a
+          <code>_</code> is part of the naming convention)
+        </li>
+        <li>
+          <code>data-s</code> sends the <code>showNum</code> signal when the
+          button is clicked. It fires the <code>$showNum</code> fuction which
+          performs the updates (prepending the function name with a
+          <code>$</code> is another part of the naming convention)
+        </li>
+      </ul>
+
+      <p>
+        There are more features, but that's everything you need to know to get
+        started.
+      </p>
+
+      <h2>Using bitty</h2>
 
       <p>
         The sections below provide details about how everything works. Check
         them out to dig in.
       </p>
+
+      <details>
+        <summary>Quick-Start</summary>
+        <p>
+          bitty is still under development. Quick-start instructions are on the
+          way.
+        </p>
+        <p>[This is a place holder stub while the content is being written]</p>
+      </details>
 
       <details>
         <summary>Counter Details (Basic Functionality Overview)</summary>
@@ -121,22 +181,25 @@
               A script tag that loads the <code>bitty.js</code> file as a
               module:
             </p>
+
             <pre
               class="code-block"
-            ><code>[@- data.snippets["script-tag.html"].highlighted -@]</code></pre>
+            ><code>[@- data.misc_html["script-tag.html"].highlighted -@]</code></pre>
           </li>
           <li>
             <p>A <code>bitty-js</code> tag with a <code>button</code> in it:</p>
+
             <pre
               class="code-block"
-            ><code>[@- data.snippets["hello-world-counter.html"].highlighted -@]</code></pre>
+            ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
           </li>
 
           <li>
             <p>A <code>counter.js</code> file:</p>
+
             <pre
               class="code-block"
-            ><code>[@- data.scripts["counter.js"].highlighted -@]</code></pre>
+            ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
           </li>
         </ol>
 
@@ -147,7 +210,7 @@
         <ul>
           <li>
             <p>
-              <code>bitty.js</code> is a vanilla web component file. It provides
+              <code>bitty.js</code> is a web component file. It provides
               a <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code> tag. Wrapping
               other tags with it gives them reactive powers.
             </p>
@@ -156,28 +219,33 @@
               gives us this <code>bitty-js</code> tag as a starting point:
             </p>
             <pre class="code-block"><code>
-              [@- data.snippets["counter-bitty-example.html"].highlighted -@]</code></pre>
+              [@- data.misc_html["counter-bitty-example.html"].highlighted -@]</code></pre>
           </li>
           <li>
             <p>
               <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code>
               tags require a
-              <code>data-wires</code> attribute.
+              <code>data-bridge</code> attribute.
             </p>
             <p>
-              The <code>data-wires</code> attribute value is a path to a
-              JavaScript module file (<code>counter.js</code> in our case). The
-              module must export a class named <code>Wires</code>. It's
-              responsible for providing the functions that are called when
-              events happen.
+              The <code>data-bridge</code> attribute value is a path to a
+              JavaScript module file (<code>counter.js</code> in our case).
+              bitty imports that file an loads a class that provides the
+              funcitons that are called when interations happen. (<code
+                >Widget</code
+              >
+              by default but you can change that.
+            </p>
+            <p class="warning">
+              (TODO: See about loading a default export instead of implicitly
+              looking for Widget.)
             </p>
           </li>
           <li>
             <p>
-              Other optional <code>data-*</code> attributes can be added to
-              <code>bitty-js</code> elements. The
-              <code>data-send</code> attribute in the counter is one example.
-              We'll come back to it shortly.
+              Other <code>data-*</code> attributes are optional
+              <code>bitty-js</code>. For example, the
+              <code>data-send</code> attribute which will come back to shortly.
             </p>
           </li>
         </ul>
@@ -221,8 +289,9 @@
               The button in our counter example has all three of the main
               <code>data-*</code> attributes:
             </p>
+
             <pre class="code-block"><code>
-              [@- data.snippets["counter-button-example.html"].highlighted -@]</code></pre>
+              [@- data.misc_html["counter-button-example.html"].highlighted -@]</code></pre>
           </li>
           <li>
             <p>
@@ -325,466 +394,46 @@
 
       <details>
         <summary>Basic Examples</summary>
+        [! for example in data.examples !]
+        <div>
+          <h3>[@ example.title @]</h3>
+          <div class="make-two-columns">[@ example.raw_html @]</div>
+          <div>
+            <pre class="code-block"><code>
+              [@- example.highlighted_html -@]
+            </code></pre>
+          </div>
+        </div>
+        [! endfor !] [@ data.reminder @]
+      </details>
 
-        [@ data.reminder @]
+      <details>
+        <summary>Examples To Make</summary>
 
-        <ol>
+        <ul>
+          <li>pass data to template via data-*</li>
+          <li>3+ levels of nesting</li>
+          <li>global send/receive</li>
+          <li>Example using templates from the HTML</li>
           <li>
-            <h2>Updating HTML</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./alfa.js">
-                <button data-s="updateText">Click me</button>
-                <div data-r="updateText">Waiting<br />...</div>
-              </bitty-js>
-            </div>
+            Update values in data attrs and show other components picking up the
+            changes.
           </li>
-
+          <li>Change attrs and HTML of elements outside the component</li>
           <li>
-            <h2>Storing State</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./bravo.js">
-                <button data-c="increment" data-s="displayCount">
-                  Click Me
-                </button>
-                <div data-r="displayCount">No initial state</div>
-              </bitty-js>
-            </div>
+            Explicit example of an element which has multiple
+            <code>data-r</code> receivers
           </li>
-
           <li>
-            <h2>Loading Initial State</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./bravo.js" data-send="displayCount">
-                <button data-c="increment" data-s="displayCount">
-                  Click Me
-                </button>
-                <div data-r="displayCount"></div>
-              </bitty-js>
-            </div>
+            Show example of event which calls a function with
+            <code>data-c</code> but doesn't send a <code>data-s</code> event.
           </li>
-
-          <li>
-            <h2>Updating Self</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./bravo.js" data-send="displayCount">
-                <button
-                  data-c="increment"
-                  data-s="displayCount"
-                  data-r="displayCount"
-                >
-                  Click Me
-                </button>
-                <div></div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Update Classes</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./delta.js">
-                <div>
-                  <button data-c="setColor" data-color="red" data-s="setClass">
-                    Red</button
-                  ><br />
-                  <button
-                    data-c="setColor"
-                    data-color="green"
-                    data-s="setClass"
-                  >
-                    Green</button
-                  ><br />
-                  <button data-c="setColor" data-color="blue" data-s="setClass">
-                    Blue</button
-                  ><br />
-                </div>
-                <div data-r="setClass">
-                  Keep the hatch tight and the watch constant.
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Updating Values</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./charlie.js">
-                <div>
-                  <label for="update-values-input-slider">Input Slider</label>
-                  <input
-                    type="range"
-                    id="update-values-input-slider"
-                    min="0"
-                    max="100"
-                    data-c="setValue"
-                    data-s="sliderValue"
-                  />
-                </div>
-                <div>
-                  <label for="update-values-output-slider">Output Slider</label>
-                  <input
-                    type="range"
-                    id="update-values-output-slider"
-                    min="0"
-                    max="100"
-                    data-r="sliderValue"
-                  />
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Avoiding Feedback</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./echo.js">
-                <div>
-                  <label for="avoid-feedback-slider-a">Slider A</label>
-                  <input
-                    type="range"
-                    id="avoid-feedback-slider-a"
-                    min="0"
-                    max="100"
-                    data-c="setValue"
-                    data-s="setSliderB"
-                    data-r="setSliderA"
-                  />
-                </div>
-                <div>
-                  <label for="avoid-feedback-slider-b">Slider B</label>
-                  <input
-                    type="range"
-                    id="avoid-feedback-slider-b"
-                    min="0"
-                    max="100"
-                    data-c="setValue"
-                    data-s="setSliderA"
-                    data-r="setSliderB"
-                  />
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Sent Multiple Signals</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./foxtrot.js">
-                <div>
-                  <label for="multiple-updates-input-slider"
-                    >Input Slider</label
-                  >
-                  <input
-                    type="range"
-                    id="multiple-updates-input-slider"
-                    min="0"
-                    max="100"
-                    data-c="setNumber"
-                    data-s="displayNumber|setNumberValue"
-                  />
-                </div>
-                <div>
-                  <label for="multiple-updates-output-slider"
-                    >Output Slider</label
-                  >
-                  <input
-                    type="range"
-                    id="multiple-updates-output-slider"
-                    min="0"
-                    max="100"
-                    data-r="setNumberValue"
-                  />
-                  <div>
-                    Output Text: <span data-r="displayNumber">Waiting</span>
-                  </div>
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Use Multiple Receivers</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./golf.js">
-                <div>
-                  <label for="multiple-receivers-input-slider"
-                    >Input Slider</label
-                  >
-                  <input
-                    type="range"
-                    id="multiple-receivers-input-slider"
-                    min="0"
-                    max="100"
-                    data-c="setNumber"
-                    data-s="displayNumber"
-                  />
-                </div>
-                <div>
-                  <div>Copy 1: <span data-r="displayNumber"></span></div>
-                  <div>Copy 2: <span data-r="displayNumber"></span></div>
-                  <div>Copy 3: <span data-r="displayNumber"></span></div>
-                  <div>Copy 4: <span data-r="displayNumber"></span></div>
-                  <div>Copy 5: <span data-r="displayNumber"></span></div>
-                  <div>Copy 6: <span data-r="displayNumber"></span></div>
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Initializing Values</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-send="setSliderA|setSliderB"
-                data-wires="./hotel.js"
-              >
-                <div>
-                  <label for="init-slider-a">Slider A</label>
-                  <input
-                    type="range"
-                    id="init-slider-a"
-                    min="0"
-                    max="100"
-                    data-c="setValue"
-                    data-s="setSliderB"
-                    data-r="setSliderA"
-                  />
-                </div>
-                <div>
-                  <label for="init-slider-b">Slider B</label>
-                  <input
-                    type="range"
-                    id="init-slider-b"
-                    min="0"
-                    max="100"
-                    data-c="setValue"
-                    data-s="setSliderA"
-                    data-r="setSliderB"
-                  />
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Create Element</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-send="buttonValue"
-                data-wires="./create-element.js"
-              >
-                <div>
-                  <button data-c="makeSlider" data-r="buttonValue"></button>
-                </div>
-                <div>
-                  <div>Output</div>
-                  <div class="output"></div>
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Call Wires init</h2>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./call-wires-init.js"></bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Template Loading Via Wires</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-send="showValue"
-                data-wires="./template-loading.js"
-              ></bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Nested Components</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-send="showValue"
-                data-wires="./nested-parent.js"
-              ></bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Nested Components with Ignore</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-wires="./nested-parent-ignore.js"
-                data-ignore="increment"
-              ></bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Getting Data From Children</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-wires="./nested-parent-calc.js"
-                data-ignore="increment"
-                data-send="showValue"
-              ></bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Batch Updates</h2>
-            <div class="make-two-columns">
-              <bitty-js data-send="setValue" data-wires="./batch-updates.js">
-                <div>
-                  <label for="batch-update-input-slider">Input</label>
-                  <input
-                    type="range"
-                    id="batch-updates-input-slider"
-                    min="0"
-                    max="100"
-                    data-c="updateNumber"
-                    data-b="checkNumbers"
-                    data-r="setValue"
-                  />
-                </div>
-                <div>
-                  <div>Greater that 10: <span data-r="check10"></span></div>
-                  <div>Greater that 20: <span data-r="check20"></span></div>
-                  <div>Greater that 30: <span data-r="check30"></span></div>
-                  <div>Greater that 40: <span data-r="check40"></span></div>
-                  <div>Greater that 50: <span data-r="check50"></span></div>
-                  <div>Greater that 60: <span data-r="check60"></span></div>
-                  <div>Greater that 70: <span data-r="check70"></span></div>
-                  <div>Greater that 80: <span data-r="check80"></span></div>
-                  <div>Greater that 90: <span data-r="check90"></span></div>
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Batch Initialization</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-batch="checkNumbers"
-                data-send="setValue"
-                data-wires="./batch-updates.js"
-              >
-                <div>
-                  <label for="batch-update-input-slider">Input</label>
-                  <input
-                    type="range"
-                    id="batch-updates-input-slider"
-                    min="0"
-                    max="100"
-                    data-c="updateNumber"
-                    data-b="checkNumbers"
-                    data-r="setValue"
-                  />
-                </div>
-                <div>
-                  <div>Greater that 10: <span data-r="check10"></span></div>
-                  <div>Greater that 20: <span data-r="check20"></span></div>
-                  <div>Greater that 30: <span data-r="check30"></span></div>
-                  <div>Greater that 40: <span data-r="check40"></span></div>
-                  <div>Greater that 50: <span data-r="check50"></span></div>
-                  <div>Greater that 60: <span data-r="check60"></span></div>
-                  <div>Greater that 70: <span data-r="check70"></span></div>
-                  <div>Greater that 80: <span data-r="check80"></span></div>
-                  <div>Greater that 90: <span data-r="check90"></span></div>
-                </div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Customize Event Listeners</h2>
-            <div class="make-two-columns">
-              <bitty-js
-                data-listeners="mouseover|mouseout"
-                data-wires="./set-listeners.js"
-              >
-                <button data-s="sawMouse">Mouse Instead of Click</button>
-                <div data-r="sawMouse">Waiting...</div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Element Access</h2>
-            <div class="make-two-columns">
-              <style>
-                .element-access-class {
-                  background-color: var(--element-access-background);
-                }
-              </style>
-              <bitty-js data-wires="./element-access.js">
-                <div>
-                  <button data-c="randomizeBackground">
-                    Randomize Background
-                  </button>
-                </div>
-                <div class="element-access-class">the quick fox</div>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>Isolated Elements</h2>
-            <style>
-              .isolated-element {
-                background-color: var(--isolated-element-background);
-              }
-            </style>
-            <div>
-              TODO: change so div backgrounds are changed since you can't see
-              the button backgrounds change when the over CSS is in play
-            </div>
-            <div class="make-two-columns">
-              <bitty-js data-wires="./isolate-element.js">
-                <button data-c="randomizeBackground" class="isolated-element">
-                  Randomize Background
-                </button>
-              </bitty-js>
-              <bitty-js data-wires="./isolate-element.js">
-                <button data-c="randomizeBackground" class="isolated-element">
-                  Randomize Background
-                </button>
-              </bitty-js>
-            </div>
-          </li>
-
-          <li>
-            <h2>To Make:</h2>
-            <ul>
-              <li>pass data to template via data-*</li>
-              <li>3+ levels of nesting</li>
-              <li>global send/receive</li>
-              <li>Example using templates from the HTML</li>
-              <li>
-                Update values in data attrs and show other components picking up
-                the changes.
-              </li>
-              <li>Change attrs and HTML of elements outside the component</li>
-              <li>
-                Explicit example of an element which has multiple
-                <code>data-r</code> receivers
-              </li>
-              <li>
-                Show example of event which calls a function with
-                <code>data-c</code> but doesn't send a
-                <code>data-s</code> event.
-              </li>
-            </ul>
-          </li>
-
-          <!-- end of examples -->
-        </ol>
+        </ul>
       </details>
 
       <details>
         <summary>Color Picker Example</summary>
+        [#
         <style>
           .color-picker {
             background-color: var(--color-picker-background);
@@ -792,14 +441,9 @@
           }
         </style>
         <div class="make-two-columns">
-          <bitty-js
-            data-call="initMode"
-            data-batch="sliders"
-            data-wires="./color-picker.js"
-            class="color-picker"
-          >
-          </bitty-js>
+          [@ data.misc_html["color-picker.html"].raw @]
         </div>
+        #]
       </details>
 
       <details>
@@ -1068,6 +712,22 @@ export class Wires {
       </details>
 
       <details>
+        <summary>Error Handling</summary>
+        <p>
+          Providing good, actionable error messages is an explicit design goal.
+          Details about them will be added here as work continues.
+        </p>
+        <p>Things to add</p>
+        <ul>
+          <li>Describe error messages</li>
+          <li>
+            example of using CSS styles added to components and elements with
+            errors to highlight them
+          </li>
+        </ul>
+      </details>
+
+      <details>
         <summary>Features</summary>
 
         [@ data.reminder @]
@@ -1078,14 +738,15 @@ export class Wires {
         </p>
 
         <ul>
-          <li>[] First class errors and debugging</li>
-          <li>[] All reactive elements have unique IDs</li>
+          <li>[] First class errors and debugging.</li>
+          <li>[] All reactive elements have unique IDs.</li>
           <li>
-            [] loadReactors is an event that bubbles so all ancestors can reload
+            [] loadReactors is an event that bubbles so all ancestors can
+            reload.
           </li>
           <li>
             [] <code>data-ignore</code> on elements tells it to ignore specific
-            signals
+            signals.
           </li>
           <li>
             [] <code>data-include</code> attr for elements. Only the signals
@@ -1094,92 +755,96 @@ export class Wires {
           </li>
           <li>
             [] An empty <code>data-include</code> in one way to turn off all
-            reactions
+            reactions.
           </li>
           <li>
             [] <code>data-inert</code> attr is an explicit way to turn off all
-            reactions
+            reactions.
           </li>
           <li>
             [] Each element is checked to make sure it's still set up to react
             to a given signal every time it receives one before the update
-            occurs
+            occurs.
           </li>
-          <li>[] All reactive elements have unique ids</li>
+          <li>[] All reactive elements have unique ids.</li>
           <li>
             [] Name-spaced signals (i.e. signals with the format
-            <code>NAMESPACE:SIGNAL</code>) are broadcast globally
+            <code>NAMESPACE:SIGNAL</code>) are broadcast globally.
           </li>
           <li>
             [] Elements can receive name-spaced signals regardless of their
-            relationship to the broadcaster
+            relationship to the broadcaster.
           </li>
-          <li>[] Error CSS class added to elements where errors occur</li>
+          <li>[] Error CSS class added to elements where errors occur.</li>
           <li>
             [] Built in debugger (TBD on specifics. Some stuff will happen
             automatically like a class being added to error elements. Thinking
             adding a watch for a <code>&debug</code> query param to add a close
-            to show them is probably worth it)
+            to show them is probably worth it).
           </li>
           <li>
             [] Rust level error message: It's a bug if an error message does
-            give you enough information on how to fix it whatever caused it
+            give you enough information on how to fix it whatever caused it.
           </li>
-          <li>[] Load template from the return value of a method call</li>
-          <li>[] Load template from a selector query on the parent page</li>
-          <li>[] Can nest multiple layers with everything becoming reactive</li>
-          <li>[] Improve error handling and messages</li>
-          <li>[] Automatically load templates</li>
-          <li>[x] Throttling done by <code>.requestAnimationFrame()</code></li>
-          <li>[x] <code>data-call</code> to send functions for init</li>
-          <li>[x] <code>data-b</code> to send batches</li>
+          <li>[] Load template from the return value of a method call.</li>
+          <li>[] Load template from a selector query on the parent page.</li>
           <li>
-            [x] <code>data-batch</code> for the init version of batch send
+            [] Can nest multiple layers with everything becoming reactive.
           </li>
-          <li>[x] Parents can ignore children signals</li>
-          <li>[x] Parents can communicate with children through bridge</li>
-          <li>[x] Children can communicate with parents through bridge</li>
-          <li>[] Global senders</li>
-          <li>[] Global receivers</li>
-          <li>[] Query arbitrary instances for their data</li>
+          <li>[] Improve error handling and messages.</li>
+          <li>[] Automatically load templates.</li>
+          <li>[x] Throttling done by <code>.requestAnimationFrame()</code>.</li>
+          <li>[x] <code>data-call</code> to send functions for init.</li>
+          <li>[x] <code>data-b</code> to send batches.</li>
           <li>
-            [x] Call <code>.init()</code> on <code>Wires</code> if available
+            [x] <code>data-batch</code> for the init version of batch send.
+          </li>
+          <li>[x] Parents can ignore children signals.</li>
+          <li>[x] Parents can communicate with children through bridge.</li>
+          <li>[x] Children can communicate with parents through bridge.</li>
+          <li>[] Global senders.</li>
+          <li>[] Global receivers.</li>
+          <li>[] Query arbitrary instances for their data.</li>
+          <li>
+            [x] Call <code>.init()</code> on <code>Wires</code> if available.
           </li>
           <li>
             [x] bitty-js init happens after wires init so send signals can be
-            sent to templates the wires loads
+            sent to templates the wires loads.
           </li>
           <li>
             [x] Loading a template automatically adds call/sender/receiver
-            functionality to it
+            functionality to it.
           </li>
-          <li>[] Load other web components</li>
-          <li>[] Loaded web components can use <code>bitty-js</code></li>
+          <li>[] Load other web components.</li>
+          <li>[] Loaded web components can use <code>bitty-js</code>.</li>
           <li>
             [x] Arbitrary <code>data-*</code> attributes can be used to send
             data to function calls.
           </li>
           <li>
-            [] Send/receive functions can access data from the triggering event
+            [] Send/receive functions can access data from the triggering event.
           </li>
           <li>
             [x] Core bitty.js functionality comes in the stand alone component.
             Specific behavior is defined by making a JavaScript module with a
             <code>Wires</code> class in it.
           </li>
-          <li>[x] Based off a naming convention to wire everything together</li>
-          <li>[x] Multiple instances can be placed on a single page</li>
+          <li>
+            [x] Based off a naming convention to wire everything together.
+          </li>
+          <li>[x] Multiple instances can be placed on a single page.</li>
           <li>
             [x] The component uses the light DOM. Page level CSS can be applied
-            to content inside the wires
+            to content inside the wires.
           </li>
           <li>
             [x] Initialize data with <code>data-send</code> which does a send
-            before the listeners are added
+            before the listeners are added.
           </li>
           <li>
             [x]: The <code>data-call</code> runs functions before doing the send
-            events in <code>data-send</code>
+            events in <code>data-send</code>.
           </li>
           <li>
             [x] Defaults to listening for <code>click</code> and
@@ -1188,24 +853,24 @@ export class Wires {
           <li>
             [x] Customize the event listeners with
             <code>data-listeners</code> in the <code>bitty-js</code> component
-            tag
+            tag.
           </li>
           <li>
             [x] CSS style variables/properties can be updated at the page/root
-            level
+            level.
           </li>
           <li>
             [x] CSS style variables/properties can be updated scoped to the
-            individual <code>bitty-js</code> element instance
+            individual <code>bitty-js</code> element instance.
           </li>
-          <li>[x] Classes can be updated</li>
-          <li>[x] .innerHTML can be updated</li>
-          <li>[x] .values can be updated</li>
-          <li>[] datasets can be updated</li>
-          <li>[] aria labels can be updated</li>
+          <li>[x] Classes can be updated.</li>
+          <li>[x] .innerHTML can be updated.</li>
+          <li>[x] .values can be updated.</li>
+          <li>[] datasets can be updated.</li>
+          <li>[] aria labels can be updated.</li>
           <li>
             [x] Can use <code>data-batch</code> and <code>data-b</code> for
-            sending batches of signals
+            sending batches of signals.
           </li>
           <li>
             [x] The data-send attribute on the main component tag sends those
@@ -1213,18 +878,39 @@ export class Wires {
           </li>
           <li>
             [] Errors are thrown if the requested wires import doesn't exist or
-            doesn't load
+            doesn't load.
           </li>
           <li>
             [] Preflight check to make sure functions exist and provide warnings
-            if they don't
+            if they don't.
           </li>
           <li>
-            [] Stress test with increasing numbers of instances and updates
+            [] Stress test with increasing numbers of instances and updates.
           </li>
           <li>
             [] Send signals from internal functions in the wires? (e.g. a type
-            of redirect)
+            of redirect).
+          </li>
+          <li>
+            [] Defined, ID based error messages. Each message contains a
+            description and, ideally help text.
+          </li>
+          <li>
+            [] Documentation on adding custom errors from the tool classes
+            (thinking they'll start with 9000 so they can be integers but be
+            safe from collisions).
+          </li>
+          <li>
+            [] Example of using <code>data-widget</code> to call something other
+            than the default <code>Widget()</code> class.
+          </li>
+          <li>
+            [x] Add a <code>bitty-component-error</code> class to components
+            that have errors.
+          </li>
+          <li>
+            [x] Add a <code>bitty-element-error</code> class to elements that
+            have errors.
           </li>
         </ul>
       </details>
@@ -1267,6 +953,32 @@ export class Wires {
             hard coded. they need to be moved to classes so the can switch
             between accessible colors for both light and dark mode)
           </li>
+          <li>
+            Debugging output shows the line number from the debug function
+            instead of where it was called from
+          </li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Queue</summary>
+
+        [@ data.reminder @]
+
+        <ul>
+          <li>
+            TODO: Move to classes for syntax highlighting so code snippets have
+            good contrast in both light and dark modes
+          </li>
+          <li>TODO: Refactored color picker to multiple components</li>
+          <li>
+            TODO: Custom error messages can be added from individual
+            tools/modules/whatever they end up being called
+          </li>
+          <li>
+            TODO: Moved examples into individual file sets to output code
+            samples along with the examples themselves.
+          </li>
         </ul>
       </details>
 
@@ -1277,21 +989,95 @@ export class Wires {
 
         <ul>
           <li>
-            <h3>Queue</h3>
+            <h3>Version: 0.2.3</h3>
+            <p>June 5, 2025</p>
 
             [@ data.reminder @]
 
-            <p>TBD</p>
+            <p>Lots of error handling work in this one.</p>
+
             <ul>
               <li>
-                TODO: Move to classes for syntax highlighting so code snippets
-                have good contrast in both light and dark modes
+                Moved UUID generation for the <code>bitty-js</code> and all
+                <code>data-*</code> reactive elements to the first thing in
+                <code>connectedCallback()</code> to aid in error messaging.
               </li>
-              <li>TODO: Refactored color picker to multiple components</li>
-              <li>TODO: Show code samples for examples</li>
               <li>
-                TODO: Stripped <code>prettier-ignore</code> comments from
-                display samples
+                Made <code>connectedCallback()</code> and
+                <code>async</code> function to throw loading the widget module
+                into its own funcitoun
+              </li>
+              <li>
+                Created an <code>#errors</code> private var to store error
+                messages and help by ID.
+              </li>
+              <li>Added the first few error messages</li>
+              <li>
+                <p>
+                  Added <code>this.error()</code> for outputting errors. It
+                  takes two optional arguments: an ID and an Element. The ID
+                  maps to the IDs in <code>#errors</code>. They're used to add
+                  detail and help message to the error output.
+                </p>
+                <p>
+                  The ID defaults to <code>0</code> which is an unclassified
+                  error type. The message for that ID includes a note to the
+                  developer to use an ID to classify the error. I consider it a
+                  bug if an appropriate ID doesn't exist and request an issue be
+                  open to fix it.
+                </p>
+                <p>
+                  The <code>this.error()</code> method dumps the
+                  <code>bitty-js</code> elemnet after the message.
+                </p>
+                <p>
+                  If an element was passed to <code>this.error()</code> it's
+                  dumped out as well.
+                </p>
+                <p>
+                  The error message end up being pretty long. The end up adding
+                  a bunch of lines to the source file. That's an explicit
+                  decision aimed at making bitty easier to work with.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Added top level <code>debug</code> function that uses a
+                  <code>debug</code> search query param from the
+                  <code>window.location</code> to see if it should output.
+                </p>
+                <p>
+                  Only thing I don't like about it is that it shows the
+                  function's line number instead of the line number from where
+                  it was called. Something to look into.
+                </p>
+              </li>
+              <li>
+                The <code>debug</code> function takes an optional element. It
+                dumps it to the console if one comes in.
+              </li>
+              <li>
+                Renamed <code>data-wires</code> to <code>data-bridge</code>.
+                Fits better and maps nicer to the <code>.bridge</code> coming
+                back in from the support class.
+              </li>
+              <li>
+                Set up to load the default class exported from a widget module
+                if no other class is defined (which happens with 'data-widget')
+              </li>
+              <li>
+                Moved all examples to use a default class export instead of a
+                named class
+              </li>
+              <li>
+                Added a <code>data-widget</code> attribute to the
+                <code>bitty-js</code> elements to allow using multiple classes
+                from inside a single supporting .js module file.
+              </li>
+              <li>
+                <code>bitty-component-error</code> and
+                <code>bitty-element-error</code> classes are added to the class
+                list of elements where errors occur.
               </li>
             </ul>
           </li>
@@ -1301,6 +1087,11 @@ export class Wires {
             <p>June 4, 2025</p>
 
             [@ data.reminder @]
+
+            <p>
+              Added UUIDs for pending error handling. Shuffeld a bunch of stuff
+              around to make the examples look nicer.
+            </p>
 
             <ul>
               <li>
@@ -1370,6 +1161,11 @@ export class Wires {
 
             [@ data.reminder @]
 
+            <p>
+              Some more wiring and some support tools for making the demo/docs
+              site.
+            </p>
+
             <ul>
               <li>
                 Made a Hello, World example that shows basic features. (Compared
@@ -1405,6 +1201,8 @@ export class Wires {
             <p>June 3, 2025</p>
 
             [@ data.reminder @]
+
+            <p>Setting up a bunch of the basic wiring.</p>
 
             <ul>
               <li>
@@ -1483,6 +1281,8 @@ export class Wires {
             <p>June 2, 2025</p>
 
             [@ data.reminder @]
+
+            <p>Getting the project started.</p>
 
             <ul>
               <li>Initial prototype.</li>
@@ -1601,52 +1401,52 @@ export class Wires {
     <script type="module" src="components/github-stars-beta-1.js"></script>
     <script type="module">
       class DetailsWatcher {
-        #storageName = "openDetailsData";
-        #data;
+        #storageName = 'openDetailsData'
+        #data
 
         initTags() {
           this.details().forEach((tag, tagIndex) => {
             if (this.#data.has(tagIndex)) {
-              tag.open = true;
+              tag.open = true
             }
-            tag.addEventListener("toggle", (event) => {
-              if (event.newState === "open") {
-                this.#data.add(tagIndex);
+            tag.addEventListener('toggle', (event) => {
+              if (event.newState === 'open') {
+                this.#data.add(tagIndex)
               } else {
-                this.#data.delete(tagIndex);
+                this.#data.delete(tagIndex)
               }
-              this.saveState();
-            });
-          });
+              this.saveState()
+            })
+          })
         }
 
         details() {
-          return document.querySelectorAll("details");
+          return document.querySelectorAll('details')
         }
 
         loadState() {
-          const storage = localStorage.getItem(this.#storageName);
+          const storage = localStorage.getItem(this.#storageName)
           if (storage === null) {
-            this.#data = new Set();
+            this.#data = new Set()
           } else {
-            this.#data = new Set(JSON.parse(storage).data);
+            this.#data = new Set(JSON.parse(storage).data)
           }
         }
 
         run() {
-          this.loadState();
-          this.initTags();
+          this.loadState()
+          this.initTags()
         }
 
         saveState() {
           localStorage.setItem(
             this.#storageName,
-            JSON.stringify({ data: [...this.#data] }),
-          );
+            JSON.stringify({ data: [...this.#data] })
+          )
         }
       }
-      const dw = new DetailsWatcher();
-      dw.run();
+      const dw = new DetailsWatcher()
+      dw.run()
     </script>
   </body>
 </html>

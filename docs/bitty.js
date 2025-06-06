@@ -1,152 +1,469 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.2.2
+// bitty.js  - Version 0.2.3
+/////////////////////////////////////////////////////
+
+function debug(payload, el = null) {
+  // TODO: Figure out how to display the function that called
+  // this or its line number
+  if (window && window.location && window.location.search) {
+    const params = new URLSearchParams(window.location.search)
+    if (params.has('debug')) {
+      console.log(payload)
+      if (el !== null) {
+        console.log(el)
+      }
+    }
+  }
+}
+
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
-  #listeners = ["click", "input"];
-  #receivers = [];
+  // TODO: Deprecate #hashString in favor of join approach
+  #hashString = '#######################################'
+  #listeners = ['click', 'input']
+  #receivers = []
+  #errors = [
+    {
+      id: 0,
+      kind: ['Not Classified'],
+      description: ['An unclassified error occurred.'],
+      help: [
+        [
+          `Detailed help isn't available since this error is unclassified.`,
+          `Use the line numbers from the error console to locate the source of the error and work from there.`,
+        ],
+      ],
+      developerNote: [
+        ` Use an ID from the BittyJS #errors variable to classify this error.`,
+        `It's a bug if there's not an approprite classification. Please open an issue if you find an error without a clear mapping.`,
+      ],
+    },
+    {
+      id: 1,
+      kind: ['Invalid Error ID'],
+      description: [
+        `An attempt to call an error with an ID of '__ERROR_ID__' was made. That ID does not exist in '#errors'.`,
+      ],
+      help: [
+        [`Change the ID to one that's avaialble in the '#errors' variable.`],
+        [
+          `Create a custom error with the ID you're attempting to use.`,
+          `NOTE: Custom error IDs should be above 9000 by convention.`,
+        ],
+      ],
+      developerNote: [],
+    },
+    {
+      id: 2,
+      kind: [
+        "A <bitty-js></bitty-js> element is missing its 'data-bridge' attribute",
+      ],
+      description: [
+        `Every <bitty-js></bitty-js> element requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
+        `The 'data-bridge' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
+        `__UUID__`,
+      ],
+      help: [
+        [
+          `Add a 'data-bridge' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
+          `<bitty-js data-bridge="./path/to/module.js"></bitty-js>`,
+        ],
+      ],
+      developerNote: [],
+    },
+    {
+      id: 3,
+      kind: [`Could not load default class from:`, `__MODULE_PATH__`],
+      description: [
+        `The <bitty-js> element with 'data-uuid':`,
+        `__BITTY_UUID__ [TODO: find/replace uuid here]`,
+        `does not have a 'data-app' attribute. Therefore, it attempted to load the default class exported from:`,
+        `__MODULE_PATH__ [TODO: find/replace .js path here]`,
+        `that attempt failed.`,
+      ],
+      help: [
+        [
+          `Make sure the __MODULE_PATH__ file has either a:`,
+          `export default class {}`,
+          `or:`,
+          `export default class SOME_NAME {}`,
+        ],
+        [
+          `If the file has a 'export default class', something went wrong with it. Examine it further to trace the issue.`,
+        ],
+        [
+          `Add a 'data-app' attribute to the <bitty-js> element with the name of a class exported from __MODULE_PATH__.`,
+        ],
+      ],
+      developerNote: [],
+    },
+    ,
+    {
+      id: 4,
+      kind: [`Could not load widget`],
+      description: [`The widget could not be loaded from the .js module file.`],
+      help: [
+        [`TODO: Make note here about defauld call to Widget()`],
+        [
+          `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
+        ],
+        ['Make sure the class in your .js module file is being exported'],
+      ],
+      developerNote: [],
+    },
+  ]
+
+  // sample to copy paste for new error message
+  // {
+  //   id: 2,
+  //   kind: [],
+  //   description: [],
+  //   help: [[`Help option`]],
+  //   developerNote: [],
+  // },
 
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
-        this.requestUpdate.call(this, event);
-      });
-    });
+        this.requestUpdate.call(this, event)
+      })
+    })
   }
 
   addIds() {
+    debug('Adding IDs')
     if (this.dataset.uuid === undefined) {
-      this.dataset.uuid = self.crypto.randomUUID();
+      this.dataset.uuid = self.crypto.randomUUID()
     }
-    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
+    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`)
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
-        el.dataset.uuid = self.crypto.randomUUID();
+        el.dataset.uuid = self.crypto.randomUUID()
       }
-    });
+    })
   }
 
   addReceiver(key, el) {
     this.#receivers.push({
-      "key": key,
-      "f": (data) => {
+      key: key,
+      f: (data) => {
         try {
-          this.wires[`$${key}`](el, data);
+          this.widget[`$${key}`](el, data)
         } catch (error) {
-          console.error(error);
-          console.error(`Tried: $${key}`);
+          console.error(error)
+          console.error(`Tried: $${key}`)
         }
       },
-    });
+    })
+  }
+
+  assembleErrorHelpText(err) {
+    const out = []
+    err.help.forEach((options, index) => {
+      if (err.help.length === 1) {
+        if (index === 0) {
+          out.push('POSSIBLE SOLUTION:')
+        }
+        out.push(this.assembleErrorText(options))
+      } else {
+        if (index === 0) {
+          out.push('POSSIBLE SOLUTIONS:')
+        }
+        options.forEach((option, optionIndex) => {
+          if (optionIndex === 0) {
+            out.push(`${index + 1}. ${option}`)
+          } else {
+            out.push(option)
+          }
+        })
+      }
+    })
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assemlbeErrorAdditionalDetails(err) {
+    if (err.additionalDetails !== null) {
+      const out = []
+      out.push('ADDITIONAL DETAILS:')
+      out.push(err.additionalDetails)
+      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
+
+  assembleErrorComponent(err) {
+    const out = []
+    out.push(`COMPONENT:`)
+    out.push(
+      `This error was caught by the <bitty-js> element with a 'data-uuid' of:`
+    )
+    out.push(this.dataset.uuid)
+    out.push(
+      `A copy of the element is in a follow up message below. ('data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console.)`
+    )
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  assemlbeErrorDescription(err) {
+    const out = []
+    out.push('DESCRIPTION:')
+    out.push(this.assembleErrorText(err.description))
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
+  // assembleErrorDumpMessage(err) {
+  //   const out = []
+  //   if (err.el !== null) {
+  //     out.push('ELEMENT OUTPUTS')
+  //     out.push(
+  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
+  //     )
+  //   } else {
+  //     out.push('ELEMENT OUTPUT')
+  //     out.push(
+  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+  //     )
+  //   }
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+  assembleErrorElementDetails(err) {
+    if (err.el !== null) {
+      const out = []
+      out.push('ERROR ELEMENT DETAILS')
+      out.push(
+        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`
+      )
+      out.push(err.el.dataset.uuid)
+      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+      err.output.push(text)
+    }
+  }
+
+  // TODO: This is out for now. Probably DEPRECATE, but think
+  // about it a little more first.
+  // assembleErrorFinding(err) {
+  //   const out = []
+  //   out.push(`FINDING THE ERROR`)
+  //   out.push(
+  //     `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
+  //   )
+  //   out.push(
+  //     `Expand the error message in the console to see the extended error trace and associated line numbers.`
+  //   )
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+  assembleErrorId(err) {
+    const out = []
+    out.push(this.#hashString)
+    out.push(`A BITTY ERROR OCCURRED [ID: ${err.id}]`)
+    out.push(this.assembleErrorText(err.kind))
+    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+    err.output.push(text)
+  }
+
+  // assembleErrorPrelude(err) {
+  //   const out = []
+  //   out.push(this.#hashString)
+  //   out.push(`A BITTY ERROR OCCURRED`)
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+  assembleErrorReplacedText(err, content) {
+    return content
+      .replaceAll('__UUID__', this.dataset.uuid)
+      .replaceAll('__ERROR_ID__', err.id)
+      .trim()
+  }
+
+  assembleErrorText(content) {
+    return content.join('\n\n')
   }
 
   constructor() {
-    super();
+    super()
   }
 
-  connectedCallback() {
-    if (this.dataset.wires) {
-      import(this.dataset.wires).then((mod) => {
-        this.wires = new mod.Wires();
-        this.requestUpdate = this.handleChange.bind(this);
-        // Reminder: loadReceivers has to be in front of init
-        // because inits can use data-send
-        this.loadReceivers();
-        this.init();
-        this.addIds();
-        this.addEventListeners();
-      });
+  async attachWidget() {
+    if (this.dataset.bridge) {
+      const mod = await import(this.dataset.bridge)
+      if (this.dataset.widget === undefined) {
+        this.widget = new mod.default()
+      } else {
+        this.widget = new mod[this.dataset.widget]()
+      }
     } else {
-      console.error("Missing data-wires attribute");
+      this.error(2)
+    }
+  }
+
+  async connectedCallback() {
+    // TODO: Verify `async` on connectedCallback
+    // works across browsers.
+    this.setId()
+    this.setIds()
+    await this.attachWidget()
+    if (this.widget === undefined) {
+      this.error(0)
+    } else {
+      this.requestUpdate = this.handleChange.bind(this)
+      this.loadReceivers()
+      this.init()
+      this.addEventListeners()
+    }
+  }
+
+  error(id = 0, el = null, additionalDetails = null) {
+    this.classList.add('bitty-component-error')
+    if (el !== null) {
+      this.classList.add('bitty-element-error')
+    }
+    let err = this.#errors.find((err) => {
+      return err.id === id
+    })
+    if (err === undefined) {
+      err = this.#errors.find((err) => {
+        return err.id === 1
+      })
+    }
+    err.el = el
+    err.additionalDetails = additionalDetails
+    err.output = []
+    // this.assembleErrorPrelude(err)
+    this.assembleErrorId(err)
+    // this.assembleErrorDumpMessage(err)
+    this.assemlbeErrorDescription(err)
+    this.assemlbeErrorAdditionalDetails(err)
+    this.assembleErrorHelpText(err)
+    this.assembleErrorComponent(err)
+    this.assembleErrorElementDetails(err)
+    // TODO: Add developerNote
+    // TODO: Pull the source error message if there is on
+    console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
+    console.error(this)
+    if (el !== null) {
+      console.error(el)
     }
   }
 
   handleChange(event) {
     if (event.target === undefined || event.target.dataset === undefined) {
-      return;
+      return
     }
     if (event.target.dataset.c !== undefined) {
-      this.runFunctions(event.target.dataset.c, event);
+      this.runFunctions(event.target.dataset.c, event)
     }
     if (event.target.dataset.b !== undefined) {
-      const batch = this.wires.batches[event.target.dataset.b].join("|");
-      this.sendUpdates(batch, event);
+      const batch = this.widget.batches[event.target.dataset.b].join('|')
+      this.sendUpdates(batch, event)
     }
     if (event.target.dataset.s !== undefined) {
-      this.sendUpdates(event.target.dataset.s, event);
+      this.sendUpdates(event.target.dataset.s, event)
     }
   }
 
   init() {
-    this.wires.bridge = this;
-    if (this.wires.template !== undefined) {
-      const skeleton = document.createElement("template");
-      skeleton.innerHTML = this.wires.template();
-      this.append(skeleton.content.cloneNode(true));
-      this.loadReceivers();
+    this.widget.bridge = this
+    if (this.widget.template !== undefined) {
+      const skeleton = document.createElement('template')
+      skeleton.innerHTML = this.widget.template()
+      this.append(skeleton.content.cloneNode(true))
+      this.loadReceivers()
     }
-    if (this.wires.init !== undefined) {
-      this.wires.init();
+    if (this.widget.init !== undefined) {
+      this.widget.init()
     }
     if (this.dataset.call !== undefined) {
-      this.runFunctions(this.dataset.call, null);
+      this.runFunctions(this.dataset.call, null)
     }
     if (this.dataset.send !== undefined) {
-      this.sendUpdates(this.dataset.send, null);
+      this.sendUpdates(this.dataset.send, null)
     }
     if (this.dataset.batch !== undefined) {
-      const batch = this.wires.batches[this.dataset.batch].join("|");
-      this.sendUpdates(batch, null);
+      const batch = this.widget.batches[this.dataset.batch].join('|')
+      this.sendUpdates(batch, null)
     }
     if (this.dataset.listeners !== undefined) {
-      this.#listeners = this.dataset.listeners.split("|");
+      this.#listeners = this.dataset.listeners.split('|')
     }
   }
 
   isIgnored(name) {
     if (this.dataset.ignore === undefined) {
-      return false;
+      return false
     }
-    return this.dataset.ignore.split("|").includes(name);
+    return this.dataset.ignore.split('|').includes(name)
   }
 
   loadReceivers() {
-    this.#receivers = [];
-    const els = this.querySelectorAll(`[data-r]`);
+    debug('loading receivers')
+    this.#receivers = []
+    const els = this.querySelectorAll(`[data-r]`)
     els.forEach((el) => {
-      el.dataset.r.split("|").forEach((key) => {
-        this.addReceiver(key, el);
-      });
-    });
+      el.dataset.r.split('|').forEach((key) => {
+        this.addReceiver(key, el)
+      })
+    })
   }
 
   runFunctions(stringToSplit, event) {
-    stringToSplit.split("|").forEach((f) => {
+    stringToSplit.split('|').forEach((f) => {
       if (this.isIgnored(f) === false) {
         try {
-          this.wires[`_${f}`](event);
+          this.widget[`_${f}`](event)
         } catch (error) {
-          console.log(error);
-          console.error(`Tried: _${f}`);
+          console.log(error)
+          console.error(`Tried: _${f}`)
         }
       }
-    });
+    })
   }
 
   sendUpdates(updates, data) {
-    updates.split("|").forEach((key) => {
+    updates.split('|').forEach((key) => {
       if (this.isIgnored(key) === false) {
         this.#receivers.forEach((receiver) => {
           if (receiver.key === key) {
-            receiver.f(data);
+            receiver.f(data)
           }
-        });
+        })
       }
-    });
+    })
+  }
+
+  setId() {
+    const uuid = self.crypto.randomUUID()
+    debug(`Setting bitty-js ID to: ${uuid}`)
+    this.dataset.uuid = uuid
+  }
+
+  setIds() {
+    const selector = ['r', 'c', 's', 'call', 'send', 'b', 'batch']
+      .map((key) => {
+        return `[data-${key}]`
+      })
+      .join(',')
+    const els = this.querySelectorAll(selector)
+    els.forEach((el) => {
+      if (el.dataset.uuid === undefined) {
+        const uuid = self.crypto.randomUUID()
+        debug(`Setting ${el.tagName} ID to: ${uuid}`)
+        el.dataset.uuid = uuid
+      }
+    })
   }
 }
 
-customElements.define("bitty-js", BittyJs);
+customElements.define('bitty-js', BittyJs)
 
 /* *************************************************
  *

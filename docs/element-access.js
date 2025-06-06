@@ -1,4 +1,7 @@
-export class Wires {
+// deno-fmt-ignore-file
+
+export default class {
+
   #colors = [
     "slategray",
     "orangered",
@@ -23,4 +26,5 @@ export class Wires {
   randomColor() {
     return this.#colors[Math.floor(Math.random() * this.#colors.length)];
   }
+
 }

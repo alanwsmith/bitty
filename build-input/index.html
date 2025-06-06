@@ -81,19 +81,38 @@
 
       <p>Bitty is a vanilla web component. It makes other elements reactive.</p>
       <p>
-        This page has examples covering the details. The first one is this
-        counter. Click it to make the number go up.
+        This page has examples covering all of bitty's features. This counter is
+        the first one. Click it to make the number go up.
       </p>
       <div
         class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
       >
         [@ data.misc_html["counter.html"].raw @]
       </div>
+      <p>The code looks like this:</p>
+
+      <div>
+        <div>
+          <pre
+            class="code-block"
+          ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
+        </div>
+        <div>
+          <pre
+            class="code-block"
+          ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
+        </div>
+      </div>
 
       <p>
         The sections below provide details about how everything works. Check
         them out to dig in.
       </p>
+
+      <details>
+        <summary>Quick-Start</summary>
+        <p>[This is a place holder stub while the content is being written]</p>
+      </details>
 
       <details>
         <summary>Counter Details (Basic Functionality Overview)</summary>
@@ -165,22 +184,27 @@
             <p>
               <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code>
               tags require a
-              <code>data-wires</code> attribute.
+              <code>data-bridge</code> attribute.
             </p>
             <p>
-              The <code>data-wires</code> attribute value is a path to a
-              JavaScript module file (<code>counter.js</code> in our case). The
-              module must export a class named <code>Wires</code>. It's
-              responsible for providing the functions that are called when
-              events happen.
+              The <code>data-bridge</code> attribute value is a path to a
+              JavaScript module file (<code>counter.js</code> in our case).
+              bitty imports that file an loads a class that provides the
+              funcitons that are called when interations happen. (<code
+                >Widget</code
+              >
+              by default but you can change that.
+            </p>
+            <p class="warning">
+              (TODO: See about loading a default export instead of implicitly
+              looking for Widget.)
             </p>
           </li>
           <li>
             <p>
-              Other optional <code>data-*</code> attributes can be added to
-              <code>bitty-js</code> elements. The
-              <code>data-send</code> attribute in the counter is one example.
-              We'll come back to it shortly.
+              Other <code>data-*</code> attributes are optional
+              <code>bitty-js</code>. For example, the
+              <code>data-send</code> attribute which will come back to shortly.
             </p>
           </li>
         </ul>
@@ -329,7 +353,8 @@
 
       <details>
         <summary>Basic Examples</summary>
-        [! for example in data.examples !] 
+[#
+        [! for example in data.examples !]
         <div>
           <h3>[@ example.title @]</h3>
           <div class="make-two-columns">[@ example.raw_html @]</div>
@@ -338,7 +363,9 @@
               [@- example.highlighted_html -@]
             </code></pre>
           </div>
-        </div> [! endfor !] [@ data.reminder @] 
+        </div>
+        [! endfor !] [@ data.reminder @]
+#]
       </details>
 
       <details>

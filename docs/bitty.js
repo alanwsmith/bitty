@@ -72,6 +72,23 @@ class BittyJs extends HTMLElement {
     },
     {
       id: 3,
+      kind: [`Could not load default class from module`],
+      description: [
+        `Bitty failed to load the default exported class from:`,
+        `__MODULE_PATH`,
+      ],
+      help: [
+        [`TODO: Make note here about defauld call to Widget()`],
+        [
+          `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
+        ],
+        ['Make sure the class in your .js module file is being exported'],
+      ],
+      developerNote: [],
+    },
+    ,
+    {
+      id: 4,
       kind: [`Could not load widget`],
       description: [`The widget could not be loaded from the .js module file.`],
       help: [
@@ -166,13 +183,13 @@ class BittyJs extends HTMLElement {
 
   assembleErrorComponent(err) {
     const out = []
-    out.push(`COMPONENT UUID`)
+    out.push(`COMPONENT`)
     out.push(
-      `The 'data-uuid' attribute of the <bitty-js></bitty-js> element associated with this error is:`
+      `The 'data-uuid' of the <bitty-js> element associated with this error is:`
     )
     out.push(this.dataset.uuid)
     out.push(
-      "NOTE: 'data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console."
+      `A copy of the element is in a follow up message below. ('data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console.)`
     )
     const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
     err.output.push(text)
@@ -186,22 +203,23 @@ class BittyJs extends HTMLElement {
     err.output.push(text)
   }
 
-  assembleErrorDumpMessage(err) {
-    const out = []
-    if (err.el !== null) {
-      out.push('ELEMENT OUTPUTS')
-      out.push(
-        'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
-      )
-    } else {
-      out.push('ELEMENT OUTPUT')
-      out.push(
-        'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
-      )
-    }
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
+  // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
+  // assembleErrorDumpMessage(err) {
+  //   const out = []
+  //   if (err.el !== null) {
+  //     out.push('ELEMENT OUTPUTS')
+  //     out.push(
+  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
+  //     )
+  //   } else {
+  //     out.push('ELEMENT OUTPUT')
+  //     out.push(
+  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+  //     )
+  //   }
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
 
   assembleErrorElementDetails(err) {
     if (err.el !== null) {
@@ -216,34 +234,37 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  assembleErrorFinding(err) {
-    const out = []
-    out.push(`FINDING THE ERROR`)
-    out.push(
-      `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
-    )
-    out.push(
-      `Expand the error message in the console to see the extended error trace and associated line numbers.`
-    )
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
+  // TODO: This is out for now. Probably DEPRECATE, but think
+  // about it a little more first.
+  // assembleErrorFinding(err) {
+  //   const out = []
+  //   out.push(`FINDING THE ERROR`)
+  //   out.push(
+  //     `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
+  //   )
+  //   out.push(
+  //     `Expand the error message in the console to see the extended error trace and associated line numbers.`
+  //   )
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
 
   assembleErrorId(err) {
     const out = []
-    out.push(`ERROR ID: ${err.id}`)
+    out.push(this.#hashString)
+    out.push(`A BITTY ERROR OCCURRED [ID: ${err.id}]`)
     out.push(this.assembleErrorText(err.kind))
     const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
     err.output.push(text)
   }
 
-  assembleErrorPrelude(err) {
-    const out = []
-    out.push(this.#hashString)
-    out.push(`A BITTY ERROR OCCURRED`)
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
-  }
+  // assembleErrorPrelude(err) {
+  //   const out = []
+  //   out.push(this.#hashString)
+  //   out.push(`A BITTY ERROR OCCURRED`)
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
 
   assembleErrorReplacedText(err, content) {
     return content
@@ -264,24 +285,42 @@ class BittyJs extends HTMLElement {
     this.setId()
     this.setIds()
     if (this.dataset.bridge) {
-      import(this.dataset.bridge).then((mod) => {
+      if (this.dataset.widget === undefined) {
         try {
-          if (this.dataset.widget === undefined) {
-            this.widget = new mod.Widget()
-          } else {
-            this.widget = new mod[this.dataset.widget]()
-          }
-          this.requestUpdate = this.handleChange.bind(this)
-          // Reminder: loadReceivers has to be in front of init
-          // because inits can use data-send
-          this.loadReceivers()
-          this.init()
-          this.addIds()
-          this.addEventListeners()
+          import(this.dataset.bridge).then((mod) => {
+            if (mod.default === undefined) {
+              this.error(3)
+            } else {
+              try {
+                this.tools = new mod.default()
+              } catch {
+                this.error(4)
+              }
+            }
+          })
         } catch {
-          this.error(3)
+          this.error(5)
         }
-      })
+      }
+
+      // import(this.dataset.bridge).then((mod) => {
+      //   try {
+      //     if (this.dataset.widget === undefined) {
+      //       this.widget = new mod.Widget()
+      //     } else {
+      //       this.widget = new mod[this.dataset.widget]()
+      //     }
+      //     this.requestUpdate = this.handleChange.bind(this)
+      //     // Reminder: loadReceivers has to be in front of init
+      //     // because inits can use data-send
+      //     this.loadReceivers()
+      //     this.init()
+      //     this.addIds()
+      //     this.addEventListeners()
+      //   } catch {
+      //     this.error(3)
+      //   }
+      // })
     } else {
       this.error(2)
     }
@@ -299,13 +338,12 @@ class BittyJs extends HTMLElement {
     err.el = el
     err.additionalDetails = additionalDetails
     err.output = []
-    this.assembleErrorPrelude(err)
+    // this.assembleErrorPrelude(err)
     this.assembleErrorId(err)
-    this.assembleErrorFinding(err)
-    this.assembleErrorDumpMessage(err)
+    // this.assembleErrorDumpMessage(err)
+    this.assemlbeErrorDescription(err)
     this.assembleErrorComponent(err)
     this.assembleErrorElementDetails(err)
-    this.assemlbeErrorDescription(err)
     this.assemlbeErrorAdditionalDetails(err)
     this.assembleErrorHelpText(err)
     // TODO: Add developerNote

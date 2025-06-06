@@ -19,7 +19,7 @@ Use the build-site.rs script to generate it
     <meta property="og:title" content="bitty.js" />
     <meta
       property="og:description"
-      content="small component - big reactivity - vanilla js"
+      content="small component - big reactivity"
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
@@ -52,7 +52,7 @@ Use the build-site.rs script to generate it
     />
     <meta
       name="description"
-      content="small component - bit reactivity - vanilla js"
+      content="small component - bit reactivity"
     />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
@@ -78,7 +78,7 @@ Use the build-site.rs script to generate it
         <h1>bitty.js</h1>
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
-            small component - big reactivity - vanilla js
+            small component - big reactivity
           </div>
         </div>
       </hgroup>
@@ -109,34 +109,37 @@ Use the build-site.rs script to generate it
         <!-- prettier-ignore -->
 
 <bitty-js 
-  data-bridge="./counter.js"
-  data-send="showNum">
+  data-bridge="./counter.js">
 
   <button 
     data-r="showNum"
     data-c="addOne" 
-    data-s="showNum">
+    data-s="showNum"
+  >Click Me
   </button>
 
 </bitty-js>
 
       </div>
-      <p>The code for the example looks like this:</p>
+      <p>
+        Everything works by mapping <code>data-*</code> attributes to functions.
+        For example, the counter's code looks like this:
+      </p>
 
       <div class="two-column-example">
         <div>
           <div>index.html</div>
           <pre
             class="code-block"
-          ><code class="xsmall-font"><span class="codeLine"></span>
+          ><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">addOne</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &gt;Click Me</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
@@ -145,7 +148,7 @@ Use the build-site.rs script to generate it
           <div>counter.js</div>
           <pre
             class="code-block"
-          ><code class="xsmall-font"><span class="codeLine"></span>
+          ><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #num = 0;</span></span>
@@ -162,6 +165,35 @@ Use the build-site.rs script to generate it
         </div>
       </div>
 
+      <ul>
+        <li>
+          <code>data-bridge</code> connects the element to the
+          <code>counter.js</code> module
+        </li>
+        <li>
+          <code>data-r</code> registeres the button to receive updates when
+          <code>showNum</code> signals are sent
+        </li>
+        <li>
+          <code>data-c</code> calls the <code>_addOne</code> function when the
+          button is clicked (prepending the funciton name with a
+          <code>_</code> is part of the naming convention)
+        </li>
+        <li>
+          <code>data-s</code> sends the <code>showNum</code> signal when the
+          button is clicked. It fires the <code>$showNum</code> fuction which
+          performs the updates (prepending the function name with a
+          <code>$</code> is another part of the naming convention)
+        </li>
+      </ul>
+
+      <p>
+        There are more features, but that's everything you need to know to get
+        started.
+      </p>
+
+      <h2>Using bitty</h2>
+
       <p>
         The sections below provide details about how everything works. Check
         them out to dig in.
@@ -169,7 +201,10 @@ Use the build-site.rs script to generate it
 
       <details>
         <summary>Quick-Start</summary>
-        <p>bitty is still under development. Quick-start instructions are on the way.</p>
+        <p>
+          bitty is still under development. Quick-start instructions are on the
+          way.
+        </p>
         <p>[This is a place holder stub while the content is being written]</p>
       </details>
 
@@ -219,13 +254,13 @@ Use the build-site.rs script to generate it
               class="code-block"
             ><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">addOne</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &gt;Click Me</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
@@ -268,7 +303,7 @@ Use the build-site.rs script to generate it
         <ul>
           <li>
             <p>
-              <code>bitty.js</code> is a vanilla web component file. It provides
+              <code>bitty.js</code> is a web component file. It provides
               a <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code> tag. Wrapping
               other tags with it gives them reactive powers.
             </p>
@@ -566,6 +601,8 @@ Use the build-site.rs script to generate it
     data-bridge="./updating-self.js" 
     data-send="displayCount">
 
+    <div></div>
+
     <button
         data-c="increment"
         data-s="displayCount"
@@ -579,6 +616,8 @@ Use the build-site.rs script to generate it
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./updating-self.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
@@ -751,58 +790,56 @@ Use the build-site.rs script to generate it
           <h3>Avoiding Feedback</h3>
           <div class="make-two-columns">
 <bitty-js data-bridge="./echo.js">
-  <div>
-    <label for="avoid-feedback-slider-a">Slider A</label>
-    <input
-      type="range"
-      id="avoid-feedback-slider-a"
-      min="0"
-      max="100"
-      data-c="setValue"
-      data-s="setSliderB"
-      data-r="setSliderA"
-    />
-  </div>
+
   <div>
     <label for="avoid-feedback-slider-b">Slider B</label>
     <input
       type="range"
       id="avoid-feedback-slider-b"
-      min="0"
-      max="100"
       data-c="setValue"
       data-s="setSliderA"
       data-r="setSliderB"
     />
   </div>
+
+  <div>
+    <label for="avoid-feedback-slider-a">Slider A</label>
+    <input
+      type="range"
+      id="avoid-feedback-slider-a"
+      data-c="setValue"
+      data-s="setSliderB"
+      data-r="setSliderA"
+    />
+  </div>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./echo.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-a</span><span style="color:#c0c5ce;">&quot;&gt;Slider A&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-a</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-b</span><span style="color:#c0c5ce;">&quot;&gt;Slider B&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-b</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-a</span><span style="color:#c0c5ce;">&quot;&gt;Slider A&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">avoid-feedback-slider-a</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -811,66 +848,74 @@ Use the build-site.rs script to generate it
           <h3>Sent Multiple Signals</h3>
           <div class="make-two-columns">
 <bitty-js data-bridge="./foxtrot.js">
+
   <div>
-    <label for="multiple-updates-input-slider"
-      >Input Slider</label
-    >
-    <input
-      type="range"
-      id="multiple-updates-input-slider"
-      min="0"
-      max="100"
-      data-c="setNumber"
-      data-s="displayNumber|setNumberValue"
-    />
-  </div>
-  <div>
-    <label for="multiple-updates-output-slider"
-      >Output Slider</label
-    >
+
+    <p>
+      Output Text: 
+      <span data-r="displayNumber">Waiting</span>
+    </p>
+
+    <label for="multiple-updates-output-slider">
+      Output Slider
+    </label>
+
     <input
       type="range"
       id="multiple-updates-output-slider"
-      min="0"
-      max="100"
-      data-r="setNumberValue"
-    />
-    <div>
-      Output Text: <span data-r="displayNumber">Waiting</span>
-    </div>
+      data-r="setNumberValue">
+
   </div>
+
+  <div>
+    <label for="multiple-updates-input-slider">
+      Input Slider
+    </label>
+
+    <input
+      type="range"
+      id="multiple-updates-input-slider"
+      data-c="setNumber"
+      data-s="displayNumber|setNumberValue">
+
+  </div>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./foxtrot.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &gt;Input Slider&lt;/</span><span style="color:#bf616a;">label</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber|setNumberValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-output-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &gt;Output Slider&lt;/</span><span style="color:#bf616a;">label</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">p</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Output Text:</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;Waiting&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">p</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-output-slider</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Output Slider</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-output-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumberValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      Output Text: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;Waiting&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumberValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Input Slider</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber|setNumberValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -879,19 +924,7 @@ Use the build-site.rs script to generate it
           <h3>Use Multiple Receivers</h3>
           <div class="make-two-columns">
 <bitty-js data-bridge="./golf.js">
-  <div>
-    <label for="multiple-receivers-input-slider"
-      >Input Slider</label
-    >
-    <input
-      type="range"
-      id="multiple-receivers-input-slider"
-      min="0"
-      max="100"
-      data-c="setNumber"
-      data-s="displayNumber"
-    />
-  </div>
+
   <div>
     <div>Copy 1: <span data-r="displayNumber"></span></div>
     <div>Copy 2: <span data-r="displayNumber"></span></div>
@@ -900,23 +933,28 @@ Use the build-site.rs script to generate it
     <div>Copy 5: <span data-r="displayNumber"></span></div>
     <div>Copy 6: <span data-r="displayNumber"></span></div>
   </div>
+
+  <div>
+
+    <label for="multiple-receivers-input-slider">
+      Input Slider
+    </label>
+
+    <input
+      type="range"
+      id="multiple-receivers-input-slider"
+      min="0"
+      max="100"
+      data-c="setNumber"
+      data-s="displayNumber">
+
+  </div>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./golf.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-receivers-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &gt;Input Slider&lt;/</span><span style="color:#bf616a;">label</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-receivers-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Copy 1: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Copy 2: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -925,6 +963,23 @@ Use the build-site.rs script to generate it
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Copy 5: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Copy 6: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-receivers-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Input Slider</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">multiple-receivers-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayNumber</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -933,64 +988,84 @@ Use the build-site.rs script to generate it
           <h3>Initializing Values</h3>
           <div class="make-two-columns">
 <bitty-js
-data-send="setSliderA|setSliderB"
-data-bridge="./hotel.js"
->
-<div>
-  <label for="init-slider-a">Slider A</label>
-  <input
-    type="range"
-    id="init-slider-a"
-    min="0"
-    max="100"
-    data-c="setValue"
-    data-s="setSliderB"
-    data-r="setSliderA"
-  />
-</div>
-<div>
-  <label for="init-slider-b">Slider B</label>
-  <input
-    type="range"
-    id="init-slider-b"
-    min="0"
-    max="100"
-    data-c="setValue"
-    data-s="setSliderA"
-    data-r="setSliderB"
-  />
-</div>
+  data-send="setSliderA|setSliderB"
+  data-bridge="./hotel.js">
+
+  <div>
+
+    <label for="init-slider-b">
+      Slider B
+    </label>
+
+    <input
+      id="init-slider-b"
+      type="range"
+      min="0"
+      max="100"
+      data-c="setValue"
+      data-s="setSliderA"
+      data-r="setSliderB">
+
+  </div>
+
+  <div>
+
+    <label for="init-slider-a">
+      Slider A
+    </label>
+
+    <input
+      id="init-slider-a"
+      type="range"
+      min="0"
+      max="100"
+      data-c="setValue"
+      data-s="setSliderB"
+      data-r="setSliderA">
+
+  </div>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA|setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./hotel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;&gt;Slider A&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;&gt;Slider B&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA|setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./hotel.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Slider B</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Slider A</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -1110,19 +1185,10 @@ data-bridge="./hotel.js"
         <div>
           <h3>Batch Updates</h3>
           <div class="make-two-columns">
-<bitty-js data-send="setValue" data-bridge="./batch-updates.js">
-  <div>
-    <label for="batch-update-input-slider">Input</label>
-    <input
-      type="range"
-      id="batch-updates-input-slider"
-      min="0"
-      max="100"
-      data-c="updateNumber"
-      data-b="checkNumbers"
-      data-r="setValue"
-    />
-  </div>
+<bitty-js 
+  data-send="setValue" 
+  data-bridge="./batch-updates.js">
+
   <div>
     <div>Greater that 10: <span data-r="check10"></span></div>
     <div>Greater that 20: <span data-r="check20"></span></div>
@@ -1134,22 +1200,32 @@ data-bridge="./hotel.js"
     <div>Greater that 80: <span data-r="check80"></span></div>
     <div>Greater that 90: <span data-r="check90"></span></div>
   </div>
+
+  <div>
+
+    <label for="batch-update-input-slider">
+      Input
+    </label>
+
+    <input
+      id="batch-updates-input-slider"
+      type="range"
+      min="0"
+      max="100"
+      data-c="updateNumber"
+      data-b="checkNumbers"
+      data-r="setValue"
+    />
+
+  </div>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./batch-updates.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-update-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;Input&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-b</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">checkNumbers</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./batch-updates.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 10: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check10</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 20: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check20</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -1161,6 +1237,25 @@ data-bridge="./hotel.js"
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 80: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check80</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 90: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check90</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-update-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      Input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-b</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">checkNumbers</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -1171,20 +1266,8 @@ data-bridge="./hotel.js"
 <bitty-js
   data-batch="checkNumbers"
   data-send="setValue"
-  data-bridge="./batch-updates.js"
->
-  <div>
-    <label for="batch-update-input-slider">Input</label>
-    <input
-      type="range"
-      id="batch-updates-input-slider"
-      min="0"
-      max="100"
-      data-c="updateNumber"
-      data-b="checkNumbers"
-      data-r="setValue"
-    />
-  </div>
+  data-bridge="./batch-updates.js">
+
   <div>
     <div>Greater that 10: <span data-r="check10"></span></div>
     <div>Greater that 20: <span data-r="check20"></span></div>
@@ -1196,26 +1279,25 @@ data-bridge="./hotel.js"
     <div>Greater that 80: <span data-r="check80"></span></div>
     <div>Greater that 90: <span data-r="check90"></span></div>
   </div>
-              </bitty-js></div>
+
+  <div>
+    <label for="batch-update-input-slider">Input</label>
+    <input
+      id="batch-updates-input-slider"
+      type="range"
+      data-c="updateNumber"
+      data-b="checkNumbers"
+      data-r="setValue">
+  </div>
+              
+</bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-batch</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">checkNumbers</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./batch-updates.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-update-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;Input&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-b</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">checkNumbers</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./batch-updates.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 10: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check10</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 20: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check20</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -1227,7 +1309,18 @@ data-bridge="./hotel.js"
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 80: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check80</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Greater that 90: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">check90</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">              &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-update-input-slider</span><span style="color:#c0c5ce;">&quot;&gt;Input&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">batch-updates-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateNumber</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-b</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">checkNumbers</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
         
@@ -1236,19 +1329,23 @@ data-bridge="./hotel.js"
           <div class="make-two-columns">
 <bitty-js
   data-listeners="mouseover|mouseout"
-  data-bridge="./set-listeners.js"
->
-  <button data-s="sawMouse">Mouse Instead of Click</button>
+  data-bridge="./set-listeners.js">
+
   <div data-r="sawMouse">Waiting...</div>
+
+  <button data-s="sawMouse">Mouse Instead of Click</button>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-listeners</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">mouseover|mouseout</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./set-listeners.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Mouse Instead of Click&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./set-listeners.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-r</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Waiting...&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-s</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Mouse Instead of Click&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>
@@ -1261,13 +1358,18 @@ data-bridge="./hotel.js"
     background-color: var(--element-access-background);
   }
 </style>
-<bitty-js data-bridge="./element-access.js">
-  <div>
-    <button data-c="randomizeBackground">
-      Randomize Background
-    </button>
+
+<bitty-js 
+  data-bridge="./element-access.js">
+
+  <div class="element-access-class">
+    the quick fox
   </div>
-  <div class="element-access-class">the quick fox</div>
+
+  <button data-c="randomizeBackground">
+    Randomize Background
+  </button>
+
 </bitty-js></div>
           <div>
             <pre class="code-block"><code><span class="codeLine"></span>
@@ -1276,13 +1378,18 @@ data-bridge="./hotel.js"
 <span class="codeLine"><span style="color:#c0c5ce;">    background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--element-access-background);</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./element-access.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">randomizeBackground</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      Randomize Background</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./element-access.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">element-access-class</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    the quick fox</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">element-access-class</span><span style="color:#c0c5ce;">&quot;&gt;the quick fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-c</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">randomizeBackground</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    Randomize Background</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
           </div>
         </div>

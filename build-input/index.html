@@ -11,7 +11,7 @@
     <meta property="og:title" content="bitty.js" />
     <meta
       property="og:description"
-      content="small component - big reactivity - vanilla js"
+      content="small component - big reactivity"
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
@@ -44,7 +44,7 @@
     />
     <meta
       name="description"
-      content="small component - bit reactivity - vanilla js"
+      content="small component - bit reactivity"
     />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
@@ -70,7 +70,7 @@
         <h1>bitty.js</h1>
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
-            small component - big reactivity - vanilla js
+            small component - big reactivity
           </div>
         </div>
       </hgroup>
@@ -92,22 +92,54 @@
       >
         [@ data.misc_html["counter.html"].raw @]
       </div>
-      <p>The code for the example looks like this:</p>
+      <p>
+        Everything works by mapping <code>data-*</code> attributes to functions.
+        For example, the counter's code looks like this:
+      </p>
 
       <div class="two-column-example">
         <div>
           <div>index.html</div>
           <pre
             class="code-block"
-          ><code class="xsmall-font">[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
+          ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
         </div>
         <div>
           <div>counter.js</div>
           <pre
             class="code-block"
-          ><code class="xsmall-font">[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
+          ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
         </div>
       </div>
+
+      <ul>
+        <li>
+          <code>data-bridge</code> connects the element to the
+          <code>counter.js</code> module
+        </li>
+        <li>
+          <code>data-r</code> registeres the button to receive updates when
+          <code>showNum</code> signals are sent
+        </li>
+        <li>
+          <code>data-c</code> calls the <code>_addOne</code> function when the
+          button is clicked (prepending the funciton name with a
+          <code>_</code> is part of the naming convention)
+        </li>
+        <li>
+          <code>data-s</code> sends the <code>showNum</code> signal when the
+          button is clicked. It fires the <code>$showNum</code> fuction which
+          performs the updates (prepending the function name with a
+          <code>$</code> is another part of the naming convention)
+        </li>
+      </ul>
+
+      <p>
+        There are more features, but that's everything you need to know to get
+        started.
+      </p>
+
+      <h2>Using bitty</h2>
 
       <p>
         The sections below provide details about how everything works. Check
@@ -116,7 +148,10 @@
 
       <details>
         <summary>Quick-Start</summary>
-        <p>bitty is still under development. Quick-start instructions are on the way.</p>
+        <p>
+          bitty is still under development. Quick-start instructions are on the
+          way.
+        </p>
         <p>[This is a place holder stub while the content is being written]</p>
       </details>
 
@@ -175,7 +210,7 @@
         <ul>
           <li>
             <p>
-              <code>bitty.js</code> is a vanilla web component file. It provides
+              <code>bitty.js</code> is a web component file. It provides
               a <code>&lt;bitty-js&gt;&lt;/bitty-js&gt;</code> tag. Wrapping
               other tags with it gives them reactive powers.
             </p>

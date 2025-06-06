@@ -10,7 +10,7 @@ syntect = { version = "5.2.0"}
 ---
 
 use anyhow::Result;
-use minijinja::{Environment, Value, context};
+use minijinja::{Environment, Value, context, path_loader};
 use minijinja::syntax::SyntaxConfig;
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -172,12 +172,20 @@ fn main() -> Result<()> {
 fn output_content() -> Result<()> {
     let payload = Payload::new()?;
     let data = Value::from_serialize(payload);
-    let index_input = fs::read_to_string("build-input/index.html")?;
+    // let index_input = fs::read_to_string("build-input/index.html")?;
     let mut env = get_env();
-    env.add_template_owned(
-        "template", index_input
-    )?;
-    let jinja = env.get_template("template")?;
+    // env.add_template_owned(
+    //     "template", index_input
+    // )?;
+    
+    env.set_loader(path_loader("build-input/misc-html"));
+
+// for (name, tmpl) in env.templates() {
+//     println!("{}", tmpl.render(context!{ name => "World" }).unwrap());
+// }
+
+
+    let jinja = env.get_template("index.html")?;
     let output = jinja.render(context!(data))?;
     fs::write("docs/index.html", output)?;
     Ok(())

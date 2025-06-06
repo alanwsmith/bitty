@@ -2,14 +2,16 @@
 
 export default class {
 
-  #num = 0;
-
-  _addOne(_) {
-    this.#num += 1;
+  constructor() {
+    this.num = 0;
   }
 
-  $showNum(el, _) {
-    el.innerHTML = this.#num;
+  _addOne() {
+    this.num += 1;
+  }
+
+  $showNum(el) {
+    el.innerHTML = this.num;
   }
 
 }

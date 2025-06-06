@@ -1,0 +1,183 @@
+<details>
+  <summary>Features</summary>
+
+  [! include "wrapper/do-not-edit-output-reminder.html" !]
+
+  <p class="warning-border-faded default-padding default-radius">
+    This section is currently at the level of draft/scratch notes. Expect some
+    duplication and possibly conflicting items.
+  </p>
+
+  <ul>
+    <li>
+      [] TODO: confirm top level bitty-js element can be taken completely out of
+      the receiver loop. that would mean they don't need inert/ignore/include
+      which could be dropped from the API. (could always use a hidden element if
+      there's something that needs to be handled inside a compoenent that's not
+      covered by another element
+    </li>
+    <li>
+      [] loadReactors is an event that bubbles so all ancestors can reload.
+    </li>
+    <li>
+      [] <code>data-include</code> attr for elements. Only the signals named in
+      it are reacted to. All others are ignored. TBD on interaction with
+      <code>data-ignore</code>.
+    </li>
+    <li>
+      [] An empty <code>data-include</code> in one way to turn off all
+      reactions.
+    </li>
+    <li>
+      [] <code>data-inert</code> attr is an explicit way to turn off all
+      reactions.
+    </li>
+    <li>[x] Exlicity defined error codes with individualized help messages.</li>
+    <li>
+      [x] All reactive elements have unique IDs that can be used for control and
+      debugging.
+    </li>
+    <li>
+      [x] Using <code>data-ignore</code> on elements tells it to ignore specific
+      signals.
+    </li>
+    <li>
+      [] Each element is checked to make sure it's still set up to react to a
+      given signal every time it receives one before the update occurs.
+    </li>
+    <li>[] All reactive elements have unique ids.</li>
+    <li>
+      [] Name-spaced signals (i.e. signals with the format
+      <code>NAMESPACE:SIGNAL</code>) are broadcast globally.
+    </li>
+    <li>
+      [] Elements can receive name-spaced signals regardless of their
+      relationship to the broadcaster.
+    </li>
+    <li>[] Error CSS class added to elements where errors occur.</li>
+    <li>
+      [] Built in debugger (TBD on specifics. Some stuff will happen
+      automatically like a class being added to error elements. Thinking adding
+      a watch for a <code>&debug</code> query param to add a close to show them
+      is probably worth it).
+    </li>
+    <li>
+      [] Rust level error message: It's a bug if an error message does give you
+      enough information on how to fix it whatever caused it.
+    </li>
+    <li>[] Load template from the return value of a method call.</li>
+    <li>[] Load template from a selector query on the parent page.</li>
+    <li>[] Can nest multiple layers with everything becoming reactive.</li>
+    <li>[] Improve error handling and messages.</li>
+    <li>[] Automatically load templates.</li>
+    <li>[x] Throttling done by <code>.requestAnimationFrame()</code>.</li>
+    <li>[x] <code>data-call</code> to send functions for init.</li>
+    <li>[x] <code>data-b</code> to send batches.</li>
+    <li>[x] <code>data-batch</code> for the init version of batch send.</li>
+    <li>[x] Parents can ignore children signals.</li>
+    <li>[x] Parents can communicate with children through bridge.</li>
+    <li>[x] Children can communicate with parents through bridge.</li>
+    <li>[] Global senders.</li>
+    <li>[] Global receivers.</li>
+    <li>[] Query arbitrary instances for their data.</li>
+    <li>[x] Call <code>.init()</code> on <code>Wires</code> if available.</li>
+    <li>
+      [x] bitty-js init happens after wires init so send signals can be sent to
+      templates the wires loads.
+    </li>
+    <li>
+      [x] Loading a template automatically adds call/sender/receiver
+      functionality to it.
+    </li>
+    <li>[] Load other web components.</li>
+    <li>[] Loaded web components can use <code>bitty-js</code>.</li>
+    <li>
+      [x] Arbitrary <code>data-*</code> attributes can be used to send data to
+      function calls.
+    </li>
+    <li>
+      [] Send/receive functions can access data from the triggering event.
+    </li>
+    <li>
+      [x] Core bitty.js functionality comes in the stand alone component.
+      Specific behavior is defined by making a JavaScript module with a
+      <code>Wires</code> class in it.
+    </li>
+    <li>[x] Based off a naming convention to wire everything together.</li>
+    <li>[x] Multiple instances can be placed on a single page.</li>
+    <li>
+      [x] The component uses the light DOM. Page level CSS can be applied to
+      content inside the wires.
+    </li>
+    <li>
+      [x] Initialize data with <code>data-send</code> which does a send before
+      the listeners are added.
+    </li>
+    <li>
+      [x]: The <code>data-call</code> runs functions before doing the send
+      events in <code>data-send</code>.
+    </li>
+    <li>
+      [x] Defaults to listening for <code>click</code> and
+      <code>input</code> events.
+    </li>
+    <li>
+      [x] Customize the event listeners with
+      <code>data-listeners</code> in the <code>bitty-js</code> component tag.
+    </li>
+    <li>
+      [x] CSS style variables/properties can be updated at the page/root level.
+    </li>
+    <li>
+      [x] CSS style variables/properties can be updated scoped to the individual
+      <code>bitty-js</code> element instance.
+    </li>
+    <li>[x] Classes can be updated.</li>
+    <li>[x] .innerHTML can be updated.</li>
+    <li>[x] .values can be updated.</li>
+    <li>[] datasets can be updated.</li>
+    <li>[] aria labels can be updated.</li>
+    <li>
+      [x] Can use <code>data-batch</code> and <code>data-b</code> for sending
+      batches of signals.
+    </li>
+    <li>
+      [x] The data-send attribute on the main component tag sends those signals
+      at the start.
+    </li>
+    <li>
+      [] Errors are thrown if the requested wires import doesn't exist or
+      doesn't load.
+    </li>
+    <li>
+      [] Preflight check to make sure functions exist and provide warnings if
+      they don't.
+    </li>
+    <li>[] Stress test with increasing numbers of instances and updates.</li>
+    <li>
+      [] Send signals from internal functions in the wires? (e.g. a type of
+      redirect).
+    </li>
+    <li>
+      [] Defined, ID based error messages. Each message contains a description
+      and, ideally help text.
+    </li>
+    <li>
+      [] Documentation on adding custom errors from the tool classes (thinking
+      they'll start with 9000 so they can be integers but be safe from
+      collisions).
+    </li>
+    <li>
+      [] Example of using <code>data-widget</code> to call something other than
+      the default <code>Widget()</code> class.
+    </li>
+    <li>
+      [x] Add a <code>bitty-component-error</code> class to components that have
+      errors.
+    </li>
+    <li>
+      [x] Add a <code>bitty-element-error</code> class to elements that have
+      errors.
+    </li>
+  </ul>
+</details>

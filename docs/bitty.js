@@ -306,62 +306,9 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  //   try {
-  //     import(this.dataset.bridge).then((mod) => {
-  //       if (mod.default === undefined) {
-  //         this.error(3)
-  //       } else {
-  //         try {
-  //           this.widget = new mod.default()
-  //         } catch {
-  //           this.error(4)
-  //         }
-  //       }
-  //     })
-
-  //   } catch {
-  //     this.error(5)
-  //   }
-  // } else {
-  //   try {
-  //     this.widget = new mod[this.dataset.widget]()
-  //   } catch {
-  //     this.error(6)
-  //   }
-  // }
-
-  // import(this.dataset.bridge).then((mod) => {
-  //   try {
-  //     if (this.dataset.widget === undefined) {
-  //       this.widget = new mod.Widget()
-  //     } else {
-  //       this.widget = new mod[this.dataset.widget]()
-  //     }
-  //     this.requestUpdate = this.handleChange.bind(this)
-  //     // Reminder: loadReceivers has to be in front of init
-  //     // because inits can use data-send
-  //     this.loadReceivers()
-  //     this.init()
-  //     this.addIds()
-  //     this.addEventListeners()
-  //   } catch {
-  //     this.error(3)
-  //   }
-  // })
-
-  //       if(this.widget !== undefined) {
-  // this.loadReceivers()
-  // this.init()
-  // this.addEventListeners()
-  //       }
-
-  //     } else {
-  //
-  //     }
-
-  // TODO: Verify that `async` on connectedCallback
-  // works across browsers.
   async connectedCallback() {
+    // TODO: Verify `async` on connectedCallback
+    // works across browsers.
     this.setId()
     this.setIds()
     await this.attachWidget()

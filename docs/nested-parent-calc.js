@@ -1,6 +1,6 @@
 // deno-fmt-ignore-file
 
-export class Widget {
+export default class {
   $showValue(el, _) {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;

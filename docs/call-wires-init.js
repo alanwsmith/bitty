@@ -1,7 +1,7 @@
 // deno-fmt-ignore-file
 
 
-export class Widget {
+export default class {
   init() {
     this.bridge.innerHTML = "This is from init() in Wires";
   }

@@ -1,6 +1,6 @@
 // deno-fmt-ignore-file
 
-export class Widget {
+export default class {
 
   #value = 15;
 

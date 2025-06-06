@@ -17,7 +17,7 @@ Use the build-site.rs script to generate it
 <title>bitty.js</title>
 <link rel="shortcut icon" href="/favicons/favicon.ico" />
 <meta property="og:title" content="bitty.js" />
-<meta property="og:description" content="small component - big reactivity" />
+<meta property="og:description" content="small component - reactive elements" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
 <meta
@@ -43,7 +43,7 @@ Use the build-site.rs script to generate it
 />
 <link rel="manifest" href="/favicons/site.webmanifest" />
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5" />
-<meta name="description" content="small component - bit reactivity" />
+<meta name="description" content="small component - reactive elements" />
 <link rel="stylesheet" href="/styles/main.css" />  </head>
 
   <body>
@@ -64,7 +64,7 @@ Use the build-site.rs script to generate it
         <h1>bitty.js</h1>
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
-            small component - big reactivity
+            small component - reactive elements
           </div>
         </div>
       </hgroup>
@@ -81,9 +81,8 @@ Use the build-site.rs script to generate it
 
 -->
 
-<p>Bitty is a web component. Wrapping elements with it makes them reactive.</p>
-<p>
-  This page has examples of all of bitty's features. The first is this counter.
+<p>Bitty is a web component. It makes elements reactive.</p>
+<p>This page has docs and examples of bitty's features. The first is this counter.
   Click it to make the number go up.
 </p>
 <div
@@ -103,9 +102,9 @@ Use the build-site.rs script to generate it
 </bitty-js>
 </div>
 <p>
-  Bitty uses a signaling approach to reactivity.
-  <code>data-*</code> attributes define which signals each element sends and
-  recieves. For example, the counter's code looks like this:
+  Bitty uses signaling.
+  <code>data-*</code> attributes define the signals an element sends and
+  recieves. For example, the counter looks like this:
 </p>
 
 <div class="two-column-example">
@@ -113,8 +112,7 @@ Use the build-site.rs script to generate it
     <div>index.html</div>
     <pre
       class="code-block"
-    ><code>
-<span class="codeLine"></span>
+    ><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"></span>
@@ -152,17 +150,17 @@ Use the build-site.rs script to generate it
 
 <ul>
   <li>
-    <code>data-bridge</code> connects to the functions in
+    <code>data-bridge</code> connects to 
     <code>counter.js</code>
   </li>
   <li>
-    <code>data-c</code> calls the <code>_addOne</code> function when the button
+    <code>data-c</code> calls <code>_addOne</code> when the button
     is clicked (prepending the funciton name with an <code>_</code> is part of
     bitty's naming convention)
   </li>
   <li>
-    <code>data-s</code> sends the <code>showNum</code> signal when the button is
-    clicked. It fires <code>$showNum</code> which handles the updates
+    <code>data-s</code> sends the signal to run <code>$showNum</code> when the button is
+    clicked
     (prepending <code>$</code>
     is another part of the naming convention)
   </li>

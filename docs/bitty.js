@@ -3,6 +3,8 @@
 /////////////////////////////////////////////////////
 
 function debug(payload, el = null) {
+  // TODO: Figure out how to display the function that called
+  // this or its line number
   if (window && window.location && window.location.search) {
     const params = new URLSearchParams(window.location.search)
     if (params.has('debug')) {
@@ -90,7 +92,9 @@ class BittyJs extends HTMLElement {
         [
           `If the file has a 'export default class', something went wrong with it. Examine it further to trace the issue.`,
         ],
-        [`Add a 'data-app' attribute to the <bitty-js> element with the name of a class exported from __MODULE_PATH__.`],
+        [
+          `Add a 'data-app' attribute to the <bitty-js> element with the name of a class exported from __MODULE_PATH__.`,
+        ],
       ],
       developerNote: [],
     },
@@ -289,59 +293,92 @@ class BittyJs extends HTMLElement {
     super()
   }
 
-  connectedCallback() {
-    this.setId()
-    this.setIds()
+  async attachWidget() {
     if (this.dataset.bridge) {
-      if (this.dataset.app === undefined) {
-        try {
-          import(this.dataset.bridge).then((mod) => {
-            if (mod.default === undefined) {
-              this.error(3)
-            } else {
-              try {
-                this.app = new mod.default()
-              } catch {
-                this.error(4)
-              }
-            }
-          })
-        } catch {
-          this.error(5)
-        }
+      const mod = await import(this.dataset.bridge)
+      if (this.dataset.widget === undefined) {
+        this.widget = new mod.default()
       } else {
-        try {
-          this.app = new mod[this.dataset.app]()
-        } catch {}
+        this.widget = new mod[this.dataset.widget]()
       }
-
-      // import(this.dataset.bridge).then((mod) => {
-      //   try {
-      //     if (this.dataset.widget === undefined) {
-      //       this.widget = new mod.Widget()
-      //     } else {
-      //       this.widget = new mod[this.dataset.widget]()
-      //     }
-      //     this.requestUpdate = this.handleChange.bind(this)
-      //     // Reminder: loadReceivers has to be in front of init
-      //     // because inits can use data-send
-      //     this.loadReceivers()
-      //     this.init()
-      //     this.addIds()
-      //     this.addEventListeners()
-      //   } catch {
-      //     this.error(3)
-      //   }
-      // })
     } else {
       this.error(2)
     }
   }
 
+  //   try {
+  //     import(this.dataset.bridge).then((mod) => {
+  //       if (mod.default === undefined) {
+  //         this.error(3)
+  //       } else {
+  //         try {
+  //           this.widget = new mod.default()
+  //         } catch {
+  //           this.error(4)
+  //         }
+  //       }
+  //     })
+
+  //   } catch {
+  //     this.error(5)
+  //   }
+  // } else {
+  //   try {
+  //     this.widget = new mod[this.dataset.widget]()
+  //   } catch {
+  //     this.error(6)
+  //   }
+  // }
+
+  // import(this.dataset.bridge).then((mod) => {
+  //   try {
+  //     if (this.dataset.widget === undefined) {
+  //       this.widget = new mod.Widget()
+  //     } else {
+  //       this.widget = new mod[this.dataset.widget]()
+  //     }
+  //     this.requestUpdate = this.handleChange.bind(this)
+  //     // Reminder: loadReceivers has to be in front of init
+  //     // because inits can use data-send
+  //     this.loadReceivers()
+  //     this.init()
+  //     this.addIds()
+  //     this.addEventListeners()
+  //   } catch {
+  //     this.error(3)
+  //   }
+  // })
+
+  //       if(this.widget !== undefined) {
+  // this.loadReceivers()
+  // this.init()
+  // this.addEventListeners()
+  //       }
+
+  //     } else {
+  //
+  //     }
+
+  // TODO: Verify that `async` on connectedCallback
+  // works across browsers.
+  async connectedCallback() {
+    this.setId()
+    this.setIds()
+    await this.attachWidget()
+    if (this.widget === undefined) {
+      this.error(0)
+    } else {
+      this.requestUpdate = this.handleChange.bind(this)
+      this.loadReceivers()
+      this.init()
+      this.addEventListeners()
+    }
+  }
+
   error(id = 0, el = null, additionalDetails = null) {
-    this.classList.add("bitty-component-error");
+    this.classList.add('bitty-component-error')
     if (el !== null) {
-      this.classList.add("bitty-element-error");
+      this.classList.add('bitty-element-error')
     }
     let err = this.#errors.find((err) => {
       return err.id === id
@@ -472,7 +509,7 @@ class BittyJs extends HTMLElement {
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
         const uuid = self.crypto.randomUUID()
-        debug(`Setting ${el.tagName} ID to: ${uuid}`, el)
+        debug(`Setting ${el.tagName} ID to: ${uuid}`)
         el.dataset.uuid = uuid
       }
     })

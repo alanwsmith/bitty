@@ -72,17 +72,25 @@ class BittyJs extends HTMLElement {
     },
     {
       id: 3,
-      kind: [`Could not load default class from module`],
+      kind: [`Could not load default class from:`, `__MODULE_PATH__`],
       description: [
-        `Bitty failed to load the default exported class from:`,
-        `__MODULE_PATH`,
+        `The <bitty-js> element with 'data-uuid':`,
+        `__BITTY_UUID__ [TODO: find/replace uuid here]`,
+        `does not have a 'data-app' attribute. Therefore, it attempted to load the default class exported from:`,
+        `__MODULE_PATH__ [TODO: find/replace .js path here]`,
+        `that attempt failed.`,
       ],
       help: [
-        [`TODO: Make note here about defauld call to Widget()`],
         [
-          `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
+          `Make sure the __MODULE_PATH__ file has either a:`,
+          `export default class {}`,
+          `or:`,
+          `export default class SOME_NAME {}`,
         ],
-        ['Make sure the class in your .js module file is being exported'],
+        [
+          `If the file has a 'export default class', something went wrong with it. Examine it further to trace the issue.`,
+        ],
+        [`Add a 'data-app' attribute to the <bitty-js> element with the name of a class exported from __MODULE_PATH__.`],
       ],
       developerNote: [],
     },
@@ -151,12 +159,12 @@ class BittyJs extends HTMLElement {
     err.help.forEach((options, index) => {
       if (err.help.length === 1) {
         if (index === 0) {
-          out.push('RECOMMENDATION')
+          out.push('POSSIBLE SOLUTION:')
         }
         out.push(this.assembleErrorText(options))
       } else {
         if (index === 0) {
-          out.push('RECOMMENDATION OPTIONS')
+          out.push('POSSIBLE SOLUTIONS:')
         }
         options.forEach((option, optionIndex) => {
           if (optionIndex === 0) {
@@ -174,7 +182,7 @@ class BittyJs extends HTMLElement {
   assemlbeErrorAdditionalDetails(err) {
     if (err.additionalDetails !== null) {
       const out = []
-      out.push('ADDITIONAL DETAILS')
+      out.push('ADDITIONAL DETAILS:')
       out.push(err.additionalDetails)
       const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
       err.output.push(text)
@@ -183,9 +191,9 @@ class BittyJs extends HTMLElement {
 
   assembleErrorComponent(err) {
     const out = []
-    out.push(`COMPONENT`)
+    out.push(`COMPONENT:`)
     out.push(
-      `The 'data-uuid' of the <bitty-js> element associated with this error is:`
+      `This error was caught by the <bitty-js> element with a 'data-uuid' of:`
     )
     out.push(this.dataset.uuid)
     out.push(
@@ -197,7 +205,7 @@ class BittyJs extends HTMLElement {
 
   assemlbeErrorDescription(err) {
     const out = []
-    out.push('DESCRIPTION')
+    out.push('DESCRIPTION:')
     out.push(this.assembleErrorText(err.description))
     const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
     err.output.push(text)
@@ -285,14 +293,14 @@ class BittyJs extends HTMLElement {
     this.setId()
     this.setIds()
     if (this.dataset.bridge) {
-      if (this.dataset.widget === undefined) {
+      if (this.dataset.app === undefined) {
         try {
           import(this.dataset.bridge).then((mod) => {
             if (mod.default === undefined) {
               this.error(3)
             } else {
               try {
-                this.tools = new mod.default()
+                this.app = new mod.default()
               } catch {
                 this.error(4)
               }
@@ -301,6 +309,10 @@ class BittyJs extends HTMLElement {
         } catch {
           this.error(5)
         }
+      } else {
+        try {
+          this.app = new mod[this.dataset.app]()
+        } catch {}
       }
 
       // import(this.dataset.bridge).then((mod) => {
@@ -342,10 +354,10 @@ class BittyJs extends HTMLElement {
     this.assembleErrorId(err)
     // this.assembleErrorDumpMessage(err)
     this.assemlbeErrorDescription(err)
-    this.assembleErrorComponent(err)
-    this.assembleErrorElementDetails(err)
     this.assemlbeErrorAdditionalDetails(err)
     this.assembleErrorHelpText(err)
+    this.assembleErrorComponent(err)
+    this.assembleErrorElementDetails(err)
     // TODO: Add developerNote
     // TODO: Pull the source error message if there is on
     console.error(err.output.join(`\n\n${this.#hashString}\n\n`))

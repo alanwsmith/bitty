@@ -1,66 +1,15 @@
 <!DOCTYPE html>
 
-[! include "do-not-edit-output-reminder.html" !]
+[! include "wrapper/do-not-edit-output-reminder.html" !]
 
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bitty.js</title>
-    <link rel="shortcut icon" href="/favicons/favicon.ico" />
-    <meta property="og:title" content="bitty.js" />
-    <meta
-      property="og:description"
-      content="small component - big reactivity"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
-    <meta
-      property="og:image"
-      content="https://bitty-js.alanwsmith.com/images/og-image-main.jpg"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicons/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicons/favicon-32x32.png"
-    />
-    <link rel="manifest" href="/favicons/site.webmanifest" />
-    <link
-      rel="mask-icon"
-      href="/favicons/safari-pinned-tab.svg"
-      color="#5bbad5"
-    />
-    <meta name="description" content="small component - bit reactivity" />
-    <link rel="stylesheet" href="/styles/main.css" />
+    [! include "wrapper/head-tag.html" !]
   </head>
 
   <body>
     <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
-      <div class="header-flex-2">
-        <div>
-          made by <a href="https://www.alanwsmith.com/">alan w smith</a>
-        </div>
-        <a href="https://github.com/alanwsmith/bitty-js">source</a>
-        <a href="https://links.alanwsmith.com/">other projects</a>
-        <a href="https://socials.alanwsmith.com/">socials</a>
-      </div>
-      <github-stars
-        :repo="alanwsmith/bitty-js"
-        :text-color="var(--accent-faded)"
-        :background-color="var(--background)"
-      ></github-stars>
+    [! include "wrapper/header.html" !]
     </header>
     <main class="default-wrapper default-flow">
       <hgroup>
@@ -72,84 +21,14 @@
         </div>
       </hgroup>
 
-      <h2>Hello, bitty</h2>
-
-      [! include "do-not-edit-output-reminder.html" !]
-
-      <p>
-        Bitty is a web component. Wrapping elements with it makes them reactive.
-      </p>
-      <p>
-        This page has examples of all of bitty's features. The first is this
-        counter. Click it to make the number go up.
-      </p>
-      <div
-        class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
-      >
-        [@ data.misc_html["counter.html"].raw @]
-      </div>
-      <p>
-        Bitty uses a signaling approach to reactivity.
-        <code>data-*</code> attributes define which signals each element sends
-        and recieves. For example, the counter's code looks like this:
-      </p>
-
-      <div class="two-column-example">
-        <div>
-          <div>index.html</div>
-          <pre
-            class="code-block"
-          ><code>[@- data.misc_html["counter.html"].highlighted -@]</code></pre>
-        </div>
-        <div>
-          <div>counter.js</div>
-          <pre
-            class="code-block"
-          ><code>[@- data.example_scripts["counter.js"].highlighted -@]</code></pre>
-        </div>
-      </div>
-
-      <ul>
-        <li>
-          <code>data-bridge</code> connects to the functions in
-          <code>counter.js</code>
-        </li>
-        <li>
-          <code>data-c</code> calls the <code>_addOne</code> function when the
-          button is clicked (prepending the funciton name with an
-          <code>_</code> is part of bitty's naming convention)
-        </li>
-        <li>
-          <code>data-s</code> sends the <code>showNum</code> signal when the
-          button is clicked. It fires <code>$showNum</code> which handles the
-          updates (prepending <code>$</code>
-          is another part of the naming convention)
-        </li>
-        <li>
-          <code>data-r</code> registeres the button to receive updates when
-          <code>showNum</code> signals are sent
-        </li>
-      </ul>
-
-      <p>
-        There are more features, but that's everything you need to know to get
-        started.
-      </p>
-
-      <h2>Using bitty</h2>
-
-      <p>
-        The sections below provide details about how everything works. Check
-        them out to dig in.
-      </p>
-
-[@- data.misc_html["section-quick-start.html"].raw -@]
-
+[! include "sections/hello-bitty.html" !]
+[! include "sections/using-bitty.html" !]
+[! include "sections/quick-start.html" !]
 
       <details>
         <summary>Counter Example Details - Functionality Overview</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <h3>Preface</h3>
 
@@ -196,7 +75,7 @@
 
         <h3>The <code>bitty-js</code> tag</h3>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <ul>
           <li>
@@ -395,7 +274,7 @@
             </code></pre>
           </div>
         </div>
-        [! endfor !] [! include "do-not-edit-output-reminder.html" !]
+        [! endfor !] [! include "wrapper/do-not-edit-output-reminder.html" !]
       </details>
       <details>
         <summary>API</summary>
@@ -512,7 +391,7 @@
       <details>
         <summary>Status: Beta</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p>
           I'm still working on the initial feature set. Everything you see in
@@ -542,7 +421,7 @@
       <details>
         <summary>Usage</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p>
           I'll push to npm soon. Copy the .js file down and use it directly for
@@ -615,7 +494,7 @@ export class Wires {
 
         <h4>Quick Notes</h4>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p>I'm working on docs. For now, the important things to know are:</p>
 
@@ -668,7 +547,7 @@ export class Wires {
       <details>
         <summary>Getting Updates</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p>
           Checkout the scratch notes at the end of the page for things I'm
@@ -684,7 +563,7 @@ export class Wires {
       <details>
         <summary>Design Goals</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p class="small-font">
           [NOTE: these are scratch notes. some of this will got to the features
@@ -793,7 +672,7 @@ export class Wires {
       <details>
         <summary>Features</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <p class="warning-border-faded default-padding default-radius">
           This section is currently at the level of draft/scratch notes. Expect
@@ -1016,7 +895,7 @@ export class Wires {
       <details>
         <summary>Known Bugs</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
         <p>
           This is largely a placeholder. Things will be added as features become
           stable
@@ -1038,7 +917,7 @@ export class Wires {
       <details>
         <summary>Queue</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <ul>
           <li>
@@ -1060,14 +939,14 @@ export class Wires {
       <details>
         <summary>Release Notes</summary>
 
-        [! include "do-not-edit-output-reminder.html" !]
+        [! include "wrapper/do-not-edit-output-reminder.html" !]
 
         <ul>
           <li>
             <h3>Version: 0.2.4</h3>
             <p>DATE TBD</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>TODO: write a short note about what's covered in this release</p>
             <ul>
@@ -1094,7 +973,7 @@ export class Wires {
             <h3>Version: 0.2.3</h3>
             <p>June 5, 2025</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>Lots of error handling work in this one.</p>
 
@@ -1188,7 +1067,7 @@ export class Wires {
             <h3>Version: 0.2.2</h3>
             <p>June 4, 2025</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>
               Added UUIDs for pending error handling. Shuffeld a bunch of stuff
@@ -1261,7 +1140,7 @@ export class Wires {
 
             <p>June 3, 2025</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>
               Some more wiring and some support tools for making the demo/docs
@@ -1302,7 +1181,7 @@ export class Wires {
             <h3>Version: 0.2.0</h3>
             <p>June 3, 2025</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>Setting up a bunch of the basic wiring.</p>
 
@@ -1382,7 +1261,7 @@ export class Wires {
             <h3>Version: 0.1.0</h3>
             <p>June 2, 2025</p>
 
-            [! include "do-not-edit-output-reminder.html" !]
+            [! include "wrapper/do-not-edit-output-reminder.html" !]
 
             <p>Getting the project started.</p>
 
@@ -1497,7 +1376,7 @@ export class Wires {
       <a href="https://socials.alanwsmith.com">socials</a>
     </footer>
 
-    [! include "do-not-edit-output-reminder.html" !]
+    [! include "wrapper/do-not-edit-output-reminder.html" !]
 
     <script type="module" src="bitty.js"></script>
     <script type="module" src="components/github-stars-beta-1.js"></script>

@@ -6,11 +6,11 @@ function debug(payload, el = null) {
   // TODO: Figure out how to display the function that called
   // this or its line number
   if (window && window.location && window.location.search) {
-    const params = new URLSearchParams(window.location.search)
-    if (params.has('debug')) {
-      console.log(payload)
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("debug")) {
+      console.log(payload);
       if (el !== null) {
-        console.log(el)
+        console.log(el);
       }
     }
   }
@@ -20,14 +20,14 @@ function debug(payload, el = null) {
 
 class BittyJs extends HTMLElement {
   // TODO: Deprecate #hashString in favor of join approach
-  #hashString = '#######################################'
-  #listeners = ['click', 'input']
-  #receivers = []
+  #hashString = "#######################################";
+  #listeners = ["click", "input"];
+  #receivers = [];
   #errors = [
     {
       id: 0,
-      kind: ['Not Classified'],
-      description: ['An unclassified error occurred.'],
+      kind: ["Not Classified"],
+      description: ["An unclassified error occurred."],
       help: [
         [
           `Detailed help isn't available since this error is unclassified.`,
@@ -41,7 +41,7 @@ class BittyJs extends HTMLElement {
     },
     {
       id: 1,
-      kind: ['Invalid Error ID'],
+      kind: ["Invalid Error ID"],
       description: [
         `An attempt to call an error with an ID of '__ERROR_ID__' was made. That ID does not exist in '#errors'.`,
       ],
@@ -108,11 +108,11 @@ class BittyJs extends HTMLElement {
         [
           `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
         ],
-        ['Make sure the class in your .js module file is being exported'],
+        ["Make sure the class in your .js module file is being exported"],
       ],
       developerNote: [],
     },
-  ]
+  ];
 
   // sample to copy paste for new error message
   // {
@@ -126,22 +126,22 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
-        this.requestUpdate.call(this, event)
-      })
-    })
+        this.requestUpdate.call(this, event);
+      });
+    });
   }
 
   addIds() {
-    debug('Adding IDs')
+    debug("Adding IDs");
     if (this.dataset.uuid === undefined) {
-      this.dataset.uuid = self.crypto.randomUUID()
+      this.dataset.uuid = self.crypto.randomUUID();
     }
-    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`)
+    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
-        el.dataset.uuid = self.crypto.randomUUID()
+        el.dataset.uuid = self.crypto.randomUUID();
       }
-    })
+    });
   }
 
   addReceiver(key, el) {
@@ -149,70 +149,70 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.widget[`$${key}`](el, data)
+          this.widget[`$${key}`](el, data);
         } catch (error) {
-          console.error(error)
-          console.error(`Tried: $${key}`)
+          console.error(error);
+          console.error(`Tried: $${key}`);
         }
       },
-    })
+    });
   }
 
   assembleErrorHelpText(err) {
-    const out = []
+    const out = [];
     err.help.forEach((options, index) => {
       if (err.help.length === 1) {
         if (index === 0) {
-          out.push('POSSIBLE SOLUTION:')
+          out.push("POSSIBLE SOLUTION:");
         }
-        out.push(this.assembleErrorText(options))
+        out.push(this.assembleErrorText(options));
       } else {
         if (index === 0) {
-          out.push('POSSIBLE SOLUTIONS:')
+          out.push("POSSIBLE SOLUTIONS:");
         }
         options.forEach((option, optionIndex) => {
           if (optionIndex === 0) {
-            out.push(`${index + 1}. ${option}`)
+            out.push(`${index + 1}. ${option}`);
           } else {
-            out.push(option)
+            out.push(option);
           }
-        })
+        });
       }
-    })
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
+    });
+    const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+    err.output.push(text);
   }
 
   assemlbeErrorAdditionalDetails(err) {
     if (err.additionalDetails !== null) {
-      const out = []
-      out.push('ADDITIONAL DETAILS:')
-      out.push(err.additionalDetails)
-      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-      err.output.push(text)
+      const out = [];
+      out.push("ADDITIONAL DETAILS:");
+      out.push(err.additionalDetails);
+      const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+      err.output.push(text);
     }
   }
 
   assembleErrorComponent(err) {
-    const out = []
-    out.push(`COMPONENT:`)
+    const out = [];
+    out.push(`COMPONENT:`);
     out.push(
-      `This error was caught by the <bitty-js> element with a 'data-uuid' of:`
-    )
-    out.push(this.dataset.uuid)
+      `This error was caught by the <bitty-js> element with a 'data-uuid' of:`,
+    );
+    out.push(this.dataset.uuid);
     out.push(
-      `A copy of the element is in a follow up message below. ('data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console.)`
-    )
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
+      `A copy of the element is in a follow up message below. ('data-uuid' attributes are added dynamically. They should be visible in the 'Elements' view in your browser's developer console.)`,
+    );
+    const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+    err.output.push(text);
   }
 
   assemlbeErrorDescription(err) {
-    const out = []
-    out.push('DESCRIPTION:')
-    out.push(this.assembleErrorText(err.description))
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
+    const out = [];
+    out.push("DESCRIPTION:");
+    out.push(this.assembleErrorText(err.description));
+    const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+    err.output.push(text);
   }
 
   // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
@@ -235,14 +235,14 @@ class BittyJs extends HTMLElement {
 
   assembleErrorElementDetails(err) {
     if (err.el !== null) {
-      const out = []
-      out.push('ERROR ELEMENT DETAILS')
+      const out = [];
+      out.push("ERROR ELEMENT DETAILS");
       out.push(
-        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`
-      )
-      out.push(err.el.dataset.uuid)
-      const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-      err.output.push(text)
+        `The element with the error is a ${err.el.tagName} tag with a 'data-uuid' attribute of:`,
+      );
+      out.push(err.el.dataset.uuid);
+      const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+      err.output.push(text);
     }
   }
 
@@ -262,12 +262,12 @@ class BittyJs extends HTMLElement {
   // }
 
   assembleErrorId(err) {
-    const out = []
-    out.push(this.#hashString)
-    out.push(`A BITTY ERROR OCCURRED [ID: ${err.id}]`)
-    out.push(this.assembleErrorText(err.kind))
-    const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-    err.output.push(text)
+    const out = [];
+    out.push(this.#hashString);
+    out.push(`A BITTY ERROR OCCURRED [ID: ${err.id}]`);
+    out.push(this.assembleErrorText(err.kind));
+    const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
+    err.output.push(text);
   }
 
   // assembleErrorPrelude(err) {
@@ -280,190 +280,190 @@ class BittyJs extends HTMLElement {
 
   assembleErrorReplacedText(err, content) {
     return content
-      .replaceAll('__UUID__', this.dataset.uuid)
-      .replaceAll('__ERROR_ID__', err.id)
-      .trim()
+      .replaceAll("__UUID__", this.dataset.uuid)
+      .replaceAll("__ERROR_ID__", err.id)
+      .trim();
   }
 
   assembleErrorText(content) {
-    return content.join('\n\n')
+    return content.join("\n\n");
   }
 
   constructor() {
-    super()
+    super();
   }
 
   async attachWidget() {
     if (this.dataset.bridge) {
-      const mod = await import(this.dataset.bridge)
+      const mod = await import(this.dataset.bridge);
       if (this.dataset.widget === undefined) {
-        this.widget = new mod.default()
+        this.widget = new mod.default();
       } else {
-        this.widget = new mod[this.dataset.widget]()
+        this.widget = new mod[this.dataset.widget]();
       }
     } else {
-      this.error(2)
+      this.error(2);
     }
   }
 
   async connectedCallback() {
     // TODO: Verify `async` on connectedCallback
     // works across browsers.
-    this.setId()
-    this.setIds()
-    await this.attachWidget()
+    this.setId();
+    this.setIds();
+    await this.attachWidget();
     if (this.widget === undefined) {
-      this.error(0)
+      this.error(0);
     } else {
-      this.requestUpdate = this.handleChange.bind(this)
-      this.loadReceivers()
-      this.init()
-      this.addEventListeners()
+      this.requestUpdate = this.handleChange.bind(this);
+      this.loadReceivers();
+      this.init();
+      this.addEventListeners();
     }
   }
 
   error(id = 0, el = null, additionalDetails = null) {
-    this.classList.add('bitty-component-error')
+    this.classList.add("bitty-component-error");
     if (el !== null) {
-      this.classList.add('bitty-element-error')
+      this.classList.add("bitty-element-error");
     }
     let err = this.#errors.find((err) => {
-      return err.id === id
-    })
+      return err.id === id;
+    });
     if (err === undefined) {
       err = this.#errors.find((err) => {
-        return err.id === 1
-      })
+        return err.id === 1;
+      });
     }
-    err.el = el
-    err.additionalDetails = additionalDetails
-    err.output = []
+    err.el = el;
+    err.additionalDetails = additionalDetails;
+    err.output = [];
     // this.assembleErrorPrelude(err)
-    this.assembleErrorId(err)
+    this.assembleErrorId(err);
     // this.assembleErrorDumpMessage(err)
-    this.assemlbeErrorDescription(err)
-    this.assemlbeErrorAdditionalDetails(err)
-    this.assembleErrorHelpText(err)
-    this.assembleErrorComponent(err)
-    this.assembleErrorElementDetails(err)
+    this.assemlbeErrorDescription(err);
+    this.assemlbeErrorAdditionalDetails(err);
+    this.assembleErrorHelpText(err);
+    this.assembleErrorComponent(err);
+    this.assembleErrorElementDetails(err);
     // TODO: Add developerNote
     // TODO: Pull the source error message if there is on
-    console.error(err.output.join(`\n\n${this.#hashString}\n\n`))
-    console.error(this)
+    console.error(err.output.join(`\n\n${this.#hashString}\n\n`));
+    console.error(this);
     if (el !== null) {
-      console.error(el)
+      console.error(el);
     }
   }
 
   handleChange(event) {
     if (event.target === undefined || event.target.dataset === undefined) {
-      return
+      return;
     }
     if (event.target.dataset.c !== undefined) {
-      this.runFunctions(event.target.dataset.c, event)
+      this.runFunctions(event.target.dataset.c, event);
     }
     if (event.target.dataset.b !== undefined) {
-      const batch = this.widget.batches[event.target.dataset.b].join('|')
-      this.sendUpdates(batch, event)
+      const batch = this.widget.batches[event.target.dataset.b].join("|");
+      this.sendUpdates(batch, event);
     }
     if (event.target.dataset.s !== undefined) {
-      this.sendUpdates(event.target.dataset.s, event)
+      this.sendUpdates(event.target.dataset.s, event);
     }
   }
 
   init() {
-    this.widget.bridge = this
+    this.widget.bridge = this;
     if (this.widget.template !== undefined) {
-      const skeleton = document.createElement('template')
-      skeleton.innerHTML = this.widget.template()
-      this.append(skeleton.content.cloneNode(true))
-      this.loadReceivers()
+      const skeleton = document.createElement("template");
+      skeleton.innerHTML = this.widget.template();
+      this.append(skeleton.content.cloneNode(true));
+      this.loadReceivers();
     }
     if (this.widget.init !== undefined) {
-      this.widget.init()
+      this.widget.init();
     }
     if (this.dataset.call !== undefined) {
-      this.runFunctions(this.dataset.call, null)
+      this.runFunctions(this.dataset.call, null);
     }
     if (this.dataset.send !== undefined) {
-      this.sendUpdates(this.dataset.send, null)
+      this.sendUpdates(this.dataset.send, null);
     }
     if (this.dataset.batch !== undefined) {
-      const batch = this.widget.batches[this.dataset.batch].join('|')
-      this.sendUpdates(batch, null)
+      const batch = this.widget.batches[this.dataset.batch].join("|");
+      this.sendUpdates(batch, null);
     }
     if (this.dataset.listeners !== undefined) {
-      this.#listeners = this.dataset.listeners.split('|')
+      this.#listeners = this.dataset.listeners.split("|");
     }
   }
 
   isIgnored(name) {
     if (this.dataset.ignore === undefined) {
-      return false
+      return false;
     }
-    return this.dataset.ignore.split('|').includes(name)
+    return this.dataset.ignore.split("|").includes(name);
   }
 
   loadReceivers() {
-    debug('loading receivers')
-    this.#receivers = []
-    const els = this.querySelectorAll(`[data-r]`)
+    debug("loading receivers");
+    this.#receivers = [];
+    const els = this.querySelectorAll(`[data-r]`);
     els.forEach((el) => {
-      el.dataset.r.split('|').forEach((key) => {
-        this.addReceiver(key, el)
-      })
-    })
+      el.dataset.r.split("|").forEach((key) => {
+        this.addReceiver(key, el);
+      });
+    });
   }
 
   runFunctions(stringToSplit, event) {
-    stringToSplit.split('|').forEach((f) => {
+    stringToSplit.split("|").forEach((f) => {
       if (this.isIgnored(f) === false) {
         try {
-          this.widget[`_${f}`](event)
+          this.widget[`_${f}`](event);
         } catch (error) {
-          console.log(error)
-          console.error(`Tried: _${f}`)
+          console.log(error);
+          console.error(`Tried: _${f}`);
         }
       }
-    })
+    });
   }
 
   sendUpdates(updates, data) {
-    updates.split('|').forEach((key) => {
+    updates.split("|").forEach((key) => {
       if (this.isIgnored(key) === false) {
         this.#receivers.forEach((receiver) => {
           if (receiver.key === key) {
-            receiver.f(data)
+            receiver.f(data);
           }
-        })
+        });
       }
-    })
+    });
   }
 
   setId() {
-    const uuid = self.crypto.randomUUID()
-    debug(`Setting bitty-js ID to: ${uuid}`)
-    this.dataset.uuid = uuid
+    const uuid = self.crypto.randomUUID();
+    debug(`Setting bitty-js ID to: ${uuid}`);
+    this.dataset.uuid = uuid;
   }
 
   setIds() {
-    const selector = ['r', 'c', 's', 'call', 'send', 'b', 'batch']
+    const selector = ["r", "c", "s", "call", "send", "b", "batch"]
       .map((key) => {
-        return `[data-${key}]`
+        return `[data-${key}]`;
       })
-      .join(',')
-    const els = this.querySelectorAll(selector)
+      .join(",");
+    const els = this.querySelectorAll(selector);
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
-        const uuid = self.crypto.randomUUID()
-        debug(`Setting ${el.tagName} ID to: ${uuid}`)
-        el.dataset.uuid = uuid
+        const uuid = self.crypto.randomUUID();
+        debug(`Setting ${el.tagName} ID to: ${uuid}`);
+        el.dataset.uuid = uuid;
       }
-    })
+    });
   }
 }
 
-customElements.define('bitty-js', BittyJs)
+customElements.define("bitty-js", BittyJs);
 
 /* *************************************************
  *

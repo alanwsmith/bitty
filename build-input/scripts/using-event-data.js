@@ -2,7 +2,6 @@
 
 export default class {
   update(el, event) {
-    el.innerHTML = event.target.value;
+    el.innerHTML = `Event type: ${event.type}`;
   }
 }
-

@@ -3,7 +3,7 @@
 export default class {
   #counter = 0;
 
-  displayCount(el, _event) {
+  update(el, _event) {
     this.#counter += 1;
     el.innerHTML = this.#counter;
   }

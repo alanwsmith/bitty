@@ -314,6 +314,7 @@ class BittyJs extends HTMLElement {
     if (event.target.dataset.send !== undefined) {
       this.sendUpdates(event.target.dataset.send, event);
     }
+    event.stopPropagation();
   }
 
   mutationCallback(_mutationList, _observer) {
@@ -331,7 +332,8 @@ class BittyJs extends HTMLElement {
     // responsible for setting things up.
     // At a minimum, combine the init() and template()
     // calls into a single thing so there's 
-    // less overhead
+    // less overhead. Also, better to use
+    // a template element regardless
     if (this.widget.template !== undefined) {
       const skeleton = document.createElement("template");
       skeleton.innerHTML = this.widget.template();
@@ -347,7 +349,7 @@ class BittyJs extends HTMLElement {
       this.widget.init();
     }
 
-    this.observerConfig = { attributes: true, childList: true, subtree: true };
+    this.observerConfig = { attributes: false, childList: true, subtree: true };
     this.observer = new MutationObserver(
       () => {this.mutationCallback.call(this)});
     this.observer.observe(this, this.observerConfig);
@@ -371,12 +373,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  isIgnored(name) {
-    if (this.dataset.ignore === undefined) {
-      return false;
-    }
-    return this.dataset.ignore.split("|").includes(name);
-  }
 
   loadReceivers() {
     debug("loading receivers");
@@ -391,26 +387,22 @@ class BittyJs extends HTMLElement {
 
   runFunctions(stringToSplit, event) {
     stringToSplit.split("|").forEach((f) => {
-      if (this.isIgnored(f) === false) {
-        try {
-          this.widget[`${f}`](event);
-        } catch (error) {
-          console.log(error);
-          console.error(`Tried: ${f}`);
-        }
+      try {
+        this.widget[`${f}`](event);
+      } catch (error) {
+        console.log(error);
+        console.error(`Tried: ${f}`);
       }
     });
   }
 
   sendUpdates(updates, data) {
     updates.split("|").forEach((key) => {
-      if (this.isIgnored(key) === false) {
-        this.#receivers.forEach((receiver) => {
-          if (receiver.key === key) {
-            receiver.f(data);
-          }
-        });
-      }
+      this.#receivers.forEach((receiver) => {
+        if (receiver.key === key) {
+          receiver.f(data);
+        }
+      });
     });
   }
 
@@ -499,6 +491,13 @@ class BittyJs extends HTMLElement {
   // }
 
 
+  // DEPRECATED as of 0.3.0
+  // isIgnored(name) {
+  //   if (this.dataset.ignore === undefined) {
+  //     return false;
+  //   }
+  //   return this.dataset.ignore.split("|").includes(name);
+  // }
 
 }
 

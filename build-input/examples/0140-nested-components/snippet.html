@@ -1,50 +1,35 @@
 <!-- prettier-ignore -->
 
-<div class="xlarge-block-margin">TODO:
-Review thius one. It was originally calling
-everything in a template. It works, but 
-it's a rare use case that's likley 
-not worth the example. Better to 
-figure out if this is really 
-a duplicate of the other examples
-</div>
-
-
-<div class="xlarge-block-margin">NOTE:
-This example has another JavaScript file (nested-child.js). 
-</div>
-<div class="xlarge-block-margin">TODO:
-Show nested-child.js as well. 
-</div>
-
-<bitty-js data-bridge="./nested-parent.js"
-  data-send="showValue">
+<bitty-js data-bridge="./nested-parent.js">
   <div>
-    <bitty-js
-      data-bridge="./nested-child.js"
-      data-send="showValue"
-      data-name="Counter 1"
-    ></bitty-js>
-    <bitty-js
-      data-bridge="./nested-child.js"
-      data-send="showValue"
-      data-name="Counter 2"
-    ></bitty-js>
+    <button data-send="updateParent">Parent</button>
+    <div data-receive="updateParent">Waiting on Parent</div>
   </div>
   <div>
-    <div>Total from internal counter</div>
-    <div data-receive="showValue"></div>
+    <bitty-js data-bridge="./nested-child.js">
+      <button data-send="updateChild">Nested Alfa</button>
+      <div data-receive="updateChild">Waiting on Alfa</div>
+    </bitty-js>
+    <bitty-js data-bridge="./nested-child.js">
+      <button data-send="updateChild">Nested Bravo</button>
+      <div data-receive="updateChild">Waiting on Bravo</div>
+    </bitty-js>
   </div>
 </bitty-js>
 
 <!-- x -->
 
 
-Nested Components
-
+Nested Component Event Issolation
 
 <!-- x -->
 
 nested-parent.js
 
 <!-- x -->
+
+- bitty is designed to work with the
+light DOM, but provides some encapsulation. 
+Specifically, event propigation (aka bubbling)
+doesn't go beyond the element. 
+

@@ -3,11 +3,9 @@
 export default class {
   #value = 0;
 
-  increment(_) {
+  updateParent(el, _event) {
     this.#value += 1;
-  }
-
-  showValue(el, _event) {
     el.innerHTML = this.#value;
   }
 }
+

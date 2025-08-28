@@ -1,10 +1,11 @@
 <!-- prettier-ignore -->
 
+<div>TODO: Make example with deeply nested elemneets,
+probably the library example will work for that</div>
+
 <bitty-js data-bridge="./create-elements.js">
-  <div>
-    <button 
-      data-send="createElements|elementStatus" 
-      data-receive="elementStatus">
+  <div data-receive="elementsAdded">
+    <button data-send="createElements|elementsAdded">
         Create Elements
     </button>
   </div>
@@ -15,9 +16,7 @@
 
 <!-- x -->
 
-
 Create Elements
-
 
 <!-- x -->
 
@@ -30,3 +29,12 @@ watches the <code>bitty-js</code>
 element's DOM Tree for new elements. When it sees one
 it runs the process to add UUIDs and set up signals
 via the attributes where necessary. 
+
+- The <code>button</code> sends two signals. The first is
+<code>createElements</code> which is received by
+the div that holds the new elements. 
+
+  The second is <code>elementsAdded</code> which
+  is received by the button's parent <code>div</code>
+  which remove the original <code>button</code>
+  in its process.

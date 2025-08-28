@@ -1,0 +1,89 @@
+<li>
+  <h3>Version: 0.1.0</h3>
+  <p>June 2, 2025</p>
+
+  [! include "wrapper/do-not-edit-output-reminder.html" !]
+
+  <p>Getting the project started.</p>
+
+  <ul>
+    <li>Initial prototype.</li>
+    <li>
+      <code>&ltbitty-js&gt;</code> wraps elements to provide them with reactive
+      capabilities.
+    </li>
+    <li>
+      Basic <code>data-c</code>, <code>data-s</code>, and
+      <code>data-r</code>
+      in place to call functions, send, and receive updates, respectively.
+    </li>
+    <li>
+      Functionality is loaded using <code>data-wrapper</code> to point to a
+      module to load. The module must export a <code>Wrapper</code> class that
+      gets loaded and used to provide functions and send/receive callbacks.
+    </li>
+    <li>
+      Uses string prefixes to make determinations about how to handle data
+      through the send/receive channels (e.g.
+      <code>htmlSOMETHING</code>
+      updates <code>.innerHTML</code> of an element while
+      <code>valueSOMETHING</code> updates the <code>.value</code>).
+    </li>
+    <li>
+      Defined convention for functions. <code>data-c</code> maps to functions in
+      the <code>Wrapper</code> class that start with a
+      <code>_</code> (underscore). The <code>data-s</code> and
+      <code>data-r</code> attributes map to functions in the
+      <code>Wrapper</code> class that start with a <code>$</code> (dollar sign).
+    </li>
+    <li>
+      Decided against using <code>data-c data-s and data-r</code> on the
+      <code>bitty.js</code> tags. That would involved a lot of extra overhead in
+      parsing to differentiate between the top level element and the content it
+      wraps. Using <code>data-send</code> instead as a replacement for
+      <code>data-c</code>. Others, TBD.
+    </li>
+    <li>
+      Set up <code>data-c="batchSOMETHIGN"</code> functionality to send a single
+      single that gets turned into multiple signals in the <code>Wrapper</code>.
+    </li>
+    <li>
+      Defined convention of using <code>.batches</code> to look for batches. It
+      must be a hash where the keys match the incoming request and the value is
+      an array of functions to run.
+    </li>
+    <li>
+      Defined <code>.bridge</code> to allow <code>Wrapper</code> functions to
+      access the parent <code>bitty-js</code> element.
+    </li>
+    <li>Scoped event listeners to the <code>bitty-js</code> elements.</li>
+    <li>
+      Set up <code>data-listeners</code> attribute on <code>bitty-js</code> tags
+      to override the default listeners (which are <code>input</code> and
+      <code>click</code>).
+    </li>
+    <li>Created example that stores its own state.</li>
+    <li>
+      Created example that updates an element with the same content it sent
+      (i.e. verified feedback can be avoided).
+    </li>
+    <li>
+      Created example using <code>data-send</code> to load initial values.
+    </li>
+    <li>Created example that sends multiple signals.</li>
+    <li>Created example with multiple elements receiving the same signal.</li>
+    <li>
+      Created example showing how to update global CSS variables/properties.
+    </li>
+    <li>Created example showing custom event listeners.</li>
+    <li>
+      Created example showing how to update CSS variables/properties scoped to
+      the content of individual <code>bitty-js</code> tags.
+    </li>
+    <li>
+      Examples use parent page's CSS for styling. It confirms I'm happy with the
+      choice to use the light DOM instead of the shadow DOM.
+    </li>
+    <li>Set up initial preflight check to ensure functions are in place.</li>
+  </ul>
+</li>

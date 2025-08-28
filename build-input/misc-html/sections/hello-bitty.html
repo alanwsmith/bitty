@@ -41,25 +41,27 @@ the text with a timestamp.</p>
   <li>
     The <code>data-bridge</code> attribute on the <code>bitty-js</code> element 
     makes the connection to the JavaScript module responsible for 
-    providing functionality. <code>hello-text.js</code> in this case.
-  </li>
-
-  <li>
-    The <code>data-receive</code> attribute on the <code>div</code> registers
-    it to receive updates when the <code>updateText</code> signal is
-    sent.
+    providing functionality (<code>hello-text.js</code> in this case).
   </li>
 
   <li>
     The <code>data-send</code> attribute on the <code>button</code> 
-    sends the <code>updateText</code> signal when the button is clicked. 
+    sets it up to send the <code>update</code> signal when the 
+    button is clicked. 
   </li>
+
+  <li>
+    The <code>data-receive</code> attribute on the <code>div</code> registers
+    it to receive the <code>update</code> signal (which updates it
+    via the <code>update</code> function).
+  </li>
+
 </ul>
 
 <h3>Full Attribute List</h3>
 
 <p>
-  The bitty API is comprised of Six (TODO: maybe just four) attributes.
+  The bitty API is comprised of Six (TODO: maybe just five) attributes.
   They are:
 </p>
 
@@ -76,12 +78,6 @@ the text with a timestamp.</p>
     <p>
   </li>
   <li>
-    <p>
-      TODO: See about deprecating <code>data-call</code>
-      in favor of just using <code>data-send</code> without
-      corresponding <code>data-receive</code> since
-      the events are passed the same way.
-    </p>
     <p>
       <code>data-call</code> - Calls a function without
       sending a signal. These calls are made prior

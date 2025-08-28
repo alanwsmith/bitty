@@ -1,10 +1,14 @@
 // deno-fmt-ignore-file
 
 export default class {
-  #counter = 0;
+  #currentState = "Off";
 
   displayCount(el, _event) {
-    this.#counter += 1;
-    el.innerHTML = this.#counter;
+    if (this.#currentState === "Off") {
+      this.#currentState = "On";
+    } else {
+      this.#currentState = "Off";
+    }
+    el.innerHTML = this.#currentState;
   }
 }

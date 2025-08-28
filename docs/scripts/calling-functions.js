@@ -3,7 +3,7 @@
 export default class {
   #counter = 0;
 
-  increment(_) {
+  increment(_event) {
     this.#counter += 1;
   }
 

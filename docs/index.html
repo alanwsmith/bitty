@@ -270,6 +270,42 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
+    <h3>Sending From The bitty Element</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js data-bridge="./send-from-bitty.js"
+    data-send="update">
+    <div data-receive="update">Waiting</div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./send-from-bitty.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Got update at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>
+<p>Signals can be sent from the bitty wrapper
+when it initializes using a <code>data-send</code> attribute
+directly on the element</p>
+</li>
+<li>
+<p>Note that the <code>send-from-bitty.js</code> file is
+identical to <code>send-and-receive.js</code> from the
+prior example. The diffence in functionality
+comes from where <code>data-send</code> is used.</p>
+</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Send Multiple Signals</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./send-multiple-signals.js">
@@ -413,20 +449,26 @@ the <code>displayCount</code> signal is sent.</p>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
-    <h3>Loading Initial State</h3>
+    <h3>Calling Functions</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<bitty-js data-bridge="./loading-initial-state.js" 
+<bitty-js data-bridge="./calling-functions.js" 
     data-send="displayCount">
-    <button data-call="increment"
-        data-send="displayCount">Click Me</button>
+    <button
+        data-call="increment"
+        data-send="displayCount">
+        Click Me
+    </button>
     <div data-receive="displayCount"></div>
 </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./loading-initial-state.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./calling-functions.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        Click Me</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
@@ -435,7 +477,7 @@ the <code>displayCount</code> signal is sent.</p>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #counter = 0;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">increment</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">increment</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">counter </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
@@ -1581,12 +1623,6 @@ Use the build-site.rs script to generate it
 
   <p>Data attribute naming update for clarity</p>
   <ul> 
-    <li>
-      TODO: See about deprecating <code>data-call</code> in favor
-      of just using <code>data-send</code> without a correspoding
-      <code>data-receive</code>. Events are sent the same way 
-      so it should be fine and reduce complexity and mental overhead. 
-    </li>
     <li>
       The biggest update is changing <code>data-b</code>, <code>data-c</code>,
       <code>data-r</code>, and <code>data-s</code> to <code>data-batch</code>, 

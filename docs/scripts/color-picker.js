@@ -46,15 +46,15 @@ export default class {
     this.updateStyles();
   }
 
-  cValue(el, _) {
+  cValue(el, _event) {
     el.value = this.#data.modes[this.#data.activeMode].c;
   }
 
-  hValue(el, _) {
+  hValue(el, _event) {
     el.value = this.#data.modes[this.#data.activeMode].h;
   }
 
-  lValue(el, _) {
+  lValue(el, _event) {
     el.value = this.#data.modes[this.#data.activeMode].l;
   }
 

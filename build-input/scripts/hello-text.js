@@ -1,5 +1,5 @@
 export default class {
-  updateText(el, _) {
+  updateText(el, _event) {
     el.innerHTML = `Clicked at: ${Date.now()}`;
   }
 }

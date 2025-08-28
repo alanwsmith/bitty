@@ -21,7 +21,7 @@ export default class {
     }
   }
 
-  buttonValue(el, _) {
+  buttonValue(el, _event) {
     el.innerHTML = this.#value;
   }
 }

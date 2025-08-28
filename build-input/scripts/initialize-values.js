@@ -7,11 +7,11 @@ export default class {
     this.#value = data.target.value;
   }
 
-  setSliderA(el, _) {
+  setSliderA(el, _event) {
     el.value = this.#value;
   }
 
-  setSliderB(el, _) {
+  setSliderB(el, _event) {
     el.value = this.#value;
   }
 }

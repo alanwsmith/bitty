@@ -2,7 +2,7 @@
 
 export default class {
 
-  updateText(el, _) {
+  updateText(el, _event) {
     const ts = Date.now();
     el.innerHTML = `Clicked at:<br>${ts}`;
   }

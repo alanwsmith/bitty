@@ -8,7 +8,7 @@ export default class {
     this.#sliderValue = event.target.value;
   }
 
-  sliderValue(el, _) {
+  sliderValue(el, _event) {
     el.value = this.#sliderValue;
   }
 

@@ -1,7 +1,7 @@
 // deno-fmt-ignore-file
 
 export default class {
-  showValue(el, _) {
+  showValue(el, _event) {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;
     counters.forEach((counter) => {

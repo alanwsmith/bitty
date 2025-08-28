@@ -16,7 +16,7 @@ export default class {
     this.#data.animal = data.target.value;
   }
 
-  $showAnimal(el, _) {
+  $showAnimal(el, _event) {
     const animal = this.#data.animal;
     el.innerHTML = this.#data.animals[animal];
   }

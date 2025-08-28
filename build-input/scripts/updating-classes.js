@@ -15,7 +15,7 @@ export default class {
     this.#state.activeColor = event.target.dataset.color;
   }
 
-  setClass(el, _) {
+  setClass(el, _event) {
     this.#state.colors.forEach((color) => {
       if (color === this.#state.activeColor) {
         el.classList.add(color);

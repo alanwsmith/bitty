@@ -7,11 +7,11 @@ export default class {
     this.#number = event.target.value;
   }
 
-  displayNumber(el, _) {
+  displayNumber(el, _event) {
     el.innerHTML = this.#number;
   }
 
-  setNumberValue(el, _) {
+  setNumberValue(el, _event) {
     el.value = this.#number;
   }
 }

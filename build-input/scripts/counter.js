@@ -6,11 +6,11 @@ export default class {
     this.num = 0;
   }
 
-  _addOne() {
+  addOne() {
     this.num += 1;
   }
 
-  $showNum(el) {
+  showNum(el) {
     el.innerHTML = this.num;
   }
 

@@ -131,21 +131,6 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  // TODO: Confirm this is deprecated and can
-  // be removed
-  //
-  // addIds() {
-  //   debug("Adding IDs");
-  //   if (this.dataset.uuid === undefined) {
-  //     this.dataset.uuid = self.crypto.randomUUID();
-  //   }
-  //   const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
-  //   els.forEach((el) => {
-  //     if (el.dataset.uuid === undefined) {
-  //       el.dataset.uuid = self.crypto.randomUUID();
-  //     }
-  //   });
-  // }
 
   addReceiver(key, el) {
     debug(`Adding receiver to: ${el.dataset.uuid}`);
@@ -153,10 +138,10 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.widget[`$${key}`](el, data);
+          this.widget[`${key}`](el, data);
         } catch (error) {
           console.error(error);
-          console.error(`Tried: $${key}`);
+          console.error(`Tried: ${key}`);
         }
       },
     });
@@ -219,24 +204,6 @@ class BittyJs extends HTMLElement {
     err.output.push(text);
   }
 
-  // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
-  // assembleErrorDumpMessage(err) {
-  //   const out = []
-  //   if (err.el !== null) {
-  //     out.push('ELEMENT OUTPUTS')
-  //     out.push(
-  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
-  //     )
-  //   } else {
-  //     out.push('ELEMENT OUTPUT')
-  //     out.push(
-  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
-  //     )
-  //   }
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
-
   assembleErrorElementDetails(err) {
     if (err.el !== null) {
       const out = [];
@@ -250,20 +217,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: This is out for now. Probably DEPRECATE, but think
-  // about it a little more first.
-  // assembleErrorFinding(err) {
-  //   const out = []
-  //   out.push(`FINDING THE ERROR`)
-  //   out.push(
-  //     `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
-  //   )
-  //   out.push(
-  //     `Expand the error message in the console to see the extended error trace and associated line numbers.`
-  //   )
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
 
   assembleErrorId(err) {
     const out = [];
@@ -274,13 +227,6 @@ class BittyJs extends HTMLElement {
     err.output.push(text);
   }
 
-  // assembleErrorPrelude(err) {
-  //   const out = []
-  //   out.push(this.#hashString)
-  //   out.push(`A BITTY ERROR OCCURRED`)
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
 
   assembleErrorReplacedText(err, content) {
     return content
@@ -314,8 +260,7 @@ class BittyJs extends HTMLElement {
     // TODO: Verify `async` on connectedCallback
     // works across browsers.
     //
-    // TODO: Deprecate setId() once everything is
-    // in setIds() (the plural)
+    // TODO: Deprecate setId() after completing 0.3.0
     this.setIds();
     await this.attachWidget();
     if (this.widget === undefined) {
@@ -425,10 +370,10 @@ class BittyJs extends HTMLElement {
     stringToSplit.split("|").forEach((f) => {
       if (this.isIgnored(f) === false) {
         try {
-          this.widget[`_${f}`](event);
+          this.widget[`${f}`](event);
         } catch (error) {
           console.log(error);
-          console.error(`Tried: _${f}`);
+          console.error(`Tried: ${f}`);
         }
       }
     });
@@ -446,13 +391,6 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  /*
-  setId() {
-    const uuid = self.crypto.randomUUID();
-    debug(`Setting bitty-js ID to: ${uuid}`);
-    this.dataset.uuid = uuid;
-  }
-  */
 
   setIds() {
     //const selector = ["r", "c", "s", "call", "send", "b", "batch"]
@@ -470,6 +408,80 @@ class BittyJs extends HTMLElement {
       }
     });
   }
+
+
+  /*
+  TODO: Deprecate after completing 0.3.0
+  setId() {
+    const uuid = self.crypto.randomUUID();
+    debug(`Setting bitty-js ID to: ${uuid}`);
+    this.dataset.uuid = uuid;
+  }
+  */
+
+  /*
+  // TODO: Deprecate after completing 0.3.00
+  //
+  // addIds() {
+  //   debug("Adding IDs");
+  //   if (this.dataset.uuid === undefined) {
+  //     this.dataset.uuid = self.crypto.randomUUID();
+  //   }
+  //   const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
+  //   els.forEach((el) => {
+  //     if (el.dataset.uuid === undefined) {
+  //       el.dataset.uuid = self.crypto.randomUUID();
+  //     }
+  //   });
+  // }
+  */
+
+
+  // TODO: This is out for now. Probably DEPRECATE, but think
+  // about it a little more first.
+  // assembleErrorFinding(err) {
+  //   const out = []
+  //   out.push(`FINDING THE ERROR`)
+  //   out.push(
+  //     `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
+  //   )
+  //   out.push(
+  //     `Expand the error message in the console to see the extended error trace and associated line numbers.`
+  //   )
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+  // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
+  // assembleErrorDumpMessage(err) {
+  //   const out = []
+  //   if (err.el !== null) {
+  //     out.push('ELEMENT OUTPUTS')
+  //     out.push(
+  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
+  //     )
+  //   } else {
+  //     out.push('ELEMENT OUTPUT')
+  //     out.push(
+  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+  //     )
+  //   }
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+
+  // TODO: Deprecate after completing 0.3.0
+  // assembleErrorPrelude(err) {
+  //   const out = []
+  //   out.push(this.#hashString)
+  //   out.push(`A BITTY ERROR OCCURRED`)
+  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
+  //   err.output.push(text)
+  // }
+
+
+
 }
 
 customElements.define("bitty-js", BittyJs);

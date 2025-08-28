@@ -67,7 +67,8 @@ impl Payload {
                 .trim()
                 .replace("<!-- prettier-ignore -->\n", "");
             let highlighted_html = highlight(&raw_html, "HTML")?;
-            let javascripts = vec![];
+            // TODO: Handle multiple scripts here when necessary.
+            let javascripts = vec![parts[2].to_string()];
             let e = Example {
                 highlighted_html,
                 javascripts,

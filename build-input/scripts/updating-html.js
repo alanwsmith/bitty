@@ -3,8 +3,8 @@
 export default class {
 
   $updateText(el, _) {
-    const ts = Date.now()
-    el.innerHTML = `Clicked at:<br>${ts}`
+    const ts = Date.now();
+    el.innerHTML = `Clicked at:<br>${ts}`;
   }
 
 }

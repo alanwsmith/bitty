@@ -1,11 +1,15 @@
 // deno-fmt-ignore-file
 
 export default class {
-  updateAlfa(el, _event) {
-    el.innerHTML = "Recieved Alfa Signal";
+  alfa(el, _event) {
+    el.innerHTML = `Got Alfa ${Date.now()}`;
   }
 
-  updateBravo(el, _event) {
-    el.innerHTML = "Recieved Bravo Signal";
+  bravo(el, _event) {
+    el.innerHTML = `Got Bravo ${Date.now()}`;
+  }
+
+  charlie(el, _event) {
+    el.innerHTML = `Got Charlie ${Date.now()}`;
   }
 }

@@ -10,5 +10,8 @@ export default class {
   displayNumber(el, _event) {
     el.innerHTML = this.#number;
   }
-}
 
+  setNumberValue(el, _event) {
+    el.value = this.#number;
+  }
+}

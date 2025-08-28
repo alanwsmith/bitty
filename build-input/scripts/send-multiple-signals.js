@@ -1,17 +1,15 @@
 // deno-fmt-ignore-file
 
 export default class {
-  #number;
-
-  setNumber(event) {
-    this.#number = event.target.value;
+  alfa(el, _event) {
+    el.innerHTML = `Got Alfa ${Date.now()}`;
   }
 
-  displayNumber(el, _event) {
-    el.innerHTML = this.#number;
+  bravo(el, _event) {
+    el.innerHTML = `Got Bravo ${Date.now()}`;
   }
 
-  setNumberValue(el, _event) {
-    el.value = this.#number;
+  charlie(el, _event) {
+    el.innerHTML = `Got Charlie ${Date.now()}`;
   }
 }

@@ -1,15 +1,7 @@
 // deno-fmt-ignore-file
 
 export default class {
-
-  #sliderValue;
-
-  setValue(event) {
-    this.#sliderValue = event.target.value;
+  sliderValue(el, event) {
+    el.value = event.target.value;
   }
-
-  sliderValue(el, _event) {
-    el.value = this.#sliderValue;
-  }
-
 }

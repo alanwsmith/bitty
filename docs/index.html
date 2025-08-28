@@ -144,7 +144,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <h3>Full Attribute List</h3>
 
 <p>
-  Six attributes make up the bitty API. They are:
+  The bitty API is comprised of Six (TODO: maybe just four) attributes.
+  They are:
 </p>
 
 <ul>
@@ -160,6 +161,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
     <p>
   </li>
   <li>
+    <p>
+      TODO: See about deprecating <code>data-call</code>
+      in favor of just using <code>data-send</code> without
+      corresponding <code>data-recieve</code> since
+      the events are passed the same way.
+    </p>
     <p>
       <code>data-call</code> - Calls a function without
       sending a signal. These calls are made prior
@@ -267,6 +274,40 @@ on initilization. It is updated directly when
 the <code>displayCount</code> signal is sent.</p>
 </li>
 </ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
+    <h3>Recieving Multiple Signals</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js data-bridge="./recieve-multiple-signals.js">
+    <div>
+        <div><button data-send="updateAlfa">Alfa</button></div>
+        <div><button data-send="updateBravo">Bravo</button></div>
+    </div>
+    <div data-recieve="updateAlfa|updateBravo">waiting</div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./recieve-multiple-signals.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;&lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateAlfa</span><span style="color:#c0c5ce;">&quot;&gt;Alfa&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;&lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateBravo</span><span style="color:#c0c5ce;">&quot;&gt;Bravo&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateAlfa|updateBravo</span><span style="color:#c0c5ce;">&quot;&gt;waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateAlfa</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Recieved Alfa Signal</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateBravo</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Recieved Bravo Signal</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"></div>
   </div>
   <div class="xxlarge-block-margin">
     <h3>Loading Initial State</h3>
@@ -465,7 +506,6 @@ argument to the function.</p>
     <input
       type="range"
       id="update-values-input-slider"
-      data-call="setValue"
       data-send="sliderValue">
   </div>
   <div>
@@ -484,7 +524,6 @@ argument to the function.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update-values-input-slider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sliderValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -499,17 +538,9 @@ argument to the function.</p>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #sliderValue;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">setValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">sliderValue </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">sliderValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">sliderValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">sliderValue</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
     </div>    
     <div class="xlarge-block-margin"><ul>
@@ -1569,6 +1600,12 @@ Use the build-site.rs script to generate it
 
   <p>Data attribute naming update for clarity</p>
   <ul> 
+    <li>
+      TODO: See about deprecating <code>data-call</code> in favor
+      of just using <code>data-send</code> without a correspoding
+      <code>data-recieve</code>. Events are sent the same way 
+      so it should be fine and reduce complexity and mental overhead. 
+    </li>
     <li>
       The biggest update is changing <code>data-b</code>, <code>data-c</code>,
       <code>data-r</code>, and <code>data-s</code> to <code>data-batch</code>, 

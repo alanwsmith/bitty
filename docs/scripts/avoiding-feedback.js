@@ -1,19 +1,9 @@
 // deno-fmt-ignore-file
 
 export default class {
-
-  #value;
-
-  setValue(data) {
-    this.#value = data.target.value;
+  update(el, event) {
+    if (el.dataset.uuid !== event.target.dataset.uuid) {
+      el.value = event.target.value;
+    }
   }
-
-  setSliderA(el, _event) {
-    el.value = this.#value;
-  }
-
-  setSliderB(el, _event) {
-    el.value = this.#value;
-  }
-
 }

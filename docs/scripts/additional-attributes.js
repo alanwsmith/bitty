@@ -7,7 +7,7 @@ export default class {
     "red",
   ];
 
-  setClass(el, event) {
+  update(el, event) {
     this.#colors.forEach((color) => {
       if (color === event.target.dataset.color) {
         el.classList.add(color);

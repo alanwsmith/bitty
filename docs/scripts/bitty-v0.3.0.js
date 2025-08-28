@@ -123,6 +123,24 @@ class BittyJs extends HTMLElement {
   //   developerNote: [],
   // },
 
+
+  async connectedCallback() {
+    // TODO: Verify `async` on connectedCallback
+    // works across browsers.
+    //
+    this.setParentId();
+    this.setIds();
+    await this.attachWidget();
+    if (this.widget === undefined) {
+      this.error(0);
+    } else {
+      this.requestUpdate = this.handleChange.bind(this);
+      this.loadReceivers();
+      this.init();
+      this.addEventListeners();
+    }
+  }
+
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
@@ -131,9 +149,8 @@ class BittyJs extends HTMLElement {
     });
   }
 
-
   addReceiver(key, el) {
-    debug(`Adding receiver to: ${el.dataset.uuid}`);
+    debug(`Adding receiver for: ${el.dataset.uuid} with key: ${key} to: ${this.dataset.uuid}`);
     this.#receivers.push({
       key: key,
       f: (data) => {
@@ -217,7 +234,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   assembleErrorId(err) {
     const out = [];
     out.push(this.#hashString);
@@ -226,7 +242,6 @@ class BittyJs extends HTMLElement {
     const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
     err.output.push(text);
   }
-
 
   assembleErrorReplacedText(err, content) {
     return content
@@ -253,23 +268,6 @@ class BittyJs extends HTMLElement {
       }
     } else {
       this.error(2);
-    }
-  }
-
-  async connectedCallback() {
-    // TODO: Verify `async` on connectedCallback
-    // works across browsers.
-    //
-    // TODO: Deprecate setId() after completing 0.3.0
-    this.setIds();
-    await this.attachWidget();
-    if (this.widget === undefined) {
-      this.error(0);
-    } else {
-      this.requestUpdate = this.handleChange.bind(this);
-      this.loadReceivers();
-      this.init();
-      this.addEventListeners();
     }
   }
 
@@ -318,23 +316,56 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  mutationCallback(_mutationList, _observer) {
+    this.setIds();
+    this.loadReceivers();
+  }
+
   init() {
+    // TODO: Probably rename this to `this.widget.bitty`
+    // so it has that name instead of bridge when
+    // addressed from inside modules. 
     this.widget.bridge = this;
+    // TODO: Probably deprecate this template process.
+    // The expecation being that the page itself is
+    // responsible for setting things up.
+    // At a minimum, combine the init() and template()
+    // calls into a single thing so there's 
+    // less overhead
     if (this.widget.template !== undefined) {
       const skeleton = document.createElement("template");
       skeleton.innerHTML = this.widget.template();
       this.append(skeleton.content.cloneNode(true));
+      this.setIds();
       this.loadReceivers();
     }
+    // TODO: Probably deprecate this in favor of 
+    // issuing a data-call from the bitty-js 
+    // element. That's more visible, explicit, 
+    // and requires less mental overhead.
     if (this.widget.init !== undefined) {
       this.widget.init();
     }
+
+    this.observerConfig = { attributes: true, childList: true, subtree: true };
+    this.observer = new MutationObserver(
+      () => {this.mutationCallback.call(this)});
+    this.observer.observe(this, this.observerConfig);
+
+
     if (this.dataset.call !== undefined) {
       this.runFunctions(this.dataset.call, null);
     }
     if (this.dataset.send !== undefined) {
       this.sendUpdates(this.dataset.send, null);
     }
+    // TODO: See about moving this up above the
+    // this.dataset.call and this.dataset.send 
+    // checks. Feels like that's where it should 
+    // belong since it's more set up than execution. 
+    // Just have to make sure it doesn't cause 
+    // a feedback loop on changes (which I think 
+    // would already have occurred)
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
     }
@@ -394,21 +425,17 @@ class BittyJs extends HTMLElement {
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
         const uuid = self.crypto.randomUUID();
-        debug(`Setting ${el.tagName} ID to: ${uuid}`);
+        debug(`Setting ${el.tagName} ID to: ${uuid} in: ${this.dataset.uuid}`);
         el.dataset.uuid = uuid;
       }
     });
   }
 
-
-  /*
-  TODO: Deprecate after completing 0.3.0
-  setId() {
+  setParentId() {
     const uuid = self.crypto.randomUUID();
     debug(`Setting bitty-js ID to: ${uuid}`);
     this.dataset.uuid = uuid;
   }
-  */
 
   /*
   // TODO: Deprecate after completing 0.3.00

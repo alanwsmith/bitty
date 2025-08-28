@@ -70,6 +70,8 @@ Use the build-site.rs script to generate it
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
             tiny component. big reactivity.
+            <br>
+            version: 0.3.0
           </div>
         </div>
       </hgroup>
@@ -90,7 +92,7 @@ Use the build-site.rs script to generate it
 
 <p>bitty is a web component. It provides reactivity to the elements
 it surrounds. For example, this &quot;Click me&quot; button updates 
-the text with a timestamp.</p>
+the text with a numeric timestamp.</p>
 
 <div
   class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
@@ -488,6 +490,29 @@ would increment the number directly.</p>
 <p>See the next example for a
 demonstration.</p>
 </li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
+    <h3>Update Elements Using data-call</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js data-bridge="./update-calling-element.js">
+TODO: Make example showing how to use event.target to update
+elements when they use data-call
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./update-calling-element.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">TODO: Make example showing how to use event.target to update</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">elements when they use data-call</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// TODO</span></span>
+<span class="codeLine"><span style="color:#65737e;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>TKTKTK</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
@@ -941,8 +966,10 @@ update itself.</li>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">!</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">15</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    } </span><span style="color:#b48ead;">else if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.dataset.uuid </span><span style="color:#c0c5ce;">!== </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.uuid) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    } </span><span style="color:#b48ead;">else if </span><span style="color:#eff1f5;">(</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.type </span><span style="color:#c0c5ce;">=== &quot;</span><span style="color:#a3be8c;">input</span><span style="color:#c0c5ce;">&quot; &amp;&amp;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.dataset.uuid </span><span style="color:#c0c5ce;">!== </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.uuid) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
@@ -962,93 +989,115 @@ to determine if an event exists or not
 if something from the event is
 used in the function.</p>
 </li>
+<li>
+<p>Additionally, a check to ensure
+the proper type of event is being
+used might be appropriate. For example,
+this code checks to ensure the <code>event.type</code>
+is <code>input</code> to avoid trying to make
+updates if the <code>event.type</code> is <code>click</code>.</p>
+<p>(Necessary because <code>click</code>, <code>change</code>,
+and <code>input</code> events are all used by
+default)</p>
+</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
-    <h3>Create Element</h3>
+    <h3>Create Elements</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<div>TODO: Verify that data-receive works
-in newly created elements</div>
-
-
-<bitty-js data-bridge="./create-element.js"
-  data-send="buttonValue">
+<bitty-js data-bridge="./create-elements.js">
   <div>
-    <button data-call="makeSlider" data-receive="buttonValue"></button>
+    <button 
+      data-send="createElements|elementStatus" 
+      data-receive="elementStatus">
+        Create Elements
+    </button>
   </div>
   <div>
-    <div>Output</div>
-    <div class="output"></div>
+    <div data-receive="createElements">Waiting for click</div>
   </div>
 </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Verify that data-receive works</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">in newly created elements&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./create-element.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">buttonValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./create-elements.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">makeSlider</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">buttonValue</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">createElements|elementStatus</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">elementStatus</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        Create Elements</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Output&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">output</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">createElements</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #sliderHasBeenAdded = false;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #value = 0;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  #slidersHaveBeenAdded = false;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">setValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">data</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">elementStatus</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">makeSlider</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">data</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">sliderHasBeenAdded </span><span style="color:#c0c5ce;">=== </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">createElements</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">slidersHaveBeenAdded </span><span style="color:#c0c5ce;">=== </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= &quot;&quot;</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">slider </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">input</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">.type </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">.dataset.call </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">.dataset.send </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">buttonValue</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">.output</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">).</span><span style="color:#8fa1b3;">append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">);</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">sliderHasBeenAdded </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    } </span><span style="color:#b48ead;">else </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.target.innerHTML </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Already&lt;br&gt;added</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">.dataset.send </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">slider</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">display </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">div</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">display</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Waiting for value</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">display</span><span style="color:#eff1f5;">.dataset.receive </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">display</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">slidersHaveBeenAdded </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">buttonValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
     </div>    
-    <div class="xlarge-block-margin"></div>
+    <div class="xlarge-block-margin"><ul>
+<li>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">Mutation Observer</a>
+watches the &lt;code&gt;bitty-js&lt;/code&gt;
+element's DOM Tree for new elements. When it sees one
+it runs the process to add UUIDs and set up signals
+via the attributes where necessary.</li>
+</ul></div>
   </div>
   <div class="xxlarge-block-margin">
     <h3>Call bridge init</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<div>TODO: Rename this.brdige to this.bitty in the
+<div>TODO: Probably deprecate this in favor of 
+using an explicit <code>data-call</code> on the
+<code>bitty-js</code> element. That's both
+more visible and requires less mental overhead.</div>
+
+<div>TODO: If not deprecated: Rename this.brdige to this.bitty in the
 script so it's more obviouis what's being
 addressed</div>
 
-<div>TODO: Rename to call-bitty-init</div>
-
+<div>TODO: If not deprecated: Rename to call-bitty-init</div>
 
 <div class="make-two-columns">
   <bitty-js data-bridge="./call-bridge-init.js"></bitty-js>
 </div></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Rename this.brdige to this.bitty in the</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Probably deprecate this in favor of</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">using an explicit &lt;</span><span style="color:#bf616a;">code</span><span style="color:#c0c5ce;">&gt;data-call&lt;/</span><span style="color:#bf616a;">code</span><span style="color:#c0c5ce;">&gt; on the</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">code</span><span style="color:#c0c5ce;">&gt;bitty-js&lt;/</span><span style="color:#bf616a;">code</span><span style="color:#c0c5ce;">&gt; element. That&#39;s both</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">more visible and requires less mental overhead.&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: If not deprecated: Rename this.brdige to this.bitty in the</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">script so it&#39;s more obviouis what&#39;s being</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">addressed&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Rename to call-bitty-init&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: If not deprecated: Rename to call-bitty-init&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">make-two-columns</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./call-bridge-init.js</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -1067,12 +1116,22 @@ addressed</div>
   <div class="xxlarge-block-margin">
     <h3>Embeded Template Loading Via Bridge init</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<div>TODO: Probably deprecate this. The
+idea being the page itself is reponsibe
+for prepping content</div>
+
+
 <bitty-js
   data-send="showValue"
   data-bridge="./template-loading.js"
 ></bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Probably deprecate this. The</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">idea being the page itself is reponsibe</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">for prepping content&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./template-loading.js</span><span style="color:#c0c5ce;">&quot;</span></span>
@@ -1510,6 +1569,8 @@ element. (Might combine this with the issolated-elements example</div>
   <div class="xxlarge-block-margin">
     <h3>Color Picker</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<div>TODO: Move this to its own Example Color Picker section</div>
+
   <style>
     .color-picker {
       background-color: var(--color-picker-background);
@@ -1559,6 +1620,8 @@ element. (Might combine this with the issolated-elements example</div>
   </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Move this to its own Example Color Picker section&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">color-picker </span><span style="color:#c0c5ce;">{</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--color-picker-background);</span></span>
@@ -1762,6 +1825,10 @@ Use the build-site.rs script to generate it
       Removed the <code>data-batch</code> attribute. While there are some use 
       cases where it might be nice, the extra complexity, mental overhead, and maintance 
       aren't worth it.
+    </li>
+    <li>
+      TODO: Added Mutation Observer so data-* functionaltiy works
+      on elements that are added after initilization.
     </li>
     <li>
       Added documentation to each of the examples. (Documention is 

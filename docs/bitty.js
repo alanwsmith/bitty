@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.2.3
+// bitty.js  - Version 0.2.4
 /////////////////////////////////////////////////////
 
 function debug(payload, el = null) {
@@ -131,20 +131,24 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  addIds() {
-    debug("Adding IDs");
-    if (this.dataset.uuid === undefined) {
-      this.dataset.uuid = self.crypto.randomUUID();
-    }
-    const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
-    els.forEach((el) => {
-      if (el.dataset.uuid === undefined) {
-        el.dataset.uuid = self.crypto.randomUUID();
-      }
-    });
-  }
+  // TODO: Confirm this is deprecated and can
+  // be removed
+  //
+  // addIds() {
+  //   debug("Adding IDs");
+  //   if (this.dataset.uuid === undefined) {
+  //     this.dataset.uuid = self.crypto.randomUUID();
+  //   }
+  //   const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
+  //   els.forEach((el) => {
+  //     if (el.dataset.uuid === undefined) {
+  //       el.dataset.uuid = self.crypto.randomUUID();
+  //     }
+  //   });
+  // }
 
   addReceiver(key, el) {
+    debug(`Adding receiver to: ${el.dataset.uuid}`);
     this.#receivers.push({
       key: key,
       f: (data) => {
@@ -309,7 +313,9 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     // TODO: Verify `async` on connectedCallback
     // works across browsers.
-    this.setId();
+    //
+    // TODO: Deprecate setId() once everything is
+    // in setIds() (the plural)
     this.setIds();
     await this.attachWidget();
     if (this.widget === undefined) {
@@ -359,15 +365,15 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-    if (event.target.dataset.c !== undefined) {
-      this.runFunctions(event.target.dataset.c, event);
+    if (event.target.dataset.call !== undefined) {
+      this.runFunctions(event.target.dataset.call, event);
     }
-    if (event.target.dataset.b !== undefined) {
-      const batch = this.widget.batches[event.target.dataset.b].join("|");
+    if (event.target.dataset.batch !== undefined) {
+      const batch = this.widget.batches[event.target.dataset.batch].join("|");
       this.sendUpdates(batch, event);
     }
-    if (event.target.dataset.s !== undefined) {
-      this.sendUpdates(event.target.dataset.s, event);
+    if (event.target.dataset.send !== undefined) {
+      this.sendUpdates(event.target.dataset.send, event);
     }
   }
 
@@ -407,9 +413,9 @@ class BittyJs extends HTMLElement {
   loadReceivers() {
     debug("loading receivers");
     this.#receivers = [];
-    const els = this.querySelectorAll(`[data-r]`);
+    const els = this.querySelectorAll(`[data-recieve]`);
     els.forEach((el) => {
-      el.dataset.r.split("|").forEach((key) => {
+      el.dataset.recieve.split("|").forEach((key) => {
         this.addReceiver(key, el);
       });
     });
@@ -440,14 +446,17 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  /*
   setId() {
     const uuid = self.crypto.randomUUID();
     debug(`Setting bitty-js ID to: ${uuid}`);
     this.dataset.uuid = uuid;
   }
+  */
 
   setIds() {
-    const selector = ["r", "c", "s", "call", "send", "b", "batch"]
+    //const selector = ["r", "c", "s", "call", "send", "b", "batch"]
+    const selector = ["batch", "call", "receive", "send"]
       .map((key) => {
         return `[data-${key}]`;
       })

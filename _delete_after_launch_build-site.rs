@@ -9,6 +9,9 @@ serde = {version = "1.0.219", features = ["derive"] }
 syntect = { version = "5.2.0"}
 ---
 
+// TODO: Deprecate this in favor of the full `src/main.rs`
+// file
+
 use anyhow::Result;
 use minijinja::{Environment, Value, context, path_loader};
 use minijinja::syntax::SyntaxConfig;

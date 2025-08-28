@@ -14,6 +14,6 @@ export default class {
   template() {
     return `
 <div>${this.bridge.dataset.name}</div>
-<button data-call="increment" data-send="showValue" data-recieve="showValue"></button>`;
+<button data-call="increment" data-send="showValue" data-receive="showValue"></button>`;
   }
 }

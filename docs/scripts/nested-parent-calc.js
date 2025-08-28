@@ -29,7 +29,7 @@ export default class {
 </div>
 
 <div>
-  Calculated Total: <span data-recieve="showValue"></span>
+  Calculated Total: <span data-receive="showValue"></span>
 </div>
 `;
   }

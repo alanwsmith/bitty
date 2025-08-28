@@ -1,7 +1,10 @@
 // deno-fmt-ignore-file
 
 export default class {
+  #counter = 0;
+
   update(el, _event) {
-    el.innerHTML = `Clicked at ${Date.now()}`;
+    this.#counter += 1;
+    el.innerHTML = this.#counter;
   }
 }

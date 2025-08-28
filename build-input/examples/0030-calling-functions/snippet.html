@@ -1,13 +1,17 @@
 <!-- prettier-ignore -->
 
-<bitty-js data-bridge="./calling-functions.js" 
-    data-send="displayCount">
+<bitty-js data-bridge="./calling-functions.js">
     <button
         data-call="increment"
-        data-send="displayCount">
+        data-send="update"
+    >
         Click Me
     </button>
-    <div data-receive="displayCount"></div>
+    <div>
+        <div data-receive="update">Waiting</div>
+        <div data-receive="update">Waiting</div>
+        <div data-receive="update">Waiting</div>
+    </div>
 </bitty-js>
 
 <!-- x -->
@@ -22,22 +26,20 @@ calling-functions.js
 
 <!-- x -->
 
-- The initial value is set as and
-stored in a `#counter`
-[private element](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_elements)
-on initilization. 
+- The `data-call` attribute can be used to call 
+functions without sending signals. 
 
-- `data-send` is used on the `bitty-js` element to
-send the `displayCount` signal which is picked
-up by the `div` to show the initial `#counter` value
-when the component is initialize. 
 
-- The button uses `data-call` to trigger the
-`increment` function that updates the `#counter`
-variable before any signals are sent. 
+- The `event` is sent to the function.
 
-- `data-send` on the button 
-triggers the `displayCount` signal and 
-corresponding function when the
-button is clicked.
+- All update functionaly can be done via
+    `data-send` in some cases. For others,
+    like this example, using `data-call`
+    separtes the signal from the update.
+    Without that, each of the text output
+    would increment the number directly. 
+
+    See the next example for a 
+    demonstration. 
+
 

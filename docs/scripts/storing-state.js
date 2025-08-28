@@ -3,7 +3,7 @@
 export default class {
   #currentState = "Off";
 
-  displayCount(el, _event) {
+  update(el, _event) {
     if (this.#currentState === "Off") {
       this.#currentState = "On";
     } else {

@@ -3,12 +3,10 @@
 <bitty-js 
     data-bridge="./loading-initial-state.js" 
     data-send="displayCount">
-
-    <div data-recieve="displayCount"></div>
-
     <button 
         data-call="increment"
         data-send="displayCount">Click Me</button>
+    <div data-recieve="displayCount"></div>
 </bitty-js>
 
 <!-- x -->
@@ -23,3 +21,23 @@ Loading Initial State
 loading-initial-state.js
 
 <!-- x -->
+
+- The initial value is set as and
+stored in a `#counter`
+[private element](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_elements)
+on initilization. 
+
+- `data-send` is used on the `bitty-js` element to
+send the `displayCount` signal which is picked
+up by the `div` to show the initial `#counter` value
+when the component is initialize. 
+
+- The button uses `data-call` to trigger the
+`increment` function that updates the `#counter`
+variable before any signals are sent. 
+
+- `data-send` on the button 
+triggers the `displayCount` signal and 
+corresponding function when the
+button is clicked.
+

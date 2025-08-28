@@ -1,7 +1,6 @@
 // deno-fmt-ignore-file
 
 export default class {
-
   #counter = 0;
 
   increment(_) {
@@ -11,5 +10,4 @@ export default class {
   displayCount(el, _) {
     el.innerHTML = this.#counter;
   }
-
 }

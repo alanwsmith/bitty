@@ -1,5 +1,15 @@
 <!-- prettier-ignore -->
 
+<div class="xlarge-block-margin">TODO:
+Review thius one. It was originally calling
+everything in a template. It works, but 
+it's a rare use case that's likley 
+not worth the example. Better to 
+figure out if this is really 
+a duplicate of the other examples
+</div>
+
+
 <div class="xlarge-block-margin">NOTE:
 This example has another JavaScript file (nested-child.js). 
 </div>
@@ -7,10 +17,25 @@ This example has another JavaScript file (nested-child.js).
 Show nested-child.js as well. 
 </div>
 
-<bitty-js
-  data-send="showValue"
-  data-bridge="./nested-parent.js"
-></bitty-js>
+<bitty-js data-bridge="./nested-parent.js"
+  data-send="showValue">
+  <div>
+    <bitty-js
+      data-bridge="./nested-child.js"
+      data-send="showValue"
+      data-name="Counter 1"
+    ></bitty-js>
+    <bitty-js
+      data-bridge="./nested-child.js"
+      data-send="showValue"
+      data-name="Counter 2"
+    ></bitty-js>
+  </div>
+  <div>
+    <div>Total from internal counter</div>
+    <div data-recieve="showValue"></div>
+  </div>
+</bitty-js>
 
 <!-- x -->
 

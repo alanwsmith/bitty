@@ -2,8 +2,8 @@
 
 [! include "wrapper/do-not-edit-output-reminder.html" !]
 
-<p>bitty is a web component. Wrapping it around elements provides reactivity.
-For example, clicking this &quot;Click me&quot; button updates 
+<p>bitty is a web component. It provides reactivity to the elements
+it surrounds. For example, this &quot;Click me&quot; button updates 
 the &quot;Waiting&quot; text with a timestamp.</p>
 
 <div
@@ -47,22 +47,97 @@ the &quot;Waiting&quot; text with a timestamp.</p>
   <li>
     The <code>data-recieve</code> attribute on the <code>div</code> registers
     it to receive updates when the <code>updateText</code> signal is
-    sent. (The element is passed to the <code>updateText</code>
-    funciton to receive the updates.)
+    sent.
   </li>
 
   <li>
     The <code>data-send</code> attribute on the <code>button</code> 
-    registers it to send the <code>updateText</code> signal when
-    it's clicked. 
+    sends the <code>updateText</code> signal when the button is clicked. 
+  </li>
+</ul>
+
+<h3>Full Attribute List</h3>
+
+<p>
+  Six attributes make up the bitty API. They are:
+</p>
+
+<ul>
+  <li>
+    <p>
+      <code>data-bridge</code> - The path to the JavaScript
+      module responsible for providing functionality for
+      the bitty component and its elements.
+    </p>
+    <p>
+      Only used by the <code>bitty-js</code> element
+      itself.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-call</code> - Calls a function without
+      sending a signal. These calls are made prior
+      to any signals being sent. 
+    </p>
+    <p>
+      Can be used in either the <code>bitty-js</code> element
+      itself or any child elements.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-ignore</code> - TKTKTKTK
+    </p>
+    <p>
+      TKTKTKT: Usage location(s) 
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-listeners</code> - Adds additional 
+      event listeners to the component. (The 
+      defaults are <code>click</code>, <code>input</code>,
+      and <code>change</code>.)
+    </p>
+    <p>
+      Only used by the <code>bitty-js</code> element itself. 
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-recieve</code> - Sets up child elements
+      to receive signals. The value is the name of
+      the funciton that's used for the signal.
+    </p>
+    <p>
+      Only used by the child element.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-send</code> - Defines signals for the
+      element to send. The value is the name of
+      the funciton that's used for the signal.
+    </p>
+    <p>Signals are sent from the <code>bitty-js</code> element 
+      when the component is initialized. They are sent  
+      from child elements when one of their event listeners
+      fires. 
+    </p>
+    <p>
+      Can be used in either the <code>bitty-js</code> element
+      itself or any child elements.
+    <p>
   </li>
 </ul>
 
 <p>
-  That's the core of how bitty works. 
-  There are a few other features shown in the examples
-  below. Check them out to get an idea
-  of what bitty can do.
+  bitty is really just wiring between elements and
+  functions in the module called by <code>data-bridge</code>.
+  The Basic Examples below provide more documentation
+  and details on how bitty works.
 </p>
+
 
 

@@ -15,6 +15,7 @@ use walkdir::WalkDir;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Example {
+    details: String,
     highlighted_html: String,
     javascripts: Vec<String>,
     raw_html: String,
@@ -69,7 +70,9 @@ impl Payload {
             let highlighted_html = highlight(&raw_html, "HTML")?;
             // TODO: Handle multiple scripts here when necessary.
             let javascripts = vec![parts[2].to_string()];
+            let details = markdown::to_html(&parts[3].to_string());
             let e = Example {
+                details,
                 highlighted_html,
                 javascripts,
                 raw_html,

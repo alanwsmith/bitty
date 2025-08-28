@@ -88,8 +88,8 @@ Use the build-site.rs script to generate it
 
 -->
 
-<p>bitty is a web component. Wrapping it around elements provides reactivity.
-For example, clicking this &quot;Click me&quot; button updates 
+<p>bitty is a web component. It provides reactivity to the elements
+it surrounds. For example, this &quot;Click me&quot; button updates 
 the &quot;Waiting&quot; text with a timestamp.</p>
 
 <div
@@ -132,46 +132,120 @@ the &quot;Waiting&quot; text with a timestamp.</p>
   <li>
     The <code>data-recieve</code> attribute on the <code>div</code> registers
     it to receive updates when the <code>updateText</code> signal is
-    sent. (The element is passed to the <code>updateText</code>
-    funciton to receive the updates.)
+    sent.
   </li>
 
   <li>
     The <code>data-send</code> attribute on the <code>button</code> 
-    registers it to send the <code>updateText</code> signal when
-    it's clicked. 
+    sends the <code>updateText</code> signal when the button is clicked. 
+  </li>
+</ul>
+
+<h3>Full Attribute List</h3>
+
+<p>
+  Six attributes make up the bitty API. They are:
+</p>
+
+<ul>
+  <li>
+    <p>
+      <code>data-bridge</code> - The path to the JavaScript
+      module responsible for providing functionality for
+      the bitty component and its elements.
+    </p>
+    <p>
+      Only used by the <code>bitty-js</code> element
+      itself.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-call</code> - Calls a function without
+      sending a signal. These calls are made prior
+      to any signals being sent. 
+    </p>
+    <p>
+      Can be used in either the <code>bitty-js</code> element
+      itself or any child elements.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-ignore</code> - TKTKTKTK
+    </p>
+    <p>
+      TKTKTKT: Usage location(s) 
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-listeners</code> - Adds additional 
+      event listeners to the component. (The 
+      defaults are <code>click</code>, <code>input</code>,
+      and <code>change</code>.)
+    </p>
+    <p>
+      Only used by the <code>bitty-js</code> element itself. 
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-recieve</code> - Sets up child elements
+      to receive signals. The value is the name of
+      the funciton that's used for the signal.
+    </p>
+    <p>
+      Only used by the child element.
+    <p>
+  </li>
+  <li>
+    <p>
+      <code>data-send</code> - Defines signals for the
+      element to send. The value is the name of
+      the funciton that's used for the signal.
+    </p>
+    <p>Signals are sent from the <code>bitty-js</code> element 
+      when the component is initialized. They are sent  
+      from child elements when one of their event listeners
+      fires. 
+    </p>
+    <p>
+      Can be used in either the <code>bitty-js</code> element
+      itself or any child elements.
+    <p>
   </li>
 </ul>
 
 <p>
-  That's the core of how bitty works. 
-  There are a few other features shown in the examples
-  below. Check them out to get an idea
-  of what bitty can do.
+  bitty is really just wiring between elements and
+  functions in the module called by <code>data-bridge</code>.
+  The Basic Examples below provide more documentation
+  and details on how bitty works.
 </p>
+
 
  
 
 <details>
   <summary>Basic Examples</summary>
 
-  <div>
+  <div class="xxlarge-block-margin">
     <h3>Storing State</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./storing-state.js">
-    <div data-recieve="displayCount">waiting</div>
     <button data-send="displayCount">Click Me</button>
+    <div data-recieve="displayCount">waiting</div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./storing-state.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #counter = 0;</span></span>
 <span class="codeLine"></span>
@@ -180,39 +254,44 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">counter</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>
+<p>Basic <code>data-bridge</code>, <code>data-send</code>, and<code>data-recieve</code> example.</p>
+</li>
+<li>
+<p>The initial value is set inside the class
+as a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_elements">private element</a>
+on initilization. It is updated directly when
+the <code>displayCount</code> signal is sent.</p>
+</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Loading Initial State</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js 
     data-bridge="./loading-initial-state.js" 
     data-send="displayCount">
-
-    <div data-recieve="displayCount"></div>
-
     <button 
         data-call="increment"
         data-send="displayCount">Click Me</button>
+    <div data-recieve="displayCount"></div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./loading-initial-state.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #counter = 0;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">increment</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
@@ -222,37 +301,56 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">displayCount</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">counter</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>
+<p>The initial value is set as and
+stored in a <code>#counter</code>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_elements">private element</a>
+on initilization.</p>
+</li>
+<li>
+<p><code>data-send</code> is used on the <code>bitty-js</code> element to
+send the <code>displayCount</code> signal which is picked
+up by the <code>div</code> to show the initial <code>#counter</code> value
+when the component is initialize.</p>
+</li>
+<li>
+<p>The button uses <code>data-call</code> to trigger the
+<code>increment</code> function that updates the <code>#counter</code>
+variable before any signals are sent.</p>
+</li>
+<li>
+<p><code>data-send</code> on the button
+triggers the <code>displayCount</code> signal and
+corresponding function when the
+button is clicked.</p>
+</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Updating Self</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./updating-self.js">
-
     <button
         data-send="displayCount"
         data-recieve="displayCount">
         Click Me
     </button>
-
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./updating-self.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">displayCount</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        Click Me</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #counter = 0;</span></span>
@@ -263,11 +361,16 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>Using <code>data-send</code> and <code>data-receive</code> on a
+button or similar element to update its contents
+when its event fires.</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Update Classes</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./updating-classes.js">
   <div>
     <button 
@@ -285,7 +388,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
   </div>
   <div data-recieve="setClass">The quick brown fox</div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./updating-classes.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -305,9 +408,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setClass</span><span style="color:#c0c5ce;">&quot;&gt;The quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #state = {</span></span>
@@ -334,11 +436,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Updating Values</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./updating-values.js">
   <div>
     <label for="update-values-input-slider">Input Slider</label>
@@ -360,7 +463,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
       data-recieve="sliderValue">
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./updating-values.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -384,9 +487,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #sliderValue;</span></span>
@@ -400,11 +502,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Avoiding Feedback</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./avoiding-feedback.js">
   <div>
     <label for="avoid-feedback-slider-a">Slider A</label>
@@ -425,7 +528,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
       data-recieve="setSliderB">
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./avoiding-feedback.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -448,9 +551,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #value;</span></span>
@@ -468,11 +570,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Send Multiple Signals</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./send-multiple-signals.js">
   <div>
     <label for="multiple-updates-input-slider">
@@ -500,7 +603,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
       data-recieve="setNumberValue">
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./send-multiple-signals.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -530,9 +633,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #number;</span></span>
 <span class="codeLine"></span>
@@ -548,11 +650,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">number</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Multiple Receivers</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./multiple-receivers.js">
   <div>
     <label for="multiple-receivers-input-slider">
@@ -576,7 +679,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
     <div data-recieve="displayNumber">waiting...</div>
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./multiple-receivers.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -602,9 +705,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #number;</span></span>
 <span class="codeLine"></span>
@@ -616,11 +718,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">number</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Initializing Values</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./initialize-values.js"
   data-send="setSliderA|setSliderB">
 
@@ -648,7 +751,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
       data-recieve="setSliderB">
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./initialize-values.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA|setSliderB</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
@@ -678,9 +781,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #value = 15;</span></span>
 <span class="codeLine"></span>
@@ -696,11 +798,16 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Create Element</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<div>TODO: Verify that data-recieve works
+in newly created elements</div>
+
+
 <bitty-js data-bridge="./create-element.js"
   data-send="buttonValue">
   <div>
@@ -711,8 +818,12 @@ the &quot;Waiting&quot; text with a timestamp.</p>
     <div class="output"></div>
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Verify that data-recieve works</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">in newly created elements&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./create-element.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">buttonValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -724,9 +835,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #sliderHasBeenAdded = false;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #value = 0;</span></span>
@@ -752,47 +862,47 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Call bridge init</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <div class="make-two-columns">
   <bitty-js data-bridge="./call-bridge-init.js"></bitty-js>
 </div></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">make-two-columns</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./call-bridge-init.js</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">init</span><span style="color:#eff1f5;">() {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.innerHTML </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">This is from init() via the bridge</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Embeded Template Loading Via Bridge init</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js
   data-send="showValue"
   data-bridge="./template-loading.js"
 ></bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./template-loading.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #value = 0;</span></span>
 <span class="codeLine"></span>
@@ -814,11 +924,22 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Nested Components</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<div class="xlarge-block-margin">TODO:
+Review thius one. It was originally calling
+everything in a template. It works, but 
+it's a rare use case that's likley 
+not worth the example. Better to 
+figure out if this is really 
+a duplicate of the other examples
+</div>
+
+
 <div class="xlarge-block-margin">NOTE:
 This example has another JavaScript file (nested-child.js). 
 </div>
@@ -826,12 +947,37 @@ This example has another JavaScript file (nested-child.js).
 Show nested-child.js as well. 
 </div>
 
-<bitty-js
-  data-send="showValue"
-  data-bridge="./nested-parent.js"
-></bitty-js></div>
-    <div>
+<bitty-js data-bridge="./nested-parent.js"
+  data-send="showValue">
+  <div>
+    <bitty-js
+      data-bridge="./nested-child.js"
+      data-send="showValue"
+      data-name="Counter 1"
+    ></bitty-js>
+    <bitty-js
+      data-bridge="./nested-child.js"
+      data-send="showValue"
+      data-name="Counter 2"
+    ></bitty-js>
+  </div>
+  <div>
+    <div>Total from internal counter</div>
+    <div data-recieve="showValue"></div>
+  </div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">xlarge-block-margin</span><span style="color:#c0c5ce;">&quot;&gt;TODO:</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">Review thius one. It was originally calling</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">everything in a template. It works, but</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">it&#39;s a rare use case that&#39;s likley</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">not worth the example. Better to</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">figure out if this is really</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">a duplicate of the other examples</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">xlarge-block-margin</span><span style="color:#c0c5ce;">&quot;&gt;NOTE:</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">This example has another JavaScript file (nested-child.js).</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -839,14 +985,28 @@ Show nested-child.js as well.
 <span class="codeLine"><span style="color:#c0c5ce;">Show nested-child.js as well.</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-parent.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-parent.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-child.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Counter 1</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-child.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Counter 2</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Total from internal counter&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #value = 0;</span></span>
 <span class="codeLine"></span>
@@ -857,45 +1017,26 @@ Show nested-child.js as well.
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">showValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">template</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;Total from internal counter&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div data-recieve=&quot;showValue&quot;&gt;&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;bitty-js</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-bridge=&quot;./nested-child.js&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-send=&quot;showValue&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-name=&quot;Counter 1&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &gt;&lt;/bitty-js&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;bitty-js</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-bridge=&quot;./nested-child.js&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-send=&quot;showValue&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-name=&quot;Counter 2&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &gt;&lt;/bitty-js&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Nested Components with Ignore</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js
   data-bridge="./nested-parent-ignore.js"
   data-ignore="increment"
 ></bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-parent-ignore.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-ignore</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">template</span><span style="color:#eff1f5;">() {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span></span>
@@ -916,11 +1057,12 @@ Show nested-child.js as well.
 <span class="codeLine"><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Getting Data From Children</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <div class="xlarge-block-margin">TODO: Make a vesrion of this that codes
 the HTML directly intsead of calling children via the template</div>
 
@@ -929,7 +1071,7 @@ the HTML directly intsead of calling children via the template</div>
   data-ignore="increment"
   data-send="showValue"
 ></bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">xlarge-block-margin</span><span style="color:#c0c5ce;">&quot;&gt;TODO: Make a vesrion of this that codes</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">the HTML directly intsead of calling children via the template&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
@@ -940,9 +1082,8 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">showValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">counters </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.</span><span style="color:#8fa1b3;">querySelectorAll</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">bitty-js</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
@@ -977,17 +1118,18 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Customize Event Listeners</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./custom-listeners.js"
   data-listeners="mouseover|mouseout">
   <button data-send="sawMouse">Mouse Instead of Click</button>
   <div data-recieve="sawMouse">Waiting...</div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./custom-listeners.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-listeners</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">mouseover|mouseout</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
@@ -995,19 +1137,19 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Waiting...&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">sawMouse</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">data</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#eff1f5;">${</span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.type}</span><span style="color:#a3be8c;"> at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Element Access</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <style>
   .element-access-class {
     background-color: var(--element-access-background);
@@ -1022,7 +1164,7 @@ the HTML directly intsead of calling children via the template</div>
     the quick fox
   </div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#b48ead;">  </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">element-access-class </span><span style="color:#c0c5ce;">{</span></span>
@@ -1039,9 +1181,8 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
@@ -1073,11 +1214,12 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#eff1f5;">    ];</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
-  <div>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
     <h3>Isolated Elements</h3>
-    <div class="make-two-columns">
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <style>
     .isolated-element {
     background-color: var(--isolated-element-background);
@@ -1100,7 +1242,7 @@ the HTML directly intsead of calling children via the template</div>
   </button>
   <div class="isolated-element">the quick brown fox</div>
 </bitty-js></div>
-    <div>
+    <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">isolated-element </span><span style="color:#c0c5ce;">{</span></span>
@@ -1125,9 +1267,8 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">isolated-element</span><span style="color:#c0c5ce;">&quot;&gt;the quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    &quot;slategray&quot;,</span></span>
@@ -1158,8 +1299,201 @@ the HTML directly intsead of calling children via the template</div>
 <span class="codeLine"><span style="color:#eff1f5;">    ];</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
-
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
+  <div class="xxlarge-block-margin">
+    <h3>Color Picker</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+  <style>
+    .color-picker {
+      background-color: var(--color-picker-background);
+      color: var(--color-picker-text);
+    }
+  </style>
+  <bitty-js
+      data-call="initMode"
+      data-batch="sliders"
+      data-bridge="./color-picker.js"
+      class="color-picker">
+    <div>
+      <label for="slider-l">Lightness</label>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        step="0.01"
+        id="slider-l"
+        data-call="handleSlider"
+        data-recieve="lValue"
+        data-key="l"
+      />
+      <label for="slider-c">Chroma</label>
+      <input
+        type="range"
+        min="0"
+        max="0.3"
+        step="0.00001"
+        id="slider-c"
+        data-call="handleSlider"
+        data-recieve="cValue"
+        data-key="c"
+      />
+      <label for="slider-h">Hue</label>
+      <input
+        type="range"
+        min="0"
+        max="360"
+        step="0.01"
+        id="slider-h"
+        data-call="handleSlider"
+        data-recieve="hValue"
+        data-key="h"
+      />
+    </div>
+  </bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">color-picker </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--color-picker-background);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--color-picker-text);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">initMode</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-batch</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sliders</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./color-picker.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">color-picker</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-l</span><span style="color:#c0c5ce;">&quot;&gt;Lightness&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.01</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-l</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-c</span><span style="color:#c0c5ce;">&quot;&gt;Chroma&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.3</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.00001</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-c</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">cValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-h</span><span style="color:#c0c5ce;">&quot;&gt;Hue&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">360</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.01</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-h</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">hValue</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">  #batches = {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    &quot;sliders&quot;: [</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      &quot;cValue&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      &quot;hValue&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      &quot;lValue&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    ],</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  #</span><span style="color:#bf616a;">data </span><span style="color:#c0c5ce;">= {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &quot;</span><span style="color:#a3be8c;">activeMode</span><span style="color:#c0c5ce;">&quot;: &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &quot;</span><span style="color:#a3be8c;">modes</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">70</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">0.05</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">190</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      },</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &quot;</span><span style="color:#a3be8c;">dark</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">20</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">0.1</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">40</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      },</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    },</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  };</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#bf616a;">get </span><span style="color:#8fa1b3;">batches</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">batches</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">handleMode</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode = </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">handleSlider</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">modeKey </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">key </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.dataset.key;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">modeKey</span><span style="color:#c0c5ce;">][</span><span style="color:#bf616a;">key</span><span style="color:#c0c5ce;">] = </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">initMode</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">cValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].c;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">hValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].h;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">lValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].l;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">backgroundColorVar</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">mode </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">oklch(</span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.l}</span><span style="color:#a3be8c;">% </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.c} ${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.h}</span><span style="color:#a3be8c;">)</span><span style="color:#c0c5ce;">`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">textColorVar</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">modeKey </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode === &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot; ? &quot;</span><span style="color:#a3be8c;">dark</span><span style="color:#c0c5ce;">&quot; : &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">mode </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">modeKey</span><span style="color:#c0c5ce;">];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">oklch(</span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.l}</span><span style="color:#a3be8c;">% </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.c} ${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.h}</span><span style="color:#a3be8c;">)</span><span style="color:#c0c5ce;">`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">template</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#a3be8c;">    </span><span style="color:#c0c5ce;">`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#c0c5ce;">(</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      `</span><span style="color:#a3be8c;">--color-picker-background</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">backgroundColorVar</span><span style="color:#c0c5ce;">(),</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#2b303b;">)</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#c0c5ce;">(</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      `</span><span style="color:#a3be8c;">--color-picker-text</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">textColorVar</span><span style="color:#c0c5ce;">(),</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#2b303b;">)</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"></div>
+  </div>
  <!-- 
 
 ######################################################
@@ -1170,8 +1504,6 @@ Use the build-site.rs script to generate it
 
 -->
 </details> 
-
-
 
 
 

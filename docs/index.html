@@ -88,144 +88,88 @@ Use the build-site.rs script to generate it
 
 -->
 
-<p>Bitty is a web component. Wrapping elements with it gives them reactive 
-capabilities.</p>
-<p>This page has docs and examples of bitty's features. The first is this counter.
-  Click it to make a number go up.
-</p>
+<p>bitty is a web component. Wrapping it around elements adds reactivity.
+For example, clicking the button below updates the &quot;Waiting&quot; text 
+with a timestamp.</p>
+
 <div
   class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
->  <bitty-js 
-  data-bridge="./counter.js">
+>  <bitty-js data-bridge="./hello-text.js">
 
-  <button 
-    data-call="addOne" 
-    data-send="showNum"
-    data-recieve="showNum"
-  > Click Me
-  </button>
+  <div data-recieve="updateText">Waiting</div>
 
-</bitty-js>
-</div>
+  <button data-send="updateText">Click me</button>
+
+</bitty-js></div>
+
 <p>
-  Bitty uses signaling.
-  <code>data-*</code> attributes define the signals an element sends and
-  recieves. For example, the counter looks like this:
+  bitty uses a signaling approach. Adding
+  <code>data-*</code> attributes to elements defines the 
+  signals they send and receive.  Here's
+  the HTML for the button and text:
 </p>
 
-<div class="two-column-example">
-  <div>
-    <div>index.html</div>
-    <pre
-      class="code-block"
-    ><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./counter.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./hello-text.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">addOne</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showNum</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &gt; Click Me</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateText</span><span style="color:#c0c5ce;">&quot;&gt;Waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateText</span><span style="color:#c0c5ce;">&quot;&gt;Click me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-  </div>
-  <div>
-    <div>counter.js</div>
-    <pre
-      class="code-block"
-    ><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+
+<p>Here's the corresponding <code>hello-text.js</code> JavaScript:</p>
+
+<pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">constructor</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.num </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateText</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">addOne</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.num </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Clicked at: </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">showNum</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.num;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-  </div>
-</div>
+
+
+<h3>How It Works</h3>
 
 <ul>
   <li>
-    <code>data-bridge</code> connects to 
-    <code>counter.js</code>
+    The <code>data-bridge</code> attribute on the <code>bitty-js</code> element 
+    makes the connection to the JavaScript module responsible for 
+    providing functionality. <code>hello-text.js</code> in this case.
   </li>
+
   <li>
-    <code>data-call</code> calls <code>_addOne</code> when the button
-    is clicked (prepending the funciton name with an <code>_</code> is part of
-    bitty's naming convention)
+    The <code>data-recieve</code> attribute on the <code>div</code> registers
+    it to receive updates when the <code>updateText</code> signal is
+    sent. (The element is passed to the <code>updateText</code>
+    funciton to receive the updates.)
   </li>
+
   <li>
-    <code>data-send</code> sends the signal to run <code>$showNum</code> when the button is
-    clicked
-    (prepending <code>$</code>
-    is another part of the naming convention)
-  </li>
-  <li>
-    <code>data-recieve</code> registeres the button to receive updates when
-    <code>showNum</code> signals are sent
+    The <code>data-send</code> attribute on the <code>button</code> 
+    registers it to send the <code>updateText</code> signal when
+    it's clicked. 
   </li>
 </ul>
 
 <p>
-  There are more features, but that's everything you need to know to get
-  started.
-</p> 
+  That's the core of how bitty works. 
+  There are a few other features shown in the examples
+  below. Check them out to get an idea
+  of what bitty can do.
+</p>
+
+ 
+
+
 
 <details>
   <summary>Basic Examples</summary>
-  <div>
-    <h3>Updating HTML</h3>
-    <div class="make-two-columns">
-<bitty-js 
-  data-bridge="./updating-html.js">
 
-  <div data-recieve="updateText">
-    Waiting
-  </div>
 
-  <button 
-      data-send="updateText">
-  Click me
-  </button>
+<p>TODO: Move counter button example into basic examples</p>
 
-</bitty-js></div>
-    <div>
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./updating-html.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateText</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    Waiting</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateText</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  Click me</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-    </div>
-  </div>
-
-<pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateText</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">ts </span><span style="color:#c0c5ce;">= </span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">();</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Clicked at:&lt;br&gt;</span><span style="color:#eff1f5;">${</span><span style="color:#bf616a;">ts</span><span style="color:#eff1f5;">}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-</pre>
 
   <div>
     <h3>Storing State</h3>
@@ -1728,6 +1672,13 @@ Use the build-site.rs script to generate it
       respectivally. I originally use the shorter names to reduce the text
       length. The increased clarity of the longer names is worth the
       few extra characters.
+    </li>
+    <li>
+      The other big change is removing the leading <code>_</code> and
+      <code>$</code> characters from function names. They were originally 
+      put in place to create a naming convention that differentiated
+      between functions that were hit with <code>data-call</code>
+      and <code>data-send</code>. In practice, that wasn't necessary.
     </li>
     <li>
       Wrote up the API. I knew there were only four attributes that define the

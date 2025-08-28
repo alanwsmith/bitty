@@ -4,11 +4,11 @@ export default class {
 
   #sliderValue;
 
-  _setValue(data) {
-    this.#sliderValue = data.target.value;
+  setValue(event) {
+    this.#sliderValue = event.target.value;
   }
 
-  $sliderValue(el, _) {
+  sliderValue(el, _event) {
     el.value = this.#sliderValue;
   }
 

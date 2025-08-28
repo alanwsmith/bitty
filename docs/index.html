@@ -286,9 +286,19 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
     </div>    
     <div class="xlarge-block-margin"><ul>
-<li>Signals can be sent from the bitty wrapper
+<li>
+<p>Signals can be sent from the bitty wrapper
 when it initializes using a <code>data-send</code> attribute
-directly on the element.</li>
+directly on the element.</p>
+</li>
+<li>
+<p>Note that using <code>data-send</code> directly on the
+bitty element does not currently send an event.
+This behaviour may change in the future.</p>
+<p>See the &quot;Initialize Values&quot; section below
+for an example of checking to see if the
+event exists.</p>
+</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
@@ -804,11 +814,19 @@ elements when necessary (e.g. in loops).</li>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
     </div>    
     <div class="xlarge-block-margin"><ul>
-<li>This is a one way update between sliders.
+<li>
+<p>This is a one way update between sliders.
 The output slider gets updated with the
 value of the input slider. But, the
 input slider is not effected by changes
-to the output slider.</li>
+to the output slider.</p>
+</li>
+<li>
+<p>Depending on the use case the
+next example (Avoding Feedback) may be a
+better approach as it allows both
+sliders to update their counterpart.</p>
+</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin">
@@ -872,82 +890,79 @@ update itself.</li>
   <div class="xxlarge-block-margin">
     <h3>Initializing Values</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<bitty-js data-bridge="./initialize-values.js"
-  data-send="setSliderA|setSliderB">
-
+<bitty-js 
+  data-bridge="./initialize-values.js" 
+  data-send="update"
+>
   <div>
-    <label for="init-slider-a">Slider A</label>
+    <label for="alfa-3">Alfa</label>
     <input
-      id="init-slider-a"
+      id="alfa-3"
       type="range"
-      min="0"
-      max="100"
-      data-call="setValue"
-      data-send="setSliderB"
-      data-receive="setSliderA">
+      data-send="update"
+      data-receive="update">
   </div>
-
   <div>
-    <label for="init-slider-b">Slider B</label>
+    <label for="bravo-3">Bravo</label>
     <input
-      id="init-slider-b"
+      id="bravo-3"
       type="range"
-      min="0"
-      max="100"
-      data-call="setValue"
-      data-send="setSliderA"
-      data-receive="setSliderB">
+      data-send="update"
+      data-receive="update">
   </div>
 </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./initialize-values.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA|setSliderB</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./initialize-values.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;&gt;Slider A&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">alfa-3</span><span style="color:#c0c5ce;">&quot;&gt;Alfa&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-a</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">alfa-3</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;&gt;Slider B&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">bravo-3</span><span style="color:#c0c5ce;">&quot;&gt;Bravo&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init-slider-b</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">bravo-3</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderA</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">setSliderB</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #value = 15;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">setValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">data</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.target.value;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">setSliderA</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">setSliderB</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">!</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">15</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    } </span><span style="color:#b48ead;">else if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.dataset.uuid </span><span style="color:#c0c5ce;">!== </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.uuid) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
     </div>    
-    <div class="xlarge-block-margin"></div>
+    <div class="xlarge-block-margin"><ul>
+<li>
+<p>This example sets the values of each
+slider to 15 on initilization.</p>
+</li>
+<li>
+<p>This approach calls <code>update</code> via a
+<code>data-send</code> attribute on the bitty
+element. That call does not currently
+include an event. It may in the future.</p>
+<p>For now, a check needs to be made
+to determine if an event exists or not
+if something from the event is
+used in the function.</p>
+</li>
+</ul></div>
   </div>
   <div class="xxlarge-block-margin">
     <h3>Create Element</h3>

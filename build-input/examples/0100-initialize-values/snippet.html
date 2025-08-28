@@ -1,30 +1,24 @@
 <!-- prettier-ignore -->
 
-<bitty-js data-bridge="./initialize-values.js"
-  data-send="setSliderA|setSliderB">
-
+<bitty-js 
+  data-bridge="./initialize-values.js" 
+  data-send="update"
+>
   <div>
-    <label for="init-slider-a">Slider A</label>
+    <label for="alfa-3">Alfa</label>
     <input
-      id="init-slider-a"
+      id="alfa-3"
       type="range"
-      min="0"
-      max="100"
-      data-call="setValue"
-      data-send="setSliderB"
-      data-receive="setSliderA">
+      data-send="update"
+      data-receive="update">
   </div>
-
   <div>
-    <label for="init-slider-b">Slider B</label>
+    <label for="bravo-3">Bravo</label>
     <input
-      id="init-slider-b"
+      id="bravo-3"
       type="range"
-      min="0"
-      max="100"
-      data-call="setValue"
-      data-send="setSliderA"
-      data-receive="setSliderB">
+      data-send="update"
+      data-receive="update">
   </div>
 </bitty-js>
 
@@ -38,3 +32,18 @@ Initializing Values
 initialize-values.js
 
 <!-- x -->
+
+- This example sets the values of each
+slider to 15 on initilization. 
+
+- This approach calls `update` via a 
+`data-send` attribute on the bitty 
+element. That call does not currently 
+include an event. It may in the future.
+
+  For now, a check needs to be made
+to determine if an event exists or not
+if something from the event is
+used in the function. 
+
+

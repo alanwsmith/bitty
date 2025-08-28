@@ -1,16 +1,17 @@
 use anyhow::Result;
-use minijinja::{Environment, Value, context, path_loader};
+use itertools::Itertools;
 use minijinja::syntax::SyntaxConfig;
+use minijinja::{Environment, Value, context, path_loader};
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 use std::fs;
 use std::path::PathBuf;
-use std::collections::BTreeMap;
 use syntect::easy::HighlightLines;
 use syntect::highlighting::{Style, ThemeSet};
-use syntect::html::{styled_line_to_highlighted_html, IncludeBackground};
+use syntect::html::{IncludeBackground, styled_line_to_highlighted_html};
 use syntect::parsing::SyntaxSet;
 use syntect::util::LinesWithEndings;
-use itertools::Itertools;
+use walkdir::WalkDir;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Example {
@@ -41,7 +42,6 @@ struct Script {
     highlighted: String,
 }
 
-
 impl Payload {
     pub fn new() -> Result<Payload> {
         let mut payload = Payload {
@@ -57,17 +57,18 @@ impl Payload {
     }
 
     pub fn load_examples(&mut self) -> Result<()> {
-
         for dir in get_dirs(&PathBuf::from("build-input/examples"))?.iter() {
             let snippet_file = dir.join("snippet.html");
-            let data= fs::read_to_string(snippet_file)?;
+            let data = fs::read_to_string(snippet_file)?;
             let parts: Vec<_> = data.split("<!-- x -->").map(|x| x.trim()).collect();
             let initial_html = parts[0];
             let title = parts[1].to_string();
-            let raw_html = initial_html.trim().replace("<!-- prettier-ignore -->\n", "");
+            let raw_html = initial_html
+                .trim()
+                .replace("<!-- prettier-ignore -->\n", "");
             let highlighted_html = highlight(&raw_html, "HTML")?;
             let javascripts = vec![];
-            let e = Example{
+            let e = Example {
                 highlighted_html,
                 javascripts,
                 raw_html,
@@ -75,16 +76,16 @@ impl Payload {
             };
             let _ = &self.examples.push(e);
 
-        //     let name = file.file_name().unwrap().display().to_string();
-        //     let base_name = file.file_stem().unwrap().display().to_string();
-        //     self.example_names.push(base_name);
-        //     let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
-        //     let html = Html {
-        //         raw,
-        //         highlighted
-        //     };
-        //     self.example_html.insert(name.clone(), html);
-        };
+            //     let name = file.file_name().unwrap().display().to_string();
+            //     let base_name = file.file_stem().unwrap().display().to_string();
+            //     self.example_names.push(base_name);
+            //     let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
+            //     let html = Html {
+            //         raw,
+            //         highlighted
+            //     };
+            //     self.example_html.insert(name.clone(), html);
+        }
 
         Ok(())
     }
@@ -112,33 +113,30 @@ impl Payload {
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
             let highlighted = highlight(&scrubbed, "HTML")?;
-            let html = Html {
-                raw,
-                highlighted
-            };
+            let html = Html { raw, highlighted };
             self.misc_html.insert(name.clone(), html);
-        };
+        }
         Ok(())
     }
 
     pub fn load_example_scripts(&mut self) -> Result<()> {
-        for file in get_files(&PathBuf::from("docs"), "js")?.iter() {
+        for file in get_files(&PathBuf::from("docs/scripts"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("// deno-fmt-ignore-file\n", "");
             let highlighted = highlight(&scrubbed, "JavaScript")?;
-            let script = Script {
-                raw,
-                highlighted
-            };
+            let script = Script { raw, highlighted };
             self.example_scripts.insert(name.clone(), script);
-        };
+        }
         Ok(())
     }
-
 }
 
 fn main() -> Result<()> {
+    copy_dir(
+        &PathBuf::from("build-input/scripts"),
+        &PathBuf::from("docs/scripts"),
+    )?;
     output_content()?;
     println!("done");
     Ok(())
@@ -156,9 +154,9 @@ fn output_content() -> Result<()> {
     env.set_trim_blocks(true);
     env.set_loader(path_loader("build-input/misc-html"));
 
-// for (name, tmpl) in env.templates() {
-//     println!("{}", tmpl.render(context!{ name => "World" }).unwrap());
-// }
+    // for (name, tmpl) in env.templates() {
+    //     println!("{}", tmpl.render(context!{ name => "World" }).unwrap());
+    // }
 
     let jinja = env.get_template("index.html")?;
     let output = jinja.render(context!(data))?;
@@ -179,10 +177,8 @@ fn get_env() -> Environment<'static> {
     env
 }
 
-
 pub fn get_dirs(dir: &PathBuf) -> Result<Vec<PathBuf>> {
-    Ok(
-    fs::read_dir(dir)
+    Ok(fs::read_dir(dir)
         .unwrap()
         .into_iter()
         .filter(|p| {
@@ -197,13 +193,11 @@ pub fn get_dirs(dir: &PathBuf) -> Result<Vec<PathBuf>> {
             Err(_) => Some(p.as_ref().unwrap().path()),
         })
         .sorted()
-        .collect()
-    )
+        .collect())
 }
 
 pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
-    Ok(
-    fs::read_dir(dir)
+    Ok(fs::read_dir(dir)
         .unwrap()
         .into_iter()
         .filter(|p| {
@@ -213,18 +207,15 @@ pub fn get_files(dir: &PathBuf, extension: &str) -> Result<Vec<PathBuf>> {
                 false
             }
         })
-        .filter(|p| {
-          match p.as_ref().unwrap().path().extension() {
+        .filter(|p| match p.as_ref().unwrap().path().extension() {
             Some(ext) => ext == extension,
-            None => false
-          }
+            None => false,
         })
         .filter_map(|p| match p.as_ref().unwrap().path().strip_prefix(".") {
             Ok(_) => None,
             Err(_) => Some(p.as_ref().unwrap().path()),
         })
-        .collect()
-    )
+        .collect())
 }
 
 fn highlight(code: &str, language: &str) -> Result<String> {
@@ -242,4 +233,18 @@ fn highlight(code: &str, language: &str) -> Result<String> {
         the_lines.push(spanned_line);
     }
     Ok(the_lines.join("\n"))
+}
+
+fn copy_dir(source_dir: &PathBuf, dest_dir: &PathBuf) -> Result<()> {
+    for entry in WalkDir::new(source_dir) {
+        let source_path = entry?.into_path();
+        let dest_path = dest_dir.join(source_path.strip_prefix(source_dir).unwrap());
+        if source_path.is_dir() {
+            fs::create_dir_all(dest_path)?;
+        } else {
+            let data = std::fs::read(source_path)?;
+            std::fs::write(dest_path, &data)?;
+        }
+    }
+    Ok(())
 }

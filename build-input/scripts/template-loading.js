@@ -3,11 +3,11 @@
 export default class {
   #value = 0;
 
-  _increment(_) {
+  increment(_) {
     this.#value += 1;
   }
 
-  $showValue(el, _) {
+  showValue(el, _) {
     el.innerHTML = this.#value;
   }
 
@@ -17,7 +17,7 @@ export default class {
   This is a template loaded via the Wrapper. 
   It catches the component's init signal and is fully functional
 </p>
-<button data-c="increment" data-s="showValue" data-r="showValue"></button>
+<button data-call="increment" data-send="showValue" data-recieve="showValue"></button>
 `;
   }
 }

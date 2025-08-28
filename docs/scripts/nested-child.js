@@ -3,17 +3,17 @@
 export default class {
   #value = 0;
 
-  _increment(_) {
+  increment(_) {
     this.#value += 1;
   }
 
-  $showValue(el, _) {
+  showValue(el, _) {
     el.innerHTML = this.#value;
   }
 
   template() {
     return `
 <div>${this.bridge.dataset.name}</div>
-<button data-c="increment" data-s="showValue" data-r="showValue"></button>`;
+<button data-call="increment" data-send="showValue" data-recieve="showValue"></button>`;
   }
 }

@@ -16,7 +16,7 @@ export default class {
     "lightsteelblue",
   ];
 
-  _randomizeBackground(_) {
+  randomizeBackground(_) {
     this.bridge.style.setProperty(
       "--element-access-background",
       this.randomColor(),
@@ -24,7 +24,10 @@ export default class {
   }
 
   randomColor() {
-    return this.#colors[Math.floor(Math.random() * this.#colors.length)];
+    return this.#colors[
+      Math.floor(
+        Math.random() * this.#colors.length
+      )
+    ];
   }
-
 }

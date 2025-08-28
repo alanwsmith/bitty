@@ -1,20 +1,19 @@
 // deno-fmt-ignore-file
 
 export default class {
-
   #sliderHasBeenAdded = false;
   #value = 0;
 
-  _setValue(data) {
+  setValue(data) {
     this.#value = data.target.value;
   }
 
-  _makeSlider(data) {
+  makeSlider(data) {
     if (this.#sliderHasBeenAdded === false) {
       const slider = document.createElement("input");
       slider.type = "range";
-      slider.dataset.c = "setValue";
-      slider.dataset.s = "buttonValue";
+      slider.dataset.call = "setValue";
+      slider.dataset.send = "buttonValue";
       this.bridge.querySelector(".output").append(slider);
       this.#sliderHasBeenAdded = true;
     } else {
@@ -22,8 +21,7 @@ export default class {
     }
   }
 
-  $buttonValue(el, _) {
+  buttonValue(el, _) {
     el.innerHTML = this.#value;
   }
-
 }

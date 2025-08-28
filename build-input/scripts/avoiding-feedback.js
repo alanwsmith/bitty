@@ -2,17 +2,17 @@
 
 export default class {
 
-  #value = 15;
+  #value;
 
-  _setValue(data) {
+  setValue(data) {
     this.#value = data.target.value;
   }
 
-  $setSliderA(el, _) {
+  setSliderA(el, _) {
     el.value = this.#value;
   }
 
-  $setSliderB(el, _) {
+  setSliderB(el, _) {
     el.value = this.#value;
   }
 

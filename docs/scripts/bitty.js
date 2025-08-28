@@ -313,10 +313,6 @@ class BittyJs extends HTMLElement {
     if (event.target.dataset.call !== undefined) {
       this.runFunctions(event.target.dataset.call, event);
     }
-    if (event.target.dataset.batch !== undefined) {
-      const batch = this.widget.batches[event.target.dataset.batch].join("|");
-      this.sendUpdates(batch, event);
-    }
     if (event.target.dataset.send !== undefined) {
       this.sendUpdates(event.target.dataset.send, event);
     }
@@ -338,10 +334,6 @@ class BittyJs extends HTMLElement {
     }
     if (this.dataset.send !== undefined) {
       this.sendUpdates(this.dataset.send, null);
-    }
-    if (this.dataset.batch !== undefined) {
-      const batch = this.widget.batches[this.dataset.batch].join("|");
-      this.sendUpdates(batch, null);
     }
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
@@ -393,8 +385,7 @@ class BittyJs extends HTMLElement {
 
 
   setIds() {
-    //const selector = ["r", "c", "s", "call", "send", "b", "batch"]
-    const selector = ["batch", "call", "receive", "send"]
+    const selector = [ "call", "receive", "send"]
       .map((key) => {
         return `[data-${key}]`;
       })

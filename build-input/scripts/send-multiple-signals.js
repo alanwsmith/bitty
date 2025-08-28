@@ -1,19 +1,17 @@
 // deno-fmt-ignore-file
 
 export default class {
-
   #number;
 
-  _setNumber(event) {
+  setNumber(event) {
     this.#number = event.target.value;
   }
 
-  $displayNumber(el, _) {
+  displayNumber(el, _) {
     el.innerHTML = this.#number;
   }
 
-  $setNumberValue(el, _) {
+  setNumberValue(el, _) {
     el.value = this.#number;
   }
-
 }

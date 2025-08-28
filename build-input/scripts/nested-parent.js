@@ -3,17 +3,18 @@
 export default class {
   #value = 0;
 
-  _increment(_) {
+  increment(_) {
     this.#value += 1;
   }
 
-  $showValue(el, _) {
+  showValue(el, _) {
     el.innerHTML = this.#value;
   }
 
   template() {
     return `
-<div>Total from internal counter<br><span data-r="showValue"></div>
+<div>Total from internal counter</div>
+<div data-recieve="showValue"></div>
 <div>
   <bitty-js
     data-bridge="./nested-child.js"

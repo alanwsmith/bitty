@@ -2,7 +2,7 @@
 
 export default class {
 
-  #data = {
+  #state = {
     "activeColor": null,
     "colors": [
       "blue",
@@ -11,13 +11,13 @@ export default class {
     ],
   };
 
-  _setColor(data) {
-    this.#data.activeColor = data.target.dataset.color;
+  setColor(event) {
+    this.#state.activeColor = event.target.dataset.color;
   }
 
-  $setClass(el, _) {
-    this.#data.colors.forEach((color) => {
-      if (color === this.#data.activeColor) {
+  setClass(el, _) {
+    this.#state.colors.forEach((color) => {
+      if (color === this.#state.activeColor) {
         el.classList.add(color);
       } else {
         el.classList.remove(color);

@@ -102,8 +102,8 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <p>
   bitty uses a signaling approach.
   <code>data-*</code> attributes define the 
-  signals individual element send and receive.  Here's
-  the HTML for the button and text:
+  signals elements send and receive.  Here's
+  the HTML:
 </p>
 
 <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./hello-text.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
@@ -111,7 +111,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-recieve</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateText</span><span style="color:#c0c5ce;">&quot;&gt;Waiting&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
 
-<p>Here's the corresponding <code>hello-text.js</code> JavaScript:</p>
+<p>and the corresponding <code>hello-text.js</code> JavaScript:</p>
 
 <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateText</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
@@ -173,6 +173,7 @@ the &quot;Waiting&quot; text with a timestamp.</p>
   <li>
     <p>
       <code>data-ignore</code> - TKTKTKTK
+      (in line for deprication)
     </p>
     <p>
       TKTKTKT: Usage location(s) 
@@ -1022,12 +1023,28 @@ Show nested-child.js as well.
   <div class="xxlarge-block-margin">
     <h3>Nested Components with Ignore</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<div>TODO: Better define the use case for 'ignore' 
+and see if it can be removed and data-send/data-recieve
+used directly instead (probably using additional
+signals but that's a fine trade off for the
+reduction in complexity if the entire data-ignore
+attribute can be removed)
+</div>
+
 <bitty-js
   data-bridge="./nested-parent-ignore.js"
   data-ignore="increment"
 ></bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Better define the use case for &#39;ignore&#39;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">and see if it can be removed and data-send/data-recieve</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">used directly instead (probably using additional</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">signals but that&#39;s a fine trade off for the</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">reduction in complexity if the entire data-ignore</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">attribute can be removed)</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-parent-ignore.js</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-ignore</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>

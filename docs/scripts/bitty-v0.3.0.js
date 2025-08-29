@@ -157,6 +157,7 @@ class BittyJs extends HTMLElement {
         try {
           this.widget[`${key}`](el, data);
         } catch (error) {
+          // TODO: Add custom error call here
           console.error(error);
           console.error(`Tried: ${key}`);
         }
@@ -261,10 +262,10 @@ class BittyJs extends HTMLElement {
   async attachWidget() {
     if (this.dataset.bridge) {
       const mod = await import(this.dataset.bridge);
-      if (this.dataset.widget === undefined) {
+      if (this.dataset.connection === undefined) {
         this.widget = new mod.default();
       } else {
-        this.widget = new mod[this.dataset.widget]();
+        this.widget = new mod[this.dataset.connection]();
       }
     } else {
       this.error(2);
@@ -326,6 +327,9 @@ class BittyJs extends HTMLElement {
     // TODO: Probably rename this to `this.widget.bitty`
     // so it has that name instead of bridge when
     // addressed from inside modules. 
+    // TODO: Also, probably rename `widget` to
+    // connection? or maybe something else that's
+    // more descriptive?
     this.widget.bridge = this;
     // TODO: Probably deprecate this template process.
     // The expecation being that the page itself is
@@ -345,6 +349,8 @@ class BittyJs extends HTMLElement {
     // issuing a data-call from the bitty-js 
     // element. That's more visible, explicit, 
     // and requires less mental overhead.
+    // TODO: Actually, probably remove init()
+    // and just use class constrotor methods
     if (this.widget.init !== undefined) {
       this.widget.init();
     }

@@ -1054,6 +1054,67 @@ in its process.</p>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>Multiple Class Exports</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+
+<bitty-js 
+    data-bridge="./multiple-class-exports.js">
+    <button data-send="update">Default Button</button>
+    <div data-receive="update">Waiting for click</div>
+</bitty-js>
+
+
+<bitty-js 
+    data-bridge="./multiple-class-exports.js"
+    data-connection="ExtraClass">
+    <button data-send="update">ExtraClass Button</button>
+    <div data-receive="update">Waiting for click</div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./multiple-class-exports.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Default Button&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./multiple-class-exports.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">ExtraClass</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;ExtraClass Button&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Default Class at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class ExtraClass </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML = `</span><span style="color:#a3be8c;">Extra Class at </span><span style="color:#c0c5ce;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#c0c5ce;">()}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>
+<p>bitty automatically connects to the default
+export for modules. This can be overridden
+using <code>data-connection</code> to identify the name
+of another exported class from the module.</p>
+</li>
+<li>
+<p>This allows multiple sets of functionality
+to be packaged into a single file.</p>
+</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
     <h3>Nested Component Event Issolation</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-bridge="./nested-parent.js">
@@ -1682,6 +1743,10 @@ Use the build-site.rs script to generate it
       there doesn't need to be anything specific added to the element signals to
       acommodate them (i.e. elements shouldn't have to know or make a decision
       about if something needs to be called async)
+    </li>
+    <li>
+      Renamed the <code>data-widget</code> attribute to <code>data-connection</code>
+      for connecting for exported module classes other than the default
     </li>
   </ul>
 </li>

@@ -191,7 +191,7 @@ class BittyJs extends HTMLElement {
   }
 
   addWatcher(key, el) {
-    solo(`Adding watcher for: ${el.constructor.name} ${el.dataset.uuid} with data-watch="${key}" to: bitty-js ${this.dataset.uuid}`);
+    debug(`Adding watcher for: ${el.constructor.name} ${el.dataset.uuid} with data-watch="${key}" to: bitty-js ${this.dataset.uuid}`);
     this.#watchers.push({
       key: key,
       f: (data) => {
@@ -399,7 +399,7 @@ class BittyJs extends HTMLElement {
 
   handleWatchers(payload) { 
     if (payload.detail === undefined || payload.detail.name === undefined || payload.detail.event === undefined) {
-      solo("Missing even from handleWatchers payload");
+      debug("Missing even from handleWatchers payload");
       return;
     }
     this.updateWatcher(payload.detail.name, payload.detail.event);

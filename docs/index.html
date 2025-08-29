@@ -472,6 +472,164 @@ event exists.</p>
 </ul></details>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>Additional Data Attributes</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js data-module="modules/additional-attributes.js">
+  <div>
+    <button  
+        data-send="update"
+        data-color="red">Red</button>
+    <button
+        data-send="update"
+        data-color="green">Green</button>
+    <button 
+        data-send="update"
+        data-color="blue">Blue</button>
+  </div>
+  <div data-receive="update">The quick brown fox</div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/additional-attributes.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">red</span><span style="color:#c0c5ce;">&quot;&gt;Red&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">green</span><span style="color:#c0c5ce;">&quot;&gt;Green&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">blue</span><span style="color:#c0c5ce;">&quot;&gt;Blue&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;The quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    &quot;blue&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    &quot;green&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    &quot;red&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  ];</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">colors</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">forEach</span><span style="color:#eff1f5;">((</span><span style="color:#c0c5ce;">color</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color </span><span style="color:#c0c5ce;">=== </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.color) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.classList.</span><span style="color:#96b5b4;">add</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      } </span><span style="color:#b48ead;">else </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.classList.</span><span style="color:#96b5b4;">remove</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">      }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    });</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
+    </div>    
+    <details class="xlarge-block-margin"><ul>
+<li>
+<p>Additional <code>data-*</code> attributes can be used to
+send supplemental data through signals.</p>
+</li>
+<li>
+<p>The attributes are available as normal in
+the event that's passed as the second
+argument to the signal function.</p>
+</li>
+</ul></details>
+  </div>
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>Different Updates for Multiple Elements</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js data-module="modules/diffent-updates-for-multiple-elements.js">
+    <div>
+        <button
+            data-type="fiction"
+            data-send="update">Fiction</button>
+        <button
+            data-type="nonFiction"
+            data-send="update">Non-Fiction</button>
+    </div>
+
+    <div>
+        <div data-name="title" data-receive="update">
+            Waiting for click
+        </div>
+        <div data-name="author" data-receive="update">
+            Waiting for click
+        </div>
+        <div data-name="pages" data-receive="update">
+            Waiting for click
+        </div>
+    </div>
+
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/diffent-updates-for-multiple-elements.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">fiction</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Fiction&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">nonFiction</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Non-Fiction&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            Waiting for click</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">author</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            Waiting for click</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pages</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            Waiting for click</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    #books = {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        fiction: {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            title: &quot;Neuromancer&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            author: &quot;William Gibson&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            pages: 271</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">nonFiction</span><span style="color:#c0c5ce;">: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            title: &quot;</span><span style="color:#a3be8c;">On Writing</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">Stephen King</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">288</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    };</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">bookType </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">.target.dataset.type;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            `</span><span style="color:#a3be8c;">Title: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookType</span><span style="color:#c0c5ce;">].title}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">author</span><span style="color:#c0c5ce;">&quot;) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            `</span><span style="color:#a3be8c;">Author: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookType</span><span style="color:#c0c5ce;">].author}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">pages</span><span style="color:#c0c5ce;">&quot;) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            `</span><span style="color:#a3be8c;">Pages: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookType</span><span style="color:#c0c5ce;">].pages}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
+    </div>    
+    <details class="xlarge-block-margin"><ul>
+<li>TKTKTK</li>
+</ul></details>
+  </div>
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
     <h3>Storing State</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
 <bitty-js data-module="modules/storing-state.js">
@@ -810,72 +968,6 @@ like regular events.</li>
     </div>    
     <details class="xlarge-block-margin"><ul>
 <li>TKTKTK</li>
-</ul></details>
-  </div>
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Additional Data Attributes</h3>
-    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<bitty-js data-module="modules/additional-attributes.js">
-  <div>
-    <button  
-        data-send="update"
-        data-color="red">Red</button>
-    <button
-        data-send="update"
-        data-color="green">Green</button>
-    <button 
-        data-send="update"
-        data-color="blue">Blue</button>
-  </div>
-  <div data-receive="update">The quick brown fox</div>
-</bitty-js></div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/additional-attributes.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">red</span><span style="color:#c0c5ce;">&quot;&gt;Red&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">green</span><span style="color:#c0c5ce;">&quot;&gt;Green&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-color</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">blue</span><span style="color:#c0c5ce;">&quot;&gt;Blue&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;The quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-    </div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;blue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;green&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;red&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  ];</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">colors</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">forEach</span><span style="color:#eff1f5;">((</span><span style="color:#c0c5ce;">color</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color </span><span style="color:#c0c5ce;">=== </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.color) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.classList.</span><span style="color:#96b5b4;">add</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color</span><span style="color:#eff1f5;">);</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      } </span><span style="color:#b48ead;">else </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.classList.</span><span style="color:#96b5b4;">remove</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">color</span><span style="color:#eff1f5;">);</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    });</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-    </div>    
-    <details class="xlarge-block-margin"><ul>
-<li>
-<p>Additional <code>data-*</code> attributes can be used to
-send supplemental data through signals.</p>
-</li>
-<li>
-<p>The attributes are available as normal in
-the event that's passed as the second
-argument to the signal function.</p>
-</li>
 </ul></details>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">

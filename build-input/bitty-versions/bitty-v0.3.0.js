@@ -213,7 +213,6 @@ class BittyJs extends HTMLElement {
       if (scrubbedPath.substring(0, 2) !== "./" && scrubbedPath.substring(0, 1) !== "/") {
         scrubbedPath = `./${scrubbedPath}`;
       } 
-      console.log(scrubbedPath);
       const mod = await import(scrubbedPath);
       if (this.dataset.use === undefined) {
         this.widget = new mod.default();

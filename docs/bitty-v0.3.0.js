@@ -1,51 +1,13 @@
 /////////////////////////////////////////////////////
-// bitty.js  - Version 0.3.0
-/////////////////////////////////////////////////////
-
-function debug(payload, el = null) {
-  // TODO: Figure out how to display the function that called
-  // this or its line number
-  if (window && window.location && window.location.search) {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("debug")) {
-      console.log(payload);
-      if (el !== null) {
-        console.log(el);
-      }
-    }
-  }
-}
-
-// solo is for debugging individual items instead of
-// the full debug
-function solo(payload, el = null) {
-  // TODO: Figure out how to display the function that called
-  // this or its line number
-  if (window && window.location && window.location.search) {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has("solo") || params.has("debug")) {
-      console.log(payload);
-      if (el !== null) {
-        console.log(el);
-      }
-    }
-  }
-}
-
-
+// bitty-js  - Version 0.3.0
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
-  // TODO: Deprecate #hashString in favor of join approach
-  #hashString = "#######################################";
-  #watchers = [];
-  // TODO: Determine if "change" should be added to "click" and "input" as a default
-  #listeners = ["click", "input"]; 
+  #listeners = ["change", "click", "input"]; 
   #receivers = [];
+  #watchers = [];
 
   async connectedCallback() {
-    // TODO: Verify `async` on connectedCallback
-    // works across browsers.
     this.setParentId();
     this.setIds();
     await this.attachWidget();
@@ -82,8 +44,7 @@ class BittyJs extends HTMLElement {
         try {
           this.widget[`${key}`](el, data);
         } catch (error) {
-          // TODO: Add custom error call here
-          console.error(error);
+          console.error(error); // TODO: Add custom error call here
           console.error(`Tried: ${key}`);
         }
       },
@@ -98,8 +59,7 @@ class BittyJs extends HTMLElement {
         try {
           this.widget[`${key}`](el, data);
         } catch (error) {
-          // TODO: Add custom error call here
-          console.error(error);
+          console.error(error); // TODO: Add custom error call here
           console.error(`Tried: ${key}`);
         }
       },
@@ -178,7 +138,7 @@ class BittyJs extends HTMLElement {
 
   assembleErrorId(err) {
     const out = [];
-    out.push(this.#hashString);
+    out.push("#######################################");
     out.push(`A BITTY ERROR OCCURRED [ID: ${err.id}]`);
     out.push(this.assembleErrorText(err.kind));
     const text = this.assembleErrorReplacedText(err, out.join("\n\n"));
@@ -202,18 +162,11 @@ class BittyJs extends HTMLElement {
 
   async attachWidget() {
     if (this.dataset.module) {
-      // TODO: Document the scrubbed path
-      // which means you don't have to add a 
-      // dot in front of relative file paths
-      // (which would otherwise be required). 
-      // And that absolute paths still work. 
-      // TODO: Verify this works with `../`
-      // relative paths. 
-      let scrubbedPath = this.dataset.module;
-      if (scrubbedPath.substring(0, 2) !== "./" && scrubbedPath.substring(0, 1) !== "/") {
-        scrubbedPath = `./${scrubbedPath}`;
+      let validModulePath = this.dataset.module;
+      if (validModulePath.substring(0, 2) !== "./" && validModulePath.substring(0, 1) !== "/") {
+        validModulePath = `./${validModulePath}`;
       } 
-      const mod = await import(scrubbedPath);
+      const mod = await import(validModulePath);
       if (this.dataset.use === undefined) {
         this.widget = new mod.default();
       } else {
@@ -249,8 +202,8 @@ class BittyJs extends HTMLElement {
     this.assembleErrorComponent(err);
     this.assembleErrorElementDetails(err);
     // TODO: Add developerNote
-    // TODO: Pull the source error message if there is on
-    console.error(err.output.join(`\n\n${this.#hashString}\n\n`));
+    // TODO: Pull the source error message if there is one
+    console.error(err.output.join(`\n\n#######################################\n\n`));
     console.error(this);
     if (el !== null) {
       console.error(el);
@@ -272,14 +225,10 @@ class BittyJs extends HTMLElement {
     event.stopPropagation();
   }
 
-  // TODO: Verify this mutation observer catches
-  // new elements that are added as strings inside
-  // .innerHTML calls
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
-        // TODO: Verify this remove node watcher removes
-        // receivers and watchers properly.
+        // TODO: Verify this remove receivers and watchers properly
         for (const removedNode of mutation.removedNodes) {
           if (removedNode.dataset) {
             if (removedNode.dataset.call || removedNode.dataset.receive || removedNode.dataset.send || removedNode.dataset.watch) {
@@ -287,9 +236,7 @@ class BittyJs extends HTMLElement {
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
-              // Only need one hit to run the processes
-              // so return after seeing the first one
-              return;
+              return; // only need one so return
             }
           }
         }
@@ -300,9 +247,7 @@ class BittyJs extends HTMLElement {
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
-              // Only need one hit to run the processes
-              // so return after seeing the first one
-              return;
+              return; // only need one so return
             }
           }
         }
@@ -319,79 +264,24 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
-    // TODO: Probably rename this to `this.widget.bitty`
+    // TODO: Rename this to `this.api.module`
     // so it has that name instead of bridge when
     // addressed from inside modules. 
-    // TODO: Also, probably rename `widget` to
-    // connection? or maybe something else that's
-    // more descriptive?
     this.widget.bridge = this;
-
-
-    // NOTE: DEPRECATE when v0.3.0 launches
-    // TODO: Probably deprecate this template process.
-    // The expecation being that the page itself is
-    // responsible for setting things up.
-    // At a minimum, combine the init() and template()
-    // calls into a single thing so there's 
-    // less overhead. Also, better to use
-    // a template element regardless
-    // if (this.widget.template !== undefined) {
-    //   const skeleton = document.createElement("template");
-    //   skeleton.innerHTML = this.widget.template();
-    //   this.append(skeleton.content.cloneNode(true));
-    //   this.setIds();
-    //   this.loadReceivers();
-    //   this.loadWatchers();
-    // }
-
-
-    // NOTE: DEPRECATE when v0.3.0 launches
-    // TODO: Probably deprecate this in favor of 
-    // issuing a data-call from the bitty-js 
-    // element. That's more visible, explicit, 
-    // and requires less mental overhead.
-    // TODO: Actually, probably remove init()
-    // and just use class constrotor methods
-    // if (this.widget.init !== undefined) {
-    //   this.widget.init();
-    // }
-
-    // TODO: Remove this if it's not necessary
-    // for watchers at the individual element
-    // level (it was originally for a single
-    // watcher at the bitty-js elemenet level)
-    // GOAL: Identify signals to watch from 
-    // child elements to allow sending signals
-    // up the tree
-    // if (this.dataset.watch) {
-    //   this.#watch = this.dataset.watch.split("|");
-    // }
 
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
-
     if (this.dataset.call !== undefined) {
-      // this fakes an event with only 
-      // a '.target' that contains the 
-      // bitty-js element itself.
       this.runFunctions(this.dataset.call, {
-        target: this
+        target: this  // stubbed even structure for init
       });
     }
     if (this.dataset.send !== undefined) {
       this.sendUpdates(this.dataset.send, {
-        target: this
+        target: this  // stubbed even structure for init
       });
     }
-    // TODO: See about moving this up above the
-    // this.dataset.call and this.dataset.send 
-    // checks. Feels like that's where it should 
-    // belong since it's more set up than execution. 
-    // Just have to make sure it doesn't cause 
-    // a feedback loop on changes (which I think 
-    // would already have occurred)
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
     }
@@ -430,22 +320,19 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  // TODO: confirm 'data' is really an 'event' and rename it
-  sendUpdates(updates, data) {
+  sendUpdates(updates, event) {
     updates.split("|").forEach((key) => {
-      // Forward the event up the tree as a
-      // `bittysignal`. 
       const signalForwarder = new CustomEvent("bittysignal", {
         bubbles: true,
         detail: {
           name: key,
-          event: data,
+          event: event,
         }
       });
       this.parentElement.dispatchEvent(signalForwarder);
       this.#receivers.forEach((receiver) => {
         if (receiver.key === key) {
-          receiver.f(data);
+          receiver.f(event);
         }
       });
     });
@@ -480,7 +367,6 @@ class BittyJs extends HTMLElement {
       }
     });
   }
-
 
   #errors = [
     {
@@ -572,92 +458,47 @@ class BittyJs extends HTMLElement {
       developerNote: [],
     },
   ];
-
-  // sample to copy paste for new error message
-  // {
-  //   id: 2,
-  //   kind: [],
-  //   description: [],
-  //   help: [[`Help option`]],
-  //   developerNote: [],
-  // },
-
-
-
-
-  /*
-  // TODO: Deprecate after completing 0.3.00
-  //
-  // addIds() {
-  //   debug("Adding IDs");
-  //   if (this.dataset.uuid === undefined) {
-  //     this.dataset.uuid = self.crypto.randomUUID();
-  //   }
-  //   const els = this.querySelectorAll(`[data-r], [data-s], [data-c]`);
-  //   els.forEach((el) => {
-  //     if (el.dataset.uuid === undefined) {
-  //       el.dataset.uuid = self.crypto.randomUUID();
-  //     }
-  //   });
-  // }
-  */
-
-
-  // TODO: This is out for now. Probably DEPRECATE, but think
-  // about it a little more first.
-  // assembleErrorFinding(err) {
-  //   const out = []
-  //   out.push(`FINDING THE ERROR`)
-  //   out.push(
-  //     `Error consoles generally report lines numbers that an error occurred on. The first number is the line where the 'console.error()' call that produced this message is. It's not useful since it always fires from the BittyJS class 'error()' method.`
-  //   )
-  //   out.push(
-  //     `Expand the error message in the console to see the extended error trace and associated line numbers.`
-  //   )
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
-
-  // TODO: Deprecate in favor of moving the messages into COMPONETN UUID and the ELEMENT Section
-  // assembleErrorDumpMessage(err) {
-  //   const out = []
-  //   if (err.el !== null) {
-  //     out.push('ELEMENT OUTPUTS')
-  //     out.push(
-  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
-  //     )
-  //   } else {
-  //     out.push('ELEMENT OUTPUT')
-  //     out.push(
-  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
-  //     )
-  //   }
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
-
-
-  // TODO: Deprecate after completing 0.3.0
-  // assembleErrorPrelude(err) {
-  //   const out = []
-  //   out.push(this.#hashString)
-  //   out.push(`A BITTY ERROR OCCURRED`)
-  //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))
-  //   err.output.push(text)
-  // }
-
-
-  // DEPRECATED as of 0.3.0
-  // isIgnored(name) {
-  //   if (this.dataset.ignore === undefined) {
-  //     return false;
-  //   }
-  //   return this.dataset.ignore.split("|").includes(name);
-  // }
-
 }
 
+/////////////////////////////////////////////////////
+// Helpers
+/////////////////////////////////////////////////////
+
+
+function debug(payload, el = null) {
+  if (window && window.location && window.location.search) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("debug")) {
+      console.log(payload);
+      if (el !== null) {
+        console.log(el);
+      }
+    }
+  }
+}
+
+// solo is for quick debugging of individual items 
+// instead of running the full debug
+function solo(payload, el = null) {
+  if (window && window.location && window.location.search) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("solo") || params.has("debug")) {
+      console.log(payload);
+      if (el !== null) {
+        console.log(el);
+      }
+    }
+  }
+}
+
+
+/////////////////////////////////////////////////////
+// Export
+/////////////////////////////////////////////////////
+
 customElements.define("bitty-js", BittyJs);
+
+
 
 /* *************************************************
  *

@@ -621,9 +621,9 @@ signals.</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Using Input Elements</h3>
+    <h3>Using Input Text Elements</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<bitty-js data-bridge="./using-inputs.js">
+<bitty-js data-bridge="./using-input-text-elements.js">
     <input
         type="text" 
         data-send="update"
@@ -633,7 +633,7 @@ signals.</li>
 </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./using-inputs.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./using-input-text-elements.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">input</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">text</span><span style="color:#c0c5ce;">&quot;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
@@ -1237,454 +1237,189 @@ attributes as seen in the next example.</p>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Getting Data From Children</h3>
+    <h3>Downward Signal Travel</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<div class="xlarge-block-margin">TODO: Make a vesrion of this that codes
-the HTML directly intsead of calling children via the template</div>
+<bitty-js 
+  data-bridge="./downward-signal-travel.js"
+  data-connection="Parent">  
+  <div>
+    <button 
+      data-name="Parent"
+      data-call="incrementParent"
+      data-send="update">Parent</button>
+    <div data-receive="update">Waiting on Parent</div>
+  </div>
 
-<bitty-js
-  data-bridge="./nested-parent-calc.js"
-  data-ignore="increment"
-  data-send="showValue"
-></bitty-js></div>
+  <div>
+    <bitty-js 
+      data-bridge="./downward-signal-travel.js"
+      data-connection="Child">  
+      <button
+        data-name="Alfa"
+        data-call="incrementChild"
+        data-send="update">Child Alfa</button>
+      <div data-receive="update">Waiting on Alfa</div>
+    </bitty-js>
+
+    <bitty-js 
+      data-bridge="./downward-signal-travel.js"
+      data-connection="Child">  
+      <button
+        data-name="Bravo"
+        data-call="incrementChild"
+        data-send="update">Child Bravo</button>
+      <div data-receive="update">Waiting on Bravo</div>
+    </bitty-js>
+  </div>
+</bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">xlarge-block-margin</span><span style="color:#c0c5ce;">&quot;&gt;TODO: Make a vesrion of this that codes</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">the HTML directly intsead of calling children via the template&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./nested-parent-calc.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-ignore</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-    </div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">showValue</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">counters </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.</span><span style="color:#8fa1b3;">querySelectorAll</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">bitty-js</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">count </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">counters</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">forEach</span><span style="color:#eff1f5;">((</span><span style="color:#c0c5ce;">counter</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">counter</span><span style="color:#eff1f5;">.widget </span><span style="color:#c0c5ce;">!== </span><span style="color:#d08770;">undefined</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">count </span><span style="color:#c0c5ce;">+= </span><span style="color:#bf616a;">counter</span><span style="color:#eff1f5;">.widget.value;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    });</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">count</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./downward-signal-travel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Parent</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Parent</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">incrementParent</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Parent&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting on Parent&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">template</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;div&gt;Counter 1&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;bitty-js</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-bridge=&quot;./nested-child-calc.js&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-send=&quot;showValue&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &gt;&lt;/bitty-js&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./downward-signal-travel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Child</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Alfa</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">incrementChild</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Child Alfa&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting on Alfa&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;div&gt;Counter 2&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &lt;bitty-js</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-bridge=&quot;./nested-child-calc.js&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">    data-send=&quot;showValue&quot;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  &gt;&lt;/bitty-js&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;/div&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">  Calculated Total: &lt;span data-receive=&quot;showValue&quot;&gt;&lt;/span&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-    </div>    
-    <div class="xlarge-block-margin"></div>
-  </div>
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Customize Event Listeners</h3>
-    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<bitty-js data-bridge="./custom-listeners.js"
-  data-listeners="mouseover|mouseout">
-  <button data-send="sawMouse">Mouse Instead of Click</button>
-  <div data-receive="sawMouse">Waiting for mouse</div>
-</bitty-js></div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./custom-listeners.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-listeners</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">mouseover|mouseout</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Mouse Instead of Click&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sawMouse</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for mouse&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-    </div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">sawMouse</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#eff1f5;">${</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.type}</span><span style="color:#a3be8c;"> at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-    </div>    
-    <div class="xlarge-block-margin"></div>
-  </div>
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Element Access</h3>
-    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<div>TODO: Rename to bitty Element Access</div>
-<div>TODO: Move from this.bridge to this.bitty for the script </div>
-<div>TODO: Show that the scope is limited to the bitty 
-element. (Might combine this with the issolated-elements example</div>
-</div>
-
-<style>
-  .element-access-class {
-    background-color: var(--element-access-background);
-  }
-</style>
-
-<bitty-js data-bridge="./element-access.js">
-  <button data-call="randomizeBackground">
-    Randomize Background
-  </button>
-  <div class="element-access-class">
-    the quick fox
-  </div>
-</bitty-js></div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Rename to bitty Element Access&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Move from this.bridge to this.bitty for the script &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Show that the scope is limited to the bitty</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">element. (Might combine this with the issolated-elements example&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#b48ead;">  </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">element-access-class </span><span style="color:#c0c5ce;">{</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--element-access-background);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./element-access.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">randomizeBackground</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    Randomize Background</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">element-access-class</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    the quick fox</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./downward-signal-travel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Child</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Bravo</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">incrementChild</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Child Bravo&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting on Bravo&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Parent </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  #</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;slategray&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;orangered&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;darkorange&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;royalblue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;brown&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;sienna&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;grey&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;darkred&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;lavender&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;linen&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;lightsteelblue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  ];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">incrementParent</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">randomizeBackground</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#eff1f5;">(</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">--element-access-background</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">randomColor</span><span style="color:#eff1f5;">(),</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#2b303b;">)</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML = `</span><span style="color:#a3be8c;">Parent: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value</span><span style="color:#c0c5ce;">}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">randomColor</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    return this.#colors[</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">floor</span><span style="color:#eff1f5;">(</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">random</span><span style="color:#eff1f5;">() </span><span style="color:#c0c5ce;">* </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">colors</span><span style="color:#eff1f5;">.length</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      )</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    ];</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Child </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  #</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">incrementChild</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      `${</span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">.target.dataset.name}</span><span style="color:#a3be8c;">: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value</span><span style="color:#c0c5ce;">}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
     </div>    
-    <div class="xlarge-block-margin"></div>
+    <div class="xlarge-block-margin"><ul>
+<li><code>bitty-js</code> elements the nest other
+<code>bitty-js</code> elements send signals to the
+children. The example above shows how the
+<code>update</code> signal is sent from the Parent
+element to the Child elements.</li>
+</ul>
+<p>Each element maintains its own instance
+of the <code>#value</code> counter. When the Child
+buttons are clicked their display shows
+their individual status.</p>
+<p>When the Parent button is clicked, it's
+output goes to itself as well as the
+child elements.</p>
+<p>Said another way, signals travel down
+the DOM tree to children. But, it
+won't travel up to ancestors or
+to siblings on the sides.</p></div>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Isolated Elements</h3>
+    <h3>Upward Signal Travel</h3>
     <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<style>
-    .isolated-element {
-    background-color: var(--isolated-element-background);
-    }
-</style>
-<div>
-  TODO: change so div backgrounds are changed since you can't see the button
-  backgrounds change when the over CSS is in play
-</div>
+<bitty-js 
+  data-bridge="./upward-signal-travel.js"
+  data-connection="Parent">
+  <div>
+    <div data-watch="update">Waiting on child</div>
+  </div>
 
-<bitty-js data-bridge="./isolate-element.js">
-  <button data-call="randomizeBackground">
-    Randomize Background
-  </button>
-  <div class="isolated-element">the quick brown fox</div>
-</bitty-js>
-<bitty-js data-bridge="./isolate-element.js">
-  <button data-call="randomizeBackground">
-    Randomize Background
-  </button>
-  <div class="isolated-element">the quick brown fox</div>
+  <div>
+    <bitty-js 
+      data-bridge="./upward-signal-travel.js"
+      data-connection="Child">  
+      <button
+        data-send="update">Child Button</button>
+      <div data-receive="update">Waiting on click</div>
+    </bitty-js>
+  </div>
 </bitty-js></div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">isolated-element </span><span style="color:#c0c5ce;">{</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--isolated-element-background);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  TODO: change so div backgrounds are changed since you can&#39;t see the button</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  backgrounds change when the over CSS is in play</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./upward-signal-travel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Parent</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-watch</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting on child&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./isolate-element.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">randomizeBackground</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    Randomize Background</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">isolated-element</span><span style="color:#c0c5ce;">&quot;&gt;the quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./isolate-element.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">randomizeBackground</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    Randomize Background</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">isolated-element</span><span style="color:#c0c5ce;">&quot;&gt;the quick brown fox&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./upward-signal-travel.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Child</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Child Button&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting on click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
     </div>
     <div class="xlarge-block-margin">
       <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #colors = [</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;slategray&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;orangered&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;darkorange&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;royalblue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;brown&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;sienna&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;grey&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;darkred&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;lavender&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;linen&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;lightsteelblue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  ];</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">randomizeBackground</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">_</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#eff1f5;">(</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">--isolated-element-background</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">randomColor</span><span style="color:#eff1f5;">(),</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#2b303b;">)</span><span style="color:#eff1f5;">;</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">randomColor</span><span style="color:#eff1f5;">() {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    return this.#colors[</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">floor</span><span style="color:#eff1f5;">(</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">random</span><span style="color:#eff1f5;">() </span><span style="color:#c0c5ce;">* </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">colors</span><span style="color:#eff1f5;">.length</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      )</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    ];</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-    </div>    
-    <div class="xlarge-block-margin"></div>
-  </div>
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>Color Picker</h3>
-    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
-<div>TODO: Move this to its own Example Color Picker section</div>
-
-  <style>
-    .color-picker {
-      background-color: var(--color-picker-background);
-      color: var(--color-picker-text);
-    }
-  </style>
-  <bitty-js
-      data-call="initMode"
-      data-batch="sliders"
-      data-bridge="./color-picker.js"
-      class="color-picker">
-    <div>
-      <label for="slider-l">Lightness</label>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        step="0.01"
-        id="slider-l"
-        data-call="handleSlider"
-        data-receive="lValue"
-        data-key="l"
-      />
-      <label for="slider-c">Chroma</label>
-      <input
-        type="range"
-        min="0"
-        max="0.3"
-        step="0.00001"
-        id="slider-c"
-        data-call="handleSlider"
-        data-receive="cValue"
-        data-key="c"
-      />
-      <label for="slider-h">Hue</label>
-      <input
-        type="range"
-        min="0"
-        max="360"
-        step="0.01"
-        id="slider-h"
-        data-call="handleSlider"
-        data-receive="hValue"
-        data-key="h"
-      />
-    </div>
-  </bitty-js></div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;TODO: Move this to its own Example Color Picker section&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">color-picker </span><span style="color:#c0c5ce;">{</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      background-color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--color-picker-background);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      color: </span><span style="color:#96b5b4;">var</span><span style="color:#c0c5ce;">(--color-picker-text);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">initMode</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-batch</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sliders</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./color-picker.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">color-picker</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-l</span><span style="color:#c0c5ce;">&quot;&gt;Lightness&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">100</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.01</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-l</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-c</span><span style="color:#c0c5ce;">&quot;&gt;Chroma&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.3</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.00001</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-c</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">cValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-h</span><span style="color:#c0c5ce;">&quot;&gt;Hue&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">input</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">range</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">min</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">max</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">360</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">step</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">0.01</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">slider-h</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">handleSlider</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">hValue</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      /&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-    </div>
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">  #batches = {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    &quot;sliders&quot;: [</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      &quot;cValue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      &quot;hValue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">      &quot;lValue&quot;,</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    ],</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  }</span><span style="color:#c0c5ce;">;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  #</span><span style="color:#bf616a;">data </span><span style="color:#c0c5ce;">= {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &quot;</span><span style="color:#a3be8c;">activeMode</span><span style="color:#c0c5ce;">&quot;: &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &quot;</span><span style="color:#a3be8c;">modes</span><span style="color:#c0c5ce;">&quot;: {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;: {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">70</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">0.05</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">190</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      },</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      &quot;</span><span style="color:#a3be8c;">dark</span><span style="color:#c0c5ce;">&quot;: {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">l</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">20</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">c</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">0.1</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">h</span><span style="color:#c0c5ce;">&quot;: </span><span style="color:#d08770;">40</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      },</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    },</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  };</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#bf616a;">get </span><span style="color:#8fa1b3;">batches</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">batches</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Parent </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    #</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        `${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value</span><span style="color:#c0c5ce;">}</span><span style="color:#a3be8c;"> - Parent caught update at </span><span style="color:#c0c5ce;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#c0c5ce;">()}`;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
 <span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">handleMode</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode = </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.value;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Child </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    #</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">+= </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      `${</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">value</span><span style="color:#c0c5ce;">}</span><span style="color:#a3be8c;"> - Child clicked at </span><span style="color:#c0c5ce;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#c0c5ce;">()}`;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">handleSlider</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">modeKey </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">key </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.dataset.key;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">modeKey</span><span style="color:#c0c5ce;">][</span><span style="color:#bf616a;">key</span><span style="color:#c0c5ce;">] = </span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.target.value;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">initMode</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">();</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">cValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].c;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">hValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].h;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">lValue</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.value = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode].l;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">backgroundColorVar</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">mode </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode];</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">oklch(</span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.l}</span><span style="color:#a3be8c;">% </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.c} ${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.h}</span><span style="color:#a3be8c;">)</span><span style="color:#c0c5ce;">`;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">textColorVar</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">modeKey </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.activeMode === &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot; ? &quot;</span><span style="color:#a3be8c;">dark</span><span style="color:#c0c5ce;">&quot; : &quot;</span><span style="color:#a3be8c;">light</span><span style="color:#c0c5ce;">&quot;;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">mode </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">data</span><span style="color:#c0c5ce;">.modes[</span><span style="color:#bf616a;">modeKey</span><span style="color:#c0c5ce;">];</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">oklch(</span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.l}</span><span style="color:#a3be8c;">% </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.c} ${</span><span style="color:#bf616a;">mode</span><span style="color:#c0c5ce;">.h}</span><span style="color:#a3be8c;">)</span><span style="color:#c0c5ce;">`;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">template</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#a3be8c;">    </span><span style="color:#c0c5ce;">`;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#8fa1b3;">updateStyles</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#c0c5ce;">(</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      `</span><span style="color:#a3be8c;">--color-picker-background</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">backgroundColorVar</span><span style="color:#c0c5ce;">(),</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#2b303b;">)</span><span style="color:#c0c5ce;">;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.bridge.style.</span><span style="color:#8fa1b3;">setProperty</span><span style="color:#c0c5ce;">(</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      `</span><span style="color:#a3be8c;">--color-picker-text</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">textColorVar</span><span style="color:#c0c5ce;">(),</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#2b303b;">)</span><span style="color:#c0c5ce;">;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  }</span></span>
-<span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
     </div>    
-    <div class="xlarge-block-margin"></div>
+    <div class="xlarge-block-margin"><ul>
+<li>Singals travel down the DOM tree
+by default. This is how to send
+them up the tree:</li>
+</ul>
+<p>TKTKTK</p></div>
   </div>
  <!-- 
 
@@ -1699,482 +1434,8 @@ Use the build-site.rs script to generate it
 
 
 
-<details>
-  <summary>Release Notes</summary>
 
-<!-- 
 
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <ul>
-
-<li>
-  <h3>Version: 0.3.0</h3>
-  <p>DATE TBD</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>Data attribute naming update for clarity</p>
-  <ul> 
-    <li>
-      The biggest update is changing <code>data-b</code>, <code>data-c</code>,
-      <code>data-r</code>, and <code>data-s</code> to <code>data-batch</code>, 
-      <code>data-call</code>, <code>data-receive</code>, and <code>data-send</code>,
-      respectivally. I originally use the shorter names to reduce the text
-      length. The increased clarity of the longer names is worth the
-      few extra characters.
-    </li>
-    <li>
-      The other big change is removing the leading <code>_</code> and
-      <code>$</code> characters from function names. They were originally 
-      put in place to create a naming convention that differentiated
-      between functions that were hit with <code>data-call</code>
-      and <code>data-send</code>. In practice, that wasn't necessary.
-    </li>
-    <li>
-      Removed the <code>data-batch</code> attribute. While there are some use 
-      cases where it might be nice, the extra complexity, mental overhead, and maintance 
-      aren't worth it.
-    </li>
-    <li>
-      Added Mutation Observer so data-* functionaltiy works
-      on elements that are added after initilization.
-    </li>
-    <li>
-      Added documentation to each of the examples. (Documention is 
-      stored as markdown direclty in the example files.)
-    </li>
-    <li>
-      Split the web site page up into individual template for sections. Much
-      nicer to work with.
-    </li>
-    <li>
-      Updated example functions to always use <code>(el, _event)</code> instead
-      of <code>(el, _)</code> for clarity. 
-    </li>
-    <li>
-      Removed inert/include/ignore can be dropped from the top level
-      components then remove them. This was originally a way to tell 
-      parent components to ignore specific calls and signals from children. 
-      After using it a bit, I don't think the complexity is worth it. 
-      Better to just name functions an signals so they don't collide.
-    </li>
-    <li>
-      TODO: Confirm async/await stuff can be done directly with functions and
-      there doesn't need to be anything specific added to the element signals to
-      acommodate them (i.e. elements shouldn't have to know or make a decision
-      about if something needs to be called async)
-    </li>
-    <li>
-      Renamed the <code>data-widget</code> attribute to <code>data-connection</code>
-      for connecting for exported module classes other than the default
-    </li>
-  </ul>
-</li>
-<li>
-  <h3>Version: 0.2.3</h3>
-  <p>June 5, 2025</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>Lots of error handling work in this one.</p>
-
-  <ul>
-    <li>
-      Moved UUID generation for the <code>bitty-js</code> and all
-      <code>data-*</code> reactive elements to the first thing in
-      <code>connectedCallback()</code> to aid in error messaging.
-    </li>
-    <li>
-      Made <code>connectedCallback()</code> and <code>async</code> function to
-      throw loading the widget module into its own funcitoun
-    </li>
-    <li>
-      Created an <code>#errors</code> private var to store error messages and
-      help by ID.
-    </li>
-    <li>Added the first few error messages</li>
-    <li>
-      <p>
-        Added <code>this.error()</code> for outputting errors. It takes two
-        optional arguments: an ID and an Element. The ID maps to the IDs in
-        <code>#errors</code>. They're used to add detail and help message to the
-        error output.
-      </p>
-      <p>
-        The ID defaults to <code>0</code> which is an unclassified error type.
-        The message for that ID includes a note to the developer to use an ID to
-        classify the error. I consider it a bug if an appropriate ID doesn't
-        exist and request an issue be open to fix it.
-      </p>
-      <p>
-        The <code>this.error()</code> method dumps the
-        <code>bitty-js</code> elemnet after the message.
-      </p>
-      <p>
-        If an element was passed to <code>this.error()</code> it's dumped out as
-        well.
-      </p>
-      <p>
-        The error message end up being pretty long. The end up adding a bunch of
-        lines to the source file. That's an explicit decision aimed at making
-        bitty easier to work with.
-      </p>
-    </li>
-    <li>
-      <p>
-        Added top level <code>debug</code> function that uses a
-        <code>debug</code> search query param from the
-        <code>window.location</code> to see if it should output.
-      </p>
-      <p>
-        Only thing I don't like about it is that it shows the function's line
-        number instead of the line number from where it was called. Something to
-        look into.
-      </p>
-    </li>
-    <li>
-      The <code>debug</code> function takes an optional element. It dumps it to
-      the console if one comes in.
-    </li>
-    <li>
-      Renamed <code>data-wires</code> to <code>data-bridge</code>. Fits better
-      and maps nicer to the <code>.bridge</code> coming back in from the support
-      class.
-    </li>
-    <li>
-      Set up to load the default class exported from a widget module if no other
-      class is defined (which happens with 'data-widget')
-    </li>
-    <li>
-      Moved all examples to use a default class export instead of a named class
-    </li>
-    <li>
-      Added a <code>data-widget</code> attribute to the
-      <code>bitty-js</code> elements to allow using multiple classes from inside
-      a single supporting .js module file.
-    </li>
-    <li>
-      <code>bitty-component-error</code> and
-      <code>bitty-element-error</code> classes are added to the class list of
-      elements where errors occur.
-    </li>
-  </ul>
-</li><li>
-  <h3>Version: 0.2.2</h3>
-  <p>June 4, 2025</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>
-    Added UUIDs for pending error handling. Shuffeld a bunch of stuff around to
-    make the examples look nicer.
-  </p>
-
-  <ul>
-    <li>
-      <p>
-        Added uuids as <code>data-uuid</code> attrs to all elements with related
-        <code>data-*</code> attributes. Added them to the
-        <code>bitty-js</code> elements too. I was originally thinking I'd add
-        the UUIDs on the elements internally (i.e. <code>el.uuid</code> instead
-        of <code>el.dataset.uuid</code>).
-      </p>
-      <p>
-        I decided on the attribute approach because it offers two benefits: 1.
-        You can see the IDs in the Element tree view of developer consoles, and
-        2. You can address them with CSS to update styles based on the UUID.
-        Both of those thing will go to supporting better error messages and bug
-        hunting.
-      </p>
-    </li>
-    <li>
-      Mostly content updates largely focused on detailing the opening counter
-      example.
-    </li>
-    <li>Added CONTRIBUTING file.</li>
-    <li>Added watcher script to build site when files change.</li>
-    <li>
-      Refined the initial counter example to remove the text and change the
-      private variable to <code>this.num</code> to make the examples look nicer.
-    </li>
-    <li>
-      Moved the Examples section directly below the initial basic functionality
-      overview section.
-    </li>
-    <li>
-      Added reminders all over the place to edit the template and instead of the
-      output for HTML page (which would be overwritten. ask me how I know).
-    </li>
-    <li>
-      Started adding <code>prettier-ignore</code> comments to code snippets to
-      prevent the display output from being mangled.
-    </li>
-    <li>
-      Started stripping <code>prettier-ignore</code> comments from the HTML
-      output so it doesn't show in the example
-    </li>
-    <li>Same goes for <code>// deno-fmt-ignore-file</code> in .js files</li>
-    <li>
-      Added script to maintain the open open/closed states of the section
-      details elements across page loads. (Having them close every time I made a
-      change was maddening)
-    </li>
-    <li>
-      Moved all the example <code>.js</code> files into the site root. Not a fan
-      of that in general, but it makes the examples look better since the path
-      is shorter.
-    </li>
-  </ul>
-</li><li>
-  <h3>Version: 0.2.1</h3>
-
-  <p>June 3, 2025</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>Some more wiring and some support tools for making the demo/docs site.</p>
-
-  <ul>
-    <li>
-      Made a Hello, World example that shows basic features. (Compared to the
-      single button press from the prior first example.)
-    </li>
-    <li>Showing Hello, World code as part of the example.</li>
-    <li>Load templates automatically.</li>
-    <li>Throttling via <code>.requestAnimationFrame()</code>.</li>
-    <li>
-      Renamed <code>data-f</code> to <code>data-c</code> (i.e. &quot;call&quot;)
-      for clarity.
-    </li>
-    <li>
-      Renamed <code>data-prep</code> attribute on <code>bitty-js</code> tag to
-      <code>data-call</code> (i.e. &quot;call&quot;) for clarity.
-    </li>
-    <li>
-      Renamed <code>data-init</code> attribute on <code>bitty-js</code> tag to
-      <code>data-send</code> so it matches <code>data-s</code> more closely.
-    </li>
-    <li>Made basic site builder for landing page.</li>
-    <li>
-      Moved everything into <code>details</code> elements for the landing page.
-    </li>
-  </ul>
-</li><li>
-  <h3>Version: 0.2.0</h3>
-  <p>June 3, 2025</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>Setting up a bunch of the basic wiring.</p>
-
-  <ul>
-    <li>
-      Rewrite to provide direct access to receiving elements. They are fully
-      accessible in the send/receive functions. (As compared to the 0.1.0
-      approach which required explicitly defining what would happen via an
-      update (e.g. update <code>.innerHTML</code> or <code>.value</code>).
-    </li>
-    <li>
-      Renamed <code>data-wrapper</code> and the target
-      <code>Wrapper</code> class to <code>data-wires</code> and
-      <code>Wires</code>. (<code>bitty.js</code> is the wrapper. The
-      <code>Wires</code> class is how things are hooked up.).
-    </li>
-    <li>
-      Added <code>data-call</code> attribute parsing to
-      <code>bitty-js</code> tag. It runs functions like <code>data-c</code> but
-      does so prior to adding the event listeners to the element.
-    </li>
-    <li>
-      Added <code>data-batch</code> attribute processing to
-      <code>bitty-js</code> tags. It operates like <code>data-b</code> but fires
-      before event listeners are added.
-    </li>
-    <li>
-      Added <code>data-ignore</code> attribute to allow components to avoid
-      calls to the named functions. (Send signals bubble up to parents of nested
-      components by default. This provides a way to ignore them).
-    </li>
-    <li>
-      The <code>bitty-js</code> element looks for an <code>.init()</code> method
-      in the <code>Wires</code> class. If it finds one it calls it during the
-      initialization process.
-    </li>
-    <li>
-      Passing both the element and the triggering event to the send/receive
-      functions.
-    </li>
-    <li>
-      Moved to using <code>data-b</code> explicitly to separate block calls from
-      individual function calls.
-    </li>
-    <li>
-      Order of operations is: function calls, batch calls, single send calls.
-    </li>
-    <li>
-      Temporarily removed preflight check until global functionality is defined.
-    </li>
-    <li>
-      Created example of loading a template via the
-      <code>.init()</code> call back to the <code>Wires</code> class.
-    </li>
-    <li>Created example with nested components.</li>
-    <li>
-      Created example with parent of child components pulling data from the
-      children to do a calculation.
-    </li>
-    <li>Created example showing parent ignoring send signals from children.</li>
-    <li>
-      Created example showing on components loading a child component via a
-      template that becomes fully reactive.
-    </li>
-  </ul>
-</li><li>
-  <h3>Version: 0.1.0</h3>
-  <p>June 2, 2025</p>
-
-<!-- 
-
-######################################################
-REMINDER: DO NOT EDIT THIS FILE DIRECTLY.
-
-Use the build-site.rs script to generate it
-######################################################
-
--->
-
-  <p>Getting the project started.</p>
-
-  <ul>
-    <li>Initial prototype.</li>
-    <li>
-      <code>&ltbitty-js&gt;</code> wraps elements to provide them with reactive
-      capabilities.
-    </li>
-    <li>
-      Basic <code>data-c</code>, <code>data-s</code>, and
-      <code>data-r</code>
-      in place to call functions, send, and receive updates, respectively.
-    </li>
-    <li>
-      Functionality is loaded using <code>data-wrapper</code> to point to a
-      module to load. The module must export a <code>Wrapper</code> class that
-      gets loaded and used to provide functions and send/receive callbacks.
-    </li>
-    <li>
-      Uses string prefixes to make determinations about how to handle data
-      through the send/receive channels (e.g.
-      <code>htmlSOMETHING</code>
-      updates <code>.innerHTML</code> of an element while
-      <code>valueSOMETHING</code> updates the <code>.value</code>).
-    </li>
-    <li>
-      Defined convention for functions. <code>data-c</code> maps to functions in
-      the <code>Wrapper</code> class that start with a
-      <code>_</code> (underscore). The <code>data-s</code> and
-      <code>data-r</code> attributes map to functions in the
-      <code>Wrapper</code> class that start with a <code>$</code> (dollar sign).
-    </li>
-    <li>
-      Decided against using <code>data-c data-s and data-r</code> on the
-      <code>bitty.js</code> tags. That would involved a lot of extra overhead in
-      parsing to differentiate between the top level element and the content it
-      wraps. Using <code>data-send</code> instead as a replacement for
-      <code>data-c</code>. Others, TBD.
-    </li>
-    <li>
-      Set up <code>data-c="batchSOMETHIGN"</code> functionality to send a single
-      single that gets turned into multiple signals in the <code>Wrapper</code>.
-    </li>
-    <li>
-      Defined convention of using <code>.batches</code> to look for batches. It
-      must be a hash where the keys match the incoming request and the value is
-      an array of functions to run.
-    </li>
-    <li>
-      Defined <code>.bridge</code> to allow <code>Wrapper</code> functions to
-      access the parent <code>bitty-js</code> element.
-    </li>
-    <li>Scoped event listeners to the <code>bitty-js</code> elements.</li>
-    <li>
-      Set up <code>data-listeners</code> attribute on <code>bitty-js</code> tags
-      to override the default listeners (which are <code>input</code> and
-      <code>click</code>).
-    </li>
-    <li>Created example that stores its own state.</li>
-    <li>
-      Created example that updates an element with the same content it sent
-      (i.e. verified feedback can be avoided).
-    </li>
-    <li>
-      Created example using <code>data-send</code> to load initial values.
-    </li>
-    <li>Created example that sends multiple signals.</li>
-    <li>Created example with multiple elements receiving the same signal.</li>
-    <li>
-      Created example showing how to update global CSS variables/properties.
-    </li>
-    <li>Created example showing custom event listeners.</li>
-    <li>
-      Created example showing how to update CSS variables/properties scoped to
-      the content of individual <code>bitty-js</code> tags.
-    </li>
-    <li>
-      Examples use parent page's CSS for styling. It confirms I'm happy with the
-      choice to use the light DOM instead of the shadow DOM.
-    </li>
-    <li>Set up initial preflight check to ensure functions are in place.</li>
-  </ul>
-</li>
-  </ul>
-</details>
       <!-- prettier-ignore-end -->
     </main>
 

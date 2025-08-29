@@ -16,12 +16,30 @@ function debug(payload, el = null) {
   }
 }
 
+// solo is for debugging individual items instead of
+// the full debug
+function solo(payload, el = null) {
+  // TODO: Figure out how to display the function that called
+  // this or its line number
+  if (window && window.location && window.location.search) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("solo")) {
+      console.log(payload);
+      if (el !== null) {
+        console.log(el);
+      }
+    }
+  }
+}
+
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
   // TODO: Deprecate #hashString in favor of join approach
   #hashString = "#######################################";
-  #listeners = ["click", "input"];
+  #watchers = [];
+  // TODO: Determine if "change" should be added to "click" and "input" as a default
+  #listeners = ["click", "input"]; 
   #receivers = [];
   #errors = [
     {
@@ -135,7 +153,9 @@ class BittyJs extends HTMLElement {
       this.error(0);
     } else {
       this.requestUpdate = this.handleChange.bind(this);
+      this.watchMutations = this.handleMutations.bind(this);
       this.loadReceivers();
+      this.loadWatchers();
       this.init();
       this.addEventListeners();
     }
@@ -147,11 +167,34 @@ class BittyJs extends HTMLElement {
         this.requestUpdate.call(this, event);
       });
     });
+
+    // this.addEventListener("bittysignal", (data) => {
+    //   if (this.#watch.includes(data.detail.name)) {
+    //     this.sendUpdates(data.detail.name, data.detail.event);
+    //   }
+    // });
+
   }
 
   addReceiver(key, el) {
-    debug(`Adding receiver for: ${el.dataset.uuid} with key: ${key} to: ${this.dataset.uuid}`);
+    debug(`Adding receiver for: ${el.constructor.name} ${el.type} ${el.dataset.uuid} with data-receive="${key}" to: bitty-js ${this.dataset.uuid}`);
     this.#receivers.push({
+      key: key,
+      f: (data) => {
+        try {
+          this.widget[`${key}`](el, data);
+        } catch (error) {
+          // TODO: Add custom error call here
+          console.error(error);
+          console.error(`Tried: ${key}`);
+        }
+      },
+    });
+  }
+
+  addWatcher(key, el) {
+    solo(`Adding watcher for: ${el.constructor.name} ${el.dataset.uuid} with data-watch="${key}" to: bitty-js ${this.dataset.uuid}`);
+    this.#watchers.push({
       key: key,
       f: (data) => {
         try {
@@ -318,9 +361,27 @@ class BittyJs extends HTMLElement {
     event.stopPropagation();
   }
 
-  mutationCallback(_mutationList, _observer) {
-    this.setIds();
-    this.loadReceivers();
+  // TODO: Verify this mutation observer catches
+  // new elements that are added as strings inside
+  // .innerHTML calls
+  handleMutations(mutationList, _observer) {
+    for (const mutation of mutationList) {
+      if (mutation.type === "childList") {
+        for (const addedNode of mutation.addedNodes) {
+          if (addedNode.dataset) {
+            if (addedNode.dataset.call || addedNode.dataset.receive || addedNode.dataset.send || addedNode.dataset.watch) {
+              solo("Caught change in node list through mutation observer. Updating IDs, receivers, and watchers");
+              this.setIds();
+              this.loadReceivers();
+              this.loadWatchers();
+              // Only need one hit to run the processes
+              // so return after seeing the first one
+              return;
+            }
+          }
+        }
+      }
+    }
   }
 
   init() {
@@ -344,6 +405,7 @@ class BittyJs extends HTMLElement {
       this.append(skeleton.content.cloneNode(true));
       this.setIds();
       this.loadReceivers();
+      this.loadWatchers();
     }
     // TODO: Probably deprecate this in favor of 
     // issuing a data-call from the bitty-js 
@@ -355,11 +417,20 @@ class BittyJs extends HTMLElement {
       this.widget.init();
     }
 
-    this.observerConfig = { attributes: false, childList: true, subtree: true };
-    this.observer = new MutationObserver(
-      () => {this.mutationCallback.call(this)});
-    this.observer.observe(this, this.observerConfig);
+    // TODO: Remove this if it's not necessary
+    // for watchers at the individual element
+    // level (it was originally for a single
+    // watcher at the bitty-js elemenet level)
+    // GOAL: Identify signals to watch from 
+    // child elements to allow sending signals
+    // up the tree
+    // if (this.dataset.watch) {
+    //   this.#watch = this.dataset.watch.split("|");
+    // }
 
+    this.observerConfig = { childList: true, subtree: true };
+    this.observer = new MutationObserver(this.watchMutations);
+    this.observer.observe(this, this.observerConfig);
 
     if (this.dataset.call !== undefined) {
       this.runFunctions(this.dataset.call, null);
@@ -379,7 +450,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   loadReceivers() {
     debug("loading receivers");
     this.#receivers = [];
@@ -387,6 +457,17 @@ class BittyJs extends HTMLElement {
     els.forEach((el) => {
       el.dataset.receive.split("|").forEach((key) => {
         this.addReceiver(key, el);
+      });
+    });
+  }
+
+  loadWatchers() {
+    solo("loading watchers");
+    this.#watchers = [];
+    const els = this.querySelectorAll(`[data-watch]`);
+    els.forEach((el) => {
+      el.dataset.watch.split("|").forEach((key) => {
+        this.addWatcher(key, el);
       });
     });
   }
@@ -402,8 +483,19 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  // TODO: confirm 'data' is really an 'event' and rename it
   sendUpdates(updates, data) {
     updates.split("|").forEach((key) => {
+      // Forward the event up the tree as a
+      // `bittysignal`. 
+      const signalForwarder = new CustomEvent("bittysignal", {
+        bubbles: true,
+        detail: {
+          name: key,
+          event: data,
+        }
+      });
+      this.parentElement.dispatchEvent(signalForwarder);
       this.#receivers.forEach((receiver) => {
         if (receiver.key === key) {
           receiver.f(data);
@@ -412,9 +504,8 @@ class BittyJs extends HTMLElement {
     });
   }
 
-
   setIds() {
-    const selector = [ "call", "receive", "send"]
+    const selector = [ "call", "receive", "send", "watch"]
       .map((key) => {
         return `[data-${key}]`;
       })

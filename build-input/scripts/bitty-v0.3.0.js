@@ -23,7 +23,7 @@ function solo(payload, el = null) {
   // this or its line number
   if (window && window.location && window.location.search) {
     const params = new URLSearchParams(window.location.search);
-    if (params.has("solo")) {
+    if (params.has("solo") || params.has("debug")) {
       console.log(payload);
       if (el !== null) {
         console.log(el);
@@ -177,7 +177,7 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(key, el) {
-    debug(`Adding receiver for: ${el.constructor.name} ${el.type} ${el.dataset.uuid} with data-receive="${key}" to: bitty-js ${this.dataset.uuid}`);
+    debug(`Adding receiver for: ${el.constructor.name} ${el.dataset.uuid} with data-receive="${key}" to: bitty-js ${this.dataset.uuid}`);
     this.#receivers.push({
       key: key,
       f: (data) => {
@@ -367,10 +367,25 @@ class BittyJs extends HTMLElement {
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
+        // TODO: Verify this remove node watcher removes
+        // receivers and watchers properly.
+        for (const removedNode of mutation.removedNodes) {
+          if (removedNode.dataset) {
+            if (removedNode.dataset.call || removedNode.dataset.receive || removedNode.dataset.send || removedNode.dataset.watch) {
+              debug("Caught removed node through mutation observer. Updating IDs, receivers, and watchers");
+              this.setIds();
+              this.loadReceivers();
+              this.loadWatchers();
+              // Only need one hit to run the processes
+              // so return after seeing the first one
+              return;
+            }
+          }
+        }
         for (const addedNode of mutation.addedNodes) {
           if (addedNode.dataset) {
             if (addedNode.dataset.call || addedNode.dataset.receive || addedNode.dataset.send || addedNode.dataset.watch) {
-              solo("Caught change in node list through mutation observer. Updating IDs, receivers, and watchers");
+              debug("Caught new node through mutation observer. Updating IDs, receivers, and watchers");
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();

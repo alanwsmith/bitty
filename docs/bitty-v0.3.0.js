@@ -381,12 +381,9 @@ class BittyJs extends HTMLElement {
       });
     }
     if (this.dataset.send !== undefined) {
-      // TODO: Update this send with the 
-      // fake event with the `.target` 
-      // that's the bitty-js element itself
-      // the same way the runFunctions()
-      // call works above. 
-      this.sendUpdates(this.dataset.send, null);
+      this.sendUpdates(this.dataset.send, {
+        target: this
+      });
     }
     // TODO: See about moving this up above the
     // this.dataset.call and this.dataset.send 

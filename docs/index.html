@@ -97,7 +97,7 @@ Use the build-site.rs script to generate it
   <p>
     <strong>bitty-js</strong> uses a signaling approach 
     powered by <strong>data-*</strong> attributes. For example, 
-    this is the timestamp demo's HTML:
+    here's the timestamp demo's HTML:
   </p>
 
   <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/timestamp-demo.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
@@ -116,13 +116,13 @@ Use the build-site.rs script to generate it
 
     <li>
       The <strong>data-send</strong> attribute tells the 
-      button to send the <strong>update</strong> signal when 
+      <strong>button</strong> to send the <strong>update</strong> signal when 
       its clicked.
     </li>
 
     <li>
       The <strong>data-receive</strong> attribute registers
-      the div as a receiver for the <strong>update</strong> signal.
+      the <strong>div</strong> as a receiver for the <strong>update</strong> signal.
     </li>
   </ul>
 
@@ -140,8 +140,8 @@ Use the build-site.rs script to generate it
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span>  </code></pre>
 
   <p>
-    The <strong>updateTimestamp</strong> function is triggered every
-    time the <strong>updateTimestamp</strong> signal is sent. 
+    The <strong>updateTimestamp</strong> function handles
+    the <strong>updateTimestamp</strong> signal. 
     It runs once for each element with the 
     <strong>data-receive=&quot;updateTimestamp&quot;</strong> attribute. 
   </p>
@@ -164,13 +164,12 @@ Use the build-site.rs script to generate it
     with the timestamp text.
   </p>
 
-
-
+  <h4>As Simple As I Can Make It</h4>
 
   <p>
-    The design is intentonally minimal. The goal 
-    being to provide a concise foundation then get out
-    of the way. 
+    The fundamental design goal of <strong>bitty-js</strong> is to make
+    it as easy as possible to add reactive content web pages. It's
+    a single file web component written with vanilla JavaScript. 
   </p>
 
 </details>
@@ -317,7 +316,7 @@ three. Here's another look at its HTML:</p>
 </details> 
 
 <details>
-  <summary>Core Examples</summary>
+  <summary>Basic Examples</summary>
 
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
     <h3>Basic Send&#x2f;Receive</h3>
@@ -739,6 +738,78 @@ signals.</li>
 mechanisms. They send their
 change events through the signals just
 like regular events.</li>
+</ul></div>
+  </div>
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>Using Radio Buttons</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js 
+    data-module="modules/using-radio-buttons.js"
+    data-send="update">
+    <div>
+        <label for="radio-button-alfa">Alfa</label>
+        <input 
+            id="radio-button-alfa" 
+            type="radio" 
+            name="using-radio-buttons" 
+            value="Alfa"
+            data-send="update"
+            checked />
+        <label for="radio-button-bravo">Bravo</label>
+        <input 
+            id="radio-button-bravo"
+            type="radio" 
+            name="using-radio-buttons"
+            value="Bravo"
+            data-send="update" />
+    </div>
+    <div data-receive="init|update"></div>
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/using-radio-buttons.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio-button-alfa</span><span style="color:#c0c5ce;">&quot;&gt;Alfa&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio-button-alfa</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">using-radio-buttons</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">value</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Alfa</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">checked</span><span style="color:#c0c5ce;"> /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">label </span><span style="color:#d08770;">for</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio-button-bravo</span><span style="color:#c0c5ce;">&quot;&gt;Bravo&lt;/</span><span style="color:#bf616a;">label</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">input</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#8fa1b3;">id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio-button-bravo</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">radio</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">using-radio-buttons</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">value</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Bravo</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot; /&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">init|update</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    #value = null;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.nodeName </span><span style="color:#c0c5ce;">=== &quot;</span><span style="color:#a3be8c;">BITTY-JS</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">checkEl </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">document.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#eff1f5;">(</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">[name=using-radio-buttons]:checked</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            );</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">checkEl</span><span style="color:#eff1f5;">.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        } </span><span style="color:#b48ead;">else </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.value;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Current Selection: </span><span style="color:#eff1f5;">${</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.#</span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"><ul>
+<li>TKTKTK</li>
 </ul></div>
   </div>
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">

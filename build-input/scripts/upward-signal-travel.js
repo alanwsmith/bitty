@@ -6,16 +6,17 @@ export class Parent {
     update(el, _event) {
         this.#value += 1;
         el.innerHTML = 
-            `${this.#value} - Parent caught update at ${Date.now()}`;
+            `Parent is ${this.#value} at ${Date.now()}`;
     }
 }
 
 export class Child {
     #value = 0;
 
-    update(el, _event) {
+    update(el, event) {
         this.#value += 1;
+        const name = event.target.dataset.name;
         el.innerHTML = 
-        `${this.#value} - Child clicked at ${Date.now()}`;
+            `${name} is ${this.#value} at ${Date.now()}`;
     }
 }

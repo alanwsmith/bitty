@@ -154,6 +154,7 @@ class BittyJs extends HTMLElement {
     } else {
       this.requestUpdate = this.handleChange.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
+      this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
       this.loadWatchers();
       this.init();
@@ -168,12 +169,9 @@ class BittyJs extends HTMLElement {
       });
     });
 
-    // this.addEventListener("bittysignal", (data) => {
-    //   if (this.#watch.includes(data.detail.name)) {
-    //     this.sendUpdates(data.detail.name, data.detail.event);
-    //   }
-    // });
-
+    this.addEventListener("bittysignal", (payload) => {
+      this.updateWatchers.call(this, payload);
+    });
   }
 
   addReceiver(key, el) {
@@ -399,6 +397,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  handleWatchers(payload) { 
+    if (payload.detail === undefined || payload.detail.name === undefined || payload.detail.event === undefined) {
+      solo("Missing even from handleWatchers payload");
+      return;
+    }
+    this.updateWatcher(payload.detail.name, payload.detail.event);
+  }
+
   init() {
     // TODO: Probably rename this to `this.widget.bitty`
     // so it has that name instead of bridge when
@@ -477,7 +483,7 @@ class BittyJs extends HTMLElement {
   }
 
   loadWatchers() {
-    solo("loading watchers");
+    debug("loading watchers");
     this.#watchers = [];
     const els = this.querySelectorAll(`[data-watch]`);
     els.forEach((el) => {
@@ -540,6 +546,15 @@ class BittyJs extends HTMLElement {
     debug(`Setting bitty-js ID to: ${uuid}`);
     this.dataset.uuid = uuid;
   }
+
+  updateWatcher(key, event) {
+    this.#watchers.forEach((watcher) => {
+      if (watcher.key === key) {
+        watcher.f(event);
+      }
+    });
+  }
+
 
   /*
   // TODO: Deprecate after completing 0.3.00

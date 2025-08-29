@@ -1,0 +1,94 @@
+<details>
+  <summary>Overview</summary>
+
+  <p><strong>bitty-js</strong> is a web component. It provides reactive functionality. 
+  For example, this &quot;Click Me&quot; button 
+  displays a numeric timestamp.</p>
+
+  <div
+    class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
+  >
+  [!- autoescape false !]
+    [@ data.misc_html["timestamp-demo.html"].raw @]
+  [!- endautoescape !]
+  </div>
+
+  <p>
+    <strong>bitty-js</strong> uses a signaling approach 
+    powered by <strong>data-*</strong> attributes. For example, 
+    this is the timestamp demo's HTML:
+  </p>
+
+  <pre class="code-block large-block-margin"><code>
+  [!- autoescape false !]
+  [@- data.misc_html["timestamp-demo.html"].highlighted -@]
+  [!- endautoescape -!]</code></pre>
+
+  <ul>
+    <li>
+      The <strong>data-module</strong> attribute 
+      makes the connection to the JavaScript module responsible for 
+      providing functionality.
+    </li>
+
+    <li>
+      The <strong>data-send</strong> attribute tells the 
+      button to send the <strong>update</strong> signal when 
+      its clicked.
+    </li>
+
+    <li>
+      The <strong>data-receive</strong> attribute registers
+      the div as a receiver for the <strong>update</strong> signal.
+    </li>
+  </ul>
+
+  <h4>Signal Functions</h4>
+
+  <p>
+    Signals map to functions by name. For example, here's the
+    <strong>timestamp-demo.js</strong> file:
+  </p>
+
+  <pre class="code-block large-block-margin"><code>
+  [!- autoescape false !]
+  [@- data.example_scripts["timestamp-demo.js"].highlighted -@]
+  [!- endautoescape !]
+  </code></pre>
+
+  <p>
+    The <strong>updateTimestamp</strong> function is triggered every
+    time the <strong>updateTimestamp</strong> signal is sent. 
+    It runs once for each element with the 
+    <strong>data-receive=&quot;updateTimestamp&quot;</strong> attribute. 
+  </p>
+
+  <p>Signal functions receive two arguments: </p>
+
+  <ol>
+    <li>
+      An element with the corresponding <strong>data-receive</strong>
+      attribute
+    </li>
+    <li>
+      The event that triggered the signal
+    </li>
+  </ol>
+
+  <p>
+    The event is ignored in the timestamp demo. The receiving
+    <strong>div</strong> simply has its <strong>innerHTML</strong> updated 
+    with the timestamp text.
+  </p>
+
+
+
+
+  <p>
+    The design is intentonally minimal. The goal 
+    being to provide a concise foundation then get out
+    of the way. 
+  </p>
+
+</details>
+

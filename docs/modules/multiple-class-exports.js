@@ -6,8 +6,8 @@ export default class {
   }
 }
 
-export class ExtraClass {
+export class AlternativeClass {
   update(el, _event) {
-    el.innerHTML = `Extra Class at ${Date.now()}`;
+    el.innerHTML = `Alternative Class at ${Date.now()}`;
   }
 }

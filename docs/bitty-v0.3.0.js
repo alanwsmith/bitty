@@ -215,10 +215,10 @@ class BittyJs extends HTMLElement {
       } 
       console.log(scrubbedPath);
       const mod = await import(scrubbedPath);
-      if (this.dataset.connection === undefined) {
+      if (this.dataset.use === undefined) {
         this.widget = new mod.default();
       } else {
-        this.widget = new mod[this.dataset.connection]();
+        this.widget = new mod[this.dataset.use]();
       }
     } else {
       this.error(2);

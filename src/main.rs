@@ -124,7 +124,7 @@ impl Payload {
     }
 
     pub fn load_example_scripts(&mut self) -> Result<()> {
-        for file in get_files(&PathBuf::from("docs/scripts"), "js")?.iter() {
+        for file in get_files(&PathBuf::from("docs/modules"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
             let scrubbed = raw.trim().replace("// deno-fmt-ignore-file\n", "");
@@ -136,15 +136,21 @@ impl Payload {
     }
 }
 
+
 fn main() -> Result<()> {
     copy_dir(
-        &PathBuf::from("build-input/scripts"),
-        &PathBuf::from("docs/scripts"),
+        &PathBuf::from("build-input/modules"),
+        &PathBuf::from("docs/modules"),
+    )?;
+    copy_dir(
+        &PathBuf::from("build-input/bitty-versions"),
+        &PathBuf::from("docs"),
     )?;
     output_content()?;
     println!("done");
     Ok(())
 }
+
 
 fn output_content() -> Result<()> {
     let payload = Payload::new()?;

@@ -32,6 +32,7 @@ function solo(payload, el = null) {
   }
 }
 
+
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
@@ -45,7 +46,6 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     // TODO: Verify `async` on connectedCallback
     // works across browsers.
-    //
     this.setParentId();
     this.setIds();
     await this.attachWidget();
@@ -202,7 +202,19 @@ class BittyJs extends HTMLElement {
 
   async attachWidget() {
     if (this.dataset.bridge) {
-      const mod = await import(this.dataset.bridge);
+      // TODO: Document the scrubbed path
+      // which means you don't have to add a 
+      // dot in front of relative file paths
+      // (which would otherwise be required). 
+      // And that absolute paths still work. 
+      // TODO: Verify this works with `../`
+      // relative paths. 
+      let scrubbedPath = this.dataset.bridge;
+      if (scrubbedPath.substring(0, 2) !== "./" && scrubbedPath.substring(0, 1) !== "/") {
+        scrubbedPath = `./${scrubbedPath}`;
+      } 
+      console.log(scrubbedPath);
+      const mod = await import(scrubbedPath);
       if (this.dataset.connection === undefined) {
         this.widget = new mod.default();
       } else {

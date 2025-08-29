@@ -413,6 +413,9 @@ class BittyJs extends HTMLElement {
     // connection? or maybe something else that's
     // more descriptive?
     this.widget.bridge = this;
+
+
+    // NOTE: DEPRECATE when v0.3.0 launches
     // TODO: Probably deprecate this template process.
     // The expecation being that the page itself is
     // responsible for setting things up.
@@ -420,23 +423,26 @@ class BittyJs extends HTMLElement {
     // calls into a single thing so there's 
     // less overhead. Also, better to use
     // a template element regardless
-    if (this.widget.template !== undefined) {
-      const skeleton = document.createElement("template");
-      skeleton.innerHTML = this.widget.template();
-      this.append(skeleton.content.cloneNode(true));
-      this.setIds();
-      this.loadReceivers();
-      this.loadWatchers();
-    }
+    // if (this.widget.template !== undefined) {
+    //   const skeleton = document.createElement("template");
+    //   skeleton.innerHTML = this.widget.template();
+    //   this.append(skeleton.content.cloneNode(true));
+    //   this.setIds();
+    //   this.loadReceivers();
+    //   this.loadWatchers();
+    // }
+
+
+    // NOTE: DEPRECATE when v0.3.0 launches
     // TODO: Probably deprecate this in favor of 
     // issuing a data-call from the bitty-js 
     // element. That's more visible, explicit, 
     // and requires less mental overhead.
     // TODO: Actually, probably remove init()
     // and just use class constrotor methods
-    if (this.widget.init !== undefined) {
-      this.widget.init();
-    }
+    // if (this.widget.init !== undefined) {
+    //   this.widget.init();
+    // }
 
     // TODO: Remove this if it's not necessary
     // for watchers at the individual element

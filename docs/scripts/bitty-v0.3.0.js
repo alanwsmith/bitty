@@ -350,11 +350,13 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-    if (event.target.dataset.call !== undefined) {
-      this.runFunctions(event.target.dataset.call, event);
-    }
-    if (event.target.dataset.send !== undefined) {
-      this.sendUpdates(event.target.dataset.send, event);
+    if (event.target.nodeName !== "BITTY-JS") {
+      if (event.target.dataset.call !== undefined) {
+        this.runFunctions(event.target.dataset.call, event);
+      }
+      if (event.target.dataset.send !== undefined) {
+        this.sendUpdates(event.target.dataset.send, event);
+      }
     }
     event.stopPropagation();
   }
@@ -406,6 +408,8 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
+    solo(`Init at ${Date.now()}`);
+
     // TODO: Probably rename this to `this.widget.bitty`
     // so it has that name instead of bridge when
     // addressed from inside modules. 
@@ -460,9 +464,19 @@ class BittyJs extends HTMLElement {
     this.observer.observe(this, this.observerConfig);
 
     if (this.dataset.call !== undefined) {
-      this.runFunctions(this.dataset.call, null);
+      // this fakes an event with only 
+      // a '.target' that contains the 
+      // bitty-js element itself.
+      this.runFunctions(this.dataset.call, {
+        target: this
+      });
     }
     if (this.dataset.send !== undefined) {
+      // TODO: Update this send with the 
+      // fake event with the `.target` 
+      // that's the bitty-js element itself
+      // the same way the runFunctions()
+      // call works above. 
       this.sendUpdates(this.dataset.send, null);
     }
     // TODO: See about moving this up above the

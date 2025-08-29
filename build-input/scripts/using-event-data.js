@@ -2,6 +2,6 @@
 
 export default class {
   update(el, event) {
-    el.innerHTML = `Event type: ${event.type}`;
+    el.innerHTML = `${event.type} event at ${Date.now()}`;
   }
 }

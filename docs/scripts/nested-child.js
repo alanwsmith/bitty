@@ -3,8 +3,11 @@
 export default class {
   #value = 0;
 
-  updateChild(el, _event) {
+  increment(_event) {
     this.#value += 1;
+  }
+
+  updateNested(el, _event) {
     el.innerHTML = this.#value;
   }
 }

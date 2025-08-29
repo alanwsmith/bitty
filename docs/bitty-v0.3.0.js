@@ -201,7 +201,7 @@ class BittyJs extends HTMLElement {
   }
 
   async attachWidget() {
-    if (this.dataset.bridge) {
+    if (this.dataset.module) {
       // TODO: Document the scrubbed path
       // which means you don't have to add a 
       // dot in front of relative file paths
@@ -209,7 +209,7 @@ class BittyJs extends HTMLElement {
       // And that absolute paths still work. 
       // TODO: Verify this works with `../`
       // relative paths. 
-      let scrubbedPath = this.dataset.bridge;
+      let scrubbedPath = this.dataset.module;
       if (scrubbedPath.substring(0, 2) !== "./" && scrubbedPath.substring(0, 1) !== "/") {
         scrubbedPath = `./${scrubbedPath}`;
       } 

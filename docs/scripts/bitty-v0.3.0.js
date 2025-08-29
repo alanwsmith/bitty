@@ -408,8 +408,6 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
-    solo(`Init at ${Date.now()}`);
-
     // TODO: Probably rename this to `this.widget.bitty`
     // so it has that name instead of bridge when
     // addressed from inside modules. 

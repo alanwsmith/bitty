@@ -66,7 +66,7 @@ Use the build-site.rs script to generate it
 -->    </header>
     <main class="default-wrapper default-flow">
       <hgroup>
-        <h1>bitty.js</h1>
+        <h1>bitty-js</h1>
         <div class="hgroup-flex">
           <div class="small-font accent-faded">
             tiny component. big reactivity.
@@ -90,37 +90,40 @@ Use the build-site.rs script to generate it
 
 -->
 
-<p>bitty is a web component. It provides reactivity to the elements
-it surrounds. For example, this &quot;Click me&quot; button updates 
-the text with a numeric timestamp.</p>
+<p><strong>bitty-js</strong> is a web component. It provides reactive functionality. 
+For example, this &quot;Click Me&quot; button 
+displays a numeric timestamp.</p>
 
 <div
   class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
->  <bitty-js data-bridge="./hello-text.js">
-  <button data-send="update">Click me</button>
+>  <bitty-js data-bridge="./timestamp-demo.js">
+  <button data-send="update">Click Me</button>
   <div data-receive="update">Waiting for click</div>
-</bitty-js></div>
+</bitty-js>
+
+<script type="module" src="scripts/bitty-v0.3.0.js"></script></div>
 
 <p>
-  bitty uses a signaling approach.
-  <code>data-*</code> attributes define the 
-  signals elements send and receive.  Here's
-  the HTML:
+  <strong>bitty-js</strong> uses a signaling approach with
+  <code>data-*</code> attributes. They define what 
+  signals are sent and received. For example, here's
+  the HTML for the timestamp demo:
 </p>
 
-<pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./hello-text.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Click me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./timestamp-demo.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">src</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">scripts/bitty-v0.3.0.js</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
 
-<p>and the corresponding <code>hello-text.js</code> JavaScript:</p>
+<p>Here's the <code>timestamp-demo.js</code> file:</p>
 
 <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Clicked at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
-
 
 <h3>How It Works</h3>
 
@@ -1078,7 +1081,6 @@ in its process.</p>
       <pre class="code-block"><code><span class="codeLine"></span>
 <span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        console.</span><span style="color:#96b5b4;">log</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&#39;</span><span style="color:#a3be8c;">loadTempalte</span><span style="color:#c0c5ce;">&#39;</span><span style="color:#eff1f5;">);</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">template </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">template</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">template</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span></span>
 <span class="codeLine"><span style="color:#a3be8c;">&lt;button data-send=&quot;update&quot; data-receive=&quot;update&quot;&gt;Click Me&lt;/button&gt;</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
@@ -1724,7 +1726,10 @@ Use the build-site.rs script to generate it
 
 -->
  
+<!--
 <script type="module" src="scripts/bitty-v0.3.0.js"></script>
+-->
+
 <script type="module" src="components/github-stars-beta-1.js"></script>
 <script type="module">
   class DetailsWatcher {

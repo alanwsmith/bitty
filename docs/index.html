@@ -201,7 +201,7 @@ the text with a numeric timestamp.</p>
       the funciton that's used for the signal.
     </p>
     <p>
-      Only used by the child element.
+      Only used by child elements.
     <p>
   </li>
   <li>
@@ -220,6 +220,16 @@ the text with a numeric timestamp.</p>
       itself or any child elements.
     <p>
   </li>
+  <li>
+    <p>
+      <code>data-watch</code> - Watching for signals coming
+      from below the element so signals can be set up
+      the DOM tree as well as down.
+    </p>
+    <p>
+      Only used by child elements.
+    <p>
+  </li>
 </ul>
 
 <p>
@@ -228,8 +238,6 @@ the text with a numeric timestamp.</p>
   The Examples below provide more documentation
   and details on how bitty works.
 </p>
-
-
  
 
 <details>
@@ -1443,6 +1451,89 @@ by default. This is how to send
 them up the tree:</li>
 </ul>
 <p>TKTKTK</p></div>
+  </div>
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>Global Data</h3>
+    <div class="make-two-columns warning-border-faded default-radius xlarge-block-margin">
+<bitty-js 
+  data-bridge="./global-data.js"
+  data-connection="Parent"
+  data-send="update">
+
+  <div data-watch="update" data-receive="update"></div>
+
+  <div>
+    <bitty-js 
+      data-bridge="./global-data.js"
+      data-connection="Child">
+      <button
+        data-call="increment"
+        data-send="update">Increment</button>
+    </bitty-js>
+
+    <bitty-js 
+      data-bridge="./global-data.js"
+      data-connection="Child">
+      <button
+        data-call="decrement"
+        data-send="update">Decrement</button>
+    </bitty-js>
+  </div>
+
+</bitty-js></div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./global-data.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Parent</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-watch</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./global-data.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Child</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">increment</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Increment&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-bridge</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">./global-data.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      </span><span style="color:#d08770;">data-connection</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">Child</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">      &lt;</span><span style="color:#bf616a;">button</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-call</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">decrement</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;Decrement&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+    </div>
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">globalState </span><span style="color:#c0c5ce;">= {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    value: </span><span style="color:#d08770;">0</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Parent </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">update</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.innerHTML =</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            `</span><span style="color:#a3be8c;">Value: </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">globalState</span><span style="color:#c0c5ce;">.value}`;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">class Child </span><span style="color:#c0c5ce;">{</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">decrement</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">globalState</span><span style="color:#c0c5ce;">.value -= </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">increment</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">globalState</span><span style="color:#c0c5ce;">.value += </span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span></code></pre>
+    </div>    
+    <div class="xlarge-block-margin"></div>
   </div>
  <!-- 
 

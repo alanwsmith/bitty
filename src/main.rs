@@ -147,7 +147,7 @@ fn main() -> Result<()> {
         &PathBuf::from("docs"),
     )?;
     output_content()?;
-    println!("done");
+    println!("\n------------------------\nSITE GENERATION SUCCEDED\n------------------------\n");
     Ok(())
 }
 

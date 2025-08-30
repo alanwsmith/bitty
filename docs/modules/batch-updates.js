@@ -1,5 +1,7 @@
 // deno-fmt-ignore-file
 
+// TODO: Deprecate this
+
 export default class {
 
   #number = 75;

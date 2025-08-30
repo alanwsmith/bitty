@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
-  #listeners = ["change", "click", "input"]; 
+  #listeners = ["click", "input"]; 
   #receivers = [];
   #watchers = [];
 

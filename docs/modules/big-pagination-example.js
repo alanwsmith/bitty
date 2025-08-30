@@ -11,71 +11,79 @@ export default class {
 
     changeDistance(event) {
         if (event.type === "input") {
-            this.#distance = 
-                parseInt(event.target.value, 10);
+            this.#distance = parseInt(event.target.value, 10);
         }
     }
 
+    currentPage() {
+        return 1 + Math.floor(this.#firstAnimal / this.#distance);
+    }
+
     next(_event) {
-        if (this.#firstAnimal 
-            + this.#distance 
-            < list.length) {
-            this.#firstAnimal = 
-                Math.min(
-                    list.length, 
-                    this.#firstAnimal 
-                    + this.#distance
-                );
+        if (this.#firstAnimal + this.#distance < list.length) {
+            this.#firstAnimal = Math.min(list.length, this.#firstAnimal + this.#distance);
+        }
+    }
+
+    pageButtonText(currentNum) {
+        if (this.currentPage() === currentNum) {
+            return "-";
+        } else {
+            return currentNum;
         }
     }
 
     previous(_event) {
-        this.#firstAnimal = 
-            Math.max(
-                0, 
-                this.#firstAnimal      
-                - this.#distance
-            );
+        this.#firstAnimal = Math.max(0, this.#firstAnimal - this.#distance);
+    }
+
+    totalPages() {
+        return Math.ceil(list.length / this.#distance);
     }
 
     update(el, _event) {
-        if (el.dataset.name === "display") {
-            const lastAnimalIndex = 
-                Math.min(
-                    list.length, 
-                    this.#firstAnimal 
-                    + this.#distance
-                );
-            const pageAnimals = [];
-            for (
-                let animalIndex = 
-                    this.#firstAnimal;
-                animalIndex < lastAnimalIndex;
-                animalIndex += 1) {
-                    pageAnimals.push(
-                        list[animalIndex]
-                    );
-                }
-            el.innerHTML = pageAnimals.join(" ");
-        } 
-        
-        if (el.dataset.name === "previous") {
-            if (this.#firstAnimal === 0) {
-                el.innerHTML = "-"
-            } else {
-                el.innerHTML = "Previous"
-            }
-        } 
+        ////////////////////////////////////////////
+        console.log(el.dataset.name);
+        console.log(this.currentPage());
 
+        if (el.dataset.name === "display") {
+            this.updateDisplay(el);
+        } 
         if (el.dataset.name === "next") {
-            if (
-                this.#firstAnimal 
-                + this.#distance 
-                >= list.length) {
-                el.innerHTML = "-"
-            } else {
-                el.innerHTML = "Next"
-            }
+            this.updateNext(el);
         }
+        if (el.dataset.name === "pages") {
+            this.updatePageButtons(el);
+        } 
+        if (el.dataset.name === "previous") {
+            this.updatePrevious(el);
+        } 
     }
+
+    updateDisplay(el) {
+        const lastAnimalIndex = Math.min(list.length, this.#firstAnimal + this.#distance);
+        const pageAnimals = [];
+        for (let animalIndex =  this.#firstAnimal; animalIndex < lastAnimalIndex; animalIndex += 1) {
+            pageAnimals.push(list[animalIndex]);
+        }
+        el.innerHTML = pageAnimals.join(" ");
+    }
+
+    updateNext(el) {
+        el.innerHTML = this.#firstAnimal + this.#distance >= list.length ? "-" : "Next";
+     }
+
+     updatePageButtons(el) {
+        el.innerHTML = "";
+        for (let buttonIndex = 1; buttonIndex <= this.totalPages(); buttonIndex ++) {
+            const pageButton = document.createElement("button");
+            pageButton.innerHTML = this.pageButtonText(buttonIndex);
+            pageButton.classList.add("page-button");
+            el.appendChild(pageButton);
+        }
+     }
+
+     updatePrevious(el) {
+        el.innerHTML = this.#firstAnimal === 0 ? "-" : "Previous";
+     }
 }

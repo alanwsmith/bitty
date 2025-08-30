@@ -14,13 +14,19 @@ Use the build-site.rs script to generate it
   <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>bitty.js</title>
+
+<title>bitty-js: a tiny component for reactive web pages</title>
+<meta property="og:title" content="bitty-js: a tiny component for reactive web pages" />
+
 <link rel="shortcut icon" href="/favicons/favicon.ico" />
-<meta property="og:title" content="bitty.js" />
+
+
+<meta name="description" content="A tiny web component designed for progressive enhancement that adds reactivity to web pages." />
 <meta
   property="og:description"
-  content="a single component for reactive elements"
+  content="A tiny web component designed for progressive enhancement that adds reactivity to web pages."
 />
+
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
 <meta
@@ -46,24 +52,21 @@ Use the build-site.rs script to generate it
 />
 <link rel="manifest" href="/favicons/site.webmanifest" />
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5" />
-<meta name="description" content="a single component for reactive elements" />
 <link rel="stylesheet" href="/styles/main.css" />  </head>
 
   <body>
     <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
 <div class="header-flex-2">
   <div>made by <a href="https://www.alanwsmith.com/">alan w smith</a></div>
-  <a href="https://github.com/alanwsmith/bitty-js">source</a>
+  <a href="https://github.com/alanwsmith/bitty-js">source code</a>
   <a href="https://links.alanwsmith.com/">other projects</a>
   <a href="https://socials.alanwsmith.com/">socials</a>
 </div>
-<!--
 <github-stars
   :repo="alanwsmith/bitty-js"
   :text-color="var(--accent-faded)"
   :background-color="var(--background)"
-></github-stars>
--->    </header>
+></github-stars>    </header>
     <main class="default-wrapper default-flow">
       <hgroup>
         <h1>bitty-js</h1>
@@ -71,7 +74,7 @@ Use the build-site.rs script to generate it
           <div class="small-font accent-faded">
             tiny component. big reactivity.
             <br>
-            version: 0.3.0
+            current version: beta-0.3.0 | next version: 1.0
           </div>
         </div>
       </hgroup>
@@ -81,110 +84,277 @@ Use the build-site.rs script to generate it
 <details>
   <summary>Overview</summary>
 
-  <p><strong>bitty-js</strong> is a web component. It provides reactive functionality. 
-  For example, this &quot;Click Me&quot; button 
-  displays a numeric timestamp.</p>
+  <p><strong>bitty-js</strong> is a web component. It makes reactive web pages. 
+  For example:</p>
 
   <div
     class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
   >    <bitty-js data-module="modules/timestamp-demo.js">
-  <button data-send="updateTimestamp">Click Me</button>
-  <div data-receive="updateTimestamp">Waiting for click</div>
+  <button data-send="update">
+    Display Milliseond Timestamp
+  </button>
+  <div data-receive="update">
+    Waiting for click
+  </div>
 </bitty-js>
 
 <script type="module" src="bitty-v0.3.0.js"></script>  </div>
 
   <p>
-    <strong>bitty-js</strong> uses a signaling approach 
-    powered by <strong>data-*</strong> attributes. For example, 
-    here's the timestamp demo's HTML:
+    The <strong>bitty-js API</strong> uses <strong>data-*</strong> attributes:
   </p>
 
   <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/timestamp-demo.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateTimestamp</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateTimestamp</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    Display Milliseond Timestamp</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    Waiting for click</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">src</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">bitty-v0.3.0.js</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
 
   <ul>
     <li>
-      The <strong>data-module</strong> attribute 
-      makes the connection to the JavaScript module responsible for 
-      providing functionality.
+      <strong>data-module</strong> 
+      connects to the file responsible for functionality.
     </li>
 
     <li>
-      The <strong>data-send</strong> attribute tells the 
-      <strong>button</strong> to send the <strong>update</strong> signal when 
-      its clicked.
+      <strong>data-send</strong> tells the 
+      <strong>button</strong> to send an <strong>update</strong> signal.
     </li>
 
     <li>
-      The <strong>data-receive</strong> attribute registers
-      the <strong>div</strong> as a receiver for the <strong>update</strong> signal.
+      <strong>data-receive</strong> registers
+      the <strong>div</strong> to react to <strong>update</strong> signals.
     </li>
   </ul>
 
-  <h4>Signal Functions</h4>
+  <h4>Functionality</h4>
 
   <p>
-    Signals map to functions by name. For example, here's the
-    <strong>timestamp-demo.js</strong> file:
+    <strong>bitty-js</strong> uses the values from 
+    <strong>data-send</strong> and <strong>data-receive</strong>
+    to map to functions with the same name.
   </p>
 
   <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">updateTimestamp</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Clicked at </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">  </span><span style="color:#8fa1b3;">update</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= `</span><span style="color:#a3be8c;">Millisecond: </span><span style="color:#eff1f5;">${</span><span style="color:#ebcb8b;">Date</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">now</span><span style="color:#eff1f5;">()}</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">;</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">  }</span></span>
 <span class="codeLine"><span style="color:#eff1f5;">}</span></span>  </code></pre>
 
-  <p>
-    The <strong>updateTimestamp</strong> function handles
-    the <strong>updateTimestamp</strong> signal. 
-    It runs once for each element with the 
-    <strong>data-receive=&quot;updateTimestamp&quot;</strong> attribute. 
-  </p>
-
-  <p>Signal functions receive two arguments: </p>
-
-  <ol>
+  <ul>
     <li>
-      An element with the corresponding <strong>data-receive</strong>
-      attribute
+      The <strong>update</strong> function handles signals from 
+      elements with <strong>data-send=&quot;update&quot;</strong>.
     </li>
     <li>
-      The event that triggered the signal
+      Element with <strong>data-receive=&quot;update&quot;</strong>
+      are processed by the <strong>update</strong> function.
+    </li>
+  </ul>
+
+  <p>The two arguments passed to a <strong>bitty-js function</strong> are:</p>
+  <ol>
+    <li>
+      The element to update
+    </li>
+    <li>
+      The event that triggered the update
     </li>
   </ol>
 
   <p>
-    The event is ignored in the timestamp demo. The receiving
-    <strong>div</strong> simply has its <strong>innerHTML</strong> updated 
-    with the timestamp text.
+    The event is ignored in the timestamp demo. The 
+    <strong>div</strong> element has its <strong>innerHTML</strong> updated 
+    with the timestamp.
   </p>
 
   <h4>As Simple As I Can Make It</h4>
 
   <p>
-    The fundamental design goal of <strong>bitty-js</strong> is to make
-    it as easy as possible to add reactive content web pages. It's
-    a single file web component written with vanilla JavaScript. 
+    The goal of <strong>bitty-js</strong> is to make
+    reactive pages with as little friction as possible. To wit,
+    <strong>bitty-js</strong> is:
   </p>
+
+  <ul>
+    <li>A single file web component</li>
+    <li>Written in vanilla JavaScript</li>
+    <li>Powered by standard HTML attributes</li>
+    <li>Designed for progressive enhancement</li>
+  </ul>
+
+  <h4>Feedback Requested</h4>
+  <p>
+    <strong>bitty-js</strong> is curently <strong>beta version 0.3.0</strong>. 
+    The API is stable. Aside from bug fixes, it will become <strong>version 1.0</strong>. 
+    Play around with it. Let me know if you find bugs or show-stoppers.
+  </p>
+
+  <h4>Happy Coding</h4>
+
+  <p>
+    A lot of thought and effort went into <strong>bitty-js</strong>. 
+
+    I'm really proud of where it ended up. I hope you enjoy it as much as I do.
+  </p>
+
+  <p>-a</p>
 
 </details>
  
 
 <details>
-<summary>How It Works</summary>
+    <summary>Bookshelf JavaScript Data Example</summary>    <bitty-js data-module="modules/big-bookshelf-javascript-data-example.js" 
+    data-send="showBooks">
+    <div data-receive="showBook|showBooks"></div>
+</bitty-js>
+
+
+    <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/big-bookshelf-javascript-data-example.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBooks</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBook|showBooks</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+
+    <pre class="code-block large-block-margin"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">templates </span><span style="color:#c0c5ce;">= {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    bookForShowBooks: `</span><span style="color:#a3be8c;">&lt;div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">    &lt;button class=&quot;book-title&quot; data-send=&quot;showBook&quot;&gt;&lt;/button&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    showBook: `</span><span style="color:#a3be8c;">&lt;div class=&quot;book-title&quot;&gt;&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;by &lt;span class=&quot;author-first-name&quot;&gt;&lt;/span&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;span class=&quot;author-last-name&quot;&gt;&lt;/span&gt;&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;&lt;span class=&quot;page-count&quot;&gt;&lt;/span&gt; pages&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;p class=&quot;book-notes&quot;&gt;&lt;/p&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">    &lt;button class=&quot;view-books&quot; data-send=&quot;showBooks&quot;&gt;View All Books&lt;/button&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    showBooks: `</span><span style="color:#a3be8c;">&lt;div&gt;Book List&lt;/div&gt;&lt;div id=&quot;book-list&quot;&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    #books = {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        &quot;1bcc8077&quot;: {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            title: &quot;Neuromancer&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            shortTitle: &quot;Neuromancer&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            sortKey: &quot;Neuromancer&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            author: [&quot;William&quot;, &quot;Gibson&quot;],</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            pages: 271,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            notes: &quot;My discovery of cyberpunk and how much I&#39;m into it.&quot;,</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">75d7c22f</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            title: &quot;</span><span style="color:#a3be8c;">On Writing: A Memoir of the Craft</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">shortTitle</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">On Writing</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">sortKey</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">On Writing</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">Stephen</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">King</span><span style="color:#c0c5ce;">&quot;],</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">288</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">notes</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">Required reading for anyone who writes.</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        },</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">ab9d8b45</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            title: &quot;</span><span style="color:#a3be8c;">The Diamond Age: Or, A Young Lady&#39;s Illustrated Primer</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">shortTitle</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">The Diamond Age</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">sortKey</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">Diamond Age, The</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">Neal</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">Stephenson</span><span style="color:#c0c5ce;">&quot;],</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">455</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">notes</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">The Primer is pretty much my vision for my grimoire.</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        },</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">de4ae65f</span><span style="color:#c0c5ce;">&quot;: {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            title: &quot;</span><span style="color:#a3be8c;">Dune</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">shortTitle</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">Dune</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">sortKey</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">Dune</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">Frank</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">Herbert</span><span style="color:#c0c5ce;">&quot;],</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">412</span><span style="color:#c0c5ce;">,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">notes</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">One of the few books I&#39;ve read multiple times. And the best movie adaptation I&#39;ve ever seen.</span><span style="color:#c0c5ce;">&quot;,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        },</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    };</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#c0c5ce;">() {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates = {};</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">for </span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">templateId </span><span style="color:#c0c5ce;">in </span><span style="color:#bf616a;">templates</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">newTemplate </span><span style="color:#c0c5ce;">= document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">template</span><span style="color:#c0c5ce;">&quot;);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">newTemplate</span><span style="color:#c0c5ce;">.innerHTML = </span><span style="color:#bf616a;">templates</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">] = </span><span style="color:#bf616a;">newTemplate</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">].content.</span><span style="color:#96b5b4;">cloneNode</span><span style="color:#c0c5ce;">(</span><span style="color:#d08770;">true</span><span style="color:#c0c5ce;">);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">makeBookForBookList</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">bookForShowBooks</span><span style="color:#c0c5ce;">&quot;);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-title</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">[</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">].shortTitle;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-title</span><span style="color:#c0c5ce;">&quot;).dataset.id = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">[</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showBook</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">showBook</span><span style="color:#c0c5ce;">&quot;);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">book </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">.target.dataset.id];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-title</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">.title;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.author-first-name</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">.author[</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.author-last-name</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">.author[</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">];</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.page-count</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">.pages;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-notes</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">.notes;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showBooks</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">showBooks</span><span style="color:#c0c5ce;">&quot;);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">list </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">#book-list</span><span style="color:#c0c5ce;">&quot;);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">for </span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">book </span><span style="color:#c0c5ce;">of </span><span style="color:#ebcb8b;">Object</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">entries</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">).</span><span style="color:#8fa1b3;">toSorted</span><span style="color:#c0c5ce;">(</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            (a,b) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">a</span><span style="color:#c0c5ce;">[</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">].sortKey.</span><span style="color:#8fa1b3;">localeCompare</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">b</span><span style="color:#c0c5ce;">[</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">].sortKey)</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        )) {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">list</span><span style="color:#c0c5ce;">.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">makeBookForBookList</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">book</span><span style="color:#c0c5ce;">));</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>    </code></pre>
+
+    <details>
+        <ul>
+            <li>
+                This is a basic bookshelf example. Dealing with multiple authors
+                and authors that have something other than a first and last name
+                are out of scope. 
+            </li>
+            <li>
+                The example doesn't save state across page refreshes. 
+            </li>
+        </ul>
+    </details>
+
+</details>
+ 
+
+
+<details>
+<summary>How bitty-js Works</summary>
 
 <p>The <strong>bitty-js</strong> API is comprised of seven
 <code>data-*</code> attributes. The timestamp demo uses
 three. Here's another look at its HTML:</p>
 
 <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/timestamp-demo.js</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateTimestamp</span><span style="color:#c0c5ce;">&quot;&gt;Click Me&lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">updateTimestamp</span><span style="color:#c0c5ce;">&quot;&gt;Waiting for click&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">button </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    Display Milliseond Timestamp</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">button</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">update</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    Waiting for click</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
 <span class="codeLine"></span>
 <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">src</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">bitty-v0.3.0.js</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
@@ -212,10 +382,10 @@ three. Here's another look at its HTML:</p>
 </details> 
 
 <details>
-<summary>The data-* Attributes</summary>
+<summary>The bitty-js data-* Attributes API</summary>
 
   <p>
-    The bitty API is comprised of N <code>data-*</code> attributes.
+    The bitty-js API is comprised of seven <code>data-*</code> attributes.
     They are:
   </p>
 
@@ -227,8 +397,7 @@ three. Here's another look at its HTML:</p>
         to any signals being sent. 
       </p>
       <p>
-        Can be used in either the <code>bitty-js</code> element
-        itself or any child elements.
+        <em>Can be used by <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em>
       <p>
     </li>
 
@@ -240,7 +409,7 @@ three. Here's another look at its HTML:</p>
         and <code>change</code>.)
       </p>
       <p>
-        Only used by the <code>bitty-js</code> element itself. 
+        <em>Can only be used by <strong>bitty-js elements</strong>.</em>
       <p>
     </li>
 
@@ -251,8 +420,7 @@ three. Here's another look at its HTML:</p>
         the bitty-js component and its elements.
       </p>
       <p>
-        Only used by the <code>bitty-js</code> element
-        itself.
+        <em>Can only be used by <strong>bitty-js elements</strong>.</em>
       <p>
     </li>
 
@@ -263,7 +431,7 @@ three. Here's another look at its HTML:</p>
         the funciton that's used for the signal.
       </p>
       <p>
-        Only used by child elements.
+        <em>Can only be used by <strong>child elements</strong>.</em>
       <p>
     </li>
     <li>
@@ -278,19 +446,19 @@ three. Here's another look at its HTML:</p>
         fires. 
       </p>
       <p>
-        Can be used in either the <code>bitty-js</code> element
-        itself or any child elements.
+        <em>Can be used by <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em>
       <p>
     </li>
-
 
     <li>
       <p>
         <strong>data-use</strong> - for using alternaive
-        classes exported from the modules
+        classes exported from the modules.
+      <p>
+      <p>
+        <em>Can only be used by <strong>bitty-js elements</strong>.</em>
       <p>
     </li>
-
 
     <li>
       <p>
@@ -299,19 +467,10 @@ three. Here's another look at its HTML:</p>
         the DOM tree as well as down.
       </p>
       <p>
-        Only used by child elements.
+        <em>Can only be used by <strong>child elements</strong>.</em>
       <p>
     </li>
   </ul>
-
-<!--
-  <p>
-    bitty is really just wiring between elements and
-    functions in the module called by <code>data-bridge</code>.
-    The Examples below provide more documentation
-    and details on how bitty works.
-  </p>
--->
 
 </details> 
 
@@ -2149,143 +2308,6 @@ Add them back in if you need them. For example:</p>
     </details>
 </details> 
 
-<details>
-    <summary>Bookshelf Example</summary>    <bitty-js 
-    class="bookshelf-example"
-    data-module="modules/big-bookshelf-example.js" 
-    data-send="viewBooks">
-
-    <div data-name="display" data-receive="viewBook|viewBooks"></div>
-
-    <div data-name="controls" data-receive="viewBook|viewBooks"></div>
-
-</bitty-js>
-
-    <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">bookshelf-example</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/big-bookshelf-example.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">viewBooks</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">display</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">viewBook|viewBooks</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-name</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">controls</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">viewBook|viewBooks</span><span style="color:#c0c5ce;">&quot;&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
-
-    <pre class="code-block large-block-margin"><code><span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">rawTemplates </span><span style="color:#c0c5ce;">= {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    viewBookControls: `</span><span style="color:#a3be8c;">&lt;button class=&quot;view-books&quot; data-send=&quot;viewBooks&quot;&gt;View All Books&lt;/button&gt;</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    viewBookDisplay: `</span><span style="color:#a3be8c;">&lt;div class=&quot;book-title&quot;&gt;&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;by &lt;span class=&quot;author-first-name&quot;&gt;&lt;/span&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;span class=&quot;author-last-name&quot;&gt;&lt;/span&gt;&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;&lt;span class=&quot;page-count&quot;&gt;&lt;/span&gt; pages&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    viewBooksBook: `</span><span style="color:#a3be8c;">&lt;div&gt;&lt;span class=&quot;book-title&quot;&gt;&lt;/span&gt; -</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;button class=&quot;view-book&quot; data-send=&quot;viewBook&quot;&gt;view&lt;/button&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;button class=&quot;edit-book&quot;&gt;edit&lt;/button&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;button class=&quot;delete-book&quot;&gt;delete&lt;/button&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    viewBooksControls: `</span><span style="color:#a3be8c;">&lt;button class=&quot;add-book&quot;&gt;Add Book&lt;/button&gt;</span><span style="color:#c0c5ce;">`,</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    viewBooksDisplay: `</span><span style="color:#a3be8c;">&lt;div&gt;Book List&lt;/div&gt;</span></span>
-<span class="codeLine"><span style="color:#a3be8c;">&lt;div id=&quot;book-list&quot;&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#eff1f5;">    #books = {</span></span>
-<span class="codeLine"><span style="color:#eff1f5;">        &quot;25d7c22f&quot;: { title: &quot;On Writing&quot;, author: [&quot;Stephen&quot;, &quot;King&quot;], pages: 288 }</span><span style="color:#c0c5ce;">,</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">4bcc8077</span><span style="color:#c0c5ce;">&quot;: { title: &quot;</span><span style="color:#a3be8c;">Neuromancer</span><span style="color:#c0c5ce;">&quot;, </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">William</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">Gibson</span><span style="color:#c0c5ce;">&quot;], </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">271 </span><span style="color:#c0c5ce;">},</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">fe4ae65f</span><span style="color:#c0c5ce;">&quot;: { title: &quot;</span><span style="color:#a3be8c;">Dune</span><span style="color:#c0c5ce;">&quot;, </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">Frank</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">Herbert</span><span style="color:#c0c5ce;">&quot;], </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">412 </span><span style="color:#c0c5ce;">},</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &quot;</span><span style="color:#a3be8c;">ab9d8b45</span><span style="color:#c0c5ce;">&quot;: { title: &quot;</span><span style="color:#a3be8c;">The Diamond Age</span><span style="color:#c0c5ce;">&quot;, </span><span style="color:#bf616a;">author</span><span style="color:#c0c5ce;">: [&quot;</span><span style="color:#a3be8c;">Neal</span><span style="color:#c0c5ce;">&quot;, &quot;</span><span style="color:#a3be8c;">Stephenson</span><span style="color:#c0c5ce;">&quot;], </span><span style="color:#bf616a;">pages</span><span style="color:#c0c5ce;">: </span><span style="color:#d08770;">455 </span><span style="color:#c0c5ce;">},</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    };</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#c0c5ce;">() {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates = {};</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">for </span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">templateId </span><span style="color:#c0c5ce;">in </span><span style="color:#bf616a;">rawTemplates</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">newTemplate </span><span style="color:#c0c5ce;">= document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">template</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">newTemplate</span><span style="color:#c0c5ce;">.innerHTML = </span><span style="color:#bf616a;">rawTemplates</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">];</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">] = </span><span style="color:#bf616a;">newTemplate</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        console.</span><span style="color:#96b5b4;">log</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.templates[</span><span style="color:#bf616a;">templateId</span><span style="color:#c0c5ce;">].content.</span><span style="color:#96b5b4;">cloneNode</span><span style="color:#c0c5ce;">(</span><span style="color:#d08770;">true</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">makeBookEl</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">bookData</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">viewBooksBook</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-title</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">bookData</span><span style="color:#c0c5ce;">.title;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.view-book</span><span style="color:#c0c5ce;">&quot;).dataset.id = </span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showViewBookControls</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">viewBookControls</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showViewBookDisplay</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">viewBookDisplay</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">bookId </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">.target.dataset.id;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.book-title</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">].title;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.author-first-name</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">].author[</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">];</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.author-last-name</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">].author[</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">];</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">.page-count</span><span style="color:#c0c5ce;">&quot;).innerHTML = </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">].pages;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showViewBooksControls</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">viewBooksControls</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">showViewBooksDisplay</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">_event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">wrapper </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">loadTemplate</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">viewBooksDisplay</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">list </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#c0c5ce;">(&quot;</span><span style="color:#a3be8c;">#book-list</span><span style="color:#c0c5ce;">&quot;);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">for </span><span style="color:#c0c5ce;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">bookId </span><span style="color:#c0c5ce;">in </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">list</span><span style="color:#c0c5ce;">.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">makeBookEl</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.#</span><span style="color:#bf616a;">books</span><span style="color:#c0c5ce;">[</span><span style="color:#bf616a;">bookId</span><span style="color:#c0c5ce;">]));</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">wrapper</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">viewBook</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">controls</span><span style="color:#c0c5ce;">&quot;) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">showViewBookControls</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">display</span><span style="color:#c0c5ce;">&quot;) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">showViewBookDisplay</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#8fa1b3;">viewBooks</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">controls</span><span style="color:#c0c5ce;">&quot;) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">showViewBooksControls</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">.dataset.name === &quot;</span><span style="color:#a3be8c;">display</span><span style="color:#c0c5ce;">&quot;) {</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            </span><span style="color:#bf616a;">this</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">showViewBooksDisplay</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">el</span><span style="color:#c0c5ce;">, </span><span style="color:#bf616a;">event</span><span style="color:#c0c5ce;">);</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    }</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>    </code></pre>
-
-    <details>
-        <ul>
-            <li>
-                This is a basic bookshelf example. Dealing with multiple authors
-                and authors that have something other than a first and last name
-                are out of scope. 
-            </li>
-            <li>
-                The example doesn't save state across page refreshes. 
-            </li>
-        </ul>
-    </details>
-
-</details>
- 
 
 
 

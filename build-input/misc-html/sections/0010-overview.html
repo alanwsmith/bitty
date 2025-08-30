@@ -1,9 +1,8 @@
 <details>
   <summary>Overview</summary>
 
-  <p><strong>bitty-js</strong> is a web component. It provides reactive functionality. 
-  For example, this &quot;Click Me&quot; button 
-  displays a numeric timestamp.</p>
+  <p><strong>bitty-js</strong> is a web component. It makes reactive web pages. 
+  For example:</p>
 
   <div
     class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
@@ -14,9 +13,7 @@
   </div>
 
   <p>
-    <strong>bitty-js</strong> uses a signaling approach 
-    powered by <strong>data-*</strong> attributes. For example, 
-    here's the timestamp demo's HTML:
+    The <strong>bitty-js API</strong> uses <strong>data-*</strong> attributes:
   </p>
 
   <pre class="code-block large-block-margin"><code>
@@ -26,28 +23,27 @@
 
   <ul>
     <li>
-      The <strong>data-module</strong> attribute 
-      makes the connection to the JavaScript module responsible for 
-      providing functionality.
+      <strong>data-module</strong> 
+      connects to the file responsible for functionality.
     </li>
 
     <li>
-      The <strong>data-send</strong> attribute tells the 
-      <strong>button</strong> to send the <strong>update</strong> signal when 
-      its clicked.
+      <strong>data-send</strong> tells the 
+      <strong>button</strong> to send an <strong>update</strong> signal.
     </li>
 
     <li>
-      The <strong>data-receive</strong> attribute registers
-      the <strong>div</strong> as a receiver for the <strong>update</strong> signal.
+      <strong>data-receive</strong> registers
+      the <strong>div</strong> to react to <strong>update</strong> signals.
     </li>
   </ul>
 
-  <h4>Signal Functions</h4>
+  <h4>Functionality</h4>
 
   <p>
-    Signals map to functions by name. For example, here's the
-    <strong>timestamp-demo.js</strong> file:
+    <strong>bitty-js</strong> uses the values from 
+    <strong>data-send</strong> and <strong>data-receive</strong>
+    to map to functions with the same name.
   </p>
 
   <pre class="code-block large-block-margin"><code>
@@ -56,38 +52,64 @@
   [!- endautoescape !]
   </code></pre>
 
-  <p>
-    The <strong>updateTimestamp</strong> function handles
-    the <strong>updateTimestamp</strong> signal. 
-    It runs once for each element with the 
-    <strong>data-receive=&quot;updateTimestamp&quot;</strong> attribute. 
-  </p>
-
-  <p>Signal functions receive two arguments: </p>
-
-  <ol>
+  <ul>
     <li>
-      An element with the corresponding <strong>data-receive</strong>
-      attribute
+      The <strong>update</strong> function handles signals from 
+      elements with <strong>data-send=&quot;update&quot;</strong>.
     </li>
     <li>
-      The event that triggered the signal
+      Element with <strong>data-receive=&quot;update&quot;</strong>
+      are processed by the <strong>update</strong> function.
+    </li>
+  </ul>
+
+  <p>The two arguments passed to a <strong>bitty-js function</strong> are:</p>
+  <ol>
+    <li>
+      The element to update
+    </li>
+    <li>
+      The event that triggered the update
     </li>
   </ol>
 
   <p>
-    The event is ignored in the timestamp demo. The receiving
-    <strong>div</strong> simply has its <strong>innerHTML</strong> updated 
-    with the timestamp text.
+    The event is ignored in the timestamp demo. The 
+    <strong>div</strong> element has its <strong>innerHTML</strong> updated 
+    with the timestamp.
   </p>
 
   <h4>As Simple As I Can Make It</h4>
 
   <p>
-    The fundamental design goal of <strong>bitty-js</strong> is to make
-    it as easy as possible to add reactive content web pages. It's
-    a single file web component written with vanilla JavaScript. 
+    The goal of <strong>bitty-js</strong> is to make
+    reactive pages with as little friction as possible. To wit,
+    <strong>bitty-js</strong> is:
   </p>
+
+  <ul>
+    <li>A single file web component</li>
+    <li>Written in vanilla JavaScript</li>
+    <li>Powered by standard HTML attributes</li>
+    <li>Designed for progressive enhancement</li>
+  </ul>
+
+  <h4>Feedback Requested</h4>
+  <p>
+    <strong>bitty-js</strong> is curently <strong>beta version 0.3.0</strong>. 
+    The API is stable. Aside from bug fixes, it will become <strong>version 1.0</strong>. 
+    Play around with it. Let me know if you find bugs or show-stoppers.
+  </p>
+
+  <h4>Happy Coding</h4>
+
+  <p>
+    A lot of thought and effort went into <strong>bitty-js</strong>. 
+
+    I'm really proud of where it ended up. I hope you enjoy it as much as I do.
+  </p>
+
+  <p>-a</p>
 
 </details>
 

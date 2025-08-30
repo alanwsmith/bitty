@@ -1,5 +1,5 @@
 export default class {
-  updateTimestamp(el, _event) {
-    el.innerHTML = `Clicked at ${Date.now()}`;
+  update(el, _event) {
+    el.innerHTML = `Millisecond: ${Date.now()}`;
   }
 }

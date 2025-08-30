@@ -32,6 +32,7 @@ export default class {
     }
 
     assemble(template, data) {
+        // console.log(data);
         const content  = this.loadTemplate(template);
         const dataIdEl = content.querySelector(`[data-id]`);
         if (dataIdEl) {
@@ -51,10 +52,9 @@ export default class {
             books = {};
             const rawBooks = el.querySelectorAll("li");
             [...rawBooks].forEach((rawBook) => {
-                const book = {};
-                // const book = {
-                //     id: rawBook.dataset.id
-                // };
+                const book = {
+                    id: rawBook.dataset.id
+                };
                 const fields = rawBook.querySelectorAll("[data-key]");
                 [...fields].forEach((field) => {
                     const key = field.dataset.key;
@@ -62,7 +62,6 @@ export default class {
                     book[key] = value;
                 });
                 books[rawBook.dataset.id] = book;
-                // return book;
             });
             // books.sort(
             //     (a,b) => a.sortKey.localeCompare(b.sortKey)
@@ -75,19 +74,12 @@ export default class {
         return this.templates[templateId].content.cloneNode(true);
     }
 
-    // makeBookForBookList(book) {
-    //     const content = this.loadTemplate("bookForShowBooks");
-    //     // wrapper.querySelector(".book-title").innerHTML = book[1].shortTitle;
-    //     // wrapper.querySelector(".book-title").dataset.id = book[0];
-    //     return content;
-    // }
-
     showBook(el, event) {
         console.log(event.target.dataset.id);
         const book = books[event.target.dataset.id];
         console.log(book);
-        // const content = this.assemble("showBook", book);
-        // el.replaceChidren(content);
+        const content = this.assemble("showBook", book);
+        el.replaceChildren(content);
 
         // const wrapper = this.loadTemplate("showBook");
         // const book = this.#books[event.target.dataset.id];
@@ -106,11 +98,20 @@ export default class {
         this.loadBooks(el);
         const content = this.loadTemplate("showBooks");
         const list = content.querySelector("#book-list");
+
+        for (const book of Object.entries(books).toSorted(
+            (a,b) => a[1].sortKey.localeCompare(b[1].sortKey)
+        )) {
+            // console.log(book);
+            list.appendChild(this.assemble("bookForShowBooks", book[1]));
+        }
+
         // books.forEach((book) => {
         //     list.appendChild(
         //         this.assemble("bookForShowBooks", book)
         //     );
         // });
+
         el.replaceChildren(content);
     }
 }

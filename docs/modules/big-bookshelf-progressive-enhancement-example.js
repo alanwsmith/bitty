@@ -2,7 +2,7 @@
 
 const templates = {
     bookForShowBooks: `<div>
-    <button data-key="shortTitle" data-send="showBook"></button>
+    <button data-id="" data-key="shortTitle" data-send="showBook"></button>
     by <span data-key="lastName"></span>
 </div>`,
 
@@ -12,12 +12,14 @@ const templates = {
 <div><span data-key="pageCount"></span> pages</div>
 <p class="notes"></p>
 <div>
-    <button class="view-books" data-send="showBooks">View All Books</button>
+    <button data-send="showBooks">View All Books</button>
 </div>
 `,
 
     showBooks: `<div id="book-list"></div>`,
 }
+
+let books = null;
 
 export default class {
     constructor() {
@@ -29,10 +31,12 @@ export default class {
         }
     }
 
-    #books = null;
-
     assemble(template, data) {
         const content  = this.loadTemplate(template);
+        const dataIdEl = content.querySelector(`[data-id]`);
+        if (dataIdEl) {
+            dataIdEl.dataset.id = data.id;
+        }
         for (const key of Object.keys(data)) {
             const el = content.querySelector(`[data-key=${key}]`);
             if (el) {
@@ -43,58 +47,70 @@ export default class {
     }
 
     loadBooks(el) {
-        if (this.#books === null) {
+        if (books === null) {
+            books = {};
             const rawBooks = el.querySelectorAll("li");
-            this.#books = [...rawBooks].map((rawBook) => {
+            [...rawBooks].forEach((rawBook) => {
                 const book = {};
+                // const book = {
+                //     id: rawBook.dataset.id
+                // };
                 const fields = rawBook.querySelectorAll("[data-key]");
                 [...fields].forEach((field) => {
                     const key = field.dataset.key;
                     const value = field.innerHTML;
                     book[key] = value;
                 });
-                return book;
+                books[rawBook.dataset.id] = book;
+                // return book;
             });
-            this.#books.sort(
-                (a,b) => a.sortKey.localeCompare(b.sortKey)
-            );
+            // books.sort(
+            //     (a,b) => a.sortKey.localeCompare(b.sortKey)
+            // );
         }
+        console.log(books);
     }
 
     loadTemplate(templateId) {
         return this.templates[templateId].content.cloneNode(true);
     }
 
-    makeBookForBookList(book) {
-        const content = this.loadTemplate("bookForShowBooks");
-        // wrapper.querySelector(".book-title").innerHTML = book[1].shortTitle;
-        // wrapper.querySelector(".book-title").dataset.id = book[0];
-        return content;
-    }
+    // makeBookForBookList(book) {
+    //     const content = this.loadTemplate("bookForShowBooks");
+    //     // wrapper.querySelector(".book-title").innerHTML = book[1].shortTitle;
+    //     // wrapper.querySelector(".book-title").dataset.id = book[0];
+    //     return content;
+    // }
 
     showBook(el, event) {
-        const wrapper = this.loadTemplate("showBook");
-        const book = this.#books[event.target.dataset.id];
-        for (const key of Object.keys(book)) {
-            console.log(key);
-        }
-        // wrapper.querySelector(".book-title").innerHTML = book.title;
-        // wrapper.querySelector(".author-first-name").innerHTML = book.author[0];
-        // wrapper.querySelector(".author-last-name").innerHTML = book.author[1];
-        // wrapper.querySelector(".page-count").innerHTML = book.pages;
-        // wrapper.querySelector(".book-notes").innerHTML = book.notes;
-        el.replaceChildren(wrapper);
+        console.log(event.target.dataset.id);
+        const book = books[event.target.dataset.id];
+        console.log(book);
+        // const content = this.assemble("showBook", book);
+        // el.replaceChidren(content);
+
+        // const wrapper = this.loadTemplate("showBook");
+        // const book = this.#books[event.target.dataset.id];
+        // for (const key of Object.keys(book)) {
+        //     console.log(key);
+        // }
+        // // wrapper.querySelector(".book-title").innerHTML = book.title;
+        // // wrapper.querySelector(".author-first-name").innerHTML = book.author[0];
+        // // wrapper.querySelector(".author-last-name").innerHTML = book.author[1];
+        // // wrapper.querySelector(".page-count").innerHTML = book.pages;
+        // // wrapper.querySelector(".book-notes").innerHTML = book.notes;
+        // el.replaceChildren(wrapper);
     }
 
     showBooks(el, _event) {
         this.loadBooks(el);
         const content = this.loadTemplate("showBooks");
         const list = content.querySelector("#book-list");
-        this.#books.forEach((book) => {
-            list.appendChild(
-                this.assemble("bookForShowBooks", book)
-            );
-        });
+        // books.forEach((book) => {
+        //     list.appendChild(
+        //         this.assemble("bookForShowBooks", book)
+        //     );
+        // });
         el.replaceChildren(content);
     }
 }

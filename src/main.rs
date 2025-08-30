@@ -139,12 +139,16 @@ impl Payload {
 
 fn main() -> Result<()> {
     copy_dir(
+        &PathBuf::from("build-input/bitty-versions"),
+        &PathBuf::from("docs"),
+    )?;
+    copy_dir(
         &PathBuf::from("build-input/modules"),
         &PathBuf::from("docs/modules"),
     )?;
     copy_dir(
-        &PathBuf::from("build-input/bitty-versions"),
-        &PathBuf::from("docs"),
+        &PathBuf::from("build-input/styles"),
+        &PathBuf::from("docs/styles"),
     )?;
     output_content()?;
     println!("\n------------------------\nSITE GENERATION SUCCEDED\n------------------------\n");

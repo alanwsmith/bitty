@@ -19,17 +19,14 @@ export default class {
         return 1 + Math.floor(this.#firstAnimal / this.#distance);
     }
 
+    goToPage(event) {
+        const targetPage = parseInt(event.target.dataset.page, 10);
+        this.#firstAnimal = (targetPage - 1) * this.#distance;
+    }
+
     next(_event) {
         if (this.#firstAnimal + this.#distance < list.length) {
             this.#firstAnimal = Math.min(list.length, this.#firstAnimal + this.#distance);
-        }
-    }
-
-    pageButtonText(currentNum) {
-        if (this.currentPage() === currentNum) {
-            return "-";
-        } else {
-            return currentNum;
         }
     }
 
@@ -37,15 +34,21 @@ export default class {
         this.#firstAnimal = Math.max(0, this.#firstAnimal - this.#distance);
     }
 
+    setPageButtonDataset(el, buttonNumber) {
+        el.dataset.page = buttonNumber;
+        el.dataset.call = "goToPage";
+        el.dataset.send = "update";
+    }
+
+    setPageButtonText(el, buttonNumber) {
+        el.innerHTML = this.currentPage() === buttonNumber ? "-" : buttonNumber;
+    }
+
     totalPages() {
         return Math.ceil(list.length / this.#distance);
     }
 
     update(el, _event) {
-        ////////////////////////////////////////////
-        console.log(el.dataset.name);
-        console.log(this.currentPage());
-
         if (el.dataset.name === "display") {
             this.updateDisplay(el);
         } 
@@ -73,11 +76,12 @@ export default class {
         el.innerHTML = this.#firstAnimal + this.#distance >= list.length ? "-" : "Next";
      }
 
-     updatePageButtons(el) {
+    updatePageButtons(el) {
         el.innerHTML = "";
-        for (let buttonIndex = 1; buttonIndex <= this.totalPages(); buttonIndex ++) {
+        for (let buttonNumber = 1; buttonNumber <= this.totalPages(); buttonNumber ++) {
             const pageButton = document.createElement("button");
-            pageButton.innerHTML = this.pageButtonText(buttonIndex);
+            this.setPageButtonText(pageButton, buttonNumber);
+            this.setPageButtonDataset(pageButton, buttonNumber);
             pageButton.classList.add("page-button");
             el.appendChild(pageButton);
         }

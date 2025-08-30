@@ -49,7 +49,6 @@ export default class {
     }
 
     update(el, _event) {
-        console.log(`Updating: ${Date.now()}`);
         if (el.dataset.name === "display") {
             this.updateDisplay(el);
         } 

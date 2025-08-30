@@ -49,6 +49,7 @@ export default class {
     }
 
     update(el, _event) {
+        console.log(`Updating: ${Date.now()}`);
         if (el.dataset.name === "display") {
             this.updateDisplay(el);
         } 
@@ -73,7 +74,13 @@ export default class {
     }
 
     updateNext(el) {
-        el.innerHTML = this.#firstAnimal + this.#distance >= list.length ? "-" : "Next";
+        if (this.#firstAnimal + this.#distance < list.length) {
+            el.innerHTML = "Next";
+            el.dataset.send = "update";
+        } else {
+            el.innerHTML = "-";
+            delete el.dataset.send;
+        }
      }
 
     updatePageButtons(el) {
@@ -88,6 +95,12 @@ export default class {
      }
 
      updatePrevious(el) {
-        el.innerHTML = this.#firstAnimal === 0 ? "-" : "Previous";
+        if (this.#firstAnimal - this.#distance >= 0) {
+            el.innerHTML = "Previous";
+            el.dataset.send = "update";
+        } else {
+            el.innerHTML = "-";
+            delete el.dataset.send;
+        }
      }
 }

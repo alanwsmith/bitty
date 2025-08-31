@@ -69,7 +69,9 @@ impl Payload {
             let title = parts[1].to_string();
             let raw_html = initial_html
                 .trim()
-                .replace("<!-- prettier-ignore -->\n", "");
+                .replace("<!-- prettier-ignore -->\n", "")
+                .trim()
+                .to_string();
             let highlighted_html = highlight(&raw_html, "HTML")?;
             // TODO: Handle multiple scripts here when necessary.
             let javascripts = vec![parts[2].to_string()];
@@ -147,7 +149,7 @@ impl Payload {
         for file in get_files(&PathBuf::from("docs/modules"), "js")?.iter() {
             let name = file.file_name().unwrap().display().to_string();
             let raw = fs::read_to_string(file)?;
-            let scrubbed = raw.trim().replace("// deno-fmt-ignore-file\n", "");
+            let scrubbed = raw.trim().replace("// deno-fmt-ignore-file\n", "").trim().to_string();
             let highlighted = highlight(&scrubbed, "JavaScript")?;
             let script = Script { raw, highlighted };
             self.example_scripts.insert(name.clone(), script);

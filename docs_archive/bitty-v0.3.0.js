@@ -10,8 +10,8 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     this.setParentId();
     this.setIds();
-    await this.attachWidget();
-    if (this.widget === undefined) {
+    await this.attachModule();
+    if (this.module === undefined) {
       this.error(0);
     } else {
       this.requestUpdate = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.widget[`${key}`](el, data);
+          this.module[`${key}`](el, data);
         } catch (error) {
           console.error(error); // TODO: Add custom error call here
           console.error(`Tried: ${key}`);
@@ -57,7 +57,7 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.widget[`${key}`](el, data);
+          this.module[`${key}`](el, data);
         } catch (error) {
           console.error(error); // TODO: Add custom error call here
           console.error(`Tried: ${key}`);
@@ -160,7 +160,7 @@ class BittyJs extends HTMLElement {
     super();
   }
 
-  async attachWidget() {
+  async attachModule() {
     if (this.dataset.module) {
       let validModulePath = this.dataset.module;
       if (validModulePath.substring(0, 2) !== "./" && validModulePath.substring(0, 1) !== "/") {
@@ -168,14 +168,28 @@ class BittyJs extends HTMLElement {
       } 
       const mod = await import(validModulePath);
       if (this.dataset.use === undefined) {
-        this.widget = new mod.default();
+        this.module = new mod.default();
       } else {
-        this.widget = new mod[this.dataset.use]();
+        this.module = new mod[this.dataset.use]();
       }
     } else {
       this.error(2);
     }
   }
+
+  // TODO: wire this up
+  doCall(key, el) {
+    console.log("TODO: wire up doCall()");
+  }
+
+  // This is used from modules via:
+  // this.api.send("functionName")
+  // TODO: Make doCall(key) as well
+  doSend(key, event) {
+    // TODO Stub an event if one isn't available
+    this.sendUpdates(key, {});
+  }
+
 
   error(id = 0, el = null, additionalDetails = null) {
     this.classList.add("bitty-component-error");
@@ -264,11 +278,7 @@ class BittyJs extends HTMLElement {
   }
 
   init() {
-    // TODO: Rename this to `this.api.module`
-    // so it has that name instead of bridge when
-    // addressed from inside modules. 
-    this.widget.bridge = this;
-
+    this.module.api = this;
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
@@ -312,7 +322,7 @@ class BittyJs extends HTMLElement {
   runFunctions(stringToSplit, event) {
     stringToSplit.split("|").forEach((f) => {
       try {
-        this.widget[`${f}`](event);
+        this.module[`${f}`](event);
       } catch (error) {
         console.log(error);
         console.error(`Tried: ${f}`);
@@ -402,17 +412,17 @@ class BittyJs extends HTMLElement {
     {
       id: 2,
       kind: [
-        "A <bitty-js></bitty-js> element is missing its 'data-bridge' attribute",
+        "A <bitty-js></bitty-js> element is missing its 'data-module' attribute",
       ],
       description: [
-        `Every <bitty-js></bitty-js> element requires a 'data-bridge' attribute that connects it to a '.js' file that powers its functionality.`,
-        `The 'data-bridge' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
+        `Every <bitty-js></bitty-js> element requires a 'data-module' attribute that connects it to a '.js' file that powers its functionality.`,
+        `The 'data-module' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
         `__UUID__`,
       ],
       help: [
         [
-          `Add a 'data-bridge' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
-          `<bitty-js data-bridge="./path/to/module.js"></bitty-js>`,
+          `Add a 'data-module' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
+          `<bitty-js data-module="./path/to/module.js"></bitty-js>`,
         ],
       ],
       developerNote: [],
@@ -440,20 +450,6 @@ class BittyJs extends HTMLElement {
         [
           `Add a 'data-app' attribute to the <bitty-js> element with the name of a class exported from __MODULE_PATH__.`,
         ],
-      ],
-      developerNote: [],
-    },
-    ,
-    {
-      id: 4,
-      kind: [`Could not load widget`],
-      description: [`The widget could not be loaded from the .js module file.`],
-      help: [
-        [`TODO: Make note here about defauld call to Widget()`],
-        [
-          `Check to make sure the value of the 'data-widget' attribute in your <bitty-js></bitty-js> element matches a class that's exported from the .js file`,
-        ],
-        ["Make sure the class in your .js module file is being exported"],
       ],
       developerNote: [],
     },

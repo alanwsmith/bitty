@@ -3,12 +3,11 @@
 export default class {
 
   init(_el) {
-    console.log(this.bridge);
+    this.api.doSend("updateViaSendFromModule");
   }
 
   updateViaSendFromModule(el, _event) {
-
+    el.innerHTML = "updated from module";
   }
 
 }
-

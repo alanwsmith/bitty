@@ -26,6 +26,25 @@ export default class {
         }
     }
 
+
+// TODO: Chand the template loading to use:
+
+/*
+
+  loadTemplates() {
+    return Object.fromEntries(
+      Object.entries(templates).map(([k,v]) => {
+        const template = document.createElement("template");
+        template.innerHTML = v;
+        return [k, template]
+      })
+    );
+
+*/
+
+
+
+
     assemble(template, data={}) {
         const content  = this.templates[template].content.cloneNode(true);
         if (data.id) {

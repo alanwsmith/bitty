@@ -1,7 +1,7 @@
 #![allow(warnings)]
 use anyhow::Result;
-use bitty_js_builder::helpers;
-use bitty_js_builder::run_server::run_server;
+use bitty_js_builder::support::helpers;
+use bitty_js_builder::support::server::*;
 use chrono::{DateTime, Local};
 use minijinja::path_loader;
 use std::path::PathBuf;
@@ -37,9 +37,10 @@ async fn main() -> Result<()> {
     let livereload = LiveReloadLayer::new();
     let reloader = livereload.reloader();
     let (watcher_tx, watcher_rx) = mpsc::channel::<DateTime<Local>>(32);
-    //let http_handle = tokio::spawn(async move {
-    let _ = run_server(&site.output_root, livereload).await;
-    //});
+
+    let http_handle = tokio::spawn(async move {
+        let _ = run_server(&site.output_root, livereload).await;
+    });
 
     // let site = Site::new(PathBuf::from("build-input"), PathBuf::from("docs"));
     // dbg!(site);

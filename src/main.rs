@@ -25,6 +25,7 @@ struct Example {
 #[derive(Debug, Deserialize, Serialize)]
 struct Payload {
     examples: Vec<Example>,
+    nesting_examples: Vec<Example>,
     example_scripts: BTreeMap<String, Script>,
     // example_html: BTreeMap<String, Html>,
     // example_names: Vec<String>,
@@ -49,9 +50,11 @@ impl Payload {
             examples: vec![],
             example_scripts: BTreeMap::new(),
             misc_html: BTreeMap::new(),
+            nesting_examples: vec![],
         };
         // payload.load_example_html()?;
         payload.load_examples()?;
+        payload.load_nesting_examples()?;
         payload.load_misc_html()?;
         payload.load_example_scripts()?;
         Ok(payload)
@@ -79,20 +82,37 @@ impl Payload {
                 title,
             };
             let _ = &self.examples.push(e);
-
-            //     let name = file.file_name().unwrap().display().to_string();
-            //     let base_name = file.file_stem().unwrap().display().to_string();
-            //     self.example_names.push(base_name);
-            //     let scrubbed = raw.trim().replace("<!-- prettier-ignore -->\n", "");
-            //     let html = Html {
-            //         raw,
-            //         highlighted
-            //     };
-            //     self.example_html.insert(name.clone(), html);
         }
-
         Ok(())
     }
+
+
+    pub fn load_nesting_examples(&mut self) -> Result<()> {
+        for dir in get_dirs(&PathBuf::from("build-input/nesting-examples"))?.iter() {
+            let snippet_file = dir.join("snippet.html");
+            let data = fs::read_to_string(snippet_file)?;
+            let parts: Vec<_> = data.split("<!-- x -->").map(|x| x.trim()).collect();
+            let initial_html = parts[0];
+            let title = parts[1].to_string();
+            let raw_html = initial_html
+                .trim()
+                .replace("<!-- prettier-ignore -->\n", "");
+            let highlighted_html = highlight(&raw_html, "HTML")?;
+            // TODO: Handle multiple scripts here when necessary.
+            let javascripts = vec![parts[2].to_string()];
+            let details = markdown::to_html(&parts[3].to_string());
+            let e = Example {
+                details,
+                highlighted_html,
+                javascripts,
+                raw_html,
+                title,
+            };
+            let _ = &self.nesting_examples.push(e);
+        }
+        Ok(())
+    }
+
 
     // pub fn load_example_html(&mut self) -> Result<()> {
     //     for file in get_files(&PathBuf::from("build-input/example-html"), "html")?.iter() {
@@ -134,6 +154,9 @@ impl Payload {
         }
         Ok(())
     }
+
+
+
 }
 
 

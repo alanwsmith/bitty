@@ -2,7 +2,9 @@
 
 export default class {
   update(el, event) {
-    el.innerHTML = event.target.value;
+    if (event.target.value !== "") {
+      el.innerHTML = event.target.value;
+    }
   }
 }
 

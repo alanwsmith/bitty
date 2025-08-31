@@ -5,6 +5,6 @@ export default class {
 
   update(el, _event) {
     this.#counter += 1;
-    el.innerHTML = this.#counter;
+    el.innerHTML = `--- ${this.#counter} ---`;
   }
 }

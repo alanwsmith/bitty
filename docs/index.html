@@ -155,7 +155,7 @@ Use the build-site.rs script to generate it
       elements with <strong>data-send=&quot;update&quot;</strong>.
     </li>
     <li>
-      Element with <strong>data-receive=&quot;update&quot;</strong>
+      Elements with <strong>data-receive=&quot;update&quot;</strong>
       are processed by the <strong>update</strong> function.
     </li>
   </ul>
@@ -188,8 +188,8 @@ Use the build-site.rs script to generate it
     <li>A single file web component</li>
     <li>Written in vanilla JavaScript</li>
     <li>Powered by standard HTML attributes</li>
-    <li>Stylable via the Light DOM</li>
-    <li>Designed for progressive enhancement</li>
+    <li>Designed for both progressive enhancement and API based content loading</li>
+    <li>Stylable via the light DOM</li>
   </ul>
 
   <h4>Feedback Requested</h4>
@@ -202,9 +202,9 @@ Use the build-site.rs script to generate it
   <h4>Happy Coding</h4>
 
   <p>
-    A lot of thought and effort went into <strong>bitty-js</strong>. All
+    I put a lot of thought and effort into <strong>bitty-js</strong>. All
     of it aimed at making things simpler. I'm really proud of where it ended up.
-    I hope you enjoy it as much as I do.
+    I hope it helps you enjoy making things for the web.
   </p>
 
   <p>-a</p>
@@ -213,7 +213,16 @@ Use the build-site.rs script to generate it
  
 
 <details>
-    <summary>Bookshelf Progressive Enhancement Example</summary>    <bitty-js
+    <summary>Progressive Enhancement Example</summary>
+
+    <h4>The Happy Path</h4>
+
+    <p>
+        This section has two views of a list of books. Here's
+        the first:
+    </p>
+
+    <div>    <bitty-js
     data-module="modules/big-bookshelf-progressive-enhancement-example.js"
     data-send="showBooks"
 >    <div data-receive="showBook|showBooks">
@@ -221,165 +230,384 @@ Use the build-site.rs script to generate it
         <li data-id="1bcc8077">
             <div>
                 <span data-key="title">Neuromancer</span>
-                by <span data-key="firstName">William</span> <span data-key="lastName">Gibson</span>
+                by <span data-key="firstName">William</span> 
+                <span data-key="lastName">Gibson</span>
             </div>
-            <div data-key="notes">My discovery of cyberpunk and how much I'm into it.</div>
-            <div>Page Count: <span data-key="pageCount">271</span></div>
-            <div data-key="shortTitle" hidden>Neuromancer</div>
-            <div data-key="sortKey" hidden>Neuromancer</div>
+            <div data-key="note">
+                My discovery of cyberpunk and how 
+                much I'm into it.
+            </div>
+            <div>
+                Page Count: 
+                <span data-key="pageCount">271</span>
+            </div>
+            <div data-key="shortTitle" hidden>
+                Neuromancer
+            </div>
+            <div data-key="sortKey" hidden>
+                Neuromancer
+            </div>
         </li>
 
         <li data-id="75d7c22f">
             <div>
-                <span data-key="title">On Writing: A Memoir of the Craft</span>
-                by <span data-key="firstName">Stephen</span> <span data-key="lastName">King</span>
+                <span data-key="title">
+                    On Writing: A Memoir of the Craft
+                </span>
+                by <span data-key="firstName">Stephen</span> 
+                <span data-key="lastName">King</span>
             </div>
-            <div data-key="notes">Required reading for anyone who writes.</div>
-            <div>Page Count: <span data-key="pageCount">288</span></div>
-            <div data-key="shortTitle" hidden>On Writing</div>
-            <div data-key="sortKey" hidden>On Writing</div>
+            <div data-key="note">
+                Required reading for anyone who writes.
+            </div>
+            <div>
+                Page Count: 
+                <span data-key="pageCount">288</span>
+            </div>
+            <div data-key="shortTitle" hidden>
+                On Writing
+            </div>
+            <div data-key="sortKey" hidden>
+                On Writing
+            </div>
         </li>
 
         <li data-id="ab9d8b45">
             <div>
-                <span data-key="title">The Diamond Age: Or, A Young Lady's Illustrated Primer</span>
-                by <span data-key="firstName">Neal</span> <span data-key="lastName">Stephenson</span>
+                <span data-key="title">
+                    The Diamond Age: Or, A Young Lady's 
+                    Illustrated Primer
+                </span>
+                by <span data-key="firstName">Neal</span>       
+                <span data-key="lastName">Stephenson</span>
             </div>
-            <div data-key="notes">The Primer is pretty much the goal for my Grimoire.</div>
-            <div>Page Count: <span data-key="pageCount">455</span></div>
-            <div data-key="shortTitle" hidden>The Diamond Age</div>
-            <div data-key="sortKey" hidden>Diamond Age, The</div>
-        </li>
-
-        <li data-id="de4ae65f">
+            <div data-key="note">
+                The Primer is pretty much the goal 
+                for my Grimoire.
+            </div>
             <div>
-                <span data-key="title">Dune</span>
-                by <span data-key="firstName">Frank</span> <span data-key="lastName">Herbert</span>
+                Page Count: 
+                <span data-key="pageCount">455</span>
             </div>
-            <div data-key="notes">One of the few books I've read multiple times. And the best movie adaptation I've ever seen.</div>
-            <div>Page Count: <span data-key="pageCount">412</span></div>
-            <div data-key="shortTitle" hidden>Dune</div>
-            <div data-key="sortKey" hidden>Dune</div>
+            <div data-key="shortTitle" hidden>
+                The Diamond Age
+            </div>
+            <div data-key="sortKey" hidden>
+                Diamond Age, The
+            </div>
         </li>
     </ul>
-</div>    </bitty-js>
+</div>    </bitty-js>    
+    </div>
 
-    <pre class="code-block large-block-margin"><code>    <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/big-bookshelf-progressive-enhancement-example.js</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBooks</span><span style="color:#c0c5ce;">&quot;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
-    <span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBook|showBooks</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">ul</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">1bcc8077</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;Neuromancer&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;William&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt; &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;Gibson&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">notes</span><span style="color:#c0c5ce;">&quot;&gt;My discovery of cyberpunk and how much I&#39;m into it.&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Page Count: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;271&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;Neuromancer&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;Neuromancer&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">75d7c22f</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;On Writing: A Memoir of the Craft&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;Stephen&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt; &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;King&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">notes</span><span style="color:#c0c5ce;">&quot;&gt;Required reading for anyone who writes.&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Page Count: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;288&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;On Writing&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;On Writing&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">ab9d8b45</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;The Diamond Age: Or, A Young Lady&#39;s Illustrated Primer&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;Neal&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt; &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;Stephenson&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">notes</span><span style="color:#c0c5ce;">&quot;&gt;The Primer is pretty much the goal for my Grimoire.&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Page Count: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;455&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;The Diamond Age&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;Diamond Age, The&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">de4ae65f</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;Dune&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;Frank&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt; &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;Herbert&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">notes</span><span style="color:#c0c5ce;">&quot;&gt;One of the few books I&#39;ve read multiple times. And the best movie adaptation I&#39;ve ever seen.&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;Page Count: &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;412&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;Dune&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;Dune&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">ul</span><span style="color:#c0c5ce;">&gt;</span></span>
-<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
-    <span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span>
-</code></pre>
+    <p>
+        The display starts with the list. Each book showing a short
+        version of the title and the author's last name. Clicking
+        the title switches to a detailed view: the
+        complete title, author's full name, page count, and
+        a personal note. 
+    </p>
 
+    <p>
+        At least, that's what you'll get if your browser is running JavaScript
+        and everything is working as expected. If not, you'll get this:
+    </p>
 
-
-
-
-    <h4>This is what it looks like if the component doesn't load</h4>    <div data-receive="showBook|showBooks">
+    <div>    <div data-receive="showBook|showBooks">
     <ul>
         <li data-id="1bcc8077">
             <div>
                 <span data-key="title">Neuromancer</span>
-                by <span data-key="firstName">William</span> <span data-key="lastName">Gibson</span>
+                by <span data-key="firstName">William</span> 
+                <span data-key="lastName">Gibson</span>
             </div>
-            <div data-key="notes">My discovery of cyberpunk and how much I'm into it.</div>
-            <div>Page Count: <span data-key="pageCount">271</span></div>
-            <div data-key="shortTitle" hidden>Neuromancer</div>
-            <div data-key="sortKey" hidden>Neuromancer</div>
+            <div data-key="note">
+                My discovery of cyberpunk and how 
+                much I'm into it.
+            </div>
+            <div>
+                Page Count: 
+                <span data-key="pageCount">271</span>
+            </div>
+            <div data-key="shortTitle" hidden>
+                Neuromancer
+            </div>
+            <div data-key="sortKey" hidden>
+                Neuromancer
+            </div>
         </li>
 
         <li data-id="75d7c22f">
             <div>
-                <span data-key="title">On Writing: A Memoir of the Craft</span>
-                by <span data-key="firstName">Stephen</span> <span data-key="lastName">King</span>
+                <span data-key="title">
+                    On Writing: A Memoir of the Craft
+                </span>
+                by <span data-key="firstName">Stephen</span> 
+                <span data-key="lastName">King</span>
             </div>
-            <div data-key="notes">Required reading for anyone who writes.</div>
-            <div>Page Count: <span data-key="pageCount">288</span></div>
-            <div data-key="shortTitle" hidden>On Writing</div>
-            <div data-key="sortKey" hidden>On Writing</div>
+            <div data-key="note">
+                Required reading for anyone who writes.
+            </div>
+            <div>
+                Page Count: 
+                <span data-key="pageCount">288</span>
+            </div>
+            <div data-key="shortTitle" hidden>
+                On Writing
+            </div>
+            <div data-key="sortKey" hidden>
+                On Writing
+            </div>
         </li>
 
         <li data-id="ab9d8b45">
             <div>
-                <span data-key="title">The Diamond Age: Or, A Young Lady's Illustrated Primer</span>
-                by <span data-key="firstName">Neal</span> <span data-key="lastName">Stephenson</span>
+                <span data-key="title">
+                    The Diamond Age: Or, A Young Lady's 
+                    Illustrated Primer
+                </span>
+                by <span data-key="firstName">Neal</span>       
+                <span data-key="lastName">Stephenson</span>
             </div>
-            <div data-key="notes">The Primer is pretty much the goal for my Grimoire.</div>
-            <div>Page Count: <span data-key="pageCount">455</span></div>
-            <div data-key="shortTitle" hidden>The Diamond Age</div>
-            <div data-key="sortKey" hidden>Diamond Age, The</div>
-        </li>
-
-        <li data-id="de4ae65f">
+            <div data-key="note">
+                The Primer is pretty much the goal 
+                for my Grimoire.
+            </div>
             <div>
-                <span data-key="title">Dune</span>
-                by <span data-key="firstName">Frank</span> <span data-key="lastName">Herbert</span>
+                Page Count: 
+                <span data-key="pageCount">455</span>
             </div>
-            <div data-key="notes">One of the few books I've read multiple times. And the best movie adaptation I've ever seen.</div>
-            <div>Page Count: <span data-key="pageCount">412</span></div>
-            <div data-key="shortTitle" hidden>Dune</div>
-            <div data-key="sortKey" hidden>Dune</div>
+            <div data-key="shortTitle" hidden>
+                The Diamond Age
+            </div>
+            <div data-key="sortKey" hidden>
+                Diamond Age, The
+            </div>
         </li>
     </ul>
 </div>
+    </div>
+
+    <h4>The Source of Truth</h4>
+
+    <p>
+        Both views come from the same HTML:
+    </p>
+
+    <pre class="code-block large-block-margin"><code><span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">bitty-js</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-module</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">modules/big-bookshelf-progressive-enhancement-example.js</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    </span><span style="color:#d08770;">data-send</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBooks</span><span style="color:#c0c5ce;">&quot;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-receive</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">showBook|showBooks</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">ul</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">1bcc8077</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;Neuromancer&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;William&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;Gibson&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">note</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                My discovery of cyberpunk and how</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                much I&#39;m into it.</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Page Count:</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;271&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Neuromancer</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Neuromancer</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">75d7c22f</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                    On Writing: A Memoir of the Craft</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;Stephen&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;King&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">note</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Required reading for anyone who writes.</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Page Count:</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;288&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                On Writing</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                On Writing</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;</span><span style="color:#bf616a;">li </span><span style="color:#d08770;">data-id</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">ab9d8b45</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">title</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                    The Diamond Age: Or, A Young Lady&#39;s</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                    Illustrated Primer</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                by &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">firstName</span><span style="color:#c0c5ce;">&quot;&gt;Neal&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">lastName</span><span style="color:#c0c5ce;">&quot;&gt;Stephenson&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">note</span><span style="color:#c0c5ce;">&quot;&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                The Primer is pretty much the goal</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                for my Grimoire.</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Page Count:</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                &lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">pageCount</span><span style="color:#c0c5ce;">&quot;&gt;455&lt;/</span><span style="color:#bf616a;">span</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">shortTitle</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                The Diamond Age</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;</span><span style="color:#bf616a;">div </span><span style="color:#d08770;">data-key</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">sortKey</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">hidden</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">                Diamond Age, The</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">            &lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">        &lt;/</span><span style="color:#bf616a;">li</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    &lt;/</span><span style="color:#bf616a;">ul</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">bitty-js</span><span style="color:#c0c5ce;">&gt;</span></span></code></pre>
+
+    <p>
+        The only difference is <strong>bitty-js</strong> is working
+        in the first one. It injests the original HTML content
+        and reformats it for the enhanced experience. 
+        <strong>bitty-js</strong> is disabled in the second version. 
+        Without it, things fall back to the original HTML formatting.
+    </p>
+
+    <p>
+        This approach to building for the web is called 
+        <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancemnet</a>.
+        Everything else being equal, it's the best way 
+        to build for the web. 
+    </p>
+
+    <h4>A bitty-js Approach to Progressive Enhancement</h4>
+
+    <p>
+        The first step on the path to Progressive Enhancement
+        is the HTML. It needs to be formatted so content
+        is accessible, even if everything else breaks.
+        From there, it needs to provide a way to add enhancements. 
+        I'm do that with three tools:
+    </p>
+
+    <ol>
+        <li>
+            <strong>data-id</strong> attributes with IDs
+            to use as references for each book
+        </li>
+        <li>
+            <strong>data-key</strong> attibutes to identify
+            the different content elements for each book
+        </li>
+        <li>
+            <strong>hidden</strong> attributes on elements 
+            with content I want to use but don't want to show up 
+            if <strong>bitty-js</strong> doesn't work (e.g. 
+            <strong>data-key=&quot;sortKey&quot;</strong> elements)
+        </li>
+    </ol>
+
+    <p>
+        Here's the <strong>bitty-js module</strong> that uses
+        those tools to provide the enhancement:
+    </p>
 
 
+    <pre class="code-block large-block-margin"><code><span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">templates </span><span style="color:#c0c5ce;">= {</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    bookForShowBooks: `</span><span style="color:#a3be8c;">&lt;div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">    &lt;button data-id=&quot;&quot; data-key=&quot;shortTitle&quot; data-send=&quot;showBook&quot;&gt;&lt;/button&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">    by &lt;span data-key=&quot;lastName&quot;&gt;&lt;/span&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    showBook: `</span><span style="color:#a3be8c;">&lt;div data-key=&quot;title&quot;&gt;&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;by &lt;span data-key=&quot;firstName&quot;&gt;&lt;/span&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;span data-key=&quot;lastName&quot;&gt;&lt;/span&gt;&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;p data-key=&quot;note&quot;&gt;&lt;/p&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;&lt;span data-key=&quot;pageCount&quot;&gt;&lt;/span&gt; pages&lt;/div&gt;</span></span>
+<span class="codeLine"><span style="color:#a3be8c;">&lt;div&gt;&lt;button data-send=&quot;showBooks&quot;&gt;View All Books&lt;/button&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#c0c5ce;">    showBooks: `</span><span style="color:#a3be8c;">&lt;div id=&quot;book-list&quot;&gt;&lt;/div&gt;</span><span style="color:#c0c5ce;">`,</span></span>
+<span class="codeLine"><span style="color:#c0c5ce;">}</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#b48ead;">export default class </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#eff1f5;">() {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.templates </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">{};</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">for </span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">templateId </span><span style="color:#c0c5ce;">in </span><span style="color:#bf616a;">templates</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">newTemplate </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">template</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">newTemplate</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">templates</span><span style="color:#eff1f5;">[</span><span style="color:#bf616a;">templateId</span><span style="color:#eff1f5;">];</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.templates[</span><span style="color:#bf616a;">templateId</span><span style="color:#eff1f5;">] </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">newTemplate</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">assemble</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">template</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">data=</span><span style="color:#eff1f5;">{}) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">content  </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.templates[</span><span style="color:#bf616a;">template</span><span style="color:#eff1f5;">].content.</span><span style="color:#96b5b4;">cloneNode</span><span style="color:#eff1f5;">(</span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.id) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">dataIdEl </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">[data-id]</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">dataIdEl</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">dataIdEl</span><span style="color:#eff1f5;">.dataset.id </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">.id;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">for </span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">key </span><span style="color:#c0c5ce;">of </span><span style="color:#ebcb8b;">Object</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">keys</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">)) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">el </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">[data-key=</span><span style="color:#eff1f5;">${</span><span style="color:#bf616a;">key</span><span style="color:#eff1f5;">}</span><span style="color:#a3be8c;">]</span><span style="color:#c0c5ce;">`</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.innerHTML </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">[</span><span style="color:#bf616a;">key</span><span style="color:#eff1f5;">];</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">loadBooks</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books </span><span style="color:#c0c5ce;">=== </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">{};</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">rawBooks </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">querySelectorAll</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">li</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            [</span><span style="color:#c0c5ce;">...</span><span style="color:#bf616a;">rawBooks</span><span style="color:#eff1f5;">].</span><span style="color:#8fa1b3;">forEach</span><span style="color:#eff1f5;">((</span><span style="color:#c0c5ce;">rawBook</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">book </span><span style="color:#c0c5ce;">= </span><span style="color:#eff1f5;">{ id: </span><span style="color:#bf616a;">rawBook</span><span style="color:#eff1f5;">.dataset.id };</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">fields </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">rawBook</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">querySelectorAll</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">[data-key]</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                [</span><span style="color:#c0c5ce;">...</span><span style="color:#bf616a;">fields</span><span style="color:#eff1f5;">].</span><span style="color:#8fa1b3;">forEach</span><span style="color:#eff1f5;">((</span><span style="color:#c0c5ce;">field</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#eff1f5;">{</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">key </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">field</span><span style="color:#eff1f5;">.dataset.key;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">value </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">field</span><span style="color:#eff1f5;">.innerHTML;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                    </span><span style="color:#bf616a;">book</span><span style="color:#eff1f5;">[</span><span style="color:#bf616a;">key</span><span style="color:#eff1f5;">] </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                });</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books[</span><span style="color:#bf616a;">rawBook</span><span style="color:#eff1f5;">.dataset.id] </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">book</span><span style="color:#eff1f5;">;</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            });</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">showBook</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">book </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books[</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">.target.dataset.id];</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">content </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">assemble</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">showBook</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">book</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"></span>
+<span class="codeLine"><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">showBooks</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">el</span><span style="color:#eff1f5;">, </span><span style="color:#c0c5ce;">_event</span><span style="color:#eff1f5;">) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">loadBooks</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">content </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">assemble</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">showBooks</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">list </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">querySelector</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">#book-list</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">for </span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">book </span><span style="color:#c0c5ce;">of </span><span style="color:#ebcb8b;">Object</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">entries</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.books).</span><span style="color:#8fa1b3;">toSorted</span><span style="color:#eff1f5;">(</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            (</span><span style="color:#c0c5ce;">a</span><span style="color:#eff1f5;">,</span><span style="color:#c0c5ce;">b</span><span style="color:#eff1f5;">) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">a</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">].sortKey.</span><span style="color:#8fa1b3;">localeCompare</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">b</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">].sortKey)</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        )) {</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">list</span><span style="color:#eff1f5;">.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">assemble</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#a3be8c;">bookForShowBooks</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">book</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">]));</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">el</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">replaceChildren</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">);</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">    }</span></span>
+<span class="codeLine"><span style="color:#eff1f5;">}</span></span></code></pre>
 
-
-
-    <details>
-        <ul>
-            <li> 
-            </li>
-        </ul>
-    </details>
+    <p>
+        When everything is working, <strong>bitty-js</strong>
+        grabs the HTML, parses is, and displays the
+        interactive list. If things go sideways, the content
+        still shows up. Just without the extra
+        formatting or interactivity. 
+    </p>
 
 </details>
  

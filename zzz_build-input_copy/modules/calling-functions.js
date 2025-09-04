@@ -1,0 +1,13 @@
+// deno-fmt-ignore-file
+
+export default class {
+  #counter = 0;
+
+  increment(_event) {
+    this.#counter += 1;
+  }
+
+  update(el, _event) {
+    el.innerHTML = this.#counter;
+  }
+}

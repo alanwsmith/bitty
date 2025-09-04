@@ -1,13 +1,228 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
-<style>
-    body {
-      background-color: black;
-      color: goldenrod;
-    }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  </head>
-  <body>This is index.html</sody>
+<title>bitty-js: a tiny component for reactive web pages</title>
+<meta property="og:title" content="bitty-js: a tiny component for reactive web pages" />
+
+<link rel="shortcut icon" href="/images/favicons/favicon.ico" />
+
+
+<meta name="description" content="A tiny web component designed for progressive enhancement that adds reactivity to web pages." />
+<meta
+  property="og:description"
+  content="A tiny web component designed for progressive enhancement that adds reactivity to web pages."
+/>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty-js.alanwsmith.com/" />
+<meta
+  property="og:image"
+  content="https://bitty-js.alanwsmith.com/images/og-image-main.jpg"
+/>
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/images/favicons/apple-touch-icon.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/images/favicons/favicon-16x16.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/images/favicons/favicon-32x32.png"
+/>
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+<link rel="stylesheet" href="/styles/main.css" />
+<link rel="stylesheet" href="/styles/syntax-highlighting/base16-ocean-dark.css" />  </head>
+
+  <body>
+    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
+<div class="header-flex-2">
+  <div>made by <a href="https://www.alanwsmith.com/">alan w smith</a></div>
+  <a href="https://github.com/alanwsmith/bitty-js">source code</a>
+  <a href="https://links.alanwsmith.com/">other projects</a>
+  <a href="https://socials.alanwsmith.com/">socials</a>
+</div>
+
+<!--
+<github-stars
+  :repo="alanwsmith/bitty-js"
+  :text-color="var(--accent-faded)"
+  :background-color="var(--background)"
+></github-stars>
+-->    </header>
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <h1>bitty-js</h1>
+        <div class="hgroup-flex">
+          <div class="small-font accent-faded">
+            tiny component. big reactivity.
+            <br>
+            current version: beta-0.3.0 | next version: 1.0
+          </div>
+        </div>
+      </hgroup>
+
+<details open>
+  <summary>Overview</summary>
+
+  <p><strong>bitty-js</strong> is a web component. It makes reactive web pages. 
+  For example:</p>
+
+  <div
+    class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
+  >
+
+<bitty-js data-module="modules/timestamp-demo.js">
+  <button data-send="update">
+    Display Milliseond Timestamp
+  </button>
+  <div data-receive="update">
+    Waiting for click
+  </div>
+</bitty-js>
+  </div>
+
+  <p>
+    The <strong>bitty-js API</strong> uses <strong>data-*</strong> attributes:
+  </p>
+
+  <pre class="code-block large-block-margin"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/timestamp-demo.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Display Milliseond Timestamp
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Waiting for click
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span>
+
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bitty-v0.3.0.js<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+  <ul>
+    <li>
+      <strong>data-module</strong> 
+      connects to the file responsible for functionality.
+    </li>
+
+    <li>
+      <strong>data-send</strong> tells the 
+      <strong>button</strong> to send an <strong>update</strong> signal.
+    </li>
+
+    <li>
+      <strong>data-receive</strong> registers
+      the <strong>div</strong> to react to <strong>update</strong> signals.
+    </li>
+  </ul>
+
+  <h4>Functionality</h4>
+
+  <p>
+    <strong>bitty-js</strong> uses the values from 
+    <strong>data-send</strong> and <strong>data-receive</strong>
+    to map to functions with the same name.
+  </p>
+
+  <pre class="code-block large-block-margin"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Millisecond: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="support class builtin js">Date</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">now</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+
+  <ul>
+    <li>
+      The <strong>update</strong> function handles signals from 
+      elements with <strong>data-send=&quot;update&quot;</strong>.
+    </li>
+    <li>
+      Elements with <strong>data-receive=&quot;update&quot;</strong>
+      are processed by the <strong>update</strong> function.
+    </li>
+  </ul>
+
+  <p>The two arguments passed to a <strong>bitty-js function</strong> are:</p>
+  <ol>
+    <li>
+      The element to update
+    </li>
+    <li>
+      The event that triggered the update
+    </li>
+  </ol>
+
+  <p>
+    The event is ignored in the timestamp demo. The 
+    <strong>div</strong> element has its <strong>innerHTML</strong> updated 
+    with the timestamp.
+  </p>
+
+  <h4>As Simple As I Can Make It</h4>
+
+  <p>
+    The goal of <strong>bitty-js</strong> is to make
+    reactive pages with as little friction as possible. To wit,
+    <strong>bitty-js</strong> is:
+  </p>
+
+  <ul>
+    <li>A single file web component</li>
+    <li>Written in vanilla JavaScript</li>
+    <li>Powered by standard HTML attributes</li>
+    <li>Designed for both progressive enhancement and API based content loading</li>
+    <li>Stylable via the light DOM</li>
+  </ul>
+
+  <h4>Feedback Requested</h4>
+  <p>
+    <strong>bitty-js</strong> is curently <strong>beta version 0.3.0</strong>. 
+    The API is stable. Aside from bug fixes, it will become <strong>version 1.0</strong>. 
+    Play around with it. Let me know if you find bugs or show-stoppers.
+  </p>
+
+  <h4>Happy Coding</h4>
+
+  <p>
+    I put a lot of thought and effort into <strong>bitty-js</strong>. All
+    of it aimed at making things simpler. I'm really proud of where it ended up.
+    I hope it helps you enjoy making things for the web.
+  </p>
+
+  <p>-a</p>
+
+</details>
+ 
+
+
+
+
+
+
+
+      <!-- prettier-ignore-end -->
+    </main>
+
+    <footer
+      class="default-wrapper align-center large-top-padding accent-top-border-faded2"
+    >
+      made by <a href="https://www.alanwsmith.com/">alan w smith</a>
+      <br />
+      <a href="https://links.alanwsmith.com">other projects</a> ~
+      <a href="https://github.com/alanwsmith/bitty-js">source</a> ~
+      <a href="https://socials.alanwsmith.com">socials</a>
+    </footer>
+
+
+<script type="module" src="bitty-v0.3.0.js"></script>
+
+
+  </body>
 </html>

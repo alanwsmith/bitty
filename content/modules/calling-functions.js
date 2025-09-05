@@ -1,7 +1,7 @@
 export default class {
   #counter = 0;
 
-  increment(_event) {
+  increment(el, _event) {
     this.#counter += 1;
   }
 

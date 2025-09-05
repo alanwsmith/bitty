@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
-  #listeners = ["click", "input"]; 
+  #listeners = ["click", "input"];
   #receivers = [];
   #watchers = [];
 
@@ -19,8 +19,11 @@ class BittyJs extends HTMLElement {
       this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
       this.loadWatchers();
-      this.init();
       this.addEventListeners();
+      this.initBitty();
+      if (typeof this.module.init === "function") {
+        this.module.init();
+      }
     }
   }
 
@@ -37,30 +40,32 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(key, el) {
-    debug(`Adding receiver for: ${el.constructor.name} ${el.dataset.uuid} with data-receive="${key}" to: bitty-js ${this.dataset.uuid}`);
+    debug(
+      `Adding receiver for: ${el.constructor.name} ${el.dataset.uuid} with data-receive="${key}" to: bitty-js ${this.dataset.uuid}`,
+    );
     this.#receivers.push({
       key: key,
       f: (data) => {
         try {
           this.module[`${key}`](el, data);
         } catch (error) {
-          console.error(error); // TODO: Add custom error call here
-          console.error(`Tried: ${key}`);
+          console.error(`Tried: ${key} - got ${error}`);
         }
       },
     });
   }
 
   addWatcher(key, el) {
-    debug(`Adding watcher for: ${el.constructor.name} ${el.dataset.uuid} with data-watch="${key}" to: bitty-js ${this.dataset.uuid}`);
+    debug(
+      `Adding watcher for: ${el.constructor.name} ${el.dataset.uuid} with data-watch="${key}" to: bitty-js ${this.dataset.uuid}`,
+    );
     this.#watchers.push({
       key: key,
       f: (data) => {
         try {
           this.module[`${key}`](el, data);
         } catch (error) {
-          console.error(error); // TODO: Add custom error call here
-          console.error(`Tried: ${key}`);
+          console.error(`Tried: ${key} - got ${error}`);
         }
       },
     });
@@ -163,9 +168,12 @@ class BittyJs extends HTMLElement {
   async attachModule() {
     if (this.dataset.module) {
       let validModulePath = this.dataset.module;
-      if (validModulePath.substring(0, 2) !== "./" && validModulePath.substring(0, 1) !== "/") {
+      if (
+        validModulePath.substring(0, 2) !== "./" &&
+        validModulePath.substring(0, 1) !== "/"
+      ) {
         validModulePath = `./${validModulePath}`;
-      } 
+      }
       const mod = await import(validModulePath);
       if (this.dataset.use === undefined) {
         this.module = new mod.default();
@@ -189,7 +197,6 @@ class BittyJs extends HTMLElement {
     // TODO Stub an event if one isn't available
     this.sendUpdates(key, {});
   }
-
 
   error(id = 0, el = null, additionalDetails = null) {
     this.classList.add("bitty-component-error");
@@ -217,7 +224,9 @@ class BittyJs extends HTMLElement {
     this.assembleErrorElementDetails(err);
     // TODO: Add developerNote
     // TODO: Pull the source error message if there is one
-    console.error(err.output.join(`\n\n#######################################\n\n`));
+    console.error(
+      err.output.join(`\n\n#######################################\n\n`),
+    );
     console.error(this);
     if (el !== null) {
       console.error(el);
@@ -245,8 +254,13 @@ class BittyJs extends HTMLElement {
         // TODO: Verify this remove receivers and watchers properly
         for (const removedNode of mutation.removedNodes) {
           if (removedNode.dataset) {
-            if (removedNode.dataset.call || removedNode.dataset.receive || removedNode.dataset.send || removedNode.dataset.watch) {
-              debug("Caught removed node through mutation observer. Updating IDs, receivers, and watchers");
+            if (
+              removedNode.dataset.call || removedNode.dataset.receive ||
+              removedNode.dataset.send || removedNode.dataset.watch
+            ) {
+              debug(
+                "Caught removed node through mutation observer. Updating IDs, receivers, and watchers",
+              );
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
@@ -256,8 +270,13 @@ class BittyJs extends HTMLElement {
         }
         for (const addedNode of mutation.addedNodes) {
           if (addedNode.dataset) {
-            if (addedNode.dataset.call || addedNode.dataset.receive || addedNode.dataset.send || addedNode.dataset.watch) {
-              debug("Caught new node through mutation observer. Updating IDs, receivers, and watchers");
+            if (
+              addedNode.dataset.call || addedNode.dataset.receive ||
+              addedNode.dataset.send || addedNode.dataset.watch
+            ) {
+              debug(
+                "Caught new node through mutation observer. Updating IDs, receivers, and watchers",
+              );
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
@@ -269,27 +288,30 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  handleWatchers(payload) { 
-    if (payload.detail === undefined || payload.detail.name === undefined || payload.detail.event === undefined) {
+  handleWatchers(payload) {
+    if (
+      payload.detail === undefined || payload.detail.name === undefined ||
+      payload.detail.event === undefined
+    ) {
       debug("Missing even from handleWatchers payload");
       return;
     }
     this.updateWatcher(payload.detail.name, payload.detail.event);
   }
 
-  init() {
+  initBitty() {
     this.module.api = this;
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.call !== undefined) {
       this.runFunctions(this.dataset.call, {
-        target: this  // stubbed even structure for init
+        target: this, // stubbed even structure for init
       });
     }
     if (this.dataset.send !== undefined) {
       this.sendUpdates(this.dataset.send, {
-        target: this  // stubbed even structure for init
+        target: this, // stubbed even structure for init
       });
     }
     if (this.dataset.listeners !== undefined) {
@@ -337,7 +359,7 @@ class BittyJs extends HTMLElement {
         detail: {
           name: key,
           event: event,
-        }
+        },
       });
       this.parentElement.dispatchEvent(signalForwarder);
       this.#receivers.forEach((receiver) => {
@@ -349,7 +371,7 @@ class BittyJs extends HTMLElement {
   }
 
   setIds() {
-    const selector = [ "call", "receive", "send", "watch"]
+    const selector = ["call", "receive", "send", "watch"]
       .map((key) => {
         return `[data-${key}]`;
       })
@@ -460,7 +482,6 @@ class BittyJs extends HTMLElement {
 // Helpers
 /////////////////////////////////////////////////////
 
-
 function debug(payload, el = null) {
   if (window && window.location && window.location.search) {
     const params = new URLSearchParams(window.location.search);
@@ -473,7 +494,7 @@ function debug(payload, el = null) {
   }
 }
 
-// solo is for quick debugging of individual items 
+// solo is for quick debugging of individual items
 // instead of running the full debug
 function solo(payload, el = null) {
   if (window && window.location && window.location.search) {
@@ -487,14 +508,11 @@ function solo(payload, el = null) {
   }
 }
 
-
 /////////////////////////////////////////////////////
 // Export
 /////////////////////////////////////////////////////
 
 customElements.define("bitty-js", BittyJs);
-
-
 
 /* *************************************************
  *

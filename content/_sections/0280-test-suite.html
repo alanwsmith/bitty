@@ -1,4 +1,4 @@
-<details>
+<details class="test-case">
   <summary>Test Suite</summary>
   <ul>
       [! for folder in folders !]
@@ -8,7 +8,11 @@
     <div class="test-output">
           [! include "tests/" + folder.name + "/index.html" !]
     </div>
-    <details>
+    <details class="test-details">
+      <summary>Details</summary>
+          [@ markdown["tests/" + folder.name + "/details.md"]|safe @]
+    </details>
+    <details class="test-code">
       <summary>Test Code</summary>
     <pre class="code-block">
           [@- highlight["tests/" + folder.name + "/index.html"]|safe -@]

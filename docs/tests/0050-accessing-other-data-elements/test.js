@@ -4,6 +4,6 @@ export default class {
   }
 
   runTest(el, _event) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = event.target.dataset.status;
   }
 }

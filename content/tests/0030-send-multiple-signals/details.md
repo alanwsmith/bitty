@@ -1,0 +1,2 @@
+- The button has multiple `data-send` values
+- Each `div` has a `data-receive` element with one of the values

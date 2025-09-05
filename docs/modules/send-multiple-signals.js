@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 export default class {
   alfa(el, _event) {
     el.innerHTML = `Got Alfa ${Date.now()}`;

@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 const templates = {
   display: `<div>Display</div>`,
   previousButton: `<button 

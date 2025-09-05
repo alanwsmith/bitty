@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 const template = document.createElement("template");
 template.innerHTML = `
 <button

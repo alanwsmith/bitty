@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 export default class {
   update(el, _event) {
     el.innerHTML = `Default Class at ${Date.now()}`;

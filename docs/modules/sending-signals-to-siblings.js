@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 export class Parent {
     update(el, event) {
         if (el.dataset.name === event.target.dataset.name) {

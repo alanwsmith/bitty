@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 export default class {
   createElements(el, _event) {
     el.innerHTML = "";

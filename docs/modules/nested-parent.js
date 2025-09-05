@@ -1,5 +1,3 @@
-// deno-fmt-ignore-file
-
 export default class {
   #value = 0;
 

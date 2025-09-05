@@ -1,7 +1,4 @@
-// deno-fmt-ignore-file
-
 export default class {
-
   constructor() {
     this.num = 0;
   }
@@ -13,6 +10,4 @@ export default class {
   showNum(el) {
     el.innerHTML = this.num;
   }
-
 }
-

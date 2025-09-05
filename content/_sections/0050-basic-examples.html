@@ -1,0 +1,50 @@
+<details>
+  <summary>Basic Examples</summary>
+
+  [! for example in data["_examples/_examples.json"].list !]
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+    <h3>[! include "_examples/" + example + "/title.txt" !]</h3>
+  </div>
+
+  <div
+    class="make-two-columns warning-border-faded default-radius xlarge-block-margin"
+  >
+    [! include "_examples/" + example + "/example.html" !]
+  </div>
+
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code>
+        [@- highlighted["_examples/" + example + "/example.html"]|safe -@]
+      </code></pre>
+    </div>
+
+
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code>
+        [@- highlighted["_examples/" + example + "/example.js"]|safe -@]
+      </code></pre>
+    </div>
+
+    <details class="xlarge-block-margin">
+      [@- markdown["_examples/" + example + "/details.md"]|safe -@]
+    </details>
+
+  [! endfor !] 
+
+
+[#
+  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
+
+    <div class="xlarge-block-margin">
+      <pre class="code-block"><code>
+        [!- autoescape false -!]
+        [@- data.example_scripts[example.javascripts[0]].highlighted -@]
+        [!- endautoescape -!]
+      </code></pre>
+    </div>
+    <details class="xlarge-block-margin">
+      [!- autoescape false -!] [@- example.details -@] [!- endautoescape -!]
+    </details>
+  </div>
+  #]
+</details>

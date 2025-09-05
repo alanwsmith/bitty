@@ -1,114 +1,81 @@
-<details open>
+<details>
   <summary>Overview</summary>
 
-  <p><strong>bitty-js</strong> is a web component. It makes reactive web pages. 
-  For example:</p>
+[! filter markdown|safe !]
+**bitty-js** is a web component. It makes reactive web pages. 
+For example:
+[! endfilter !]
 
-  <div
-    class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
-  >
+<div class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin">
+  [! include "_sections/_timestamp-demo.html" !]
+</div>
 
-    [! include "_examples/timestamp-demo.html" !]
+[! filter markdown|safe !]
+The **bitty-js API** uses __data-*__ attributes:
+[! endfilter !]
 
-  </div>
+<pre class="code-block large-block-margin"><code>
+  [@- highlighted["_sections/_timestamp-demo.html"]|safe -@]
+  [@- "\n\n" -@]
+  [@- highlighted["_includes/_script-tag.html"]|safe -@]
+</code></pre>
 
-  <p>
-    The <strong>bitty-js API</strong> uses <strong>data-*</strong> attributes:
-  </p>
 
-  <pre class="code-block large-block-margin"><code>
-    [@- highlighted["_examples/timestamp-demo.html"]|safe -@]
-    [@- "\n\n" -@]
-    [@- highlighted["_examples/_script-tag.html"]|safe -@]
-  </code></pre>
-  <ul>
-    <li>
-      <strong>data-module</strong> 
-      connects to the file responsible for functionality.
-    </li>
+[! filter markdown|safe !]
+- **data-module** connects to the file responsible for functionality.
+- **data-send** tells the **button** to send an **update** signal.
+- **data-receive** registers the **div** to react to **update** signals.
 
-    <li>
-      <strong>data-send</strong> tells the 
-      <strong>button</strong> to send an <strong>update</strong> signal.
-    </li>
+#### Functionality 
 
-    <li>
-      <strong>data-receive</strong> registers
-      the <strong>div</strong> to react to <strong>update</strong> signals.
-    </li>
-  </ul>
+**bitty-js** uses the values from **data-send** and **data-receive**
+to map to functions with the same name.
+[! endfilter !]
 
-  <h4>Functionality</h4>
+<pre class="code-block large-block-margin"><code>
+  [@- highlighted["modules/timestamp-demo.js"]|safe -@]
+</code></pre>
 
-  <p>
-    <strong>bitty-js</strong> uses the values from 
-    <strong>data-send</strong> and <strong>data-receive</strong>
-    to map to functions with the same name.
-  </p>
+[! filter markdown|safe !]
+- The **update** function handles signals from elements with **data-send="update"**
+- Elements with **data-receive="update"** are processed by the **update** function.
 
-  <pre class="code-block large-block-margin"><code>
-    [@- highlighted["modules/timestamp-demo.js"]|safe -@]
-  </code></pre>
+The two arguments passed to a **bitty-js function** are:
 
-  <ul>
-    <li>
-      The <strong>update</strong> function handles signals from 
-      elements with <strong>data-send=&quot;update&quot;</strong>.
-    </li>
-    <li>
-      Elements with <strong>data-receive=&quot;update&quot;</strong>
-      are processed by the <strong>update</strong> function.
-    </li>
-  </ul>
+1. The element to update
+2. The event that triggered the update
 
-  <p>The two arguments passed to a <strong>bitty-js function</strong> are:</p>
-  <ol>
-    <li>
-      The element to update
-    </li>
-    <li>
-      The event that triggered the update
-    </li>
-  </ol>
+The event is ignored in the timestamp demo. The 
+**div** element has its **innerHTML** updated 
+with the timestamp.
 
-  <p>
-    The event is ignored in the timestamp demo. The 
-    <strong>div</strong> element has its <strong>innerHTML</strong> updated 
-    with the timestamp.
-  </p>
+#### As Simple As I Can Make It
 
-  <h4>As Simple As I Can Make It</h4>
+The goal of **bitty-js** is to make
+reactive pages with as little friction as possible. To wit,
+**bitty-js** is:
 
-  <p>
-    The goal of <strong>bitty-js</strong> is to make
-    reactive pages with as little friction as possible. To wit,
-    <strong>bitty-js</strong> is:
-  </p>
+- A single file web component
+- Written in vanilla JavaScript
+- Powered by standard HTML attributes
+- Designed for both progressive enhancement and API based content loading
+- Stylable via the light DOM
 
-  <ul>
-    <li>A single file web component</li>
-    <li>Written in vanilla JavaScript</li>
-    <li>Powered by standard HTML attributes</li>
-    <li>Designed for both progressive enhancement and API based content loading</li>
-    <li>Stylable via the light DOM</li>
-  </ul>
 
-  <h4>Feedback Requested</h4>
-  <p>
-    <strong>bitty-js</strong> is curently <strong>beta version 0.3.0</strong>. 
-    The API is stable. Aside from bug fixes, it will become <strong>version 1.0</strong>. 
-    Play around with it. Let me know if you find bugs or show-stoppers.
-  </p>
+#### Feedback Requested
 
-  <h4>Happy Coding</h4>
+**bitty-js** is currently **beta version 0.3.0**. 
+The API is stable. Aside from bug fixes, it will become **version 1.0**. 
+Play around with it. Let me know if you find bugs or show-stoppers.
 
-  <p>
-    I put a lot of thought and effort into <strong>bitty-js</strong>. All
-    of it aimed at making things simpler. I'm really proud of where it ended up.
-    I hope it helps you enjoy making things for the web.
-  </p>
+#### Happy Coding
 
-  <p>-a</p>
+I put a lot of thought and effort into **bitty-js**. All
+of it aimed at making things simpler. I'm really proud of where it ended up.
+I hope it helps you enjoy making things for the web.
+
+-a
+[! endfilter !]
 
 </details>
 

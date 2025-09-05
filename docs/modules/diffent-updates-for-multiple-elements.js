@@ -11,23 +11,21 @@ export default class {
       pages: 288
     }
   };
+  #bookType = null;
 
-  update(el, event) {
-    const bookType = event.target.dataset.type;
+  author(el, _event) {
+    el.innerHTML = `Author: ${this.#books[this.#bookType].author}`;
+  }
 
-    if (el.dataset.name === "title") {
-      el.innerHTML =
-        `Title: ${this.#books[bookType].title}`;
-    }
+  pages(el, _event) {
+    el.innerHTML = `Pages: ${this.#books[this.#bookType].pages}`;
+  }
 
-    if (el.dataset.name === "author") {
-      el.innerHTML =
-        `Author: ${this.#books[bookType].author}`;
-    }
+  setType(event) {
+    this.#bookType = event.target.dataset.type;
+  }
 
-    if (el.dataset.name === "pages") {
-      el.innerHTML =
-        `Pages: ${this.#books[bookType].pages}`;
-    }
+  title(el, _event) {
+    el.innerHTML = `Title: ${this.#books[this.#bookType].title}`;
   }
 }

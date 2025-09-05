@@ -6,9 +6,9 @@ from os.path import join
 from pathlib import Path 
 
 
-source_dir = "examples-holding"
+source_dir = "nesting-examples"
 
-output_root = "../content/_examples"
+output_root = "../content/_nesting-examples"
 
 directories = [d for d in listdir(source_dir) if isdir(join(source_dir, d)) and d[0] != '.' ]
 

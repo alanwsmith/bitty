@@ -1,0 +1,33 @@
+<details>
+  <summary>Nesting Examples</summary>
+
+  <p>
+    <strong>bitty-js</strong> supports nesting.
+    These examples cover how multiple instances
+    can interact with each other. 
+  </p>
+
+  [! for folder in folders !]
+    [! if folder.parent == "_nesting-examples" !]
+      <div class="example-wrapper">
+        <h3>[! include "_nesting-examples/" + folder.name + "/title.txt" !]</h3>
+        <div class="example-output">
+        [! include "_nesting-examples/" + folder.name + "/example.html" !]
+        </div>
+        <pre class="code-block"><code>
+          [@- highlighted["_nesting-examples/" + folder.name + "/example.html"]|safe -@]
+          [@- "\n\n" -@]
+          [@- highlighted["_includes/_script-tag.html"]|safe -@]
+        </code></pre>
+        [! set scriptname !][! include "_nesting-examples/" + folder.name + "/script-name.txt" !][! endset !]
+        <pre class="code-block"><code>
+          [@- highlighted["modules/" + scriptname]|safe -@]
+        </code></pre>
+        <div>
+        [@ markdown["_nesting-examples/" + folder.name + "/details.md"]|safe @]
+        </div>
+      </div>
+    [! endif !]
+  [! endfor !]
+</details>
+

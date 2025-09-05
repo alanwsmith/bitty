@@ -1,2 +1,0 @@
-- The button has `data-send="runTest"`
-- Multiple `div` elements have `data-receive="runTest"`

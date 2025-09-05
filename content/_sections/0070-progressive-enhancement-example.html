@@ -1,0 +1,94 @@
+<details>
+  <summary>Progressive Enhancement Example</summary>
+
+  <h4>The Happy Path</h4>
+
+  <p>This section has two views of a list of books. Here's the first:</p>
+
+  <div>
+    [! include "_progressive-enhancement/bitty-js-header.html" !] [! include
+    "_progressive-enhancement/content.html" !] [! include
+    "_progressive-enhancement/bitty-js-footer.html" !]
+  </div>
+
+  <p>
+    The display starts with the list. Each book showing a short version of the
+    title and the author's last name. Clicking the title switches to a detailed
+    view: the complete title, author's full name, page count, and a personal
+    note.
+  </p>
+
+  <p>
+    At least, that's what you'll get if your browser is running JavaScript and
+    everything is working as expected. If not, you'll get this:
+  </p>
+
+  <div>[! include "_progressive-enhancement/content.html" !]</div>
+
+  <h4>The Source of Truth</h4>
+
+  <p>Both views come from the same HTML:</p>
+
+  <pre class="code-block large-block-margin"><code>
+[@- highlight["_progressive-enhancement/bitty-js-header.html"]|safe -@]
+[@- "\n" -@]
+[@- highlight["_progressive-enhancement/content.html"]|safe -@]
+[@- "\n" -@]
+[@- highlight["_progressive-enhancement/bitty-js-footer.html"]|safe -@]
+</code></pre>
+
+  <p>
+    The only difference is <strong>bitty-js</strong> is working in the first
+    one. It injests the original HTML content and reformats it for the enhanced
+    experience. <strong>bitty-js</strong> is disabled in the second version.
+    Without it, things fall back to the original HTML formatting.
+  </p>
+
+  <p>
+    This approach to building for the web is called
+    <a href="https://en.wikipedia.org/wiki/Progressive_enhancement"
+      >Progressive Enhancemnet</a
+    >. Everything else being equal, it's the best way to build for the web.
+  </p>
+
+  <h4>A bitty-js Approach to Progressive Enhancement</h4>
+
+  <p>
+    The first step on the path to Progressive Enhancement is the HTML. It needs
+    to be formatted so content is accessible, even if everything else breaks.
+    From there, it needs to provide a way to add enhancements. I'm do that with
+    three tools:
+  </p>
+
+  <ol>
+    <li>
+      <strong>data-id</strong> attributes with IDs to use as references for each
+      book
+    </li>
+    <li>
+      <strong>data-key</strong> attibutes to identify the different content
+      elements for each book
+    </li>
+    <li>
+      <strong>hidden</strong> attributes on elements with content I want to use
+      but don't want to show up if <strong>bitty-js</strong> doesn't work (e.g.
+      <strong>data-key=&quot;sortKey&quot;</strong> elements)
+    </li>
+  </ol>
+
+  <p>
+    Here's the <strong>bitty-js module</strong> that uses those tools to provide
+    the enhancement:
+  </p>
+
+  <pre class="code-block large-block-margin"><code>
+    [@- highlight["modules/progressive-enhancement.js"]|safe -@]
+    </code></pre>
+
+  <p>
+    When everything is working, <strong>bitty-js</strong>
+    grabs the HTML, parses is, and displays the interactive list. If things go
+    sideways, the content still shows up. Just without the extra formatting or
+    interactivity.
+  </p>
+</details>

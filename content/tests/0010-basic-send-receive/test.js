@@ -4,7 +4,7 @@ export default class {
     button.click();
   }
 
-  runTest() {
-    console.log("ping");
+  runTest(el, _event) {
+    el.innerHTML = "PASSED";
   }
 }

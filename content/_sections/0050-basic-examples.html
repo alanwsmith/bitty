@@ -1,22 +1,34 @@
 <details>
   <summary>Basic Examples</summary>
 
+  [! for folder in folders !]
+    [! if folder.parent == "_examples" !]
+      <div class="example-wrapper">
+        <h3>[! include "_examples/" + folder.name + "/title.txt" !]</h3>
+        <div class="example-output">
+        [! include "_examples/" + folder.name + "/example.html" !]
+        </div>
+        <pre class="code-block"><code>
+          [@- highlighted["_examples/" + folder.name + "/example.html"]|safe -@]
+          [@- "\n\n" -@]
+          [@- highlighted["_includes/_script-tag.html"]|safe -@]
+        </code></pre>
+        [! set scriptname !]send-and-receive.js[! endset !]
+        <pre class="code-block"><code>
+          [@- highlighted["modules/" + scriptname]|safe -@]
+
+    </code></pre>
+        <div>
+        [@ markdown["_examples/" + folder.name + "/details.md"]|safe @]
+        </div>
+      </div>
+    [! endif !]
+  [! endfor !]
+
+[#
   [! for example in data["_examples/_examples.json"].list !]
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-    <h3>[! include "_examples/" + example + "/title.txt" !]</h3>
-  </div>
 
-  <div
-    class="make-two-columns warning-border-faded default-radius xlarge-block-margin"
-  >
-    [! include "_examples/" + example + "/example.html" !]
-  </div>
 
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code>
-        [@- highlighted["_examples/" + example + "/example.html"]|safe -@]
-      </code></pre>
-    </div>
 
 
     <div class="xlarge-block-margin">
@@ -32,7 +44,6 @@
   [! endfor !] 
 
 
-[#
   <div class="xxlarge-block-margin xxxlarge-bottom-padding">
 
     <div class="xlarge-block-margin">

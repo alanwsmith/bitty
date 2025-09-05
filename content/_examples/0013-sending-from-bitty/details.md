@@ -1,21 +1,3 @@
-<!-- prettier-ignore -->
-
-<bitty-js 
-    data-module="modules/send-from-bitty.js"
-    data-send="update">
-    <div data-receive="update"></div>
-</bitty-js>
-
-<!-- x -->
-
-Sending from the bitty-js Element
-
-<!-- x -->
-
-send-from-bitty.js
-
-<!-- x -->
-
 - Signals can be sent from the bitty wrapper
 when it initializes using a `data-send` attribute
 directly on the element.

@@ -13,49 +13,14 @@
           [@- "\n\n" -@]
           [@- highlighted["_includes/_script-tag.html"]|safe -@]
         </code></pre>
-        [! set scriptname !]send-and-receive.js[! endset !]
+        [! set scriptname !][! include "_examples/" + folder.name + "/script-name.txt" !][! endset !]
         <pre class="code-block"><code>
           [@- highlighted["modules/" + scriptname]|safe -@]
-
-    </code></pre>
+        </code></pre>
         <div>
         [@ markdown["_examples/" + folder.name + "/details.md"]|safe @]
         </div>
       </div>
     [! endif !]
   [! endfor !]
-
-[#
-  [! for example in data["_examples/_examples.json"].list !]
-
-
-
-
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code>
-        [@- highlighted["_examples/" + example + "/example.js"]|safe -@]
-      </code></pre>
-    </div>
-
-    <details class="xlarge-block-margin">
-      [@- markdown["_examples/" + example + "/details.md"]|safe -@]
-    </details>
-
-  [! endfor !] 
-
-
-  <div class="xxlarge-block-margin xxxlarge-bottom-padding">
-
-    <div class="xlarge-block-margin">
-      <pre class="code-block"><code>
-        [!- autoescape false -!]
-        [@- data.example_scripts[example.javascripts[0]].highlighted -@]
-        [!- endautoescape -!]
-      </code></pre>
-    </div>
-    <details class="xlarge-block-margin">
-      [!- autoescape false -!] [@- example.details -@] [!- endautoescape -!]
-    </details>
-  </div>
-  #]
 </details>

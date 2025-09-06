@@ -13,7 +13,7 @@ class BittyJs extends HTMLElement {
     this.setIds();
     await this.attachModule();
     if (this.module === undefined) {
-      console.error("Could not load module");
+      console.error("bitty-js failed to load its module");
     } else {
       this.requestUpdate = this.handleChange.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
@@ -85,7 +85,7 @@ class BittyJs extends HTMLElement {
         this.module = new mod[this.dataset.use]();
       }
     } else {
-      console.error("Could not attach module");
+      console.error("bitty-js is missing its data-module attribute");
     }
   }
 

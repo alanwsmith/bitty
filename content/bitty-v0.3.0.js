@@ -1,5 +1,8 @@
 /////////////////////////////////////////////////////
-// bitty-js  - Version 0.3.0
+// bitty-js: 0.3.0
+// License at: https://bitty-js.alanwsmith.com/
+// This ID must be included in the file:
+// 2y1pBoEREr3eWA1ubCCOXdmRCdn
 /////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
@@ -33,7 +36,6 @@ class BittyJs extends HTMLElement {
         this.requestUpdate.call(this, event);
       });
     });
-
     this.addEventListener("bittysignal", (payload) => {
       this.updateWatchers.call(this, payload);
     });
@@ -89,17 +91,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: wire this up
-  doCall(key, el) {
-    console.log("TODO: wire up doCall()");
-  }
-
-  // This is used from modules via:
-  // this.api.send("functionName")
-  // TODO: Make doCall(key) as well
-  doSend(key, event) {
-    // TODO Stub an event if one isn't available
-    this.sendUpdates(key, {});
+  doSend(key, event = {}) {
+    this.sendUpdates(key, event);
   }
 
   handleChange(event) {
@@ -107,9 +100,6 @@ class BittyJs extends HTMLElement {
       return;
     }
     if (event.target.nodeName !== "BITTY-JS") {
-      if (event.target.dataset.call !== undefined) {
-        this.runFunctions(event.target.dataset.call, event);
-      }
       if (event.target.dataset.send !== undefined) {
         this.sendUpdates(event.target.dataset.send, event);
       }
@@ -124,26 +114,26 @@ class BittyJs extends HTMLElement {
         for (const removedNode of mutation.removedNodes) {
           if (removedNode.dataset) {
             if (
-              removedNode.dataset.call || removedNode.dataset.receive ||
+              removedNode.dataset.receive ||
               removedNode.dataset.send || removedNode.dataset.watch
             ) {
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
-              return; // only need one so return
+              return;
             }
           }
         }
         for (const addedNode of mutation.addedNodes) {
           if (addedNode.dataset) {
             if (
-              addedNode.dataset.call || addedNode.dataset.receive ||
+              addedNode.dataset.receive ||
               addedNode.dataset.send || addedNode.dataset.watch
             ) {
               this.setIds();
               this.loadReceivers();
               this.loadWatchers();
-              return; // only need one so return
+              return;
             }
           }
         }
@@ -166,11 +156,6 @@ class BittyJs extends HTMLElement {
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
-    if (this.dataset.call !== undefined) {
-      this.runFunctions(this.dataset.call, {
-        target: this, // stubbed even structure for init
-      });
-    }
     if (this.dataset.send !== undefined) {
       this.sendUpdates(this.dataset.send, {
         target: this, // stubbed even structure for init
@@ -201,16 +186,6 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  runFunctions(stringToSplit, event) {
-    stringToSplit.split("|").forEach((f) => {
-      try {
-        this.module[`${f}`](event);
-      } catch (error) {
-        console.error(`Tried: ${f}\nGot: ${error}`);
-      }
-    });
-  }
-
   sendUpdates(signals, event) {
     signals.split("|").forEach((signal) => {
       const signalForwarder = new CustomEvent("bittysignal", {
@@ -228,8 +203,6 @@ class BittyJs extends HTMLElement {
           receiver.f(event);
         }
       });
-      // use the calling element if no
-      // receivers were found
       if (numberOfReceivers === 0) {
         this.module[signal](event.target, event);
       }
@@ -237,7 +210,7 @@ class BittyJs extends HTMLElement {
   }
 
   setIds() {
-    const selector = ["call", "receive", "send", "watch"]
+    const selector = ["receive", "send", "watch"]
       .map((key) => {
         return `[data-${key}]`;
       })
@@ -266,39 +239,3 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define("bitty-js", BittyJs);
-
-/* *************************************************
- *
- * MIT License
- * https://bitty-js.alanwsmith.com/
- *
- * Copyright (c) 2025 Alan W. Smith
- *
- * Permission is hereby granted, free of charge, to
- * any person obtaining a copy of this software and
- * associated documentation files (the "Software"),
- * to deal in the Software without restriction,
- * including without limitation the rights to use,
- * copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is
- * furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice, this permission
- * notice, and this ID (2y1pBoEREr3eWA1ubCCOXdmRCdn)
- * shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
- * OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- * ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- * ****************************************************/

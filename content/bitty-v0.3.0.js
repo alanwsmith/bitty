@@ -352,8 +352,8 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  sendUpdates(updates, event) {
-    updates.split("|").forEach((key) => {
+  sendUpdates(signals, event) {
+    signals.split("|").forEach((key) => {
       const signalForwarder = new CustomEvent("bittysignal", {
         bubbles: true,
         detail: {
@@ -362,11 +362,18 @@ class BittyJs extends HTMLElement {
         },
       });
       this.parentElement.dispatchEvent(signalForwarder);
+      let numberOfReceivers = 0;
       this.#receivers.forEach((receiver) => {
         if (receiver.key === key) {
+          numberOfReceivers += 1;
           receiver.f(event);
         }
       });
+      // use the calling element if no receivers
+      // were found
+      if (numberOfReceivers === 0) {
+        this.module[key](event.target, event);
+      }
     });
   }
 

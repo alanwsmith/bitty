@@ -3,13 +3,13 @@ export default class {
     fiction: {
       title: "Neuromancer",
       author: "William Gibson",
-      pages: 271
+      pages: 271,
     },
     nonFiction: {
       title: "On Writing",
       author: "Stephen King",
-      pages: 288
-    }
+      pages: 288,
+    },
   };
   #bookType = null;
 
@@ -21,7 +21,7 @@ export default class {
     el.innerHTML = `Pages: ${this.#books[this.#bookType].pages}`;
   }
 
-  setType(event) {
+  setType(_el, event) {
     this.#bookType = event.target.dataset.type;
   }
 

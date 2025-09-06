@@ -1,9 +1,7 @@
-/////////////////////////////////////////////////////
-// bitty-js: 0.3.0
-// License at: https://bitty-js.alanwsmith.com/
-// This ID must be included in the file:
-// 2y1pBoEREr3eWA1ubCCOXdmRCdn
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+// bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
+// This ID must be included: 2y1pBoEREr3eWA1ubCCOXdmRCdn
+////////////////////////////////////////////////////////////////////
 
 class BittyJs extends HTMLElement {
   #listeners = ["click", "input"];
@@ -99,10 +97,11 @@ class BittyJs extends HTMLElement {
     if (event.target === undefined || event.target.dataset === undefined) {
       return;
     }
-    if (event.target.nodeName !== "BITTY-JS") {
-      if (event.target.dataset.send !== undefined) {
-        this.sendUpdates(event.target.dataset.send, event);
-      }
+    if (
+      event.target.nodeName !== "BITTY-JS" &&
+      event.target.dataset.send !== undefined
+    ) {
+      this.sendUpdates(event.target.dataset.send, event);
     }
     event.stopPropagation();
   }

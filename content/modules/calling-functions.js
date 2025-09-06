@@ -1,11 +1,5 @@
 export default class {
-  #counter = 0;
-
-  increment(el, _event) {
-    this.#counter += 1;
-  }
-
-  update(el, _event) {
-    el.innerHTML = this.#counter;
+  update(_el, _event) {
+    this.api.querySelector("div").innerHTML = "Updated without data-receive attribute";
   }
 }

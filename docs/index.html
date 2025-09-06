@@ -73,13 +73,84 @@
         </div>
       </hgroup>
 
-<details>
+<details class="section-details">
+  <summary>Documentation</summary>
+<details class="docs-section">
+  <summary>The data-* API</summary>
+<p>The entire <strong>bitty-js API</strong> consists of six <strong>data-*</strong> attributes
+that are added to the HTML.</p>
+<ul>
+<li>data-listeners</li>
+<li>data-module</li>
+<li>data-receive</li>
+<li>data-send</li>
+<li>data-use</li>
+<li>data-watch</li>
+</ul>
+<p>Most of the time, you'll only use three:</p>
+<ul>
+<li>data-module</li>
+<li>data-send</li>
+<li>data-receive</li>
+</ul>
+<h5>data-module</h5>
+<p>The <strong>data-module</strong> attribute is used directly on
+<strong>&lt;bitty-js&gt;</strong> elements. Its value defines
+the path to the JavaScript module responsible
+for providing functionality to the element.</p>
+<p>For example:</p>
+
+
+<p>The entire <strong>bitty-js API</strong> consists of six <strong>data-*</strong> attributes
+that are added to the HTML.</p>
+<ul>
+<li>data-listeners</li>
+<li>data-module</li>
+<li>data-receive</li>
+<li>data-send</li>
+<li>data-use</li>
+<li>data-watch</li>
+</ul>
+<p>Most of the time, you'll only use three:</p>
+<ul>
+<li>data-module</li>
+<li>data-send</li>
+<li>data-receive</li>
+</ul>
+<h5>data-module</h5>
+<p>The <strong>data-module</strong> attribute is used directly on
+<strong>&lt;bitty-js&gt;</strong> elements. Its value defines
+the path to the JavaScript module responsible
+for providing functionality to the element.</p>
+<p>For example:</p>
+
+  <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="comment block html"><span class="punctuation definition comment begin html">&lt;!--</span> etc... <span class="punctuation definition comment end html">--&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
+<p>The path can be either a relative path starting with a
+dot (e.g. <code>./modules/module-name.js</code>),
+a relative path without the starting dot
+(e.g. <code>modules/module-name.js</code>), or
+an absolute path (e.g. <code>/modules/module-name.js</code>).</p>
+<h5>data-send</h5>
+<p>Adding a <strong>data-send</strong> attribute to an element sets
+it up to send signals. The names for the signals
+are defined by the value of the attribute.</p>
+<p>Individual signals use a single name:</p>
+
+</details>
+<details class="docs-section">
+  <summary>UUIDs</summary>
+</details>
+</details>
+ 
+<details class="section-details">
   <summary>Overview</summary>
 
 <p><strong>bitty-js</strong> is a web component. It adds reactivity to web pages.
 For example:</p>
 
-<div class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin">
+<div class="add-bitty-flow">
 <bitty-js data-module="modules/timestamp-demo.js">
   <div data-receive="update">Waiting for click</div>
   <button data-send="update">Show Timestamp</button>
@@ -103,11 +174,11 @@ For example:</p>
 <p>The values from the <strong>data-send</strong> and <strong>data-receive</strong>
 attributes map to functions with the same name.</p>
 
-<pre class="code-block large-block-margin"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<pre class="code-block large-block-margin"><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Millisecond: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="support class builtin js">Date</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">now</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
 
 <ul>
 <li>The <strong>update</strong> function handles signals from elements with <strong>data-send=&quot;update&quot;</strong></li>
@@ -118,92 +189,67 @@ attributes map to functions with the same name.</p>
 <li>The element to update</li>
 <li>The event that triggered the update</li>
 </ol>
-<p>The <strong>div</strong> element has its <strong>innerHTML</strong> updated
-with the timestamp. The event isn't used in the demo.</p>
+<p>The element is the same you'd get from <strong>document.querySelector()</strong>.</p>
+<p>The event is the same you'd get from <strong>document.addListener()</strong>.</p>
+<p>The <strong>div</strong> element in the example has its <strong>innerHTML</strong> updated
+with the timestamp. The event isn't used in this case.</p>
 
 </details> 
-<details>
-  <summary>Designed for Simplicity</summary>
-
-<p>The goal is to make adding reactivity to sites
-and pages as simple as possible. To wit,
-<strong>bitty-js</strong> is:</p>
-<ul>
-<li>A single file web component</li>
-<li>Written in vanilla JavaScript</li>
-<li>Powered by standard HTML attributes</li>
-<li>Stylable via the light DOM</li>
-<li>Designed for both progressive enhancement and API based content loading</li>
-</ul>
-<p>The result:</p>
-<ul>
-<li>CSS selectors work like they do on regular elements.</li>
-<li><strong>data-* attributes</strong> are the only things used in
-the HTML.</li>
-<li>The elements used in the <strong>bitty-js</strong> functions
-are the same ones you'd get if you used <code>document.querySelector()</code>.</li>
-<li>The events used in the <strong>bitty-js</strong> functions are
-the same ones you'd get if you used <code>document.addEventListener()</code>.</li>
-</ul>
-
-</details> 
-<details>
+<details class="section-details">
 <summary>The data-* API</summary>
 
 <p><strong>bitty-js</strong> uses six <strong>data-*</strong> attributes:</p>
 <ul>
 <li>
-<p><strong>data-listeners</strong> - Changes the event
-listeners. (The
-defaults are <strong>click</strong> and <strong>input</strong>)</p>
-<p><em>Can only be used in <strong>bitty-js elements</strong>.</em></p>
+<p><strong>data-listeners</strong> - Changes the events
+<strong>bitty-js</strong> listens for. (The defaults are <strong>click</strong> and <strong>input</strong>.)</p>
+<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
 </li>
 <li>
 <p><strong>data-module</strong> - The path to the JavaScript
 module responsible for providing functionality.</p>
-<p><em>Can only be used in <strong>bitty-js elements</strong>.</em></p>
+<p><em>Required - Can only be used in <strong>bitty-js elements</strong>.</em></p>
 </li>
 <li>
 <p><strong>data-receive</strong> - Sets up child elements
 to receive signals. The value is the name of
-the funciton that's used for the signal.</p>
-<p><em>Only used in <strong>child elements</strong>.</em></p>
+the function that's used for the signal.</p>
+<p><em>Standard - Only used in <strong>child elements</strong>.</em></p>
 </li>
 <li>
-<p><strong>data-send</strong> - Defines signals for the
-element to send. The value is the name of
-the funciton that's used for the signal.</p>
+<p><strong>data-send</strong> - Defines signals as
+element sends. The value is the name of
+the function that's used for the signal.</p>
 <p>Signals are sent from the <strong>bitty-js</strong> element
 when the component is initialized. They are sent
-from child elements when one of their event listeners
-fires.</p>
-<p><em>Available in both <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em></p>
+from child elements when an event that's being
+listened to occurs.</p>
+<p><em>Standard - Available in both <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em></p>
 </li>
 <li>
-<p><strong>data-use</strong> - for using alternaive
+<p><strong>data-use</strong> - for using alternative
 classes exported from the modules.</p>
-<p><em>Can only be used in <strong>bitty-js elements</strong>.</em></p>
+<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
 </li>
 <li>
 <p><strong>data-watch</strong> - Watching for signals coming
 from below the element so signals can be set up
 the DOM tree as well as down.</p>
-<p><em>Only used in <strong>child elements</strong>.</em></p>
+<p><em>Optional - Only used in <strong>child elements</strong>.</em></p>
 </li>
 </ul>
 
 </details> 
-<details>
+<details class="section-details">
   <summary>Basic Examples</summary>
-
       <div class="example-wrapper">
-        <h3>Send/Receive</h3>
+        <h4 class="default-bottom-margin">Send/Receive</h4>
         <div class="example-output">
 <bitty-js data-module="modules/send-and-receive.js">
   <div data-receive="update">Waiting for click</div>
   <button data-send="update">Click Me</button>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/send-and-receive.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for click<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -216,6 +262,7 @@ the DOM tree as well as down.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Basic sending and receiving is done
@@ -223,9 +270,10 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 </ul>
 
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Sending Multiple Signals</h3>
+        <h4 class="default-bottom-margin">Sending Multiple Signals</h4>
         <div class="example-output">
 <bitty-js data-module="modules/send-multiple-signals.js">
   <div>
@@ -235,7 +283,7 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
   </div>
   <button data-send="alfa|bravo|charlie">Click Me</button>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/send-multiple-signals.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -260,6 +308,7 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Multiple signals can be sent from <code>data-send</code> by separating them with
@@ -267,9 +316,10 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 </ul>
 
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Receiving Multiple Signals</h3>
+        <h4 class="default-bottom-margin">Receiving Multiple Signals</h4>
         <div class="example-output">
 <bitty-js data-module="modules/receive-multiple-signals.js">
   <div data-receive="alfa|bravo|charlie">Waiting for clicks</div>
@@ -279,7 +329,7 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
     <button data-send="charlie">Send Charlie</button>
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/receive-multiple-signals.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa|bravo|charlie<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for clicks<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -304,15 +354,17 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Multiple signals can be received from <code>data-receive</code> by separating them with
 <code>|</code> characters.</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Using Additional Data Attributes</h3>
+        <h4 class="default-bottom-margin">Using Additional Data Attributes</h4>
         <div class="example-output">
 <bitty-js data-module="modules/additional-attributes.js">
   <div data-receive="update">Waiting for clicks</div>
@@ -322,7 +374,7 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
     <button data-color="blue" data-send="update">blue</button>
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/additional-attributes.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for clicks<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -353,6 +405,7 @@ with <code>data-send</code> and <code>data-receive</code>.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -366,11 +419,12 @@ argument to the signal function.</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Multiple Senders to Multiple Receivers</h3>
+        <h4 class="default-bottom-margin">Multiple Senders and Multiple Receivers</h4>
         <div class="example-output">
-<bitty-js data-module="modules/diffent-updates-for-multiple-elements.js">
+<bitty-js data-module="modules/multiple-senders-and-multiple-receivers.js">
   <div>
     <div data-receive="title">Waiting for click</div>
     <div data-receive="author">Waiting for click</div>
@@ -380,10 +434,11 @@ argument to the signal function.</p>
     <button data-type="fiction" data-send="setType|title|author|pages">Fiction</button>
     <button data-type="nonFiction" data-send="setType|title|author|pages">Non-Fiction</button>
   </div>
-</bitty-js>        </div>
-        <details>
+</bitty-js>
+        </div>
+        <details class="section-code">
           <summary>Code</summary>
-        <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/diffent-updates-for-multiple-elements.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+        <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/multiple-senders-and-multiple-receivers.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>title<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for click<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>author<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for click<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -427,19 +482,21 @@ argument to the signal function.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>}</span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>TKTKTK</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Sending Directly from the bitty-js Element</h3>
+        <h4 class="default-bottom-margin">Sending Directly from the bitty-js Element</h4>
         <div class="example-output">
 <bitty-js data-module="modules/send-from-bitty.js" data-send="update">
   <div data-receive="update"></div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/send-from-bitty.js<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -451,6 +508,7 @@ argument to the signal function.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -469,15 +527,16 @@ event exists.</p>
 </ul>
 
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Storing State</h3>
+        <h4 class="default-bottom-margin">Storing State</h4>
         <div class="example-output">
 <bitty-js data-module="modules/storing-state.js">
   <div data-receive="update">Waiting for click</div>
   <button data-send="update">Click Me</button>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/storing-state.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for click<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -497,6 +556,7 @@ event exists.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>The initial value is set inside the class
@@ -506,15 +566,16 @@ on initilization. It is updated directly when
 the <code>update</code> signal is sent.</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Calling Functions Without Receivers</h3>
+        <h4 class="default-bottom-margin">Calling Functions Without Receivers</h4>
         <div class="example-output">
 <bitty-js data-module="modules/calling-functions.js">
   <div>Waiting for click</div>
   <button data-send="update">Click Me</button>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/calling-functions.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>Waiting for click<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -527,6 +588,7 @@ the <code>update</code> signal is sent.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Using <code>data-send</code> without any receivers set
@@ -535,14 +597,15 @@ with the element that triggered the event.</li>
 </ul>
 
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Updating An Element Directly</h3>
+        <h4 class="default-bottom-margin">Updating An Element Directly</h4>
         <div class="example-output">
 <bitty-js data-module="modules/updating-self.js">
   <button data-send="update" data-receive="update">Click Me</button>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/updating-self.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Click Me<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -557,6 +620,7 @@ with the element that triggered the event.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -571,9 +635,10 @@ approach to avoid that.</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Using Event Data</h3>
+        <h4 class="default-bottom-margin">Using Event Data</h4>
         <div class="example-output">
 <bitty-js data-module="modules/using-event-data.js">
     <button data-send="update">
@@ -583,7 +648,7 @@ approach to avoid that.</p>
         Waiting on click
     </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/using-event-data.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -600,6 +665,7 @@ approach to avoid that.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>The second argument passed to signal
@@ -609,15 +675,16 @@ updates to the elements that receive
 signals.</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Using Input Text Elements</h3>
+        <h4 class="default-bottom-margin">Using Input Text Elements</h4>
         <div class="example-output">
 <bitty-js data-module="modules/using-input-text-elements.js">
   <input type="text" data-send="update" placeholder="Input text here" />
   <div data-receive="update">Waiting for input</div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/using-input-text-elements.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>text<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">placeholder</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Input text here<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html"> /&gt;</span></span>
@@ -632,6 +699,7 @@ signals.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Input elements don't require any loopback
@@ -640,9 +708,47 @@ change events through the signals just
 like regular events.</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Using Radio Buttons</h3>
+        <h4 class="default-bottom-margin">Input Elements Updating Each Other</h4>
+        <div class="example-output">
+<bitty-js data-module="modules/input-elements-updating-each-other.js">
+  <div>
+  <input type="text" data-send="update" data-receive="update" placeholder="Input text here" />
+  </div>
+  <div>
+  <input type="text" data-send="update" data-receive="update" placeholder="Input text here" />
+  </div>
+</bitty-js>
+        </div>
+        <details class="section-code">
+          <summary>Code</summary>
+        <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/input-elements-updating-each-other.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>text<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">placeholder</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Input text here<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>text<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">placeholder</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Input text here<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span>
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bitty-v0.3.0.js<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
+        <pre class="code-block"><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">uuid</span> <span class="keyword operator comparison js">!==</span> <span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">uuid</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
+        </details>
+    <!--
+        <details>
+        
+        </details>
+-->
+      </div>
+      <div class="example-wrapper">
+        <h4 class="default-bottom-margin">Using Radio Buttons</h4>
         <div class="example-output">
 <bitty-js data-module="modules/using-radio-buttons.js">
   <div>
@@ -666,7 +772,7 @@ like regular events.</li>
   </div>
   <div data-receive="update">Waiting for selection</div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/using-radio-buttons.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -697,14 +803,16 @@ like regular events.</li>
 <span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>TKTKTK</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Element UUIDs</h3>
+        <h4 class="default-bottom-margin">Automatically Added UUIDs</h4>
         <div class="example-output">
 <bitty-js data-module="modules/element-uuids.js">
     <div>
@@ -719,7 +827,7 @@ like regular events.</li>
         Waiting for click
     </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/element-uuids.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -743,6 +851,7 @@ like regular events.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -757,9 +866,10 @@ elements when necessary (e.g. in loops).</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Updating Range Sliders</h3>
+        <h4 class="default-bottom-margin">Updating Range Sliders</h4>
         <div class="example-output">
 <bitty-js data-module="modules/updating-range-sliders.js">
   <div>
@@ -781,7 +891,7 @@ elements when necessary (e.g. in loops).</p>
       data-receive="update">
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/updating-range-sliders.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -810,6 +920,7 @@ elements when necessary (e.g. in loops).</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -836,9 +947,10 @@ release.</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Avoiding Feedback</h3>
+        <h4 class="default-bottom-margin">Avoiding Feedback</h4>
         <div class="example-output">
 <bitty-js data-module="modules/avoiding-feedback.js">
   <div>
@@ -860,7 +972,7 @@ release.</p>
     />
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/avoiding-feedback.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -891,6 +1003,7 @@ release.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>Element UUIDs can be used to avoid feedback loops
@@ -898,9 +1011,10 @@ by ensuring a given element doesn't try to
 update itself.</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Initializing Values</h3>
+        <h4 class="default-bottom-margin">Initializing Values</h4>
         <div class="example-output">
 <bitty-js data-module="modules/initialize-values.js">
   <div>
@@ -912,7 +1026,7 @@ update itself.</li>
     <input id="bravo-3" type="range" data-send="update" data-receive="update" />
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/initialize-values.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -939,6 +1053,7 @@ update itself.</li>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -968,12 +1083,13 @@ default)</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Using Templates</h3>
+        <h4 class="default-bottom-margin">Using Templates</h4>
         <div class="example-output">
 <bitty-js data-module="modules/using-templates.js"></bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/using-templates.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span>
 <span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bitty-v0.3.0.js<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
@@ -990,60 +1106,51 @@ default)</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>TKTKTK</li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Create Elements</h3>
+        <h4 class="default-bottom-margin">Create Elements</h4>
         <div class="example-output">
-<div>TODO: Make example with deeply nested elemneets,
-probably the library example will work for that</div>
-
 <bitty-js data-module="modules/create-elements.js">
+  <div data-receive="createElements">
+    Waiting for click
+  </div>
   <div data-receive="elementsAdded">
     <button data-send="createElements|elementsAdded">
         Create Elements
     </button>
   </div>
-  <div>
-    <div data-receive="createElements">
-      Waiting for click
-    </div>
-  </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
-        <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>TODO: Make example with deeply nested elemneets,
-<span class="line-marker"></span>probably the library example will work for that<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/create-elements.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+        <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/create-elements.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>createElements<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Waiting for click
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elementsAdded<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>createElements|elementsAdded<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>        Create Elements
 <span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>createElements<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      Waiting for click
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span>
 <span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bitty-v0.3.0.js<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
         <pre class="code-block"><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">createElements</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span><span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">display</span> <span class="keyword operator assignment js">=</span> <span class="support type object dom js">document</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">createElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>div<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">display</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Waiting for slider<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">display</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>update<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">display</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">slider</span> <span class="keyword operator assignment js">=</span> <span class="support type object dom js">document</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">createElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>input<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">slider</span><span class="punctuation accessor js">.</span><span class="meta property object js">type</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>range<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">slider</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>0<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">slider</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">send</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>update<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">slider</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">display</span> <span class="keyword operator assignment js">=</span> <span class="support type object dom js">document</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">createElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>div<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">display</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Waiting for value<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">display</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>update<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">display</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elementsAdded</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
@@ -1055,6 +1162,7 @@ probably the library example will work for that</div>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -1075,9 +1183,10 @@ in its process.</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Customize Event Listeners</h3>
+        <h4 class="default-bottom-margin">Customize Event Listeners</h4>
         <div class="example-output">
 <bitty-js data-module="modules/alternate-event-listeners.js"
   data-listeners="mouseover|mouseout">
@@ -1088,7 +1197,7 @@ in its process.</p>
     Waiting for mouse
   </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/alternate-event-listeners.js<span class="punctuation definition string end html">&quot;</span></span></span>
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-listeners</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>mouseover|mouseout<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -1106,6 +1215,7 @@ in its process.</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -1124,9 +1234,10 @@ Add them back in if you need them. For example:</p>
 </li>
 </ul>
         </details>
+-->
       </div>
       <div class="example-wrapper">
-        <h3>Multiple Class Exports</h3>
+        <h4 class="default-bottom-margin">Multiple Class Exports with data-use</h4>
         <div class="example-output">
 <bitty-js 
     data-module="modules/multiple-class-exports.js">
@@ -1149,7 +1260,7 @@ Add them back in if you need them. For example:</p>
         Waiting for click
     </div>
 </bitty-js>        </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> 
 <span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/multiple-class-exports.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -1185,6 +1296,7 @@ Add them back in if you need them. For example:</p>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></pre>
         </details>
+    <!--
         <details>
         <ul>
 <li>
@@ -1199,9 +1311,10 @@ to be packaged into a single file.</p>
 </li>
 </ul>
         </details>
+-->
       </div>
 </details> 
-<details>
+<details class="section-details">
   <summary>Nesting Examples</summary>
 
   <p>
@@ -1819,13 +1932,7 @@ them up the tree:</li>
       </div>
 </details>
  
-<details>
-  <summary>Advanced Examples</summary>
-<p>TOOD: Document <code>doCall</code> and <code>doSend</code>,
-and the bitty signals for calls
-and bubbling</p>
-</details> 
-<details>
+<details class="section-details">
   <summary>Progressive Enhancement Example</summary>
 
   <h4>The Happy Path</h4>
@@ -2152,12 +2259,34 @@ and bubbling</p>
     interactivity.
   </p>
 </details> 
-<details>
+<details class="section-details">
     <summary>JavaScript Data Example</summary>
 
 </details>
  
-<details>
+<details class="section-details">
+  <summary>Designed for Simplicity</summary>
+
+<p>The goal is to make adding reactivity to sites
+and pages as simple as possible. To wit,
+<strong>bitty-js</strong> is:</p>
+<ul>
+<li>A single file web component</li>
+<li>Written in vanilla JavaScript</li>
+<li>Powered by standard HTML attributes</li>
+<li>Stylable via the light DOM</li>
+<li>Designed for both progressive enhancement and API based content loading</li>
+</ul>
+<p>The result:</p>
+<ul>
+<li>No build step required.</li>
+<li>CSS selectors work like they do on regular elements.</li>
+<li><strong>data-* attributes</strong> are the only things used in
+the HTML.</li>
+<li>Functionality is defined with native JavaScript functions.</li>
+</ul>
+</details> 
+<details class="section-details">
   <summary>Release Notes</summary>
           <h3>Version: 0.3.0</h3>
 <p>DATE TBD</p>
@@ -2589,7 +2718,7 @@ choice to use the light DOM instead of the shadow DOM.</p>
 </li>
 </ul>
 </details> 
-<details class="test-case">
+<details class="section-details">
   <summary>Test Suite</summary>
   <ul>
     <h5 class="test-title">Basic Send and Receive</h5>
@@ -3073,7 +3202,7 @@ choice to use the light DOM instead of the shadow DOM.</p>
     </details>
   </ul>
 </details> 
-<details>
+<details class="section-details">
   <summary>Feedback Requested</summary>
 
 <p><strong>bitty-js</strong> is currently <strong>beta version 0.3.0</strong>.

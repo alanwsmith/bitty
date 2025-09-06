@@ -1,0 +1,27 @@
+The entire __bitty-js API__ consists of six __data-*__ attributes
+that are added to the HTML. 
+
+- data-listeners
+- data-module
+- data-receive
+- data-send
+- data-use
+- data-watch
+
+Most of the time, you'll only use three:
+
+- data-module
+- data-send
+- data-receive
+
+##### data-module
+
+The __data-module__ attribute is used directly on 
+__&lt;bitty-js&gt;__ elements. Its value defines
+the path to the JavaScript module responsible
+for providing functionality to the element. 
+
+For example:
+
+
+

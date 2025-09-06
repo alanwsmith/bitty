@@ -209,12 +209,13 @@ class BittyJs extends HTMLElement {
   }
 
   setIds() {
-    const selector = ["receive", "send", "watch"]
-      .map((key) => {
-        return `[data-${key}]`;
-      })
-      .join(",");
-    const els = this.querySelectorAll(selector);
+    // const selector = ["receive", "send", "watch"]
+    //   .map((key) => {
+    //     return `[data-${key}]`;
+    //   })
+    //   .join(",");
+
+    const els = this.querySelectorAll("*");
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
         const uuid = self.crypto.randomUUID();

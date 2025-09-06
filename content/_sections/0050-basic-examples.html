@@ -1,14 +1,13 @@
-<details>
+<details class="section-details">
   <summary>Basic Examples</summary>
-
   [! for folder in folders !]
     [! if folder.parent == "_examples" !]
       <div class="example-wrapper">
-        <h3>[! include "_examples/" + folder.name + "/title.txt" !]</h3>
+        <h4 class="default-bottom-margin">[! include "_examples/" + folder.name + "/title.txt" !]</h4>
         <div class="example-output">
         [! include "_examples/" + folder.name + "/example.html" !]
         </div>
-        <details>
+        <details class="section-code">
           <summary>Code</summary>
         <pre class="code-block">
           [@- highlight["_examples/" + folder.name + "/example.html"]|safe -@]
@@ -20,9 +19,11 @@
           [@- highlight["modules/" + scriptname]|safe -@]
         </pre>
         </details>
+    <!--
         <details>
         [@ markdown["_examples/" + folder.name + "/details.md"]|safe @]
         </details>
+-->
       </div>
     [! endif !]
   [! endfor !]

@@ -20,8 +20,8 @@ class BittyJs extends HTMLElement {
       this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
       this.loadWatchers();
-      this.addEventListeners();
       this.initBitty();
+      this.addEventListeners();
       if (typeof this.module.init === "function") {
         this.module.init();
       }

@@ -11,9 +11,9 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     this.setParentId();
     this.setIds();
-    await this.attachModule();
-    if (this.module === undefined) {
-      console.error("bitty-js failed to load its module");
+    await this.makeConnection();
+    if (this.connection === undefined) {
+      console.error("bitty-js failed to load its connection");
     } else {
       this.requestUpdate = this.handleChange.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
@@ -22,8 +22,8 @@ class BittyJs extends HTMLElement {
       this.loadWatchers();
       this.initBitty();
       this.addEventListeners();
-      if (typeof this.module.init === "function") {
-        this.module.init();
+      if (typeof this.connection.init === "function") {
+        this.connection.init();
       }
     }
   }
@@ -44,7 +44,7 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.module[`${key}`](el, data);
+          this.connection[`${key}`](el, data);
         } catch (error) {
           console.error(`Tried: ${key}\nGot ${error}`);
         }
@@ -57,7 +57,7 @@ class BittyJs extends HTMLElement {
       key: key,
       f: (data) => {
         try {
-          this.module[`${key}`](el, data);
+          this.connection[`${key}`](el, data);
         } catch (error) {
           console.error(`Tried: ${key}\nGot ${error}`);
         }
@@ -69,17 +69,17 @@ class BittyJs extends HTMLElement {
     super();
   }
 
-  async attachModule() {
-    if (this.dataset.module) {
+  async makeConnection() {
+    if (this.dataset.connection) {
       // first see if there's a bittyClasses
       // class on the page. Use it if there is.
       if (
         typeof bittyClasses !== "undefined" &&
-        typeof bittyClasses[this.dataset.module] !== "undefined"
+        typeof bittyClasses[this.dataset.connection] !== "undefined"
       ) {
-        this.module = new bittyClasses[this.dataset.module]();
+        this.connection = new bittyClasses[this.dataset.connection]();
       } else {
-        let validModulePath = this.dataset.module;
+        let validModulePath = this.dataset.connection;
         if (
           validModulePath.substring(0, 2) !== "./" &&
           validModulePath.substring(0, 1) !== "/"
@@ -88,13 +88,13 @@ class BittyJs extends HTMLElement {
         }
         const mod = await import(validModulePath);
         if (this.dataset.use === undefined) {
-          this.module = new mod.default();
+          this.connection = new mod.default();
         } else {
-          this.module = new mod[this.dataset.use]();
+          this.connection = new mod[this.dataset.use]();
         }
       }
     } else {
-      console.error("bitty-js is missing its data-module attribute");
+      console.error("bitty-js is missing its data-connection attribute");
     }
   }
 
@@ -160,7 +160,7 @@ class BittyJs extends HTMLElement {
   }
 
   initBitty() {
-    this.module.api = this;
+    this.connection.api = this;
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
@@ -212,7 +212,7 @@ class BittyJs extends HTMLElement {
         }
       });
       if (numberOfReceivers === 0) {
-        this.module[signal](event.target, event);
+        this.connection[signal](event.target, event);
       }
     });
   }

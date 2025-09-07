@@ -1,7 +1,7 @@
 export class Parent {
   #value = 0;
 
-  increment(_event) {
+  increment(el, _event) {
     this.#value += 1;
   }
 
@@ -13,12 +13,11 @@ export class Parent {
 export class Child {
   #value = 0;
 
-  increment(_event) {
+  increment(el, _event) {
     this.#value += 1;
   }
 
   updateChild(el, event) {
-    el.innerHTML = 
-      `${event.target.dataset.name}: ${this.#value}`;
+    el.innerHTML = `${event.target.dataset.name}: ${this.#value}`;
   }
 }

@@ -2,7 +2,7 @@ export class Parent {
   init() {
     this.api.querySelector("button").click();
   }
-  update(el, event) {
+  runTest(el, event) {
     el.innerHTML = `PASSED`;
   }
 }

@@ -412,17 +412,17 @@ class BittyJs extends HTMLElement {
     {
       id: 2,
       kind: [
-        "A <bitty-js></bitty-js> element is missing its 'data-module' attribute",
+        "A <bitty-js></bitty-js> element is missing its 'data-connect' attribute",
       ],
       description: [
-        `Every <bitty-js></bitty-js> element requires a 'data-module' attribute that connects it to a '.js' file that powers its functionality.`,
-        `The 'data-module' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
+        `Every <bitty-js></bitty-js> element requires a 'data-connect' attribute that connects it to a '.js' file that powers its functionality.`,
+        `The 'data-connect' attribute is missing from the <bitty-js></bitty-js> element with the 'data-uuid' attribute:`,
         `__UUID__`,
       ],
       help: [
         [
-          `Add a 'data-module' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
-          `<bitty-js data-module="./path/to/module.js"></bitty-js>`,
+          `Add a 'data-connect' attribute to the <bitty-js></bitty-js> tag with the path to its supporting '.js' module file. For example:`,
+          `<bitty-js data-connect="./path/to/module.js"></bitty-js>`,
         ],
       ],
       developerNote: [],

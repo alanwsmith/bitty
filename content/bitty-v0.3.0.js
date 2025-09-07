@@ -49,7 +49,7 @@ class BittyJs extends HTMLElement {
           this.connection[`${key}`](el, data);
         } catch (error) {
           this.error(
-            `Attempt to call "${key}(el, event)" produced this error: ${error} - Connection path: ${this.connectionPath} - Connection class: ${this.connectionClass}`,
+            `Receiver "${key}(el, event)" failed with error: ${error}`,
           );
         }
       },
@@ -64,7 +64,7 @@ class BittyJs extends HTMLElement {
           this.connection[`${key}`](el, data);
         } catch (error) {
           this.error(
-            `Attempt to call "${key}(el, event)" produced this error: ${error} - Connection path: ${this.connectionPath} - Connection class: ${this.connectionClass}`,
+            `Watcher "${key}(el, event)" failed with error: ${error}`,
           );
         }
       },
@@ -121,6 +121,8 @@ class BittyJs extends HTMLElement {
 <div class="bitty-js-error-header">bitty-js Error</div>
 <div class="bitty-js-error-message">${message}</div>
 <div class="bitty-js-error-uuid">UUID: ${this.dataset.uuid}</div>
+<div class="bitty-js-error-connection-path">Connection Path: ${this.connectionPath}</div>
+<div class="bitty-js-error-connection-class">Connection Class: ${this.connectionClass}</div>
 </div>`;
   }
 
@@ -235,7 +237,11 @@ class BittyJs extends HTMLElement {
         }
       });
       if (numberOfReceivers === 0) {
-        this.connection[signal](event.target, event);
+        try {
+          this.connection[signal](event.target, event);
+        } catch (error) {
+          this.error(`Signal "${signal}" failed with error: ${error}`);
+        }
       }
     });
   }

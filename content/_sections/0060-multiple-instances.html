@@ -1,0 +1,34 @@
+<details class="section-details">
+  <summary>Multiple Instances</summary>
+
+  <p>
+    Multiple <strong>bitty-js</strong> instances
+    can be used on a single page. 
+  </p>
+
+  [! for folder in folders !]
+    [! if folder.parent == "_multiple-instance-examples" !]
+      <div class="example-wrapper">
+        <h3>[! include "_multiple-instance-examples/" + folder.name + "/title.txt" !]</h3>
+        <div class="example-output">
+        [! include "_multiple-instance-examples/" + folder.name + "/example.html" !]
+        </div>
+        <pre class="code-block"><code>
+          [@- highlight["_multiple-instance-examples/" + folder.name + "/example.html"]|safe -@]
+          [@- "\n" -@]
+          [@- highlight["_includes/_script-tag.html"]|safe -@]
+        </code></pre>
+        [! set scriptname !][! include "_multiple-instance-examples/" + folder.name + "/script-name.txt" !][! endset !]
+        <pre class="code-block"><code>
+          [@- highlight["modules/" + scriptname]|safe -@]
+        </code></pre>
+    <!--
+        <details>
+        [@ markdown["_multiple-instance-examples/" + folder.name + "/details.md"]|safe @]
+        </details>
+-->
+      </div>
+    [! endif !]
+  [! endfor !]
+</details>
+

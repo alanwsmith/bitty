@@ -3,8 +3,7 @@ export class Parent {
 
   update(el, _event) {
     this.#value += 1;
-    el.innerHTML =
-      `Parent is ${this.#value} at ${Date.now()}`;
+    el.innerHTML = `Parent is ${this.#value} at ${Date.now()}`;
   }
 }
 
@@ -14,7 +13,6 @@ export class Child {
   update(el, event) {
     this.#value += 1;
     const name = event.target.dataset.name;
-    el.innerHTML =
-      `${name} is ${this.#value} at ${Date.now()}`;
+    el.innerHTML = `${name} is ${this.#value} at ${Date.now()}`;
   }
 }

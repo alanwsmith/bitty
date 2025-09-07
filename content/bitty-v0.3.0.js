@@ -42,33 +42,25 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(key, el) {
-    this.#receivers.push({
-      key: key,
-      f: (data) => {
-        try {
+    if (this.connection[`${key}`] !== undefined) {
+      this.#receivers.push({
+        key: key,
+        f: (data) => {
           this.connection[`${key}`](el, data);
-        } catch (error) {
-          this.error(
-            `Attempt to call "${key}(el, event)" produced this error: ${error} - Connection path: ${this.connectionPath} - Connection class: ${this.connectionClass}`,
-          );
-        }
-      },
-    });
+        },
+      });
+    }
   }
 
   addWatcher(key, el) {
-    this.#watchers.push({
-      key: key,
-      f: (data) => {
-        try {
+    if (this.connection[`${key}`] !== undefined) {
+      this.#watchers.push({
+        key: key,
+        f: (data) => {
           this.connection[`${key}`](el, data);
-        } catch (error) {
-          this.error(
-            `Attempt to call "${key}(el, event)" produced this error: ${error} - Connection path: ${this.connectionPath} - Connection class: ${this.connectionClass}`,
-          );
-        }
-      },
-    });
+        },
+      });
+    }
   }
 
   async makeConnection() {
@@ -82,7 +74,7 @@ class BittyJs extends HTMLElement {
       }
       if (
         typeof bittyClasses !== "undefined" &&
-        typeof bittyClasses[this.dataset.connection] !== "undefined"
+        typeof bittyClasses[this.dataset.connection] === "class"
       ) {
         this.connectionPath = "script-tag-on-page";
         this.connectionClass = this.dataset.connection;
@@ -121,6 +113,8 @@ class BittyJs extends HTMLElement {
 <div class="bitty-js-error-header">bitty-js Error</div>
 <div class="bitty-js-error-message">${message}</div>
 <div class="bitty-js-error-uuid">UUID: ${this.dataset.uuid}</div>
+<div class="bitty-js-error-connection-path">Connection Path: ${this.connectionPath}</div>
+<div class="bitty-js-error-connection-class">Connection Class: ${this.connectionClass}</div>
 </div>`;
   }
 
@@ -235,7 +229,9 @@ class BittyJs extends HTMLElement {
         }
       });
       if (numberOfReceivers === 0) {
-        this.connection[signal](event.target, event);
+        if (this.connection[signal] !== undefined) {
+          this.connection[signal](event.target, event);
+        }
       }
     });
   }

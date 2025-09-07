@@ -70,7 +70,10 @@ class BittyJs extends HTMLElement {
   }
 
   async attachModule() {
-    if (this.dataset.module) {
+    if (this.dataset.local) {
+      this.module = document.ping;
+      console.log(this.module);
+    } else if (this.dataset.module) {
       let validModulePath = this.dataset.module;
       if (
         validModulePath.substring(0, 2) !== "./" &&

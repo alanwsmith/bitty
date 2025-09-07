@@ -1,0 +1,9 @@
+- A single element can use both `data-send` and
+`data-receive` with the same signal name/function to 
+update itself in many cases. 
+One exception is `input` elements. If they
+try to update their own values when they change a 
+feedback loop could be created. 
+
+    See "Avoiding Feedback" below for one 
+    approach to avoid that.

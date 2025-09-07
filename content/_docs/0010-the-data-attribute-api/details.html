@@ -1,0 +1,358 @@
+[! filter markdown|safe !]
+__bitty-js__  is a web component. It wraps
+other elements and connects them to JavaScript
+functions via signaling events. 
+The connections are made via the __bitty-js API__ which
+consists of __six data-*  attributes__:
+
+- data-listeners
+- data-module
+- data-receive
+- data-send
+- data-use
+- data-watch
+
+Most of the time, you'll only use three:
+
+- data-module
+- data-send
+- data-receive
+
+#### data-module
+
+__&lt;bitty-js&gt;__ components require the 
+__data-module__ attribute. It sets
+the path to the JavaScript module file responsible
+for providing functionality. 
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js data-module="modules/example.js">
+  <!-- etc... -->
+</bitty-js>
+  [!- endfilter -!]
+</pre>
+
+The path can be relative:
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+data-module="modules/example.js"
+  [!- endfilter -!]
+</pre>
+
+absolute:
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+data-module="/modules/example.js"
+  [!- endfilter -!]
+</pre>
+
+or relative starting with a leading dot:
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+data-module="./modules/example.js"
+  [!- endfilter -!]
+</pre>
+
+The only requirement of the JavaScript 
+module is that it export a default class:
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+// modules/example.js
+export default class {
+  // etc...
+}
+  [!- endfilter -!]
+</pre>
+
+
+#### data-send
+
+Adding a __data-send__ attribute to an element
+sets it up to send signals. 
+The attribute can be added directly to a __&lt;bitty-js&gt;__
+component:
+[! endfilter !]
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js" 
+  data-send="componentSignal">
+   <!-- etc... -->
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+
+[! filter markdown|safe !]
+The value of the __data-send__ attribute is the name
+of the signal. It maps to a function in 
+the JavaScript module with the same name:
+[! endfilter !]
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  componentSignal(_el, _event) {
+    // etc...
+  }
+}
+  [!- endfilter -!]
+</pre>
+
+[! filter markdown|safe !]
+A __&lt;bitty-js&gt;__ component with a __data-send__
+attribute sends the named signal when it's
+initialized. The values the function receives
+are determined by __data-receive__ attributes
+(covered below).
+
+The __data-send__ attribute can also be 
+added to child elements of a 
+__&lt;bitty-js&gt;__ component:
+[! endfilter !]
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js data-module="modules/example.js">
+  <button data-send="buttonSignal">
+    Click me
+  </button>
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+[! filter markdown|safe !]
+The value of the __data-send__ attribute
+works the same way it does on a __&lt;bitty-js&gt;__
+component. It maps to a function with the same 
+name in the JavaScript module.
+[! endfilter !]
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  buttonSignal(_el, _event) {
+    // etc...
+  }
+}
+  [!- endfilter -!]
+</pre>
+
+[! filter markdown|safe !]
+Child elements with a __data-send__
+attribute send their named signals based
+on events. The default events are "click"
+and "input", but they can be changed
+with the __data-listeners__ attribute
+detailed below.
+
+Multiple signals can be sent from the 
+__data-send__ attribute of either
+a __&lt;bitty-js&gt;__ component or its
+children by separating the signal names
+with `|` characters. 
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-send="signalAlfa|signalBravo">
+    <button data-send="signalCharlie|signalDelta">
+      Click me
+    </button>
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+Which would map to corresponding
+function names in the JavaScript module.
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  signalAlfa(_el, _event) { 
+    // etc...
+  }
+  signalBravo(_el, _event) {
+    // etc...
+  }
+  signalCharlie(_el, _event) { 
+    // etc...
+  }
+  signalDelta(_el, _event) { 
+    // etc...
+  }
+}
+  [!- endfilter -!]
+</pre>
+
+
+The values the JavaScript module function receives
+are determined by __data-receive__ attributes
+(covered below).
+
+#### data-receive
+
+The __data-receive__ attribute can be added
+to children of __&lt;bitty-js&gt;__ components.
+It registers them to receive updates when 
+a signal matching their value is sent. 
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-send="componentSignal">
+    <div data-receive="componentSignal"></div>
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+As with __data-send__ attributes, the
+value of __data-receive__ attributes maps
+to JavaScript module functions with the
+same name:
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  componentSignal(_el, _event) {
+    // etc...
+  }
+}
+  [!- endfilter -!]
+</pre>
+
+This ties the __data-send__ and
+__data-receive__ attributes together
+through the function. Details on
+how the connections work are
+in The Signal Chain section below.
+
+#### data-listeners
+
+__&lt;bitty-js&gt;__ components default to 
+listening for "click" and "input" events
+from the elements they wrap. Using the
+__data-listeners__ attribute overrides
+the defaults. 
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-listeners="data-listeners="mouseover">
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+Multiple event types are separated by a
+"|" character.
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-listeners="data-listeners="mouseover|mouseout">
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+The override is complete. If "click"
+and "input" listeners are still needed
+they must be included in the attribute's
+value.
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-listeners="click|input|mouseover|mouseout">
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+
+#### data-use
+
+__&lt;bitty-js&gt;__ components use
+the default export from JavaScript modules. 
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  // etc...
+}
+  [!- endfilter -!]
+</pre>
+
+They can use other classes via 
+the __data-use__ attribute.
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+<bitty-js 
+  data-module="modules/example.js"
+  data-use="AlternateClass">
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export class AlternateClass {
+  // etc...
+}
+  [!- endfilter -!]
+</pre>
+
+This allows multiple bitty components to
+access different functionality from 
+a single JavaScript module file.
+
+<pre class="code-block">
+  [!- filter highlight_html|safe -!]
+
+<bitty-js 
+  data-module="modules/example.js">
+</bitty-js>
+
+<bitty-js 
+  data-module="modules/example.js"
+  data-use="AlternateClass">
+</bitty-js>
+  [! endfilter !]
+</pre>
+
+<pre class="code-block">
+  [!- filter highlight_javascript|safe -!]
+export default class {
+  // etc...
+}
+
+export class AlternateClass {
+  // etc...
+}
+  [!- endfilter -!]
+</pre>
+
+#### data-watch
+
+__&lt;bitty-js&gt;__ components can be nested. 
+Signals from each component are self-contained
+by default. The __data-watch__ attribute
+can be used to transfer signals between
+multiple components. 
+
+More documentation on nesting is pending.
+
+See the examples in the mean time. 
+
+[! endfilter !]
+

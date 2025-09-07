@@ -1,0 +1,64 @@
+<h2>Hello, bitty</h2>
+
+[! include "wrapper/do-not-edit-output-reminder.html" !]
+
+<p>Bitty is a web component. It makes elements reactive.</p>
+<p>This page has docs and examples of bitty's features. The first is this counter.
+  Click it to make a number go up.
+</p>
+<div
+  class="make-two-columns warning-border-faded default-radius xxlarge-inline-margin"
+>
+[!- autoescape false !]
+  [@ data.misc_html["counter.html"].raw @]
+[!- endautoescape !]
+</div>
+<p>
+  Bitty uses signaling.
+  <code>data-*</code> attributes define the signals an element sends and
+  recieves. For example, the counter looks like this:
+</p>
+
+<div class="two-column-example">
+  <div>
+    <div>index.html</div>
+    <pre
+      class="code-block"
+    ><code>
+[!- autoescape false !][@- data.misc_html["counter.html"].highlighted -@]
+[! endautoescape !]</code></pre>
+  </div>
+  <div>
+    <div>counter.js</div>
+    <pre
+      class="code-block"
+    ><code>[!- autoescape false !][@- data.example_scripts["counter.js"].highlighted -@][!- endautoescape !]</code></pre>
+  </div>
+</div>
+
+<ul>
+  <li>
+    <code>data-bridge</code> connects to 
+    <code>counter.js</code>
+  </li>
+  <li>
+    <code>data-c</code> calls <code>_addOne</code> when the button
+    is clicked (prepending the funciton name with an <code>_</code> is part of
+    bitty's naming convention)
+  </li>
+  <li>
+    <code>data-s</code> sends the signal to run <code>$showNum</code> when the button is
+    clicked
+    (prepending <code>$</code>
+    is another part of the naming convention)
+  </li>
+  <li>
+    <code>data-r</code> registeres the button to receive updates when
+    <code>showNum</code> signals are sent
+  </li>
+</ul>
+
+<p>
+  There are more features, but that's everything you need to know to get
+  started.
+</p>

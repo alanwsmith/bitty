@@ -1,0 +1,56 @@
+<details class="section-details">
+  <summary>Overview</summary>
+
+[! filter markdown|safe !]
+**bitty-js** is a web component. It adds reactivity to web pages. 
+For example:
+[! endfilter !]
+
+<div class="add-bitty-flow">
+  [! include "_misc/_timestamp-demo.html" !]
+</div>
+
+[! filter markdown|safe !]
+The **API**  uses __data-*__ attributes:
+[! endfilter !]
+
+<pre class="code-block large-block-margin">
+  [@- highlight["_misc/_timestamp-demo.html"]|safe -@]
+  [@- "\n" -@]
+  [@- highlight["_includes/_script-tag.html"]|safe -@]
+</pre>
+
+
+[! filter markdown|safe !]
+- **data-module** connects to the script responsible for functionality.
+- **data-receive** registers the **div** to react to **update** signals.
+- **data-send** tells the **button** to send **update** signals.
+
+#### Functionality 
+
+The values from the **data-send** and **data-receive**
+attributes map to functions with the same name.
+[! endfilter !]
+
+<pre class="code-block large-block-margin">
+  [@- highlight["modules/timestamp-demo.js"]|safe -@]
+</pre>
+
+[! filter markdown|safe !]
+- The **update** function handles signals from elements with **data-send="update"**
+- Elements with **data-receive="update"** are processed by the **update** function.
+
+The two arguments passed to a **bitty-js function** are:
+
+1. The element to update
+2. The event that triggered the update
+
+The element is the same you'd get from __document.querySelector()__. 
+
+The event is the same you'd get from __document.addListener()__.
+
+The **div** element in the example has its **innerHTML** updated 
+with the timestamp. The event isn't used in this case. 
+[! endfilter !]
+
+</details>

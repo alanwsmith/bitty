@@ -1,0 +1,23 @@
+<details class="section-details">
+  <summary>Test Suite</summary>
+  <ul>
+      [! for folder in folders !]
+        [! if folder.parent == "tests" !]
+    <h5 class="test-title">[! include "tests/" + folder.name + "/title.txt" !]</h5>
+
+    <div class="test-output">
+          [! include "tests/" + folder.name + "/index.html" !]
+    </div>
+    <details class="test-code">
+      <summary>Test Code</summary>
+    <pre class="code-block">
+          [@- highlight["tests/" + folder.name + "/index.html"]|safe -@]
+    </pre >
+    <pre class="code-block">
+          [@- highlight["tests/" + folder.name + "/test.js"]|safe -@]
+    </pre >
+    </details>
+        [! endif !]
+      [! endfor !]
+  </ul>
+</details>

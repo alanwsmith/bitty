@@ -1,11 +1,12 @@
 export default class {
-  update(el, _event) {
+  updateDefault(el, _event) {
     el.innerHTML = `Default Class at ${Date.now()}`;
   }
 }
 
 export class AlternativeClass {
-  update(el, _event) {
+  updateAlt(el, _event) {
     el.innerHTML = `Alternative Class at ${Date.now()}`;
   }
 }
+

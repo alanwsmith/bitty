@@ -71,18 +71,27 @@ class BittyJs extends HTMLElement {
 
   async attachModule() {
     if (this.dataset.module) {
-      let validModulePath = this.dataset.module;
+      // first see if there's a bittyClasses
+      // class on the page. Use it if there is.
       if (
-        validModulePath.substring(0, 2) !== "./" &&
-        validModulePath.substring(0, 1) !== "/"
+        typeof bittyClasses !== "undefined" &&
+        typeof bittyClasses[this.dataset.module] !== "undefined"
       ) {
-        validModulePath = `./${validModulePath}`;
-      }
-      const mod = await import(validModulePath);
-      if (this.dataset.use === undefined) {
-        this.module = new mod.default();
+        this.module = new bittyClasses[this.dataset.module]();
       } else {
-        this.module = new mod[this.dataset.use]();
+        let validModulePath = this.dataset.module;
+        if (
+          validModulePath.substring(0, 2) !== "./" &&
+          validModulePath.substring(0, 1) !== "/"
+        ) {
+          validModulePath = `./${validModulePath}`;
+        }
+        const mod = await import(validModulePath);
+        if (this.dataset.use === undefined) {
+          this.module = new mod.default();
+        } else {
+          this.module = new mod[this.dataset.use]();
+        }
       }
     } else {
       console.error("bitty-js is missing its data-module attribute");

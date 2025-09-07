@@ -77,8 +77,10 @@
   <summary>Documentation</summary>
 <details class="docs-section">
   <summary>The data-* API</summary>
-<p>The entire <strong>bitty-js API</strong> consists of six <strong>data-*</strong> attributes
-that are added to the HTML.</p>
+<p><strong>bitty-js</strong>  is a web component. It connects
+HTML elements and events to JavaScript functions.
+The connections are made via the <strong>bitty-js API</strong> which
+consists of six <strong>data-*</strong>  attributes:</p>
 <ul>
 <li>data-listeners</li>
 <li>data-module</li>
@@ -94,51 +96,106 @@ that are added to the HTML.</p>
 <li>data-receive</li>
 </ul>
 <h5>data-module</h5>
-<p>The <strong>data-module</strong> attribute is used directly on
-<strong>&lt;bitty-js&gt;</strong> elements. Its value defines
+<p><strong>&lt;bitty-js&gt;</strong> components require the
+<strong>data-module</strong> attribute. It sets
 the path to the JavaScript module responsible
 for providing functionality to the element.</p>
-<p>For example:</p>
 
-
-<p>The entire <strong>bitty-js API</strong> consists of six <strong>data-*</strong> attributes
-that are added to the HTML.</p>
-<ul>
-<li>data-listeners</li>
-<li>data-module</li>
-<li>data-receive</li>
-<li>data-send</li>
-<li>data-use</li>
-<li>data-watch</li>
-</ul>
-<p>Most of the time, you'll only use three:</p>
-<ul>
-<li>data-module</li>
-<li>data-send</li>
-<li>data-receive</li>
-</ul>
-<h5>data-module</h5>
-<p>The <strong>data-module</strong> attribute is used directly on
-<strong>&lt;bitty-js&gt;</strong> elements. Its value defines
-the path to the JavaScript module responsible
-for providing functionality to the element.</p>
-<p>For example:</p>
-
-  <pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="comment block html"><span class="punctuation definition comment begin html">&lt;!--</span> etc... <span class="punctuation definition comment end html">--&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
-<p>The path can be either a relative path starting with a
-dot (e.g. <code>./modules/module-name.js</code>),
-a relative path without the starting dot
-(e.g. <code>modules/module-name.js</code>), or
-an absolute path (e.g. <code>/modules/module-name.js</code>).</p>
+
+<p>The path can be relative:</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic">data-module=&quot;modules/example.js&quot;</span></pre>
+
+<p>absolute:</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic">data-module=&quot;/modules/example.js&quot;</span></pre>
+
+<p>or relative starting with a leading dot:</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic">data-module=&quot;./modules/example.js&quot;</span></pre>
+
+<p>The only requirement of the JavaScript
+module is that it export a default class:</p><pre class="code-block"><span class="line-marker"></span><span class="source js"><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> modules/example.js
+<span class="line-marker"></span></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> etc...
+<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
+
+
 <h5>data-send</h5>
-<p>Adding a <strong>data-send</strong> attribute to an element sets
-it up to send signals. The names for the signals
-are defined by the value of the attribute.</p>
-<p>Individual signals use a single name:</p>
+<p>Adding a <strong>data-send</strong> attribute to an element
+sets it up to send signals.
+The attribute can be added directly to a <strong>&lt;bitty-js&gt;</strong>
+component:</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>componentSignal<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>   <span class="comment block html"><span class="punctuation definition comment begin html">&lt;!--</span> etc... <span class="punctuation definition comment end html">--&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
+
+
+<p>The value of the <strong>data-send</strong> attribute is the name
+of the signal. It maps to a function in
+the JavaScript module with the same name:</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">componentSignal</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> etc...
+<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
+
+<p>A <strong>&lt;bitty-js&gt;</strong> component with a <strong>data-send</strong>
+attribute sends the named signal when it's
+initialized. The values the function receives
+are determined by <strong>data-receive</strong> attributes
+(covered below).</p>
+<p>The <strong>data-send</strong> attribute can also be
+applied to child elements of a
+<strong>&lt;bitty-js&gt;</strong> component:</p>
+
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>buttonSignal<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Click me
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
+
+<p>The value of the <strong>data-send</strong> attribute maps
+to a function with the same name in the JavaScript
+module.</p>
+
+<pre class="code-block"><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">buttonSignal</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_el</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_event</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> etc...
+<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></pre>
+
+<p>Child elements with a <strong>data-send</strong>
+attribute send their named signals based
+on events. The default events are &quot;click&quot;
+and &quot;input&quot;. They can be changed
+with the <strong>data-listeners</strong> attribute
+details below.</p>
+<p>The values the function receives
+are determined by <strong>data-receive</strong> attributes
+(covered below).</p>
+
+
+
+
+<pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-js</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-module</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>modules/example.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>exampleSignal<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
+
+<p>It can also be used
+with  <strong>&lt;bitty-js&gt;</strong> tags directly:</p><pre class="code-block"><span class="line-marker"></span><span class="text html basic"><span class="comment block html"><span class="punctuation definition comment begin html">&lt;!--</span> etc... <span class="punctuation definition comment end html">--&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-js</span><span class="punctuation definition tag end html">&gt;</span></span></span></pre>
 
 </details>
+
 <details class="docs-section">
   <summary>UUIDs</summary>
 </details>
@@ -193,51 +250,6 @@ attributes map to functions with the same name.</p>
 <p>The event is the same you'd get from <strong>document.addListener()</strong>.</p>
 <p>The <strong>div</strong> element in the example has its <strong>innerHTML</strong> updated
 with the timestamp. The event isn't used in this case.</p>
-
-</details> 
-<details class="section-details">
-<summary>The data-* API</summary>
-
-<p><strong>bitty-js</strong> uses six <strong>data-*</strong> attributes:</p>
-<ul>
-<li>
-<p><strong>data-listeners</strong> - Changes the events
-<strong>bitty-js</strong> listens for. (The defaults are <strong>click</strong> and <strong>input</strong>.)</p>
-<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
-</li>
-<li>
-<p><strong>data-module</strong> - The path to the JavaScript
-module responsible for providing functionality.</p>
-<p><em>Required - Can only be used in <strong>bitty-js elements</strong>.</em></p>
-</li>
-<li>
-<p><strong>data-receive</strong> - Sets up child elements
-to receive signals. The value is the name of
-the function that's used for the signal.</p>
-<p><em>Standard - Only used in <strong>child elements</strong>.</em></p>
-</li>
-<li>
-<p><strong>data-send</strong> - Defines signals as
-element sends. The value is the name of
-the function that's used for the signal.</p>
-<p>Signals are sent from the <strong>bitty-js</strong> element
-when the component is initialized. They are sent
-from child elements when an event that's being
-listened to occurs.</p>
-<p><em>Standard - Available in both <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em></p>
-</li>
-<li>
-<p><strong>data-use</strong> - for using alternative
-classes exported from the modules.</p>
-<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
-</li>
-<li>
-<p><strong>data-watch</strong> - Watching for signals coming
-from below the element so signals can be set up
-the DOM tree as well as down.</p>
-<p><em>Optional - Only used in <strong>child elements</strong>.</em></p>
-</li>
-</ul>
 
 </details> 
 <details class="section-details">
@@ -1313,6 +1325,51 @@ to be packaged into a single file.</p>
         </details>
 -->
       </div>
+</details> 
+<details class="section-details">
+<summary>The data-* API</summary>
+
+<p><strong>bitty-js</strong> uses six <strong>data-*</strong> attributes:</p>
+<ul>
+<li>
+<p><strong>data-listeners</strong> - Changes the events
+<strong>bitty-js</strong> listens for. (The defaults are <strong>click</strong> and <strong>input</strong>.)</p>
+<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
+</li>
+<li>
+<p><strong>data-module</strong> - The path to the JavaScript
+module responsible for providing functionality.</p>
+<p><em>Required - Can only be used in <strong>bitty-js elements</strong>.</em></p>
+</li>
+<li>
+<p><strong>data-receive</strong> - Sets up child elements
+to receive signals. The value is the name of
+the function that's used for the signal.</p>
+<p><em>Standard - Only used in <strong>child elements</strong>.</em></p>
+</li>
+<li>
+<p><strong>data-send</strong> - Defines signals as
+element sends. The value is the name of
+the function that's used for the signal.</p>
+<p>Signals are sent from the <strong>bitty-js</strong> element
+when the component is initialized. They are sent
+from child elements when an event that's being
+listened to occurs.</p>
+<p><em>Standard - Available in both <strong>bitty-js elements</strong> and <strong>child elements</strong>.</em></p>
+</li>
+<li>
+<p><strong>data-use</strong> - for using alternative
+classes exported from the modules.</p>
+<p><em>Optional - Can only be used in <strong>bitty-js elements</strong>.</em></p>
+</li>
+<li>
+<p><strong>data-watch</strong> - Watching for signals coming
+from below the element so signals can be set up
+the DOM tree as well as down.</p>
+<p><em>Optional - Only used in <strong>child elements</strong>.</em></p>
+</li>
+</ul>
+
 </details> 
 <details class="section-details">
   <summary>Nesting Examples</summary>

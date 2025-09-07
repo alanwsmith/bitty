@@ -42,33 +42,25 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(key, el) {
-    this.#receivers.push({
-      key: key,
-      f: (data) => {
-        try {
+    if (this.connection[`${key}`] !== undefined) {
+      this.#receivers.push({
+        key: key,
+        f: (data) => {
           this.connection[`${key}`](el, data);
-        } catch (error) {
-          this.error(
-            `Receiver "${key}(el, event)" failed with error: ${error}`,
-          );
-        }
-      },
-    });
+        },
+      });
+    }
   }
 
   addWatcher(key, el) {
-    this.#watchers.push({
-      key: key,
-      f: (data) => {
-        try {
+    if (this.connection[`${key}`] !== undefined) {
+      this.#watchers.push({
+        key: key,
+        f: (data) => {
           this.connection[`${key}`](el, data);
-        } catch (error) {
-          this.error(
-            `Watcher "${key}(el, event)" failed with error: ${error}`,
-          );
-        }
-      },
-    });
+        },
+      });
+    }
   }
 
   async makeConnection() {
@@ -82,7 +74,7 @@ class BittyJs extends HTMLElement {
       }
       if (
         typeof bittyClasses !== "undefined" &&
-        typeof bittyClasses[this.dataset.connection] !== "undefined"
+        typeof bittyClasses[this.dataset.connection] === "class"
       ) {
         this.connectionPath = "script-tag-on-page";
         this.connectionClass = this.dataset.connection;
@@ -237,10 +229,8 @@ class BittyJs extends HTMLElement {
         }
       });
       if (numberOfReceivers === 0) {
-        try {
+        if (this.connection[signal] !== undefined) {
           this.connection[signal](event.target, event);
-        } catch (error) {
-          this.error(`Signal "${signal}" failed with error: ${error}`);
         }
       }
     });

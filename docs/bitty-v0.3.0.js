@@ -74,9 +74,9 @@ class BittyJs extends HTMLElement {
       }
       if (
         typeof bittyClasses !== "undefined" &&
-        typeof bittyClasses[this.dataset.connection] === "class"
+        typeof window.bittyClasses[this.dataset.connection] !== "undefined"
       ) {
-        this.connectionPath = "script-tag-on-page";
+        this.connectionPath = null;
         this.connectionClass = this.dataset.connection;
         this.connection = new bittyClasses[this.connectionClass]();
       } else {

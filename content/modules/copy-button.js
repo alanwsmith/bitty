@@ -1,6 +1,12 @@
 export default class {
+  #theTimeout = null;
+  #originalText = "Copy";
+
   async copyText(_el, event) {
     const elToCopy = document.querySelector(event.target.dataset.target);
+    if (event.target.innerHTML !== "Copied") {
+      this.#originalText = event.target.innerHTML;
+    }
     try {
       let content;
       if (elToCopy.value) {
@@ -13,9 +19,12 @@ export default class {
     } catch (err) {
       event.target.innerHTML = "Error copying";
     }
-    setTimeout(
+    if (this.#theTimeout !== null) {
+      clearTimeout(this.#theTimeout);
+    }
+    this.#theTimeout = setTimeout(
       (theButton) => {
-        event.target.innerHTML = "Copy";
+        event.target.innerHTML = this.#originalText;
       },
       2000,
       event.target,

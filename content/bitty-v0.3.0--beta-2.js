@@ -67,20 +67,20 @@ class BittyJs extends HTMLElement {
     try {
       if (
         typeof this.dataset === "undefined" ||
-        typeof this.dataset.connection === "undefined"
+        typeof this.dataset.connect === "undefined"
       ) {
-        this.error("Missing data-connection attribute");
+        this.error("Missing data-connect attribute");
         return;
       }
       if (
         typeof bittyClasses !== "undefined" &&
-        typeof window.bittyClasses[this.dataset.connection] !== "undefined"
+        typeof window.bittyClasses[this.dataset.connect] !== "undefined"
       ) {
         this.connectionPath = null;
-        this.connectionClass = this.dataset.connection;
+        this.connectionClass = this.dataset.connect;
         this.connection = new bittyClasses[this.connectionClass]();
       } else {
-        const connectionParts = this.dataset.connection.split("|");
+        const connectionParts = this.dataset.connect.split("|");
         if (
           connectionParts[0].substring(0, 2) === "./" ||
           connectionParts[0].substring(0, 1) === "/"

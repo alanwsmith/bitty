@@ -10,7 +10,7 @@ of this page:
 [@ highlight["_inline_scripts/main-example-script.html"]|safe @]
 </pre>
 
-Using it is done by setting the __data-connection__
+Using it is done by setting the __data-connect__
 attribute of a __bitty-js__ to the name of
 the class in the __bittyClasses__ object:
 
@@ -31,12 +31,12 @@ the Documentation section.
 
 __bitty-js__ components can be powered by either
 JavaScript modules or `<script>` tags embedded
-directly on the page. The __data-connection__
+directly on the page. The __data-connect__
 attribute is used in both cases. 
 
 The order of operations is:
 
-1. Verify there's a __data-connection__
+1. Verify there's a __data-connect__
 attribute on the component. Stop
 processing and throw an error if there
 isn't.
@@ -47,7 +47,7 @@ Map on the window named `BittyClasses`
 with a key that mathces the value and contains
 a class. For example, 
 
-    `data-connection="InlineExample"` 
+    `data-connect="InlineExample"` 
 
     would look for:
 
@@ -58,17 +58,17 @@ a class. For example,
   and uses it's functionality.
 
 3. If the local `<script>` tag
-class isn't found the __data-connection__
+class isn't found the __data-connect__
 is used as a path to a JavaScript
 module. 
 
-4. If the __data-connection__ value
+4. If the __data-connect__ value
 is treated as a path and it ends
 with `|SomeName` it attempts to
 load a class named `SomeName` from
 the module (e.g. `export class SomeName {}`)
 
-5. If the __data-connection__ doesn't
+5. If the __data-connect__ doesn't
 have a `|SomeName` ending then the
 module's default class is used 
 (i.e. `export default class {}`)

@@ -1,7 +1,5 @@
-////////////////////////////////////////////////////////////////////
-// bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
-// This ID must be included: 2y1pBoEREr3eWA1ubCCOXdmRCdn
-////////////////////////////////////////////////////////////////////
+// TODO: Add send from the api to forward function
+// calls
 
 class BittyJs extends HTMLElement {
   constructor() {
@@ -81,14 +79,7 @@ class BittyJs extends HTMLElement {
         this.connection = new bittyClasses[this.connectionClass]();
       } else {
         const connectionParts = this.dataset.connect.split("|");
-        if (
-          connectionParts[0].substring(0, 2) === "./" ||
-          connectionParts[0].substring(0, 1) === "/"
-        ) {
-          this.connectionPath = connectionParts[0];
-        } else {
-          this.connectionPath = `./${connectionParts[0]}`;
-        }
+        this.connectionPath = connectionParts[0];
         const mod = await import(this.connectionPath);
         if (connectionParts[1] === undefined) {
           this.connectionClass = "default";
@@ -260,3 +251,8 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define("bitty-js", BittyJs);
+
+////////////////////////////////////////////////////////////////////
+// bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
+// This ID must be included: 2y1pBoEREr3eWA1ubCCOXdmRCdn
+////////////////////////////////////////////////////////////////////

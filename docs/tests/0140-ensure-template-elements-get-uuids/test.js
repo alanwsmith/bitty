@@ -2,7 +2,7 @@ const template = document.createElement("template");
 template.innerHTML = `<button data-send="testStub">FAILED</button>`;
 
 export default class {
-  init() {
+  bittyInit() {
     this.api.querySelector("button").click();
   }
 

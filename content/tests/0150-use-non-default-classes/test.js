@@ -1,5 +1,5 @@
 export class AltClass {
-  init() {
+  bittyInit() {
     this.api.querySelector("button").click();
   }
   runTest(el, _event) {

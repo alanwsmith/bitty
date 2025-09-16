@@ -1,5 +1,5 @@
 export default class {
-  init() {
+  bittyInit() {
     this.api.querySelector("button").click();
   }
   runTest(el, _event) {

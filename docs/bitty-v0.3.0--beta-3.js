@@ -92,7 +92,6 @@ class BittyJs extends HTMLElement {
   }
 
   send(key, event = {}) {
-    console.log(event);
     this.sendUpdates(key, event);
   }
 

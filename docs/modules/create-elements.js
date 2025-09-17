@@ -1,5 +1,5 @@
 export default class {
-  createElements(el, _event) {
+  createElements(_event, el) {
     const display = document.createElement("div");
     display.innerHTML = "Waiting for slider";
     display.dataset.receive = "update";
@@ -11,11 +11,11 @@ export default class {
     el.appendChild(slider);
   }
 
-  elementsAdded(el, _event) {
+  elementsAdded(_event, el) {
     el.innerHTML = "Elements added";
   }
 
-  update(el, event) {
+  update(event, el) {
     el.innerHTML = event.target.value;
   }
 }

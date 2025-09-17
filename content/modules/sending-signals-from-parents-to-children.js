@@ -1,5 +1,5 @@
 export default class {
-  runTest(el, event) {
+  runTest(event, el) {
     el.innerHTML = `Updated ${el.dataset.name} at ${Date.now()}`;
   }
 }

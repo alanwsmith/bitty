@@ -5,7 +5,7 @@ export default class {
     this.#value += 1;
   }
 
-  updateNested(el, _event) {
+  updateNested(_event, el) {
     el.innerHTML = this.#value;
   }
 }

@@ -53,8 +53,8 @@ class BittyJs extends HTMLElement {
     if (this.connection[`${key}`] !== undefined) {
       this.#watchers.push({
         key: key,
-        f: (data) => {
-          this.connection[`${key}`](el, data);
+        f: (event) => {
+          this.connection[`${key}`](event, el);
         },
       });
     }
@@ -163,7 +163,7 @@ class BittyJs extends HTMLElement {
     ) {
       return;
     }
-    this.updateWatcher(payload.detail.name, payload.detail.event);
+    this.updateWatcher(payload.detail.event, payload.detail.name);
   }
 
   initBitty() {
@@ -245,7 +245,7 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = uuid;
   }
 
-  updateWatcher(key, event) {
+  updateWatcher(event, key) {
     this.#watchers.forEach((watcher) => {
       if (watcher.key === key) {
         watcher.f(event);

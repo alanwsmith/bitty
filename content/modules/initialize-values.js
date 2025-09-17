@@ -5,7 +5,7 @@ export default class {
         el.value = 90;
       });
   }
-  update(el, event) {
+  update(event, el) {
     if (el.dataset.uuid !== event.target.dataset.uuid) {
       el.value = event.target.value;
     }

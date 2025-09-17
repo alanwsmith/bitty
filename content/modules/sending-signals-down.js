@@ -5,7 +5,7 @@ export class Parent {
     this.#value += 1;
   }
 
-  update(el, _event) {
+  update(_event, el) {
     el.innerHTML = `Parent: ${this.#value}`;
   }
 }
@@ -17,7 +17,7 @@ export class Child {
     this.#value += 1;
   }
 
-  update(el, event) {
+  update(event, el) {
     el.innerHTML = 
       `${event.target.dataset.name}: ${this.#value}`;
   }

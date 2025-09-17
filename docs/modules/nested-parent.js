@@ -5,7 +5,7 @@ export default class {
     this.#value += 1;
   }
 
-  updateParent(el, _event) {
+  updateParent(_event, el) {
     el.innerHTML = this.#value;
   }
 }

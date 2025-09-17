@@ -5,7 +5,7 @@ export default class {
     "red",
   ];
 
-  update(el, event) {
+  update(event, el) {
     const selectedColor = event.target.dataset.color;
     this.#colors.forEach((color) => {
       if (color === selectedColor) {

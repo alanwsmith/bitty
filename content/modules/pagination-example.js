@@ -58,7 +58,7 @@ export default class {
 
   }
 
-  init(el, _event) {
+  init(_event, el) {
     this.loadAnimals(el);
     this.loadLayout(el);
   }
@@ -105,7 +105,7 @@ export default class {
   //     return Math.ceil(this.animals.length / this.animalsPerPage);
   // }
 
-  // update(el, _event) {
+  // update(_event, el) {
   //     if (el.dataset.name === "display") {
   //         this.updateDisplay(el);
   //     } 

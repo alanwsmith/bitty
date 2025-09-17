@@ -1,5 +1,5 @@
 export default class {
-  update(el, event) {
+  update(event, el) {
     el.innerHTML = `Got x from x`;
   }
 }

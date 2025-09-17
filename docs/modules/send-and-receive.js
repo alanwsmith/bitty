@@ -1,5 +1,5 @@
 export default class {
-  update(el, _event) {
+  update(_event, el) {
     el.innerHTML = `Clicked: ${Date().toString()}`;
   }
 }

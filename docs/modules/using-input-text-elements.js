@@ -1,5 +1,5 @@
 export default class {
-  update(el, event) {
+  update(event, el) {
     if (event.target.value !== "") {
       el.innerHTML = event.target.value;
     }

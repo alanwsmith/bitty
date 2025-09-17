@@ -3,7 +3,7 @@ const globalState = {
 }
 
 export class Parent {
-    update(el, _event) {
+    update(_event, el) {
         el.innerHTML = 
             `Value: ${globalState.value}`;
     }

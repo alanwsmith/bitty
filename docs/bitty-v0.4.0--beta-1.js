@@ -1,6 +1,11 @@
 class BittyJs extends HTMLElement {
   constructor() {
     super();
+    this.metadata = [
+      "Copyright: 2025 - Alan W. Smith",
+      "License at: htttp://bitty-js.alanwsmith.com/",
+      "License ID: 2y1pBoEREr3eWA1ubCCOXdmRCdn",
+    ];
   }
 
   #listeners = ["click", "input"];
@@ -40,8 +45,8 @@ class BittyJs extends HTMLElement {
     if (this.connection[`${key}`] !== undefined) {
       this.#receivers.push({
         key: key,
-        f: (data) => {
-          this.connection[`${key}`](el, data);
+        f: (event) => {
+          this.connection[`${key}`](event, el);
         },
       });
     }
@@ -51,8 +56,8 @@ class BittyJs extends HTMLElement {
     if (this.connection[`${key}`] !== undefined) {
       this.#watchers.push({
         key: key,
-        f: (data) => {
-          this.connection[`${key}`](el, data);
+        f: (event) => {
+          this.connection[`${key}`](event, el);
         },
       });
     }
@@ -91,19 +96,12 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  send(key, event = {}) {
-    this.sendUpdates(key, event);
+  send(event, signal) {
+    this.sendUpdates(event, signal);
   }
 
   error(message) {
     console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
-    this.innerHTML = `<div class="bitty-js-error">
-<div class="bitty-js-error-header">bitty-js Error</div>
-<div class="bitty-js-error-message">${message}</div>
-<div class="bitty-js-error-uuid">UUID: ${this.dataset.uuid}</div>
-<div class="bitty-js-error-connection-path">Connection Path: ${this.connectionPath}</div>
-<div class="bitty-js-error-connection-class">Connection Class: ${this.connectionClass}</div>
-</div>`;
   }
 
   handleChange(event) {
@@ -114,7 +112,7 @@ class BittyJs extends HTMLElement {
       event.target.nodeName !== "BITTY-JS" &&
       event.target.dataset.send !== undefined
     ) {
-      this.sendUpdates(event.target.dataset.send, event);
+      this.sendUpdates(event, event.target.dataset.send);
     }
     event.stopPropagation();
   }
@@ -160,7 +158,7 @@ class BittyJs extends HTMLElement {
     ) {
       return;
     }
-    this.updateWatcher(payload.detail.name, payload.detail.event);
+    this.updateWatcher(payload.detail.event, payload.detail.name);
   }
 
   initBitty() {
@@ -169,9 +167,13 @@ class BittyJs extends HTMLElement {
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send !== undefined) {
-      this.sendUpdates(this.dataset.send, {
-        target: this, // stubbed event structure for init
-      });
+      this.sendUpdates(
+        {
+          // TODO: Add type here
+          target: this, // stubbed event structure for init
+        },
+        this.dataset.send,
+      );
     }
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
@@ -198,7 +200,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  sendUpdates(signals, event) {
+  sendUpdates(event, signals) {
     signals.split("|").forEach((signal) => {
       const signalForwarder = new CustomEvent("bittysignal", {
         bubbles: true,
@@ -217,7 +219,7 @@ class BittyJs extends HTMLElement {
       });
       if (numberOfReceivers === 0) {
         if (this.connection[signal] !== undefined) {
-          this.connection[signal](null, event);
+          this.connection[signal](event, null);
         }
       }
     });
@@ -238,7 +240,7 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = uuid;
   }
 
-  updateWatcher(key, event) {
+  updateWatcher(event, key) {
     this.#watchers.forEach((watcher) => {
       if (watcher.key === key) {
         watcher.f(event);
@@ -251,5 +253,5 @@ customElements.define("bitty-js", BittyJs);
 
 ////////////////////////////////////////////////////////////////////
 // bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
-// This ID must be included: 2y1pBoEREr3eWA1ubCCOXdmRCdn
+// This ID must be included:
 ////////////////////////////////////////////////////////////////////

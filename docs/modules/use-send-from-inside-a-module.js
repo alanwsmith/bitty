@@ -3,7 +3,7 @@ export default class {
     this.api.doSend("updateViaSendFromModule");
   }
 
-  updateViaSendFromModule(el, _event) {
+  updateViaSendFromModule(_event, el) {
     el.innerHTML = "updated from module";
   }
 }

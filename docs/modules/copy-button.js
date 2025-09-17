@@ -2,7 +2,7 @@ export default class {
   #theTimeout = null;
   #originalText = "Copy";
 
-  async copyText(_el, event) {
+  async copyText(event, _el) {
     const elToCopy = document.querySelector(event.target.dataset.target);
     if (event.target.innerHTML !== "Copied") {
       this.#originalText = event.target.innerHTML;

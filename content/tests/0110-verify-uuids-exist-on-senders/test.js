@@ -2,7 +2,7 @@ export default class {
   bittyInit() {
     this.api.querySelector("button").click();
   }
-  runTest(el, event) {
+  runTest(event, el) {
     if (event.target.dataset.uuid !== undefined) {
       el.innerHTML = "PASSED";
     }

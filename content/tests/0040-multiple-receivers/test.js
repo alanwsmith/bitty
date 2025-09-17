@@ -2,7 +2,7 @@ export default class {
   bittyInit() {
     this.api.querySelector("button").click();
   }
-  runTest(el, _event) {
+  runTest(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

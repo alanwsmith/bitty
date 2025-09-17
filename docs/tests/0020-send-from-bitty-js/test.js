@@ -1,5 +1,5 @@
 export default class {
-  runTest(el, _event) {
+  runTest(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

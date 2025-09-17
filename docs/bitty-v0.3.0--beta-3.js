@@ -1,6 +1,3 @@
-// TODO: Add send from the api to forward function
-// calls
-
 class BittyJs extends HTMLElement {
   constructor() {
     super();
@@ -95,7 +92,6 @@ class BittyJs extends HTMLElement {
   }
 
   send(key, event = {}) {
-    console.log(event);
     this.sendUpdates(key, event);
   }
 

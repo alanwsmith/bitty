@@ -5,7 +5,7 @@ export default class {
     this.#value += 1;
   }
 
-  showValue(el, _event) {
+  showValue(_event, el) {
     el.innerHTML = this.#value;
   }
 

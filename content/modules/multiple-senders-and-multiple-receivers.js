@@ -13,19 +13,19 @@ export default class {
   };
   #bookType = null;
 
-  author(el, _event) {
+  author(_event, el) {
     el.innerHTML = `Author: ${this.#books[this.#bookType].author}`;
   }
 
-  pages(el, _event) {
+  pages(_event, el) {
     el.innerHTML = `Pages: ${this.#books[this.#bookType].pages}`;
   }
 
-  setType(_el, event) {
+  setType(event, _el) {
     this.#bookType = event.target.dataset.type;
   }
 
-  title(el, _event) {
+  title(_event, el) {
     el.innerHTML = `Title: ${this.#books[this.#bookType].title}`;
   }
 }

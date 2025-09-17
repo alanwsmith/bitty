@@ -7,7 +7,7 @@ export default class {
       statusDiv.innerHTML = "";
     }
   }
-  runTest(el, event) {
+  runTest(event, el) {
     el.innerHTML = "PASSED";
   }
 }

@@ -6,7 +6,7 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  async runTest(el, _event) {
+  async runTest(event, el) {
     let newButton = template.content.cloneNode(true);
     el.replaceChildren(newButton);
     // sleep for test to wait for observer

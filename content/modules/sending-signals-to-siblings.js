@@ -1,5 +1,5 @@
 export class Parent {
-    update(el, event) {
+    update(event, el) {
         if (el.dataset.name === event.target.dataset.name) {
             el.innerHTML = "HERE"
         } else {

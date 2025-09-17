@@ -1,5 +1,5 @@
 export default class {
-  showValue(el, _event) {
+  showValue(_event, el) {
     const counters = this.bridge.querySelectorAll("bitty-js");
     let count = 0;
     counters.forEach((counter) => {

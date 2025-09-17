@@ -1,6 +1,6 @@
 export default class {
   #count = 0;
-  init() {
+  bittyInit() {
     this.api.querySelector("button").click();
     this.api.querySelector("button").click();
     this.api.querySelector("button").click();

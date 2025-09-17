@@ -1,5 +1,5 @@
 export default class {
-  init() {
+  bittyInit() {
     this.api.innerHTML = "PASSED";
   }
 }

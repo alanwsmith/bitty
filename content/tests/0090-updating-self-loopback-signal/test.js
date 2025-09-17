@@ -1,5 +1,5 @@
 export default class {
-  init() {
+  bittyInit() {
     const button = this.api.querySelector("button");
     const statusDiv = this.api.querySelector("div");
     button.click();

@@ -220,7 +220,7 @@ class BittyJs extends HTMLElement {
       });
       if (numberOfReceivers === 0) {
         if (this.connection[signal] !== undefined) {
-          this.connection[signal](event.target, event);
+          this.connection[signal](null, event);
         }
       }
     });

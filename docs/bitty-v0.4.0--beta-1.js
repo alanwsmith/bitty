@@ -1,8 +1,11 @@
 class BittyJs extends HTMLElement {
   constructor() {
     super();
-    this.licenseId = "2y1pBoEREr3eWA1ubCCOXdmRCdn";
-    this.licenseUrl = "https://bitty-js.alanwsmith.com/";
+    this.metadata = [
+      "Copyright: 2025 - Alan W. Smith",
+      "License at: htttp://bitty-js.alanwsmith.com/",
+      "License ID: 2y1pBoEREr3eWA1ubCCOXdmRCdn",
+    ];
   }
 
   #listeners = ["click", "input"];
@@ -99,14 +102,6 @@ class BittyJs extends HTMLElement {
 
   error(message) {
     console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
-
-    this.innerHTML = `<div class="bitty-js-error">
-<div class="bitty-js-error-header">bitty-js Error</div>
-<div class="bitty-js-error-message">${message}</div>
-<div class="bitty-js-error-uuid">UUID: ${this.dataset.uuid}</div>
-<div class="bitty-js-error-connection-path">Connection Path: ${this.connectionPath}</div>
-<div class="bitty-js-error-connection-class">Connection Class: ${this.connectionClass}</div>
-</div>`;
   }
 
   handleChange(event) {

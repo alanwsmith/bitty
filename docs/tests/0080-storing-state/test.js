@@ -5,7 +5,7 @@ export default class {
     this.api.querySelector("button").click();
     this.api.querySelector("button").click();
   }
-  runTest(el, event) {
+  runTest(event, el) {
     this.#count += 1;
     if (this.#count === 3) {
       el.innerHTML = "PASSED";

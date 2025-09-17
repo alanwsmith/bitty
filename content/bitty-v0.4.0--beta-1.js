@@ -42,8 +42,8 @@ class BittyJs extends HTMLElement {
     if (this.connection[`${key}`] !== undefined) {
       this.#receivers.push({
         key: key,
-        f: (data) => {
-          this.connection[`${key}`](el, data);
+        f: (event) => {
+          this.connection[`${key}`](event, el);
         },
       });
     }
@@ -93,13 +93,13 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  send(key, event = {}) {
-    console.log(event);
-    this.sendUpdates(key, event);
+  send(event, signal) {
+    this.sendUpdates(event, signal);
   }
 
   error(message) {
     console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
+
     this.innerHTML = `<div class="bitty-js-error">
 <div class="bitty-js-error-header">bitty-js Error</div>
 <div class="bitty-js-error-message">${message}</div>
@@ -117,7 +117,7 @@ class BittyJs extends HTMLElement {
       event.target.nodeName !== "BITTY-JS" &&
       event.target.dataset.send !== undefined
     ) {
-      this.sendUpdates(event.target.dataset.send, event);
+      this.sendUpdates(event, event.target.dataset.send);
     }
     event.stopPropagation();
   }
@@ -172,9 +172,13 @@ class BittyJs extends HTMLElement {
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send !== undefined) {
-      this.sendUpdates(this.dataset.send, {
-        target: this, // stubbed event structure for init
-      });
+      this.sendUpdates(
+        {
+          // TODO: Add type here
+          target: this, // stubbed event structure for init
+        },
+        this.dataset.send,
+      );
     }
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
@@ -201,7 +205,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  sendUpdates(signals, event) {
+  sendUpdates(event, signals) {
     signals.split("|").forEach((signal) => {
       const signalForwarder = new CustomEvent("bittysignal", {
         bubbles: true,
@@ -220,7 +224,7 @@ class BittyJs extends HTMLElement {
       });
       if (numberOfReceivers === 0) {
         if (this.connection[signal] !== undefined) {
-          this.connection[signal](null, event);
+          this.connection[signal](event, null);
         }
       }
     });

@@ -2,7 +2,7 @@ export default class {
   bittyInit() {
     this.api.querySelector("button").click();
   }
-  async runTest(el, _event) {
+  async runTest(_event, el) {
     const newButton = document.createElement("button");
     newButton.dataset.receive = "placeholderToGenerateUUID";
     newButton.innerHTML = "FAILED";

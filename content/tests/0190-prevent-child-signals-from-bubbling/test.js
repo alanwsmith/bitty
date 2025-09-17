@@ -1,5 +1,5 @@
 export class Parent {
-  runTest(el, _event) {
+  runTest(_event, el) {
     el.innerHMTL = "FAILED";
   }
 }
@@ -8,7 +8,7 @@ export class Child {
   bittyInit() {
     this.api.querySelector("button").click();
   }
-  runTest(el, _event) {
+  runTest(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

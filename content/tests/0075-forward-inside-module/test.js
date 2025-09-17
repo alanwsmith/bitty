@@ -3,11 +3,11 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  runTest(_el, event) {
-    this.api.send("forward", event);
+  runTest(event, _el) {
+    this.api.send(event, "forward");
   }
 
-  forward(el, event) {
+  forward(event, el) {
     el.innerHTML = "PASSED";
   }
 }

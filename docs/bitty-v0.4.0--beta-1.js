@@ -1,6 +1,8 @@
 class BittyJs extends HTMLElement {
   constructor() {
     super();
+    this.licenseId = "2y1pBoEREr3eWA1ubCCOXdmRCdn";
+    this.licenseUrl = "https://bitty-js.alanwsmith.com/";
   }
 
   #listeners = ["click", "input"];
@@ -252,5 +254,5 @@ customElements.define("bitty-js", BittyJs);
 
 ////////////////////////////////////////////////////////////////////
 // bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
-// This ID must be included: 2y1pBoEREr3eWA1ubCCOXdmRCdn
+// This ID must be included:
 ////////////////////////////////////////////////////////////////////

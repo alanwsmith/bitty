@@ -1,6 +1,5 @@
 export default class {
-  update(_event, el) {
-    el.innerHTML = Date().toString();
+  update(event, element) {
+    element.innerHTML = Date().toString();
   }
 }
-

@@ -2,7 +2,7 @@
   <summary>Overview</summary>
 
 [! filter markdown|safe !]
-**bitty-js** is a web component. It adds reactivity to web pages. 
+**bitty-js** is a web component. It uses signals to make pages reactive. 
 For example:
 [! endfilter !]
 
@@ -11,7 +11,8 @@ For example:
 </div>
 
 [! filter markdown|safe !]
-The **API**  uses __data-*__ attributes:
+The **bitty-js API** is made from  __data-*__ attributes. For example, 
+  here's the HTML that makes up the example:
 [! endfilter !]
 
 <pre class="code-block large-block-margin">
@@ -22,14 +23,15 @@ The **API**  uses __data-*__ attributes:
 
 
 [! filter markdown|safe !]
-- **data-connect** connects to the script responsible for functionality.
-- **data-receive** registers the **div** to react to **update** signals.
-- **data-send** tells the **button** to send **update** signals.
+- The **bitty-js** tag's **data-connect** attribute defines the path to a JavaScript module responsible for providing functionality.
+- The **button** tag's **data-send** attribute sets it up to send **update** signals when its clicked.
+- The **div** tag's **data-receive** attribute registers it to react to **update** signals when they occur. 
 
 #### Functionality 
 
-The values from the **data-send** and **data-receive**
-attributes map to functions with the same name.
+The **update** values from the **data-send** and **data-receive**
+attributes map to a function in the module with the same name.
+
 [! endfilter !]
 
 <pre class="code-block large-block-margin">
@@ -37,26 +39,21 @@ attributes map to functions with the same name.
 </pre>
 
 [! filter markdown|safe !]
-- The **update** function handles signals from elements with **data-send="update"**
-- Elements with **data-receive="update"** are processed by the **update** function.
 
-The two arguments passed to a **bitty-js function** are:
+The arguments passed to the function are:
 
-1. The element to update
-2. The event that triggered the update
+1. The **event** that triggered the update (e.g. **click** events on 
+  the **button** in the example)
 
-The element is the same you'd get from __document.querySelector()__. 
+2. The **element** to update (e.g. the **div** element in the example)
 
-The event is the same you'd get from __document.addListener()__.
+The **event** and **element** are the same ones you'd get
+  from __document.addEventListener()__ and __document.querySelector()__
+  functions. 
 
-The **div** element in the example has its **innerHTML** updated 
-with the timestamp. The event isn't used in this case. 
-
----
-
-
-You can grab a copy of the file
-  here: <a href="/bitty-v0.3.0--beta-2.js" download>bitty-v0.3.0--beta-2.js</a>
+When the example **button** is clicked the **div** element is passed
+through the function where it has its innerHTML updated. 
+(The __event__ isn't used in this example.)
 
 [! endfilter !]
 

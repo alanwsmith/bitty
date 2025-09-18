@@ -1,10 +1,11 @@
 class BittyJs extends HTMLElement {
   constructor() {
     super();
+    this.version = [0, 4, 0];
     this.metadata = [
-      "Copyright: 2025 - Alan W. Smith",
-      "License at: htttp://bitty-js.alanwsmith.com/",
-      "License ID: 2y1pBoEREr3eWA1ubCCOXdmRCdn",
+      "Copyright 2025 - Alan W. Smith",
+      "MIT Based License at: htttp://bitty-js.alanwsmith.com/",
+      "License Hash: 2y1pBoEREr3eWA1ubCCOXdmRCdn",
     ];
   }
 
@@ -250,8 +251,3 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define("bitty-js", BittyJs);
-
-////////////////////////////////////////////////////////////////////
-// bitty-js: 0.3.0 - License at: https://bitty-js.alanwsmith.com/
-// This ID must be included:
-////////////////////////////////////////////////////////////////////

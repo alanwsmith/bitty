@@ -1,13 +1,8 @@
 export default class {
   bittyInit() {
-    [...this.api.querySelectorAll("[data-receive=update]")]
+    [...this.api.querySelectorAll("[type=range]")]
       .forEach((el) => {
         el.value = 90;
       });
-  }
-  update(event, el) {
-    if (el.dataset.uuid !== event.target.dataset.uuid) {
-      el.value = event.target.value;
-    }
   }
 }

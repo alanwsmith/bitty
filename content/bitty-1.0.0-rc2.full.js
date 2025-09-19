@@ -287,8 +287,7 @@ class BittyJs extends HTMLElement {
     const els = this.querySelectorAll("*");
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
-        const uuid = self.crypto.randomUUID();
-        el.dataset.uuid = uuid;
+        el.dataset.uuid = self.crypto.randomUUID();
       }
     });
   }

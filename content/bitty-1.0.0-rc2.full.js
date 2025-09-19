@@ -18,7 +18,7 @@ class BittyJs extends HTMLElement {
     this.setIds();
     await this.makeConnection();
     if (this.connection !== undefined) {
-      this.requestUpdate = this.handleChange.bind(this);
+      this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
       this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
@@ -101,7 +101,7 @@ class BittyJs extends HTMLElement {
     if (event.target && event.target.dataset) {
       event.target.dataset.send = signal;
     }
-    this.handleChange(event);
+    this.handleEvent(event);
     // TODO: Stub a specific event type here
     //this.sendUpdates(event, signal);
   }
@@ -111,7 +111,7 @@ class BittyJs extends HTMLElement {
   }
 
   //TODO: Rename to handleEvent
-  handleChange(event) {
+  handleEvent(event) {
     if (event.type !== "bittyconnect") {
       event.stopPropagation();
     }
@@ -225,7 +225,7 @@ class BittyJs extends HTMLElement {
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send !== undefined) {
       // simulate an event
-      this.handleChange(
+      this.handleEvent(
         { type: "bittyconnect", target: this },
       );
       // this.sendUpdates(

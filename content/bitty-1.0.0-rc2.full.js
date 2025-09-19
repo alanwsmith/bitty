@@ -98,6 +98,10 @@ class BittyJs extends HTMLElement {
   }
 
   send(event, signal) {
+    if (event.target && event.target.dataset) {
+      event.target.dataset.send = signal;
+    }
+    this.handleChange(event);
     // TODO: Stub a specific event type here
     //this.sendUpdates(event, signal);
   }
@@ -112,7 +116,6 @@ class BittyJs extends HTMLElement {
       event.stopPropagation();
     }
     event.uuid = self.crypto.randomUUID();
-    // TODO: Add UUID to events
     if (
       event.target !== undefined &&
       //event.target.nodeName !== "BITTY-JS" &&

@@ -37,8 +37,8 @@ class BittyJs extends HTMLElement {
         this.requestUpdate.call(this, event);
       });
     });
-    this.addEventListener("bittysignal", (payload) => {
-      this.updateWatchers.call(this, payload);
+    this.addEventListener("bittysignal", (payload_with_event) => {
+      this.updateWatchers.call(this, payload_with_event);
     });
   }
 
@@ -121,7 +121,6 @@ class BittyJs extends HTMLElement {
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
-        // TODO: Verify this remove receivers and watchers properly
         for (const removedNode of mutation.removedNodes) {
           if (removedNode.dataset) {
             if (

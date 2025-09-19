@@ -1,7 +1,7 @@
 class BittyJs extends HTMLElement {
   constructor() {
     super();
-    this.version = [1, 0, 0, "rc1"];
+    this.version = [1, 0, 0, "rc2"];
     this.metadata = [
       "Copyright 2025 - Alan W. Smith",
       "MIT Based License at: htttp://bitty-js.alanwsmith.com/",
@@ -98,24 +98,77 @@ class BittyJs extends HTMLElement {
   }
 
   send(event, signal) {
-    this.sendUpdates(event, signal);
+    // TODO: Stub a specific event type here
+    //this.sendUpdates(event, signal);
   }
 
   error(message) {
     console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
   }
 
+  //TODO: Rename to handleEvent
   handleChange(event) {
-    if (event.target === undefined || event.target.dataset === undefined) {
-      return;
+    if (event.type !== "bittyconnect") {
+      event.stopPropagation();
     }
+    // TODO: Add UUID to events
     if (
-      event.target.nodeName !== "BITTY-JS" &&
+      event.target !== undefined &&
+      //event.target.nodeName !== "BITTY-JS" &&
+      event.target.dataset !== undefined &&
       event.target.dataset.send !== undefined
     ) {
-      this.sendUpdates(event, event.target.dataset.send);
+      event.target.dataset.send.split("|").forEach((signal) => {
+        console.log(signal);
+        let numberOfReceivers = 0;
+        this.#receivers.forEach((receiver) => {
+          if (receiver.key === signal) {
+            numberOfReceivers += 1;
+            receiver.f(event);
+          }
+        });
+        if (numberOfReceivers === 0) {
+          if (this.connection[signal] !== undefined) {
+            this.connection[signal](event, null);
+          }
+        }
+      });
     }
-    event.stopPropagation();
+
+    // const signalForwarder = new CustomEvent("bittysignal", {
+    //   bubbles: true,
+    //   detail: {
+    //     name: signal,
+    //     event: event,
+    //   },
+    // });
+    //   this.parentElement.dispatchEvent(signalForwarder);
+
+    // signals.split("|").forEach((signal) => {
+    //   this.parentElement.dispatchEvent(signalForwarder);
+    //   let numberOfReceivers = 0;
+    //   this.#receivers.forEach((receiver) => {
+    //     if (receiver.key === signal) {
+    //       numberOfReceivers += 1;
+    //       receiver.f(event);
+    //     }
+    //   });
+    //   if (numberOfReceivers === 0) {
+    //     if (this.connection[signal] !== undefined) {
+    //       this.connection[signal](event, null);
+    //     }
+    //   }
+    // });
+
+    // if (event.target === undefined || event.target.dataset === undefined) {
+    //   return;
+    // }
+    // if (
+    //   event.target.nodeName !== "BITTY-JS" &&
+    //   event.target.dataset.send !== undefined
+    // ) {
+    //   this.sendUpdates(event, event.target.dataset.send);
+    // }
   }
 
   handleMutations(mutationList, _observer) {
@@ -167,13 +220,17 @@ class BittyJs extends HTMLElement {
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send !== undefined) {
-      this.sendUpdates(
-        {
-          // TODO: Add type here
-          target: this, // stubbed event structure for init
-        },
-        this.dataset.send,
+      // simulate an event
+      this.handleChange(
+        { type: "bittyconnect", target: this },
       );
+      // this.sendUpdates(
+      //   {
+      //     // TODO: Add type here
+      //     target: this, // stubbed event structure for init
+      //   },
+      //   this.dataset.send,
+      // );
     }
     if (this.dataset.listeners !== undefined) {
       this.#listeners = this.dataset.listeners.split("|");
@@ -200,15 +257,16 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  sendUpdates(event, signals) {
+  sendUpdates(event, _signals) {
+    // const signalForwarder = new CustomEvent("bittysignal", {
+    //   bubbles: true,
+    //   detail: {
+    //     name: signal,
+    //     event: event,
+    //   },
+    // });
+
     signals.split("|").forEach((signal) => {
-      const signalForwarder = new CustomEvent("bittysignal", {
-        bubbles: true,
-        detail: {
-          name: signal,
-          event: event,
-        },
-      });
       this.parentElement.dispatchEvent(signalForwarder);
       let numberOfReceivers = 0;
       this.#receivers.forEach((receiver) => {

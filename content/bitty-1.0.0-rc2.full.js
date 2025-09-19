@@ -111,6 +111,7 @@ class BittyJs extends HTMLElement {
     if (event.type !== "bittyconnect") {
       event.stopPropagation();
     }
+    event.uuid = self.crypto.randomUUID();
     // TODO: Add UUID to events
     if (
       event.target !== undefined &&

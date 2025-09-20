@@ -58,7 +58,7 @@ export default class {
   showBook(event, element) {
     const book = this.books[event.target.dataset.id];
     const content = this.assemble("showBook", book);
-    el.replaceChildren(content);
+    element.replaceChildren(content);
   }
 
   showBooks(_event, element) {

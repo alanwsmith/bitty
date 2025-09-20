@@ -11,7 +11,8 @@ class BittyJs extends HTMLElement {
 
   #listeners = ["click", "input"];
   #receivers = [];
-  #watchers = [];
+  #watchers = []; // TODO: Deprecate watchers
+  #watchSignals = [];
 
   async connectedCallback() {
     this.setParentId();
@@ -21,12 +22,12 @@ class BittyJs extends HTMLElement {
       // TODO: Rename to handleEvent = updateReceiver
       this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
-      // TODO: Rename to handleWatcher = updateWatcher
-      this.handleHoist = this.updateWatcher.bind(this);
+      this.catchWatchEventBrdige = this.catchWatchEvent.bind(this);
       // this is the original from handleHoist
       //   this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
-      this.loadWatchers();
+      this.loadWatchSignals();
+      //this.loadWatchers();
       this.initBitty();
       this.addEventListeners();
       if (typeof this.connection.bittyInit === "function") {
@@ -41,12 +42,13 @@ class BittyJs extends HTMLElement {
         this.requestUpdate.call(this, event);
       });
     });
+
     this.addEventListener("bittyhoist", (payload_with_event) => {
       if (
         payload_with_event.detail !== undefined &&
         payload_with_event.detail.event !== undefined
       ) {
-        this.handleHoist.call(this, payload_with_event.detail.event);
+        this.catchWatchEvent.call(this, payload_with_event.detail.event);
       }
     });
   }
@@ -120,6 +122,12 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
+    // TODO: Review whey bittyconnect is allowed to
+    // propagate?
+    if (event.type !== "bittyconnect") {
+      event.stopPropagation();
+    }
+
     const signalForwarder = new CustomEvent("bittyhoist", {
       bubbles: true,
       detail: {
@@ -127,11 +135,7 @@ class BittyJs extends HTMLElement {
       },
     });
     this.parentElement.dispatchEvent(signalForwarder);
-    if (event.type !== "bittyconnect") {
-      event.stopPropagation();
-    }
 
-    event.uuid = self.crypto.randomUUID();
     if (
       event.target !== undefined &&
       //event.target.nodeName !== "BITTY-JS" &&
@@ -169,7 +173,6 @@ class BittyJs extends HTMLElement {
     //     }
     //   }
     // });
-
     // if (event.target === undefined || event.target.dataset === undefined) {
     //   return;
     // }
@@ -192,7 +195,7 @@ class BittyJs extends HTMLElement {
             ) {
               this.setIds();
               this.loadReceivers();
-              this.loadWatchers();
+              //this.loadWatchers();
               return;
             }
           }
@@ -205,7 +208,7 @@ class BittyJs extends HTMLElement {
             ) {
               this.setIds();
               this.loadReceivers();
-              this.loadWatchers();
+              //this.loadWatchers();
               return;
             }
           }
@@ -257,15 +260,24 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  loadWatchers() {
-    this.#watchers = [];
-    const els = this.querySelectorAll(`[data-watch]`);
-    els.forEach((el) => {
-      el.dataset.watch.split("|").forEach((signal) => {
-        this.addWatcher(signal, el);
+  loadWatchSignals() {
+    if (this.dataset.watch) {
+      this.dataset.watch.split("|").forEach((signal) => {
+        // TODO: trim whitespace
+        this.#watchSignals.push(signal);
       });
-    });
+    }
   }
+
+  // loadWatchers() {
+  //   this.#watchers = [];
+  //   const els = this.querySelectorAll(`[data-watch]`);
+  //   els.forEach((el) => {
+  //     el.dataset.watch.split("|").forEach((signal) => {
+  //       this.addWatcher(signal, el);
+  //     });
+  //   });
+  // }
 
   sendUpdates(event, _signals) {
     // const signalForwarder = new CustomEvent("bittysignal", {
@@ -275,7 +287,6 @@ class BittyJs extends HTMLElement {
     //     event: event,
     //   },
     // });
-
     signals.split("|").forEach((signal) => {
       this.parentElement.dispatchEvent(signalForwarder);
       let numberOfReceivers = 0;
@@ -307,17 +318,59 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = uuid;
   }
 
-  updateWatcher(event) {
-    console.log(event);
+  catchWatchEvent(event) {
     if (event.target && event.target.dataset && event.target.dataset.send) {
       event.target.dataset.send.split("|").forEach((signal) => {
-        this.#watchers.forEach((watcher) => {
-          if (watcher.signal === signal) {
-            watcher.f(event);
+        if (this.#watchSignals.includes(signal)) {
+          let numberOfReceivers = 0;
+          this.#receivers.forEach((receiver) => {
+            if (receiver.key === signal) {
+              numberOfReceivers += 1;
+              receiver.f(event);
+            }
+          });
+          if (numberOfReceivers === 0) {
+            if (this.connection[signal] !== undefined) {
+              this.connection[signal](event, null);
+            }
           }
-        });
+        }
       });
+
+      //if (
+      //  event.target !== undefined &&
+      //  //event.target.nodeName !== "BITTY-JS" &&
+      //  event.target.dataset !== undefined &&
+      //  event.target.dataset.send !== undefined
+      //) {
+      //  event.target.dataset.send.split("|").forEach((signal) => {
+      //    let numberOfReceivers = 0;
+      //    this.#receivers.forEach((receiver) => {
+      //      if (receiver.key === signal) {
+      //        numberOfReceivers += 1;
+      //        receiver.f(event);
+      //      }
+      //    });
+      //    if (numberOfReceivers === 0) {
+      //      if (this.connection[signal] !== undefined) {
+      //        this.connection[signal](event, null);
+      //      }
+      //    }
+      //  });
+      //}
     }
+
+    //if (event.target && event.target.dataset && event.target.dataset.send) {
+    //  event.target.dataset.send.split("|").forEach((signal) => {
+    //    console.log(signal);
+    //    this.#watchers.forEach((watcher) => {
+    //      //console.log(watcher);
+    //      if (watcher.signal === signal) {
+    //        watcher.f(event);
+    //      }
+    //    });
+    //  });
+    //}
   }
 
   // updateWatcher(event, key) {

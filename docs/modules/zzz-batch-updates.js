@@ -26,43 +26,43 @@ export default class {
     this.#number = data.target.value;
   }
 
-  check10(_event, el) {
-    el.innerHTML = this.#number > 10;
+  check10(_event, element) {
+    element.innerHTML = this.#number > 10;
   }
 
-  check20(_event, el) {
-    el.innerHTML = this.#number > 20;
+  check20(_event, element) {
+    element.innerHTML = this.#number > 20;
   }
 
-  check30(_event, el) {
-    el.innerHTML = this.#number > 30;
+  check30(_event, element) {
+    element.innerHTML = this.#number > 30;
   }
 
-  check40(_event, el) {
-    el.innerHTML = this.#number > 40;
+  check40(_event, element) {
+    element.innerHTML = this.#number > 40;
   }
 
-  check50(_event, el) {
-    el.innerHTML = this.#number > 50;
+  check50(_event, element) {
+    element.innerHTML = this.#number > 50;
   }
 
-  check60(_event, el) {
-    el.innerHTML = this.#number > 60;
+  check60(_event, element) {
+    element.innerHTML = this.#number > 60;
   }
 
-  check70(_event, el) {
-    el.innerHTML = this.#number > 70;
+  check70(_event, element) {
+    element.innerHTML = this.#number > 70;
   }
 
-  check80(_event, el) {
-    el.innerHTML = this.#number > 80;
+  check80(_event, element) {
+    element.innerHTML = this.#number > 80;
   }
 
-  check90(_event, el) {
-    el.innerHTML = this.#number > 90;
+  check90(_event, element) {
+    element.innerHTML = this.#number > 90;
   }
 
-  setInitialValue(_event, el) {
+  setInitialValue(_event, element) {
     el.value = this.#number;
   }
 

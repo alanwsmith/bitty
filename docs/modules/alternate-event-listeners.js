@@ -1,6 +1,6 @@
 export default class {
-  sawMouse(event, el) {
-    el.innerHTML = `${event.type} at ${Date.now()}`;
+  sawMouse(event, element) {
+    element.innerHTML = `${event.type} at ${Date.now()}`;
   }
 }
 

@@ -1,6 +1,6 @@
 export class Parent {
-  update(_event, el) {
-    el.innerHTML = Date.now();
+  update(_event, element) {
+    element.innerHTML = Date.now();
   }
 }
 

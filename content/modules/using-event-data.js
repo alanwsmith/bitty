@@ -1,5 +1,5 @@
 export default class {
-  update(event, el) {
-    el.innerHTML = `${event.type} event at ${Date().toString()}`;
+  update(event, element) {
+    element.innerHTML = `${event.type} event at ${Date().toString()}`;
   }
 }

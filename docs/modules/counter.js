@@ -7,7 +7,7 @@ export default class {
     this.num += 1;
   }
 
-  showNum(el) {
-    el.innerHTML = this.num;
+  showNum(element) {
+    element.innerHTML = this.num;
   }
 }

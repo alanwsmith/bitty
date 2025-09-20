@@ -1,8 +1,8 @@
 export default class {
   #value = 0;
 
-  update(event, el) {
+  update(event, element) {
     this.#value += 1;
-    el.innerHTML = this.#value;
+    element.innerHTML = this.#value;
   }
 }

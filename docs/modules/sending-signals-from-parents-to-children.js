@@ -1,5 +1,5 @@
 export default class {
-  runTest(event, el) {
-    el.innerHTML = Date.now();
+  runTest(event, element) {
+    element.innerHTML = Date.now();
   }
 }

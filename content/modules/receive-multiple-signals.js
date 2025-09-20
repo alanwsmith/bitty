@@ -1,13 +1,13 @@
 export default class {
-  alfa(_event, el) {
-    el.innerHTML = `Alfa`;
+  alfa(_event, element) {
+    element.innerHTML = `Alfa`;
   }
 
-  bravo(_event, el) {
-    el.innerHTML = `Bravo`;
+  bravo(_event, element) {
+    element.innerHTML = `Bravo`;
   }
 
-  charlie(_event, el) {
-    el.innerHTML = `Charlie`;
+  charlie(_event, element) {
+    element.innerHTML = `Charlie`;
   }
 }

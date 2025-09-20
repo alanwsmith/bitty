@@ -1,9 +1,9 @@
 export default class {
-  init(_el) {
+  init(_element) {
     this.api.doSend("updateViaSendFromModule");
   }
 
-  updateViaSendFromModule(_event, el) {
-    el.innerHTML = "updated from module";
+  updateViaSendFromModule(_event, element) {
+    element.innerHTML = "updated from module";
   }
 }

@@ -33,15 +33,15 @@ export default class {
       }
     }
     for (const key of Object.keys(data)) {
-      const el = content.querySelector(`[data-key=${key}]`);
-      if (el) {
-        el.innerHTML = data[key];
+      const element = content.querySelector(`[data-key=${key}]`);
+      if (element) {
+        element.innerHTML = data[key];
       }
     }
     return content;
   }
 
-  loadBooks(event, _el) {
+  loadBooks(event, _element) {
     const rawBooks = event.target.querySelectorAll("li");
     [...rawBooks].forEach((rawBook) => {
       const book = { id: rawBook.dataset.id };
@@ -55,13 +55,13 @@ export default class {
     });
   }
 
-  showBook(event, el) {
+  showBook(event, element) {
     const book = this.books[event.target.dataset.id];
     const content = this.assemble("showBook", book);
     el.replaceChildren(content);
   }
 
-  showBooks(_event, el) {
+  showBooks(_event, element) {
     const content = this.assemble("showBooks");
     const list = content.querySelector("#book-list");
     for (
@@ -71,6 +71,6 @@ export default class {
     ) {
       list.appendChild(this.assemble("bookForShowBooks", book[1]));
     }
-    el.replaceChildren(content);
+    element.replaceChildren(content);
   }
 }

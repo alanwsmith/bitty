@@ -78,7 +78,7 @@ export default class {
         return wrapper;
     }
 
-    showBook(event, el) {
+    showBook(event, element) {
         const wrapper = this.loadTemplate("showBook");
         const book = this.#books[event.target.dataset.id];
         wrapper.querySelector(".book-title").innerHTML = book.title;
@@ -89,7 +89,7 @@ export default class {
         el.replaceChildren(wrapper);
     }
 
-    showBooks(_event, el) {
+    showBooks(_event, element) {
         const wrapper = this.loadTemplate("showBooks");
         const list = wrapper.querySelector("#book-list");
         for (const book of Object.entries(this.#books).toSorted(

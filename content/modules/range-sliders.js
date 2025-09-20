@@ -1,5 +1,5 @@
 export default class {
-  update(event, el) {
-    el.innerHTML = event.target.value;
+  update(event, element) {
+    element.innerHTML = event.target.value;
   }
 }

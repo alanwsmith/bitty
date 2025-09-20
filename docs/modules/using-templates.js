@@ -7,7 +7,7 @@ export default class {
     this.api.replaceChildren(template.content.cloneNode(true));
   }
 
-  update(_event, el) {
-    el.innerHTML = `Clicked at ${Date().toString()}`;
+  update(_event, element) {
+    element.innerHTML = `Clicked at ${Date().toString()}`;
   }
 }

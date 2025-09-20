@@ -1,9 +1,9 @@
 export default class {
-  forward(_event, el) {
-    el.innerHTML = `Clicked: ${Date().toString()}`;
+  forward(_event, element) {
+    element.innerHTML = `Clicked: ${Date().toString()}`;
   }
 
-  update(event, _el) {
+  update(event, _element) {
     this.api.send(event, "forward");
   }
 }

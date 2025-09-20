@@ -1,7 +1,7 @@
 export default class {
-  update(event, el) {
+  update(event, element) {
     if (event.target.value !== "") {
-      el.innerHTML = event.target.value;
+      element.innerHTML = event.target.value;
     }
   }
 }

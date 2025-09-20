@@ -1,12 +1,12 @@
 export default class {
   #currentState = "Off";
 
-  update(_event, el) {
+  update(_event, element) {
     if (this.#currentState === "Off") {
       this.#currentState = "On";
     } else {
       this.#currentState = "Off";
     }
-    el.innerHTML = this.#currentState;
+    element.innerHTML = this.#currentState;
   }
 }

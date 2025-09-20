@@ -5,8 +5,8 @@ export default class {
     this.#value += 1;
   }
 
-  showValue(_event, el) {
-    el.innerHTML = this.#value;
+  showValue(_event, element) {
+    element.innerHTML = this.#value;
   }
 
   template() {

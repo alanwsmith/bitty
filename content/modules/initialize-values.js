@@ -1,8 +1,8 @@
 export default class {
   bittyInit() {
     [...this.api.querySelectorAll("[type=range]")]
-      .forEach((el) => {
-        el.value = 90;
+      .forEach((element) => {
+        element.value = 90;
       });
   }
 }

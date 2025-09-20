@@ -1,7 +1,6 @@
 export default class {
-  update(event, el) {
-    el.innerHTML = 
-        `<div>From: ${event.target.dataset.uuid}</div>
-        <div>To: ${el.dataset.uuid}</div>`
+  update(event, element) {
+    element.innerHTML = `<div>From: ${event.target.dataset.uuid}</div>
+        <div>To: ${element.dataset.uuid}</div>`;
   }
 }

@@ -40,7 +40,7 @@ export default class {
     );
   }
 
-  loadAnimals(el) {
+  loadAnimals(element) {
     if (this.animals === null) {
       const animalEls = el.querySelectorAll("li");
       this.animals = [...animalEls].map(
@@ -49,7 +49,7 @@ export default class {
     }
   }
 
-  loadLayout(el) {
+  loadLayout(element) {
     el.replaceChildren(this.templates["display"].content.cloneNode(true));
     el.appendChild(this.templates["previousButton"].content.cloneNode(true));
     el.appendChild(this.templates["nextButton"].content.cloneNode(true));
@@ -58,9 +58,9 @@ export default class {
 
   }
 
-  init(_event, el) {
-    this.loadAnimals(el);
-    this.loadLayout(el);
+  init(_event, element) {
+    this.loadAnimals(element);
+    this.loadLayout(element);
   }
 
   // #firstAnimal = 0;
@@ -98,49 +98,49 @@ export default class {
   // }
 
   // setPageButtonText(el, buttonNumber) {
-  //     el.innerHTML = this.currentPage() === buttonNumber ? "-" : buttonNumber;
+  //     element.innerHTML = this.currentPage() === buttonNumber ? "-" : buttonNumber;
   // }
 
   // totalPages() {
   //     return Math.ceil(this.animals.length / this.animalsPerPage);
   // }
 
-  // update(_event, el) {
+  // update(_event, element) {
   //     if (el.dataset.name === "display") {
-  //         this.updateDisplay(el);
+  //         this.updateDisplay(element);
   //     } 
   //     if (el.dataset.name === "next") {
-  //         this.updateNext(el);
+  //         this.updateNext(element);
   //     }
   //     if (el.dataset.name === "pages") {
-  //         this.updatePageButtons(el);
+  //         this.updatePageButtons(element);
   //     } 
   //     if (el.dataset.name === "previous") {
-  //         this.updatePrevious(el);
+  //         this.updatePrevious(element);
   //     } 
   // }
 
-  // updateDisplay(el) {
+  // updateDisplay(element) {
   //     const lastAnimalIndex = Math.min(this.animals.length, this.firstAnimal + this.animalsPerPage);
   //     const pageAnimals = [];
   //     for (let animalIndex =  this.firstAnimal; animalIndex < lastAnimalIndex; animalIndex += 1) {
   //         pageAnimals.push(list[animalIndex]);
   //     }
-  //     el.innerHTML = pageAnimals.join(" ");
+  //     element.innerHTML = pageAnimals.join(" ");
   // }
 
-  // updateNext(el) {
+  // updateNext(element) {
   //     if (this.firstAnimal + this.animalsPerPage < this.animals.length) {
-  //         el.innerHTML = "Next";
+  //         element.innerHTML = "Next";
   //         el.dataset.send = "update";
   //     } else {
-  //         el.innerHTML = "-";
+  //         element.innerHTML = "-";
   //         delete el.dataset.send;
   //     }
   //  }
 
-  // updatePageButtons(el) {
-  //     el.innerHTML = "";
+  // updatePageButtons(element) {
+  //     element.innerHTML = "";
   //     for (let buttonNumber = 1; buttonNumber <= this.totalPages(); buttonNumber ++) {
   //         const pageButton = document.createElement("button");
   //         this.setPageButtonText(pageButton, buttonNumber);
@@ -150,12 +150,12 @@ export default class {
   //     }
   //  }
 
-  //  updatePrevious(el) {
+  //  updatePrevious(element) {
   //     if (this.firstAnimal - this.animalsPerPage >= 0) {
-  //         el.innerHTML = "Previous";
+  //         element.innerHTML = "Previous";
   //         el.dataset.send = "update";
   //     } else {
-  //         el.innerHTML = "-";
+  //         element.innerHTML = "-";
   //         delete el.dataset.send;
   //     }
   //  }

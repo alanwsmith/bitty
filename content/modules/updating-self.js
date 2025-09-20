@@ -1,8 +1,5 @@
 export default class {
-  #counter = 0;
-
-  update(_event, el) {
-    this.#counter += 1;
-    el.innerHTML = `Clicked ${this.#counter} times`;
+  update(_event, element) {
+    element.innerHTML = Date.now();
   }
 }

@@ -1,6 +1,6 @@
 export default class {
-    update(event, el) {
-        el.innerHTML = `Selected: ${event.target.value}`;
+    update(event, element) {
+        element.innerHTML = `Selected: ${event.target.value}`;
     }
 }
 

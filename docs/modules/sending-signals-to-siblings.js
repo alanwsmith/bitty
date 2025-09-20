@@ -1,13 +1,13 @@
 export class Parent {
-    update(event, el) {
-        if (el.dataset.name === event.target.dataset.name) {
-            el.innerHTML = "HERE"
-        } else {
-            el.innerHTML = "----"
-        }
+  update(event, element) {
+    if (element.dataset.uuid === event.target.dataset.uuid) {
+      element.innerHTML = "HERE";
+    } else {
+      element.innerHTML = "----";
     }
+  }
 }
 
 export class Child {
-    // class must exist but doesn't need anything
+  // must exist but no methods required
 }

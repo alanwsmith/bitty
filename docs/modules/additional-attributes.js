@@ -5,15 +5,15 @@ export default class {
     "red",
   ];
 
-  update(event, el) {
+  update(event, element) {
     const selectedColor = event.target.dataset.color;
     this.#colors.forEach((color) => {
       if (color === selectedColor) {
-        el.classList.add(color);
+        element.classList.add(color);
       } else {
-        el.classList.remove(color);
+        element.classList.remove(color);
       }
     });
-    el.innerHTML = `Selected: ${selectedColor}`;
+    element.innerHTML = `Selected: ${selectedColor}`;
   }
 }

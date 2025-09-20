@@ -1,9 +1,8 @@
 export default class {
   #value = 0;
 
-  update(event, el) {
+  update(event, element) {
     this.#value += 1;
-    const name = event.target.dataset.name;
-    el.innerHTML = `${name} is now ${this.#value}`;
+    element.innerHTML = this.#value;
   }
 }

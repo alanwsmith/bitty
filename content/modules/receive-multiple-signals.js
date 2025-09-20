@@ -1,13 +1,13 @@
 export default class {
   alfa(_event, el) {
-    el.innerHTML = `Got Alfa ${Date().toString()}`;
+    el.innerHTML = `Alfa`;
   }
 
   bravo(_event, el) {
-    el.innerHTML = `Got Bravo ${Date().toString()}`;
+    el.innerHTML = `Bravo`;
   }
 
   charlie(_event, el) {
-    el.innerHTML = `Got Charlie ${Date().toString()}`;
+    el.innerHTML = `Charlie`;
   }
 }

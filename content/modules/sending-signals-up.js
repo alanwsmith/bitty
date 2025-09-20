@@ -1,18 +1,11 @@
 export class Parent {
-  #value = 0;
-
   update(_event, el) {
-    this.#value += 1;
-    el.innerHTML = `Parent is ${this.#value} at ${Date.now()}`;
+    el.innerHTML = Date.now();
   }
 }
 
 export class Child {
-  #value = 0;
-
-  update(event, el) {
-    this.#value += 1;
-    const name = event.target.dataset.name;
-    el.innerHTML = `${name} is ${this.#value} at ${Date.now()}`;
-  }
+  // This class must exist for
+  // the connection but doesn't
+  // need anything in it
 }

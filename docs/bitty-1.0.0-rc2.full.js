@@ -70,7 +70,10 @@ class BittyJs extends HTMLElement {
         this.error("Missing data-connect attribute");
         return;
       }
-      if (bittyClasses && window.bittyClasses[this.dataset.connect]) {
+      if (
+        typeof bittyClasses !== "undefined" &&
+        typeof window.bittyClasses[this.dataset.connect] !== "undefined"
+      ) {
         this.connPath = null;
         this.connClass = this.dataset.connect;
         this.conn = new bittyClasses[this.connClass]();

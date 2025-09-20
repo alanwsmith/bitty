@@ -39,14 +39,15 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
+        event.uuid = self.crypto.randomUUID();
         this.requestUpdate.call(this, event);
       });
     });
 
     this.addEventListener("bittyhoist", (payload_with_event) => {
       if (
-        payload_with_event.detail !== undefined &&
-        payload_with_event.detail.event !== undefined
+        payload_with_event.detail &&
+        payload_with_event.detail.event
       ) {
         this.catchWatchEvent.call(this, payload_with_event.detail.event);
       }

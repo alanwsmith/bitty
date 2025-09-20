@@ -1,20 +1,13 @@
 export class Parent {
   update(event, element) {
-    console.log(event);
-    console.log(element);
+    if (element.dataset.uuid === event.target.dataset.uuid) {
+      element.innerHTML = "HERE";
+    } else {
+      element.innerHTML = "----";
+    }
   }
-
-  // update(event, el) {
-  //   if (el.dataset.uuid === event.target.dataset.uuid) {
-  //     el.innerHTML = "HERE";
-  //   } else {
-  //     el.innerHTML = "----";
-  //   }
-  // }
 }
 
 export class Child {
-  // this must exist for bitty to have
-  // something to connect to, but it
-  // doesn't need to have anything in it
+  // must exist but no methods required
 }

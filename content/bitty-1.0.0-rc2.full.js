@@ -1,3 +1,7 @@
+function getUUID() {
+  return self.crypto.randomUUID();
+}
+
 class BittyJs extends HTMLElement {
   constructor() {
     super();
@@ -11,7 +15,6 @@ class BittyJs extends HTMLElement {
 
   #listeners = ["click", "input"];
   #receivers = [];
-  #watchers = []; // TODO: Deprecate watchers
   #watchSignals = [];
 
   async connectedCallback() {
@@ -23,11 +26,8 @@ class BittyJs extends HTMLElement {
       this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
       this.catchWatchEventBrdige = this.catchWatchEvent.bind(this);
-      // this is the original from handleHoist
-      //   this.updateWatchers = this.handleWatchers.bind(this);
       this.loadReceivers();
       this.loadWatchSignals();
-      //this.loadWatchers();
       this.initBitty();
       this.addEventListeners();
       if (typeof this.connection.bittyInit === "function") {
@@ -39,11 +39,10 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
-        event.uuid = self.crypto.randomUUID();
+        event.uuid = getUUID();
         this.requestUpdate.call(this, event);
       });
     });
-
     this.addEventListener("bittyhoist", (payload_with_event) => {
       if (
         payload_with_event.detail &&
@@ -58,17 +57,6 @@ class BittyJs extends HTMLElement {
     if (this.connection[signal] !== undefined) {
       this.#receivers.push({
         key: signal,
-        f: (event) => {
-          this.connection[signal](event, el);
-        },
-      });
-    }
-  }
-
-  addWatcher(signal, el) {
-    if (this.connection[signal]) {
-      this.#watchers.push({
-        signal: signal,
         f: (event) => {
           this.connection[signal](event, el);
         },
@@ -114,8 +102,6 @@ class BittyJs extends HTMLElement {
       event.target.dataset.send = signal;
     }
     this.handleEvent(event);
-    // TODO: Stub a specific event type here
-    //this.sendUpdates(event, signal);
   }
 
   error(message) {
@@ -138,10 +124,9 @@ class BittyJs extends HTMLElement {
     this.parentElement.dispatchEvent(signalForwarder);
 
     if (
-      event.target !== undefined &&
-      //event.target.nodeName !== "BITTY-JS" &&
-      event.target.dataset !== undefined &&
-      event.target.dataset.send !== undefined
+      event.target &&
+      event.target.dataset &&
+      event.target.dataset.send
     ) {
       event.target.dataset.send.split("|").forEach((signal) => {
         let numberOfReceivers = 0;
@@ -158,31 +143,6 @@ class BittyJs extends HTMLElement {
         }
       });
     }
-
-    // signals.split("|").forEach((signal) => {
-    //   this.parentElement.dispatchEvent(signalForwarder);
-    //   let numberOfReceivers = 0;
-    //   this.#receivers.forEach((receiver) => {
-    //     if (receiver.key === signal) {
-    //       numberOfReceivers += 1;
-    //       receiver.f(event);
-    //     }
-    //   });
-    //   if (numberOfReceivers === 0) {
-    //     if (this.connection[signal] !== undefined) {
-    //       this.connection[signal](event, null);
-    //     }
-    //   }
-    // });
-    // if (event.target === undefined || event.target.dataset === undefined) {
-    //   return;
-    // }
-    // if (
-    //   event.target.nodeName !== "BITTY-JS" &&
-    //   event.target.dataset.send !== undefined
-    // ) {
-    //   this.sendUpdates(event, event.target.dataset.send);
-    // }
   }
 
   handleMutations(mutationList, _observer) {
@@ -196,7 +156,6 @@ class BittyJs extends HTMLElement {
             ) {
               this.setIds();
               this.loadReceivers();
-              //this.loadWatchers();
               return;
             }
           }
@@ -209,7 +168,6 @@ class BittyJs extends HTMLElement {
             ) {
               this.setIds();
               this.loadReceivers();
-              //this.loadWatchers();
               return;
             }
           }
@@ -218,35 +176,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // handleWatchers(payload) {
-  //   if (
-  //     payload.detail === undefined || payload.detail.name === undefined ||
-  //     payload.detail.event === undefined
-  //   ) {
-  //     return;
-  //   }
-  //   this.updateWatcher(payload.detail.event, payload.detail.name);
-  // }
-
   initBitty() {
     this.connection.api = this;
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
-    if (this.dataset.send !== undefined) {
-      // simulate an event
+    if (this.dataset.send) {
       this.handleEvent(
+        // simulate an event
         { type: "bittyconnect", target: this },
       );
-      // this.sendUpdates(
-      //   {
-      //     // TODO: Add type here
-      //     target: this, // stubbed event structure for init
-      //   },
-      //   this.dataset.send,
-      // );
     }
-    if (this.dataset.listeners !== undefined) {
+    if (this.dataset.listeners) {
       this.#listeners = this.dataset.listeners.split("|");
     }
   }
@@ -270,52 +211,17 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // loadWatchers() {
-  //   this.#watchers = [];
-  //   const els = this.querySelectorAll(`[data-watch]`);
-  //   els.forEach((el) => {
-  //     el.dataset.watch.split("|").forEach((signal) => {
-  //       this.addWatcher(signal, el);
-  //     });
-  //   });
-  // }
-
-  sendUpdates(event, _signals) {
-    // const signalForwarder = new CustomEvent("bittysignal", {
-    //   bubbles: true,
-    //   detail: {
-    //     name: signal,
-    //     event: event,
-    //   },
-    // });
-    signals.split("|").forEach((signal) => {
-      this.parentElement.dispatchEvent(signalForwarder);
-      let numberOfReceivers = 0;
-      this.#receivers.forEach((receiver) => {
-        if (receiver.key === signal) {
-          numberOfReceivers += 1;
-          receiver.f(event);
-        }
-      });
-      if (numberOfReceivers === 0) {
-        if (this.connection[signal] !== undefined) {
-          this.connection[signal](event, null);
-        }
-      }
-    });
-  }
-
   setIds() {
     const els = this.querySelectorAll("*");
     els.forEach((el) => {
       if (el.dataset.uuid === undefined) {
-        el.dataset.uuid = self.crypto.randomUUID();
+        el.dataset.uuid = getUUID();
       }
     });
   }
 
   setParentId() {
-    const uuid = self.crypto.randomUUID();
+    const uuid = getUUID();
     this.dataset.uuid = uuid;
   }
 
@@ -337,52 +243,8 @@ class BittyJs extends HTMLElement {
           }
         }
       });
-
-      //if (
-      //  event.target !== undefined &&
-      //  //event.target.nodeName !== "BITTY-JS" &&
-      //  event.target.dataset !== undefined &&
-      //  event.target.dataset.send !== undefined
-      //) {
-      //  event.target.dataset.send.split("|").forEach((signal) => {
-      //    let numberOfReceivers = 0;
-      //    this.#receivers.forEach((receiver) => {
-      //      if (receiver.key === signal) {
-      //        numberOfReceivers += 1;
-      //        receiver.f(event);
-      //      }
-      //    });
-      //    if (numberOfReceivers === 0) {
-      //      if (this.connection[signal] !== undefined) {
-      //        this.connection[signal](event, null);
-      //      }
-      //    }
-      //  });
-      //}
     }
-
-    //if (event.target && event.target.dataset && event.target.dataset.send) {
-    //  event.target.dataset.send.split("|").forEach((signal) => {
-    //    console.log(signal);
-    //    this.#watchers.forEach((watcher) => {
-    //      //console.log(watcher);
-    //      if (watcher.signal === signal) {
-    //        watcher.f(event);
-    //      }
-    //    });
-    //  });
-    //}
   }
-
-  // updateWatcher(event, key) {
-  //   this.#watchers.forEach((watcher) => {
-  //     if (watcher.key === key) {
-  //       watcher.f(event);
-  //     }
-  //   });
-  // }
-
-  //
 }
 
 customElements.define("bitty-js", BittyJs);

@@ -21,7 +21,7 @@ class BittyJs extends HTMLElement {
     this.setParentId();
     this.setIds();
     await this.makeConnection();
-    if (this.connection) {
+    if (this.conn) {
       // TODO: Rename to handleEvent = updateReceiver
       this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
@@ -30,8 +30,8 @@ class BittyJs extends HTMLElement {
       this.loadWatchSignals();
       this.initBitty();
       this.addEventListeners();
-      if (typeof this.connection.bittyInit === "function") {
-        this.connection.bittyInit();
+      if (typeof this.conn.bittyInit === "function") {
+        this.conn.bittyInit();
       }
     }
   }
@@ -54,11 +54,11 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(signal, el) {
-    if (this.connection[signal]) {
+    if (this.conn[signal]) {
       this.#receivers.push({
         key: signal,
         f: (event) => {
-          this.connection[signal](event, el);
+          this.conn[signal](event, el);
         },
       });
     }
@@ -71,19 +71,19 @@ class BittyJs extends HTMLElement {
         return;
       }
       if (bittyClasses && window.bittyClasses[this.dataset.connect]) {
-        this.connectionPath = null;
-        this.connectionClass = this.dataset.connect;
-        this.connection = new bittyClasses[this.connectionClass]();
+        this.connPath = null;
+        this.connClass = this.dataset.connect;
+        this.conn = new bittyClasses[this.connClass]();
       } else {
         const connectionParts = this.dataset.connect.split("|");
-        this.connectionPath = connectionParts[0];
-        const mod = await import(this.connectionPath);
+        this.connPath = connectionParts[0];
+        const mod = await import(this.connPath);
         if (connectionParts[1] === undefined) {
-          this.connectionClass = "default";
-          this.connection = new mod.default();
+          this.connClass = "default";
+          this.conn = new mod.default();
         } else {
-          this.connectionClass = connectionParts[1];
-          this.connection = new mod[this.connectionClass]();
+          this.connClass = connectionParts[1];
+          this.conn = new mod[this.connClass]();
         }
       }
     } catch (error) {
@@ -131,8 +131,8 @@ class BittyJs extends HTMLElement {
           }
         });
         if (numberOfReceivers === 0) {
-          if (this.connection[signal]) {
-            this.connection[signal](event, null);
+          if (this.conn[signal]) {
+            this.conn[signal](event, null);
           }
         }
       });
@@ -171,7 +171,7 @@ class BittyJs extends HTMLElement {
   }
 
   initBitty() {
-    this.connection.api = this;
+    this.conn.api = this;
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
@@ -232,8 +232,8 @@ class BittyJs extends HTMLElement {
             }
           });
           if (numberOfReceivers === 0) {
-            if (this.connection[signal] !== undefined) {
-              this.connection[signal](event, null);
+            if (this.conn[signal] !== undefined) {
+              this.conn[signal](event, null);
             }
           }
         }

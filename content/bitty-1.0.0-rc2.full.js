@@ -21,7 +21,7 @@ class BittyJs extends HTMLElement {
     this.setParentId();
     this.setIds();
     await this.makeConnection();
-    if (this.connection !== undefined) {
+    if (this.connection) {
       // TODO: Rename to handleEvent = updateReceiver
       this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
@@ -54,7 +54,7 @@ class BittyJs extends HTMLElement {
   }
 
   addReceiver(signal, el) {
-    if (this.connection[signal] !== undefined) {
+    if (this.connection[signal]) {
       this.#receivers.push({
         key: signal,
         f: (event) => {
@@ -66,17 +66,11 @@ class BittyJs extends HTMLElement {
 
   async makeConnection() {
     try {
-      if (
-        typeof this.dataset === "undefined" ||
-        typeof this.dataset.connect === "undefined"
-      ) {
+      if (!this.dataset || !this.dataset.connect) {
         this.error("Missing data-connect attribute");
         return;
       }
-      if (
-        typeof bittyClasses !== "undefined" &&
-        typeof window.bittyClasses[this.dataset.connect] !== "undefined"
-      ) {
+      if (bittyClasses && window.bittyClasses[this.dataset.connect]) {
         this.connectionPath = null;
         this.connectionClass = this.dataset.connect;
         this.connection = new bittyClasses[this.connectionClass]();
@@ -137,7 +131,7 @@ class BittyJs extends HTMLElement {
           }
         });
         if (numberOfReceivers === 0) {
-          if (this.connection[signal] !== undefined) {
+          if (this.connection[signal]) {
             this.connection[signal](event, null);
           }
         }
@@ -196,8 +190,9 @@ class BittyJs extends HTMLElement {
     this.#receivers = [];
     const els = this.querySelectorAll(`[data-receive]`);
     els.forEach((el) => {
-      el.dataset.receive.split("|").forEach((key) => {
-        this.addReceiver(key, el);
+      el.dataset.receive.split("|").forEach((signal) => {
+        // TODO: trim whitespace
+        this.addReceiver(signal, el);
       });
     });
   }

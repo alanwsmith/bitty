@@ -8,6 +8,6 @@ export default class {
   }
 
   update(_event, element) {
-    element.innerHTML = `Clicked at ${Date().toString()}`;
+    element.innerHTML = Date.now();
   }
 }

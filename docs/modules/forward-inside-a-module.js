@@ -1,6 +1,6 @@
 export default class {
   forward(_event, element) {
-    element.innerHTML = `Clicked: ${Date().toString()}`;
+    element.innerHTML = Date.now();
   }
 
   update(event, _element) {

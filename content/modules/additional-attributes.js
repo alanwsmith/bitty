@@ -9,9 +9,9 @@ export default class {
     const selectedColor = event.target.dataset.color;
     this.#colors.forEach((color) => {
       if (color === selectedColor) {
-        el.classList.add(color);
+        element.classList.add(color);
       } else {
-        el.classList.remove(color);
+        element.classList.remove(color);
       }
     });
     element.innerHTML = `Selected: ${selectedColor}`;

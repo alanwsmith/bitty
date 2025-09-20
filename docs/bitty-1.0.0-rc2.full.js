@@ -42,36 +42,32 @@ class BittyJs extends HTMLElement {
       });
     });
     this.addEventListener("bittyhoist", (payload_with_event) => {
-      console.log("asdf");
       if (
         payload_with_event.detail !== undefined &&
         payload_with_event.detail.event !== undefined
       ) {
-        console.log("WATCHER");
-        this.handleHoist(this, payload_with_event.detail.event);
+        this.handleHoist.call(this, payload_with_event.detail.event);
       }
-
-      //      this.updateWatchers.call(this, payload_with_event);
     });
   }
 
-  addReceiver(key, el) {
-    if (this.connection[`${key}`] !== undefined) {
+  addReceiver(signal, el) {
+    if (this.connection[signal] !== undefined) {
       this.#receivers.push({
-        key: key,
+        key: signal,
         f: (event) => {
-          this.connection[`${key}`](event, el);
+          this.connection[signal](event, el);
         },
       });
     }
   }
 
-  addWatcher(key, el) {
-    if (this.connection[`${key}`] !== undefined) {
+  addWatcher(signal, el) {
+    if (this.connection[signal]) {
       this.#watchers.push({
-        key: key,
+        signal: signal,
         f: (event) => {
-          this.connection[`${key}`](event, el);
+          this.connection[signal](event, el);
         },
       });
     }
@@ -124,7 +120,6 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
-    console.log(event);
     const signalForwarder = new CustomEvent("bittyhoist", {
       bubbles: true,
       detail: {
@@ -144,7 +139,6 @@ class BittyJs extends HTMLElement {
       event.target.dataset.send !== undefined
     ) {
       event.target.dataset.send.split("|").forEach((signal) => {
-        console.log(signal);
         let numberOfReceivers = 0;
         this.#receivers.forEach((receiver) => {
           if (receiver.key === signal) {
@@ -267,8 +261,8 @@ class BittyJs extends HTMLElement {
     this.#watchers = [];
     const els = this.querySelectorAll(`[data-watch]`);
     els.forEach((el) => {
-      el.dataset.watch.split("|").forEach((key) => {
-        this.addWatcher(key, el);
+      el.dataset.watch.split("|").forEach((signal) => {
+        this.addWatcher(signal, el);
       });
     });
   }
@@ -315,11 +309,15 @@ class BittyJs extends HTMLElement {
 
   updateWatcher(event) {
     console.log(event);
-    // this.#watchers.forEach((watcher) => {
-    //   if (watcher.key === key) {
-    //     watcher.f(event);
-    //   }
-    // });
+    if (event.target && event.target.dataset && event.target.dataset.send) {
+      event.target.dataset.send.split("|").forEach((signal) => {
+        this.#watchers.forEach((watcher) => {
+          if (watcher.signal === signal) {
+            watcher.f(event);
+          }
+        });
+      });
+    }
   }
 
   // updateWatcher(event, key) {

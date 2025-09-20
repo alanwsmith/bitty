@@ -72,7 +72,7 @@ class BittyJs extends HTMLElement {
       }
       if (
         typeof bittyClasses !== "undefined" &&
-        window.bittyClasses[this.dataset.connect]
+        typeof window.bittyClasses[this.dataset.connect] !== "undefined"
       ) {
         this.connPath = null;
         this.connClass = this.dataset.connect;

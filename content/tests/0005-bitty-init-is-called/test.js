@@ -1,5 +1,5 @@
 export default class {
   bittyInit() {
-    this.api.querySelector("button").innerHTML = "PASSED";
+    this.api.querySelector("div").innerHTML = "PASSED";
   }
 }

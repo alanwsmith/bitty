@@ -3,6 +3,6 @@ export default class {
     this.api.querySelector("button").click();
   }
   runTest(event, el) {
-    el.innerHTML = `PASSED_${el.dataset.name}`;
+    el.innerHTML = `PASSED`;
   }
 }

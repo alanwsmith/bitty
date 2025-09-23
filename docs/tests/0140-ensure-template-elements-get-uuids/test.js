@@ -11,9 +11,10 @@ export default class {
     el.replaceChildren(newButton);
     // sleep for test to wait for observer
     // to update the UUID.
-    await this.sleep(300);
+    await this.sleep(200);
     if (el.childNodes[0].dataset.uuid !== undefined) {
       el.childNodes[0].innerHTML = "PASSED";
+      el.childNodes[0].classList.add("test");
     }
   }
 

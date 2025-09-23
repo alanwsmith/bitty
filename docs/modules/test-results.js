@@ -3,9 +3,30 @@ function sleep(ms) {
 }
 
 export default class {
+  #passed = 0;
+  #failed = 0;
+
   async showResults(event, element) {
     element.innerHTML = "Gathering test results...";
-    await sleep(1000);
-    element.innerHTML = "TODO: Show test results report";
+    await sleep(900);
+    const els = document.querySelectorAll(".test");
+    [...els].forEach((el) => {
+      if (el.innerHTML == "PASSED") {
+        this.#passed += 1;
+        el.classList.add("test-passed");
+      } else {
+        this.#failed += 1;
+        el.classList.add("test-failed");
+      }
+    });
+    if (this.#failed == 0) {
+      element.innerHTML = `
+<div class="test-passed">PASSED: ${this.#passed}</div>
+<div>Failed: ${this.#failed}</div>`;
+    } else {
+      element.innerHTML = `
+<div>PASSED: ${this.#passed}</div>
+<div class="test-failed">Failed: ${this.#failed}</div>`;
+    }
   }
 }

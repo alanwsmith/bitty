@@ -9,9 +9,15 @@ export default class {
     el.replaceChildren(newButton);
     // sleep for test to wait for observer
     // to update the UUID.
-    await this.sleep(300);
+    // TODO: Document that newly added elements
+    // have an init/setup process that take
+    // some amount of time. It happens
+    // very quick but it's not instant.
+    // So, be aware of race conditions.
+    await this.sleep(200);
     if (newButton.dataset.uuid !== undefined) {
       newButton.innerHTML = "PASSED";
+      newButton.classList.add("test");
     }
   }
 

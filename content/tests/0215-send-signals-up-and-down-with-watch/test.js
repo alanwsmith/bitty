@@ -11,15 +11,14 @@ export default class {
 
   runTest(event, element) {
     this.#counter += 1;
-    console.log("asdf");
     this.api.forward(event, "testResult");
   }
 
   testResult(_event, element) {
     if (this.#counter >= 4) {
-      element.innerHTML = "PASSED";
+      // element.innerHTML = "PASSED";
     } else {
-      element.innerHTML = "FAILED";
+      // element.innerHTML = "FAILED";
     }
   }
 }

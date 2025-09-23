@@ -2,12 +2,13 @@ export class Parent {
   bittyInit() {
     this.api.querySelector("button").click();
   }
+
   runTest(_event, el) {
-    el.innerHTML = "PASSED";
+    console.log("TODO: 0200-...");
+    // el.innerHTML = "PASSED";
   }
 }
+
 export class Child {
-  // This class must exist for bitty to
-  // be able to connect to, but no
-  // functionality is needed
+  // must exist, but no methods required
 }

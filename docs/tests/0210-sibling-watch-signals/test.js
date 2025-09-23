@@ -4,7 +4,7 @@ export class Parent {
   }
 
   runTest(event, el) {
-    el.innerHTML = "PASSED";
+    //el.innerHTML = "PASSED";
   }
 }
 

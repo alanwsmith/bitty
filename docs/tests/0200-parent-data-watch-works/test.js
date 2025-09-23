@@ -3,9 +3,8 @@ export class Parent {
     this.api.querySelector("button").click();
   }
 
-  runTest(_event, el) {
-    console.log("TODO: 0200-...");
-    // el.innerHTML = "PASSED";
+  runTest(_event, element) {
+    // element.innerHTML = "PASSED";
   }
 }
 

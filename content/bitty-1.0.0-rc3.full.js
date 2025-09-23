@@ -15,7 +15,7 @@ class BittyJs extends HTMLElement {
 
   #listeners = ["click", "input"];
   #receivers = [];
-  // #watchers = [];
+  #watchers = [];
   //#watchSignals = [];
 
   async connectedCallback() {
@@ -27,6 +27,7 @@ class BittyJs extends HTMLElement {
       this.watchMutations = this.handleMutations.bind(this);
       //this.catchWatchEventBrdige = this.catchWatchEvent.bind(this);
       this.loadReceivers();
+      this.loadWatchers();
       // this.loadWatchSignals();
       this.initBitty();
       this.addEventListeners();
@@ -40,18 +41,20 @@ class BittyJs extends HTMLElement {
     this.#listeners.forEach((listener) => {
       this.addEventListener(listener, (event) => {
         if (
-          event.target && event.target.dataset && event.target.dataset.send &&
+          event.target &&
+          event.target.nodeName.toLowerCase() !== "bitty-js" &&
+          event.target.dataset && event.target.dataset.send &&
           !event.bittyScope
         ) {
           event.uuid = getUUID();
           event.bittyScope = "receive";
+          // console.log(event.target.nodeName);
           this.handleEventBridge.call(this, event);
         }
       });
-
       document.addEventListener(listener, (event) => {
         if (event.bittyScope === "watch") {
-          console.log(event.target);
+          this.handleEventBridge.call(this, event);
         }
 
         // if (event.target.nodeName.toLowerCase() !== "bitty-js") {
@@ -78,14 +81,23 @@ class BittyJs extends HTMLElement {
     // });
   }
 
-  addReceiver(signal, el, scope) {
+  addReceiver(signal, el) {
     if (this.conn[signal]) {
       this.#receivers.push({
         key: signal,
         f: (event) => {
-          if (event.bittyScope === scope) {
-            this.conn[signal](event, el);
-          }
+          this.conn[signal](event, el);
+        },
+      });
+    }
+  }
+
+  addWatchers(signal, el) {
+    if (this.conn[signal]) {
+      this.#watchers.push({
+        key: signal,
+        f: (event) => {
+          this.conn[signal](event, el);
         },
       });
     }
@@ -144,6 +156,80 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
+    if (event.bittyScope === "receive") {
+      if (event.target.dataset.forward) {
+        event.target.dataset.forward.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
+          let numberOfReceivers = 0;
+          this.#receivers.forEach((receiver) => {
+            if (receiver.key === signal) {
+              numberOfReceivers += 1;
+              receiver.f(event);
+            }
+          });
+          if (numberOfReceivers === 0) {
+            if (this.conn[signal]) {
+              this.conn[signal](event, null);
+            }
+          }
+        });
+        delete event.target.dataset.forward;
+      } else if (event.target.dataset.send) {
+        event.target.dataset.send.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
+          let numberOfReceivers = 0;
+          this.#receivers.forEach((receiver) => {
+            if (receiver.key === signal) {
+              numberOfReceivers += 1;
+              receiver.f(event);
+            }
+          });
+          if (numberOfReceivers === 0) {
+            if (this.conn[signal]) {
+              this.conn[signal](event, null);
+            }
+          }
+        });
+      }
+    } else if (event.bittyScope === "watch") {
+      if (event.target.dataset.forward) {
+        event.target.dataset.forward.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
+          let numberOfReceivers = 0;
+          this.#watchers.forEach((receiver) => {
+            if (receiver.key === signal) {
+              numberOfReceivers += 1;
+              receiver.f(event);
+            }
+          });
+          // if (numberOfReceivers === 0) {
+          //   if (this.conn[signal]) {
+          //     this.conn[signal](event, null);
+          //   }
+          // }
+        });
+        delete event.target.dataset.forward;
+      } else if (event.target.dataset.send) {
+        event.target.dataset.send.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
+          let numberOfReceivers = 0;
+          this.#watchers.forEach((receiver) => {
+            if (receiver.key === signal) {
+              numberOfReceivers += 1;
+              receiver.f(event);
+            }
+          });
+          // if (numberOfReceivers === 0) {
+          //   if (this.conn[signal]) {
+          //     this.conn[signal](event, null);
+          //   }
+          // }
+        });
+      }
+    }
+
+    event.bittyScope = "watch";
+
     // if (event.stopPropagation) {
     //   event.stopPropagation();
     // }
@@ -163,41 +249,40 @@ class BittyJs extends HTMLElement {
 
     // this.parentElement.dispatchEvent(signalForwarder);
 
-    if (event.target.dataset.forward) {
-      event.target.dataset.forward.split("|").forEach((signal) => {
-        // TODO: Remove this duplication with processSignal()
-        let numberOfReceivers = 0;
-        this.#receivers.forEach((receiver) => {
-          if (receiver.key === signal) {
-            numberOfReceivers += 1;
-            receiver.f(event);
-          }
-        });
-        if (numberOfReceivers === 0) {
-          if (this.conn[signal]) {
-            this.conn[signal](event, null);
-          }
-        }
-      });
-      delete event.target.dataset.forward;
-    } else if (event.target.dataset.send) {
-      event.target.dataset.send.split("|").forEach((signal) => {
-        // TODO: Remove this duplication with processSignal()
-        let numberOfReceivers = 0;
-        this.#receivers.forEach((receiver) => {
-          if (receiver.key === signal) {
-            numberOfReceivers += 1;
-            receiver.f(event);
-          }
-        });
-        if (numberOfReceivers === 0) {
-          if (this.conn[signal]) {
-            this.conn[signal](event, null);
-          }
-        }
-      });
-    }
-    event.bittyScope = "watch";
+    // if (event.target.dataset.forward) {
+    //   event.target.dataset.forward.split("|").forEach((signal) => {
+    //     // TODO: Remove this duplication with processSignal()
+    //     let numberOfReceivers = 0;
+    //     this.#receivers.forEach((receiver) => {
+    //       if (receiver.key === signal) {
+    //         numberOfReceivers += 1;
+    //         receiver.f(event);
+    //       }
+    //     });
+    //     if (numberOfReceivers === 0) {
+    //       if (this.conn[signal]) {
+    //         this.conn[signal](event, null);
+    //       }
+    //     }
+    //   });
+    //   delete event.target.dataset.forward;
+    // } else if (event.target.dataset.send) {
+    //   event.target.dataset.send.split("|").forEach((signal) => {
+    //     // TODO: Remove this duplication with processSignal()
+    //     let numberOfReceivers = 0;
+    //     this.#receivers.forEach((receiver) => {
+    //       if (receiver.key === signal) {
+    //         numberOfReceivers += 1;
+    //         receiver.f(event);
+    //       }
+    //     });
+    //     if (numberOfReceivers === 0) {
+    //       if (this.conn[signal]) {
+    //         this.conn[signal](event, null);
+    //       }
+    //     }
+    //   });
+    // }
   }
 
   handleMutations(mutationList, _observer) {
@@ -248,17 +333,20 @@ class BittyJs extends HTMLElement {
 
   loadReceivers() {
     this.#receivers = [];
-    // TODO use a loop to slime these down a little
     const receiverEls = this.querySelectorAll(`[data-receive]`);
     receiverEls.forEach((el) => {
       el.dataset.receive.split("|").forEach((signal) => {
-        this.addReceiver(signal, el, "receive");
+        this.addReceiver(signal, el);
       });
     });
+  }
+
+  loadWatchers() {
+    this.#watchers = [];
     const watcherEls = this.querySelectorAll(`[data-watch]`);
     watcherEls.forEach((el) => {
       el.dataset.watch.split("|").forEach((signal) => {
-        this.addReceiver(signal, el, "watch");
+        this.addWatcher(signal, el);
       });
     });
   }

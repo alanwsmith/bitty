@@ -4,8 +4,6 @@ function sleep(ms) {
 
 export class Alfa {
   runTest0210(event, element) {
-    console.log(event);
-    console.log("eeeeeeeeeeeeeeee");
     element.innerHTML = "PASSED";
   }
 }

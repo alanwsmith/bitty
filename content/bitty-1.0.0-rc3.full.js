@@ -22,7 +22,6 @@ class BittyJs extends HTMLElement {
     this.setIds();
     await this.makeConnection();
     if (this.conn) {
-      // TODO: Rename to handleEvent = updateReceiver
       this.requestUpdate = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
       this.catchWatchEventBrdige = this.catchWatchEvent.bind(this);
@@ -101,21 +100,11 @@ class BittyJs extends HTMLElement {
     this.handleEvent(event);
   }
 
-  // TODO: Deprecate this in favor of forward()
-  send(event, signal) {
-    if (event.target && event.target.dataset) {
-      event.target.dataset.send = signal;
-    }
-    this.handleEvent(event);
-  }
-
   error(message) {
     console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
   }
 
   handleEvent(event) {
-    // TODO: Review whey bittyconnect is allowed to
-    // propagate?
     if (event.type !== "bittyconnect") {
       event.stopPropagation();
     }
@@ -167,27 +156,6 @@ class BittyJs extends HTMLElement {
         });
       }
     }
-
-    // if (
-    //   event.target &&
-    //   event.target.dataset &&
-    //   event.target.dataset.send
-    // ) {
-    //   event.target.dataset.send.split("|").forEach((signal) => {
-    //     let numberOfReceivers = 0;
-    //     this.#receivers.forEach((receiver) => {
-    //       if (receiver.key === signal) {
-    //         numberOfReceivers += 1;
-    //         receiver.f(event);
-    //       }
-    //     });
-    //     if (numberOfReceivers === 0) {
-    //       if (this.conn[signal]) {
-    //         this.conn[signal](event, null);
-    //       }
-    //     }
-    //   });
-    // }
   }
 
   handleMutations(mutationList, _observer) {
@@ -228,7 +196,6 @@ class BittyJs extends HTMLElement {
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send) {
       this.handleEvent(
-        // simulate an event
         { type: "bittyconnect", target: this },
       );
     }

@@ -101,38 +101,10 @@ class BittyJs extends HTMLElement {
 
   handleEvent(event) {
     if (event.target.dataset.forward) {
-      event.target.dataset.forward.split("|").forEach((signal) => {
-        // TODO: Remove this duplication with processSignal()
-        let numberOfReceivers = 0;
-        this.#receivers.forEach((receiver) => {
-          if (receiver.key === signal) {
-            numberOfReceivers += 1;
-            receiver.f(event);
-          }
-        });
-        if (numberOfReceivers === 0) {
-          if (this.conn[signal]) {
-            this.conn[signal](event, null);
-          }
-        }
-      });
+      this.processSignals(event.target.dataset.forward)
       delete event.target.dataset.forward;
     } else if (event.target.dataset.send) {
-      event.target.dataset.send.split("|").forEach((signal) => {
-        // TODO: Remove this duplication with processSignal()
-        let numberOfReceivers = 0;
-        this.#receivers.forEach((receiver) => {
-          if (receiver.key === signal) {
-            numberOfReceivers += 1;
-            receiver.f(event);
-          }
-        });
-        if (numberOfReceivers === 0) {
-          if (this.conn[signal]) {
-            this.conn[signal](event, null);
-          }
-        }
-      });
+      this.processSignals(event.target.dataset.send)
     }
   }
 
@@ -143,7 +115,7 @@ class BittyJs extends HTMLElement {
           if (removedNode.dataset) {
             if (
               removedNode.dataset.receive ||
-              removedNode.dataset.send || removedNode.dataset.watch
+              removedNode.dataset.send 
             ) {
               this.setIds();
               this.loadReceivers();
@@ -155,7 +127,7 @@ class BittyJs extends HTMLElement {
           if (addedNode.dataset) {
             if (
               addedNode.dataset.receive ||
-              addedNode.dataset.send || addedNode.dataset.watch
+              addedNode.dataset.send 
             ) {
               this.setIds();
               this.loadReceivers();
@@ -196,6 +168,23 @@ class BittyJs extends HTMLElement {
       });
     });
   }
+
+  processSignals(signals) {
+    signals.split("|").forEach((signal) => {
+      let numberOfReceivers = 0;
+      this.#receivers.forEach((receiver) => {
+        if (receiver.key === signal) {
+          numberOfReceivers += 1;
+          receiver.f(event);
+        }
+      });
+      if (numberOfReceivers === 0) {
+        if (this.conn[signal]) {
+          this.conn[signal](event, null);
+        }
+      }
+    });
+  } 
 
   setIds() {
     const els = this.querySelectorAll("*");

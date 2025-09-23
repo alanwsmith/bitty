@@ -117,7 +117,6 @@ class BittyJs extends HTMLElement {
               removedNode.dataset.receive ||
               removedNode.dataset.send 
             ) {
-              this.setIds();
               this.loadReceivers();
               return;
             }
@@ -146,12 +145,7 @@ class BittyJs extends HTMLElement {
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send) {
       this.handleEvent(
-        {
-          bittyScope: "receive",
-          uuid: getUUID(),
-          type: "bittyconnected",
-          target: this,
-        },
+        { uuid: getUUID(), target: this },
       );
     }
     if (this.dataset.listeners) {
@@ -161,8 +155,7 @@ class BittyJs extends HTMLElement {
 
   loadReceivers() {
     this.#receivers = [];
-    const receiverEls = this.querySelectorAll(`[data-receive]`);
-    receiverEls.forEach((el) => {
+    this.querySelectorAll(`[data-receive]`).forEach((el) => {
       el.dataset.receive.split("|").forEach((signal) => {
         this.addReceiver(signal, el);
       });

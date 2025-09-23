@@ -17,7 +17,7 @@ class BittyJs extends HTMLElement {
   #receivers = [];
 
   async connectedCallback() {
-    this.setParentId();
+    this.dataset.uuid = getUUID();
     this.setIds();
     await this.makeConnection();
     if (this.conn) {
@@ -112,14 +112,9 @@ class BittyJs extends HTMLElement {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
         for (const removedNode of mutation.removedNodes) {
-          if (removedNode.dataset) {
-            if (
-              removedNode.dataset.receive ||
-              removedNode.dataset.send 
-            ) {
-              this.loadReceivers();
-              return;
-            }
+          if (removedNode.dataset && removedNode.dataset.receive) {
+            this.loadReceivers();
+            return;
           }
         }
         for (const addedNode of mutation.addedNodes) {
@@ -186,11 +181,6 @@ class BittyJs extends HTMLElement {
         el.dataset.uuid = getUUID();
       }
     });
-  }
-
-  setParentId() {
-    const uuid = getUUID();
-    this.dataset.uuid = uuid;
   }
 }
 

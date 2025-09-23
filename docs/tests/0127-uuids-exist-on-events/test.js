@@ -8,9 +8,9 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  runTest(event, el) {
+  runTest0127(event, element) {
     if (event.uuid !== undefined) {
-      el.innerHTML = "PASSED";
+      element.innerHTML = "PASSED";
     }
   }
 }

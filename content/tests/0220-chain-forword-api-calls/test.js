@@ -21,34 +21,34 @@ export default class {
     button.click();
   }
 
-  runTest(event, element) {
+  runTest0220(event, element) {
     this.#counterAlfa += 1;
     event.target.dataset.counter = `${this.#counterAlfa}`;
     if (event.target.dataset.counter == "4") {
       element.innerHTML = "PASSED";
     }
-    this.api.forward(event, "secondSignal");
+    this.api.forward(event, "secondSignal0220");
   }
 
-  secondSignal(event, element) {
+  secondSignal0220(event, element) {
     this.#counterBravo += 1;
     event.target.dataset.counter = `${this.#counterBravo}`;
     if (event.target.dataset.counter == "4") {
       element.innerHTML = "PASSED";
     }
-    this.api.forward(event, "thirdSignal");
+    this.api.forward(event, "thirdSignal0220");
   }
 
-  thirdSignal(event, element) {
+  thirdSignal0220(event, element) {
     this.#counterCharlie += 1;
     event.target.dataset.counter = `${this.#counterCharlie}`;
     if (event.target.dataset.counter == "4") {
       element.innerHTML = "PASSED";
     }
-    this.api.forward(event, "fourthSignal");
+    this.api.forward(event, "fourthSignal0220");
   }
 
-  fourthSignal(event, element) {
+  fourthSignal0220(event, element) {
     this.#counterDelta += 1;
     event.target.dataset.counter = `${this.#counterDelta}`;
     if (event.target.dataset.counter == "4") {

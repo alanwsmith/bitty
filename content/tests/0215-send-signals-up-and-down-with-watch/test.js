@@ -9,31 +9,31 @@ export default class {
     btn.click();
   }
 
-  runTest0215Echo(event, element) {
+  runTest0215Echo(_event, element) {
     element.innerHTML = "PASSED";
   }
 }
 
 export class ChildAlfa {
-  runTest0215Alfa(event, element) {
+  runTest0215Alfa(_event, element) {
     element.innerHTML = "PASSED";
   }
 }
 
 export class ChildBravo {
-  runTest0215Bravo(event, element) {
+  runTest0215Bravo(_event, element) {
     element.innerHTML = "PASSED";
   }
 }
 
 export class ChildCharlie {
-  runTest0215Charlie(event, element) {
+  runTest0215Charlie(_event, element) {
     element.innerHTML = "PASSED";
   }
 }
 
 export class ChildDelta {
-  runTest0215Delta(event, element) {
+  runTest0215Delta(_event, element) {
     element.innerHTML = "PASSED";
   }
 }

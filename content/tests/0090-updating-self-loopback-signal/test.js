@@ -8,7 +8,7 @@ export default class {
     const button = this.api.querySelector("button");
     button.click();
   }
-  runTest(event, el) {
+  runTest0090(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

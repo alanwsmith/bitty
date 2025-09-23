@@ -8,7 +8,7 @@ export class AltClass {
     this.api.querySelector("button").click();
   }
 
-  runTest(_event, el) {
+  runTest0150(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

@@ -7,13 +7,13 @@ export default class {
     await sleep(100) // time pad for test
     this.api.querySelector("button").click();
   }
-  runTestAlfa(_event, el) {
+  runTestAlfa0030(_event, el) {
     el.innerHTML = "PASSED";
   }
-  runTestBravo(_event, el) {
+  runTestBravo0030(_event, el) {
     el.innerHTML = "PASSED";
   }
-  runTestCharlie(_event, el) {
+  runTestCharlie0030(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

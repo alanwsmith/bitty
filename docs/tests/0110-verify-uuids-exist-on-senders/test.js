@@ -8,7 +8,7 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  runTest(event, el) {
+  runTest0110(event, el) {
     if (event.target.dataset.uuid !== undefined) {
       el.innerHTML = "PASSED";
     }

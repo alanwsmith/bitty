@@ -6,15 +6,16 @@ export default class {
   #passed = 0;
   #failed = 0;
 
-  async showResults(event, element) {
+  async showResults(_event, element) {
     element.innerHTML = "Gathering test results...";
-    await sleep(900);
+    await sleep(1200);
     const els = document.querySelectorAll(".test");
     [...els].forEach((el) => {
       if (el.innerHTML == "PASSED") {
         this.#passed += 1;
         el.classList.add("test-passed");
       } else {
+        console.log(el)
         this.#failed += 1;
         el.classList.add("test-failed");
       }

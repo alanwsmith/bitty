@@ -11,19 +11,15 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  async runTest(event, el) {
+  async runTest0140(_event, element) {
     let newButton = template.content.cloneNode(true);
-    el.replaceChildren(newButton);
+    element.replaceChildren(newButton);
     // sleep for test to wait for observer
     // to update the UUID.
-    await this.sleep(200);
-    if (el.childNodes[0].dataset.uuid !== undefined) {
-      el.childNodes[0].innerHTML = "PASSED";
-      el.childNodes[0].classList.add("test");
+    await sleep(100);
+    if (element.childNodes[0].dataset.uuid !== undefined) {
+      element.childNodes[0].innerHTML = "PASSED";
+      element.childNodes[0].classList.add("test");
     }
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

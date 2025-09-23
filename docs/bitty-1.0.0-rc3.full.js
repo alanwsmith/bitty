@@ -15,7 +15,7 @@ class BittyJs extends HTMLElement {
 
   #listeners = ["click", "input"];
   #receivers = [];
-  #watchers = [];
+  //j#watchers = [];
   //#watchSignals = [];
 
   async connectedCallback() {
@@ -27,7 +27,7 @@ class BittyJs extends HTMLElement {
       this.watchMutations = this.handleMutations.bind(this);
       //this.catchWatchEventBrdige = this.catchWatchEvent.bind(this);
       this.loadReceivers();
-      this.loadWatchers();
+      //  this.loadWatchers();
       // this.loadWatchSignals();
       this.initBitty();
       this.addEventListeners();
@@ -39,47 +39,63 @@ class BittyJs extends HTMLElement {
 
   addEventListeners() {
     this.#listeners.forEach((listener) => {
-      this.addEventListener(listener, (event) => {
+      document.addEventListener(listener, (event) => {
         if (
           event.target &&
           event.target.nodeName.toLowerCase() !== "bitty-js" &&
-          event.target.dataset && event.target.dataset.send &&
-          !event.bittyScope
+          event.target.dataset && event.target.dataset.send
         ) {
           event.uuid = getUUID();
-          event.bittyScope = "receive";
-          // console.log(event.target.nodeName);
           this.handleEventBridge.call(this, event);
         }
-      });
-      document.addEventListener(listener, (event) => {
-        if (event.bittyScope === "watch") {
-          this.handleEventBridge.call(this, event);
-        }
-
-        // if (event.target.nodeName.toLowerCase() !== "bitty-js") {
-        //   console.log(event.target);
-        //   if (event.target && event.target.dataset) {
-        //     console.log(event.target.dataset);
-        //   }
-        // }
       });
     });
-
-    //document.addEventListener("bittyhoist", (payload_with_event) => {
-    //  //this.requestUpdate.call(this, payload_with_event.detail.event);
-    //  // console.log(payload_with_event);
-    //});
-
-    // this.addEventListener("bittyhoist", (payload_with_event) => {
-    //   if (
-    //     payload_with_event.detail &&
-    //     payload_with_event.detail.event
-    //   ) {
-    //     this.catchWatchEvent.call(this, payload_with_event.detail.event);
-    //   }
-    // });
   }
+
+  //addEventListeners() {
+  //  this.#listeners.forEach((listener) => {
+  //    this.addEventListener(listener, (event) => {
+  //      if (
+  //        event.target &&
+  //        event.target.nodeName.toLowerCase() !== "bitty-js" &&
+  //        event.target.dataset && event.target.dataset.send &&
+  //        !event.bittyScope
+  //      ) {
+  //        event.uuid = getUUID();
+  //        event.bittyScope = "receive";
+  //        if (event.target.dataset.send === "runTest0200") {
+  //          console.log(event);
+  //          console.log("iiiiiiiiiiiiiiiiiiii");
+  //        }
+  //        // console.log(event.target.nodeName);
+  //        this.handleEventBridge.call(this, event);
+  //      }
+  //    });
+  //    document.addEventListener(listener, (event) => {
+  //      if (event.bittyScope === "watch") {
+  //        this.handleEventBridge.call(this, event);
+  //      }
+  //      // if (event.target.nodeName.toLowerCase() !== "bitty-js") {
+  //      //   console.log(event.target);
+  //      //   if (event.target && event.target.dataset) {
+  //      //     console.log(event.target.dataset);
+  //      //   }
+  //      // }
+  //    });
+  //  });
+  //  //document.addEventListener("bittyhoist", (payload_with_event) => {
+  //  //  //this.requestUpdate.call(this, payload_with_event.detail.event);
+  //  //  // console.log(payload_with_event);
+  //  //});
+  //  // this.addEventListener("bittyhoist", (payload_with_event) => {
+  //  //   if (
+  //  //     payload_with_event.detail &&
+  //  //     payload_with_event.detail.event
+  //  //   ) {
+  //  //     this.catchWatchEvent.call(this, payload_with_event.detail.event);
+  //  //   }
+  //  // });
+  //}
 
   addReceiver(signal, el) {
     if (this.conn[signal]) {
@@ -92,16 +108,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  addWatcher(signal, el) {
-    if (this.conn[signal]) {
-      this.#watchers.push({
-        key: signal,
-        f: (event) => {
-          this.conn[signal](event, el);
-        },
-      });
-    }
-  }
+  // addWatcher(signal, el) {
+  //   if (this.conn[signal]) {
+  //     this.#watchers.push({
+  //       key: signal,
+  //       f: (event) => {
+  //         this.conn[signal](event, el);
+  //       },
+  //     });
+  //   }
+  // }
 
   // addWatcher(signal, el) {
   //   if (this.conn[signal]) {
@@ -156,79 +172,79 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
-    if (event.bittyScope === "receive") {
-      if (event.target.dataset.forward) {
-        event.target.dataset.forward.split("|").forEach((signal) => {
-          // TODO: Remove this duplication with processSignal()
-          let numberOfReceivers = 0;
-          this.#receivers.forEach((receiver) => {
-            if (receiver.key === signal) {
-              numberOfReceivers += 1;
-              receiver.f(event);
-            }
-          });
-          if (numberOfReceivers === 0) {
-            if (this.conn[signal]) {
-              this.conn[signal](event, null);
-            }
+    if (event.target.dataset.forward) {
+      event.target.dataset.forward.split("|").forEach((signal) => {
+        // TODO: Remove this duplication with processSignal()
+        let numberOfReceivers = 0;
+        this.#receivers.forEach((receiver) => {
+          if (receiver.key === signal) {
+            numberOfReceivers += 1;
+            receiver.f(event);
           }
         });
-        delete event.target.dataset.forward;
-      } else if (event.target.dataset.send) {
-        event.target.dataset.send.split("|").forEach((signal) => {
-          // TODO: Remove this duplication with processSignal()
-          let numberOfReceivers = 0;
-          this.#receivers.forEach((receiver) => {
-            if (receiver.key === signal) {
-              numberOfReceivers += 1;
-              receiver.f(event);
-            }
-          });
-          if (numberOfReceivers === 0) {
-            if (this.conn[signal]) {
-              this.conn[signal](event, null);
-            }
+        if (numberOfReceivers === 0) {
+          if (this.conn[signal]) {
+            this.conn[signal](event, null);
+          }
+        }
+      });
+      delete event.target.dataset.forward;
+    } else if (event.target.dataset.send) {
+      event.target.dataset.send.split("|").forEach((signal) => {
+        // TODO: Remove this duplication with processSignal()
+        let numberOfReceivers = 0;
+        this.#receivers.forEach((receiver) => {
+          if (receiver.key === signal) {
+            numberOfReceivers += 1;
+            receiver.f(event);
           }
         });
-      }
-    } else if (event.bittyScope === "watch") {
-      if (event.target.dataset.forward) {
-        event.target.dataset.forward.split("|").forEach((signal) => {
-          // TODO: Remove this duplication with processSignal()
-          let numberOfReceivers = 0;
-          this.#watchers.forEach((receiver) => {
-            if (receiver.key === signal) {
-              numberOfReceivers += 1;
-              receiver.f(event);
-            }
-          });
-          // if (numberOfReceivers === 0) {
-          //   if (this.conn[signal]) {
-          //     this.conn[signal](event, null);
-          //   }
-          // }
-        });
-        delete event.target.dataset.forward;
-      } else if (event.target.dataset.send) {
-        event.target.dataset.send.split("|").forEach((signal) => {
-          // TODO: Remove this duplication with processSignal()
-          let numberOfReceivers = 0;
-          this.#watchers.forEach((receiver) => {
-            if (receiver.key === signal) {
-              numberOfReceivers += 1;
-              receiver.f(event);
-            }
-          });
-          // if (numberOfReceivers === 0) {
-          //   if (this.conn[signal]) {
-          //     this.conn[signal](event, null);
-          //   }
-          // }
-        });
-      }
+        if (numberOfReceivers === 0) {
+          if (this.conn[signal]) {
+            this.conn[signal](event, null);
+          }
+        }
+      });
     }
 
-    event.bittyScope = "watch";
+    // else if (event.bittyScope === "watch") {
+    //   if (event.target.dataset.forward) {
+    //     event.target.dataset.forward.split("|").forEach((signal) => {
+    //       // TODO: Remove this duplication with processSignal()
+    //       let numberOfReceivers = 0;
+    //       this.#watchers.forEach((receiver) => {
+    //         if (receiver.key === signal) {
+    //           numberOfReceivers += 1;
+    //           receiver.f(event);
+    //         }
+    //       });
+    //       // if (numberOfReceivers === 0) {
+    //       //   if (this.conn[signal]) {
+    //       //     this.conn[signal](event, null);
+    //       //   }
+    //       // }
+    //     });
+    //     delete event.target.dataset.forward;
+    //   } else if (event.target.dataset.send) {
+    //     event.target.dataset.send.split("|").forEach((signal) => {
+    //       // TODO: Remove this duplication with processSignal()
+    //       let numberOfReceivers = 0;
+    //       this.#watchers.forEach((receiver) => {
+    //         if (receiver.key === signal) {
+    //           numberOfReceivers += 1;
+    //           receiver.f(event);
+    //         }
+    //       });
+    //       // if (numberOfReceivers === 0) {
+    //       //   if (this.conn[signal]) {
+    //       //     this.conn[signal](event, null);
+    //       //   }
+    //       // }
+    //     });
+    //   }
+    // }
+
+    // event.bittyScope = "watch";
 
     // if (event.stopPropagation) {
     //   event.stopPropagation();
@@ -346,15 +362,15 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  loadWatchers() {
-    this.#watchers = [];
-    const watcherEls = this.querySelectorAll(`[data-watch]`);
-    watcherEls.forEach((el) => {
-      el.dataset.watch.split("|").forEach((signal) => {
-        this.addWatcher(signal, el);
-      });
-    });
-  }
+  // loadWatchers() {
+  //   this.#watchers = [];
+  //   const watcherEls = this.querySelectorAll(`[data-watch]`);
+  //   watcherEls.forEach((el) => {
+  //     el.dataset.watch.split("|").forEach((signal) => {
+  //       this.addWatcher(signal, el);
+  //     });
+  //   });
+  // }
 
   // loadWatchers() {
   //   this.#watchers = [];

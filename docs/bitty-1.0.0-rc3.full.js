@@ -92,7 +92,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  addWatchers(signal, el) {
+  addWatcher(signal, el) {
     if (this.conn[signal]) {
       this.#watchers.push({
         key: signal,
@@ -323,7 +323,12 @@ class BittyJs extends HTMLElement {
     this.observer.observe(this, this.observerConfig);
     if (this.dataset.send) {
       this.handleEvent(
-        { type: "bittyconnect", target: this },
+        {
+          bittyScope: "receive",
+          uuid: getUUID(),
+          type: "bittyconnected",
+          target: this,
+        },
       );
     }
     if (this.dataset.listeners) {

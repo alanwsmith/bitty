@@ -1,6 +1,10 @@
 // Ensure the `data-send` value of the
 // event generating element doesn't
 // get changed
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 
 export default class {
   #counterAlfa = 0;
@@ -8,7 +12,8 @@ export default class {
   #counterCharlie = 0;
   #counterDelta = 0;
 
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     const button = this.api.querySelector("button");
     button.click();
     button.click();

@@ -10,7 +10,7 @@ export class Alfa {
 
 export class Bravo {
   async bittyInit() {
-    await sleep(200); // pad time for module loading
+    await sleep(100) // time pad for test
     const btn = this.api.querySelector("button");
     btn.click();
   }

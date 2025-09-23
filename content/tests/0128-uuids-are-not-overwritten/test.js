@@ -1,5 +1,10 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default class {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     const els = this.api.querySelectorAll("[data-uuid]");
     [...els].forEach((el) => {
       if (el.dataset.uuid === "original-uuid") {

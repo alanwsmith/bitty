@@ -3,7 +3,7 @@ export class Parent {
     this.api.querySelector("button").click();
   }
   runTest(_event, el) {
-    el.innerHTML = "PASSED_GOT_CHILD_SIGNAL";
+    el.innerHTML = "PASSED";
   }
 }
 export class Child {

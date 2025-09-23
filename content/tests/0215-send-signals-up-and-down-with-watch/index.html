@@ -1,13 +1,34 @@
 <h1>TODO: Send Signals Up and Down</h1>
 
-<bitty-js 
-  data-connect="/tests/[@ folder.name @]/test.js|Parent"
-  data-watch="runTest"
->
-  <!--
-  <div class="test">FAILED</div>
+<bitty-js data-connect="/tests/[@ folder.name @]/test.js "data-watch="runTest">
 
--->
-  
+  <div class="test" data-receive="testResult">FAILED</div>
+  <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildAlfa">
+    <div class="test" data-receive="testResult">FAILED</div>
+    <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildBravo">
+      <div class="test" data-receive="testResult">FAILED</div>
+      <button data-send="runTest">Test Trigger</button>
+      <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildCharlie">
+        <div class="test" data-receive="testResult">FAILED</div>
+        <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildDelta">
+          <div class="test" data-receive="testResult">FAILED</div>
+        </bitty-js>
+      </bitty-js>
+    </bitty-js>
+  </bitty-js>
+
+  <div class="test" data-receive="testResult">FAILED</div>
+  <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildAlfa">
+    <div class="test" data-receive="testResult">FAILED</div>
+    <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildBravo">
+      <div class="test" data-receive="testResult">FAILED</div>
+      <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildCharlie">
+        <div class="test" data-receive="testResult">FAILED</div>
+        <bitty-js data-connect="/tests/[@ folder.name @]/test.js|ChildDelta">
+          <div class="test" data-receive="testResult">FAILED</div>
+        </bitty-js>
+      </bitty-js>
+    </bitty-js>
+  </bitty-js>
 
 </bitty-js>

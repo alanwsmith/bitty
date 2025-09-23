@@ -41,7 +41,7 @@ class BittyJs extends HTMLElement {
       this.addEventListener(listener, (event) => {
         if (
           event.target && event.target.dataset && event.target.dataset.send &&
-          !event.uuid
+          !event.bittyScope
         ) {
           event.uuid = getUUID();
           event.bittyScope = "receive";
@@ -197,6 +197,7 @@ class BittyJs extends HTMLElement {
         }
       });
     }
+    event.bittyScope = "watch";
   }
 
   handleMutations(mutationList, _observer) {

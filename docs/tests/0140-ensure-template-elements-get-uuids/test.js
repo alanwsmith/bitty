@@ -3,7 +3,7 @@ function sleep(ms) {
 }
 
 const template = document.createElement("template");
-template.innerHTML = `<button data-send="testStub">FAILED</button>`;
+template.innerHTML = `<button class="test" data-send="testStub">FAILED</button>`;
 
 export default class {
   async bittyInit() {

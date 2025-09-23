@@ -4,10 +4,10 @@ export default class {
   }
 
   runTest(event, _el) {
-    this.api.send(event, "forward");
+    this.api.forward(event, "forwardEvent");
   }
 
-  forward(event, el) {
+  forwardEvent(event, el) {
     el.innerHTML = "PASSED";
   }
 }

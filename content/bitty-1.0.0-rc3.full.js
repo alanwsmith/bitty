@@ -133,8 +133,8 @@ class BittyJs extends HTMLElement {
       event.target.dataset
     ) {
       if (event.target.dataset.forward) {
-        console.log("forward");
         event.target.dataset.forward.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
           let numberOfReceivers = 0;
           this.#receivers.forEach((receiver) => {
             if (receiver.key === signal) {
@@ -151,6 +151,7 @@ class BittyJs extends HTMLElement {
         delete event.target.dataset.forward;
       } else if (event.target.dataset.send) {
         event.target.dataset.send.split("|").forEach((signal) => {
+          // TODO: Remove this duplication with processSignal()
           let numberOfReceivers = 0;
           this.#receivers.forEach((receiver) => {
             if (receiver.key === signal) {

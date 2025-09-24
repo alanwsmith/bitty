@@ -1,11 +1,11 @@
 export default class {
-  update(_event, element) {
+  updateDefaultClass(_event, element) {
     element.innerHTML = Date.now();
   }
 }
 
 export class AlternativeClass {
-  update(_event, element) {
+  updateAltClass(_event, element) {
     element.innerHTML = Date.now();
   }
 }

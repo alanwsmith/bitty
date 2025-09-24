@@ -1,9 +1,9 @@
 export default class {
-  forward(_event, element) {
+  forwardedSignal(_event, element) {
     element.innerHTML = Date.now();
   }
 
-  update(event, _element) {
-    this.api.send(event, "forward");
+  forwardUpdate(event, _element) {
+    this.api.forward(event, "forwardedSignal");
   }
 }

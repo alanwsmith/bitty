@@ -1,7 +1,7 @@
 export default class {
   #currentState = "Off";
 
-  update(_event, element) {
+  updateStoredState(_event, element) {
     if (this.#currentState === "Off") {
       this.#currentState = "On";
     } else {

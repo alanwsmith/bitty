@@ -1,5 +1,5 @@
 export default class {
-  update(event, element) {
+  updateTimestamp(event, element) {
     element.innerHTML = Date().toString();
   }
 }

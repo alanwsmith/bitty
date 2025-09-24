@@ -1,21 +1,24 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default class {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     this.api.querySelector("button").click();
   }
-  async runTest(_event, el) {
+
+  async runTest0130(_event, element) {
     const newButton = document.createElement("button");
     newButton.dataset.receive = "placeholderToGenerateUUID";
     newButton.innerHTML = "FAILED";
-    el.replaceChildren(newButton);
+    element.replaceChildren(newButton);
     // sleep for test to wait for observer
     // to update the UUID.
-    await this.sleep(300);
+    await sleep(200);
     if (newButton.dataset.uuid !== undefined) {
       newButton.innerHTML = "PASSED";
+      newButton.classList.add("test");
     }
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

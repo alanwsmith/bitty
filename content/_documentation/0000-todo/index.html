@@ -3,6 +3,8 @@
 
   <pre>
 
+- TODO: modules local async. If they are nested, doing
+    something like `bittyInit` presents a race condition. 
 
 - TODO: Add documentation note about `event` being pulled from `window.event`
 if nothing overrides it in scope. (e.g. if you bury an incoming
@@ -25,7 +27,68 @@ element and functionality from the module.
     TODO: Make sure watchers pick up
     forwarded signals
 
+- 
+    // TODO: Document that newly added elements
+    // have an init/setup process that take
+    // some amount of time. It happens
+    // very quick but it's not instant.
+    // So, be aware of race conditions.
 
   </pre>
+
+<!--
+
+
+### For Documentation Section
+
+These more technical notes will be moved into
+the Documentation section. 
+
+__bitty-js__ components can be powered by either
+JavaScript modules or `<script>` tags embedded
+directly on the page. The __data-connect__
+attribute is used in both cases. 
+
+The order of operations is:
+
+1. Verify there's a __data-connect__
+attribute on the component. Stop
+processing and throw an error if there
+isn't.
+
+2. Use the value from the __data-conneciton__
+attribute to see if there's a JavaScript
+Map on the window named __BittyClasses__
+with a key that mathces the value and contains
+a class. For example, 
+
+    __data-connect="InlineExample"__
+
+    would look for:
+
+    __bittyClasses.InlineExample__
+
+    If it exists and is a class
+  the component connects to it
+  and uses it's functionality.
+
+3. If the local `<script>` tag
+class isn't found the __data-connect__
+is used as a path to a JavaScript
+module. 
+
+4. If the __data-connect__ value
+is treated as a path and it ends
+with __|SomeName__ it attempts to
+load a class named __SomeName__ from
+the module (e.g. __export class SomeName {}__)
+
+5. If the __data-connect__ doesn't
+have a __|SomeName__ ending then the
+module's default class is used 
+(i.e. __export default class {}__)
+
+-->
+
 </details>
 

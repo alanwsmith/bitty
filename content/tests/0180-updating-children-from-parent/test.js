@@ -1,13 +1,17 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export class Parent {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     this.api.querySelector("button").click();
   }
-  runTest(event, el) {
-    el.innerHTML = `PASSED`;
+  runTest0180(_event, element) {
+    element.innerHTML = `PASSED`;
   }
 }
 
 export class Child {
-  // Child class must exist but update comes
-  // via cascade from the Parent
+  // must exist, but no methods required
 }

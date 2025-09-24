@@ -1,5 +1,5 @@
 export default class {
-    update(event, element) {
+    updateFromRadioButtons(event, element) {
         element.innerHTML = `Selected: ${event.target.value}`;
     }
 }

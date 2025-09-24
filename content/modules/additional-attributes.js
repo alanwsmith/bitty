@@ -1,13 +1,7 @@
 export default class {
-  #colors = [
-    "blue",
-    "green",
-    "red",
-  ];
-
-  update(event, element) {
+  updateFromData(event, element) {
     const selectedColor = event.target.dataset.color;
-    this.#colors.forEach((color) => {
+    ["red", "green", "blue"].forEach((color) => {
       if (color === selectedColor) {
         element.classList.add(color);
       } else {

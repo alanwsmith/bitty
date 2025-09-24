@@ -5,7 +5,7 @@ const templates = {
 
   showBook: `<div data-key="title"></div>
 <div>by <span data-key="firstName"></span>
-<span data-key="lastName"></span></div> 
+<span data-key="lastName"></span></div>
 <p data-key="note"></p>
 <div><span data-key="pageCount"></span> pages</div>
 <div><button data-send="showBooks">View All Books</button></div>`,
@@ -14,6 +14,7 @@ const templates = {
 };
 
 export default class {
+  /*
   constructor() {
     this.books = {};
     this.templates = {};
@@ -73,4 +74,5 @@ export default class {
     }
     element.replaceChildren(content);
   }
+  */
 }

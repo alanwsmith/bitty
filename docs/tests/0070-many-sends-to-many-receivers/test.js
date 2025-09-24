@@ -1,14 +1,19 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default class {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     this.api.querySelector("button").click();
   }
-  runTestAlfa(event, el) {
+  runTestAlfa0070(_event, el) {
     el.innerHTML = "PASSED";
   }
-  runTestBravo(event, el) {
+  runTestBravo0070(_event, el) {
     el.innerHTML = "PASSED";
   }
-  runTestCharlie(event, el) {
+  runTestCharlie0070(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

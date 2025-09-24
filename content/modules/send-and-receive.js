@@ -1,5 +1,5 @@
 export default class {
-  update(_event, element) {
+  updateSendAndReceive(_event, element) {
     element.innerHTML = Date.now();
   }
 }

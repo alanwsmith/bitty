@@ -1,11 +1,9 @@
 export class Parent {
-  update(_event, element) {
+  demoSendingFromChildToParent(_event, element) {
     element.innerHTML = Date.now();
   }
 }
 
 export class Child {
-  // This class must exist for
-  // the connection but doesn't
-  // need anything in it
+  // must exist, but no methods required
 }

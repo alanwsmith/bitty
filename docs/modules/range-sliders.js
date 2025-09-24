@@ -1,5 +1,5 @@
 export default class {
-  update(event, element) {
+  updateFromRangeSlider(event, element) {
     element.innerHTML = event.target.value;
   }
 }

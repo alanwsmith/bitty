@@ -1,23 +1,25 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const template = document.createElement("template");
-template.innerHTML = `<button data-send="testStub">FAILED</button>`;
+template.innerHTML = `<button class="test" data-send="testStub">FAILED</button>`;
 
 export default class {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     this.api.querySelector("button").click();
   }
 
-  async runTest(event, el) {
+  async runTest0140(_event, element) {
     let newButton = template.content.cloneNode(true);
-    el.replaceChildren(newButton);
+    element.replaceChildren(newButton);
     // sleep for test to wait for observer
     // to update the UUID.
-    await this.sleep(300);
-    if (el.childNodes[0].dataset.uuid !== undefined) {
-      el.childNodes[0].innerHTML = "PASSED";
+    await sleep(100);
+    if (element.childNodes[0].dataset.uuid !== undefined) {
+      element.childNodes[0].innerHTML = "PASSED";
+      element.childNodes[0].classList.add("test");
     }
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

@@ -1,13 +1,14 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default class {
-  bittyInit() {
+  async bittyInit() {
+    await sleep(100) // time pad for test
     const button = this.api.querySelector("button");
-    const statusDiv = this.api.querySelector("div");
     button.click();
-    if (button.innerHTML === "PASSED") {
-      statusDiv.innerHTML = "";
-    }
   }
-  runTest(event, el) {
+  runTest0090(_event, el) {
     el.innerHTML = "PASSED";
   }
 }

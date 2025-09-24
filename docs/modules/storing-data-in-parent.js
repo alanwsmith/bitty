@@ -1,10 +1,10 @@
 export class Parent {
   #value = 0;
-  decrement(_event, element) {
+  decrementDemo(_event, element) {
     this.#value -= 1;
     element.innerHTML = this.#value;
   }
-  increment(_event, element) {
+  incrementDemo(_event, element) {
     this.#value += 1;
     element.innerHTML = this.#value;
   }

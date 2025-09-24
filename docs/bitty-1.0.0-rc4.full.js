@@ -26,7 +26,11 @@ class BittyJs extends HTMLElement {
       this.initBitty();
       this.addEventListeners();
       if (typeof this.conn.bittyInit === "function") {
-        this.conn.bittyInit();
+        if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+          await this.conn.bittyInit();
+        } else {
+          this.conn.bittyInit();
+        }
       }
     }
   }

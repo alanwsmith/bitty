@@ -3,6 +3,15 @@
 
   <pre>
 
+- You can forward to a function with 
+`this.api.forward(null, "nameOfFunction");`. A temporary
+        event is stubbed with `{ target: { dataset: { forward: "nameOfFunction" }}`
+        inside the component to make the transition, but the
+        `forward` value is removed prior to the 
+        actual function call. This is designed to allow
+        things like using a forward in side `bittyInit()`
+        without having to explicitly mock an event. 
+
 - bittyInit() can be async. When it is, it's called with
         `await`. If it's not, it's called normally.
 

@@ -100,10 +100,10 @@ class BittyJs extends HTMLElement {
 
   handleEvent(event) {
     if (event.target.dataset.forward) {
-      this.processSignals(event.target.dataset.forward)
+      this.processSignals(event.target.dataset.forward);
       delete event.target.dataset.forward;
     } else if (event.target.dataset.send) {
-      this.processSignals(event.target.dataset.send)
+      this.processSignals(event.target.dataset.send);
     }
   }
 
@@ -120,7 +120,7 @@ class BittyJs extends HTMLElement {
           if (addedNode.dataset) {
             if (
               addedNode.dataset.receive ||
-              addedNode.dataset.send 
+              addedNode.dataset.send
             ) {
               this.setIds();
               this.loadReceivers();
@@ -171,7 +171,7 @@ class BittyJs extends HTMLElement {
         }
       }
     });
-  } 
+  }
 
   setIds() {
     const els = this.querySelectorAll("*");
@@ -184,3 +184,4 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define("bitty-js", BittyJs);
+

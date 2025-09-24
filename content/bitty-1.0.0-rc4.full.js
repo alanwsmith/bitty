@@ -5,7 +5,7 @@ function getUUID() {
 class BittyJs extends HTMLElement {
   constructor() {
     super();
-    this.version = [1, 0, 0, "rc3"];
+    this.version = [1, 0, 0, "rc4"];
     this.metadata = [
       "Copyright 2025 - Alan W. Smith",
       "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",

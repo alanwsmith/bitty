@@ -2,23 +2,20 @@
 [!- block main -!]
 <div class="download-div">
   <div class="download-link-wrapper">
-    <a class="download-link" href="/[! include "_includes/_script_file_name.txt" !]" download>
-      Download 
+    <a class="download-link" href="/[@- min_script_file_name -@]" download>
+      <span class="small-font">Download</span>
       <br>Version[@ " " @] 
-[@- major_version -@]
-.
-[@- minor_version -@]
-.
-[@- patch_version -@]
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
 [!- if rc_version != "" -!]
       <br>
 Release Candidate [@ rc_version @]
 [!- endif -!]
-      <br><span class="small-font">[! include "_includes/_script_file_name.txt" !]</span></a>
+      <br><span class="small-font">[@- full_script_file_name -@]</span></a>
   </div>
 </div>
+
 <div class="center">
-  non-minified version: <a href="/[! include "_includes/_script_file_name_full.txt" !]" download>[! include "_includes/_script_file_name_full.txt" !]</a>
+  non-minified version: <a href="/[@- full_script_file_name -@]" download>[@- full_script_file_name -@]</a>
 </div>
 
 [! for file in files !]

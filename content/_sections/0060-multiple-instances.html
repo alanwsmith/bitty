@@ -17,15 +17,17 @@
 
 
     <details class="section-code">
-      <summary>Code</summary>
+      <summary>Show Example Source Code</summary>
         <pre class="code-block"><code>
-          [@- highlight["_multiple-instance-examples/" + folder.name + "/example.html"]|safe -@]
+          [@- highlight_file["_multiple-instance-examples/" + folder.name + "/example.html"]|safe -@]
           [@- "\n" -@]
-          [@- highlight["_includes/_script-tag.html"]|safe -@]
+  [!- filter highlight_html|safe -!]
+    <script src="/[@- min_script_file_name @]" type="module"></script>
+  [!- endfilter -!]
         </code></pre>
         [! set scriptname !][! include "_multiple-instance-examples/" + folder.name + "/script-name.txt" !][! endset !]
         <pre class="code-block"><code>
-          [@- highlight["modules/" + scriptname]|safe -@]
+          [@- highlight_file["modules/" + scriptname]|safe -@]
         </code></pre>
     </details>
         </div>

@@ -16,21 +16,24 @@
         [! include "_examples/" + folder.name + "/example.html" !]
 
         <details class="section-code">
-          <summary>Show Example Code</summary>
+          <summary>Show Example Source Code</summary>
           <div class="section-code-wrapper">
             <div class="section-code-block">
               <div class="xxxsmall-padding xxxsmall-margin">example.html</div>
               <pre class="code-block">
-                [@- highlight["_examples/" + folder.name + "/example.html"]|safe -@]
+                [@- highlight_file["_examples/" + folder.name + "/example.html"]|safe -@]
                 [@- "\n" -@]
-                [@- highlight["_includes/_script-tag.html"]|safe -@]
+            [!- filter highlight_html|safe -!]
+              <script src="/[@- min_script_file_name @]" type="module"></script>
+            [!- endfilter -!]
+                
               </pre>
             </div>
             <div class="section-code-block">
               [! set script_name !][! include "_examples/" + folder.name + "/script-name.txt" !][! endset !]
               <div class="xxxsmall-padding xxxsmall-margin">modules/[@ script_name @]</div>
               <pre class="code-block">
-                [@- highlight["modules/" + script_name]|safe -@]
+                [@- highlight_file["modules/" + script_name]|safe -@]
               </pre>
             </div>
           </div>

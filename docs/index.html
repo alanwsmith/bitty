@@ -1,4 +1,60 @@
 <!DOCTYPE html>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--
+
+Welcome to the source code!
+
+Neither this page nor the CSS has
+undergone any optimization.
+That's for a future update.
+
+-->
+
+<title>bitty</title>
+<meta property="og:title" content="bitty" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+
+<meta name="description" content="A vanilla JS web component that uses signals to add reactivity to web pages" />
+<meta
+  property="og:description"
+  content="A vanilla JS web component that uses signals to add reactivity to web pages"
+/>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta
+  property="og:image"
+  content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image.jpg"
+/>
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="675" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image.jpg">
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/images/favicons/apple-touch-icon.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/images/favicons/favicon-16x16.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/images/favicons/favicon-32x32.png"
+/>
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+<link rel="stylesheet" href="/styles/main.css" />
+
 <html lang="en">
   <head>
 
@@ -68,38 +124,46 @@ bittyClasses.InlineExample = class {
 </script>  </head>
 
   <body>
+    <bitty-js data-connect="/modules/home-page-wrapper.js"
+      data-send="majorVersion|minorVersion|patchVersion|rcVersion"
+    >
     <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
-<div class="header-flex-2">
-  <div>made by <a href="https://www.alanwsmith.com/">alan w smith</a></div>
-  <a href="https://github.com/alanwsmith/bitty-js">source code</a>
-  <a href="https://socials.alanwsmith.com/">socials</a>
-  <a href="https://links.alanwsmith.com/">other projects</a>
-  <!--
-  TODO: rss
--->
-</div>
-
-<github-stars
-  :repo="alanwsmith/bitty"
-  :text-color="var(--accent-faded)"
-  :background-color="var(--background)"
-></github-stars>    </header>
-    <main class="default-wrapper default-flow">
-      
-<hgroup class="">
-  <h1>bitty</h1>
-    <div class="small-font accent-faded">
-    signals based reactivity 
-    </div>
-</hgroup>
-    <div class="download-div">
-      <div class="download-link-wrapper">
-        <a class="download-link" href="/bitty-1.0.0-rc4.full.js" download>Download Release Candidate 4<br>Version 1.0.0<br><span class="small-font">bitty-1.0.0-rc4.full.js</span></a>
+      <div class="header-flex-2">
+        <div>made by <a href="https://www.alanwsmith.com/">alan w smith</a></div>
+        <a href="https://github.com/alanwsmith/bitty-js">source code</a>
+        <a href="https://socials.alanwsmith.com/">socials</a>
+        <a href="https://links.alanwsmith.com/">other projects</a>
+        <!--
+        TODO: rss
+      -->
       </div>
-    </div>
-    <div class="center">
-      non-minified version: <a href="/bitty-1.0.0-rc4.full.js" download>bitty-1.0.0-rc4.full.js</a>
-    </div>
+
+        <!-- TODO: only show github-stars if not on localhost -->
+      <github-stars
+        :repo="alanwsmith/bitty"
+        :text-color="var(--accent-faded)"
+        :background-color="var(--background)"
+      ></github-stars>
+
+    </header>
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <h1>bitty</h1>
+        <div class="small-font accent-faded">
+          signals based reactivity 
+        </div>
+      </hgroup>
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/bitty-1.0.0-rc4.full.js" download>
+      Download 
+      <br>Version 1.0.0<br>
+Release Candidate 4<br><span class="small-font">bitty-1.0.0-rc4.full.js</span></a>
+  </div>
+</div>
+<div class="center">
+  non-minified version: <a href="/bitty-1.0.0-rc4.full.js" download>bitty-1.0.0-rc4.full.js</a>
+</div>
 
 <details class="section-details">
   <summary>Overview</summary>
@@ -1958,8 +2022,14 @@ the class in the <strong>bittyClasses</strong> object:</p>
           <h3>Version: 1.0.0-rc4</h3>
 <p>DATE: TBD</p>
 <ul>
-<li>Call <code>bittyInit()</code> with <code>await</code>
-if it's an <code>async</code> function.</li>
+<li>
+<p>Call <code>bittyInit()</code> with <code>await</code>
+if it's an <code>async</code> function.</p>
+</li>
+<li>
+<p>Added tests for <code>this.api.querySelector()</code>
+and <code>document.querySelector()</code></p>
+</li>
 </ul>
 
           <h3>Version: 1.0.0-rc3</h3>
@@ -4005,7 +4075,7 @@ Test TODO List  </h5>
 
       <p>MIT License</p>
 
-      <p>Copyright (c) 2025 Alan Smith - https://bitty-js.alanwsmith.com/</p>
+      <p>Copyright (c) 2025 Alan Smith - https://bitty.alanwsmith.com/</p>
 
       <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -4032,21 +4102,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 <details class="section-details">
   <summary>Feedback Requested</summary>
 
-<p><strong>bitty-js</strong> is currently <strong>bitty-1.0.0-rc4.full.js</strong>.
-The API is stable. Aside from bug fixes, it will
-become <strong>version 1.0</strong>. Play around with it.
+<p><strong>bitty</strong> is currently <strong>Version:
+<span data-receive="majorVersion">#</span>.<span data-receive="minorVersion">#</span>.<span data-receive="patchVersion">#</span><span data-receive="rcVersion"></span></strong>.
+Play around with it.
 <a href="https://socials.alanwsmith.com/">Let me know</a> if you find bugs or show-stoppers.</p>
 <h4>Happy Coding</h4>
-<p>I put a lot of thought and effort into <strong>bitty-js</strong>. All
-of it aimed at making things simpler. I'm really proud of where it ended up.
-I hope it helps you enjoy making things for the web.</p>
+<p>A lot of work into making <strong>bitty</strong>
+as simple as possible.
+I hope that simplicity helps
+you enjoy making things for the web.</p>
 <p>- alan</p>
 
 </details>
 
  
-
-
+ 
     </main>
 
     <footer
@@ -4059,7 +4129,12 @@ I hope it helps you enjoy making things for the web.</p>
       <a href="https://links.alanwsmith.com">other projects</a>
     </footer>
 
-<script type="module" src="bitty-1.0.0-rc4.full.js"></script><script type="module" src="bitty-1.0.0-rc4.full.js"></script><script type="module" src="components/github-stars-beta-1.js"></script>
+    </bitty-js>
+
+    <script src="bitty-1.0.0-rc4.
+full
+.js" type="module"></script>
+<script type="module" src="components/github-stars-beta-1.js"></script>
 <script type="module">
   class DetailsWatcher {
     #storageName = 'openDetailsData'
@@ -4112,5 +4187,6 @@ I hope it helps you enjoy making things for the web.</p>
 
   </body>
 </html>
+
 
 

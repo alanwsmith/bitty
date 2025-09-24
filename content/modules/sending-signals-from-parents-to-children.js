@@ -1,5 +1,5 @@
 export default class {
-  runTest(event, element) {
+  demoParentToChildSignal(event, element) {
     element.innerHTML = Date.now();
   }
 }

@@ -1,5 +1,5 @@
 export default class {
-  update(_event, element) {
+  updateSelf(_event, element) {
     element.innerHTML = Date.now();
   }
 }

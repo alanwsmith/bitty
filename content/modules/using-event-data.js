@@ -1,5 +1,5 @@
 export default class {
-  update(event, element) {
+  updateWithEventData(event, element) {
     element.innerHTML = `${event.type} ${Date.now()}`;
   }
 }

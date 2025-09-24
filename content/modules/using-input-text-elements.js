@@ -1,5 +1,5 @@
 export default class {
-  update(event, element) {
+  updateFromTextInput(event, element) {
     if (event.target.value !== "") {
       element.innerHTML = event.target.value;
     }

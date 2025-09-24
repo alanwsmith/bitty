@@ -8,8 +8,7 @@ class BittyJs extends HTMLElement {
     this.version = [1, 0, 0, "rc3"];
     this.metadata = [
       "Copyright 2025 - Alan W. Smith",
-      "MIT Based License at: htttp://bitty-js.alanwsmith.com/",
-      "License Hash: 2y1pBoEREr3eWA1ubCCOXdmRCdn",
+      "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
     ];
   }
 

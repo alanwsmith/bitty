@@ -1,13 +1,13 @@
 export default class {
-  alfa(_event, element) {
+  multiAlfa(_event, element) {
     element.innerHTML = Date.now();
   }
 
-  bravo(_event, element) {
+  multiBravo(_event, element) {
     element.innerHTML = Date.now();
   }
 
-  charlie(_event, element) {
+  multiCharlie(_event, element) {
     element.innerHTML = Date.now();
   }
 }

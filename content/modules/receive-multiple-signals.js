@@ -1,13 +1,13 @@
 export default class {
-  alfa(_event, element) {
+  multiReceiveAlfa(_event, element) {
     element.innerHTML = `Alfa`;
   }
 
-  bravo(_event, element) {
+  multiReceiveBravo(_event, element) {
     element.innerHTML = `Bravo`;
   }
 
-  charlie(_event, element) {
+  multiReceiveCharlie(_event, element) {
     element.innerHTML = `Charlie`;
   }
 }

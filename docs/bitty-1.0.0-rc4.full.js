@@ -12,10 +12,9 @@ class BittyJs extends HTMLElement {
     ];
   }
 
-  #receivers = [];
-
   async connectedCallback() {
     this.dataset.uuid = getUUID();
+    this.receivers = [];
     this.setIds();
     await this.makeConnection();
     if (this.conn) {
@@ -57,7 +56,7 @@ class BittyJs extends HTMLElement {
 
   addReceiver(signal, el) {
     if (this.conn[signal]) {
-      this.#receivers.push({
+      this.receivers.push({
         key: signal,
         f: (event) => {
           this.conn[signal](event, el);
@@ -162,7 +161,7 @@ class BittyJs extends HTMLElement {
   }
 
   loadReceivers() {
-    this.#receivers = [];
+    this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
       el.dataset.receive.split("|").forEach((signal) => {
         this.addReceiver(signal, el);
@@ -173,7 +172,7 @@ class BittyJs extends HTMLElement {
   processSignals(signals) {
     signals.split("|").forEach((signal) => {
       let numberOfReceivers = 0;
-      this.#receivers.forEach((receiver) => {
+      this.receivers.forEach((receiver) => {
         if (receiver.key === signal) {
           numberOfReceivers += 1;
           receiver.f(event);

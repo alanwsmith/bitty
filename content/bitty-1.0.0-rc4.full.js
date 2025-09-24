@@ -12,7 +12,6 @@ class BittyJs extends HTMLElement {
     ];
   }
 
-  #listeners = ["click", "input"];
   #receivers = [];
 
   async connectedCallback() {
@@ -20,23 +19,23 @@ class BittyJs extends HTMLElement {
     this.setIds();
     await this.makeConnection();
     if (this.conn) {
+      this.conn.api = this;
       this.handleEventBridge = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
       this.loadReceivers();
-      this.initBitty();
+      this.addObserver();
       this.addEventListeners();
-      if (typeof this.conn.bittyInit === "function") {
-        if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-          await this.conn.bittyInit();
-        } else {
-          this.conn.bittyInit();
-        }
-      }
+      await this.callBittyInit();
+      this.runSendFromComponent();
     }
   }
 
   addEventListeners() {
-    this.#listeners.forEach((listener) => {
+    let listeners = ["click", "input"];
+    if (this.dataset.listeners) {
+      listeners = this.dataset.listeners.split("|").map((l) => l.trim());
+    }
+    listeners.forEach((listener) => {
       document.addEventListener(listener, (event) => {
         if (
           event.target &&
@@ -50,6 +49,12 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addObserver() {
+    this.observerConfig = { childList: true, subtree: true };
+    this.observer = new MutationObserver(this.watchMutations);
+    this.observer.observe(this, this.observerConfig);
+  }
+
   addReceiver(signal, el) {
     if (this.conn[signal]) {
       this.#receivers.push({
@@ -58,6 +63,16 @@ class BittyJs extends HTMLElement {
           this.conn[signal](event, el);
         },
       });
+    }
+  }
+
+  async callBittyInit() {
+    if (typeof this.conn.bittyInit === "function") {
+      if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+        await this.conn.bittyInit();
+      } else {
+        this.conn.bittyInit();
+      }
     }
   }
 
@@ -138,18 +153,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  initBitty() {
-    this.conn.api = this;
-    this.observerConfig = { childList: true, subtree: true };
-    this.observer = new MutationObserver(this.watchMutations);
-    this.observer.observe(this, this.observerConfig);
+  runSendFromComponent() {
     if (this.dataset.send) {
       this.handleEvent(
         { uuid: getUUID(), target: this },
       );
-    }
-    if (this.dataset.listeners) {
-      this.#listeners = this.dataset.listeners.split("|");
     }
   }
 

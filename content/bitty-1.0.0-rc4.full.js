@@ -10,6 +10,9 @@ class BittyJs extends HTMLElement {
       "Copyright 2025 - Alan W. Smith",
       "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
     ];
+    this.config = {
+      logMissingAttributeWarnings: true,
+    };
   }
 
   async connectedCallback() {
@@ -154,54 +157,65 @@ class BittyJs extends HTMLElement {
     // This fires for every bitty-element that
     // gets an update. Multiple copies of the
     // same error will show up as a result.
+    // Output can be turned off vie logMissingAttributeWarnings
     const loneAttrs = [];
-    const sendAttrs = [];
-    // NOTE: This can be collapsed into a single
-    // list across both types by checking the
-    // type the comparing for the other.
-    // Probably do that at some point not as
-    // much for the code optimization but
-    // to reduce the duplication for
-    // less mental overhead
-    document.querySelectorAll(`[data-send]`).forEach((el) => {
-      el.dataset.send.split("|").forEach((signal) => {
-        sendAttrs.push([signal, el]);
-      });
-    });
-    const receiveAttrs = [];
-    document.querySelectorAll(`[data-receive]`).forEach((el) => {
-      el.dataset.receive.split("|").forEach((signal) => {
-        receiveAttrs.push([signal, el]);
-      });
-    });
-    sendAttrs.forEach((sendAttr) => {
-      if (
-        ![...receiveAttrs].map((rec) => {
-          return rec[0];
-        }).includes(sendAttr[0])
-      ) {
-        loneAttrs.push({ key: sendAttr[0], type: "send", el: sendAttr[1] });
-      }
-    });
-    if (loneAttrs.length === 1) {
-      console.log(loneAttrs);
-    }
-    receiveAttrs.forEach((receiveAttr) => {
-      if (
-        ![...sendAttrs].map((snd) => {
-          return snd[0];
-        }).includes(receiveAttr[0])
-      ) {
-        loneAttrs.push({
-          key: receiveAttr[0],
-          type: "receive",
-          el: receiveAttr[1],
+    if (this.config.logMissingAttributeWarnings === true) {
+      const sendAttrs = [];
+      // NOTE: This can be collapsed into a single
+      // list across both types by checking the
+      // type the comparing for the other.
+      // Probably do that at some point not as
+      // much for the code optimization but
+      // to reduce the duplication for
+      // less mental overhead
+      document.querySelectorAll(`[data-send]`).forEach((el) => {
+        el.dataset.send.split("|").forEach((signal) => {
+          sendAttrs.push([signal, el]);
         });
+      });
+      const receiveAttrs = [];
+      document.querySelectorAll(`[data-receive]`).forEach((el) => {
+        el.dataset.receive.split("|").forEach((signal) => {
+          receiveAttrs.push([signal, el]);
+        });
+      });
+      sendAttrs.forEach((sendAttr) => {
+        if (
+          ![...receiveAttrs].map((rec) => {
+            return rec[0];
+          }).includes(sendAttr[0])
+        ) {
+          loneAttrs.push({
+            level: "WARN",
+            bittyEl: this.dataset.uuid,
+            targetEl: sendAttr[1].dataset.uuid,
+            type: "no-send-attribute",
+            payload: { signal: sendAttr[0] },
+          });
+        }
+      });
+      if (loneAttrs.length === 1) {
+        console.log(loneAttrs);
       }
-    });
-    loneAttrs.forEach((loneAttr) => {
-      console.log(loneAttr);
-    });
+      receiveAttrs.forEach((receiveAttr) => {
+        if (
+          ![...sendAttrs].map((snd) => {
+            return snd[0];
+          }).includes(receiveAttr[0])
+        ) {
+          loneAttrs.push({
+            level: "WARN",
+            bittyEl: this.dataset.uuid,
+            targetEl: receiveAttr[1].dataset.uuid,
+            type: "no-receive-attribute",
+            payload: { signal: receiveAttr[0] },
+          });
+        }
+      });
+      loneAttrs.forEach((loneAttr) => {
+        console.log(loneAttr);
+      });
+    }
     return loneAttrs;
   }
 

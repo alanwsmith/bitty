@@ -26,7 +26,7 @@
 
     // NOTE: DEPRECATE when v0.3.0 launches
     // TODO: Probably deprecate this in favor of 
-    // issuing a data-call from the bitty-js 
+    // issuing a data-call from the bitty-COMPONENT_VERSION 
     // element. That's more visible, explicit, 
     // and requires less mental overhead.
     // TODO: Actually, probably remove init()
@@ -40,7 +40,7 @@
     // TODO: Remove this if it's not necessary
     // for watchers at the individual element
     // level (it was originally for a single
-    // watcher at the bitty-js elemenet level)
+    // watcher at the bitty-COMPONENT_VERSION elemenet level)
     // GOAL: Identify signals to watch from 
     // child elements to allow sending signals
     // up the tree
@@ -91,12 +91,12 @@
   //   if (err.el !== null) {
   //     out.push('ELEMENT OUTPUTS')
   //     out.push(
-  //       'Dumps of the <bitty-js></bitty-js> element and the element passed to the error function are in follow up console messages below.'
+  //       'Dumps of the <bitty-COMPONENT_VERSION></bitty-COMPONENT_VERSION> element and the element passed to the error function are in follow up console messages below.'
   //     )
   //   } else {
   //     out.push('ELEMENT OUTPUT')
   //     out.push(
-  //       'A dump of the <bitty-js></bitty-js> element is in a follow up console message below.'
+  //       'A dump of the <bitty-COMPONENT_VERSION></bitty-COMPONENT_VERSION> element is in a follow up console message below.'
   //     )
   //   }
   //   const text = this.assembleErrorReplacedText(err, out.join('\n\n'))

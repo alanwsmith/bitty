@@ -1,5 +1,5 @@
-- `bitty-js` elements the nest other 
-`bitty-js` elements send signals to the
+- `bitty-v1-rc4` elements the nest other 
+`bitty-v1-rc4` elements send signals to the
 children. The example above shows how the
 `update` signal is sent from the Parent
 element to the Child elements. 

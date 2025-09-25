@@ -6,7 +6,7 @@ export default class {
   runTest0310(_event, el) {
     if (
       [...this.api.missingAttrs()].map((note) => {
-        return note.key;
+        return note.payload.signal;
       }).includes("FOR_TESTING_SendAttrWithoutReceiver")
     ) {
       el.innerHTML = "PASSED";

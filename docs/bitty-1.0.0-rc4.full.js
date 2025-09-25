@@ -40,7 +40,7 @@ class BittyJs extends HTMLElement {
       listeners = this.dataset.listeners.split("|").map((l) => l.trim());
     }
     listeners.forEach((listener) => {
-      document.addEventListener(listener, (event) => {
+      this.addEventListener(listener, (event) => {
         if (
           event.target &&
           event.target.nodeName.toLowerCase() !== "bitty-js" &&
@@ -86,7 +86,10 @@ class BittyJs extends HTMLElement {
 
   forward(event, signal) {
     if (!event) {
-      this.handleEvent({ target: { dataset: { forward: signal } } });
+      this.handleEvent({
+        type: "bittyforward",
+        target: { dataset: { forward: signal } },
+      });
     } else if (event.target && event.target.dataset) {
       event.target.dataset.forward = signal;
       this.handleEvent(event);
@@ -94,6 +97,9 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
+    if (event.type !== "bittyforward" && event.type !== "bittysend") {
+      event.stopPropagation();
+    }
     if (event.target.dataset.forward) {
       this.processSignals(event.target.dataset.forward);
       delete event.target.dataset.forward;
@@ -181,13 +187,13 @@ class BittyJs extends HTMLElement {
     // much for the code optimization but
     // to reduce the duplication for
     // less mental overhead
-    document.querySelectorAll(`[data-send]`).forEach((el) => {
+    this.querySelectorAll(`[data-send]`).forEach((el) => {
       el.dataset.send.split("|").forEach((signal) => {
         sendAttrs.push([signal, el]);
       });
     });
     const receiveAttrs = [];
-    document.querySelectorAll(`[data-receive]`).forEach((el) => {
+    this.querySelectorAll(`[data-receive]`).forEach((el) => {
       el.dataset.receive.split("|").forEach((signal) => {
         receiveAttrs.push([signal, el]);
       });
@@ -234,7 +240,7 @@ class BittyJs extends HTMLElement {
   missingFunctions() {
     const list = [];
     const sendCalls = [];
-    document.querySelectorAll(`[data-send]`).forEach((el) => {
+    this.querySelectorAll(`[data-send]`).forEach((el) => {
       el.dataset.send.split("|").forEach((signal) => {
         if (
           !sendCalls.map((c) => {
@@ -285,7 +291,7 @@ class BittyJs extends HTMLElement {
   runSendFromComponent() {
     if (this.dataset.send) {
       this.handleEvent(
-        { uuid: getUUID(), target: this },
+        { type: "bittysend", uuid: getUUID(), target: this },
       );
     }
   }

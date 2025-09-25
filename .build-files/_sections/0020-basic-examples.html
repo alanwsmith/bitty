@@ -1,0 +1,52 @@
+<details class="section-details">
+  <summary>Basic Examples</summary>
+  <p>
+    This is a collection of examples
+    showing some of the ways <strong>bitty-js</strong>
+    can be used. The examples all work. The source code
+    for each is available in the Show Example Code
+    sections.
+  </p>
+
+  [! for folder in folders !]
+    [! if folder.parent == "_examples" !]
+      <div class="example-wrapper">
+        <h4 class="xxxlarge-top-margin xsmall-bottom-margin">[! include "_examples/" + folder.name + "/title.txt" !]</h4>
+        <div class="example-output">
+        [! include "_examples/" + folder.name + "/example.html" !]
+
+        <details class="section-code">
+          <summary>Show Example Source Code</summary>
+          <div class="section-code-wrapper">
+            <div class="section-code-block">
+              <div class="xxxsmall-padding xxxsmall-margin">example.html</div>
+              <pre class="code-block">
+                [@- highlight_file["_examples/" + folder.name + "/example.html"]|safe -@]
+                [@- "\n" -@]
+            [!- filter highlight_html|safe -!]
+              <script src="/[@- min_script_file_name @]" type="module"></script>
+            [!- endfilter -!]
+                
+              </pre>
+            </div>
+            <div class="section-code-block">
+              [! set script_name !][! include "_examples/" + folder.name + "/script-name.txt" !][! endset !]
+              <div class="xxxsmall-padding xxxsmall-margin">modules/[@ script_name @]</div>
+              <pre class="code-block">
+                [@- highlight_file["modules/" + script_name]|safe -@]
+              </pre>
+            </div>
+          </div>
+
+          <div>ID: [@ folder.name @]</div>
+        </details>
+        </div>
+    <!--
+        <details>
+        [@ markdown["_examples/" + folder.name + "/details.md"]|safe @]
+        </details>
+-->
+      </div>
+    [! endif !]
+  [! endfor !]
+</details>

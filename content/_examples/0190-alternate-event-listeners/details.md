@@ -1,4 +1,4 @@
-- bitty-js default to listening for
+- bitty-COMPONENT_VERSION default to listening for
 "click" and "input" events. Switching
 to a different set of listeners is done
 with the `data-listeners` attribute. 

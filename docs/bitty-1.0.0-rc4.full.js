@@ -306,4 +306,4 @@ class BittyJs extends HTMLElement {
   }
 }
 
-customElements.define("bitty-js", BittyJs);
+customElements.define("bitty-v1-rc4", BittyJs);

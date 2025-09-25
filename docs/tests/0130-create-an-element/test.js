@@ -9,14 +9,16 @@ export default class {
   }
 
   async runTest0130(_event, element) {
+    const newDiv = document.createElement("div");
     const newButton = document.createElement("button");
     newButton.classList.add("test");
     newButton.dataset.receive = "placeholderToGenerateUUID";
     newButton.innerHTML = "FAILED";
-    element.replaceChildren(newButton);
+    newDiv.appendChild(newButton);
+    element.replaceChildren(newDiv);
     // sleep for test to wait for observer
     // to update the UUID.
-    await sleep(200);
+    await sleep(100);
     if (newButton.dataset.uuid !== undefined) {
       newButton.innerHTML = "PASSED";
     }

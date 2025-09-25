@@ -75,6 +75,51 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  error(message) {
+    console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
+  }
+
+  forward(event, signal) {
+    if (!event) {
+      this.handleEvent({ target: { dataset: { forward: signal } } });
+    } else if (event.target && event.target.dataset) {
+      event.target.dataset.forward = signal;
+      this.handleEvent(event);
+    }
+  }
+
+  handleEvent(event) {
+    if (event.target.dataset.forward) {
+      this.processSignals(event.target.dataset.forward);
+      delete event.target.dataset.forward;
+    } else if (event.target.dataset.send) {
+      this.processSignals(event.target.dataset.send);
+    }
+  }
+
+  handleMutations(mutationList, _observer) {
+    for (const mutation of mutationList) {
+      if (mutation.type === "childList") {
+        if (
+          mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0
+        ) {
+          this.setIds();
+          this.loadReceivers();
+        }
+      }
+    }
+  }
+
+  loadReceivers() {
+    this.receivers = [];
+    this.querySelectorAll(`[data-receive]`).forEach((el) => {
+      el.dataset.receive.split("|").forEach((signal) => {
+        this.addReceiver(signal, el);
+      });
+    });
+    this.missingAttrs();
+  }
+
   async makeConnection() {
     try {
       if (!this.dataset || !this.dataset.connect) {
@@ -105,81 +150,59 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  forward(event, signal) {
-    if (!event) {
-      this.handleEvent({ target: { dataset: { forward: signal } } });
-    } else if (event.target && event.target.dataset) {
-      event.target.dataset.forward = signal;
-      this.handleEvent(event);
-    }
-  }
-
-  error(message) {
-    console.error(`bitty-js error: ${message} on element ${this.dataset.uuid}`);
-  }
-
-  handleEvent(event) {
-    if (event.target.dataset.forward) {
-      this.processSignals(event.target.dataset.forward);
-      delete event.target.dataset.forward;
-    } else if (event.target.dataset.send) {
-      this.processSignals(event.target.dataset.send);
-    }
-  }
-
-  handleMutations(mutationList, _observer) {
-    for (const mutation of mutationList) {
-      if (mutation.type === "childList") {
-        if (
-          mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0
-        ) {
-          this.setIds();
-          this.loadReceivers();
-        }
-      }
-    }
-  }
-
-  handleMutations_OLD(mutationList, _observer) {
-    for (const mutation of mutationList) {
-      if (mutation.type === "childList") {
-        for (const removedNode of mutation.removedNodes) {
-          if (removedNode.dataset && removedNode.dataset.receive) {
-            this.loadReceivers();
-            return;
-          }
-        }
-        for (const addedNode of mutation.addedNodes) {
-          if (addedNode.dataset) {
-            if (
-              addedNode.dataset.receive ||
-              addedNode.dataset.send
-            ) {
-              this.setIds();
-              this.loadReceivers();
-              return;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  runSendFromComponent() {
-    if (this.dataset.send) {
-      this.handleEvent(
-        { uuid: getUUID(), target: this },
-      );
-    }
-  }
-
-  loadReceivers() {
-    this.receivers = [];
-    this.querySelectorAll(`[data-receive]`).forEach((el) => {
-      el.dataset.receive.split("|").forEach((signal) => {
-        this.addReceiver(signal, el);
+  missingAttrs() {
+    // This fires for every bitty-element that
+    // gets an update. Multiple copies of the
+    // same error will show up as a result.
+    const loneAttrs = [];
+    const sendAttrs = [];
+    // NOTE: This can be collapsed into a single
+    // list across both types by checking the
+    // type the comparing for the other.
+    // Probably do that at some point not as
+    // much for the code optimization but
+    // to reduce the duplication for
+    // less mental overhead
+    document.querySelectorAll(`[data-send]`).forEach((el) => {
+      el.dataset.send.split("|").forEach((signal) => {
+        sendAttrs.push([signal, el]);
       });
     });
+    const receiveAttrs = [];
+    document.querySelectorAll(`[data-receive]`).forEach((el) => {
+      el.dataset.receive.split("|").forEach((signal) => {
+        receiveAttrs.push([signal, el]);
+      });
+    });
+    sendAttrs.forEach((sendAttr) => {
+      if (
+        ![...receiveAttrs].map((rec) => {
+          return rec[0];
+        }).includes(sendAttr[0])
+      ) {
+        loneAttrs.push({ key: sendAttr[0], type: "send", el: sendAttr[1] });
+      }
+    });
+    if (loneAttrs.length === 1) {
+      console.log(loneAttrs);
+    }
+    receiveAttrs.forEach((receiveAttr) => {
+      if (
+        ![...sendAttrs].map((snd) => {
+          return snd[0];
+        }).includes(receiveAttr[0])
+      ) {
+        loneAttrs.push({
+          key: receiveAttr[0],
+          type: "receive",
+          el: receiveAttr[1],
+        });
+      }
+    });
+    loneAttrs.forEach((loneAttr) => {
+      console.log(loneAttr);
+    });
+    return loneAttrs;
   }
 
   processSignals(signals) {
@@ -197,6 +220,14 @@ class BittyJs extends HTMLElement {
         }
       }
     });
+  }
+
+  runSendFromComponent() {
+    if (this.dataset.send) {
+      this.handleEvent(
+        { uuid: getUUID(), target: this },
+      );
+    }
   }
 
   setIds() {

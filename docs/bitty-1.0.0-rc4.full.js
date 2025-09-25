@@ -11,7 +11,8 @@ class BittyJs extends HTMLElement {
       "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
     ];
     this.config = {
-      logMissingAttributeWarnings: true,
+      logMissingAttributes: true,
+      logMissingFunctions: true,
     };
   }
 
@@ -121,7 +122,8 @@ class BittyJs extends HTMLElement {
         this.addReceiver(signal, el);
       });
     });
-    this.missingAttrs();
+    this.missingAttributes();
+    this.missingFunctions();
   }
 
   loadWindowConfig() {
@@ -133,6 +135,9 @@ class BittyJs extends HTMLElement {
   }
 
   async makeConnection() {
+    // TODO: Just pull this from `window.bittyClasses`
+    // so you don't have to do the check for the
+    // non-prefixed version of `bittyClasses`
     try {
       if (!this.dataset || !this.dataset.connect) {
         this.error("Missing data-connect attribute");
@@ -162,7 +167,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  missingAttrs() {
+  missingAttributes() {
     // This fires for every bitty-element that
     // gets an update. Multiple copies of the
     // same error will show up as a result.
@@ -202,9 +207,6 @@ class BittyJs extends HTMLElement {
         });
       }
     });
-    if (loneAttrs.length === 1) {
-      console.log(loneAttrs);
-    }
     receiveAttrs.forEach((receiveAttr) => {
       if (
         ![...sendAttrs].map((snd) => {
@@ -220,12 +222,47 @@ class BittyJs extends HTMLElement {
         });
       }
     });
-    if (this.config.logMissingAttributeWarnings === true) {
+    if (this.config.logMissingAttributes === true) {
       loneAttrs.forEach((loneAttr) => {
+        // TODO: Send this to an error handler
         console.log(loneAttr);
       });
     }
     return loneAttrs;
+  }
+
+  missingFunctions() {
+    const list = [];
+    const sendCalls = [];
+    document.querySelectorAll(`[data-send]`).forEach((el) => {
+      el.dataset.send.split("|").forEach((signal) => {
+        if (
+          !sendCalls.map((c) => {
+            return c[0];
+          }).includes(signal)
+        ) {
+        }
+        sendCalls.push([signal, el]);
+      });
+    });
+    sendCalls.forEach((c) => {
+      if (typeof this.conn[c[0]] !== "function") {
+        list.push({
+          level: "WARN",
+          bittyUUID: this.dataset.uuid,
+          targetEl: c[1],
+          type: "missing-function-for-send",
+          payload: { signal: c[0] },
+        });
+      }
+    });
+    if (this.config.logMissingFunctions === true) {
+      list.forEach((item) => {
+        // TODO: Send this to an error handler
+        console.log(item);
+      });
+    }
+    return list;
   }
 
   processSignals(signals) {

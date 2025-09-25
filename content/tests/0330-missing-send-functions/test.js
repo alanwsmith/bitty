@@ -3,11 +3,11 @@ export default class {
     this.api.querySelector("button").click();
   }
 
-  runTest0320(_event, el) {
+  runTest0330(_event, el) {
     if (
-      [...this.api.missingAttributes()].map((note) => {
+      [...this.api.missingFunctions()].map((note) => {
         return note.payload.signal;
-      }).includes("FOR_TESTING_ReceiveAttrWithoutSender")
+      }).includes("FOR_TESTING_SignalWithoutMatchingFunction")
     ) {
       el.innerHTML = "PASSED";
     }

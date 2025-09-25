@@ -17,6 +17,7 @@ class BittyJs extends HTMLElement {
 
   async connectedCallback() {
     this.dataset.uuid = getUUID();
+    this.loadWindowConfig();
     this.receivers = [];
     this.setIds();
     await this.makeConnection();
@@ -123,6 +124,14 @@ class BittyJs extends HTMLElement {
     this.missingAttrs();
   }
 
+  loadWindowConfig() {
+    if (window.bittyConfig) {
+      Object.keys(window.bittyConfig).forEach((option) => {
+        this.config[option] = window.bittyConfig[option];
+      });
+    }
+  }
+
   async makeConnection() {
     try {
       if (!this.dataset || !this.dataset.connect) {
@@ -159,59 +168,59 @@ class BittyJs extends HTMLElement {
     // same error will show up as a result.
     // Output can be turned off vie logMissingAttributeWarnings
     const loneAttrs = [];
-    if (this.config.logMissingAttributeWarnings === true) {
-      const sendAttrs = [];
-      // NOTE: This can be collapsed into a single
-      // list across both types by checking the
-      // type the comparing for the other.
-      // Probably do that at some point not as
-      // much for the code optimization but
-      // to reduce the duplication for
-      // less mental overhead
-      document.querySelectorAll(`[data-send]`).forEach((el) => {
-        el.dataset.send.split("|").forEach((signal) => {
-          sendAttrs.push([signal, el]);
+    const sendAttrs = [];
+    // NOTE: This can be collapsed into a single
+    // list across both types by checking the
+    // type the comparing for the other.
+    // Probably do that at some point not as
+    // much for the code optimization but
+    // to reduce the duplication for
+    // less mental overhead
+    document.querySelectorAll(`[data-send]`).forEach((el) => {
+      el.dataset.send.split("|").forEach((signal) => {
+        sendAttrs.push([signal, el]);
+      });
+    });
+    const receiveAttrs = [];
+    document.querySelectorAll(`[data-receive]`).forEach((el) => {
+      el.dataset.receive.split("|").forEach((signal) => {
+        receiveAttrs.push([signal, el]);
+      });
+    });
+    sendAttrs.forEach((sendAttr) => {
+      if (
+        ![...receiveAttrs].map((rec) => {
+          return rec[0];
+        }).includes(sendAttr[0])
+      ) {
+        loneAttrs.push({
+          level: "WARN",
+          bittyUUID: this.dataset.uuid,
+          targetEl: sendAttr[1],
+          type: "no-send-attribute",
+          payload: { signal: sendAttr[0] },
         });
-      });
-      const receiveAttrs = [];
-      document.querySelectorAll(`[data-receive]`).forEach((el) => {
-        el.dataset.receive.split("|").forEach((signal) => {
-          receiveAttrs.push([signal, el]);
-        });
-      });
-      sendAttrs.forEach((sendAttr) => {
-        if (
-          ![...receiveAttrs].map((rec) => {
-            return rec[0];
-          }).includes(sendAttr[0])
-        ) {
-          loneAttrs.push({
-            level: "WARN",
-            bittyEl: this.dataset.uuid,
-            targetEl: sendAttr[1].dataset.uuid,
-            type: "no-send-attribute",
-            payload: { signal: sendAttr[0] },
-          });
-        }
-      });
-      if (loneAttrs.length === 1) {
-        console.log(loneAttrs);
       }
-      receiveAttrs.forEach((receiveAttr) => {
-        if (
-          ![...sendAttrs].map((snd) => {
-            return snd[0];
-          }).includes(receiveAttr[0])
-        ) {
-          loneAttrs.push({
-            level: "WARN",
-            bittyEl: this.dataset.uuid,
-            targetEl: receiveAttr[1].dataset.uuid,
-            type: "no-receive-attribute",
-            payload: { signal: receiveAttr[0] },
-          });
-        }
-      });
+    });
+    if (loneAttrs.length === 1) {
+      console.log(loneAttrs);
+    }
+    receiveAttrs.forEach((receiveAttr) => {
+      if (
+        ![...sendAttrs].map((snd) => {
+          return snd[0];
+        }).includes(receiveAttr[0])
+      ) {
+        loneAttrs.push({
+          level: "WARN",
+          bittyUUID: this.dataset.uuid,
+          targetEl: receiveAttr[1],
+          type: "no-receive-attribute",
+          payload: { signal: receiveAttr[0] },
+        });
+      }
+    });
+    if (this.config.logMissingAttributeWarnings === true) {
       loneAttrs.forEach((loneAttr) => {
         console.log(loneAttr);
       });

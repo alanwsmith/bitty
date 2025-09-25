@@ -136,24 +136,6 @@ class BittyJs extends HTMLElement {
           this.setIds();
           this.loadReceivers();
         }
-        // for (const removedNode of mutation.removedNodes) {
-        //   if (removedNode.dataset && removedNode.dataset.receive) {
-        //     this.loadReceivers();
-        //     return;
-        //   }
-        // }
-        // for (const addedNode of mutation.addedNodes) {
-        //   if (addedNode.dataset) {
-        //     if (
-        //       addedNode.dataset.receive ||
-        //       addedNode.dataset.send
-        //     ) {
-        //       this.setIds();
-        //       this.loadReceivers();
-        //       return;
-        //     }
-        //   }
-        // }
       }
     }
   }

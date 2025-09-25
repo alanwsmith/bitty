@@ -1,5 +1,5 @@
 export default class {
-  runTest0240(_event, element) {
+  runTest0350(_event, element) {
     element.innerHTML = "PASSED";
     element.classList.add("test-passed");
   }

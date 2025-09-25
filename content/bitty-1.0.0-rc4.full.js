@@ -130,6 +130,37 @@ class BittyJs extends HTMLElement {
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
+        if (
+          mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0
+        ) {
+          this.setIds();
+          this.loadReceivers();
+        }
+        // for (const removedNode of mutation.removedNodes) {
+        //   if (removedNode.dataset && removedNode.dataset.receive) {
+        //     this.loadReceivers();
+        //     return;
+        //   }
+        // }
+        // for (const addedNode of mutation.addedNodes) {
+        //   if (addedNode.dataset) {
+        //     if (
+        //       addedNode.dataset.receive ||
+        //       addedNode.dataset.send
+        //     ) {
+        //       this.setIds();
+        //       this.loadReceivers();
+        //       return;
+        //     }
+        //   }
+        // }
+      }
+    }
+  }
+
+  handleMutations_OLD(mutationList, _observer) {
+    for (const mutation of mutationList) {
+      if (mutation.type === "childList") {
         for (const removedNode of mutation.removedNodes) {
           if (removedNode.dataset && removedNode.dataset.receive) {
             this.loadReceivers();

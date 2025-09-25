@@ -1,9 +1,5 @@
-export class Parent {
+export default class {
   demoSendingFromChildToParent(_event, element) {
     element.innerHTML = Date.now();
   }
-}
-
-export class Child {
-  // must exist, but no methods required
 }

@@ -40,7 +40,7 @@ class BittyJs extends HTMLElement {
       listeners = this.dataset.listeners.split("|").map((l) => l.trim());
     }
     listeners.forEach((listener) => {
-      this.addEventListener(listener, (event) => {
+      document.addEventListener(listener, (event) => {
         if (
           event.target &&
           event.target.nodeName.toLowerCase() !== "bitty-js" &&
@@ -144,45 +144,35 @@ class BittyJs extends HTMLElement {
     // TODO: Just pull this from `window.bittyClasses`
     // so you don't have to do the check for the
     // non-prefixed version of `bittyClasses`
-    
+
+
     try {
-      if(this.dataset && this.dataset.connect) {
-        const mod = await import(this.dataset.connect);
-        this.conn = new mod.default();
+      if (!this.dataset || !this.dataset.connect) {
+        this.error("Missing data-connect attribute");
+        return;
+      }
+      if (
+        typeof bittyClasses !== "undefined" &&
+        typeof window.bittyClasses[this.dataset.connect] !== "undefined"
+      ) {
+        this.connPath = null;
+        this.connClass = this.dataset.connect;
+        this.conn = new bittyClasses[this.connClass]();
+      } else {
+        const connectionParts = this.dataset.connect.split("|");
+        this.connPath = connectionParts[0];
+        const mod = await import(this.connPath);
+        if (connectionParts[1] === undefined) {
+          this.connClass = "default";
+          this.conn = new mod.default();
+        } else {
+          this.connClass = connectionParts[1];
+          this.conn = new mod[this.connClass]();
+        }
       }
     } catch (error) {
       this.error(error);
     }
-
-    // try {
-    //   if (!this.dataset || !this.dataset.connect) {
-    //     this.error("Missing data-connect attribute");
-    //     return;
-    //   }
-    //   if (
-    //     typeof bittyClasses !== "undefined" &&
-    //     typeof window.bittyClasses[this.dataset.connect] !== "undefined"
-    //   ) {
-    //     this.connPath = null;
-    //     this.connClass = this.dataset.connect;
-    //     this.conn = new bittyClasses[this.connClass]();
-    //   } else {
-    //     const connectionParts = this.dataset.connect.split("|");
-    //     this.connPath = connectionParts[0];
-    //     const mod = await import(this.connPath);
-    //     if (connectionParts[1] === undefined) {
-    //       this.connClass = "default";
-    //       this.conn = new mod.default();
-    //     } else {
-    //       this.connClass = connectionParts[1];
-    //       this.conn = new mod[this.connClass]();
-    //     }
-    //   }
-    // } catch (error) {
-    //   this.error(error);
-    // }
-
-
   }
 
   missingAttributes() {

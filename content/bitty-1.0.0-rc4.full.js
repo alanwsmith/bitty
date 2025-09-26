@@ -5,6 +5,9 @@ function getUUID() {
 class BittyJs extends HTMLElement {
   constructor() {
     super();
+    this.config = {
+      listeners: ["click", "input"],
+    };
     this.metadata = {
       copyright: "Copyright 2025 - Alan W. Smith",
       license:
@@ -31,11 +34,10 @@ class BittyJs extends HTMLElement {
   }
 
   addEventListeners() {
-    let listeners = ["click", "input"];
     if (this.dataset.listeners) {
-      listeners = this.dataset.listeners.split("|").map((l) => l.trim());
+      this.config.listeners = this.dataset.listeners.split("|").map((l) => l.trim());
     }
-    listeners.forEach((listener) => {
+    this.config.listeners.forEach((listener) => {
       document.addEventListener(listener, (event) => {
         if (
           event.target &&

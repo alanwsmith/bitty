@@ -83,15 +83,14 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    if (!event) {
-      this.handleEvent({
+    if (!event || !event.target || !event.target.dataset) {
+      event = {
         type: "bittyforward",
         target: { dataset: { forward: signal } },
-      });
-    } else if (event.target && event.target.dataset) {
-      event.target.dataset.forward = signal;
-      this.handleEvent(event);
+      };
     }
+    event.target.dataset.forward = signal;
+    this.handleEvent(event);
   }
 
   handleEvent(event) {
@@ -126,10 +125,6 @@ class BittyJs extends HTMLElement {
   }
 
   async makeConnection() {
-    // TODO: Just pull this from `window.bittyClasses`
-    // so you don't have to do the check for the
-    // non-prefixed version of `bittyClasses`
-
     try {
       if (!this.dataset || !this.dataset.connect) {
         this.error("Missing data-connect attribute");
@@ -160,14 +155,14 @@ class BittyJs extends HTMLElement {
 
   processSignals(signals) {
     signals.split("|").forEach((signal) => {
-      let numberOfReceivers = 0;
+      let receiverCount = 0;
       this.receivers.forEach((receiver) => {
         if (receiver.key === signal) {
-          numberOfReceivers += 1;
+          receiverCount += 1;
           receiver.f(event);
         }
       });
-      if (numberOfReceivers === 0) {
+      if (receiverCount === 0) {
         if (this.conn[signal]) {
           this.conn[signal](event, null);
         }

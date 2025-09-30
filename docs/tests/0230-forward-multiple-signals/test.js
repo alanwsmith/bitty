@@ -4,14 +4,17 @@ function sleep(ms) {
 
 export default class {
   async bittyInit() {
-    await sleep(100) // time pad for test
+    await sleep(100); // time pad for test
     const button = this.api.querySelector("button");
     button.click();
   }
 
   runTest0230(event, element) {
     element.innerHTML = "PASSED";
-    this.api.forward(event, "secondSignal0230|thirdSignal0230|fourthSignal0230");
+    this.api.forward(
+      event,
+      "secondSignal0230|thirdSignal0230|fourthSignal0230",
+    );
   }
 
   secondSignal0230(_event, element) {

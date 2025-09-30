@@ -1,0 +1,204 @@
+[!- set major_version = "1" -!]
+[!- set minor_version = "0" -!]
+[!- set patch_version = "0" -!]
+[!- set rc_version = "4" -!]
+[#- flip min_key to `min` when the .min.js version is available -#]
+[!- set min_key = "min" -!]
+[!- set full_key = "full" -!]
+[!- set the_title = "bitty" -!]
+[!- set the_description = "A vanilla JS web component that uses signals to add reactivity to web pages" -!]
+[!- set image_url = "https://bitty.alanwsmith.com/images/og-image.jpg" -!]
+
+[!- set version_string -!]
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!]
+[!- endset -!]
+
+[!- set min_script_file_name -!]
+bitty-
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ min_key @].js
+[!- endset -!]
+
+[!- set full_script_file_name -!]
+bitty-
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ full_key @].js
+[!- endset -!]
+
+[!- set component_version -!]
+-v
+[@- major_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ full_key @].js
+[!- endset -!]
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--
+
+Welcome to the source code!
+
+Neither this page nor the CSS has
+undergone any optimization.
+That's for a future update.
+
+-->
+
+<title>[@ the_title @]</title>
+<meta property="og:title" content="[@ the_title @]" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+
+<meta name="description" content="[@ the_description @]" />
+<meta
+  property="og:description"
+  content="[@ the_description @]"
+/>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta
+  property="og:image"
+  content="[@ image_url @]"
+/>
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="675" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="[@ image_url @]">
+
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/images/favicons/apple-touch-icon.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/images/favicons/favicon-16x16.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/images/favicons/favicon-32x32.png"
+/>
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+<link rel="stylesheet" href="/styles/main.css" />
+    [! include "_inline_scripts/main-example-script.html" !]
+  </head>
+
+  <body>
+    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
+      <div class="header-flex-2">
+        <div>made by <a href="https://www.alanwsmith.com/">alan w smith</a></div>
+        <a href="https://github.com/alanwsmith/bitty-v1-rc4">source code</a>
+        <a href="https://socials.alanwsmith.com/">socials</a>
+        <a href="https://links.alanwsmith.com/">other projects</a>
+        <!--
+        TODO: rss
+      -->
+      </div>
+
+        <!-- TODO: only show github-stars if not on localhost -->
+      <github-stars
+        :repo="alanwsmith/bitty"
+        :text-color="var(--accent-faded)"
+        :background-color="var(--background)"
+      ></github-stars>
+
+    </header>
+
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <h1>bitty</h1>
+        <div class="small-font accent-faded">
+          signals based reactivity 
+        </div>
+      </hgroup>
+[! block main !][! endblock !] 
+    </main>
+
+    <footer
+      class="default-wrapper align-center large-top-padding accent-top-border-faded2"
+    >
+      made by <a href="https://www.alanwsmith.com/">alan w smith</a>
+      <br />
+      <a href="https://github.com/alanwsmith/bitty-v1-rc4">source</a> ~
+      <a href="https://socials.alanwsmith.com">socials</a> ~
+      <a href="https://links.alanwsmith.com">other projects</a>
+    </footer>
+
+    <script src="[@- min_script_file_name -@]" type="module"></script>
+<script type="module" src="components/github-stars-beta-1.js"></script>
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+  </body>
+</html>
+
+
+
+

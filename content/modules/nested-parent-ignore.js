@@ -2,18 +2,18 @@ export default class {
   template() {
     return `
 <div>
-  <bitty-js
+  <bitty-COMPONENT_VERSION
     data-connect="./nested-child.js"
     data-send="showValue"
     data-name="Counter 1"
-  ></bitty-js>
+  ></bitty-COMPONENT_VERSION>
 </div>
 <div>
-  <bitty-js
+  <bitty-COMPONENT_VERSION
     data-connect="./nested-child.js"
     data-send="showValue"
     data-name="Counter 2"
-  ></bitty-js>
+  ></bitty-COMPONENT_VERSION>
 </div>
 `;
   }

@@ -1,0 +1,222 @@
+<details>
+  <summary>Counter Example Details - Functionality Overview</summary>
+
+  [! include "wrapper/do-not-edit-output-reminder.html" !]
+
+  <h3>Preface</h3>
+
+  <p>
+    This section uses a detailed breakdown of the counter example to look at the
+    core reactive functionality bitty provides. Skip down to the
+    <em>Basic Examples</em> section if you'd prefer looking at code samples to
+    get a handle on things. They're laid out starting with the basics to support
+    a general run through.
+  </p>
+
+  <h3>Starting With The Pieces</h3>
+
+  <p>Three pieces of code come together to generate the counter example:</p>
+  <ol>
+    <li>
+      <p>A script tag that loads the <code>bitty.js</code> file as a module:</p>
+
+      <pre
+        class="code-block"
+      ><code>[! autoescape false!][@- data.misc_html["script-tag.html"].highlighted -@][! endautoescape !]</code></pre>
+    </li>
+    <li>
+      <p>A <code>bitty-v1-rc4</code> tag with a <code>button</code> in it:</p>
+
+      <pre
+        class="code-block"
+      ><code>[! autoescape false!][@- data.misc_html["counter.html"].highlighted -@][! endautoescape !]</code></pre>
+    </li>
+
+    <li>
+      <p>A <code>counter.js</code> file:</p>
+
+      <pre
+        class="code-block"
+      ><code>[! autoescape false!][@- data.example_scripts["counter.js"].highlighted -@][! endautoescape !]</code></pre>
+    </li>
+  </ol>
+
+  <h3>The <code>bitty-v1-rc4</code> tag</h3>
+
+  [! include "wrapper/do-not-edit-output-reminder.html" !]
+
+  <ul>
+    <li>
+      <p>
+        <code>bitty.js</code> is a web component file. It provides a
+        <code>&lt;bitty-v1-rc4&gt;&lt;/bitty-v1-rc4&gt;</code> tag. Wrapping other tags
+        with it gives them reactive powers.
+      </p>
+      <p>
+        Temporarily removing the <code>button</code> from our example gives us
+        this <code>bitty-v1-rc4</code> tag as a starting point:
+      </p>
+      <pre class="code-block"><code>[! autoescape false!]
+              [@- data.misc_html["counter-bitty-example.html"].highlighted -@][! endautoescape !]</code></pre>
+    </li>
+    <li>
+      <p>
+        <code>&lt;bitty-v1-rc4&gt;&lt;/bitty-v1-rc4&gt;</code>
+        tags require a
+        <code>data-bridge</code> attribute.
+      </p>
+      <p>
+        The <code>data-bridge</code> attribute value is a path to a JavaScript
+        module file (<code>counter.js</code> in our case). bitty imports that
+        file an loads a class that provides the funcitons that are called when
+        interations happen. (<code>Widget</code>
+        by default but you can change that.
+      </p>
+      <p class="warning">
+        (TODO: See about loading a default export instead of implicitly looking
+        for Widget.)
+      </p>
+    </li>
+    <li>
+      <p>
+        Other <code>data-*</code> attributes are optional <code>bitty-v1-rc4</code>.
+        For example, the <code>data-send</code> attribute which will come back
+        to shortly.
+      </p>
+    </li>
+  </ul>
+
+  <h4>
+    The <code>data-r</code>, <code>data-c</code>, and
+    <code>data-s</code> attributes
+  </h4>
+
+  <ul>
+    <li>
+      <p>
+        The reactivity bitty provides is managed by adding
+        <code>data-*</code> attributes to tags/elements. The three main
+        attributes are:
+      </p>
+      <ul>
+        <li>
+          <code>data-r</code><br />
+          Registers an element to <em>receive</em> notification sent via
+          <code>data-s</code> attributes.
+        </li>
+        <li>
+          <code>data-c</code><br />
+          <em>Calls</em> functions without sending notifications.
+        </li>
+        <li>
+          <code>data-s</code><br />
+          <em>Sends</em> notifications to elements with corresponding
+          <code>data-r</code> attributes.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h4><code>button</code> Tag Registration</h4>
+
+  <ul>
+    <li>
+      <p>
+        The button in our counter example has all three of the main
+        <code>data-*</code> attributes:
+      </p>
+
+      <pre class="code-block"><code>[! autoescape false !]
+              [@- data.misc_html["counter-button-example.html"].highlighted -@][! endautoescape !]</code></pre>
+    </li>
+    <li>
+      <p>
+        <code>bitty-v1-rc4</code> elements go through all their children looking for
+        <code>data-r</code> attributes when they initialize. Any children with
+        the attribute get added (aka <em>registered</em>) to a list of elements
+        whose <code>data-r</code> attributes all have the same value (<code
+          >showNumber</code
+        >
+        in our example).
+      </p>
+    </li>
+    <li>[TKTKTK: describe how the callback function is defined]</li>
+    <li>
+      <code>bitty-v1-rc4</code> elements attach generic event listeners to
+      themselves after creating the element lists. Events from our example
+      button bubble up into those listeners.
+    </li>
+  </ul>
+
+  <h4>Clicking the <code>button</code></h4>
+
+  <p>
+    Four things happen when you click the button in our example. They occur in
+    this order:
+  </p>
+  <ol>
+    <li>
+      The button fires a <em>click</em> event that gets picked up by the
+      <code>bitty-v1-rc4</code> element.
+    </li>
+    <li>
+      <p>
+        The <code>bitty-v1-rc4</code> element checks to see if the element that sent
+        the click event (i.e. our button) has a <code>data-c</code> attribute.
+        When it finds it, it uses the attribute's value (<code>addOne</code>) to
+        call the <code>_addOne</code> function from the <code>Wires</code> class
+        export. We'll look at that function's code a momentarily.
+      </p>
+      <p>
+        (NOTE: The <code>_</code> (underscore) is prepended to the function name
+        automatically. It's part of the overall naming convention that's details
+        in the <em>Naming Convention</em> section below.)
+      </p>
+    </li>
+
+    <li>
+      <p>
+        After the <code>_addOne</code> function runs, the
+        <code>bitty-v1-rc4</code> element looks back at the button element to see if
+        it has a <code>data-s</code> attribute.
+      </p>
+      <p>
+        When it finds it, it uses its value (<code>showNumber</code>) to run
+        through all the elements in the list with that name that was assembled
+        earlier with all the elements that have a
+        <code>data-r="showNumber"</code> attribute.
+      </p>
+      <p>
+        [TKTKTK: rephrase this and the earlier note to describe the list as a
+        list of receivers].
+      </p>
+      <p>
+        Each element in the list is run through the
+        <code>$showNumber</code> function from the <code>Wires</code> export. As
+        with the <code>_</code> on <code>_addOne</code>, the <code>$</code> is
+        prepended to call the <code>$showNumber</code> function automatically as
+        part of the naming convention.
+      </p>
+    </li>
+    <li>
+      Since our button has a <code>data-r</code> attribute with the
+      <code>showNumber</code> value it goes through the function which call runs
+      an <code>.innerHTML</code> update on it to change the value.
+    </li>
+  </ol>
+
+  <p>With those steps completed, the button ends up with the new number</p>
+
+  <h3>The <code>counter.js</code> File</h3>
+  <p>
+    [TKTKTK: this is a placeholder stub until the content has actually been
+    written]
+  </p>
+
+  <h3>Even More Things</h3>
+  <p>
+    There are other features (e.g. initialing data, batch updates, using
+    templates, etc...), but the core functionality comes down to those three
+    attributes.
+  </p>
+</details>

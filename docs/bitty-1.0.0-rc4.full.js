@@ -3,6 +3,7 @@ function getUUID() {
 }
 
 const version = [1, 0, 0, "rc4"];
+// TEST BUILD: SEPT. 30, 2025
 const tagNameParts = [];
 tagNameParts.push("bitty-v");
 tagNameParts.push(version[0]);
@@ -52,7 +53,6 @@ class BittyJs extends HTMLElement {
       document.addEventListener(listener, (event) => {
         if (
           event.target &&
-           PANIC!(Make sure tagName works here);
           event.target.nodeName.toLowerCase() !== tagName &&
           event.target.dataset && event.target.dataset.send
         ) {
@@ -200,5 +200,4 @@ class BittyJs extends HTMLElement {
   }
 }
 
- PANIC!(make sure version numbers work here)
 customElements.define(tagName, BittyJs);

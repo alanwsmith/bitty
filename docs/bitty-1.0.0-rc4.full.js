@@ -2,6 +2,15 @@ function getUUID() {
   return self.crypto.randomUUID();
 }
 
+const version = [1, 0, 0, "rc4"];
+const tagNameParts = [];
+tagNameParts.push("bitty-v");
+tagNameParts.push(version[0]);
+if (version[3]) {
+  tagNameParts.push(`-${version[3]}`);
+}
+const tagName = tagNameParts.join("");
+
 class BittyJs extends HTMLElement {
   constructor() {
     super();
@@ -12,7 +21,7 @@ class BittyJs extends HTMLElement {
       copyright: "Copyright 2025 - Alan W. Smith",
       license:
         "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
-      version: [1, 0, 0, "rc4"],
+      version: version,
     };
   }
 
@@ -35,13 +44,16 @@ class BittyJs extends HTMLElement {
 
   addEventListeners() {
     if (this.dataset.listeners) {
-      this.config.listeners = this.dataset.listeners.split("|").map((l) => l.trim());
+      this.config.listeners = this.dataset.listeners.split("|").map((l) =>
+        l.trim()
+      );
     }
     this.config.listeners.forEach((listener) => {
       document.addEventListener(listener, (event) => {
         if (
           event.target &&
-          event.target.nodeName.toLowerCase() !== "bitty-js" &&
+           PANIC!(Make sure tagName works here);
+          event.target.nodeName.toLowerCase() !== tagName &&
           event.target.dataset && event.target.dataset.send
         ) {
           event.uuid = getUUID();
@@ -131,6 +143,7 @@ class BittyJs extends HTMLElement {
         return;
       }
       if (
+        window.bittyClasses &&
         typeof window.bittyClasses[this.dataset.connect] !== "undefined"
       ) {
         this.connPath = null;
@@ -187,4 +200,5 @@ class BittyJs extends HTMLElement {
   }
 }
 
-customElements.define("bitty-v1-rc4", BittyJs);
+ PANIC!(make sure version numbers work here)
+customElements.define(tagName, BittyJs);

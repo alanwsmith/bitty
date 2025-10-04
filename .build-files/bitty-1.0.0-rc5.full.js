@@ -105,12 +105,14 @@ class BittyJs extends HTMLElement {
   }
 
   handleEvent(event) {
+    let signals = null;
     if (event.target.dataset.forward) {
-      this.processSignals(event.target.dataset.forward);
+      signals = event.target.dataset.forward;
       delete event.target.dataset.forward;
-    } else if (event.target.dataset.send) {
-      this.processSignals(event.target.dataset.send);
+    } else {
+      signals = event.target.dataset.send;
     }
+    this.processSignals(event, signals);
   }
 
   handleMutations(mutationList, _observer) {
@@ -165,7 +167,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  processSignals(signals) {
+  processSignals(event, signals) {
     signals.split("|").forEach((signal) => {
       let receiverCount = 0;
       this.receivers.forEach((receiver) => {
@@ -185,7 +187,7 @@ class BittyJs extends HTMLElement {
   runSendFromComponent() {
     if (this.dataset.send) {
       this.handleEvent(
-        { type: "bittysend", uuid: getUUID(), target: this },
+        { type: "bittytagdatasend", uuid: getUUID(), target: this },
       );
     }
   }

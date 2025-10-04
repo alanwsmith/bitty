@@ -1,5 +1,5 @@
 - A [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-watches the <code>bitty-v1-rc4</code>
+watches the <code>bitty-v1-rc5</code>
 element's DOM Tree for new elements. When it sees one
 it runs the process to add UUIDs and set up signals
 via the attributes where necessary. 

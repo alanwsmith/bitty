@@ -9,6 +9,5 @@ export class Child {
     if (el) {
       el.innerHTML = "FAILED";
     }
-    console.log("HERE");
   }
 }

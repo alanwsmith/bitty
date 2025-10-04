@@ -1,4 +1,4 @@
-- bitty-v1-rc4 default to listening for
+- bitty-v1-rc5 default to listening for
 "click" and "input" events. Switching
 to a different set of listeners is done
 with the `data-listeners` attribute. 

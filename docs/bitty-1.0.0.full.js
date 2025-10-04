@@ -2,9 +2,9 @@ function getUUID() {
   return self.crypto.randomUUID();
 }
 
-const version = [1, 0, 0, "rc5"];
+const version = [1, 0, 0];
 const tagNameParts = [];
-tagNameParts.push(`bitty-v${version[0]}`);
+tagNameParts.push(`bitty-${version[0]}-${version[1]}`);
 if (version[3]) {
   tagNameParts.push(`-${version[3]}`);
 }

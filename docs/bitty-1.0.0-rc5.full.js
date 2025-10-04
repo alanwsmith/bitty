@@ -4,8 +4,7 @@ function getUUID() {
 
 const version = [1, 0, 0, "rc5"];
 const tagNameParts = [];
-tagNameParts.push("bitty-v");
-tagNameParts.push(version[0]);
+tagNameParts.push(`bitty-v${version[0]}`);
 if (version[3]) {
   tagNameParts.push(`-${version[3]}`);
 }

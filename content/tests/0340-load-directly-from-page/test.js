@@ -1,1 +1,3 @@
-// test code is on the page itself
+// This test comes from `window.BittyClasses`
+// on the parent HTML page.
+

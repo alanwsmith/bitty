@@ -17,10 +17,10 @@ on the local page and used that way.
 
 
 
-__bitty-1-0__  is a web component. It wraps
+__bitty-1-1__  is a web component. It wraps
 other elements and connects them to JavaScript
 functions via signaling events. 
-The connections are made via the __bitty-1-0 API__ which
+The connections are made via the __bitty-1-1 API__ which
 consists of five __data-*  attributes__:
 
 - data-connect
@@ -35,16 +35,16 @@ TODO: Add documentation for calling
 classes from a `bittyClasses` object
 on the window.
 
-__&lt;bitty-1-0&gt;__ components require the 
+__&lt;bitty-1-1&gt;__ components require the 
 __data-connect__ attribute. It sets
 the path to the JavaScript module file responsible
 for providing functionality. 
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 data-connect="/modules/example.js">
+<bitty-1-1 data-connect="/modules/example.js">
   <!-- etc... -->
-</bitty-1-0>
+</bitty-1-1>
   [!- endfilter -!]
 </pre>
 
@@ -89,17 +89,17 @@ export default class {
 
 Adding a __data-send__ attribute to an element
 sets it up to send signals. 
-The attribute can be added directly to a __&lt;bitty-1-0&gt;__
+The attribute can be added directly to a __&lt;bitty-1-1&gt;__
 component:
 [! endfilter !]
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js" 
   data-send="componentSignal">
    <!-- etc... -->
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -121,7 +121,7 @@ export default class {
 </pre>
 
 [! filter markdown|safe !]
-A __&lt;bitty-1-0&gt;__ component with a __data-send__
+A __&lt;bitty-1-1&gt;__ component with a __data-send__
 attribute sends the named signal when it's
 initialized. The values the function receives
 are determined by __data-receive__ attributes
@@ -129,22 +129,22 @@ are determined by __data-receive__ attributes
 
 The __data-send__ attribute can also be 
 added to child elements of a 
-__&lt;bitty-1-0&gt;__ component:
+__&lt;bitty-1-1&gt;__ component:
 [! endfilter !]
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 data-connect="/modules/example.js">
+<bitty-1-1 data-connect="/modules/example.js">
   <button data-send="buttonSignal">
     Click me
   </button>
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
 [! filter markdown|safe !]
 The value of the __data-send__ attribute
-works the same way it does on a __&lt;bitty-1-0&gt;__
+works the same way it does on a __&lt;bitty-1-1&gt;__
 component. It maps to a function with the same 
 name in the JavaScript module.
 [! endfilter !]
@@ -169,19 +169,19 @@ detailed below.
 
 Multiple signals can be sent from the 
 __data-send__ attribute of either
-a __&lt;bitty-1-0&gt;__ component or its
+a __&lt;bitty-1-1&gt;__ component or its
 children by separating the signal names
 with `|` characters. 
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-send="signalAlfa|signalBravo">
     <button data-send="signalCharlie|signalDelta">
       Click me
     </button>
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -215,17 +215,17 @@ are determined by __data-receive__ attributes
 #### data-receive
 
 The __data-receive__ attribute can be added
-to children of __&lt;bitty-1-0&gt;__ components.
+to children of __&lt;bitty-1-1&gt;__ components.
 It registers them to receive updates when 
 a signal matching their value is sent. 
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-send="componentSignal">
     <div data-receive="componentSignal"></div>
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -252,7 +252,7 @@ in The Signal Chain section below.
 
 #### data-listeners
 
-__&lt;bitty-1-0&gt;__ components default to 
+__&lt;bitty-1-1&gt;__ components default to 
 listening for "click" and "input" events
 from the elements they wrap. Using the
 __data-listeners__ attribute overrides
@@ -260,10 +260,10 @@ the defaults.
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-listeners="data-listeners="mouseover">
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -272,10 +272,10 @@ Multiple event types are separated by a
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-listeners="data-listeners="mouseover|mouseout">
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -286,17 +286,17 @@ value.
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-listeners="click|input|mouseover|mouseout">
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
 
 #### data-use
 
-__&lt;bitty-1-0&gt;__ components use
+__&lt;bitty-1-1&gt;__ components use
 the default export from JavaScript modules. 
 
 <pre class="code-block">
@@ -312,10 +312,10 @@ the __data-use__ attribute.
 
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-use="AlternateClass">
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -334,14 +334,14 @@ a single JavaScript module file.
 <pre class="code-block">
   [!- filter highlight_html|safe -!]
 
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js">
-</bitty-1-0>
+</bitty-1-1>
 
-<bitty-1-0 
+<bitty-1-1 
   data-connect="/modules/example.js"
   data-use="AlternateClass">
-</bitty-1-0>
+</bitty-1-1>
   [! endfilter !]
 </pre>
 
@@ -359,7 +359,7 @@ export class AlternateClass {
 
 #### data-watch
 
-__&lt;bitty-1-0&gt;__ components can be nested. 
+__&lt;bitty-1-1&gt;__ components can be nested. 
 Signals from each component are self-contained
 by default. The __data-watch__ attribute
 can be used to transfer signals between

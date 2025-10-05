@@ -10,4 +10,14 @@ at: [bitty.alanwsmith.com](https://bitty.alanwsmith.com/)
 [Terser](https://try.terser.org/)
 
 
+## Release Checklist
+
+[] Set date on Release Notes
+
+[] Make .min version
+
+[] Point home page at .min version
+
+[] Verify home page tests on .min version
+
 

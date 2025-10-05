@@ -130,7 +130,6 @@ class BittyJs extends HTMLElement {
   async makeConnection() {
     try {
       if (!this.dataset.connect && window.BittyClass) {
-        console.log("here1");
         this.conn = new window.BittyClass();
       } else if (
         window.bittyClasses &&

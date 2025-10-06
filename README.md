@@ -12,6 +12,8 @@ at: [bitty.alanwsmith.com](https://bitty.alanwsmith.com/)
 
 ## Release Checklist
 
+[] Use https://try.terser.org/ to make the .min.js version
+
 [] Set date on Release Notes
 
 [] Make .min version

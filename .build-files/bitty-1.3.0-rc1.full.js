@@ -2,7 +2,7 @@ function getUUID() {
   return self.crypto.randomUUID();
 }
 
-const version = [1, 2, 0];
+const version = [1, 3, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 class BittyJs extends HTMLElement {

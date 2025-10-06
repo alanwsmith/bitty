@@ -201,6 +201,15 @@ class BittyJs extends HTMLElement {
       }
     });
   }
+
+  useTemplate(content, replacements) {
+    for (let key of Object.keys(replacements)) {
+      content = content.replaceAll(key, replacements[key]);
+    }
+    const el = document.createElement("template");
+    el.innerHTML = content;
+    return el.content.cloneNode(true);
+  }
 }
 
 customElements.define(tagName, BittyJs);

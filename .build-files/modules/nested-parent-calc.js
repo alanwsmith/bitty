@@ -1,6 +1,6 @@
 export default class {
   showValue(_event, element) {
-    const counters = this.bridge.querySelectorAll("bitty-1-2");
+    const counters = this.bridge.querySelectorAll("bitty-1-3");
     let count = 0;
     counters.forEach((counter) => {
       if (counter.widget !== undefined) {
@@ -14,16 +14,16 @@ export default class {
     return `
 <div>
   <div>Counter 1</div>
-  <bitty-1-2
+  <bitty-1-3
     data-connect="./nested-child-calc.js"
     data-send="showValue"
-  ></bitty-1-2>
+  ></bitty-1-3>
 
   <div>Counter 2</div>
-  <bitty-1-2
+  <bitty-1-3
     data-connect="./nested-child-calc.js"
     data-send="showValue"
-  ></bitty-1-2>
+  ></bitty-1-3>
 </div>
 
 <div>

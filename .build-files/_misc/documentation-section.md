@@ -9,8 +9,8 @@
 
 #### UUIDs
 
-__bitty-2-0__ adds __data-uuid__ attributes to every
-element inside a __&lt;bitty-2-0&gt;__ tag on 
+__bitty-COMPONENT_VERSION__ adds __data-uuid__ attributes to every
+element inside a __&lt;bitty-COMPONENT_VERSION&gt;__ tag on 
 initialization. These UUIDs can be used for things
 like avoiding feedback (e.g. when an element 
 has both __data-send__ and __data-receiver__ attributes

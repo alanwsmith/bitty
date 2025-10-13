@@ -1,0 +1,28 @@
+[!- extends "versions/v2.0.0/_wrappers/wrapper.html" -!]
+[!- block main -!]
+
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/[@- min_script_file_name -@]" download>
+      <span class="small-font">Download</span>
+      <br>Version[@ " " @] 
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+      <br>Release Candidate [@ rc_version @]
+[!- endif -!]
+      <br><span class="small-font">[@- min_script_file_name -@]</span></a>
+  </div>
+</div>
+
+<div class="center">
+  non-minified version: <a href="/[@- full_script_file_name -@]" download>[@- full_script_file_name -@]</a>
+</div>
+
+[! set sections_path =  "versions/v2.0.0/_sections" !]
+[! for file in files !]
+  [! if file.folder == sections_path !]
+      [! include sections_path + "/" + file.name !] 
+  [! endif !]
+[! endfor !]
+
+[!- endblock -!]

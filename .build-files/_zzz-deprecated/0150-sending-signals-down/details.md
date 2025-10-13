@@ -1,5 +1,5 @@
-- `bitty-2-0` elements the nest other 
-`bitty-2-0` elements send signals to the
+- `bitty-COMPONENT_VERSION` elements the nest other 
+`bitty-COMPONENT_VERSION` elements send signals to the
 children. The example above shows how the
 `update` signal is sent from the Parent
 element to the Child elements. 

@@ -1,0 +1,80 @@
+<!-- prettier-ignore -->
+
+<bitty-2-0 
+  data-connect="/modules/sending-signals-down.js"
+  data-use="Parent">  
+  <div>
+    <button 
+      data-name="Parent"
+      data-call="incrementParent"
+      data-send="update">
+        Parent
+    </button>
+    <div data-receive="update">
+      Waiting on Parent
+    </div>
+  </div>
+
+  <div>
+    <bitty-2-0 
+      data-connect="/modules/sending-signals-down.js"
+      data-use="Child">  
+      <button
+        data-name="Alfa"
+        data-call="incrementChild"
+        data-send="update">
+          Child Alfa
+      </button>
+      <div data-receive="update">
+        Waiting on Alfa
+      </div>
+    </bitty-2-0>
+
+    <bitty-2-0 
+      data-connect="/modules/sending-signals-down.js"
+      data-use="Child">  
+      <button
+        data-name="Bravo"
+        data-call="incrementChild"
+        data-send="update">
+          Child Bravo
+      </button>
+      <div data-receive="update">
+        Waiting on Bravo
+      </div>
+    </bitty-2-0>
+  </div>
+</bitty-2-0>
+
+<!-- x -->
+
+Sending Signals Down
+
+<!-- x -->
+
+sending-signals-down.js
+
+<!-- x -->
+
+- `bitty-2-0` elements the nest other 
+`bitty-2-0` elements send signals to the
+children. The example above shows how the
+`update` signal is sent from the Parent
+element to the Child elements. 
+
+Each element maintains its own instance
+of the `#value` counter. When the Child
+buttons are clicked their display shows
+their individual status. 
+
+When the Parent button is clicked, it's
+output goes to itself as well as the
+child elements. 
+
+Said another way, signals travel down
+the DOM tree to children. But, it 
+won't travel up to ancestors or 
+to siblings on the sides. 
+
+
+

@@ -28,6 +28,7 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = getUUID();
     this.receivers = [];
     this.setIds();
+    this.url = new URL(window.location.href);
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;

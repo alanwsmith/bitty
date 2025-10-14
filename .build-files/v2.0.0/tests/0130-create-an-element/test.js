@@ -3,11 +3,6 @@ function sleep(ms) {
 }
 
 export default class {
-  async bittyInit() {
-    await sleep(100); // time pad for test
-    this.api.querySelector("button").click();
-  }
-
   async runTest0130(_event, element) {
     const newDiv = document.createElement("div");
     const newButton = document.createElement("button");

@@ -4,7 +4,7 @@ function sleep(ms) {
 
 export default class {
   async bittyInit() {
-    await sleep(100) // time pad for test
+    await sleep(100); // time pad for test
     this.api.querySelector("button").click();
   }
   runTest0100(event, el) {

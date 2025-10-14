@@ -121,6 +121,26 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async fetchSVG(url, subs = []) {
+    let response = await fetch(url);
+    try {
+      if (!response.ok) {
+        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
+      } else {
+        let content = await response.text();
+        subs.forEach((sub) => {
+          content = content.replaceAll(sub[0], sub[1]);
+        });
+        const el = document.createElement("svg");
+        el.innerHTML = content;
+        return el;
+      }
+    } catch (error) {
+      console.error(`fetchHTML Error [${url}] - ${error}`);
+      return undefined;
+    }
+  }
+
   forward(event, signal) {
     if (!event || !event.target || !event.target.dataset) {
       event = {
@@ -226,10 +246,10 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  useTemplate(content, replacements) {
-    for (let key of Object.keys(replacements)) {
-      content = content.replaceAll(key, replacements[key]);
-    }
+  useTemplate(content, subs) {
+    subs.forEach((sub) => {
+      content = content.replaceAll(sub[0], sub[1]);
+    });
     const el = document.createElement("template");
     el.innerHTML = content;
     return el.content.cloneNode(true);

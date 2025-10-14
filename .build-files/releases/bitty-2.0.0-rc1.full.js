@@ -85,14 +85,18 @@ class BittyJs extends HTMLElement {
 
   // TODO: Rename to upper case.
   // pass array of arrays for find replacements on the string?
-  async fetchHTML(url, replacments) {
+  async fetchHTML(url, replacements = []) {
     let response = await fetch(url);
     try {
       if (!response.ok) {
         throw new Error(`${response.status} [${response.statusText}] - ${url}`);
       } else {
+        let content = await response.text();
+        replacements.forEach((replacement) => {
+          content = content.replaceAll(replacement[0], replacement[1]);
+        });
         const el = document.createElement("template");
-        el.innerHTML = await response.text();
+        el.innerHTML = content;
         return el.content.cloneNode(true);
       }
     } catch (error) {
@@ -103,7 +107,7 @@ class BittyJs extends HTMLElement {
 
   // TODO: Rename to upper case.
   // pass array of arrays for find replacements on the string?
-  async fetchJson(url) {
+  async fetchJSON(url) {
     let response = await fetch(url);
     try {
       if (!response.ok) {

@@ -1,9 +1,12 @@
+const version = [2, 0, 0, "rc1"];
+const tagName = `bitty-${version[0]}-${version[1]}`;
+const blockStylesheet = new CSSStyleSheet();
+blockStylesheet.replaceSync(`${tagName} { display: block; }`);
+document.adoptedStyleSheets.push(blockStylesheet);
+
 function getUUID() {
   return self.crypto.randomUUID();
 }
-
-const version = [2, 0, 0, "rc1"];
-const tagName = `bitty-${version[0]}-${version[1]}`;
 
 class BittyJs extends HTMLElement {
   constructor() {

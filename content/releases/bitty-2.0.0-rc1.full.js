@@ -176,6 +176,27 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async loadCSS(url, subs = []) {
+    let response = await fetch(url);
+    try {
+      if (!response.ok) {
+        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
+      } else {
+        let content = await response.text();
+        subs.forEach((sub) => {
+          content = content.replaceAll(sub[0], sub[1]);
+        });
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(content);
+        document.adoptedStyleSheets.push(sheet);
+        return sheet;
+      }
+    } catch (error) {
+      console.error(`fetchHTML Error [${url}] - ${error}`);
+      return undefined;
+    }
+  }
+
   loadReceivers() {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {

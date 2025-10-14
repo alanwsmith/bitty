@@ -105,8 +105,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: Rename to upper case.
-  // pass array of arrays for find replacements on the string?
   async fetchJSON(url, subs = []) {
     let response = await fetch(url);
     try {

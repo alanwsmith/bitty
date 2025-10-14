@@ -3,6 +3,7 @@
 
   <h2> TODO: Move tests to using init(_event, el) instead of bittyInit()</h2>
 
+
   <h3>Test Results</h3>
   <[@ config.tag_name @]
     data-connect="/[@ config.version_dir @]/modules/test-results.js"
@@ -13,6 +14,16 @@
         JavaScript must be enabled and working to calculate test results 
       </noscript>
     </div>
+
+    <p>
+      NOTE: Each test loads its own external `test.js` file. 
+      They are checked after a brief `setTimeout()`. 
+      If you're on a slow network connection they may
+      not all load before the check function fires. 
+      That's the first thing to check if you 
+      see failures. 
+    </p>
+
   </[@ config.tag_name @]>
 
   [! for folder in folders !] [! if folder.parent == config.version_dir + "/tests" !]

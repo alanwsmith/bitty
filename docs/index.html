@@ -89,6 +89,7 @@ bitty-2.0.0-rc1.full.js
 
   <h2> TODO: Move tests to using init(_event, el) instead of bittyInit()</h2>
 
+
   <h3>Test Results</h3>
   <bitty-2-0
     data-connect="/v2.0.0/modules/test-results.js"
@@ -99,6 +100,16 @@ bitty-2.0.0-rc1.full.js
         JavaScript must be enabled and working to calculate test results 
       </noscript>
     </div>
+
+    <p>
+      NOTE: Each test loads its own external `test.js` file. 
+      They are checked after a brief `setTimeout()`. 
+      If you're on a slow network connection they may
+      not all load before the check function fires. 
+      That's the first thing to check if you 
+      see failures. 
+    </p>
+
   </bitty-2-0>
 
                                                                                                                                                                                                                                                                                                                              <div>
@@ -1571,6 +1582,17 @@ Fetch JSON with options      </h5>
   data-send="runTest0397"
 >
   <div class="test" data-receive="runTest0397">FAILED</div>
+  <p>NOTE: This tests uses `https://echo.hoppscotch.io/`
+    to generate the response. If there's a failure
+    that's the first place to look to make sure
+    the service is operational
+  </p>
+  <p>NOTE: all the `.fetchThing()` methods use the same 
+    underlying `fetchTxt(url, subs=[], options={})` call. 
+    A passing test hear implies a passing test for
+    `options = {}` on `.fetchTxt()`, `.fetchHTML()`, etc...
+  </p>
+
 </bitty-2-0>
 
 
@@ -1582,6 +1604,17 @@ Fetch JSON with options      </h5>
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest0397<span class="punctuation definition string end html">&quot;</span></span></span>
 <span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest0397<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>FAILED<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>NOTE: This tests uses `https://echo.hoppscotch.io/`
+<span class="line-marker"></span>    to generate the response. If there&#39;s a failure
+<span class="line-marker"></span>    that&#39;s the first place to look to make sure
+<span class="line-marker"></span>    the service is operational
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>NOTE: all the `.fetchThing()` methods use the same 
+<span class="line-marker"></span>    underlying `fetchTxt(url, subs=[], options={})` call. 
+<span class="line-marker"></span>    A passing test hear implies a passing test for
+<span class="line-marker"></span>    `options = {}` on `.fetchTxt()`, `.fetchHTML()`, etc...
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span></span>            </pre>
             <pre class="code-block">
 <span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
@@ -2031,6 +2064,42 @@ Allow empty space around data-send and data-receive      </h5>
 <span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0480</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>
+          </details>
+        </div>
+      </div>
+    </div>
+      <div>
+      <h5 class="test-title">
+Fetch text with fetchTxt(url, sub=[], options= {})      </h5>
+      <div class="example-output">
+        <div class="test-output">
+<bitty-2-0 
+  data-connect="/v2.0.0/tests/0490-fetch-txt-url/test.js"
+  data-send="runTest0490"
+>
+  <div class="test" data-receive="runTest0490">FAILED</div>
+</bitty-2-0>
+
+
+          <details class="test-code">
+            <summary>Test Code<br>ID: 0490-fetch-txt-url</summary>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v2.0.0/tests/0490-fetch-txt-url/test.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest0490<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest0490<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>FAILED<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span></span>            </pre>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">runTest0490</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v2.0.0/tests/0490-fetch-txt-url/payload.txt<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string regexp js"><span class="punctuation definition string begin js">/</span>FAILED<span class="punctuation definition string end js">/</span><span class="keyword other js">g</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">options</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchTxt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">options</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trim</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>
           </details>

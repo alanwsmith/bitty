@@ -109,21 +109,8 @@ class BittyJs extends HTMLElement {
   }
 
   async fetchJSON(url, subs = [], options = {}) {
-    let response = await fetch(url, options);
-    try {
-      if (!response.ok) {
-        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
-      } else {
-        let content = await response.text();
-        subs.forEach((sub) => {
-          content = content.replaceAll(sub[0], sub[1]);
-        });
-        return JSON.parse(content);
-      }
-    } catch (error) {
-      console.error(`fetchJson Error [${url}] - ${error}`);
-      return undefined;
-    }
+    let content = await this.fetchTxt(url, subs, options);
+    return JSON.parse(content);
   }
 
   async fetchSVG(url, subs = []) {
@@ -142,6 +129,24 @@ class BittyJs extends HTMLElement {
       }
     } catch (error) {
       console.error(`fetchHTML Error [${url}] - ${error}`);
+      return undefined;
+    }
+  }
+
+  async fetchTxt(url, subs = [], options = {}) {
+    let response = await fetch(url, options);
+    try {
+      if (!response.ok) {
+        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
+      } else {
+        let content = await response.text();
+        subs.forEach((sub) => {
+          content = content.replaceAll(sub[0], sub[1]);
+        });
+        return content;
+      }
+    } catch (error) {
+      console.error(`fetchJson Error [${url}] - ${error}`);
       return undefined;
     }
   }

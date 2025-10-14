@@ -1,5 +1,5 @@
 export default class {
-  initTest0015(_event, el) {
+  init(_event, el) {
     el.click();
   }
 

@@ -88,24 +88,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async fetchHTML(url, subs = []) {
-    let response = await fetch(url);
-    try {
-      if (!response.ok) {
-        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
-      } else {
-        let content = await response.text();
-        subs.forEach((sub) => {
-          content = content.replaceAll(sub[0], sub[1]);
-        });
-        const el = document.createElement("template");
-        el.innerHTML = content;
-        return el.content.cloneNode(true);
-      }
-    } catch (error) {
-      console.error(`fetchHTML Error [${url}] - ${error}`);
-      return undefined;
-    }
+  async fetchHTML(url, subs = [], options = {}) {
+    const el = document.createElement("template");
+    el.innerHTML = await this.fetchTxt(url, subs, options);
+    return el.content.cloneNode(true);
   }
 
   async fetchJSON(url, subs = [], options = {}) {
@@ -113,24 +99,10 @@ class BittyJs extends HTMLElement {
     return JSON.parse(content);
   }
 
-  async fetchSVG(url, subs = []) {
-    let response = await fetch(url);
-    try {
-      if (!response.ok) {
-        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
-      } else {
-        let content = await response.text();
-        subs.forEach((sub) => {
-          content = content.replaceAll(sub[0], sub[1]);
-        });
-        const el = document.createElement("svg");
-        el.innerHTML = content;
-        return el;
-      }
-    } catch (error) {
-      console.error(`fetchHTML Error [${url}] - ${error}`);
-      return undefined;
-    }
+  async fetchSVG(url, subs = [], options = {}) {
+    const el = document.createElement("svg");
+    el.innerHTML = await this.fetchTxt(url, subs, options);
+    return el;
   }
 
   async fetchTxt(url, subs = [], options = {}) {

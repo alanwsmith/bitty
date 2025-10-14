@@ -1,7 +1,9 @@
 const version = [2, 0, 0, "rc1"];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 const blockStylesheet = new CSSStyleSheet();
-blockStylesheet.replaceSync(`${tagName} { display: block; }`);
+blockStylesheet.replaceSync(
+  `${tagName} { display: block; }`,
+);
 document.adoptedStyleSheets.push(blockStylesheet);
 
 function getUUID() {
@@ -237,8 +239,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  match(event, el, key) {
+    if (
+      event.target.dataset[key] === undefined || el.dataset[key] === undefined
+    ) {
+      return false;
+    }
+    return event.target.dataset[key] === el.dataset[key];
+  }
+
   processSignals(event, signals) {
     signals.split("|").forEach((signal) => {
+      signal = signal.trim();
       let receiverCount = 0;
       this.receivers.forEach((receiver) => {
         if (receiver.key === signal) {

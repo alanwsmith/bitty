@@ -1,9 +1,7 @@
 export default class {
   async runTest0390(_event, el) {
-    const url = "https://api.weather.gov/gridpoints/DTX/34,36/forecast";
+    const url = "/v2.0.0/tests/0390-fetch-json/payload.json";
     const data = await this.api.fetchJSON(url);
-    if (data.type === "Feature") {
-      el.innerHTML = "PASSED";
-    }
+    el.innerHTML = data.status;
   }
 }

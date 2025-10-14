@@ -7,11 +7,6 @@ template.innerHTML =
   `<div><div><button class="test" data-send="testStub">FAILED</button></div></div>`;
 
 export default class {
-  async bittyInit() {
-    await sleep(100); // time pad for test
-    this.api.querySelector("button").click();
-  }
-
   async runTest0140(_event, element) {
     let newButton = template.content.cloneNode(true);
     element.replaceChildren(newButton);

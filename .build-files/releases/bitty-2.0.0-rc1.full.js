@@ -123,6 +123,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO: See about adding async/await here
   forward(event, signal) {
     if (!event || !event.target || !event.target.dataset) {
       event = {
@@ -158,25 +159,12 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async loadCSS(url, subs = []) {
-    let response = await fetch(url);
-    try {
-      if (!response.ok) {
-        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
-      } else {
-        let content = await response.text();
-        subs.forEach((sub) => {
-          content = content.replaceAll(sub[0], sub[1]);
-        });
-        const sheet = new CSSStyleSheet();
-        sheet.replaceSync(content);
-        document.adoptedStyleSheets.push(sheet);
-        return sheet;
-      }
-    } catch (error) {
-      console.error(`fetchHTML Error [${url}] - ${error}`);
-      return undefined;
-    }
+  async loadCSS(url, subs = [], options = {}) {
+    const content = await this.fetchTxt(url, subs, options);
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(content);
+    document.adoptedStyleSheets.push(sheet);
+    return sheet;
   }
 
   loadReceivers() {

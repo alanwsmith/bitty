@@ -83,6 +83,26 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO: Rename to upper case.
+  // pass array of arrays for find replacements on the string?
+  async fetchHTML(url, replacments) {
+    let response = await fetch(url);
+    try {
+      if (!response.ok) {
+        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
+      } else {
+        const el = document.createElement("template");
+        el.innerHTML = await response.text();
+        return el.content.cloneNode(true);
+      }
+    } catch (error) {
+      console.error(`fetchHTML Error [${url}] - ${error}`);
+      return undefined;
+    }
+  }
+
+  // TODO: Rename to upper case.
+  // pass array of arrays for find replacements on the string?
   async fetchJson(url) {
     let response = await fetch(url);
     try {
@@ -165,7 +185,7 @@ class BittyJs extends HTMLElement {
         }
       }
     } catch (error) {
-      console.error(`${tagName} error: ${error}`);
+      console.error(`${tagName} error: ${error} - ${this.dataset.connect}`);
     }
   }
 

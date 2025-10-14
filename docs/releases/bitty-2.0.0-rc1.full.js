@@ -105,6 +105,10 @@ class BittyJs extends HTMLElement {
     return el;
   }
 
+  async fetchTemplate(url, subs = [], options = {}) {
+    return await this.fetchTxt(url, subs, options);
+  }
+
   async fetchTxt(url, subs = [], options = {}) {
     let response = await fetch(url, options);
     try {

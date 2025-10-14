@@ -99,6 +99,11 @@ class BittyJs extends HTMLElement {
     return JSON.parse(content);
   }
 
+  async fetchLines(url, subs = [], options = {}) {
+    const content = await this.fetchTxt(url, subs, options);
+    return content.split("\n").map((line) => line.trim());
+  }
+
   async fetchSVG(url, subs = [], options = {}) {
     const el = document.createElement("svg");
     el.innerHTML = await this.fetchTxt(url, subs, options);

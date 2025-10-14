@@ -108,8 +108,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async fetchJSON(url, subs = []) {
-    let response = await fetch(url);
+  async fetchJSON(url, subs = [], options = {}) {
+    let response = await fetch(url, options);
     try {
       if (!response.ok) {
         throw new Error(`${response.status} [${response.statusText}] - ${url}`);
@@ -205,9 +205,11 @@ class BittyJs extends HTMLElement {
   loadReceivers() {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
-      el.dataset.receive.split("|").forEach((signal) => {
-        this.addReceiver(signal, el);
-      });
+      el.dataset.receive.split("|").map((signal) => signal.trim()).forEach(
+        (signal) => {
+          this.addReceiver(signal, el);
+        },
+      );
     });
   }
 
@@ -220,7 +222,7 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.dataset.connect.split("|");
+        const connParts = this.dataset.connect.split("|").map((x) => x.trim());
         if (
           typeof window[connParts[0]] !== "undefined"
         ) {
@@ -239,7 +241,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  match(event, el, key) {
+  match(event, el, key = "") {
+    if (key === "") {
+      key = "uuid";
+    }
     if (
       event.target.dataset[key] === undefined || el.dataset[key] === undefined
     ) {
@@ -249,8 +254,7 @@ class BittyJs extends HTMLElement {
   }
 
   processSignals(event, signals) {
-    signals.split("|").forEach((signal) => {
-      signal = signal.trim();
+    signals.split("|").map((signal) => signal.trim()).forEach((signal) => {
       let receiverCount = 0;
       this.receivers.forEach((receiver) => {
         if (receiver.key === signal) {
@@ -282,7 +286,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  useTemplate(content, subs) {
+  useTemplate(content, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
     });

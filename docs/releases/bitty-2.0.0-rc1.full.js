@@ -106,9 +106,9 @@ class BittyJs extends HTMLElement {
   }
 
   async fetchSVG(url, subs = [], options = {}) {
-    const el = document.createElement("svg");
+    const el = document.createElement("template");
     el.innerHTML = await this.fetchTxt(url, subs, options);
-    return el;
+    return el.content.cloneNode(true);
   }
 
   async fetchTemplate(url, subs = [], options = {}) {

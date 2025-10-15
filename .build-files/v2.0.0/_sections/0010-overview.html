@@ -1,0 +1,168 @@
+<section class="default-flow">
+  <h2>Overview</h2>
+  <p>
+    bitty is a web component. It uses 
+    signals to add reactivity to pages. 
+    A basic example looks like this:
+  </p>
+
+  <div class="default-flow example-wrapper">
+    <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+        [! include "v2.0.0/_snippets/overview.html" !]
+      </div>
+    </div>
+    <div class="default-flow">
+      <div class="code-block-wrapper">
+        <div class="code-block-title">HTML</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+            [! include "v2.0.0/_snippets/overview.html" !]
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+      <div class="code-block-wrapper">
+        <div class="code-block-title">JavaScript: /v2.0.0/modules/overview.js</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_javascript|safe -!]
+            [! include "v2.0.0/modules/overview.js" !]
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+    </div>
+  </div>
+  
+  <h3>The data-* Attributes</h3>
+  <p>The example uses three of bitty's <code>data-*</code> attributes:</p>
+  <ul>
+    <li>
+      <code>data-connect:</code> loads the default class 
+      from a module that's responsible for providing 
+      functionality
+    </li>
+    <li>
+      <code>data-send:</code> sets up the <code>button</code> to send
+      a signal named <code>update</code> when it's clicked
+    </li>
+    <li>
+      <code>data-receive:</code> sets up the <code>div</code>
+      to receive a signal named <code>update</code> when it's sent
+    </li>
+  </ul>
+
+  <h3>The Signal Methods</h3>
+  <p>
+    Signals are mapped to methods from the class by name. 
+    So, the <code>update</code> signal connects to 
+    the <code>update(event, el)</code> method.
+  </p>
+  <p>Signal methods receive two arguments:</p>
+  <ol>
+    <li>
+      The event that triggered the signal
+    </li>
+    <li>
+      An element that has a <code>data-receive</code> 
+      attribute with the signal's name
+    </li>
+  </ol>
+
+  <h4>Signal Method Events</h4>
+
+  <p>
+    The <code>event</code> sent to a signal method comes from an 
+    <code>.addEventListener()</code> that <code>bitty</code>
+    initializes on the <code>&lt;bitty-2-0&gt;</code> tag.
+    In the example, it's a standard <code>PointerEvent</code>
+    event that gives us access to the <code>event.offsetX</code>
+    and <code>event.offsetY</code> properties.
+  </p>
+
+  <h4>Signal Method Elements</h4>
+
+  <p>
+    Each element with a <code>data-receive</code> 
+    attribute for the signal is sent through the method 
+    individually. For example, here's an update to the demo.
+    It uses the same JavaScript module, but has multiple
+    <code>div</code> tags with the 
+    <code>data-receive=&quot;update&quot;</code>
+    attribute:
+  </p>
+
+  <div class="default-flow example-wrapper">
+    <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+        [! include "v2.0.0/_snippets/overview-2.html" !]
+      </div>
+    </div>
+    <div class="default-flow">
+      <div class="code-block-wrapper">
+        <div class="code-block-title">HTML</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+            [! include "v2.0.0/_snippets/overview-2.html" !]
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+      <div class="code-block-wrapper">
+        <div class="code-block-title">JavaScript: /v2.0.0/modules/overview.js</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_javascript|safe -!]
+            [! include "v2.0.0/modules/overview.js" !]
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    The elements are native HTML Element objects. 
+    The same ones you get form <code>document.querySelector()</code>.
+    Updating them is done through standard methods
+    and properties
+    like <code>.innerHTML</code>, <code>.appendChild</code>, etc...
+  </p>
+
+
+
+
+  <h3>Foundation Complete</h3>
+  <p>
+    The <code>data-send</code>, and 
+    <code>data-receive</code>
+    attributes are the primary tools at the
+    heart of bitty. They connect native events and 
+    elements through standardized 
+    method calls. By taking that
+    overhead out of the way, bitty
+    lets you focus on how you 
+    want your pages to behave. 
+  </p>
+  <p>
+    bitty has other features for changing
+    event listeners, loading data, 
+    interacting with other components, etc...
+    But, that's all optional. Once
+    you connect to a module with 
+    <code>data-connect</code> all you have
+    to do is fill in methods 
+    for the signals in <code>data-send</code>
+    and <code>data-receive</code>
+    to make your page reactive. 
+  <p>
+
+  <h3>Next Steps</h3>
+  <p>
+    Version 2.0.0 just came out. I'm in
+    the process of updating the examples,
+    docs, and videos. The test cases are
+    below. Each one includes its code. 
+    You can poke around there if you want
+    to get an idea how how things work
+    in the mean time.
+  </p>
+
+</section>

@@ -58,6 +58,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async addCSS(url, subs = [], options = {}) {
+    const content = await this.fetchTxt(url, subs, options);
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(content);
+    document.adoptedStyleSheets.push(sheet);
+    return sheet;
+  }
+
   /** @internal */
   addEventListeners() {
     if (this.dataset.listeners) {
@@ -191,13 +199,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async loadCSS(url, subs = [], options = {}) {
-    const content = await this.fetchTxt(url, subs, options);
-    const sheet = new CSSStyleSheet();
-    sheet.replaceSync(content);
-    document.adoptedStyleSheets.push(sheet);
-    return sheet;
-  }
 
   /** @internal */
   loadFunctions() {

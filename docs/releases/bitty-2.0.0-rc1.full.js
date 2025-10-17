@@ -1,14 +1,27 @@
+/** @ignore */
 const version = [2, 0, 0, "rc1"];
+
+/** @ignore */
 const tagName = `bitty-${version[0]}-${version[1]}`;
+
+/** @ignore */
 const blockStylesheet = new CSSStyleSheet();
 blockStylesheet.replaceSync(
   `${tagName} { display: block; }`,
 );
 document.adoptedStyleSheets.push(blockStylesheet);
 
+/** @ignore */
 function getUUID() {
   return self.crypto.randomUUID();
 }
+
+/**
+ * @attribute {string} data-connect
+ * @attribute {string} data-listeners
+ * @attribute {string} data-receive
+ * @attribute {string} data-send
+ */
 
 class BittyJs extends HTMLElement {
   constructor() {
@@ -24,6 +37,7 @@ class BittyJs extends HTMLElement {
     };
   }
 
+  /** @internal */
   async connectedCallback() {
     this.dataset.uuid = getUUID();
     this.receivers = [];
@@ -42,6 +56,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** @internal */
   addEventListeners() {
     if (this.dataset.listeners) {
       this.config.listeners = this.dataset.listeners.split("|").map((l) =>
@@ -62,12 +77,14 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  /** @internal */
   addObserver() {
     this.observerConfig = { childList: true, subtree: true };
     this.observer = new MutationObserver(this.watchMutations);
     this.observer.observe(this, this.observerConfig);
   }
 
+  /** @internal */
   addReceiver(signal, el) {
     if (this.conn[signal]) {
       this.receivers.push({
@@ -79,6 +96,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** @internal */
   async callBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
@@ -145,6 +163,7 @@ class BittyJs extends HTMLElement {
     this.handleEvent(event);
   }
 
+  /** @internal */
   handleEvent(event) {
     let signals = null;
     if (event.target.dataset.forward) {
@@ -156,6 +175,7 @@ class BittyJs extends HTMLElement {
     this.processSignals(event, signals);
   }
 
+  /** @internal */
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
@@ -177,6 +197,7 @@ class BittyJs extends HTMLElement {
     return sheet;
   }
 
+  /** @internal */
   loadReceivers() {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
@@ -188,6 +209,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  /** @internal */
   async makeConnection() {
     try {
       if (!this.dataset.connect) {
@@ -228,6 +250,7 @@ class BittyJs extends HTMLElement {
     return event.target.dataset[key] === el.dataset[key];
   }
 
+  /** @internal */
   processSignals(event, signals) {
     signals.split("|").map((signal) => signal.trim()).forEach((signal) => {
       let receiverCount = 0;
@@ -245,6 +268,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  /** @internal */
   runSendFromComponent() {
     if (this.dataset.send) {
       this.handleEvent(
@@ -253,6 +277,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** @internal */
   setIds() {
     this.querySelectorAll("*").forEach((el) => {
       if (!el.dataset.uuid) {

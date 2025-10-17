@@ -1,4 +1,4 @@
-TODO: 
+TODO: data-functions is not yet in place
 
 data-functions adds functions to `this.api.fn`.
 

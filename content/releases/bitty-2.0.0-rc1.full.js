@@ -18,6 +18,7 @@ function getUUID() {
 
 /**
  * @attribute {string} data-connect
+ * @attribute {string} data-functions
  * @attribute {string} data-listeners
  * @attribute {string} data-receive
  * @attribute {string} data-send

@@ -11,11 +11,7 @@ blockStylesheet.replaceSync(
 );
 document.adoptedStyleSheets.push(blockStylesheet);
 
-const functions = {
-  setProp: (key, value) => {
-    document.documentElement.style.setProperty(key, value);
-  },
-};
+const functions = {};
 
 /** @ignore */
 function getUUID() {

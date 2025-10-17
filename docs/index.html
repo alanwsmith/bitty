@@ -191,7 +191,7 @@ window.BittyClass = class {
 </section> 
 <h2>Documentation</h2>
 
-<h3>Element Attributes</h3>
+<h3>The data-* API Element Attributes</h3>
 
 <h4>data-connect</h4>
 <p>Defines the class that provides functionality
@@ -242,20 +242,25 @@ like</p>
 </li>
 </ol>
 <h4>data-listeners</h4>
-<p>Change the event listeners the component uses. For example:</p>
+<p>Change the event listeners the component uses.</p>
+<p>Availability: <code>&lt;bitty-2-0&gt;</code> elements: yes - child elements: no</p>
+<p>bitty listens for <code>click</code> and <code>input</code> events on its child
+elements by default. Other listeners can be used
+by setting them with the <code>data-listeners</code> attribute.</p>
+<p>For example, to switch to listening for the mouse
+entering elements:</p>
 <pre><code>data-listeners=&quot;mouseenter&quot;
 </code></pre>
 <p>Multiple listeners are separated by a pipe:</p>
 <pre><code>data-listeners=&quot;mouseenter|mouseleave&quot;
 </code></pre>
-<p>The default listeners are 'click' and 'input'. Using
-<code>data-listeners</code> overrides them complete. If
-you need them along with the alternate listeners
-they must be included.</p>
+<p>Using <code>data-listeners</code> sets the listeners explicitly.
+That is, <code>click</code> and <code>input</code> are removed unless
+you add them back in:</p>
 <pre><code>data-listeners=&quot;mouseenter|mouseleave|click|input&quot;
 </code></pre>
 <p>Turning off all listeners can be done by
-passing an empty string</p>
+passing an empty string:</p>
 <pre><code>data-listeners=&quot;&quot;
 </code></pre>
 <h4>data-receive</h4>

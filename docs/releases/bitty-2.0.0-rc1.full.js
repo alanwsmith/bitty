@@ -203,7 +203,7 @@ class BittyJs extends HTMLElement {
     this.fn = {};
     if (window.bittyFunctions) {
       for (let [key, fn] of Object.entries(window.bittyFunctions)) {
-        console.log(key);
+        this.fn[key] = fn;
       }
     }
   }

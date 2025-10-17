@@ -1,6 +1,6 @@
 window.bittyFunctions = {
-  test0530: () => {
-    return "PASSED";
+  test0530: function() {
+    return this.dataset.uuid;
   },
 
   url: () => {

@@ -24,7 +24,6 @@ function getUUID() {
 
 /**
  * @attribute {string} data-connect
- * @attribute {string} data-functions
  * @attribute {string} data-listeners
  * @attribute {string} data-receive
  * @attribute {string} data-send
@@ -209,12 +208,12 @@ class BittyJs extends HTMLElement {
     this.fn = {};
     if (functions) {
       for (let [key, fn] of Object.entries(functions)) {
-        this.fn[key] = fn;
+        this.fn[key] = fn.bind(this);
       }
     }
     if (window.bittyFunctions) {
       for (let [key, fn] of Object.entries(window.bittyFunctions)) {
-        this.fn[key] = fn;
+         this.fn[key] = fn.bind(this);
       }
     }
   }

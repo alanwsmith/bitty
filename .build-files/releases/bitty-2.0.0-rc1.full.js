@@ -11,6 +11,12 @@ blockStylesheet.replaceSync(
 );
 document.adoptedStyleSheets.push(blockStylesheet);
 
+const functions = {
+  setProp: (key, value) => {
+    document.documentElement.style.setProperty(key, value);
+  },
+};
+
 /** @ignore */
 function getUUID() {
   return self.crypto.randomUUID();
@@ -40,6 +46,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async connectedCallback() {
+    this.loadFunctions();
     this.dataset.uuid = getUUID();
     this.receivers = [];
     this.setIds();
@@ -48,7 +55,6 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleEventBridge = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
-      this.loadFunctions();
       this.loadReceivers();
       this.addObserver();
       this.addEventListeners();
@@ -201,6 +207,11 @@ class BittyJs extends HTMLElement {
   /** @internal */
   loadFunctions() {
     this.fn = {};
+    if (functions) {
+      for (let [key, fn] of Object.entries(functions)) {
+        this.fn[key] = fn;
+      }
+    }
     if (window.bittyFunctions) {
       for (let [key, fn] of Object.entries(window.bittyFunctions)) {
         this.fn[key] = fn;

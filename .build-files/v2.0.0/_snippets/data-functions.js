@@ -3,10 +3,6 @@ window.bittyFunctions = {
     return "PASSED";
   },
 
-  setProp: (key, value) => {
-    document.documentElement.style.setProperty(key, value);
-  },
-
   url: () => {
     return new URL(window.location.href);
   },

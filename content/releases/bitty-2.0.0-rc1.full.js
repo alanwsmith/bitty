@@ -43,12 +43,12 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = getUUID();
     this.receivers = [];
     this.setIds();
-    this.url = new URL(window.location.href);
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
       this.handleEventBridge = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
+      this.loadFunctions();
       this.loadReceivers();
       this.addObserver();
       this.addEventListeners();
@@ -196,6 +196,16 @@ class BittyJs extends HTMLElement {
     sheet.replaceSync(content);
     document.adoptedStyleSheets.push(sheet);
     return sheet;
+  }
+
+  /** @internal */
+  loadFunctions() {
+    this.fn = {};
+    if (window.bittyFunctions) {
+      for (let [key, fn] of Object.entries(window.bittyFunctions)) {
+        console.log(key);
+      }
+    }
   }
 
   /** @internal */

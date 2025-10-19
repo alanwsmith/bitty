@@ -317,7 +317,7 @@ class BittyJs extends HTMLElement {
       content = content.replaceAll(sub[0], sub[1]);
     });
     const tmpl = document.createElement("template");
-    tmpl.innerHTML = content;
+    tmpl.innerHTML = content.trim();
     const el = tmpl.content.cloneNode(true);
     return el.firstChild;
   }

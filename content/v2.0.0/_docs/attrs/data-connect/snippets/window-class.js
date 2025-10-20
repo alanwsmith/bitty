@@ -1,3 +1,4 @@
-    windowBittyClass(_event, el) {
-      el.innerHTML = Math.random();
-    }
+        defaultWindowClass(_event, el) {
+          el.innerHTML = Math.random();
+        }
+

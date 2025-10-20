@@ -1,8 +1,10 @@
-
 <p>If there is no <code>data-connect</code> attribute
 on the <code>[@ highlight_code("<" + config.tag_name + ">", "js")|safe @]</code>
 component tag, then <strong>bitty</strong> looks for a <code>[@ highlight_code("window.BittyClass", "js")|safe @]</code>
 variable. For example:</p>
+
+[! set example = config.version_dir + "/_docs/attrs/data-connect/default-window-class/example.html" !]
+[! set bitty = config.version_dir + "/_docs/attrs/data-connect/default-window-class/bitty.html" !]
 
 <div class="default-flow example-wrapper">
   <div class="default-flow">
@@ -10,7 +12,7 @@ variable. For example:</p>
           <div class="code-block-title">index.html</div>
           <pre class="code-block"><code>
           [!- filter highlight_html|safe -!]
-                  [! include "v2.0.0/_docs/attrs/data-connect/default-window-class/example.html"|safe !]
+                  [! include example|safe !]
           [!- endfilter -!]
           </code></pre>
       </div>
@@ -18,8 +20,14 @@ variable. For example:</p>
       <div class="example-output-wrapper">
       <div class="example-output-title">Example</div>
       <div class="example-output">
-          [! include "v2.0.0/_docs/attrs/data-connect/default-window-class/example.html" !]
+          [! include bitty !]
       </div>
       </div>
   </div>
 </div>
+
+<p>(NOTE: the [@ highlight_code("if (el) {}", "js")|safe @] check is 
+generally not necessary. It's used here because of the 
+tests further below. The one that tests
+[@ highlight_code("window.BittyClass", "js")|safe @] 
+throws an erroneous error without it.)</p>

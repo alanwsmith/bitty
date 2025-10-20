@@ -35,7 +35,22 @@ The `bitty` element is exposed to
     [!- if not loop.last -!], [@- " " -@][!- endif -!]
     [!- endfor -!]
     )</h4>
-[! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/overview.html" !]
+
+  <div>Parameters</div>
+  <ul>
+    [!- for param in member.parameters -!]
+    <li><p>[@- param.name -@]</p>
+      [! include "v2.0.0/_docs/members/" + member.name + "/params/" + param.name + ".html" !]
+    </li>
+    [!- endfor -!]
+  </ul>
+
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
+
+
   [! endfor !]
 
 <h3>Block Styling</h3>

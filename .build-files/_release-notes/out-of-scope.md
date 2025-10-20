@@ -17,4 +17,10 @@ target itself.
 added as an external function once
 `data-functions` is in place. 
 
-
+- Using a `s = new State()` type object
+to send signals when it updates. That 
+could be set up if folks want to do
+it in there classes. It won't be included
+in bitty directly. The `data-send` and
+`data-receive` attributes can send
+signals between components already. 

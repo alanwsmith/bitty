@@ -1,4 +1,6 @@
 [! set docs = data["releases/custom-elements.json"].modules[0].declarations[1] !]
+<section class="default-flow">
+
 <h2>Documentation</h2>
 
 <h3>The data-* API Element Attributes</h3>
@@ -10,9 +12,25 @@
 [! endfilter !]
   [! endfor !]
 
+<h3>Block Styling</h3>
+
+  <p>
+    An [! filter highlight_javascript|safe !]adoptedStyleSheets[! endfilter !] is added to the page
+    that sets:
+  </p>
+
+  <div>
+<pre type="code-blokc"><code>
+[! filter highlight_css|safe !]
+    [@ config.tag_name @] { display: block; }
+[! endfilter !]
+</code></pre>
+  </div>
 
 <pre><code>
   [#
 [@ docs|tojson(true) @]
   #]
 </code></pre>
+
+</section>

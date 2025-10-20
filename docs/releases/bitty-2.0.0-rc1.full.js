@@ -30,8 +30,6 @@ class BittyJs extends HTMLElement {
     super();
     this.config = {
       listeners: ["click", "input"],
-    };
-    this.metadata = {
       copyright: "Copyright 2025 - Alan W. Smith",
       license:
         "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",

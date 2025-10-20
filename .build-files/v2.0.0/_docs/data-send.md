@@ -1,38 +1,22 @@
-Signals to send
-when the component finishes initializing. Separate
-multiple signals with pipes
+Signals to send when an event fires
+on an element with the attribute. 
 
-data-send="alfa"
+Availability: `<[@ config.tag_name @]>` elements: yes - child elements: yes 
 
-data-send="bravo|charlie"
+A single named signal is set like this:
 
-TODO: Note that signals are sent all the way 
-up the document and any component 
-on the page sees them all. Any earlier 
-prototype limited signals so they
-stopped at the component by default
-with a forwarding mechanism that
-allowed signals to be seen outside. 
-That added complexity to the overall
-code and the mental model of working
-with the components themselves. 
+    data-send="alfa"
 
-The approach is now to send signals
-all the way to the document root
-and for each component to have
-it's listeners attached to the 
-document root. That means that
-if two components try to use 
-the same signal name for different
-purposes, they'll collide.
+Multiple signals can be set on the same
+event with a pipe (`|`) separated list
 
-Bitty's goal is to make things easier
-to build. Not to build complex systems.
-In that line, if a collision occurs
-the solution is to rename one of the
-signals. That's much lower overhead
-than dealing with limiting and forwarding
-mechanisms. 
+    data-send="bravo|charlie"
 
-
-
+Signals are sent all the way 
+to the DOM root. Any component 
+on the page has access to all of them. 
+If multiple components are on the
+page they can respond to signals
+from each other. Isolating components
+from each other is done by 
+ensuring names don't overlap. 

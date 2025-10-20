@@ -28,6 +28,7 @@ function getUUID() {
 class BittyJs extends HTMLElement {
   constructor() {
     super();
+    /** @internal */
     this.config = {
       listeners: ["click", "input"],
       copyright: "Copyright 2025 - Alan W. Smith",
@@ -126,11 +127,6 @@ class BittyJs extends HTMLElement {
     return JSON.parse(content);
   }
 
-  async fetchLines(url, subs = [], options = {}) {
-    const content = await this.fetchTxt(url, subs, options);
-    return content.split("\n").map((line) => line.trim());
-  }
-
   async fetchSVG(url, subs = [], options = {}) {
     const tmpl = document.createElement("template");
     tmpl.innerHTML = await this.fetchTxt(url, subs, options);
@@ -199,7 +195,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   /** @internal */
   loadFunctions() {
     this.fn = {};
@@ -210,7 +205,7 @@ class BittyJs extends HTMLElement {
     }
     if (window.bittyFunctions) {
       for (let [key, fn] of Object.entries(window.bittyFunctions)) {
-         this.fn[key] = fn.bind(this);
+        this.fn[key] = fn.bind(this);
       }
     }
   }
@@ -258,7 +253,7 @@ class BittyJs extends HTMLElement {
 
   // matches the dataset key from an
   // event and an element. If no key
-  // is identified the uuid is used 
+  // is identified the uuid is used
   // instead
   match(event, el, key = "") {
     if (key === "") {
@@ -320,9 +315,9 @@ class BittyJs extends HTMLElement {
     return el.firstChild;
   }
 
-  // Returns a template document fragment 
+  // Returns a template document fragment
   // from the string after doing replaments
-  // from the subs array. 
+  // from the subs array.
   useTemplate(content, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
@@ -331,7 +326,6 @@ class BittyJs extends HTMLElement {
     el.innerHTML = content;
     return el.content.cloneNode(true);
   }
-
 }
 
 customElements.define(tagName, BittyJs);

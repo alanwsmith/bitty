@@ -1,18 +1,16 @@
 [! set docs = data["releases/custom-elements.json"].modules[0].declarations[1] !]
 <section class="default-flow">
 
-<h2>Documentation</h2>
+<details class="section-details">
+  <summary>Docs - Singnal Method API</summary>
 
-<h3>The data-* API Element Attributes</h3>
+<p>
+  Signals names are mapped to method names in
+  the class that provides funcionality to
+  the component. Check out the demo
+  in the overview for a basic example. 
+</p>
 
-  [! for attribute in docs.attributes !]
-<h4>[@ attribute.name @]</h4>
-[! filter markdown|safe !]
-[! include "v2.0.0/_docs/" + attribute.name + ".md" !]
-[! endfilter !]
-  [! endfor !]
-
-<h3>API Methods</h3>
 
 [! filter markdown|safe !]
 The `bitty` element is exposed to
@@ -53,25 +51,7 @@ The `bitty` element is exposed to
 
   [! endfor !]
 
-<h3>Block Styling</h3>
 
-  <p>
-    An [! filter highlight_javascript|safe !]adoptedStyleSheets[! endfilter !] is added to the page
-    that sets:
-  </p>
-
-  <div>
-<pre type="code-blokc"><code>
-[! filter highlight_css|safe !]
-    [@ config.tag_name @] { display: block; }
-[! endfilter !]
-</code></pre>
-  </div>
-
-<pre><code>
-  [#
-[@ docs|tojson(true) @]
-  #]
-</code></pre>
+  </details>
 
 </section>

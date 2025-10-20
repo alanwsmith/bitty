@@ -77,11 +77,13 @@ window.bittyFunctions = {
 
 
 <section class="default-flow">
-  <h2>Overview</h2>
+
+<details class="section-details" open>
+  <summary>Overview</summary>
+
   <p>
     bitty is a web component. It makes pages
-    reactive. This example contains you everything
-    you need to get started:
+    reactive. For example:
   </p>
 
   <div class="default-flow example-wrapper">
@@ -116,7 +118,7 @@ window.bittyFunctions = {
     </div>
   </div>
   
-  <h4>How It Works</h4>
+  <h3>How It Works</h3>
 
   <h5>The data-* API</h5>
   <p>
@@ -194,14 +196,98 @@ window.bittyFunctions = {
     on the import part: deciding
     what you want your page to do.
   </p>
+
+</details>
 </section> 
 <section class="default-flow">
+<details class="section-details">
+  <summary>Installation and Usage</summary>
 
-<h2>Documentation</h2>
+<p>Since bitty is a web component, there's no framework to
+install. Using it is done by 
+<a class="download-link" href="/releases/bitty-2.0.0-rc1.full.js" download>
+downloading the bitty-2.0.0-rc1.full.js file</a>, putting
+it in your sites direcotry tree, and calling it with 
+a script tag like:</p>
 
-<h3>The data-* API Element Attributes</h3>
 
-<h4>data-connect</h4>
+ <div class="code-block-wrapper">
+    <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/releases/bitty-2.0.0-rc1.full.js<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+</div>
+
+<p>
+  bitty components work by connection to a class that's
+responsible for providing 
+  functionality to the component. That class
+  can be defined directly on the page. Or, it can be stored in an
+  external file. For example, if we make a
+  a file like:
+</p>
+
+ <div class="code-block-wrapper">
+        <div class="code-block-title">/v2.0.0/modules/example-class.js</div>
+        <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #num = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">count</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">num</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Count: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">num</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span> 
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+</div>
+
+<p>We can use it like this:</p>
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">index.html</div>
+  <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v2.0.0/modules/example-class.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>count<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>count<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Click Me
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/releases/bitty-2.0.0-rc1.full.js<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span>  </code></pre>
+</div>
+
+
+<p>The result looks like this:</p>
+
+    <div class="example-output-wrapper">
+      <div class="example-output"><bitty-2-0 data-connect="/v2.0.0/modules/example-class.js">
+  <button data-send="count" data-receive="count">
+    Click Me
+  </button>
+</bitty-2-0>      </div>
+    </div>
+
+
+
+
+
+
+</details>
+</summary> 
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - The HTML data-* API</summary>
+
+<p>bitty sends signals to elements when
+events occur. Defining the signals and the events
+that trigger them is done with four <code><span class="line-marker"></span><span class="text html basic">data-*</span></code>
+attributes that are added to <code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>
+tags and their children. The four attributes are:</p>
+
+<ul>
+<li>data-connect</li>
+<li>data-listeners</li>
+<li>data-receive</li>
+<li>data-send</li>
+</ul>
+
+<p>Details for each attribute are as follows:</p>
+
+<h3>data-connect</h3>
 <p>Defines the class that provides functionality
 to the component.</p>
 <p>Availability: <code>&lt;bitty-2-0&gt;</code> elements: yes - child elements: no</p>
@@ -249,7 +335,7 @@ like</p>
 </code></pre>
 </li>
 </ol>
-<h4>data-listeners</h4>
+<h3>data-listeners</h3>
 <p>Change the event listeners the component uses.</p>
 <p>Availability: <code>&lt;bitty-2-0&gt;</code> elements: yes - child elements: no</p>
 <p>bitty listens for <code>click</code> and <code>input</code> events on its child
@@ -271,7 +357,7 @@ you add them back in:</p>
 passing an empty string:</p>
 <pre><code>data-listeners=&quot;&quot;
 </code></pre>
-<h4>data-receive</h4>
+<h3>data-receive</h3>
 <p>Signals the child element receive.</p>
 <p>Availability: <code>&lt;bitty-2-0&gt;</code> elements: no - child elements: yes</p>
 <p>Defines the signals that an element listens
@@ -291,7 +377,7 @@ is using for functionality.</p>
 <p>Listening for signals is set up with
 <code>document.addEventListener()</code> for
 each event type that's being listened
-for.</p><h4>data-send</h4>
+for.</p><h3>data-send</h3>
 <p>Signals to send when an event fires
 on an element with the attribute.</p>
 <p>Availability: <code>&lt;bitty-2-0&gt;</code> elements: yes - child elements: yes</p>
@@ -310,7 +396,21 @@ page they can respond to signals
 from each other. Isolating components
 from each other is done by
 ensuring names don't overlap.</p>
-<h3>API Methods</h3>
+  </details>
+
+</section> 
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - Singnal Method API</summary>
+
+<p>
+  Signals names are mapped to method names in
+  the class that provides funcionality to
+  the component. Check out the demo
+  in the overview for a basic example. 
+</p>
+
 
 <p>The <code>bitty</code> element is exposed to
 the class providing functionality via
@@ -557,22 +657,908 @@ the result as a document fragment.</p>
 
 
 
-<h3>Block Styling</h3>
 
+  </details>
+
+</section> 
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - Misc.</summary>
+
+  <h3>UUIDs</h3>
+    <p>Every bitty component and all their child elements
+    automatically receive a `data-uuid` attribute with a UUID.
+    They can be used any time an ID is needed. They 
+    are also the default values that are compared
+    via `this.api.match(event, el)` if no other key
+    is provided. 
+    </p>
+
+
+  <h3>Block Styling</h3>
   <p>
     An <span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">adoptedStyleSheets</span></span> is added to the page
     that sets:
   </p>
 
-  <div>
-<pre type="code-blokc"><code>
-<span class="line-marker"></span><span class="source css"><span class="meta selector css">    <span class="entity name tag custom css">bitty-2-0</span> </span><span class="meta property-list css"><span class="punctuation section property-list css">{</span> <span class="meta property-name css"><span class="support type property-name css">display</span></span><span class="punctuation separator key-value css">:</span><span class="meta property-value css"> </span><span class="meta property-value css"><span class="support constant property-value css">block</span></span><span class="punctuation terminator rule css">;</span></span> <span class="punctuation section property-list css">}</span></span></code></pre>
-  </div>
+<div class="code-block-wrapper">
+  <pre class="code-block"><code><span class="line-marker"></span><span class="source css"><span class="meta selector css"><span class="entity name tag custom css">bitty-2-0</span> </span><span class="meta property-list css"><span class="punctuation section property-list css">{</span> <span class="meta property-name css"><span class="support type property-name css">display</span></span><span class="punctuation separator key-value css">:</span><span class="meta property-value css"> </span><span class="meta property-value css"><span class="support constant property-value css">block</span></span><span class="punctuation terminator rule css">;</span></span> <span class="punctuation section property-list css">}</span></span></code></pre>
+</div>
 
-<pre><code>
-</code></pre>
 
-</section> 
+</details>
+</summary>
+ 
+<details class="section-details">
+  <summary>Release Notes</summary>
+          <h3>Version: 2.0.0-rc1</h3>
+<p>Oct. 19.2025</p>
+<ul>
+<li>
+<p>Renamed <code>this.api.fetchJSON()</code> to
+<code>this.api.getJSON()</code> to match case used
+with <code>JSON.stringify()</code>, and switch
+from <code>fetch</code> to <code>get</code> prelude.</p>
+</li>
+<li>
+<p>Added substitutions param to
+<code>this.api.getJSON(url, subs=[])</code> so
+all <code>.getTHING(url, subs=[])</code> methods
+have the same behavior.</p>
+</li>
+<li>
+<p>Added <code>options={}</code> to
+<code>this.api.getJSON()</code> to pass options to
+the fetch call. The signature is
+<code>this.api.getJSON(url, subs=[], options={})</code>.</p>
+</li>
+<li>
+<p>Added <code>this.api.getHTML(url, subs=[], options={})</code>
+that loads an HTML file and does find
+replace with <code>subs</code> on the initial string
+where <code>subs</code> is an array
+of arrays with the patterns to match and
+replace. The patterns can be strings or regex.</p>
+</li>
+<li>
+<p>Added <code>this.api.getSVG(url, subs=[], options={})</code>
+that loads an SVG file and does find
+replace with <code>subs</code> which is an array
+of arrays with the patterns to match and
+replace. The patterns can be strings or regex.</p>
+</li>
+<li>
+<p>Added <code>this.api.getTXT(url, subs=[], options={})</code>
+that returns the text content of an external file.</p>
+</li>
+<li>
+<p>Switched to array or arrays for find
+replace strings for <code>this.api.useTemplate(templateString, subs=[])</code>
+and defaulting to an empty array so the
+argument doesn't have be sent which
+is consistent with the <code>.getTHING(url, subs=[])</code></p>
+</li>
+<li>
+<p>Added an adoptedStylesheet that sets
+the <code>&lt;bitty-x-x&gt;</code> tag to <code>display: block</code>.</p>
+</li>
+<li>
+<p>Added <code>this.api.match(event, el, key=&quot;&quot;)</code>.
+If a key exists, it's used to check the
+<code>dataset</code> of the <code>event</code> and the <code>el</code>
+and returns true if they match. If no
+<code>key</code> is provided the <code>uuid</code> of the <code>event</code>
+and <code>el</code> are compared instead.</p>
+</li>
+<li>
+<p>Allowing whitespace around <code>data-send</code>
+attributes.</p>
+</li>
+<li>
+<p>Allowing whitespace around <code>data-receive</code>
+attributes.</p>
+</li>
+<li>
+<p>Added <code>.useHTML(content, subs = [])</code> that
+converts a string from <code>content</code> into an
+HTML template (doing the substitutions)
+then returns the first element from it
+as an HTML element instead of a document
+fragment.</p>
+</li>
+<li>
+<p>Ingesting <code>window.bittyFunctions</code> from
+the page and <code>const functions</code> inside the module
+and providing access the them via <code>this.api.fn.FUNCTION()</code></p>
+</li>
+<li>
+<p>Ingest local <code>const functions</code> functions
+from the bitty component file that get
+added as <code>this.api.fn.FUNCTION()</code></p>
+</li>
+<li>
+<p>Ingested functions are bound with <code>.bind()</code> so
+that their <code>this.</code> is the bitty component's
+element itself.</p>
+</li>
+<li>
+<p>Combined <code>this.config</code> and <code>this.metadata</code> in the
+<code>constructor()</code>.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.3.0</h3>
+<p>Oct. 13, 2025</p>
+<ul>
+<li>
+<p>Releasing v1.3.0. No changes
+from v1.3.0-rc1.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.3.0-rc1</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>
+<p>Added <code>fetchJson(url)</code> method which
+can be called with <code>this.api.fetchJson(url)</code>.
+Returns the data object if everything works.
+Otherwise, throws an error and returns
+<code>undefined</code>.</p>
+</li>
+<li>
+<p>Added <code>useTemplate()</code> to assemble
+a example while doing a find and
+replace of text</p>
+</li>
+</ul>
+
+          <h3>Version: 1.2.0-rc1</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>
+<p>When using <code>data-connect</code> if the value
+matches a class on the window object it's
+used. For example: <code>data-connect=&quot;ExampleClass&quot;</code>
+connects to <code>window.ExampleClass</code>.</p>
+<p>Previously, the class had to be in a
+<code>window.bittyClasses</code> object (e.g.
+<code>window.bittyClasses = { ExampleClass: class {} };</code></p>
+</li>
+</ul>
+
+          <h3>Version: 1.1.0-rc2</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>Updated console error message if no
+class to connect to can be found.</li>
+</ul>
+
+          <h3>Version: 1.1.0-rc1</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p><code>&lt;bitty-COMPONENT_VERSION&gt;</code> can be called
+without a <code>data-connect</code> attribute. When it is,
+it looks for a <code>window.BittyClass</code> on the
+page and uses it if it's available.</p>
+</li>
+<li>
+<p>Removed .error() method in favor of
+calling <code>console.error()</code> directly in order
+to get useful line numbers.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p>Moved <code>v1.0.0-rc5</code> to <code>v1.0.0</code></p>
+</li>
+<li>
+<p>Tag name is <code>&lt;bitty-1-0&gt;</code></p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0-rc5</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p>Fixed bug with events not being passed
+to signal processing.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0-rc4</h3>
+<p>Oct. 1, 2025</p>
+<ul>
+<li>
+<p>Renamed <code>&lt;bitty-js&gt;</code> component tag to
+<code>&lt;bitty-MAJOR_VERSION&gt;</code> for semantic versioning.</p>
+</li>
+<li>
+<p>Call <code>bittyInit()</code> with <code>await</code>
+if it's an <code>async</code> function.</p>
+</li>
+<li>
+<p>Moved <code>bittyInit()</code> before the <code>data-send</code>
+calls from the component so the module
+can set things up before the signals
+start being sent.</p>
+</li>
+<li>
+<p>Allowing <code>this.api.forward()</code> to be called
+with a <code>null</code> event (e.g.
+<code>this.api.forward(null, &quot;anotherFunction&quot;);</code>).
+This is done to allow things like forwarding
+a signal from <code>bittyInit()</code> or any other
+function where there isn't an event to pass
+along.</p>
+</li>
+<li>
+<p>Fixed bug where new receivers weren't
+being added properly when they were child
+nodes of new nodes being added (and
+the top layer didn't have a <code>data-</code> attr
+in it)</p>
+</li>
+<li>
+<p>Added tests for <code>this.api.querySelector()</code>
+and <code>document.querySelector()</code></p>
+</li>
+<li>
+<p>Update site to use variables for version
+numbers to make them easier to maintain
+instead of having them in multiple places
+for different displays.</p>
+</li>
+<li>
+<p>Made <code>this.metadata</code> an object and
+moved <code>version</code> into it (along with
+<code>copyright</code> and <code>license</code>)</p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0-rc3</h3>
+<p>Sept. 23, 2025</p>
+<ul>
+<li>
+<p>Fixed bug where <code>this.api.send()</code> would update the
+<code>data-send</code> attribute on the original element so
+it no longer send the same signal. The method
+is now called <code>this.api.forward()</code>.</p>
+</li>
+<li>
+<p>Removed <code>data-watch</code>. Any element
+can receive a signal from anywhere else on the
+page without extra overhead. The biggest
+negative to this approach is that you have
+to be a little more careful to avoid naming
+collisions. But, the ease of use is well
+worth that minor trade off.</p>
+</li>
+<li>
+<p>Added Test Suite Results Report to site
+for easier viewing.</p>
+</li>
+<li>
+<p>Applying passed and failed colors to
+individual tests for quicker scanning.</p>
+</li>
+<li>
+<p>Updated tests to use unique signal
+names to avoid collisions.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0-rc2</h3>
+<p>Sept. 19, 2025</p>
+<ul>
+<li>
+<p><code>data-watch</code> is applied to <code>bitty-js</code> elements
+directly instead of individual elements.
+The signals are send back down the tree
+when one is received via <code>data-watch</code></p>
+</li>
+<li>
+<p>Refactored multiple UUID() calls to single
+function to save a few characters.</p>
+</li>
+</ul>
+
+          <h3>Version: 1.0.0-rc1</h3>
+<p>Sept. 18, 2025</p>
+<p>Initial release candidate for version 1.0.0.</p>
+<p>No changes since v0.4.0.</p>
+
+          <h3>Version: 0.4.0</h3>
+<p>Sept. 17, 2025</p>
+<ul>
+<li>
+<p>Flipped module arguments from <code>example(el, event)</code>
+to <code>example(event, el)</code> since that lines up better
+with the order of send/receive. (i.e. the <code>event</code>
+is what gets sent from <code>data-send</code> and the <code>el</code>
+is the element from <code>data-receive</code></p>
+</li>
+<li>
+<p>Remove HTML output of error message. They're
+nice during debug but wouldn't want them
+showing up in prod. Could use a <code>debug</code> flag
+but that's more overhead than I want to add.
+So, message just go to the console.</p>
+</li>
+</ul>
+
+          <h3>Version: 0.3.0</h3>
+<p>Sept. 17, 2025</p>
+<p>Big refactor based on experience using 0.2.0.</p>
+<ul>
+<li>
+<p>Added more generic error handing where you just send
+a message and it outputs to the page along with the
+UUID of the element that had the problem. The
+elements have <code>bitty-js-error</code> style classes on them
+so their display can be controlled via CSS.</p>
+</li>
+<li>
+<p>Updated to use the name <code>data-connect</code> instead of <code>data-module</code></p>
+</li>
+<li>
+<p>The <code>data-connect</code> can point to either a module or
+to a class in a global <code>bittyClasses</code> window object.</p>
+</li>
+<li>
+<p>Alternate module classes are selected by passing a <code>|</code> followed
+by the desired class name instead of using <code>data-use</code>.
+(e.g. <code>data-connect=&quot;./module.js|AltClass</code>)</p>
+</li>
+<li>
+<p>If there's an <code>bittyInit()</code> function in a module it's the
+first thing that gets called once bitty is loaded.</p>
+</li>
+<li>
+<p>Removed <code>data-call</code>. The <code>data-send</code> attribute is used
+for everything. Nothing would fire from it in prior versions
+if there wasn't at least one element with a <code>data-receive</code>
+with the same name. Now it calls the function once
+with no element if there's no associated <code>data-receive</code></p>
+</li>
+<li>
+<p>Added test suite.</p>
+</li>
+<li>
+<p>The biggest update is changing <code>data-b</code>, <code>data-c</code>,
+<code>data-r</code>, and <code>data-s</code> to <code>data-batch</code>,
+<code>data-call</code>, <code>data-receive</code>, and <code>data-send</code>,
+respectively. I originally use the shorter names to reduce the text
+length. The increased clarity of the longer names is worth the
+few extra characters.</p>
+</li>
+<li>
+<p>Remove expanded error messages. They were nice, but added a bunch of size
+without a significant improvement.</p>
+</li>
+<li>
+<p>The other big change is removing the leading <code>_</code> and
+<code>$</code> characters from function names. They were originally
+put in place to create a naming convention that differentiated
+between functions that were hit with <code>data-call</code>
+and <code>data-send</code>. In practice, that wasn't necessary.</p>
+</li>
+<li>
+<p>Removed the <code>data-batch</code> attribute. While there are some use
+cases where it might be nice, the extra complexity, mental overhead, and maintance
+aren't worth it.</p>
+</li>
+<li>
+<p>Added Mutation Observer so data-* functionality works
+on elements that are added after initialization.</p>
+</li>
+<li>
+<p>Added Mutation Observer to watch for
+removed elements to pull them out of the mix when
+they get gone.</p>
+</li>
+<li>
+<p>Split the web site page up into individual template for sections. Much
+nicer to work with.</p>
+</li>
+<li>
+<p>Updated example functions to always use <code>(el, _event)</code> instead
+of <code>(el, _)</code> for clarity.</p>
+</li>
+<li>
+<p>Removed inert/include/ignore from the top level
+components then remove them. This was originally a way to tell
+parent components to ignore specific calls and signals from children.
+After using it a bit, I don't think the complexity is worth it.
+Better to just name functions an signals so they don't collide.</p>
+</li>
+<li>
+<p>Isolated default signal travel to only go down the DOM.
+That is, if there are nested bitty-js tags, signals from
+the child tags don't propagate to the parent by default.
+(see <code>data-watch</code> for how to send signals up and to
+siblings)</p>
+</li>
+<li>
+<p>Added <code>data-watch</code> so parents and siblings
+can receive signals from their children and other
+siblings. With this, signals can be sent up, down, and
+to siblings.</p>
+</li>
+<li>
+<p>Ignore events directly from <code>bitty-js</code>
+elements (i.e. only process events from child elements).
+This is done to prevent <code>data-send</code> attributes on
+<code>bitty-js</code> elements from firing repeatedly
+when things inside the element send events (e.g. clicks).</p>
+</li>
+<li>
+<p>Renamed <code>scripts</code> directory to <code>modules</code>.</p>
+</li>
+<li>
+<p>Moved bitty source script file under <code>bitty-versions/bitty-v0.3.0.js</code>
+and copying to prod at the root of the site (i.e. <code>/bitty-v0.3.0.js</code>)
+so examples look cleaner.</p>
+</li>
+<li>
+<p>Renamed <code>data-bridge</code> to <code>data-connect</code> for clarity.</p>
+</li>
+<li>
+<p>Renamed <code>this.widget.bridge</code> to <code>this.module.api</code> in <code>bitty-js</code></p>
+</li>
+<li>
+<p>Added <code>this.api.send(key, event)</code> to send/forward
+events from inside modules.</p>
+</li>
+<li>
+<p>Added Progressive Enhancement and JavaScript Data comparison examples.</p>
+</li>
+<li>
+<p>Added/polished a bunch of other examples.</p>
+</li>
+</ul>
+
+            <h3>Version: 0.2.3</h3>
+  <p>June 5, 2025</p>
+  <p>Lots of error handling work in this one.</p>
+  <ul>
+    <li>
+      Moved UUID generation for the <code>bitty-js</code> and all
+      <code>data-*</code> reactive elements to the first thing in
+      <code>connectedCallback()</code> to aid in error messaging.
+    </li>
+    <li>
+      Made <code>connectedCallback()</code> and <code>async</code> function to
+      throw loading the widget module into its own funcitoun
+    </li>
+    <li>
+      Created an <code>#errors</code> private var to store error messages and
+      help by ID.
+    </li>
+    <li>Added the first few error messages</li>
+    <li>
+      <p>
+        Added <code>this.error()</code> for outputting errors. It takes two
+        optional arguments: an ID and an Element. The ID maps to the IDs in
+        <code>#errors</code>. They're used to add detail and help message to the
+        error output.
+      </p>
+      <p>
+        The ID defaults to <code>0</code> which is an unclassified error type.
+        The message for that ID includes a note to the developer to use an ID to
+        classify the error. I consider it a bug if an appropriate ID doesn't
+        exist and request an issue be open to fix it.
+      </p>
+      <p>
+        The <code>this.error()</code> method dumps the
+        <code>bitty-js</code> elemnet after the message.
+      </p>
+      <p>
+        If an element was passed to <code>this.error()</code> it's dumped out as
+        well.
+      </p>
+      <p>
+        The error message end up being pretty long. The end up adding a bunch of
+        lines to the source file. That's an explicit decision aimed at making
+        bitty easier to work with.
+      </p>
+    </li>
+    <li>
+      <p>
+        Added top level <code>debug</code> function that uses a
+        <code>debug</code> search query param from the
+        <code>window.location</code> to see if it should output.
+      </p>
+      <p>
+        Only thing I don't like about it is that it shows the function's line
+        number instead of the line number from where it was called. Something to
+        look into.
+      </p>
+    </li>
+    <li>
+      The <code>debug</code> function takes an optional element. It dumps it to
+      the console if one comes in.
+    </li>
+    <li>
+      Renamed <code>data-wires</code> to <code>data-bridge</code>. Fits better
+      and maps nicer to the <code>.bridge</code> coming back in from the support
+      class.
+    </li>
+    <li>
+      Set up to load the default class exported from a widget module if no other
+      class is defined (which happens with 'data-widget')
+    </li>
+    <li>
+      Moved all examples to use a default class export instead of a named class
+    </li>
+    <li>
+      Added a <code>data-widget</code> attribute to the
+      <code>bitty-js</code> elements to allow using multiple classes from inside
+      a single supporting .js module file.
+    </li>
+    <li>
+      <code>bitty-component-error</code> and
+      <code>bitty-element-error</code> classes are added to the class list of
+      elements where errors occur.
+    </li>
+  </ul>
+
+            <h3>Version: 0.2.2</h3>
+  <p>June 4, 2025</p>
+  <p>
+    Added UUIDs for pending error handling. Shuffeld a bunch of stuff around to
+    make the examples look nicer.
+  </p>
+  <ul>
+    <li>
+      <p>
+        Added uuids as <code>data-uuid</code> attrs to all elements with related
+        <code>data-*</code> attributes. Added them to the
+        <code>bitty-js</code> elements too. I was originally thinking I'd add
+        the UUIDs on the elements internally (i.e. <code>el.uuid</code> instead
+        of <code>el.dataset.uuid</code>).
+      </p>
+      <p>
+        I decided on the attribute approach because it offers two benefits: 1.
+        You can see the IDs in the Element tree view of developer consoles, and
+        2. You can address them with CSS to update styles based on the UUID.
+        Both of those thing will go to supporting better error messages and bug
+        hunting.
+      </p>
+    </li>
+    <li>
+      Mostly content updates largely focused on detailing the opening counter
+      example.
+    </li>
+    <li>Added CONTRIBUTING file.</li>
+    <li>Added watcher script to build site when files change.</li>
+    <li>
+      Refined the initial counter example to remove the text and change the
+      private variable to <code>this.num</code> to make the examples look nicer.
+    </li>
+    <li>
+      Moved the Examples section directly below the initial basic functionality
+      overview section.
+    </li>
+    <li>
+      Added reminders all over the place to edit the template and instead of the
+      output for HTML page (which would be overwritten. ask me how I know).
+    </li>
+    <li>
+      Started adding <code>prettier-ignore</code> comments to code snippets to
+      prevent the display output from being mangled.
+    </li>
+    <li>
+      Started stripping <code>prettier-ignore</code> comments from the HTML
+      output so it doesn't show in the example
+    </li>
+    <li>Same goes for <code>// deno-fmt-ignore-file</code> in .js files</li>
+    <li>
+      Added script to maintain the open open/closed states of the section
+      details elements across page loads. (Having them close every time I made a
+      change was maddening)
+    </li>
+    <li>
+      Moved all the example <code>.js</code> files into the site root. Not a fan
+      of that in general, but it makes the examples look better since the path
+      is shorter.
+    </li>
+  </ul>
+
+            <h3>Version: 0.2.1</h3>
+  <p>June 3, 2025</p>
+  <p>Some more wiring and some support tools for making the demo/docs site.</p>
+  <ul>
+    <li>
+      Made a Hello, World example that shows basic features. (Compared to the
+      single button press from the prior first example.)
+    </li>
+    <li>Showing Hello, World code as part of the example.</li>
+    <li>Load templates automatically.</li>
+    <li>Throttling via <code>.requestAnimationFrame()</code>.</li>
+    <li>
+      Renamed <code>data-f</code> to <code>data-c</code> (i.e. &quot;call&quot;)
+      for clarity.
+    </li>
+    <li>
+      Renamed <code>data-prep</code> attribute on <code>bitty-js</code> tag to
+      <code>data-call</code> (i.e. &quot;call&quot;) for clarity.
+    </li>
+    <li>
+      Renamed <code>data-init</code> attribute on <code>bitty-js</code> tag to
+      <code>data-send</code> so it matches <code>data-s</code> more closely.
+    </li>
+    <li>Made basic site builder for landing page.</li>
+    <li>
+      Moved everything into <code>details</code> elements for the landing page.
+    </li>
+  </ul>
+
+            <h3>Version: 0.2.0</h3>
+  <p>June 3, 2025</p>
+  <p>Setting up a bunch of the basic wiring.</p>
+  <ul>
+    <li>
+      Rewrite to provide direct access to receiving elements. They are fully
+      accessible in the send/receive functions. (As compared to the 0.1.0
+      approach which required explicitly defining what would happen via an
+      update (e.g. update <code>.innerHTML</code> or <code>.value</code>).
+    </li>
+    <li>
+      Renamed <code>data-wrapper</code> and the target
+      <code>Wrapper</code> class to <code>data-wires</code> and
+      <code>Wires</code>. (<code>bitty.js</code> is the wrapper. The
+      <code>Wires</code> class is how things are hooked up.).
+    </li>
+    <li>
+      Added <code>data-call</code> attribute parsing to
+      <code>bitty-js</code> tag. It runs functions like <code>data-c</code> but
+      does so prior to adding the event listeners to the element.
+    </li>
+    <li>
+      Added <code>data-batch</code> attribute processing to
+      <code>bitty-js</code> tags. It operates like <code>data-b</code> but fires
+      before event listeners are added.
+    </li>
+    <li>
+      Added <code>data-ignore</code> attribute to allow components to avoid
+      calls to the named functions. (Send signals bubble up to parents of nested
+      components by default. This provides a way to ignore them).
+    </li>
+    <li>
+      The <code>bitty-js</code> element looks for an <code>.init()</code> method
+      in the <code>Wires</code> class. If it finds one it calls it during the
+      initialization process.
+    </li>
+    <li>
+      Passing both the element and the triggering event to the send/receive
+      functions.
+    </li>
+    <li>
+      Moved to using <code>data-b</code> explicitly to separate block calls from
+      individual function calls.
+    </li>
+    <li>
+      Order of operations is: function calls, batch calls, single send calls.
+    </li>
+    <li>
+      Temporarily removed preflight check until global functionality is defined.
+    </li>
+    <li>
+      Created example of loading a template via the
+      <code>.init()</code> call back to the <code>Wires</code> class.
+    </li>
+    <li>Created example with nested components.</li>
+    <li>
+      Created example with parent of child components pulling data from the
+      children to do a calculation.
+    </li>
+    <li>Created example showing parent ignoring send signals from children.</li>
+    <li>
+      Created example showing on components loading a child component via a template that becomes fully reactive.
+    </li>
+  </ul>
+
+          <h3>Version: 0.1.0</h3>
+<p>June 2, 2025</p>
+<p>Getting the project started.</p>
+<ul>
+<li>
+<p>Initial prototype.</p>
+</li>
+<li>
+<p><code>&lt;bitty-js&gt;;</code> wraps elements to provide them with reactive
+capabilities.</p>
+</li>
+<li>
+<p>Basic <code>data-c</code>, <code>data-s</code>, and <code>data-r</code>
+in place to call functions, send, and receive updates, respectively.</p>
+</li>
+<li>
+<p>Functionality is loaded using <code>data-wrapper</code> to point to a
+module to load. The module must export a <code>Wrapper</code> class that
+gets loaded and used to provide functions and send/receive callbacks.</p>
+</li>
+<li>
+<p>Uses string prefixes to make determinations about how to handle data
+through the send/receive channels (e.g.
+<code>htmlSOMETHING</code>
+updates <code>.innerHTML</code> of an element while
+<code>valueSOMETHING</code> updates the <code>.value</code>).</p>
+</li>
+<li>
+<p>Defined convention for functions. <code>data-c</code> maps to functions in
+the <code>Wrapper</code> class that start with a
+<code>_</code> (underscore). The <code>data-s</code> and
+<code>data-r</code> attributes map to functions in the
+<code>Wrapper</code> class that start with a <code>$</code> (dollar sign).</p>
+</li>
+<li>
+<p>Decided against using <code>data-c data-s and data-r</code> on the
+<code>bitty.js</code> tags. That would involved a lot of extra overhead in
+parsing to differentiate between the top level element and the content it
+wraps. Using <code>data-send</code> instead as a replacement for
+<code>data-c</code>. Others, TBD.</p>
+</li>
+<li>
+<p>Set up <code>data-c=&quot;batchSOMETHIGN&quot;</code> functionality to send a single
+single that gets turned into multiple signals in the <code>Wrapper</code>.</p>
+</li>
+<li>
+<p>Defined convention of using <code>.batches</code> to look for batches. It
+must be a hash where the keys match the incoming request and the value is
+an array of functions to run.</p>
+</li>
+<li>
+<p>Defined <code>.bridge</code> to allow <code>Wrapper</code> functions to
+access the parent <code>bitty-js</code> element.</p>
+</li>
+<li>
+<p>Scoped event listeners to the <code>bitty-js</code> elements.</p>
+</li>
+<li>
+<p>Set up <code>data-listeners</code> attribute on <code>bitty-js</code> tags
+to override the default listeners (which are <code>input</code> and
+<code>click</code>).</p>
+</li>
+<li>
+<p>Created example that stores its own state.</p>
+</li>
+<li>
+<p>Created example that updates an element with the same content it sent
+(i.e. verified feedback can be avoided).</p>
+</li>
+<li>
+<p>Created example using <code>data-send</code> to load initial values.</p>
+</li>
+<li>
+<p>Created example that sends multiple signals.</p>
+</li>
+<li>
+<p>Created example with multiple elements receiving the same signal.</p>
+</li>
+<li>
+<p>Created example showing how to update global CSS variables/properties.</p>
+</li>
+<li>
+<p>Created example showing custom event listeners.</p>
+</li>
+<li>
+<p>Created example showing how to update CSS variables/properties scoped to
+the content of individual <code>bitty-js</code> tags.</p>
+</li>
+<li>
+<p>Examples use parent page's CSS for styling. It confirms I'm happy with the
+choice to use the light DOM instead of the shadow DOM.</p>
+</li>
+<li>
+<p>Set up initial preflight check to ensure functions are in place.</p>
+</li>
+</ul>
+
+          <h2>Roadmap</h2>
+<ul>
+<li>
+<p>TODO: Added a top level <code>class State {}</code> and
+<code>const s = new State()</code> to provide state across
+components.</p>
+</li>
+<li>
+<p>TODO: Set up the <code>&lt;bitty-#-#&gt;</code> tag to receive signals
+via <code>data-receive</code></p>
+</li>
+<li>
+<p>TODO: Added <code>usePageTemplate()</code> that pulls
+a template from the overall page via
+a query selector.</p>
+</li>
+<li>
+<p>TODO: Set up the <code>bitty</code> tag to listen
+for signals with <code>data-receive</code> to allow
+for things like completely switching out
+the contents of the component without
+having to rely on a child element calling
+<code>.parentNode</code>.</p>
+</li>
+<li>
+<p>TODO: Added <code>await:signal</code> to <code>data-send</code>
+and <code>this.api.forward(event, &quot;signal&quot;)</code>
+to await async methods</p>
+</li>
+<li>
+<p>TODO: Include a top level <code>s = new State()</code>
+object that all the bitty elements
+on the page can use to collaborate.</p>
+</li>
+</ul>
+
+          <h2>Out of Scope</h2>
+<p>These items are out of scope for
+bitty:</p>
+<ul>
+<li>
+<p>Triggering signals from events on the
+<code>bitty</code> element itself. (e.g. <code>click</code> events).
+The purpose of the element is
+as a wrapper that provides interactivity
+to its child elements. Not to be a click
+target itself.</p>
+</li>
+<li>
+<p>Working with the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/History">History API</a></p>
+</li>
+<li>
+<p>Pretty much anything that can be
+added as an external function once
+<code>data-functions</code> is in place.</p>
+</li>
+<li>
+<p>Using a <code>s = new State()</code> type object
+to send signals when it updates. That
+could be set up if folks want to do
+it in there classes. It won't be included
+in bitty directly. The <code>data-send</code> and
+<code>data-receive</code> attributes can send
+signals between components already.</p>
+</li>
+</ul>
+
+          <h2>History</h2>
+<p>Reference notes about the evolution of
+the project.</p>
+<ul>
+<li>Any earlier prototype limited signals
+so they stopped at the component by default
+with a forwarding mechanism that
+allowed signals to be seen outside.
+That added complexity to the overall
+code and the mental model of working
+with the components themselves.</li>
+</ul>
+<p>The approach is now to send signals
+all the way to the document root
+and for each component to have
+it's listeners attached to the
+document root. That means that
+if two components try to use
+the same signal name for different
+purposes, they'll collide.</p>
+<p>Bitty's goal is to make things easier
+to build. Not to build complex systems.
+In that line, if a collision occurs
+the solution is to rename one of the
+signals. That's much lower overhead
+than dealing with limiting and forwarding
+mechanisms.</p>
+
+</details>
+ 
 <details class="section-details">
   <summary>Test Suite</summary>
 
@@ -590,7 +1576,7 @@ the result as a document fragment.</p>
 
   </bitty-2-0>
 
-                                                                                                                                                                                                                                                                                                                                                                     <div>
+                                                                                                                                                                                                                                                                                                                                                                       <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="example-output">

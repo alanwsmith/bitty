@@ -107,7 +107,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: See about adding async/await here
   forward(event, signal) {
     if (!event || !event.target || !event.target.dataset) {
       event = {

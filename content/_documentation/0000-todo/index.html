@@ -2,6 +2,56 @@
   <summary>TODO</summary>
 <pre>
 
+- show how to use these together:
+
+    const template = this.api.fetchTxt(url);
+    const content = this.api.useTemplate(template);
+
+    and 
+
+    const html = this.api.fetchTxt(url);
+    const content = this.api.useHTML(html);
+
+
+- Show how to do stuff just on localhost
+
+        const t = {
+          stars: `<github-stars
+          :repo="alanwsmith/bitty"
+          :text-color="var(--accent-faded)"
+          :background-color="var(--background)"
+        ></github-stars>`,
+        };
+
+        export default class {
+          bittyInit() {
+            if (this.api.url.hostname !== "localhost") {
+              this.api.appendChild(this.api.useTemplate(t.stars));
+            }
+          }
+        }
+
+
+- Demonstrate setURL
+
+- show using substitutions on fetchSVG to replace
+text with unicode characters for things like
+play/pause buttons, etc...
+
+- demo using `this.api.url.searchParams.get("key")`
+for getting a param from the URL query string. 
+
+- document `this.api.fetchHTML(url, replacments)`
+noting that replacements can be regex like:
+`[ [/FILE_ME/g, "UPDATED TEXT"] ]`
+
+- document `this.api.fetchSVG(url, replacments)`
+
+- document `this.api.fetchJSON(url, replacments)`
+
+- document `this.api.fetchCSS(url, replacments)`
+
+
 - Show example of toggling a hidden attribute:
   details(_event, el) {
     if (el.hidden === true) {

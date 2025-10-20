@@ -1,0 +1,24 @@
+[!- extends "v2.0.0/_wrappers/wrapper.html" -!]
+[!- block main -!]
+
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/releases/[@- config.script_min_file_name -@]" download>
+      <div class="center small-font">Download</div>
+      <div class="center">
+      Version[@ " " @] 
+[@- config.data.major_version -@].[@- config.data.minor_version -@].[@- config.data.patch_version -@][@ config.data.rc_string @]
+      </div>
+      <div class="center small-font">[@ config.script_min_file_name -@]</div></a>
+  </div>
+</div>
+
+
+[! set sections_path = config.version_dir + "/_sections" !]
+[! for file in files !]
+  [! if file.folder == sections_path !]
+      [! include sections_path + "/" + file.name !] 
+  [! endif !]
+[! endfor !]
+
+[!- endblock -!]

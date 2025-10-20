@@ -1,0 +1,204 @@
+[!- set config = namespace() -!]
+[!- set config.data = data["v2.0.0/_includes/config.json"] -!]
+
+[!- set config.script_min_file_name -!]
+bitty-[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- if config.data.rc_string != "" -!]
+[@- config.data.rc_string -@]
+[!- endif -!]
+.[@- config.data.min_switch -@].js
+[!- endset -!]
+
+[!- set config.script_full_file_name -!]
+bitty-[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- if config.data.rc_string != "" -!]
+[@- config.data.rc_string -@]
+[!- endif -!]
+.full.js
+[!- endset -!]
+
+[!- set config.version_dir -!]
+v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- endset -!]
+
+[!- set config.tag_name -!]
+bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
+[!- endset -!]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--
+Welcome to the HTML!
+
+Neither this page nor the CSS has undergone any 
+optimization. All the work has been on bitty
+itself. Please excuse the mess.
+-->
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>[@ config.data.metadata.title @]</title>
+<meta property="og:title" content="[@ config.data.metadata.title @]" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="[@ config.data.metadata.description @]" />
+<meta property="og:description" content="[@ config.data.metadata.description @]" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="[@ config.data.metadata.og_image_url @]" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+<link rel="stylesheet" href="/[@ config.version_dir @]/styles/main.css" />
+
+[! include "/" + config.version_dir + "/_snippets/bitty-class-for-page.html" !]
+
+    <script>
+[! include "/" + config.version_dir + "/_snippets/bitty-functions.js" !]
+    </script>
+
+  </head>
+
+
+  <body>
+    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
+      <!-- TODO: only show github-stars if not on localhost -->
+    </header>
+
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <bitty-2-0 data-connect="/[@ config.version_dir @]/modules/github-stars.js"></bitty-2-0>
+        </div>
+        <div class="small-font accent-faded">
+          reactivity without frameworks
+        </div>
+      </hgroup>
+[! block main !][! endblock !] 
+    </main>
+
+    <footer
+      class="default-wrapper align-center large-top-padding accent-top-border-faded2"
+    >
+      from <a href="https://www.alanwsmith.com/">alan w smith</a>
+      <br />
+      <a href="https://github.com/alanwsmith/bitty">source</a> ~
+      <a href="https://socials.alanwsmith.com">socials</a> ~
+      <a href="https://links.alanwsmith.com">other projects</a>
+    </footer>
+
+<script type="module" src="components/github-stars-beta-1.js"></script>
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+<script src="/releases/[@ config.script_min_file_name @]" type="module"></script>
+  </body>
+</html>
+
+
+
+
+[#-
+[!- set major_version = "2" -!]
+[!- set minor_version = "0" -!]
+[!- set patch_version = "0" -!]
+[!- set rc_version = "1" -!]
+[!- set min_key = "full" -!]
+-#]
+
+
+[#-
+
+[!- set full_key = "full" -!]
+[!- set the_title = "bitty - signals based web component" -!]
+[!- set the_description = "A vanilla JS web component that uses signals to add reactivity to web pages" -!]
+[!- set image_url = "https://bitty.alanwsmith.com/images/og-image.jpg" -!]
+
+
+[!- set version_string -!]
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!]
+[!- endset -!]
+
+
+[!- set min_script_file_name -!]
+bitty-
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ min_key @].js
+[!- endset -!]
+
+[!- set full_script_file_name -!]
+bitty-
+[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ full_key @].js
+[!- endset -!]
+
+[!- set component_version -!]
+-v
+[@- major_version -@]
+[!- if rc_version != "" -!]
+-rc[@ rc_version @]
+[!- endif -!].[@ full_key @].js
+[!- endset -!]
+
+-#]
+
+

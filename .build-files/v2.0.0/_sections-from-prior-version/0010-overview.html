@@ -1,0 +1,86 @@
+<details class="section-details">
+  <summary>Overview</summary>
+
+[! filter markdown|safe !]
+**bitty** is a web component. It uses signals to make pages reactive. 
+For example, take this button:
+[! endfilter !]
+
+<div class="add-bitty-flow">
+  [! include "_misc/_timestamp-demo.html" !]
+</div>
+
+[! filter markdown|safe !]
+It's made from this HTML
+[! endfilter !]
+
+<pre class="code-block large-block-margin">
+  [@- highlight_file("_misc/_timestamp-demo.html")|safe -@]
+  [@- "\n" -@]
+  [!- filter highlight_html|safe -!]
+    <script src="/[@- min_script_file_name @]" type="module"></script>
+  [!- endfilter -!]
+</pre>
+
+
+[! filter markdown|safe !]
+And this JavaScript
+[! endfilter !]
+
+
+
+
+[! filter markdown|safe !]
+
+---
+
+
+The **bitty API** is made from  __data-*__ attributes. For example, 
+  here's the HTML that makes up the example:
+[! endfilter !]
+
+<pre class="code-block large-block-margin">
+  [@- highlight_file("_misc/_timestamp-demo.html")|safe -@]
+  [@- "\n" -@]
+  [!- filter highlight_html|safe -!]
+    <script src="/[@- min_script_file_name @]" type="module"></script>
+  [!- endfilter -!]
+</pre>
+
+
+[! filter markdown|safe !]
+- The **bitty-COMPONENT_VERSION** tag's **data-connect** attribute defines the path to a JavaScript module responsible for providing functionality.
+- The **button** tag's **data-send** attribute sets it up to send **update** signals when its clicked.
+- The **div** tag's **data-receive** attribute registers it to react to **update** signals when they occur. 
+
+#### Functionality 
+
+The **update** values from the **data-send** and **data-receive**
+attributes map to a function in the module with the same name.
+
+[! endfilter !]
+
+<pre class="code-block large-block-margin">
+  [@- highlight_file("modules/timestamp-demo.js")|safe -@]
+</pre>
+
+[! filter markdown|safe !]
+
+The arguments passed to the function are:
+
+1. The **event** that triggered the update (e.g. **click** events on 
+  the **button** in the example)
+
+2. The **element** to update (e.g. the **div** element in the example)
+
+The **event** and **element** are the same ones you'd get
+  from __document.addEventListener()__ and __document.querySelector()__
+  functions. 
+
+When the example **button** is clicked the **div** element is passed
+through the function where it has its innerHTML updated. 
+(The __event__ isn't used in this example.)
+
+[! endfilter !]
+
+</details>

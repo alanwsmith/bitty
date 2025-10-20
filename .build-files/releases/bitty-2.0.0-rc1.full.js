@@ -242,8 +242,8 @@ class BittyJs extends HTMLElement {
   // event and an element. If no key
   // is identified the uuid is used
   // instead
-  match(event, el, key = "") {
-    if (key === "") {
+  match(event, el, key = null) {
+    if (key === null) {
       key = "uuid";
     }
     if (

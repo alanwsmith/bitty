@@ -17,18 +17,25 @@
 [! filter markdown|safe !]
 The `bitty` element is exposed to
   the class providing functionality via
-  `this.api`. `bitty` adds the following 
+  <code>[! filter highlight_javascript|safe !]this.api[! endfilter !]</code>. The `bitty` component adds the following 
   supplemental methods to the standard
   element methods and properties. 
 [! endfilter !]
 
   [! for member in docs.members !]
-<h4>[@ member.name @]</h4>
-[! filter markdown|safe !]
-  [#
-[! include "v2.0.0/_docs/" + attribute.name + ".md" !]
-  #]
-[! endfilter !]
+<h4>[@ member.name @](
+    [!- for param in member.parameters -!]
+    [@- param.name -@]
+    [!- if param.default -!]
+    [@- " " -@]
+    = 
+    [@- " " -@]
+    [@- param.default -@]
+    [!- endif -!]
+    [!- if not loop.last -!], [@- " " -@][!- endif -!]
+    [!- endfor -!]
+    )</h4>
+[! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
   [! endfor !]
 
 <h3>Block Styling</h3>

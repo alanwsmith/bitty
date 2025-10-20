@@ -1,5 +1,12 @@
 ## Roadmap 
 
+- TODO: Added ingestion of fucntions from 
+the module js files into `this.api.fn`. 
+If there are naming collisions the order
+last one in the chain of `[@ config.tag_name @]`,
+`window.bittyFunctions`, module function
+exports wins. 
+
 - TODO: Added a top level `class State {}` and
 `const s = new State()` to provide state across
 components. 

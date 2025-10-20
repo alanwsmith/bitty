@@ -55,14 +55,18 @@ window.BittyClass = class {
 
     <script>
 window.bittyFunctions = {
+
+sleep: (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+},
   test0530: function () {
     return this.dataset.uuid;
   },
 
   url: () => {
     return new URL(window.location.href);
-  },
-};    </script>
+  },}
+    </script>
 
   </head>
 
@@ -2061,6 +2065,14 @@ choice to use the light DOM instead of the shadow DOM.</p>
           <h2>Roadmap</h2>
 <ul>
 <li>
+<p>TODO: Added ingestion of fucntions from
+the module js files into <code>this.api.fn</code>.
+If there are naming collisions the order
+last one in the chain of <code>[@ config.tag_name @]</code>,
+<code>window.bittyFunctions</code>, module function
+exports wins.</p>
+</li>
+<li>
 <p>TODO: Added a top level <code>class State {}</code> and
 <code>const s = new State()</code> to provide state across
 components.</p>
@@ -2173,7 +2185,7 @@ mechanisms.</p>
 
   </bitty-2-0>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                               <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                   <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="example-output">

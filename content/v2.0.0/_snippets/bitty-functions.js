@@ -1,5 +1,5 @@
 window.bittyFunctions = {
-  test0530: function() {
+  test0530: function () {
     return this.dataset.uuid;
   },
 

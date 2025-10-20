@@ -25,6 +25,10 @@ v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.
 bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
 [!- endset -!]
 
+[!- set config.script_path -!]
+/release/ [@- config.script_min_file_name -@]
+[!- endset -!]
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -55,7 +59,21 @@ itself. Please excuse the mess.
 <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
 <link rel="stylesheet" href="/[@ config.version_dir @]/styles/main.css" />
 
-[! include "/" + config.version_dir + "/_snippets/bitty-class-for-page.html" !]
+
+<script>
+window.BittyClass = class {
+  [! include config.version_dir + "/_snippets/bitty-class-for-page.html" !]
+
+  [! include config.version_dir + "/_docs/attrs/data-connect/default-window-class/script.js" !]
+}
+</script>
+
+
+
+<script>
+  [! include config.version_dir + "/_docs/attrs/data-connect/alt-window-class/script.js" !]
+</script>
+
 
     <script>
 [! include "/" + config.version_dir + "/_snippets/bitty-functions.js" !]
@@ -143,7 +161,7 @@ itself. Please excuse the mess.
   dw.run()
 </script>
 
-<script src="/releases/[@ config.script_min_file_name @]" type="module"></script>
+<script src="[@ config.script_path @]" type="module"></script>
   </body>
 </html>
 

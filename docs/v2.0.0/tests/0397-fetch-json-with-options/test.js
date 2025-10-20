@@ -3,7 +3,7 @@ export default class {
     const url = "https://echo.hoppscotch.io/";
     const subs = [];
     const options = { method: "POST" };
-    const response = await this.api.fetchJSON(url, subs, options);
+    const response = await this.api.getJSON(url, subs, options);
     if (response.method === "POST") {
       el.innerHTML = "PASSED";
     }

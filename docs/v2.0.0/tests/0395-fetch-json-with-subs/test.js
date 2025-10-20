@@ -4,7 +4,7 @@ export default class {
     const subs = [
       [/FAILED/g, "PASSED"],
     ];
-    const data = await this.api.fetchJSON(url, subs);
+    const data = await this.api.getJSON(url, subs);
     el.innerHTML = data.status;
   }
 }

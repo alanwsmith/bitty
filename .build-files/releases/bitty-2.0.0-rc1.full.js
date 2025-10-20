@@ -6,9 +6,7 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 
 /** @ignore */
 const blockStylesheet = new CSSStyleSheet();
-blockStylesheet.replaceSync(
-  `${tagName} { display: block; }`,
-);
+blockStylesheet.replaceSync(`${tagName} { display: block; }`);
 document.adoptedStyleSheets.push(blockStylesheet);
 
 const functions = {};
@@ -60,16 +58,17 @@ class BittyJs extends HTMLElement {
   /** @internal */
   addEventListeners() {
     if (this.dataset.listeners) {
-      this.config.listeners = this.dataset.listeners.split("|").map((l) =>
-        l.trim()
-      );
+      this.config.listeners = this.dataset.listeners
+        .split("|")
+        .map((l) => l.trim());
     }
     this.config.listeners.forEach((listener) => {
       document.addEventListener(listener, (event) => {
         if (
           event.target &&
           event.target.nodeName.toLowerCase() !== tagName &&
-          event.target.dataset && event.target.dataset.send
+          event.target.dataset &&
+          event.target.dataset.send
         ) {
           event.uuid = getUUID();
           this.handleEventBridge.call(this, event);
@@ -108,30 +107,38 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async fetchHTML(url, subs = [], options = {}) {
+  // TODO: See about adding async/await here
+  forward(event, signal) {
+    if (!event || !event.target || !event.target.dataset) {
+      event = {
+        type: "bittyforward",
+        target: { dataset: { forward: signal } },
+      };
+    }
+    event.target.dataset.forward = signal;
+    this.handleEvent(event);
+  }
+
+  async getHTML(url, subs = [], options = {}) {
     const el = document.createElement("template");
-    el.innerHTML = await this.fetchTxt(url, subs, options);
+    el.innerHTML = await this.getTXT(url, subs, options);
     return el.content.cloneNode(true);
   }
 
-  async fetchJSON(url, subs = [], options = {}) {
-    let content = await this.fetchTxt(url, subs, options);
+  async getJSON(url, subs = [], options = {}) {
+    let content = await this.getTXT(url, subs, options);
     return JSON.parse(content);
   }
 
-  async fetchSVG(url, subs = [], options = {}) {
+  async getSVG(url, subs = [], options = {}) {
     const tmpl = document.createElement("template");
-    tmpl.innerHTML = await this.fetchTxt(url, subs, options);
+    tmpl.innerHTML = await this.getTXT(url, subs, options);
     const wrapper = tmpl.content.cloneNode(true);
     const svg = wrapper.querySelector("svg");
     return svg;
   }
 
-  async fetchTemplate(url, subs = [], options = {}) {
-    return await this.fetchTxt(url, subs, options);
-  }
-
-  async fetchTxt(url, subs = [], options = {}) {
+  async getTXT(url, subs = [], options = {}) {
     let response = await fetch(url, options);
     try {
       if (!response.ok) {
@@ -144,21 +151,9 @@ class BittyJs extends HTMLElement {
         return content;
       }
     } catch (error) {
-      console.error(`fetchJson Error [${url}] - ${error}`);
+      console.error(`getTXT Error [${url}] - ${error}`);
       return undefined;
     }
-  }
-
-  // TODO: See about adding async/await here
-  forward(event, signal) {
-    if (!event || !event.target || !event.target.dataset) {
-      event = {
-        type: "bittyforward",
-        target: { dataset: { forward: signal } },
-      };
-    }
-    event.target.dataset.forward = signal;
-    this.handleEvent(event);
   }
 
   /** @internal */
@@ -178,7 +173,8 @@ class BittyJs extends HTMLElement {
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
         if (
-          mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0
+          mutation.addedNodes.length > 0 ||
+          mutation.removedNodes.length > 0
         ) {
           this.setIds();
           this.loadReceivers();
@@ -206,11 +202,12 @@ class BittyJs extends HTMLElement {
   loadReceivers() {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
-      el.dataset.receive.split("|").map((signal) => signal.trim()).forEach(
-        (signal) => {
+      el.dataset.receive
+        .split("|")
+        .map((signal) => signal.trim())
+        .forEach((signal) => {
           this.addReceiver(signal, el);
-        },
-      );
+        });
     });
   }
 
@@ -225,9 +222,7 @@ class BittyJs extends HTMLElement {
         }
       } else {
         const connParts = this.dataset.connect.split("|").map((x) => x.trim());
-        if (
-          typeof window[connParts[0]] !== "undefined"
-        ) {
+        if (typeof window[connParts[0]] !== "undefined") {
           this.conn = new window[connParts[0]]();
         } else {
           const mod = await import(connParts[0]);
@@ -252,7 +247,8 @@ class BittyJs extends HTMLElement {
       key = "uuid";
     }
     if (
-      event.target.dataset[key] === undefined || el.dataset[key] === undefined
+      event.target.dataset[key] === undefined ||
+      el.dataset[key] === undefined
     ) {
       return false;
     }
@@ -261,28 +257,33 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   processSignals(event, signals) {
-    signals.split("|").map((signal) => signal.trim()).forEach((signal) => {
-      let receiverCount = 0;
-      this.receivers.forEach((receiver) => {
-        if (receiver.key === signal) {
-          receiverCount += 1;
-          receiver.f(event);
+    signals
+      .split("|")
+      .map((signal) => signal.trim())
+      .forEach((signal) => {
+        let receiverCount = 0;
+        this.receivers.forEach((receiver) => {
+          if (receiver.key === signal) {
+            receiverCount += 1;
+            receiver.f(event);
+          }
+        });
+        if (receiverCount === 0) {
+          if (this.conn[signal]) {
+            this.conn[signal](event, null);
+          }
         }
       });
-      if (receiverCount === 0) {
-        if (this.conn[signal]) {
-          this.conn[signal](event, null);
-        }
-      }
-    });
   }
 
   /** @internal */
   runSendFromComponent() {
     if (this.dataset.send) {
-      this.handleEvent(
-        { type: "bittytagdatasend", uuid: getUUID(), target: this },
-      );
+      this.handleEvent({
+        type: "bittytagdatasend",
+        uuid: getUUID(),
+        target: this,
+      });
     }
   }
 
@@ -297,7 +298,7 @@ class BittyJs extends HTMLElement {
 
   // Creates a template and returns the first
   // child from it as an element.
-  useEl(content, subs = []) {
+  useHTML(content, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
     });

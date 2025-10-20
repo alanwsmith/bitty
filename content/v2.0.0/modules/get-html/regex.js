@@ -1,8 +1,8 @@
 export default class {
-  async getSubsHTML(_event, el) {
+  async getRegExHTML(_event, el) {
     const subs = [
-      ["SPEED", "slow"],
-      ["KIND", "red"]
+      [/SPEED/g, "fast"],
+      [/KIND/g, "arctic"]
     ];
     const content = await this.api.getHTML(
       "/v2.0.0/payloads/get-html/subs/index.html",

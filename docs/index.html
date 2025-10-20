@@ -224,7 +224,7 @@ sleep: (ms) => {
 </section> 
 <section class="default-flow">
 <details class="section-details">
-  <summary>Installation and Usage</summary>
+  <summary>Installation / Getting Started</summary>
 
 <p>Since bitty is a web component, there's no framework to
 install. Using it is done by 
@@ -1246,43 +1246,114 @@ element methods and properties.</p>
 <details><summary class="docs-summary">forward(event, signal)</summary>
 
 <ul>
-<li>forwards an event from one
-signal to another.</li>
+<li>calls another method to trigger its
+signal. The event which triggered the
+first signal can be sent to the second.</li>
 </ul>
 
   <div>Parameters</div>
   <ul><li><p>event</p>
 <p>The event to forward, can be null.</p>    </li><li><p>signal</p>
-<p>The name of the signal to forward to</p>    </li></ul>
+<p>The name of the signal to forward to (required)</p>    </li></ul>
 
 
-<h5>Example</h5>
-<bitty-2-0 data-connect="/v2.0.0/modules/api-forward.js">
-  <button data-send="first">Pass Event For Coords</button>
-  <div data-receive="second">waiting</div>
-</bitty-2-0>
-<pre class="code-block"><code>
-<span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v2.0.0/modules/api-forward.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>first<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Pass Event For Coords<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>second<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<h4>Basic Signal Forwarding</h4>
+
+<p>Forwarding an event from one signal to another looks like this:</p>
+
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v2.0.0/modules/forward/basic.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>forwardFirstPart<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Pass Event For Coords<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>forwardFirstPart<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (first)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>forwardSecondPart<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (second)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
 
-<pre class="code-block"><code>
-<span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">first</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>second<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v2.0.0&#x2f;modules&#x2f;forward&#x2f;basic.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">forwardFirstPart</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>event recieved and forwarded<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>forwardSecondPart<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">second</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">x</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetX</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">y</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetY</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>x: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">x</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"> - y: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">y</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">forwardSecondPart</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>x: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetX</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"> - y: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetY</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-2-0 data-connect="/v2.0.0/modules/forward/basic.js">
+  <button data-send="forwardFirstPart">Pass Event For Coords</button>
+  <div data-receive="forwardFirstPart">waiting (first)</div>
+  <div data-receive="forwardSecondPart">waiting (second)</div>
+</bitty-2-0>      </div>
+      </div>
+  </div>
+</div>
+<h4>null Event Forwarding</h4>
+
+<p>The `event` can be `null`. For example, if
+an initial update is made that branches
+into a conditional update where the event
+isn't required it doesn't have to be
+sent.</p>
 
 
 
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-2-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v2.0.0/modules/forward/null.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>incrementThenBranch<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Pass Event For Coords<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>branchAlfa<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (alfa)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>branchBravo<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (bravo)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-2-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
 
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v2.0.0&#x2f;modules&#x2f;forward&#x2f;null.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #count = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">incrementThenBranch</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span> <span class="keyword operator arithmetic js">%</span> <span class="constant numeric js">2</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="constant language null js">null</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>branchAlfa<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="constant language null js">null</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>branchBravo<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">branchAlfa</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">branchBravo</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-2-0 data-connect="/v2.0.0/modules/forward/null.js">
+  <button data-send="incrementThenBranch">Pass Event For Coords</button>
+  <div data-receive="branchAlfa">waiting (alfa)</div>
+  <div data-receive="branchBravo">waiting (bravo)</div>
+</bitty-2-0>      </div>
+      </div>
+  </div>
+</div>
 </details>
 
 
@@ -2443,7 +2514,7 @@ mechanisms.</p>
 
   </bitty-2-0>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                             <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                   <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="example-output">

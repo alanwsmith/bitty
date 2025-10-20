@@ -11,89 +11,10 @@ to the component.<p>
     four locations:</p>
 
 <ol>
-    <li>
-        <p>If there is no <code>data-connect</code> attribute,
-then <strong>bitty</strong> looks for a <code>[@ highlight_code("window.BittyClass", "js")|safe @]</code>
-variable. For example:</p>
-
-  <div class="default-flow example-wrapper">
-    <div class="default-flow">
-        <div class="code-block-wrapper">
-            <div class="code-block-title">index.html</div>
-            <pre class="code-block"><code>
-            [!- filter highlight_html|safe -!]
-                    [! include "v2.0.0/_docs/attrs/data-connect/default-window-class/example.html"|safe !]
-            [!- endfilter -!]
-            </code></pre>
-        </div>
-
-        <div class="example-output-wrapper">
-        <div class="example-output-title">Example</div>
-        <div class="example-output">
-            [! include "v2.0.0/_docs/attrs/data-connect/default-window-class/example.html" !]
-        </div>
-        </div>
-    </div>
-  </div>
-
-</li>
-<li>
-
-    <p>If the <code>data-connect</code> attribute exists and
-its value matches a variable on the <code>window</code> object,
-then the <code>class</code> from that variable is used. For example:</p>
-
-  <div class="default-flow example-wrapper">
-    <div class="default-flow">
-        <div class="code-block-wrapper">
-            <div class="code-block-title">index.html</div>
-            <pre class="code-block"><code>
-            [!- filter highlight_html|safe -!]
-                    [! include "v2.0.0/_docs/attrs/data-connect/alt-window-class/bitty.html"|safe !]
-            [!- endfilter -!]
-            </code></pre>
-        </div>
-
-        <div class="example-output-wrapper">
-        <div class="example-output-title">Example</div>
-        <div class="example-output">
-            [! include "v2.0.0/_docs/attrs/data-connect/alt-window-class/bitty.html" !]
-        </div>
-        </div>
-    </div>
-  </div>
-
-
-
-
-</li>
-
-<li>The default export from an external module when the value
-of `data-connect` is the path to the module. For example:
-
-        <[@ config.tag_name @] data-connect="/some/module.js"></[@ config.tag_name @]>
-
-    looks for a file at `/some/module.js` with a default class
-    export like:
-
-        export default class {}
-</li>
-
-<li>
-A named class from an external module when the value
-of `data-connect` is a path followed by a `|` then the
-name of the class to look for. For example:
-
-
-
-        <[@ config.tag_name @] data-connect="/some/module.js|AltExample"></[@ config.tag_name @]>
-
-    looks for a file at `/some/module.js` with an exported class
-    like
-
-        export class AltExample {}
-
-</li>
+    <li>[! include config.version_dir + "/_docs/attrs/data-connect/default-window-class/content.html" !]</li>
+    <li>[! include config.version_dir + "/_docs/attrs/data-connect/alt-window-class/content.html" !]</li>
+    <li>[! include config.version_dir + "/_docs/attrs/data-connect/default-module/content.html" !]</li>
+    <li>[! include config.version_dir + "/_docs/attrs/data-connect/alt-module/content.html" !]</li>
 </ul>
 
 

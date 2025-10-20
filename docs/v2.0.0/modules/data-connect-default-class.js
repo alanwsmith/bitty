@@ -1,5 +1,5 @@
 export default class {
-  defaultModuleRandomNum(_event, el) {
+  defaultModuleClassRandomNum(_event, el) {
     el.innerHTML = Math.random();
   }
 }

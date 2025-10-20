@@ -20,8 +20,12 @@ The `bitty` element is exposed to
   element methods and properties. 
 [! endfilter !]
 
+
+
   [! for member in docs.members !]
-<h4>[@ member.name @](
+
+
+<details><summary class="docs-summary">[@ member.name @](
     [!- for param in member.parameters -!]
     [@- param.name -@]
     [!- if param.default -!]
@@ -32,7 +36,7 @@ The `bitty` element is exposed to
     [!- endif -!]
     [!- if not loop.last -!], [@- " " -@][!- endif -!]
     [!- endfor -!]
-    )</h4>
+    )</summary>
 
     [! include "v2.0.0/_docs/members/" + member.name + "/overview.html" !]
 
@@ -48,6 +52,7 @@ The `bitty` element is exposed to
 
     [! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
 
+</details>
 
   [! endfor !]
 

@@ -1,4 +1,4 @@
-        defaultWindowClass(_event, el) {
+        defaultRandomNum(_event, el) {
           el.innerHTML = Math.random();
         }
 

@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: rename `useHTML` to `makeEl` when
+the next breaking change bump to v3.x.x happens
+
+
 - TODO: Added ingestion of fucntions from 
 the module js files into `this.api.fn`. 
 If there are naming collisions the order

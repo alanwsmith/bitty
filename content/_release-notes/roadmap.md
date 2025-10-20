@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: Added a top level `class State {}` and
+`const s = new State()` to provide state across
+components. 
+
 - TODO: Set up the `<bitty-#-#>` tag to receive signals
 via `data-receive`
 

@@ -1,0 +1,94 @@
+[! set docs = data["releases/custom-elements.json"].modules[0].declarations[1] !]
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - The HTML data-* API</summary>
+
+<p>bitty sends signals to elements when
+events occur. Defining the signals and the events
+that trigger them is done with four <code>[! filter highlight_html|safe!]data-*[! endfilter !]</code>
+attributes that are added to <code>[! filter highlight_html|safe!]<bitty-2-0>[! endfilter !]</code>
+tags and their children. The four attributes are:</p>
+
+<ul>
+<li>data-connect</li>
+<li>data-listeners</li>
+<li>data-receive</li>
+<li>data-send</li>
+</ul>
+
+<p>Details for each attribute are as follows:</p>
+
+
+  [! for attribute in docs.attributes !]
+<h3>[@ attribute.name @]</h3>
+[! filter markdown|safe !]
+[! include "v2.0.0/_docs/" + attribute.name + ".md" !]
+[! endfilter !]
+  [! endfor !]
+
+<h3>API Methods</h3>
+
+[! filter markdown|safe !]
+The `bitty` element is exposed to
+  the class providing functionality via
+  <code>[! filter highlight_javascript|safe !]this.api[! endfilter !]</code>. The `bitty` component adds the following 
+  supplemental methods to the standard
+  element methods and properties. 
+[! endfilter !]
+
+  [! for member in docs.members !]
+<h4>[@ member.name @](
+    [!- for param in member.parameters -!]
+    [@- param.name -@]
+    [!- if param.default -!]
+    [@- " " -@]
+    = 
+    [@- " " -@]
+    [@- param.default -@]
+    [!- endif -!]
+    [!- if not loop.last -!], [@- " " -@][!- endif -!]
+    [!- endfor -!]
+    )</h4>
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/overview.html" !]
+
+  <div>Parameters</div>
+  <ul>
+    [!- for param in member.parameters -!]
+    <li><p>[@- param.name -@]</p>
+      [! include "v2.0.0/_docs/members/" + member.name + "/params/" + param.name + ".html" !]
+    </li>
+    [!- endfor -!]
+  </ul>
+
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
+
+
+  [! endfor !]
+
+<h3>Block Styling</h3>
+
+  <p>
+    An [! filter highlight_javascript|safe !]adoptedStyleSheets[! endfilter !] is added to the page
+    that sets:
+  </p>
+
+  <div>
+<pre type="code-blokc"><code>
+[! filter highlight_css|safe !]
+    [@ config.tag_name @] { display: block; }
+[! endfilter !]
+</code></pre>
+  </div>
+
+<pre><code>
+  [#
+[@ docs|tojson(true) @]
+  #]
+</code></pre>
+
+  </details>
+
+</section>

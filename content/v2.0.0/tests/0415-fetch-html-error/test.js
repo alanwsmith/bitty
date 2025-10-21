@@ -1,0 +1,10 @@
+export default class {
+  async runTest0415(_event, el) {
+    const html = await this.api.getHTML(
+      `/v2.0.0/tests/0415-fetch-html-error/payload/intentionally-missing-file.html`,
+    );
+    if (html === undefined) {
+      el.innerHTML = "PASSED";
+    }
+  }
+}

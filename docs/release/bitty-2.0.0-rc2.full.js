@@ -119,9 +119,14 @@ class BittyJs extends HTMLElement {
   }
 
   async getHTML(url, subs = [], options = {}) {
-    const el = document.createElement("template");
-    el.innerHTML = await this.getTXT(url, subs, options);
-    return el.content.cloneNode(true);
+    const content = await this.getTXT(url, subs, options);
+    if (content === undefined) {
+      return undefined;
+    } else {
+      const el = document.createElement("template");
+      el.innerHTML = content;
+      return el.content.cloneNode(true);
+    }
   }
 
   async getJSON(url, subs = [], options = {}) {

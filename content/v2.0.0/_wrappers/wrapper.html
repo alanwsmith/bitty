@@ -59,21 +59,25 @@ itself. Please excuse the mess.
 <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
 <link rel="stylesheet" href="/[@ config.version_dir @]/styles/main.css" />
 
+<script>
+console.error(`HEADS UP: There are intentional 404 errors on this page!
+The code on the page is live. That includes the examples and tests demonstrating failing fetch calls that throw errors. Any 404s can safely be ignored.`);
+</script>
 
 <script>
 window.BittyClass = class {
   [! include config.version_dir + "/_snippets/bitty-class-for-page.html" !]
 
   [! include config.version_dir + "/_docs/attrs/data-connect/default-window-class/script.js" !]
+
+  [! include config.version_dir + "/_snippets/intentional-errors.js" !]
+
 }
 </script>
-
-
 
 <script>
   [! include config.version_dir + "/_docs/attrs/data-connect/alt-window-class/script.js" !]
 </script>
-
 
     <script>
 [! include "/" + config.version_dir + "/_page_functions/content.js" !]
@@ -109,6 +113,10 @@ window.BittyClass = class {
       <a href="https://socials.alanwsmith.com">socials</a> ~
       <a href="https://links.alanwsmith.com">other projects</a>
     </footer>
+
+
+<[@ config.tag_name @] data-send="intentionalErrors"></[@ config.tag_name @]>
+
 
 <script type="module" src="components/github-stars-beta-1.js"></script>
 <script type="module">
@@ -164,59 +172,3 @@ window.BittyClass = class {
 <script src="[@ config.script_path @]" type="module"></script>
   </body>
 </html>
-
-
-
-
-[#-
-[!- set major_version = "2" -!]
-[!- set minor_version = "0" -!]
-[!- set patch_version = "0" -!]
-[!- set rc_version = "1" -!]
-[!- set min_key = "full" -!]
--#]
-
-
-[#-
-
-[!- set full_key = "full" -!]
-[!- set the_title = "bitty - reactivity without frameworks" -!]
-[!- set the_description = "a stand-alone web component that adds reactivity to your site" -!]
-[!- set image_url = "https://bitty.alanwsmith.com/images/og-image-2.jpg" -!]
-
-
-[!- set version_string -!]
-[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
-[!- if rc_version != "" -!]
--rc[@ rc_version @]
-[!- endif -!]
-[!- endset -!]
-
-
-[!- set min_script_file_name -!]
-bitty-
-[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
-[!- if rc_version != "" -!]
--rc[@ rc_version @]
-[!- endif -!].[@ min_key @].js
-[!- endset -!]
-
-[!- set full_script_file_name -!]
-bitty-
-[@- major_version -@].[@- minor_version -@].[@- patch_version -@]
-[!- if rc_version != "" -!]
--rc[@ rc_version @]
-[!- endif -!].[@ full_key @].js
-[!- endset -!]
-
-[!- set component_version -!]
--v
-[@- major_version -@]
-[!- if rc_version != "" -!]
--rc[@ rc_version @]
-[!- endif -!].[@ full_key @].js
-[!- endset -!]
-
--#]
-
-

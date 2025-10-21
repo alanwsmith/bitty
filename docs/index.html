@@ -28,6 +28,10 @@ itself. Please excuse the mess.
 <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
 <link rel="stylesheet" href="/v2.0.0/styles/main.css" />
 
+<script>
+console.error(`HEADS UP: There are intentional 404 errors on this page!
+The code on the page is live. That includes the examples and tests demonstrating failing fetch calls that throw errors. Any 404s can safely be ignored.`);
+</script>
 
 <script>
 window.BittyClass = class {
@@ -39,10 +43,15 @@ window.BittyClass = class {
           el.innerHTML = Math.random();
         }
       }
+
+async intentionalErrors(_event, el) {
+  await new Promise(resolve => setTimeout(resolve, 2400));
+  console.error(`HEADS UP: There are intentional 404 errors on this page!
+The code on the page is live. That includes the examples and tests demonstrating failing fetch calls that throw errors. Any 404s can safely be ignored.`);
+}
+
 }
 </script>
-
-
 
 <script>
     window.AltBittyClass = class {
@@ -51,7 +60,6 @@ window.BittyClass = class {
         }
     }
 </script>
-
 
     <script>
 window.bittyFunctions = {
@@ -5221,6 +5229,10 @@ Test useEl(content, subs = []) with blankspace      </h5>
       <a href="https://socials.alanwsmith.com">socials</a> ~
       <a href="https://links.alanwsmith.com">other projects</a>
     </footer>
+
+
+<bitty-2-0 data-send="intentionalErrors"></bitty-2-0>
+
 
 <script type="module" src="components/github-stars-beta-1.js"></script>
 <script type="module">

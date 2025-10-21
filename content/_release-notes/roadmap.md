@@ -9,6 +9,10 @@ or `{ error: { text: ERROR_TEXT } }` with
 extra data coming down in the error object
 like status codes for HTML errors. 
 
+- TODO: Added a `getEl` that gets a single
+HTML element instead of a document fragment
+like `getHTML` does
+
 - TODO: Added ingestion of fucntions from 
 the module js files into `this.api.fn`. 
 If there are naming collisions the order
@@ -16,12 +20,8 @@ last one in the chain of `[@ config.tag_name @]`,
 `window.bittyFunctions`, module function
 exports wins. 
 
-- TODO: Added a top level `class State {}` and
-`const s = new State()` to provide state across
-components. 
-
-- TODO: Set up the `<bitty-#-#>` tag to receive signals
-via `data-receive`
+- TODO: Set up the `<bitty-#-#>` tag to receive 
+signals via `data-receive`
 
 - TODO: Added `usePageTemplate()` that pulls
 a template from the overall page via
@@ -37,7 +37,3 @@ having to rely on a child element calling
 - TODO: Added `await:signal` to `data-send`
 and `this.api.forward(event, "signal")`
 to await async methods
-
-- TODO: Include a top level `s = new State()`
-object that all the bitty elements
-on the page can use to collaborate. 

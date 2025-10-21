@@ -130,7 +130,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getJSON(url, subs = [], options = {}) {
-    let content = await this.getTXT(url, subs, options);
+    const content = await this.getTXT(url, subs, options);
     if (content === undefined) {
       return undefined;
     } else {
@@ -139,11 +139,16 @@ class BittyJs extends HTMLElement {
   }
 
   async getSVG(url, subs = [], options = {}) {
-    const tmpl = document.createElement("template");
-    tmpl.innerHTML = await this.getTXT(url, subs, options);
-    const wrapper = tmpl.content.cloneNode(true);
-    const svg = wrapper.querySelector("svg");
-    return svg;
+    const content =  await this.getTXT(url, subs, options);
+    if (content === undefined) {
+      return undefined;
+    } else {
+      const tmpl = document.createElement("template");
+      tmpl.innerHTML = content;
+      const wrapper = tmpl.content.cloneNode(true);
+      const svg = wrapper.querySelector("svg");
+      return svg;
+    }
   }
 
   async getTXT(url, subs = [], options = {}) {

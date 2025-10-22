@@ -1,6 +1,27 @@
 [!- extends "v2.0.0/_wrappers/wrapper.html" -!]
 [!- block main -!]
 
+<div class="default-flow warning-border default-radius default-padding warning-background-faded2">
+  <div><strong>Head's Up: Version 3 is pending</strong></div>
+  <p>The API for Version 3 is the same as Version 2 with the following
+breaking changes:</p>
+<ol>
+<li><strong>this.api.useHTML()</strong> has been renamed to <strong>this.api.makeEl()</strong>
+to avoid confusion with the return value from <strong>this.api.getHTML()</strong>. Specifically, <strong>this.api.makeEl()</strong> returns
+and Element while <strong>this.api.getHTML()</strong> returns a document fragment.</li>
+
+<li>The value returned from <strong>this.api.getHTML()</strong>, <strong>.getJSON()</strong>,
+<strong>.getSVG()</strong>, and <strong>.getTXT()</strong> has changed. In version 2, the return
+value was either the payload or `undefined`. In version 3, if the request
+is successful the result is <strong>[@ highlight_code("{ ok: PAYLOAD }", "js")|safe @]</strong>. If
+the request fails, the result is <strong>[@ highlight_code('{ error: { text: "MESSAGE", status: STATUS_CODE } }', "js")|safe @]</strong>.</li>
+
+</ol>
+
+<p>Everything else works the same way if you want to experiment with
+Verison 2 without having to change code for Version 3.</p>
+</div>
+
 <div class="download-div">
   <div class="download-link-wrapper">
     <a class="download-link" href="/releases/[@- config.script_min_file_name -@]" download>

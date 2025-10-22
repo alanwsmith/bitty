@@ -1,5 +1,34 @@
 ## Roadmap 
 
+- TODO: Added test to verify events
+have UUIDs added to them. 
+
+
+- TODO: Moved everything in the init
+into the conditional check to see if 
+the component makes a connection to a class. 
+Previous a few things happend prior to 
+the connection attempt. Moving them in
+prevents UUIDs from being added until
+a conneciton has been made. 
+
+- TODO: Added `connectedMoveCallback()` to 
+prevent `connectedCallback()` from firing
+if a component is moved
+
+- TODO: rename `useHTML` to `makeEl` when
+the next breaking change bump to v3.x.x happens
+
+- TODO: When returning values from fetches
+return an object with either `{ ok: PAYLOAD }`, 
+or `{ error: { text: ERROR_TEXT } }` with 
+extra data coming down in the error object
+like status codes for HTML errors. 
+
+- TODO: Added a `getEl` that gets a single
+HTML element instead of a document fragment
+like `getHTML` does
+
 - TODO: Added ingestion of fucntions from 
 the module js files into `this.api.fn`. 
 If there are naming collisions the order
@@ -7,12 +36,8 @@ last one in the chain of `[@ config.tag_name @]`,
 `window.bittyFunctions`, module function
 exports wins. 
 
-- TODO: Added a top level `class State {}` and
-`const s = new State()` to provide state across
-components. 
-
-- TODO: Set up the `<bitty-#-#>` tag to receive signals
-via `data-receive`
+- TODO: Set up the `<bitty-#-#>` tag to receive 
+signals via `data-receive`
 
 - TODO: Added `usePageTemplate()` that pulls
 a template from the overall page via
@@ -29,6 +54,7 @@ having to rely on a child element calling
 and `this.api.forward(event, "signal")`
 to await async methods
 
-- TODO: Include a top level `s = new State()`
-object that all the bitty elements
-on the page can use to collaborate. 
+- TODO: Investigate: Added a `disconnectedCallback()`
+to clean up anything that can be
+removed when a component is removed
+

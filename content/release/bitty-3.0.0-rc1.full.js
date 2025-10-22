@@ -312,7 +312,7 @@ console.log(error);
   }
 
   // TODO: Refactor to pull from make Fragment
-  makeElement(content, subs = []) {
+  makeElement(template, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
     });
@@ -322,7 +322,7 @@ console.log(error);
     return el.firstChild;
   }
 
-  makeFragment(content, subs = []) {
+  makeFragment(template, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
     });

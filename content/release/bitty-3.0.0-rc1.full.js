@@ -107,6 +107,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** @internal */
   connectedMoveCallback() {
     // this method exist soley to prevent
     // connectedCallback() from firing if
@@ -124,7 +125,12 @@ class BittyJs extends HTMLElement {
     this.handleEvent(event);
   }
 
-  async getHTML(url, subs = [], options = {}) {
+  // TODO: Pull from getFragment
+  async getElement(url, subs = [], options = {}) {
+
+  }
+
+  async getFragment(url, subs = [], options = {}) {
     const content = await this.getTXT(url, subs, options);
     if (content === undefined) {
       return undefined;
@@ -257,10 +263,26 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // matches the dataset key from an
-  // event and an element. If no key
-  // is identified the uuid is used
-  // instead
+  // TODO: Refactor to pull from make Fragment
+  makeElement(content, subs = []) {
+    subs.forEach((sub) => {
+      content = content.replaceAll(sub[0], sub[1]);
+    });
+    const template = document.createElement("template");
+    template.innerHTML = content.trim();
+    const el = template.content.cloneNode(true);
+    return el.firstChild;
+  }
+
+  makeFragment(content, subs = []) {
+    subs.forEach((sub) => {
+      content = content.replaceAll(sub[0], sub[1]);
+    });
+    const template = document.createElement("template");
+    template.innerHTML = content;
+    return template.content.cloneNode(true);
+  }
+
   match(event, el, key = null) {
     if (key === null) {
       key = "uuid";
@@ -313,30 +335,6 @@ class BittyJs extends HTMLElement {
         el.dataset.uuid = getUUID();
       }
     });
-  }
-
-  // Creates a template and returns the first
-  // child from it as an element.
-  makeEl(content, subs = []) {
-    subs.forEach((sub) => {
-      content = content.replaceAll(sub[0], sub[1]);
-    });
-    const tmpl = document.createElement("template");
-    tmpl.innerHTML = content.trim();
-    const el = tmpl.content.cloneNode(true);
-    return el.firstChild;
-  }
-
-  // Returns a template document fragment
-  // from the string after doing replaments
-  // from the subs array.
-  useTemplate(content, subs = []) {
-    subs.forEach((sub) => {
-      content = content.replaceAll(sub[0], sub[1]);
-    });
-    const el = document.createElement("template");
-    el.innerHTML = content;
-    return el.content.cloneNode(true);
   }
 }
 

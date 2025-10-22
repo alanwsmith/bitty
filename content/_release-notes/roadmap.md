@@ -18,3 +18,12 @@ having to rely on a child element calling
 - TODO: Added `usePageTemplate()` that pulls
 a template from the overall page via
 a query selector.
+
+
+- TODO: Added ingestion of fucntions from 
+the module js files into `this.api.fn`. 
+If there are naming collisions the order
+last one in the chain of `[@ config.tag_name @]`,
+`window.bittyFunctions`, module function
+exports wins. 
+

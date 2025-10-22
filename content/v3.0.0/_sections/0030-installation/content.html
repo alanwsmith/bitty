@@ -2,6 +2,48 @@
 <details class="section-details">
   <summary>Installation / Getting Started</summary>
 
+<h3>TL;DR</h3>
+
+<p>
+This section walks through making these two files. 
+If you just want to see them work you can copy
+the contents, adjust the paths as necessary,
+and drop them on your site.
+</p>
+
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">page.html</div>
+  <pre class="code-block"><code>
+    [!- filter highlight_html|safe !]
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+
+
+<script src="/releases/[@- config.script_min_file_name -@]" type="module"></script>
+    [!- endfilter !]
+  </code></pre>
+</div>
+
+ <div class="code-block-wrapper">
+    <div class="code-block-title">/v3.0.0/modules/installation-example.js</div>
+    <pre class="code-block"><code>
+[!- filter highlight_javascript|safe !]
+[!- include "v3.0.0/modules/installation-example.js" !]
+[!- endfilter !]
+</code></pre>
+</div>
+
+<p>The result is this button that updates with a random number:</p>
+
+    <div class="example-output-wrapper">
+      <div class="example-output">
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+     </div>
+    </div>
+
+<h3>The Walk-Through</h3>
+
+
 <h4>The &lt;script&gt; Tag</h4>
 
 <p>Since bitty is a web component, there's no framework to
@@ -23,7 +65,7 @@ download the [@ config.script_min_file_name @] file</a></li>
 
 </ul>
 
-<h4>Connecting To A Functionality Class</h4>
+<h4>Making a Functionality Class</h4>
 
 <p>
   <strong>bitty</strong> works by connection to a class 
@@ -40,6 +82,9 @@ with a <code>randomNum()</code> method in it.
 [!- endfilter !]
 </code></pre>
 </div>
+
+
+<h4>Connecting to the Functionality Class</h4>
 
 <p>Here's an empty <strong>bitty</strong> tag that
 uses the <code>data-connect</code> attribute to 
@@ -113,6 +158,15 @@ from the module</p>
 [!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
      </div>
     </div>
+
+<aside>NOTE: The button will alread be showing a random
+number if you clicked the one in the TL;DR. It goes
+the other way too. Clicking this button updates
+the other one. They're connected because the code in that 
+section and down here is duplicated. Generally, you wouldn't do
+that, but it works. In this case, I'm only doing it makes 
+the examples more consistent.</aside>
+
 
 <h4>Next Steps</h4>
 

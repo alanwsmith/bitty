@@ -5,7 +5,7 @@ export default class {
     const newEl = await this.api.getElement(
       url, subs
     );
-    el.replaceChildren(newEl);
+    el.parentNode.replaceChildren(newEl);
   }
 }
 

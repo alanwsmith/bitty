@@ -7,4 +7,3 @@ export default class {
     el.parentNode.replaceChildren(newEl);
   }
 }
-

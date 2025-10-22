@@ -6,7 +6,7 @@ const template = `
 
 export default class {
   runTest0550(_event, el) {
-    const newChild = this.api.makeEl(
+    const newChild = this.api.makeElement(
       template,
     );
     newChild.innerHTML = "PASSED";

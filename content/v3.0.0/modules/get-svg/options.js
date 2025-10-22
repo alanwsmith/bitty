@@ -5,7 +5,7 @@ export default class {
       method: "POST",
     };
     const data = await this.api.getSVG(
-      "/v2.0.0/payloads/get-svg/options.svg",
+      "/v3.0.0/payloads/get-svg/options.svg",
       subs,
       options
     );

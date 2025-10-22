@@ -5,7 +5,7 @@ export default class {
       [/KIND/g, "arctic"]
     ];
     const svg = await this.api.getSVG(
-      "/v2.0.0/payloads/get-svg/regex.svg",
+      "/v3.0.0/payloads/get-svg/regex.svg",
       subs
     );
     el.parentNode.replaceChildren(svg);

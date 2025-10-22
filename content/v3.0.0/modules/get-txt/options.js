@@ -5,7 +5,7 @@ export default class {
       method: "POST",
     };
     const text = await this.api.getTXT(
-      "/v2.0.0/payloads/get-txt/options.txt",
+      "/v3.0.0/payloads/get-txt/options.txt",
       subs,
       options
     );

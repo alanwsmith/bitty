@@ -156,13 +156,15 @@ class BittyJs extends HTMLElement {
   }
 
   async getFragment(url, subs = [], options = {}) {
-    const content = await this.getTXT(url, subs, options, "getFragment");
-    if (content === undefined) {
-      return undefined;
+    const response = await this.getTXT(url, subs, options, "getFragment");
+    if (response.error) {
+      return response;
     } else {
       const template = document.createElement("template");
-      template.innerHTML = content;
-      return template.content.cloneNode(true);
+      template.innerHTML = response.ok;
+      const fragment = template.content.cloneNode(true);
+      const payload = { ok: fragment };
+      return payload;
     }
   }
 
@@ -171,8 +173,17 @@ class BittyJs extends HTMLElement {
     if (response.error) {
       return response;
     } else {
-      const payload = { ok: JSON.parse(response.ok) };
-      return payload;
+      try {
+        const data = JSON.parse(response.ok);
+        const payload = { ok: data };
+        return payload;
+      } catch(error) {
+        console.log('here1');
+console.log(error);
+        let payloadError = new BittyError({ type: "parsing" });
+        const payload = { error: payloadError };
+        return payload;
+      }
     }
   }
 
@@ -195,6 +206,7 @@ class BittyJs extends HTMLElement {
       if (!response.ok) {
         throw new BittyError({ 
           type: "fetching",
+          message: `${response.method}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)}, ${JSON.stringify(options)})`,
           statusText: response.statusText, 
           status: response.status, 
           url: response.url, 
@@ -211,7 +223,8 @@ class BittyJs extends HTMLElement {
       }
     } catch (error) {
       console.error(
-        `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.incomingMethod}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
+       // `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.incomingMethod}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
+        `BittyError: ${error.message}`);
       return { error: error };
     }
   }

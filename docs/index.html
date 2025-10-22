@@ -100,11 +100,15 @@ sleep: (ms) => {
 breaking changes:</p>
 <ol>
 <li><strong>this.api.useHTML()</strong> has been renamed to <strong>this.api.makeEl()</strong>
-to avoid confusion with <strong>this.api.getHTML()</strong> which returns a document fragment.</li>
+to avoid confusion with the return value from <strong>this.api.getHTML()</strong>. Specifically, <strong>this.api.makeEl()</strong> returns
+and Element while <strong>this.api.getHTML()</strong> returns a document fragment.</li>
+
 <li>The value returned from <strong>this.api.getHTML()</strong>, <strong>.getJSON()</strong>,
-<strong>.getSVG()</strong>, and <strong>.getTXT()</strong> has changed. If the request
+<strong>.getSVG()</strong>, and <strong>.getTXT()</strong> has changed. In version 2, the return
+value was either the payload or `undefined`. In version 3, if the request
 is successful the result is <strong><span class="line-marker"></span><span class="source js"><span class="meta block js"><span class="punctuation section block js">{</span> <span class="entity name label js">ok</span><span class="punctuation separator js">:</span> <span class="variable other constant js">PAYLOAD</span> <span class="punctuation section block js">}</span></span></span></strong>. If
 the request fails, the result is <strong><span class="line-marker"></span><span class="source js"><span class="meta block js"><span class="punctuation section block js">{</span> <span class="entity name label js">error</span><span class="punctuation separator js">:</span> <span class="meta block js"><span class="punctuation section block js">{</span> <span class="entity name label js">text</span><span class="punctuation separator js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>MESSAGE<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">status</span>: <span class="variable other constant js">STATUS_CODE</span> <span class="punctuation section block js">}</span></span> <span class="punctuation section block js">}</span></span></span></strong>.</li>
+
 </ol>
 
 <p>Everything else works the same way if you want to experiment with
@@ -186,12 +190,13 @@ a signal named <code>coords</code> when it's clicked</li>
 <li><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>coords<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span>
 receives <code>coords</code> signals</li>
 
-<li><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">coords</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span> is
-a method I wrote that sets the <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span></span> value of
+<li><p><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">coords</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span></code> sets the <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span></span> value of
 the <span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span> to the 
 <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">offsetX</span></span> and <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">offsetY</span></span>
-values from the click event from the signal. (Singal names map to method names which is why this
-one is named <code>coords</code>.)
+values from the click event of the <code>coords</code> signal. </p>
+
+<p>(Signal names map to method names which is why this
+one is named <code>coords</code>.)</p>
 </li>
 </ul>
 
@@ -1271,7 +1276,7 @@ keeps them in sync</p>
 <section class="default-flow">
 
 <details class="section-details">
-  <summary>Docs - Singnal Method API</summary>
+  <summary>Docs - Signal Method API</summary>
 
 <p>
   Signals names are mapped to method names in
@@ -3215,8 +3220,14 @@ and send signals when they are triggered.
 
 </details><details>
 <summary class="docs-summary">Custom data-* Attributes</summary>
+<p>
+bitty uses native `data-*` attributes for set up. It's
+also designed to work with arbitrary `data-*` attributes.
+Specifically, the `this.api.match` helper function compares
+`event.target.dataset.KEY` and `el.dataset.KEY`
+for matches.</p>
 
-<p>Quick support via `this.api.match(event, el, key)`</p>
+
 </details><details>
 <summary class="docs-summary">this.api.fn Functions</summary>
 
@@ -3238,7 +3249,6 @@ bitty component.
 
 <p>NOTE: Functions will also be ingested from class modules
 files in Version 3.</p>
-
 
 </details>
 <details>
@@ -3276,7 +3286,7 @@ bubble and trigger twice.
 <details class="section-details">
   <summary>Release Notes</summary>
           <h3>Version: 2.0.0-rc2</h3>
-<p>DATE: TBD</p>
+<p>Oct. 22, 2025</p>
 <ul>
 <li>
 <p>Properly returned <code>undefined</code> if there's a

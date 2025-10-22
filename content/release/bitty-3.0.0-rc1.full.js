@@ -18,6 +18,21 @@ function getUUID() {
   return self.crypto.randomUUID();
 }
 
+/** @internal */
+class BittyError extends Error {
+  constructor(payload) {
+    super();
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, BittyError);
+    }
+    this.name = "BittyError";
+    for (let [key, value] of Object.entries(payload)) {
+      this[key] = value;
+    }
+  }
+}
+
+
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-listeners
@@ -129,12 +144,12 @@ class BittyJs extends HTMLElement {
   }
 
   async getElement(url, subs = [], options = {}) {
-    let content = await this.getTXT(url, subs, options);
-    if (content === undefined) {
-      return undefined;
+    let response = await this.getTXT(url, subs, options, "getElement");
+    if (response.error) {
+      return response;
     } else {
       const template = document.createElement("template");
-      template.innerHTML = content;
+      template.innerHTML = response.ok;
       const fragment = template.content.cloneNode(true);
       const el = fragment.firstChild;
       return el;
@@ -142,7 +157,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getFragment(url, subs = [], options = {}) {
-    const content = await this.getTXT(url, subs, options);
+    const content = await this.getTXT(url, subs, options, "getFragment");
     if (content === undefined) {
       return undefined;
     } else {
@@ -153,7 +168,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getJSON(url, subs = [], options = {}) {
-    const content = await this.getTXT(url, subs, options);
+    const content = await this.getTXT(url, subs, options, "getJSON");
     if (content === undefined) {
       return undefined;
     } else {
@@ -162,7 +177,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getSVG(url, subs = [], options = {}) {
-    const content =  await this.getTXT(url, subs, options);
+    const content =  await this.getTXT(url, subs, options, "getSVG");
     if (content === undefined) {
       return undefined;
     } else {
@@ -174,11 +189,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getTXT(url, subs = [], options = {}) {
+  async getTXT(url, subs = [], options = {}, method = "getTXT") {
     let response = await fetch(url, options);
     try {
       if (!response.ok) {
-        throw new Error(`${response.status} [${response.statusText}] - ${url}`);
+        throw new BittyError({ statusText: response.statusText, status: response.status, url: response.url, method: method, subs: subs, options: options});
       } else {
         let content = await response.text();
         subs.forEach((sub) => {
@@ -187,10 +202,12 @@ class BittyJs extends HTMLElement {
         return content;
       }
     } catch (error) {
-      console.error(`getTXT Error [${url}] - ${error}`);
-      return undefined;
+      console.error(
+        `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.method}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
+      return error;
     }
   }
+
 
   /** @internal */
   handleEvent(event) {

@@ -188,15 +188,16 @@ console.log(error);
   }
 
   async getSVG(url, subs = [], options = {}) {
-    const content = await this.getTXT(url, subs, options, "getSVG");
-    if (content === undefined) {
-      return undefined;
+    const response = await this.getTXT(url, subs, options, "getSVG");
+    if (response.error) {
+      return response;
     } else {
       const tmpl = document.createElement("template");
-      tmpl.innerHTML = content;
+      tmpl.innerHTML = response.ok;
       const wrapper = tmpl.content.cloneNode(true);
       const svg = wrapper.querySelector("svg");
-      return svg;
+      const payload = { ok: svg };
+      return payload;
     }
   }
 

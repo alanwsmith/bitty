@@ -1,12 +1,12 @@
 const template = `<div>The SPEED KIND fox</div>`;
 
 export default class {
-  useSubsTemplate(_event, el) {
+  makeFragmentSubs(_event, el) {
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]
     ];
-    const content = this.api.useTemplate(
+    const content = this.api.makeFragment(
       template, subs
     );
     el.appendChild(content);

@@ -1,8 +1,8 @@
 const template = `<div>The quick brown fox</div>`;
 
 export default class {
-  useBasicTemplate(_event, el) {
-    const content = this.api.useTemplate(template);
+  makeFragmentBasic(_event, el) {
+    const content = this.api.makeFragment(template);
     el.appendChild(content);
   }
 }

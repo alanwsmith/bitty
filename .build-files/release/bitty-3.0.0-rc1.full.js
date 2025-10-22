@@ -314,21 +314,21 @@ console.log(error);
   // TODO: Refactor to pull from make Fragment
   makeElement(template, subs = []) {
     subs.forEach((sub) => {
-      content = content.replaceAll(sub[0], sub[1]);
+      template = template.replaceAll(sub[0], sub[1]);
     });
-    const template = document.createElement("template");
-    template.innerHTML = content.trim();
-    const el = template.content.cloneNode(true);
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = template.trim();
+    const el = skeleton.content.cloneNode(true);
     return el.firstChild;
   }
 
   makeFragment(template, subs = []) {
     subs.forEach((sub) => {
-      content = content.replaceAll(sub[0], sub[1]);
+      template = template.replaceAll(sub[0], sub[1]);
     });
-    const template = document.createElement("template");
-    template.innerHTML = content;
-    return template.content.cloneNode(true);
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = template;
+    return skeleton.content.cloneNode(true);
   }
 
   match(event, el, key = null) {

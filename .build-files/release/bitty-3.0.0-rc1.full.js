@@ -32,7 +32,6 @@ class BittyError extends Error {
   }
 }
 
-
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-listeners
@@ -178,7 +177,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getSVG(url, subs = [], options = {}) {
-    const content =  await this.getTXT(url, subs, options, "getSVG");
+    const content = await this.getTXT(url, subs, options, "getSVG");
     if (content === undefined) {
       return undefined;
     } else {
@@ -190,11 +189,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getTXT(url, subs = [], options = {}, method = "getTXT") {
+  async getTXT(url, subs = [], options = {}, incomingMethod = "getTXT") {
     let response = await fetch(url, options);
     try {
       if (!response.ok) {
-        throw new BittyError({ statusText: response.statusText, status: response.status, url: response.url, method: method, subs: subs, options: options});
+        throw new BittyError({ 
+          type: "fetching",
+          statusText: response.statusText, 
+          status: response.status, 
+          url: response.url, 
+          incomingMethod: incomingMethod, 
+          subs: subs, 
+          options: options });
       } else {
         let content = await response.text();
         subs.forEach((sub) => {
@@ -205,7 +211,7 @@ class BittyJs extends HTMLElement {
       }
     } catch (error) {
       console.error(
-        `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.method}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
+        `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.incomingMethod}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
       return { error: error };
     }
   }

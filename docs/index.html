@@ -3268,8 +3268,25 @@ bubble and trigger twice.
 <p>DATE: TBD</p>
 <ul>
 <li>
-<p>TODO: rename <code>useHTML</code> to <code>makeEl</code> when
-the next breaking change bump to v3.x.x happens</p>
+<p>Renamed <code>this.api.useHTML()</code> to
+<code>this.api.makeEl()</code> (which returns an Element)
+to avoid confusion with
+<code>this.api.getHTML()</code> (which returns a
+Document Fragment).</p>
+</li>
+<li>
+<p>Added <code>connectedMoveCallback()</code> to
+prevent <code>connectedCallback()</code> from firing
+if a component is moved</p>
+</li>
+<li>
+<p>Moved everything in the init
+into the conditional check to see if
+the component makes a connection to a class.
+Previous a few things happend prior to
+the connection attempt. Moving them in
+prevents UUIDs from being added until
+a conneciton has been made.</p>
 </li>
 <li>
 <p>TODO: When returning values from fetches
@@ -3277,6 +3294,10 @@ return an object with either <code>{ ok: PAYLOAD }</code>,
 or <code>{ error: { text: ERROR_TEXT } }</code> with
 extra data coming down in the error object
 like status codes for HTML errors.</p>
+</li>
+<li>
+<p>TODO: Added test to verify events
+have UUIDs added to them.</p>
 </li>
 <li>
 <p>TODO: Added a <code>getEl</code> that gets a single
@@ -3291,46 +3312,10 @@ last one in the chain of <code>[@ config.tag_name @]</code>,
 <code>window.bittyFunctions</code>, module function
 exports wins.</p>
 </li>
-<li>
-<p>TODO: Set up the <code>bitty</code> tag to listen
-for signals with <code>data-receive</code> to allow
-for things like completely switching out
-the contents of the component without
-having to rely on a child element calling
-<code>.parentNode</code>.</p>
-</li>
-<li>
-<p>TODO: Added <code>usePageTemplate()</code> that pulls
-a template from the overall page via
-a query selector.</p>
-</li>
-<li>
-<p>TODO: Added <code>connectedMoveCallback()</code> to
-prevent <code>connectedCallback()</code> from firing
-if a component is moved</p>
-</li>
-<li>
-<p>TODO: Moved everything in the init
-into the conditional check to see if
-the component makes a connection to a class.
-Previous a few things happend prior to
-the connection attempt. Moving them in
-prevents UUIDs from being added until
-a conneciton has been made.</p>
-</li>
-<li>
-<p>TODO: Added test to verify events
-have UUIDs added to them.</p>
-</li>
-<li>
-<p>TODO: Added <code>await:signal</code> to <code>data-send</code>
-and <code>this.api.forward(event, &quot;signal&quot;)</code>
-to await async methods</p>
-</li>
 </ul>
 
           <h3>Version: 2.0.0-rc2</h3>
-<p>Oct. 22, 2025</p>
+<p>Oct. 21, 2025</p>
 <ul>
 <li>
 <p>Properly returned <code>undefined</code> if there's a
@@ -4125,9 +4110,29 @@ choice to use the light DOM instead of the shadow DOM.</p>
 
           <h2>Roadmap</h2>
 <ul>
-<li>TODO: Investigate: Added a <code>disconnectedCallback()</code>
+<li>
+<p>TODO: Investigate: Added a <code>disconnectedCallback()</code>
 to clean up anything that can be
-removed when a component is removed</li>
+removed when a component is removed</p>
+</li>
+<li>
+<p>TODO: Added <code>await:signal</code> to <code>data-send</code>
+and <code>this.api.forward(event, &quot;signal&quot;)</code>
+to await async methods</p>
+</li>
+<li>
+<p>TODO: Set up the <code>bitty</code> tag to listen
+for signals with <code>data-receive</code> to allow
+for things like completely switching out
+the contents of the component without
+having to rely on a child element calling
+<code>.parentNode</code>.</p>
+</li>
+<li>
+<p>TODO: Added <code>usePageTemplate()</code> that pulls
+a template from the overall page via
+a query selector.</p>
+</li>
 </ul>
 
           <h2>Out of Scope</h2>
@@ -6394,7 +6399,7 @@ Test useEl(content, subs = [])      </h5>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0540</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newChild</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">useHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">template</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newChild</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeEl</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">template</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">newChild</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">newChild</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -6436,7 +6441,7 @@ Test useEl(content, subs = []) with blankspace      </h5>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0550</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newChild</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">useHTML</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newChild</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeEl</span><span class="meta group js"><span class="punctuation section group js">(</span>
 <span class="line-marker"></span>      <span class="variable other readwrite js">template</span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">newChild</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>

@@ -34,16 +34,16 @@ class BittyJs extends HTMLElement {
         "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
       version: version,
     };
+    this.receivers = [];
   }
 
   /** @internal */
   async connectedCallback() {
-    this.loadFunctions();
     this.dataset.uuid = getUUID();
-    this.receivers = [];
-    this.setIds();
     await this.makeConnection();
     if (this.conn) {
+      this.loadFunctions();
+      this.setIds();
       this.conn.api = this;
       this.handleEventBridge = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
@@ -105,6 +105,12 @@ class BittyJs extends HTMLElement {
         this.conn.bittyInit();
       }
     }
+  }
+
+  connectedMoveCallback() {
+    // this method exist soley to prevent
+    // connectedCallback() from firing if
+    // a bitty component is moved. 
   }
 
   forward(event, signal) {
@@ -311,7 +317,7 @@ class BittyJs extends HTMLElement {
 
   // Creates a template and returns the first
   // child from it as an element.
-  useHTML(content, subs = []) {
+  makeEl(content, subs = []) {
     subs.forEach((sub) => {
       content = content.replaceAll(sub[0], sub[1]);
     });

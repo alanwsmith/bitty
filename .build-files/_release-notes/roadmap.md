@@ -26,5 +26,3 @@ having to rely on a child element calling
 that pulls a template from the overall page 
 via a query selector.
 
-
-

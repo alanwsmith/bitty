@@ -1,3 +1,7 @@
+/* Place user defined functions here */
+
+const functions = {};
+
 /** @ignore */
 const version = [3, 0, 0, "rc1"];
 
@@ -8,8 +12,6 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 const blockStylesheet = new CSSStyleSheet();
 blockStylesheet.replaceSync(`${tagName} { display: block; }`);
 document.adoptedStyleSheets.push(blockStylesheet);
-
-const functions = {};
 
 /** @ignore */
 function getUUID() {
@@ -34,6 +36,7 @@ class BittyJs extends HTMLElement {
         "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
       version: version,
     };
+    /** @internal */
     this.receivers = [];
   }
 

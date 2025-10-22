@@ -1,5 +1,21 @@
 ## Roadmap 
 
+- TODO: Added test to verify events
+have UUIDs added to them. 
+
+
+- TODO: Moved everything in the init
+into the conditional check to see if 
+the component makes a connection to a class. 
+Previous a few things happend prior to 
+the connection attempt. Moving them in
+prevents UUIDs from being added until
+a conneciton has been made. 
+
+- TODO: Added `connectedMoveCallback()` to 
+prevent `connectedCallback()` from firing
+if a component is moved
+
 - TODO: rename `useHTML` to `makeEl` when
 the next breaking change bump to v3.x.x happens
 
@@ -37,3 +53,8 @@ having to rely on a child element calling
 - TODO: Added `await:signal` to `data-send`
 and `this.api.forward(event, "signal")`
 to await async methods
+
+- TODO: Investigate: Added a `disconnectedCallback()`
+to clean up anything that can be
+removed when a component is removed
+

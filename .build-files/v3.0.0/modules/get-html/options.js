@@ -5,7 +5,7 @@ export default class {
       method: "POST",
     };
     const content = await this.api.getHTML(
-      "/v2.0.0/payloads/get-html/options/index.html",
+      "/v3.0.0/payloads/get-html/options/index.html",
       subs,
       options
     );

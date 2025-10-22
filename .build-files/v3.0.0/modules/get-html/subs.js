@@ -5,7 +5,7 @@ export default class {
       ["KIND", "red"]
     ];
     const content = await this.api.getHTML(
-      "/v2.0.0/payloads/get-html/subs/index.html",
+      "/v3.0.0/payloads/get-html/subs/index.html",
       subs
     );
     el.replaceChildren(content);

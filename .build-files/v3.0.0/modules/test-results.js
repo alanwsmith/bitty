@@ -27,7 +27,7 @@ export default class {
   #failed = 0;
 
   async showResults(_event, element) {
-    await sleep(1200);
+    await sleep(2000);
     const els = document.querySelectorAll(".test");
     [...els].forEach((el) => {
       if (el.innerHTML == "PASSED") {

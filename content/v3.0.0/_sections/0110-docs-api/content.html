@@ -1,0 +1,62 @@
+[! set docs = data["release/custom-elements.json"].modules[0].declarations[1] !]
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - Signal Method API</summary>
+
+<p>
+  Signals names are mapped to method names in
+  the class that provides funcionality to
+  the component. Check out the demo
+  in the overview for a basic example. 
+</p>
+
+
+[! filter markdown|safe !]
+The `bitty` element is exposed to
+  the class providing functionality via
+  <code>[! filter highlight_javascript|safe !]this.api[! endfilter !]</code>. The `bitty` component adds the following 
+  supplemental methods to the standard
+  element methods and properties. 
+[! endfilter !]
+
+
+
+  [! for member in docs.members !]
+
+
+<details><summary class="docs-summary">[@ member.name @](
+    [!- for param in member.parameters -!]
+    [@- param.name -@]
+    [!- if param.default -!]
+    [@- " " -@]
+    = 
+    [@- " " -@]
+    [@- param.default -@]
+    [!- endif -!]
+    [!- if not loop.last -!], [@- " " -@][!- endif -!]
+    [!- endfor -!]
+    )</summary>
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/overview.html" !]
+
+  <div>Parameters</div>
+  <ul>
+    [!- for param in member.parameters -!]
+    <li><p>[@- param.name -@]</p>
+      [! include "v2.0.0/_docs/members/" + member.name + "/params/" + param.name + ".html" !]
+    </li>
+    [!- endfor -!]
+  </ul>
+
+
+    [! include "v2.0.0/_docs/members/" + member.name + "/details.html" !]
+
+</details>
+
+  [! endfor !]
+
+
+  </details>
+
+</section>

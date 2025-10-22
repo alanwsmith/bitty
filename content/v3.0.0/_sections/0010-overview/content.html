@@ -1,0 +1,138 @@
+<section class="default-flow">
+
+<details class="section-details" open>
+  <summary>Overview</summary>
+
+  <p>
+    <strong>bitty</strong> is a web component. Wrapping
+    it around other elements makes them interactive. 
+    For example, click/tap this
+    button a few times in differnet places to get the coordinates
+    of where the interaction occurred:
+  </p>
+
+  <div class="default-flow example-wrapper">
+    <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+        [! include "v2.0.0/_snippets/overview.html" !]
+      </div>
+    </div>
+  </div>
+
+<p>Here's the code behind the functionality:</pp>
+
+  <div class="default-flow example-wrapper">
+    <div class="default-flow">
+      <div class="code-block-wrapper">
+        <div class="code-block-title">page.html</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+            [! include "v2.0.0/_snippets/overview.html" !]
+<script src="[@ config.script_path @]" type="module"></script>
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+        <div class="code-block-title">/v2.0.0/modules/get-coords.js</div>
+        <pre class="code-block"><code>
+          [!- filter highlight_javascript|safe -!]
+            [! include "v2.0.0/modules/get-coords.js" !]
+          [!- endfilter -!]
+        </code></pre>
+      </div>
+    </div>
+  </div>
+  
+  <h3>How It Works</h3>
+
+  <p>
+    <strong>bitty</strong> uses signals to associate events with elements. They're
+    connected through methods you write to provide funcionality.
+    For example:</p>
+<ul>
+<li>[@ highlight_code('<button data-send="coords">', 'html')|safe @] sends
+a signal named <code>coords</code> when it's clicked</li>
+
+<li>[@ highlight_code('<div data-receive="coords">', 'html')|safe @]
+receives <code>coords</code> signals</li>
+
+<li><p><code>[@ highlight_code('coords(event, el) {}', 'js')|safe @]</code> sets the [@ highlight_code('.innerHTML', 'js')|safe @] value of
+the [@ highlight_code('<div>', 'html')|safe @] to the 
+[@ highlight_code('.offsetX', 'js')|safe @] and [@ highlight_code('.offsetY', 'js')|safe @]
+values from the click event of the <code>coords</code> signal. </p>
+
+<p>(Signal names map to method names which is why this
+one is named <code>coords</code>.)</p>
+</li>
+</ul>
+
+<p>That's pretty much it. <strong>bitty</strong> has some helper functions. 
+They do things like load external 
+HTML, JSON, and SVG files, etc... but that's all secondary. At its core,
+<strong>bitty</strong> sets you up to create your functionality and
+then gets out of the way. 
+</p>
+
+[#
+
+
+
+  <h4>The data-* API</h4>
+  <p>
+    <strong>bitty's</strong> entire HTML API consists of four <strong>data-*</strong> attributes.
+    They define the signals that map to methods you write to provide functionality.  
+    The three attributes used in the example are:</p>
+  <ul>
+    <li>
+      <code>data-connect:</code> loads a class 
+      that's responsible for providing functionality
+    </li>
+    <li>
+      <code>data-send:</code> sets an element to send
+      signals with a given name
+    </li>
+    <li>
+      <code>data-receive:</code> sets an element 
+      to receive signals with a given name
+    </li>
+  </ul>
+  <p>The other attribute is:<p>
+    <ul>
+      <li>
+        <code>data-listeners:</code> provides the ability
+        to change which events bitty listens for
+      </li>
+    </ul>
+
+  <h4>Signal Methods</h4>
+  <p>
+    Signals are mapped to methods by name. 
+    For example, the <code>coords</code> signal connects to 
+    the <code>coords(event, el)</code> method it <code>get-coords.js</code>. 
+    Signal methods receive two arguments:</p>
+  <ol>
+    <li>
+      <p>The event that triggered the signal</p>
+    </li>
+    <li>
+      <p>
+        An element that has a <code>data-receive</code> 
+        attribute with the signal's name
+      </p>
+    </li>
+  </ol>
+
+  <h3>That's The Basics</h3>
+  <p>
+    At it's core, that's all bitty does.
+    Connecting events and elements
+    through methods you write to 
+    define the functionality. 
+  </p>
+#]
+
+
+</details>
+</section>

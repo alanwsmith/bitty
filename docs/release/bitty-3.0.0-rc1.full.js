@@ -128,9 +128,17 @@ class BittyJs extends HTMLElement {
     this.handleEvent(event);
   }
 
-  // TODO: Pull from getFragment
   async getElement(url, subs = [], options = {}) {
-
+    let content = await this.getTXT(url, subs, options);
+    if (content === undefined) {
+      return undefined;
+    } else {
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      const fragment = template.content.cloneNode(true);
+      const el = fragment.firstChild;
+      return el;
+    }
   }
 
   async getFragment(url, subs = [], options = {}) {
@@ -138,9 +146,9 @@ class BittyJs extends HTMLElement {
     if (content === undefined) {
       return undefined;
     } else {
-      const el = document.createElement("template");
-      el.innerHTML = content;
-      return el.content.cloneNode(true);
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      return template.content.cloneNode(true);
     }
   }
 

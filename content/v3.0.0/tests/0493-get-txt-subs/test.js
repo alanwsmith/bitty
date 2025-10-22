@@ -4,7 +4,9 @@ export default class {
     const subs = [[/FAILED/g, "PASSED"]];
     const options = {};
     const response = await this.api.getTXT(url, subs, options);
-    el.innerHTML = response.ok;
+    if (response.ok) {
+      el.innerHTML = response.ok;
+    }
   }
 }
 

@@ -151,8 +151,8 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = response.ok;
       const fragment = template.content.cloneNode(true);
-      const el = fragment.firstChild;
-      return el;
+      const payload = { ok: fragment.firstChild };
+      return payload;
     }
   }
 
@@ -168,11 +168,12 @@ class BittyJs extends HTMLElement {
   }
 
   async getJSON(url, subs = [], options = {}) {
-    const content = await this.getTXT(url, subs, options, "getJSON");
-    if (content === undefined) {
-      return undefined;
+    const response = await this.getTXT(url, subs, options, "getJSON");
+    if (response.error) {
+      return response;
     } else {
-      return JSON.parse(content);
+      const payload = { ok: JSON.parse(response.ok) };
+      return payload;
     }
   }
 
@@ -199,15 +200,15 @@ class BittyJs extends HTMLElement {
         subs.forEach((sub) => {
           content = content.replaceAll(sub[0], sub[1]);
         });
-        return content;
+        const payload = { ok: content };
+        return payload;
       }
     } catch (error) {
       console.error(
         `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.method}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
-      return error;
+      return { error: error };
     }
   }
-
 
   /** @internal */
   handleEvent(event) {

@@ -178,8 +178,6 @@ class BittyJs extends HTMLElement {
         const payload = { ok: data };
         return payload;
       } catch(error) {
-        console.log('here1');
-console.log(error);
         let payloadError = new BittyError({ type: "parsing" });
         const payload = { error: payloadError };
         return payload;
@@ -207,7 +205,7 @@ console.log(error);
       if (!response.ok) {
         throw new BittyError({ 
           type: "fetching",
-          message: `${response.method}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)}, ${JSON.stringify(options)})`,
+          message: `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)}, ${JSON.stringify(options)})`,
           statusText: response.statusText, 
           status: response.status, 
           url: response.url, 

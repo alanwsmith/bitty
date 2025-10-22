@@ -5,7 +5,7 @@ export default class {
       [/KIND/g, "arctic"]
     ];
     const content = await this.api.getFragment(
-      "/v3.0.0/payloads/get-fragment/subs/index.html",
+      "/v3.0.0/payloads/get-fragment/regex/index.html",
       subs
     );
     el.replaceChildren(content);

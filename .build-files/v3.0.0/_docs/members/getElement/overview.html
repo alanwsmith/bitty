@@ -1,24 +1,32 @@
 [! filter markdown|safe !]
-- Retreives an external file as a string
-of text.
+- Requests and external file as 
+a string of text. 
 
-- Performs find and replace updates
-from the `subs` argument.
+- Any optional `options` key/value pairs
+are passed to the request. 
 
-- Creates a `template` and sets
-its `.innerHTML` to the string.
+- If the request succeeds, any find/replace
+patterns from the optional `subs` argument
+are applied. 
 
-- Generates a document fragment
-from the template. 
+- A `template` element is then created. 
 
-- Isolates the `.firstChild` of
-the document fragment and returns
-it as an HTML Element in an 
-object `{ ok: ELEMENT }`
+- The `.innerHTML` value of the template 
+is set to the string. 
+
+- The template is cloned to produce
+a document fragment. 
+
+- The `.firstChild` elemnet of 
+the document fragment is extrated 
+and return as an HTML Element in an 
+object (i.e. `{ ok: ELEMENT }`).
 
 - If there's an error the return
-value is `{ error: BITTY_ERROR }`.
-
+value is at object 
+with the bitty error 
+(i.e. `{ error: BITTY_ERROR }`).
 [! endfilter !]
+
 
 

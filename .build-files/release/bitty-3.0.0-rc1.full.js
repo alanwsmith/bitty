@@ -255,6 +255,19 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async loadCSS(url, subs, options) {
+    const response = await this.getTXT(url, subs, options, "loadCSS");
+    if (response.error) {
+      return response;
+    } else {
+      const newStylesheet = new CSSStyleSheet();
+      newStylesheet.replaceSync(response.ok);
+      document.adoptedStyleSheets.push(newStylesheet);
+      const payload = { ok: response.ok };
+      return payload;
+    }
+  }
+
   /** @internal */
   loadFunctions() {
     this.fn = {};
@@ -282,6 +295,7 @@ class BittyJs extends HTMLElement {
         });
     });
   }
+
 
   /** @internal */
   async makeConnection() {

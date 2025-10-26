@@ -1445,7 +1445,36 @@ sent.</p>
 
 <details><summary class="docs-summary">getElement(url, subs = [], options = {})</summary>
 
-TODO
+<ul>
+<li>
+<p>Retreives an external file as a string
+of text.</p>
+</li>
+<li>
+<p>Performs find and replace updates
+from the <code>subs</code> argument.</p>
+</li>
+<li>
+<p>Creates a <code>template</code> and sets
+its <code>.innerHTML</code> to the string.</p>
+</li>
+<li>
+<p>Generates a document fragment
+from the template.</p>
+</li>
+<li>
+<p>Isolates the <code>.firstChild</code> of
+the document fragment and returns
+it as an HTML Element in an
+object <code>{ ok: ELEMENT }</code></p>
+</li>
+<li>
+<p>If there's an error the return
+value is <code>{ error: BITTY_ERROR }</code>.</p>
+</li>
+</ul>
+
+
   <div>Parameters</div>
   <ul><li><p>url</p>
 <p>The URL of the file to get as a string</p>    </li><li><p>subs</p>
@@ -1453,7 +1482,145 @@ TODO
 <p>Options to pass to the `.fetch()` method</p>    </li></ul>
 
 
-TODO
+<details>
+  <summary>this.api.getElement() - Basic Element Retrieval</summary>
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-3-0</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v3.0.0/modules/get-element/basic.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementBasic<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementBasic<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-3-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v3.0.0&#x2f;modules&#x2f;get-element&#x2f;basic.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">getElementBasic</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v3.0.0/payloads/get-element/basic/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">error</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v3.0.0&#x2f;payloads&#x2f;get-element&#x2f;basic&#x2f;index.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>the quick brown fox<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-3-0 
+    data-connect="/v3.0.0/modules/get-element/basic.js"
+    data-send="getElementBasic">
+  <div data-receive="getElementBasic">waiting</div>
+</bitty-3-0>      </div>
+      </div>
+  </div>
+</div></details>
+
+<details>
+  <summary>this.api.getElement() - Error Handling</summary>
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-3-0</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v3.0.0/modules/get-element/error.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementError<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementError<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-3-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v3.0.0&#x2f;modules&#x2f;get-element&#x2f;error.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">getElementError</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v3.0.0/payloads/get-element/basic/intentionally-missing-file.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">error</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-3-0 
+    data-connect="/v3.0.0/modules/get-element/error.js"
+    data-send="getElementError">
+  <div data-receive="getElementError">waiting</div>
+</bitty-3-0>      </div>
+      </div>
+  </div>
+</div></details>
+
+
+
+
+<details>
+  <summary>this.api.getElement() - Passing Fetch Options</summary>
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-3-0</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v3.0.0/modules/get-element/options.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementOptions<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getElementOptions<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-3-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v3.0.0&#x2f;modules&#x2f;get-element&#x2f;options.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">getElementOptions</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v3.0.0/payloads/get-element/options/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">options</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta object-literal key js"><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>method<span class="punctuation definition string end js">&quot;</span></span></span><span class="punctuation separator key-value js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>GET<span class="punctuation definition string end js">&quot;</span></span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getElement</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="support module node js">url</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">options</span>
+<span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">error</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-3-0 
+    data-connect="/v3.0.0/modules/get-element/options.js"
+    data-send="getElementOptions">
+  <div data-receive="getElementOptions">waiting</div>
+</bitty-3-0>      </div>
+      </div>
+  </div>
+</div></details>
 </details>
 
 
@@ -1462,25 +1629,37 @@ TODO
 
 <ul>
 <li>
-<p>Retreives an external file as a string
-of text</p>
+<p>Requests and external file as
+a string of text.</p>
 </li>
 <li>
-<p>Performs find and replace updates
-from the <code>subs</code> argument</p>
+<p>Any optional <code>options</code> key/value pairs
+are passed to the request.</p>
 </li>
 <li>
-<p>Creates a <code>template</code> and sets
-its <code>.innerHTML</code> to the string</p>
+<p>If the request succeeds, any find/replace
+patterns from the optional <code>subs</code> argument
+are applied.</p>
 </li>
 <li>
-<p>Returns the cloned node as
-a document fragment</p>
+<p>A <code>template</code> element is then created.</p>
 </li>
 <li>
-<p>If there's an error retreiving the
-external content the return value
-is <code>undefined</code></p>
+<p>The <code>.innerHTML</code> value of the template
+is set to the string.</p>
+</li>
+<li>
+<p>The template is cloned to produce
+a document fragment.</p>
+</li>
+<li>
+<p>The document fragment is returned
+in an object with an <code>ok</code> key (i.e.
+<code>{ ok: DOCUMENT_FRAGMENT }</code>.</p>
+</li>
+<li>
+<p>If the request fails, the return value
+is <code>{ error: BITTY_ERROR }</code>.</p>
 </li>
 </ul>
 
@@ -1491,7 +1670,7 @@ is <code>undefined</code></p>
 <p>Options to pass to the `.fetch()` method</p>    </li></ul>
 
 
-<h4>Basic HTML Retreival</h4>
+<h4>Basic HTML Document Fragment Retreival</h4>
 
 
 <div class="default-flow example-wrapper">
@@ -1651,14 +1830,20 @@ retreives the HTML:
           <div class="code-block-title">/v3.0.0&#x2f;modules&#x2f;get-fragment&#x2f;options.js</div>
           <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">getFragmentOptions</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span>  <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v3.0.0/payloads/get-fragment/options/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">myHeaders</span> <span class="keyword operator assignment js">=</span> <span class="meta instance constructor js"><span class="keyword operator word new js">new</span><span class="meta function-call constructor js"> <span class="variable type js">Headers</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">myHeaders</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">append</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Content-Type<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>application/json<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">options</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="meta object-literal key js">method</span><span class="punctuation separator key-value js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>POST<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta object-literal key js">body</span><span class="punctuation separator key-value js">:</span> <span class="variable other object js">JSON</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">stringify</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta object-literal js"><span class="punctuation section block js">{</span> <span class="meta object-literal key js">username</span><span class="punctuation separator key-value js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>example<span class="punctuation definition string end js">&quot;</span></span> <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="meta object-literal key js">headers</span><span class="punctuation separator key-value js">:</span> <span class="variable other readwrite js">myHeaders</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">content</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getFragment</span><span class="meta group js"><span class="punctuation section group js">(</span>
-<span class="line-marker"></span>      <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v3.0.0/payloads/get-fragment/options/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>      <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>      <span class="variable other readwrite js">options</span>
+<span class="line-marker"></span>      <span class="support module node js">url</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">options</span>
 <span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">content</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -4311,7 +4496,7 @@ mechanisms.</p>
 
   </bitty-3-0>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="test-output-wrapper">

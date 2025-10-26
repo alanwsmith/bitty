@@ -1,18 +1,27 @@
 [! filter markdown|safe !]
-- Retreives an external file as a string
-of text
+- Requests and external file as 
+a string of text. 
 
-- Performs find and replace updates
-from the `subs` argument 
+- Any optional `options` key/value pairs
+are passed to the request. 
 
-- Creates a `template` and sets
-its `.innerHTML` to the string
+- If the request succeeds, any find/replace
+patterns from the optional `subs` argument
+are applied. 
 
-- Returns the cloned node as
-a document fragment
+- A `template` element is then created. 
 
-- If there's an error retreiving the
-external content the return value
-is `undefined`
+- The `.innerHTML` value of the template 
+is set to the string. 
+
+- The template is cloned to produce
+a document fragment. 
+
+- The document fragment is returned
+in an object with an `ok` key (i.e.
+`{ ok: DOCUMENT_FRAGMENT }`.
+
+- If the request fails, the return value
+is `{ error: BITTY_ERROR }`.
 [! endfilter !]
 

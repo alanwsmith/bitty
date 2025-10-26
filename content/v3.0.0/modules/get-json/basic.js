@@ -1,8 +1,13 @@
 export default class {
   async getBasicJSON(_event, el) {
-    const data = await this.api.getJSON(
-      "/v3.0.0/payloads/get-json/basic.json"
+    const url = "/v3.0.0/payloads/get-json/basic.json";
+    const response = await this.api.getJSON(
+      url
     );
-    el.innerHTML = data.text;
+    if (response.ok) {
+      el.innerHTML = response.ok.text;
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

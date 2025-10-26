@@ -1,14 +1,17 @@
 export default class {
-  async getOptionsJSON(_event, el) {
+  async getJSONOptions(_event, el) {
+    const url = "/v3.0.0/payloads/get-json/options.json";
     const subs = [];
     const options = {
-      method: "POST",
+      method: "GET",
     };
-    const data = await this.api.getJSON(
-      "/v3.0.0/payloads/get-json/options.json",
-      subs,
-      options
+    const response = await this.api.getJSON(
+      url, subs, options
     );
-    el.innerHTML = data.text;
+    if (response.ok) {
+      el.replaceChildren(response.ok.text);
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

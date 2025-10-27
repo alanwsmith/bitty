@@ -3,14 +3,12 @@
 
 <details class="section-details">
   <summary>Docs - Signal Method API</summary>
-
 <p>
   Signals names are mapped to method names in
   the class that provides funcionality to
   the component. Check out the demo
   in the overview for a basic example. 
 </p>
-
 
 [! filter markdown|safe !]
 The `bitty` element is exposed to
@@ -20,10 +18,10 @@ The `bitty` element is exposed to
   element methods and properties. 
 [! endfilter !]
 
-
-
   [! for member in docs.members !]
-
+    [! set member_folder = config.version_dir + "/_docs/members/" + member.name !]
+    [! set examples_folder = member_folder + "/examples" !]
+    [! set params_folder = member_folder + "/params" !]
 
 <details><summary class="docs-summary">[@ member.name @](
     [!- for param in member.parameters -!]
@@ -38,19 +36,31 @@ The `bitty` element is exposed to
     [!- endfor -!]
     )</summary>
 
-    [! include "v3.0.0/_docs/members/" + member.name + "/overview.html" !]
+    [! include member_folder + "/overview.html" !]
 
   <div>Parameters</div>
   <ul>
     [!- for param in member.parameters -!]
     <li><p>[@- param.name -@]</p>
-      [! include "v3.0.0/_docs/members/" + member.name + "/params/" + param.name + ".html" !]
+      [! include params_folder + "/" + param.name + ".html" !]
     </li>
     [!- endfor -!]
   </ul>
 
+  [! for folder in folders !]
+    [! if folder.parent == examples_folder !]
+      [! set example_folder = examples_folder + "/" + folder.name !]
+    <details><summary>this.api.[@ member.name @]() - [! include example_folder + "/title.txt" !]</summary>
+      [! include example_folder + "/content.html" !]
+    </details>
+    [! endif !]
+  [! endfor !]
 
+
+[#
+    TODO: DEPCREATED: removed details.html files
     [! include "v3.0.0/_docs/members/" + member.name + "/details.html" !]
+#]
 
 </details>
 

@@ -9,6 +9,6 @@ export default class {
     const content = this.api.makeFragment(
       template, subs
     );
-    el.appendChild(content);
+    el.replaceChildren(content);
   }
 }

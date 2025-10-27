@@ -3,3 +3,4 @@ export default class {
     el.innerHTML = `x: ${event.offsetX} - y: ${event.offsetY}`;
   }
 }
+

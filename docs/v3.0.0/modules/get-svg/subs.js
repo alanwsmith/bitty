@@ -1,13 +1,17 @@
 export default class {
-  async getSubsSVG(_event, el) {
+  async getSVGSubs(_event, el) {
+    const url = "/v3.0.0/payloads/get-svg/subs.svg";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]
     ];
-    const svg = await this.api.getSVG(
-      "/v3.0.0/payloads/get-svg/subs.svg",
-      subs
+    const response = await this.api.getSVG(
+      url, subs
     );
-    el.parentNode.replaceChildren(svg);
+    if (response.ok) {
+      el.replaceChildren(response.ok);
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

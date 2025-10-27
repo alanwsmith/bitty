@@ -1,14 +1,17 @@
 export default class {
-  async getOptionsTXT(_event, el) {
+  async getTXTOptions(_event, el) {
+    const url = "/v3.0.0/payloads/get-txt/options.txt";
     const subs = [];
     const options = {
-      method: "POST",
+      method: "GET",
     };
-    const text = await this.api.getTXT(
-      "/v3.0.0/payloads/get-txt/options.txt",
-      subs,
-      options
+    const response = await this.api.getTXT(
+      url, subs, options
     );
-    el.innerHTML = text;
+    if (response.ok) {
+      el.innerHTML = response.ok;
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

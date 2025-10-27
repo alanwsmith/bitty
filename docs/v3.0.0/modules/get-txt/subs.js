@@ -1,13 +1,18 @@
 export default class {
-  async getSubsTXT(_event, el) {
+  async getTXTSubs(_event, el) {
+    const url = "/v3.0.0/payloads/get-txt/subs.txt";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]
     ];
-    const text = await this.api.getTXT(
-      "/v3.0.0/payloads/get-txt/subs.txt",
-      subs
+    const options = {};
+    const response = await this.api.getTXT(
+      url, subs, options
     );
-    el.innerHTML = text;
+    if (response.ok) {
+      el.innerHTML = response.ok;
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

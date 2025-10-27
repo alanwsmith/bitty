@@ -1,14 +1,17 @@
 export default class {
-  async getOptionsSVG(_event, el) {
+  async getSVGOptions(_event, el) {
+    const url = "/v3.0.0/payloads/get-svg/options.svg";
     const subs = [];
     const options = {
-      method: "POST",
+      method: "GET",
     };
-    const data = await this.api.getSVG(
-      "/v3.0.0/payloads/get-svg/options.svg",
-      subs,
-      options
+    const response = await this.api.getSVG(
+      url, subs, options
     );
-    el.innerHTML = data.text;
+    if (response.ok) {
+      el.replaceChildren(response.ok);
+    } else {
+      el.innerHTML = response.error;
+    }
   }
 }

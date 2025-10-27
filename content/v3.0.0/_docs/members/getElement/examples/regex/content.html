@@ -1,7 +1,13 @@
-[! set bitty = config.version_dir + "/_docs/members/getElement/examples/regex/bitty.html" !]
-[! set script = config.version_dir + "/modules/get-element/regex.js" !]
-[! set payload = config.version_dir + "/payloads/get-element/regex.html" !]
-[! set payload_string = config.version_dir + "/payloads/get-element/regex/index.html" !]
+[! set member_key = "getElement" !]
+[! set url_key = "get-element" !]
+[! set name_key = "regex" !]
+[! set extension = ".html" !]
+[! set tail_string = "/index" + extension !]
+
+[! set bitty = config.version_dir + "/_docs/members/" + member_key + "/examples/" + name_key + "/bitty.html" !]
+[! set script = config.version_dir + "/modules/" + url_key + "/" + name_key + ".js" !]
+[! set payload = config.version_dir + "/payloads/" + url_key + "/" + name_key + extension !]
+[! set payload_string = config.version_dir + "/payloads/" + url_key + "/" + name_key + tail_string !]
 
 <div class="default-flow example-wrapper">
   <div class="default-flow">
@@ -13,21 +19,20 @@
           [!- endfilter -!]
           </code></pre>
       </div>
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/[@ payload_string @]</div>
+          <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+                  [! include payload|safe !]
+          [!- endfilter -!]
+          </code></pre>
+      </div>
 
       <div class="code-block-wrapper">
           <div class="code-block-title">page.html</div>
           <pre class="code-block"><code>
           [!- filter highlight_html|safe -!]
                   [! include bitty|safe !]
-          [!- endfilter -!]
-          </code></pre>
-      </div>
-
-      <div class="code-block-wrapper">
-          <div class="code-block-title">/[@ payload_string @]</div>
-          <pre class="code-block"><code>
-          [!- filter highlight_html|safe -!]
-                  [! include payload|safe !]
           [!- endfilter -!]
           </code></pre>
       </div>

@@ -10,17 +10,14 @@ as a wrapper that provides interactivity
 to its child elements. Not to be a click
 target itself. 
 
-- Working with the 
+- Including the 
 [History API](https://developer.mozilla.org/en-US/docs/Web/API/History)
+in bitty's `this.api`.
 
-- Pretty much anything that can be 
-added as an external function once
-`data-functions` is in place. 
-
-- Using a `s = new State()` type object
-to send signals when it updates. That 
+- Including a `s = new State()` type object
+to maintain state. That 
 could be set up if folks want to do
-it in there classes. It won't be included
+it in their classes. It won't be included
 in bitty directly. The `data-send` and
 `data-receive` attributes can send
 signals between components already. 

@@ -1,0 +1,195 @@
+<section class="default-flow">
+<details class="section-details">
+  <summary>Installation / Getting Started</summary>
+
+<h3>TL;DR</h3>
+
+<p>
+This section walks through making these two files. 
+If you just want to see them work you can copy
+the contents, adjust the paths as necessary,
+and drop them on your site.
+</p>
+
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">page.html</div>
+  <pre class="code-block"><code>
+    [!- filter highlight_html|safe !]
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+
+
+<script src="/releases/[@- config.script_min_file_name -@]" type="module"></script>
+    [!- endfilter !]
+  </code></pre>
+</div>
+
+ <div class="code-block-wrapper">
+    <div class="code-block-title">/v3.0.0/modules/installation-example.js</div>
+    <pre class="code-block"><code>
+[!- filter highlight_javascript|safe !]
+[!- include "v3.0.0/modules/installation-example.js" !]
+[!- endfilter !]
+</code></pre>
+</div>
+
+<p>The result is this button that updates with a random number:</p>
+
+    <div class="example-output-wrapper">
+      <div class="example-output">
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+     </div>
+    </div>
+
+<h3>The Walk-Through</h3>
+
+
+<h4>The &lt;script&gt; Tag</h4>
+
+<p>Since bitty is a web component, there's no framework to
+install. To use it, just:
+
+<ul>
+  <li><a class="download-link" href="/releases/[@- config.script_min_file_name -@]" download>
+download the [@ config.script_min_file_name @] file</a></li>
+  <li>put the file somewhere in your site's directory tree</li>
+  <li><p>load <strong>bitty</strong> on your pages with a script tag like:</p>
+ <div class="code-block-wrapper">
+    <pre class="code-block"><code>
+[!- filter highlight_html|safe -!]
+<script src="/releases/[@- config.script_min_file_name -@]" type="module"></script>
+[!- endfilter !]
+</code></pre>
+</div>
+</li>
+
+</ul>
+
+<h4>Making a Functionality Class</h4>
+
+<p>
+  <strong>bitty</strong> works by connection to a class 
+  that provides methods for functionality. For example, 
+  here's a module that exports a default class
+with a <code>randomNum()</code> method in it. 
+</p>
+
+ <div class="code-block-wrapper">
+        <div class="code-block-title">/v3.0.0/modules/installation-example.js</div>
+        <pre class="code-block"><code>
+[!- filter highlight_javascript|safe !]
+[!- include "v3.0.0/modules/installation-example.js" !]
+[!- endfilter !]
+</code></pre>
+</div>
+
+
+<h4>Connecting to the Functionality Class</h4>
+
+<p>Here's an empty <strong>bitty</strong> tag that
+uses the <code>data-connect</code> attribute to 
+connect to the default export class from the module:</p>
+
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">page.html (In progress)</div>
+  <pre class="code-block"><code>
+    [!- filter highlight_html|safe !]
+<bitty-3-0 data-connect="/v3.0.0/modules/installation-example.js">
+  <!-- child elements go here --> 
+</bitty-3-0>
+
+<script src="/releases/[@- config.script_min_file_name -@]" type="module"></script>
+    [!- endfilter !]
+  </code></pre>
+</div>
+
+<h4>Creating an Interactive Element</h4>
+
+<p>Next up is a <code>button</code> element with 
+<code>data-send</code> and <code>data-receive</code> 
+attirubtes. Both use <code>randomNum</code>
+as their value to line up with the method
+from the module</p>
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">button snippet</div>
+  <pre class="code-block"><code>
+    [!- filter highlight_html|safe !]
+  <button data-send="randomNum" data-receive="randomNum">
+    Get Random Number
+  </button>
+    [!- endfilter !]
+  </code></pre>
+</div>
+
+
+<h4>Putting It All Together</h4>
+
+<p>Here's the completed HTML with the button in place:</p>
+
+<div class="code-block-wrapper">
+  <div class="code-block-title">page.html (Complete)</div>
+  <pre class="code-block"><code>
+    [!- filter highlight_html|safe !]
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+
+
+<script src="/releases/[@- config.script_min_file_name -@]" type="module"></script>
+    [!- endfilter !]
+  </code></pre>
+</div>
+
+<p>And here's the module file again to see it in context</p>
+
+ <div class="code-block-wrapper">
+    <div class="code-block-title">/v3.0.0/modules/installation-example.js</div>
+    <pre class="code-block"><code>
+[!- filter highlight_javascript|safe !]
+[!- include "v3.0.0/modules/installation-example.js" !]
+[!- endfilter !]
+</code></pre>
+</div>
+
+<p>And here's the live result:</p>
+
+    <div class="example-output-wrapper">
+      <div class="example-output">
+[!- include "v3.0.0/_sections/0030-installation/snippets/example.html" !]
+     </div>
+    </div>
+
+<aside>NOTE: The button will alread be showing a random
+number if you clicked the one in the TL;DR. It goes
+the other way too. Clicking this button updates
+the other one. They're connected because the code in that 
+section and down here is duplicated. Generally, you wouldn't do
+that, but it works. In this case, I'm only doing it makes 
+the examples more consistent.</aside>
+
+
+<h4>Next Steps</h4>
+
+<p>
+  The example in the overview used a <code>button</code> with
+  a <code>data-send</code> attribute and a separate <code>div</code>
+  with a <code>data-receive</code> attribute. Here, we're using
+  a single button with both <code>data-send</code> and <code>data-receive</code>.
+  No extra work is required for most elements to
+  both send and receive the same signal. 
+</p>
+
+<p>
+There are some cases (like [@ highlight_code('<input type="range">', "html")|safe @] elements)
+where you have to add check to prevent feedback. <strong>bitty</strong>
+provides helper funtions including one called <code>match</code>
+to cover that. Check out the <code>Docs</code> sections
+below for details. You can also check out the <code>Test Suite</code>.
+Each test includes its source code that work as their own
+examples as well. 
+</p>
+
+
+</details>
+</summary>
+

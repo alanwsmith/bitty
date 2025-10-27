@@ -1,0 +1,17 @@
+export default class {
+  async getTXTOptions(_event, el) {
+    const url = "/v3.0.0/payloads/get-txt/options.txt";
+    const subs = [];
+    const options = {
+      method: "GET",
+    };
+    const response = await this.api.getTXT(
+      url, subs, options
+    );
+    if (response.ok) {
+      el.innerHTML = response.ok;
+    } else {
+      el.innerHTML = response.error;
+    }
+  }
+}

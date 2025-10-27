@@ -11,7 +11,7 @@ That added complexity to the overall
 code and the mental model of working
 with the components themselves. 
 
-The approach is now to send signals
+  The approach is now to send signals
 all the way to the document root
 and for each component to have
 it's listeners attached to the 
@@ -20,7 +20,7 @@ if two components try to use
 the same signal name for different
 purposes, they'll collide.
 
-Bitty's goal is to make things easier
+  Bitty's goal is to make things easier
 to build. Not to build complex systems.
 In that line, if a collision occurs
 the solution is to rename one of the

@@ -2,7 +2,6 @@ export default class {
   async runTest0495(_event, el) {
     const url = "/v3.0.0/tests/0495-get-txt-fetching-error/intentionally-missing-file.txt";
     const response = await this.api.getTXT(url);
-    console.log(response);
     if (response.error.type === "fetching" 
           && response.error.message !== undefined
           && response.error.status === 404

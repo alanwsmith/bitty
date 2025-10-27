@@ -1,7 +1,8 @@
 export default class {
   makeElementBasic(_evnet, el) {
-    const template = `<div>The quick brown fox</div>`;
-    const newEl = this.api.makeElement(template);
-    el.appendChild(newEl);
+    const html = `<div>The quick brown fox</div>`;
+    const newEl = this.api.makeElement(html);
+    newEl.classList.add("green");
+    el.replaceChildren(newEl);
   }
 }

@@ -23,7 +23,7 @@ The `bitty` element is exposed to
     [! set examples_folder = member_folder + "/examples" !]
     [! set params_folder = member_folder + "/params" !]
 
-<details><summary class="docs-summary">[@ member.name @](
+<details class="sub-section-details"><summary class="docs-summary">[@ member.name @](
     [!- for param in member.parameters -!]
     [@- param.name -@]
     [!- if param.default -!]
@@ -36,9 +36,12 @@ The `bitty` element is exposed to
     [!- endfor -!]
     )</summary>
 
+
+  <div><strong>Overview</strong></div>
+
     [! include member_folder + "/overview.html" !]
 
-  <div>Parameters</div>
+  <div><strong>Parameters</strong></div>
   <ul>
     [!- for param in member.parameters -!]
     <li><p>[@- param.name -@]</p>
@@ -47,20 +50,16 @@ The `bitty` element is exposed to
     [!- endfor -!]
   </ul>
 
+  <div><strong>Examples</strong></div>
+
   [! for folder in folders !]
     [! if folder.parent == examples_folder !]
       [! set example_folder = examples_folder + "/" + folder.name !]
-    <details><summary>this.api.[@ member.name @]() - [! include example_folder + "/title.txt" !]</summary>
+    <details class="member-example-summary"><summary>this.api.[@ member.name @]() - [! include example_folder + "/title.txt" !]</summary>
       [! include example_folder + "/content.html" !]
     </details>
     [! endif !]
   [! endfor !]
-
-
-[#
-    TODO: DEPCREATED: removed details.html files
-    [! include "v3.0.0/_docs/members/" + member.name + "/details.html" !]
-#]
 
 </details>
 

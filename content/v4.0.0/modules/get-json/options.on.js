@@ -1,6 +1,6 @@
 export default class {
   async getJSONOptions(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-json/options.json";
+    const url = "/[@ json.version.version_dir @]/payloads/get-json/options.on.json";
     const subs = [];
     const options = {
       method: "GET",

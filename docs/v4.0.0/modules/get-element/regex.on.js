@@ -1,6 +1,6 @@
 export default class {
   async getElementRegex(_event, el) {
-    const url = "/[@ version_dir @]/payloads/get-element/regex/index.html";
+    const url = "//payloads/get-element/regex.html";
     const subs = [
       [/SPEED/g, "fast"],
       [/KIND/g, "arctic"]
@@ -15,4 +15,3 @@ export default class {
     }
   }
 }
-

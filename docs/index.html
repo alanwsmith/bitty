@@ -3674,6 +3674,239 @@ there isn't</p>
   </details>
 
 </section> 
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - Misc.</summary>
+
+<details>
+<summary class="docs-summary">Initilization Steps</summary>
+
+<p>
+When a web component (like bitty) is
+attached to a page's DOM it fires a
+`connectedCallback` event. bitty
+uses the event to do the following
+notable steps in this order:
+</p>
+
+<ul>
+  <li>
+    load supplemental function into `this.api.fn`.
+  </li>
+  <li>
+    automatically generate `data-uuid` attributes
+with unique IDs for the bitty element and 
+all children elements if they don't
+already exist.
+  </li>
+  <li>
+    Attempt to make a connection to a supporting
+class either on the page or in an external module file.
+If the connection can't be made, an error is thrown
+and the process stops. Otherwise, the following
+steps are taken:
+  </li>
+  <li>
+    Find any child elements with `data-receive` attributes
+and add them to the internal list of receivers. 
+  </li>
+  <li>
+    Add a mutation observer that watches for changes
+and refreshes receivers when new elements are added
+or removed. New elements also recive a `data-uuid`
+if they don't already have one.
+  </li>
+  <li>
+    Add event event listeners at the document level. 
+The defaults are `click` and `input` but can be chagned
+with a `data-listeners` attribute on the bitty component
+tag. 
+  </li>
+  <li>
+    Check for a `bittyInit()` method in the
+  connected class and call it if it exists. (If
+the method is defined with `async bittyInit()` it
+is called with `await`.)
+  </li>
+
+  <li>
+    Check for a `data-send` attribute on the
+`bitty` component tag. Trigger it to send
+its signals if it exists. The signal is
+set with a type of `bittytagdatasend`.
+The target is the bitty element itself. 
+    </li>
+</ul>
+
+<p>
+bitty this proceeds to listen for events
+and send signals when they are triggered.
+</p>
+
+</details><details>
+<summary class="docs-summary">bittyInit()</summary>
+
+<h4>Basic Example</h4>
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v4.0.0&#x2f;modules&#x2f;bitty-init&#x2f;basic.on.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #counter = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyInit</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">9000</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-4-0</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v4.0.0/modules/bitty-init/basic.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-4-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+      <div class="example-output-wrapper">
+        <div class="example-output-title">Example</div>
+        <div class="example-output">
+<bitty-4-0 
+    data-connect="/v4.0.0/modules/bitty-init/basic.on.js"
+    data-send="update">
+  <div data-receive="update"></div>
+</bitty-4-0>        </div>
+      </div>
+  </div>
+</div>
+<h4>async Example</h4>
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/v4.0.0&#x2f;modules&#x2f;bitty-init&#x2f;async.on.js</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #message = null;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">bittyInit</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/v4.0.0/payloads/bitty-init/basic.txt<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getTXT</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">message</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">message</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">error</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">message</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-4-0</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v4.0.0/modules/bitty-init/async.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-4-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+      <div class="example-output-wrapper">
+        <div class="example-output-title">Example</div>
+        <div class="example-output">
+<bitty-4-0 
+    data-connect="/v4.0.0/modules/bitty-init/async.on.js"
+    data-send="update">
+  <div data-receive="update"></div>
+</bitty-4-0>        </div>
+      </div>
+  </div>
+</div>
+</details><details>
+<summary class="docs-summary">Block Styling</summary>
+
+  <p>
+    An <span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">adoptedStyleSheets</span></span> is added to the page
+    that sets:
+  </p>
+
+<div class="code-block-wrapper">
+  <pre class="code-block"><code><span class="line-marker"></span><span class="source css"><span class="meta selector css"><span class="entity name tag custom css">bitty-4-0</span> </span><span class="meta property-list css"><span class="punctuation section property-list css">{</span> <span class="meta property-name css"><span class="support type property-name css">display</span></span><span class="punctuation separator key-value css">:</span><span class="meta property-value css"> </span><span class="meta property-value css"><span class="support constant property-value css">block</span></span><span class="punctuation terminator rule css">;</span></span> <span class="punctuation section property-list css">}</span></span></code></pre>
+</div>
+
+</details><details>
+<summary class="docs-summary">Custom data-* Attributes</summary>
+<p>
+bitty uses native `data-*` attributes for set up. It's
+also designed to work with arbitrary `data-*` attributes.
+Specifically, the `this.api.match` helper function compares
+`event.target.dataset.KEY` and `el.dataset.KEY`
+for matches.</p>
+
+
+</details><details>
+<summary class="docs-summary">this.api.fn Functions</summary>
+
+<p>bitty looks in two places for functions to add to its
+API in this order</p>
+
+<ul>
+<li>`const functions = {}` inside the ``
+itself </li>
+<li>`window.bittyFunctions = {}` on the parent page</li>
+</ul>
+
+<p>Any functions in those locations are added to 
+`this.api.fn` that can be used inside signal methods.
+These function calls use `.bind()` so that using
+`this` inside them connects back to the
+bitty component.
+</p>
+
+
+</details>
+<details>
+<summary class="docs-summary">UUIDs for Elements</summary>
+
+<p>Every bitty component and all their child elements
+automatically receive a `data-uuid` attribute with a UUID.
+They can be used any time an ID is needed. They 
+are also the default values that are compared
+via `this.api.match(event, el)` if no other key
+is provided. 
+</p>
+</details><details>
+<summary class="docs-summary">UUIDs for Events</summary>
+<p>The event listeners that bitty uses add 
+a `.uuid` property to each event. They
+can be used to prevent processing the same
+event multiple times in situations
+where that might occur. 
+</p>
+</details><details>
+<summary class="docs-summary">No Events From the Bitty Component</summary>
+<p>
+bitty components send a one time `bittytagdatasend` with signals from
+a `data-send` attribute if one exists. Other than that, no
+events from the bitty component itself are used. This
+helps avoid duplication from events that would otherwise
+bubble and trigger twice. 
+</p>
+</details>
+</details>
+</summary>
+ 
  
     </main>
 

@@ -1,6 +1,6 @@
 export default class {
   async getSVGRegEx(_event, el) {
-    const url = "/v3.0.0/payloads/get-svg/regex.svg";
+    const url = "/v4.0.0/payloads/get-svg/regex.svg";
     const subs = [
       [/SPEED/g, "fast"],
       [/KIND/g, "arctic"]

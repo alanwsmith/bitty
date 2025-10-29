@@ -1,6 +1,6 @@
 export default class {
   async getElementSubs(_event, el) {
-    const url = "/v3.0.0/payloads/get-element/subs/index.html";
+    const url = "/v4.0.0/payloads/get-element/subs/index.html";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]

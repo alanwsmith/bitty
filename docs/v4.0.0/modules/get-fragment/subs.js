@@ -5,7 +5,7 @@ export default class {
       ["KIND", "red"]
     ];
     const response = await this.api.getFragment(
-      "/v3.0.0/payloads/get-fragment/subs/index.html",
+      "/v4.0.0/payloads/get-fragment/subs/index.html",
       subs
     );
     if (response.ok) {

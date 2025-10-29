@@ -1,6 +1,6 @@
 export default class {
   async getFragmentOptions(_event, el) {
-    const url =  "/v3.0.0/payloads/get-fragment/options/index.html";
+    const url =  "/v4.0.0/payloads/get-fragment/options/index.html";
     const subs = [];
     const options = {
       "method": "GET"

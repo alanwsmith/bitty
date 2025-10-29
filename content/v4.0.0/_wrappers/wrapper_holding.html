@@ -19,11 +19,11 @@ bitty-[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.
 .full.js
 [!- endset -!]
 
-[!- set config.version_dir -!]
+[!- set version_dir -!]
 v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
 [!- endset -!]
 
-[!- set config.tag_name -!]
+[!- set bitty_tag -!]
 bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
 [!- endset -!]
 
@@ -52,11 +52,11 @@ console.error(`########## HEAD'S UP ########## There are intentional 404 errors 
 <script>
 window.BittyClass = class {
   [#
-  [! include config.version_dir + "/_snippets/bitty-class-for-page.html" !]
+  [! include version_dir + "/_snippets/bitty-class-for-page.html" !]
 
-  [! include config.version_dir + "/_docs/attrs/data-connect/default-window-class/script.js" !]
+  [! include version_dir + "/_docs/attrs/data-connect/default-window-class/script.js" !]
 
-  [! include config.version_dir + "/_snippets/intentional-errors.js" !]
+  [! include version_dir + "/_snippets/intentional-errors.js" !]
   #]
 
 }
@@ -64,13 +64,13 @@ window.BittyClass = class {
 
 <script>
     [#
-  [! include config.version_dir + "/_docs/attrs/data-connect/alt-window-class/script.js" !]
+  [! include version_dir + "/_docs/attrs/data-connect/alt-window-class/script.js" !]
     #]
 </script>
 
     <script>
     [#
-[! include "/" + config.version_dir + "/_page_functions/content.js" !]
+[! include "/" + version_dir + "/_page_functions/content.js" !]
     #]
     </script>
 
@@ -87,7 +87,7 @@ window.BittyClass = class {
       <hgroup>
         <div class="justify-space-between accent-bottom-border">
           <h1>bitty</h1>
-          <[@ bitty_tag @] data-connect="/[@ config.version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+          <[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
         </div>
         <div class="small-font accent-faded">
           interactivity without frameworks
@@ -113,7 +113,7 @@ window.BittyClass = class {
 
 [#
 
-<[@ config.tag_name @] data-send="intentionalErrors"></[@ config.tag_name @]>
+<[@ bitty_tag @] data-send="intentionalErrors"></[@ bitty_tag @]>
 
       #]
 

@@ -1,8 +1,8 @@
 <details class="section-details">
   <summary>Test Suite</summary>
 
-  <[@ config.tag_name @]
-    data-connect="/[@ config.version_dir @]/modules/test-results.js"
+  <[@ bitty_tag @]
+    data-connect="/[@ version_dir @]/modules/test-results.js"
     data-send="showResults"
     class="default-flow">
     <div data-receive="showResults">
@@ -13,17 +13,17 @@
       </noscript>
     </div>
 
-  </[@ config.tag_name @]>
+  </[@ bitty_tag @]>
 
-  [! for folder in folders !] [! if folder.parent == config.version_dir + "/tests" !]
+  [! for folder in folders !] [! if folder.parent == version_dir + "/tests" !]
     <div>
       <h5 class="test-title">
-        [! include config.version_dir + "/tests/" + folder.name + "/title.txt" !]
+        [! include version_dir + "/tests/" + folder.name + "/title.txt" !]
       </h5>
       <div class="test-output-wrapper">
 
         <div class="test-output">
-          [! include config.version_dir + "/tests/" + folder.name + "/index.html" !]
+          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
         </div>
 
         <div class="test-details">
@@ -31,12 +31,12 @@
             <summary>Test Code<br>ID: [@ folder.name @]</summary>
             <pre class="code-block">
         [! filter highlight_html|safe !]
-          [! include config.version_dir + "/tests/" + folder.name + "/index.html" !]
+          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
         [! endfilter !]
             </pre>
             <pre class="code-block">
             [! filter highlight_javascript|safe !]
-              [! include config.version_dir + "/tests/" + folder.name + "/test.js" !]
+              [! include version_dir + "/tests/" + folder.name + "/test.js" !]
             [! endfilter !]
             </pre>
           </details>

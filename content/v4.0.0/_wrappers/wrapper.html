@@ -1,5 +1,5 @@
-[!- set version_string = "v4.0.0" -!]
-[!- set config = json[version_string].config -!]
+[!- set version_dir = "v4.0.0" -!]
+[!- set config = json[version_dir].config -!]
 
 [!- set script_min_file_name -!]
 bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
@@ -7,45 +7,23 @@ bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_vers
 .[@- config.min_switch -@].js
 [!- endset -!]
 
-
 [!- set script_full_file_name -!]
 bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
 [@- config.rc_string -@]
 .full.js
 [!- endset -!]
 
-
-[@ script_full_file_name  @]
-
-
-<pre>
-[@ json[version_string]|tojson(true) @]
-</pre>
-
-
-[#
-
-
-
-
-
-
-
-
-
-
-[!- set config.version_dir -!]
-v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- set bitty_tag_name -!]
+bitty-[@ config.major_version @]-[@ config.minor_version @]
 [!- endset -!]
 
-[!- set config.tag_name -!]
-bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
+[!- set bitty_js_path -!]
+/release/ [@- script_min_file_name -@]
 [!- endset -!]
 
-[!- set config.script_path -!]
-/release/ [@- config.script_min_file_name -@]
-[!- endset -!]
-#]
+[@ bitty_js_path @]
+
+
 
 
 <!DOCTYPE html>

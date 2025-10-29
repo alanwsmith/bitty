@@ -1,6 +1,6 @@
 export default class {
   async getTXTRegEx(_event, el) {
-    const url = "/[@ version_dir @]/payloads/get-txt/regex.txt";
+    const url = "/[@ json.version.version_dir @]/payloads/get-txt/regex.txt";
     const subs = [
       [/SPEED/g, "fast"],
       [/KIND/g, "atctic"]

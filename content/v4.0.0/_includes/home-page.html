@@ -1,0 +1,31 @@
+[!- extends "v4.0.0/_wrappers/wrapper.html" -!]
+
+[!- block main -!]
+
+        [#
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/release/[@- config.script_min_file_name -@]" download>
+      <div class="center small-font">Download</div>
+      <div class="center">
+      Version[@ " " @] 
+[@- config.data.major_version -@].[@- config.data.minor_version -@]
+      </div>
+      <div class="center small-font">[@ config.script_min_file_name -@]</div></a>
+  </div>
+</div>
+
+        #]
+
+        [#
+[! for folder in folders !]
+  [! if folder.parent == "v4.0.0/_sections" !]
+      [! include folder.parent + "/" + folder.name + "/content.html" !] 
+  [! endif !]
+[! endfor !]
+
+
+
+        #]
+
+[!- endblock -!]

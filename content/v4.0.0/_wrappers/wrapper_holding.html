@@ -1,0 +1,181 @@
+[!- set config = namespace() -!]
+[!- set config.data = data["v4.0.0"].config"] -!]
+
+[#
+
+[!- set config.script_min_file_name -!]
+bitty-[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- if config.data.rc_string != "" -!]
+[@- config.data.rc_string -@]
+[!- endif -!]
+.[@- config.data.min_switch -@].js
+[!- endset -!]
+
+[!- set config.script_full_file_name -!]
+bitty-[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- if config.data.rc_string != "" -!]
+[@- config.data.rc_string -@]
+[!- endif -!]
+.full.js
+[!- endset -!]
+
+[!- set config.version_dir -!]
+v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- endset -!]
+
+[!- set config.tag_name -!]
+bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
+[!- endset -!]
+
+[!- set config.script_path -!]
+/release/ [@- config.script_min_file_name -@]
+[!- endset -!]
+#]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--
+Welcome to the HTML!
+
+Neither this page nor the CSS has undergone any 
+optimization. All the work has been on bitty
+itself. Please excuse the mess.
+-->
+
+    [# include VERION NAME head #]
+
+<script>
+console.error(`########## HEAD'S UP ########## There are intentional 404 errors on this page! The code on the page is live. That includes the examples and tests demonstrating failing fetch calls that throw errors. Any 404s can safely be disregarded.`);
+</script>
+
+<script>
+window.BittyClass = class {
+  [#
+  [! include config.version_dir + "/_snippets/bitty-class-for-page.html" !]
+
+  [! include config.version_dir + "/_docs/attrs/data-connect/default-window-class/script.js" !]
+
+  [! include config.version_dir + "/_snippets/intentional-errors.js" !]
+  #]
+
+}
+</script>
+
+<script>
+    [#
+  [! include config.version_dir + "/_docs/attrs/data-connect/alt-window-class/script.js" !]
+    #]
+</script>
+
+    <script>
+    [#
+[! include "/" + config.version_dir + "/_page_functions/content.js" !]
+    #]
+    </script>
+
+  </head>
+
+
+  <body>
+
+    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
+      <!-- TODO: only show github-stars if not on localhost -->
+    </header>
+
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <bitty-3-0 data-connect="/[@ config.version_dir @]/modules/github-stars.js"></bitty-3-0>
+        </div>
+        <div class="small-font accent-faded">
+          interactivity without frameworks
+        </div>
+      </hgroup>
+      [#
+
+[! block main !][! endblock !] 
+      #]
+    </main>
+
+    <footer
+      class="default-wrapper align-center large-top-padding accent-top-border-faded2"
+    >
+      from <a href="https://www.alanwsmith.com/">alan w smith</a>
+      <br />
+      <a href="https://github.com/alanwsmith/bitty">source</a> ~
+      <a href="https://socials.alanwsmith.com">socials</a> ~
+      <a href="https://links.alanwsmith.com">other projects</a>
+
+
+
+
+[#
+
+<[@ config.tag_name @] data-send="intentionalErrors"></[@ config.tag_name @]>
+
+      #]
+
+[#
+<script type="module" src="components/github-stars-beta-1.js"></script>
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+<script src="[@ config.script_path @]" type="module"></script>
+
+
+
+    </footer>
+
+    #]
+
+  </body>
+</html>

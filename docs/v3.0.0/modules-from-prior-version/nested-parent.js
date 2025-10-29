@@ -9,3 +9,4 @@ export default class {
     element.innerHTML = this.#value;
   }
 }
+

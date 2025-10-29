@@ -1,0 +1,71 @@
+[!- set version_string = "v4.0.0" -!]
+[!- set config = json[version_string].config -!]
+
+[!- set script_min_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.[@- config.min_switch -@].js
+[!- endset -!]
+
+
+[!- set script_full_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.full.js
+[!- endset -!]
+
+
+[@ script_full_file_name  @]
+
+
+<pre>
+[@ json[version_string]|tojson(true) @]
+</pre>
+
+
+[#
+
+
+
+
+
+
+
+
+
+
+[!- set config.version_dir -!]
+v[@ config.data.major_version @].[@ config.data.minor_version @].[@ config.data.patch_version -@]
+[!- endset -!]
+
+[!- set config.tag_name -!]
+bitty-[@ config.data.major_version @]-[@ config.data.minor_version @]
+[!- endset -!]
+
+[!- set config.script_path -!]
+/release/ [@- config.script_min_file_name -@]
+[!- endset -!]
+#]
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--
+Welcome to the HTML!
+
+Neither this page nor the CSS has undergone any 
+optimization. All the work has been on bitty
+itself. Please excuse the mess.
+-->
+
+  </head>
+
+  <body>
+    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
+      <!-- TODO: only show github-stars if not on localhost -->
+    </header>
+
+  </body>
+
+</html>

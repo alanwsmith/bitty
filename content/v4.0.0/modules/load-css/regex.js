@@ -1,6 +1,6 @@
 export default class {
   async loadCSSRegEx(_event, el) {
-    const url = "/v3.0.0/payloads/load-css/regex.css";
+    const url = "/v4.0.0/payloads/load-css/regex.css";
     const subs = [
       [/COLOR_NAME/g, "red"],
     ];

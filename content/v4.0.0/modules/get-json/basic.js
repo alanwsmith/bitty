@@ -1,6 +1,6 @@
 export default class {
   async getBasicJSON(_event, el) {
-    const url = "/v4.0.0/payloads/get-json/basic.json";
+    const url = "/[@ version_dir @]/payloads/get-json/basic.json";
     const response = await this.api.getJSON(
       url
     );

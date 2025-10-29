@@ -5,7 +5,7 @@ export default class {
       [/KIND/g, "arctic"]
     ];
     const response = await this.api.getFragment(
-      "/v4.0.0/payloads/get-fragment/regex/index.html",
+      "/[@ version_dir @]/payloads/get-fragment/regex/index.html",
       subs
     );
     if (response.ok) {

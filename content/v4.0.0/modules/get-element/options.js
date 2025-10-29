@@ -1,6 +1,6 @@
 export default class {
   async getElementOptions(_event, el) {
-    const url = "/v4.0.0/payloads/get-element/options/index.html";
+    const url = "/[@ version_dir @]/payloads/get-element/options/index.html";
     const subs = [];
     const options = {
       "method": "GET"

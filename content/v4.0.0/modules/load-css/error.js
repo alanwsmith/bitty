@@ -1,6 +1,6 @@
 export default class {
   async loadCSSError(_event, el) {
-    const url = "/v4.0.0/payloads/load-css/intentionall-missing-file.css";
+    const url = "/[@ version_dir @]/payloads/load-css/intentionall-missing-file.css";
     const response = await this.api.loadCSS(url);
     if (response.ok) {
       el.innerHTML = "CSS Loaded";

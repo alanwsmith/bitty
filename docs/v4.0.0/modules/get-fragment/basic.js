@@ -1,7 +1,7 @@
 export default class {
   async getFragmentBasic(_event, el) {
     const response = await this.api.getFragment(
-      "/v4.0.0/payloads/get-fragment/basic/index.html"
+      "/[@ version_dir @]/payloads/get-fragment/basic/index.html"
     );
     if (response.ok) {
       el.replaceChildren(response.ok);

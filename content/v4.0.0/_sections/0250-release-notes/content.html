@@ -2,8 +2,9 @@
   <summary>Release Notes</summary>
     [! for file in files|reverse !]
       [! if file.folder == "_release-notes" !]
-          [@ markdown_file("_release-notes/" + file.name)|safe @]
+        [! filter markdown|safe !]
+         [! include "_release-notes/" + file.name !]
+        [! endfilter !]
       [! endif !]
     [! endfor !]
 </details>
-

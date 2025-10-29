@@ -1,8 +1,14 @@
 ## Roadmap 
 
+
 - TODO: Rename `this.api.getFragment` to 
 `this.api.getElements` (this is a breaking
 change so it's a major version bump)
+
+- TODO: Rename `this.api.makeFragment` to 
+`this.api.makeElements` (with the 
+`this.api.getFragment` change)
+
 
 - TODO: Update the `this.api.forward` functionality
 so that it can be fired with no/null signal.

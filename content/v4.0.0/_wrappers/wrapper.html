@@ -13,16 +13,13 @@ bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_vers
 .full.js
 [!- endset -!]
 
-[!- set bitty_tag_name -!]
+[!- set bitty_tag -!]
 bitty-[@ config.major_version @]-[@ config.minor_version @]
 [!- endset -!]
 
 [!- set bitty_js_path -!]
 /release/ [@- script_min_file_name -@]
 [!- endset -!]
-
-[@ bitty_js_path @]
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,9 +39,18 @@ itself. Please excuse the mess.
   </head>
 
   <body>
-    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
-      <!-- TODO: only show github-stars if not on localhost -->
-    </header>
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <[@ bitty_tag @] data-connect="/[@ config.version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+        </div>
+        <div class="small-font accent-faded">
+          interactivity without frameworks
+        </div>
+      </hgroup>
+[! block main !][! endblock !] 
+    </main>
 
   </body>
 

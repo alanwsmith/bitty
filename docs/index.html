@@ -1,7 +1,4 @@
 
-/release/bitty-4.0.0.full.js
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,9 +66,116 @@ sleep: (ms) => {
   </head>
 
   <body>
-    <header class="default-wrapper header-flex small-font xlarge-bottom-margin">
-      <!-- TODO: only show github-stars if not on localhost -->
-    </header>
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <bitty-4-0 data-connect="//modules/github-stars.js"></bitty-4-0>
+        </div>
+        <div class="small-font accent-faded">
+          interactivity without frameworks
+        </div>
+      </hgroup>
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/release/bitty-4.0.0.full.js" download>
+
+      <div class="center small-font">Download</div>
+      <div class="center">
+      Version 4.0</div>
+      <div class="center small-font">bitty-4.0.0.full.js</div></a>
+  </div>
+</div>
+
+<section class="default-flow">
+
+<details class="section-details" open>
+  <summary>Introduction</summary>
+
+
+  <p>
+    <strong>bitty</strong> is a web component. Wrapping
+    it around other elements makes them interactive. 
+    For example, click/tap this
+    button a few times in differnet places to get the coordinates
+    of where the interaction occurred:
+  </p>
+
+  <div class="default-flow">
+    <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+<bitty-3-0 data-connect="/v3.0.0/modules/get-coords.js">
+  <button data-send="coords">Get Click Coordinates</button>
+  <div data-receive="coords">waiting</div>
+</bitty-3-0>
+
+      </div>
+    </div>
+  </div>
+
+<p>Here's the code behind the functionality:</pp>
+
+  <div class="default-flow">
+    <div class="default-flow">
+
+      <div class="code-block-wrapper">
+        <div class="code-block-title">/v3.0.0/modules/get-coords.js</div>
+        <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">coords</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>x: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetX</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"> - y: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">offsetY</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+      </div>
+
+      <div class="code-block-wrapper">
+        <div class="code-block-title">page.html</div>
+        <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-3-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v3.0.0/modules/get-coords.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>coords<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Get Click Coordinates<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>coords<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-3-0</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+      </div>
+
+    </div>
+  </div>
+  
+  <h3>How It Works</h3>
+
+  <p>
+    <strong>bitty</strong> uses signals to associate events with elements. They're
+    connected through methods you write to provide funcionality.
+    For example:</p>
+<ul>
+<li><span class="line-marker"></span><span class="text html basic"><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>coords<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span> sends
+a signal named <code>coords</code> when it's clicked</li>
+
+<li><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>coords<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span>
+receives <code>coords</code> signals</li>
+
+<li><p><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">coords</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span></code> sets the <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span></span> value of
+the <span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span> to the 
+<span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">offsetX</span></span> and <span class="line-marker"></span><span class="source js"><span class="punctuation accessor js">.</span><span class="meta property object js">offsetY</span></span>
+values from the click event of the <code>coords</code> signal. </p>
+
+<p>(Signal names map to method names which is why this
+one is named <code>coords</code>.)</p>
+</li>
+</ul>
+
+<p>That's pretty much it. <strong>bitty</strong> has some helper functions. 
+They do things like load external 
+HTML, JSON, and SVG files, etc... but that's all secondary. At its core,
+<strong>bitty</strong> sets you up to create your functionality and
+then gets out of the way. 
+</p>
+
+
+</details>
+</section> 
+ 
+    </main>
 
   </body>
 

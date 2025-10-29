@@ -1,6 +1,6 @@
 export default class {
-  async getTXTBasic(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-txt/basic.txt";
+  async getTXTError(_event, el) {
+    const url = "/v4.0.0/payloads/get-txt/intentionally-missing-file.txt";
     const response = await this.api.getTXT(url);
     if (response.ok) {
       el.innerHTML = response.ok;

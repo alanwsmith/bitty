@@ -1,6 +1,6 @@
 export default class {
   async loadCSSOptions(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/load-css/options.css";
+    const url = "/v4.0.0/payloads/load-css/options.css";
     const subs = [];
     const options = {
       "method": "GET"
@@ -15,4 +15,3 @@ export default class {
     }
   }
 }
-

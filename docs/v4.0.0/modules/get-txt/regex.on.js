@@ -1,9 +1,9 @@
 export default class {
-  async getTXTSubs(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-txt/subs.txt";
+  async getTXTRegEx(_event, el) {
+    const url = "/v4.0.0/payloads/get-txt/regex.txt";
     const subs = [
-      ["SPEED", "slow"],
-      ["KIND", "red"]
+      [/SPEED/g, "fast"],
+      [/KIND/g, "atctic"]
     ];
     const options = {};
     const response = await this.api.getTXT(

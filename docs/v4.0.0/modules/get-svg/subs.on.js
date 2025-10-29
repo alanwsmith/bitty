@@ -1,9 +1,9 @@
 export default class {
-  async getSVGRegEx(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-svg/regex.svg";
+  async getSVGSubs(_event, el) {
+    const url = "/v4.0.0/payloads/get-svg/subs.svg";
     const subs = [
-      [/SPEED/g, "fast"],
-      [/KIND/g, "arctic"]
+      ["SPEED", "slow"],
+      ["KIND", "red"]
     ];
     const response = await this.api.getSVG(
       url, subs
@@ -15,4 +15,3 @@ export default class {
     }
   }
 }
-

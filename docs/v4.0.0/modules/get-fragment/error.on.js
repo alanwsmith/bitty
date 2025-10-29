@@ -1,6 +1,6 @@
 export default class {
   async getFragmentError(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-fragment/intentionally-missing-file.html";
+    const url = "/v4.0.0/payloads/get-fragment/intentionally-missing-file.html";
     const response = await this.api.getFragment(url);
     if (response.ok) {
       el.replaceChildren(response.ok);

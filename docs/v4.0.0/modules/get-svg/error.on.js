@@ -1,6 +1,6 @@
 export default class {
-  async getSVGBasic(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-svg/basic.svg";
+  async getSVGError(_event, el) {
+    const url = "/v4.0.0/payloads/get-svg/intentionally-missing-file.svg";
     const response = await this.api.getSVG(url);
     if (response.ok) {
       el.replaceChildren(response.ok);
@@ -9,4 +9,3 @@ export default class {
     }
   }
 }
-

@@ -1,6 +1,6 @@
 export default class {
   async getTXTOptions(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-txt/options.txt";
+    const url = "/v4.0.0/payloads/get-txt/options.txt";
     const subs = [];
     const options = {
       method: "GET",

@@ -1,9 +1,9 @@
 export default class {
-  async getSubsJSON(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-json/subs.json";
+  async getRegExJSON(_event, el) {
+    const url = "/v4.0.0/payloads/get-json/subs.json";
     const subs = [
-      ["SPEED", "slow"],
-      ["KIND", "red"]
+      [/SPEED/g, "fast"],
+      [/KIND/g, "atctic"]
     ];
     const response = await this.api.getJSON(
       url, subs

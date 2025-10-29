@@ -1,0 +1,11 @@
+export default class {
+  async runTest0590(_event, el) {
+    const url = `/[@ json.version.version_dir @]/tests/0590-load-css/payload.css`;
+    const response = await this.api.loadCSS(url);
+    const styles = getComputedStyle(document.documentElement);
+    const checkValue = styles.getPropertyValue('--test-0590-value');
+    if (checkValue === "green") {
+      el.innerHTML = "PASSED";
+    }
+  }
+}

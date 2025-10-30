@@ -131,16 +131,16 @@ class BittyJs extends HTMLElement {
     // a bitty component is moved. 
   }
 
-  forward(event, signal) {
-    if (!event || !event.target || !event.target.dataset) {
-      event = {
-        type: "bittyforward",
-        target: { dataset: { forward: signal } },
-      };
-    }
-    event.target.dataset.forward = signal;
-    this.handleEvent(event);
-  }
+  // forward(event, signal) {
+  //   if (!event || !event.target || !event.target.dataset) {
+  //     event = {
+  //       type: "bittyforward",
+  //       target: { dataset: { forward: signal } },
+  //     };
+  //   }
+  //   event.target.dataset.forward = signal;
+  //   this.handleEvent(event);
+  // }
 
   async getElement(url, subs = [], options = {}) {
     let response = await this.getTXT(url, subs, options, "getElement");
@@ -240,6 +240,30 @@ class BittyJs extends HTMLElement {
     this.processSignals(event, signals);
   }
 
+  forward(event, signal) {
+    if (!event) {
+      event = {
+        type: "bittyforward",
+        target: { dataset: { forward: signal } },
+      };
+    }
+    event.target.dataset.forward = signal;
+    this.handleEvent(event);
+  }
+
+
+  // /** @internal */
+  // handleEvent(event) {
+  //   let signals = null;
+  //   if (event.target.dataset.forward) {
+  //     signals = event.target.dataset.forward;
+  //     delete event.target.dataset.forward;
+  //   } else {
+  //     signals = event.target.dataset.send;
+  //   }
+  //   this.processSignals(event, signals);
+  // }
+
   /** @internal */
   handleMutations(mutationList, _observer) {
     for (const mutation of mutationList) {
@@ -295,7 +319,6 @@ class BittyJs extends HTMLElement {
         });
     });
   }
-
 
   /** @internal */
   async makeConnection() {

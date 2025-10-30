@@ -3,9 +3,7 @@ export default class {
     this.api.forward(null, "runTest0280");
   }
 
-  runTest0280(event, element) {
-
-    console.log(event);
+  runTest0280(_event, element) {
     element.innerHTML = "PASSED";
   }
 }

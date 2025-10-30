@@ -1,28 +1,6 @@
 ## Roadmap 
 
 
-- TODO: Rename `this.api.getFragment` to 
-`this.api.getElements` (this is a breaking
-change so it's a major version bump)
-
-- TODO: Rename `this.api.makeFragment` to 
-`this.api.makeElements` (with the 
-`this.api.getFragment` change)
-
-
-- TODO: Update the `this.api.forward` functionality
-so that it can be fired with no/null signal.
-At that point it falls back to a generic
-`bittyForward`. This can be used, e.g. when
-receiving a message from `.postMessage()`
-that doesn't have a direct method for adding
-in a `.dataset.send` key.
-
-- TODO: Fix bug in `this.api.forward` where
-an event that doesn't have a `.target` or
-`.target.dataset` gets overridded. (i.e.
-if there's an event at all, just forward it.
-Probably add a UUID though)
 
 - TODO: Added ingestion of functions from 
 the module js files into `this.api.fn`. 

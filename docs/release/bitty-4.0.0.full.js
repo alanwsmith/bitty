@@ -137,6 +137,9 @@ class BittyJs extends HTMLElement {
         type: "bittyforward",
       };
     }
+    if (!event.uuid) {
+      event.uuid = getUUID();
+    }
     event.bitty = {
       forward: signal
     };

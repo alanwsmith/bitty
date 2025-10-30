@@ -338,7 +338,7 @@ class BittyJs extends HTMLElement {
     return el.firstChild;
   }
 
-  makeFragment(template, subs = []) {
+  makeElements(template, subs = []) {
     subs.forEach((sub) => {
       template = template.replaceAll(sub[0], sub[1]);
     });

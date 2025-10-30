@@ -3,7 +3,7 @@ export default class {
     el.classList.remove("test");
     const template = `<div class="test">FAILED</div>`;
     const subs = [[/FAILED/g, "PASSED"]];
-    el.replaceChildren(this.api.makeFragment(
+    el.replaceChildren(this.api.makeElements(
       template,
       subs,
     ));

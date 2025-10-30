@@ -228,10 +228,27 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // /** @internal */
+  // handleEvent(event) {
+  //   let signals = null;
+  //   if (event.target.dataset.forward) {
+  //     signals = event.target.dataset.forward;
+  //     delete event.target.dataset.forward;
+  //   } else {
+  //     signals = event.target.dataset.send;
+  //   }
+  //   this.processSignals(event, signals);
+  // }
+
+
+
   /** @internal */
   handleEvent(event) {
     let signals = null;
-    if (event.target.dataset.forward) {
+    if (event.bitty && event.bitty.forward) {
+      signals = event.bitty.forward;
+      delete event.bitty.forward;
+    } else if (event.target.dataset.forward) {
       signals = event.target.dataset.forward;
       delete event.target.dataset.forward;
     } else {
@@ -244,31 +261,21 @@ class BittyJs extends HTMLElement {
     if (!event) {
       event = {
         type: "bittyforward",
-        target: { dataset: { forward: signal } },
+        // target: { dataset: { forward: signal } },
       };
     }
-    if (!event.target) {
-      event.target = {};
-    }
-    if (!event.target.dataset) {
-      event.target.dataset = {};
-    }
-    event.target.dataset.forward = signal;
+    // if (!event.target) {
+    //   event.target = {};
+    // }
+    // if (!event.target.dataset) {
+    //   event.target.dataset = {};
+    // }
+    event.bitty = {
+      forward: signal
+    };
+    // event.target.dataset.forward = signal;
     this.handleEvent(event);
   }
-
-
-  // /** @internal */
-  // handleEvent(event) {
-  //   let signals = null;
-  //   if (event.target.dataset.forward) {
-  //     signals = event.target.dataset.forward;
-  //     delete event.target.dataset.forward;
-  //   } else {
-  //     signals = event.target.dataset.send;
-  //   }
-  //   this.processSignals(event, signals);
-  // }
 
   /** @internal */
   handleMutations(mutationList, _observer) {

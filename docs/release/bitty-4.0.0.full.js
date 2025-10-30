@@ -247,6 +247,12 @@ class BittyJs extends HTMLElement {
         target: { dataset: { forward: signal } },
       };
     }
+    if (!event.target) {
+      event.target = {};
+    }
+    if (!event.target.dataset) {
+      event.target.dataset = {};
+    }
     event.target.dataset.forward = signal;
     this.handleEvent(event);
   }

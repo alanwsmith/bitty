@@ -72,7 +72,7 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     if (this.dataset.listeners) {
       this.config.listeners = this.dataset.listeners
-        .split("|")
+        .split(" ")
         .map((l) => l.trim());
     }
     this.config.listeners.forEach((listener) => {
@@ -289,7 +289,7 @@ class BittyJs extends HTMLElement {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
       el.dataset.receive
-        .split("|")
+        .split(" ")
         .map((signal) => signal.trim())
         .forEach((signal) => {
           this.addReceiver(signal, el);
@@ -307,7 +307,7 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.dataset.connect.split("|").map((x) => x.trim());
+        const connParts = this.dataset.connect.split(" ").map((x) => x.trim());
         if (typeof window[connParts[0]] !== "undefined") {
           this.conn = new window[connParts[0]]();
         } else {
@@ -360,7 +360,7 @@ class BittyJs extends HTMLElement {
   /** @internal */
   processSignals(event, signals) {
     signals
-      .split("|")
+      .split(" ")
       .map((signal) => signal.trim())
       .forEach((signal) => {
         let receiverCount = 0;

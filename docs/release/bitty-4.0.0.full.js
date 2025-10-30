@@ -159,7 +159,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getFragment(url, subs = [], options = {}) {
+  async getElements(url, subs = [], options = {}) {
     const response = await this.getTXT(url, subs, options, "getFragment");
     if (response.error) {
       return response;

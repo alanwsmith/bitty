@@ -62,6 +62,7 @@ class BittyJs extends HTMLElement {
       this.loadFunctions();
       this.setIds();
       this.conn.api = this;
+      this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
       this.watchMutations = this.handleMutations.bind(this);
       this.loadReceivers();
@@ -80,15 +81,18 @@ class BittyJs extends HTMLElement {
         .map((l) => l.trim());
     }
     this.config.listeners.forEach((listener) => {
-      document.addEventListener(listener, (event) => {
+      window.addEventListener(listener, (event) => {
+        event.uuid = getUUID();
         if (
           event.target &&
+          event.target.nodeName &&
           event.target.nodeName.toLowerCase() !== tagName &&
           event.target.dataset &&
           event.target.dataset.send
         ) {
-          event.uuid = getUUID();
           this.handleEventBridge.call(this, event);
+        } else {
+          this.handleCatchBridge.call(this, event);
         }
       });
     });
@@ -231,6 +235,19 @@ class BittyJs extends HTMLElement {
       return { error: error };
     }
   }
+
+  /** @internal */
+  handleCatch(event) {
+    // TODO: get version where bittyCatch exists
+    // and a version where bittyCatch does not. 
+    // TODO: Document that this won't
+    // have async/await, but you can 
+    // do that in the fucntion itself
+    if (typeof this.conn.bittyCatch === "function") {
+      this.conn.bittyCatch(event);
+    }
+  }
+
 
   /** @internal */
   handleEvent(event) {

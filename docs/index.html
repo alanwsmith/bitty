@@ -63,7 +63,7 @@ sleep: (ms) => {
     return new URL(window.location.href);
   },}
 </script>
-    <script src="/release/bitty-4.0.0.full.js" type="module"></script>
+    <script src="/release/bitty-4.0.0-rc1.full.js" type="module"></script>
 
 
   </head>
@@ -81,12 +81,12 @@ sleep: (ms) => {
       </hgroup>
 <div class="download-div">
   <div class="download-link-wrapper">
-    <a class="download-link" href="/release/bitty-4.0.0.full.js" download>
+    <a class="download-link" href="/release/bitty-4.0.0-rc1.full.js" download>
 
       <div class="center small-font">Download</div>
       <div class="center">
       Version 4.0</div>
-      <div class="center small-font">bitty-4.0.0.full.js</div></a>
+      <div class="center small-font">bitty-4.0.0-rc1.full.js</div></a>
   </div>
 </div>
 
@@ -228,7 +228,7 @@ and drop them on your site.
 install. To use it, just:
 
 <ul>
-  <li><a class="download-link" href="/releases/bitty-4.0.0.full.js" download>
+  <li><a class="download-link" href="/releases/bitty-4.0.0-rc1.full.js" download>
 download the  file</a></li>
   <li>put the file somewhere in your site's directory tree</li>
   <li><p>load <strong>bitty</strong> on your pages with a script tag like:</p>
@@ -3909,9 +3909,12 @@ bubble and trigger twice.
  
 <details class="section-details">
   <summary>Release Notes</summary>
-<h3>Version: 4.0.0</h3>
+<h3>Version: 4.0.0-rc1</h3>
 <p>TBD</p>
 <ul>
+<li>
+<p>TODO: Add tests for bittyCatch()</p>
+</li>
 <li>
 <p>Renamed <code>this.api.getFragment</code> to
 <code>this.api.getElements</code> (this is a breaking
@@ -3923,11 +3926,17 @@ change so it's a major version bump)</p>
 <code>this.api.getFragment</code> change)</p>
 </li>
 <li>
-<p>TODO: Added <code>bittyCatch(event)</code> that
+<p>Added <code>bittyCatch(event)</code> that
 catches any events that don't have a
 <code>.target.dataset.send</code> value. This provides
 a way to catch message like from <code>.postMessage()</code>
 and decided what to do with them.</p>
+</li>
+<li>
+<p>Changed listeners to be on the
+window to catch things like <code>.postMessage()</code>.
+TODO: Make sure that's cool to listen
+on the window instead of the document.</p>
 </li>
 <li>
 <p>Changed internal use of

@@ -1,7 +1,3 @@
-/* Place user defined functions here */
-
-const functions = {};
-
 /** @ignore */
 const version = [4, 0, 0, ""];
 
@@ -59,7 +55,6 @@ class BittyJs extends HTMLElement {
     this.dataset.uuid = getUUID();
     await this.makeConnection();
     if (this.conn) {
-      this.loadFunctions();
       this.setIds();
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
@@ -286,21 +281,6 @@ class BittyJs extends HTMLElement {
       document.adoptedStyleSheets.push(newStylesheet);
       const payload = { ok: response.ok };
       return payload;
-    }
-  }
-
-  /** @internal */
-  loadFunctions() {
-    this.fn = {};
-    if (functions) {
-      for (let [key, fn] of Object.entries(functions)) {
-        this.fn[key] = fn.bind(this);
-      }
-    }
-    if (window.bittyFunctions) {
-      for (let [key, fn] of Object.entries(window.bittyFunctions)) {
-        this.fn[key] = fn.bind(this);
-      }
     }
   }
 

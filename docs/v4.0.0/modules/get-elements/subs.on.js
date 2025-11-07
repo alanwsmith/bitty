@@ -1,11 +1,11 @@
 export default class {
-  async getFragmentSubs(_event, el) {
+  async getElementsSubs(_event, el) {
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]
     ];
-    const response = await this.api.getFragment(
-      "/v4.0.0/payloads/get-fragment/subs.html",
+    const response = await this.api.getElements(
+      "/v4.0.0/payloads/get-elements/subs.html",
       subs
     );
     if (response.ok) {

@@ -1,7 +1,10 @@
 ## Roadmap 
 
-
 - TODO: Add tests for bittyCatch()
+
+- TODO: Rename `getElements` and `makeElements`
+to `getHTML` and `makeHTML` (`getElement` and
+`makeElement` will stay the same)
 
 - TODO: Renamed `response.ok` to `response.value`
 for clarity and to avoid confusion with

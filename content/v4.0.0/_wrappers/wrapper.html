@@ -1,0 +1,112 @@
+[!- set version_dir = "v4.0.0" -!]
+[!- set config = json[version_dir].config -!]
+
+[!- set script_min_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.[@- config.min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.full.js
+[!- endset -!]
+
+[!- set bitty_tag -!]
+bitty-[@ config.major_version @]-[@ config.minor_version @]
+[!- endset -!]
+
+[!- set bitty_js_path -!]
+/release/ [@- script_min_file_name -@]
+[!- endset -!]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--
+Welcome to the HTML!
+
+Neither this page nor the CSS has undergone any 
+optimization. All the work has been on bitty
+itself. Please excuse the mess.
+-->
+    [! include version_dir + "/_wrappers/head.html" !]
+    [! include version_dir + "/_wrappers/bitty-page-class.html" !]
+    [! include version_dir + "/_wrappers/docs-alt-class.html" !]
+    [! include version_dir + "/_wrappers/page-functions.html" !]
+
+    <script src="[@ bitty_js_path @]" type="module"></script>
+
+
+  </head>
+
+  <body>
+    <main class="default-wrapper default-flow">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+        </div>
+        <div class="small-font accent-faded">
+          a bit of interactvity
+        </div>
+      </hgroup>
+[! block main !][! endblock !] 
+    </main>
+
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+
+  </body>
+
+</html>

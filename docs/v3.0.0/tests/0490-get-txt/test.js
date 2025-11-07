@@ -5,3 +5,4 @@ export default class {
     el.innerHTML = response.ok;
   }
 }
+

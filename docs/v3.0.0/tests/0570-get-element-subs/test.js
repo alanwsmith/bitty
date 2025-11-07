@@ -6,3 +6,4 @@ export default class {
     el.parentNode.replaceChildren(response.ok);
   }
 }
+

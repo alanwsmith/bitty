@@ -3,3 +3,4 @@ export default class {
     element.innerHTML = `${event.type} at ${Date.now()}`;
   }
 }
+

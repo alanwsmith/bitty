@@ -3,3 +3,4 @@ export default class {
         element.innerHTML = `Selected: ${event.target.value}`;
     }
 }
+

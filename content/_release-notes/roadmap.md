@@ -1,16 +1,6 @@
 ## Roadmap 
 
-- TODO: Add tests for bittyCatch()
-
-- TODO: Rename `getElements` and `makeElements`
-to `getHTML` and `makeHTML` (`getElement` and
-`makeElement` will stay the same)
-
-- TODO: Renamed `response.ok` to `response.value`
-for clarity and to avoid confusion with
-things like `response.ok === false`. 
-(i.e. `response.value === false` takes less 
-mental overhead)
+- TODO: Add more tests for bittyCatch()
 
 - TODO: Allow sending forward without
 having to pass a null event. That is, 
@@ -26,17 +16,6 @@ and `data-r` attribute for `data-receive`
 text value from a template after running
 substitutions over it. 
 
-- TODO: Renamed `data-uuid` to `data-bittyid`
-to namespace and prevent collisions with
-anything else the wants to use `data-uuid`
-
-- TODO: Added ingestion of functions from 
-the module js files into `this.api.fn`. 
-If there are naming collisions the order
-last one in the chain of `[@ config.tag_name @]`,
-`window.bittyFunctions`, module function
-exports wins. 
-
 - TODO: Investigate: Added a `disconnectedCallback()`
 to clean up anything that can be
 removed when a component is removed.
@@ -51,8 +30,4 @@ for things like completely switching out
 the contents of the component without
 having to rely on a child element calling
 `.parentNode`. 
-
-- TODO: MAYBE: Added `usePageTemplate()` 
-that pulls a template from the overall page 
-via a query selector.
 

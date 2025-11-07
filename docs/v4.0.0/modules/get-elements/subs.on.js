@@ -5,7 +5,7 @@ export default class {
       ["KIND", "red"]
     ];
     const response = await this.api.getElements(
-      "/v4.0.0/payloads/get-elements/subs.html",
+      "/v5.0.0/payloads/get-elements/subs.html",
       subs
     );
     if (response.ok) {

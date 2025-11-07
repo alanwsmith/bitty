@@ -158,8 +158,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getElements(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options, "getElements");
+  async getHTML(url, subs = [], options = {}) {
+    const response = await this.getTXT(url, subs, options, "getHTML");
     if (response.error) {
       return response;
     } else {

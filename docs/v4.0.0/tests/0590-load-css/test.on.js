@@ -1,6 +1,6 @@
 export default class {
   async runTest0590(_event, el) {
-    const url = `/v4.0.0/tests/0590-load-css/payload.css`;
+    const url = `/v5.0.0/tests/0590-load-css/payload.css`;
     const response = await this.api.loadCSS(url);
     const styles = getComputedStyle(document.documentElement);
     const checkValue = styles.getPropertyValue('--test-0590-value');

@@ -1,6 +1,31 @@
 ## Roadmap 
 
 
+- TODO: Add tests for bittyCatch()
+
+- TODO: Renamed `response.ok` to `response.value`
+for clarity and to avoid confusion with
+things like `response.ok === false`. 
+(i.e. `response.value === false` takes less 
+mental overhead)
+
+- TODO: Allow sending forward without
+having to pass a null event. That is, 
+if there's only one argument, it's
+treated as the signal with a null event. 
+So, `this.api.forward("NAME")` is 
+equivalent to `this.api.forward(null, "NAME")`
+
+- TODO: Added `data-s` alias for `data-send`
+and `data-r` attribute for `data-receive`
+
+- TODO: Added `makeTXT` which returns a 
+text value from a template after running
+substitutions over it. 
+
+- TODO: Renamed `data-uuid` to `data-bittyid`
+to namespace and prevent collisions with
+anything else the wants to use `data-uuid`
 
 - TODO: Added ingestion of functions from 
 the module js files into `this.api.fn`. 

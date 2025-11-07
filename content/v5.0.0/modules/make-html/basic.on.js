@@ -1,7 +1,7 @@
 export default class {
-  makeElementsBasic(_event, el) {
+  makeHTMLBasic(_event, el) {
     const html = `<div>The quick brown fox</div>`;
-    const content = this.api.makeElements(html);
+    const content = this.api.makeHTML(html);
     el.replaceChildren(content);
   }
 }

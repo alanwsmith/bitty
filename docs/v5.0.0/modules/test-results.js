@@ -41,13 +41,13 @@ export default class {
     });
     if (this.#failed == 0) {
       const subs = [["PASSED_NUM", this.#passed]];
-      element.replaceChildren(this.api.makeElements(t.passed, subs));
+      element.replaceChildren(this.api.makeHTML(t.passed, subs));
     } else {
       const subs = [
         ["PASSED_NUM", this.#passed],
         ["FAILED_NUM", this.#failed],
       ];
-      element.replaceChildren(this.api.makeElements(t.failed, subs));
+      element.replaceChildren(this.api.makeHTML(t.failed, subs));
     }
   }
 }

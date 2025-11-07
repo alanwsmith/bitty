@@ -335,7 +335,7 @@ class BittyJs extends HTMLElement {
     return el.firstChild;
   }
 
-  makeElements(template, subs = []) {
+  makeHTML(template, subs = []) {
     subs.forEach((sub) => {
       template = template.replaceAll(sub[0], sub[1]);
     });

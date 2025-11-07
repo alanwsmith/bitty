@@ -1,6 +1,6 @@
 export default class {
   async getRegExJSON(_event, el) {
-    const url = "/v4.0.0/payloads/get-json/regex.on.json";
+    const url = "/v5.0.0/payloads/get-json/regex.on.json";
     const subs = [
       [/SPEED/g, "fast"],
       [/KIND/g, "atctic"]

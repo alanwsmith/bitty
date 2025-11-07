@@ -8,8 +8,8 @@ export default class {
     const response = await this.api.getSVG(
       url, subs
     );
-    if (response.ok) {
-      el.replaceChildren(response.ok);
+    if (response.value) {
+      el.replaceChildren(response.value);
     } else {
       el.innerHTML = response.error;
     }

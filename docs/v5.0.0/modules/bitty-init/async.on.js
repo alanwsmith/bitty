@@ -4,8 +4,8 @@ export default class {
   async bittyInit() {
     const url = "/v5.0.0/payloads/bitty-init/basic.txt";
     const response = await this.api.getTXT(url);
-    if (response.ok) {
-      this.#message = response.ok;
+    if (response.value) {
+      this.#message = response.value;
     } else {
       this.#message = response.error;
     }

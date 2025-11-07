@@ -5,8 +5,8 @@ export default class {
       [/FAILED/g, "PASSED"],
     ];
     const response = await this.api.getJSON(url, subs);
-    if (response.ok) {
-      el.innerHTML = response.ok.status;
+    if (response.value) {
+      el.innerHTML = response.value.status;
     }
   }
 }

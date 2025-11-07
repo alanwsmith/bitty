@@ -151,9 +151,9 @@ class BittyJs extends HTMLElement {
       return response;
     } else {
       const template = document.createElement("template");
-      template.innerHTML = response.ok;
+      template.innerHTML = response.value;
       const fragment = template.content.cloneNode(true);
-      const payload = { ok: fragment.firstChild };
+      const payload = { value: fragment.firstChild };
       return payload;
     }
   }
@@ -164,9 +164,9 @@ class BittyJs extends HTMLElement {
       return response;
     } else {
       const template = document.createElement("template");
-      template.innerHTML = response.ok;
+      template.innerHTML = response.value;
       const fragment = template.content.cloneNode(true);
-      const payload = { ok: fragment };
+      const payload = { value: fragment };
       return payload;
     }
   }
@@ -177,8 +177,8 @@ class BittyJs extends HTMLElement {
       return response;
     } else {
       try {
-        const data = JSON.parse(response.ok);
-        const payload = { ok: data };
+        const data = JSON.parse(response.value);
+        const payload = { value: data };
         return payload;
       } catch(error) {
         let payloadError = new BittyError({ type: "parsing" });
@@ -194,10 +194,10 @@ class BittyJs extends HTMLElement {
       return response;
     } else {
       const tmpl = document.createElement("template");
-      tmpl.innerHTML = response.ok;
+      tmpl.innerHTML = response.value;
       const wrapper = tmpl.content.cloneNode(true);
       const svg = wrapper.querySelector("svg");
-      const payload = { ok: svg };
+      const payload = { value: svg };
       return payload;
     }
   }
@@ -220,7 +220,7 @@ class BittyJs extends HTMLElement {
         subs.forEach((sub) => {
           content = content.replaceAll(sub[0], sub[1]);
         });
-        const payload = { ok: content };
+        const payload = { value: content };
         return payload;
       }
     } catch (error) {
@@ -277,9 +277,9 @@ class BittyJs extends HTMLElement {
       return response;
     } else {
       const newStylesheet = new CSSStyleSheet();
-      newStylesheet.replaceSync(response.ok);
+      newStylesheet.replaceSync(response.value);
       document.adoptedStyleSheets.push(newStylesheet);
-      const payload = { ok: response.ok };
+      const payload = { value: response.value };
       return payload;
     }
   }

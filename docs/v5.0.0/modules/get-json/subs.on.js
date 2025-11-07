@@ -8,8 +8,8 @@ export default class {
     const response = await this.api.getJSON(
       url, subs
     );
-    if (response.ok) {
-      el.innerHTML = response.ok.text;
+    if (response.value) {
+      el.innerHTML = response.value.text;
     } else {
       el.innerHTML = response.error;
     }

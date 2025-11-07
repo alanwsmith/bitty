@@ -7,7 +7,7 @@ export default class {
     const response = await this.api.loadCSS(
       url, subs
     );
-    if (response.ok) {
+    if (response.value) {
       el.innerHTML = "CSS Loaded";
     } else {
       el.innerHTML = response.error;

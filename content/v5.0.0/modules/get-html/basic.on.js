@@ -3,8 +3,8 @@ export default class {
     const response = await this.api.getHTML(
       "/[@ json.version.version_dir @]/payloads/get-html/basic.html"
     );
-    if (response.ok) {
-      el.replaceChildren(response.ok);
+    if (response.value) {
+      el.replaceChildren(response.value);
     } else {
       el.innerHTML = response.error;
     }

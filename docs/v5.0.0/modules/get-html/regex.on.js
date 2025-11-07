@@ -8,8 +8,8 @@ export default class {
       "/v5.0.0/payloads/get-html/regex.html",
       subs
     );
-    if (response.ok) {
-      el.replaceChildren(response.ok);
+    if (response.value) {
+      el.replaceChildren(response.value);
     } else {
       el.innerHTML = response.error;
     }

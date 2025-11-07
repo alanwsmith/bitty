@@ -8,8 +8,8 @@ export default class {
     const response = await this.api.getElement(
       url, subs, options
     );
-    if (response.ok) {
-      el.replaceChildren(response.ok);
+    if (response.value) {
+      el.replaceChildren(response.value);
     } else {
       el.innerHTML = response.error;
     }

@@ -4,7 +4,7 @@ export default class {
     const subs = [];
     const options = { method: "POST" };
     const response = await this.api.getJSON(url, subs, options);
-    if (response.ok && response.ok.method === "POST") {
+    if (response.value && response.value.method === "POST") {
       el.innerHTML = "PASSED";
     }
   }

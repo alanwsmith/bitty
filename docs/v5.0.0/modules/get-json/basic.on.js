@@ -4,8 +4,8 @@ export default class {
     const response = await this.api.getJSON(
       url
     );
-    if (response.ok) {
-      el.innerHTML = response.ok.text;
+    if (response.value) {
+      el.innerHTML = response.value.text;
     } else {
       el.innerHTML = response.error;
     }

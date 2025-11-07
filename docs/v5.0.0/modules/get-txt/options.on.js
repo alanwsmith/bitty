@@ -8,8 +8,8 @@ export default class {
     const response = await this.api.getTXT(
       url, subs, options
     );
-    if (response.ok) {
-      el.innerHTML = response.ok;
+    if (response.value) {
+      el.innerHTML = response.value;
     } else {
       el.innerHTML = response.error;
     }

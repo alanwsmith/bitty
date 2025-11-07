@@ -8,8 +8,8 @@ export default class {
       "/[@ json.version.version_dir @]/payloads/get-html/subs.html",
       subs
     );
-    if (response.ok) {
-      el.replaceChildren(response.ok);
+    if (response.value) {
+      el.replaceChildren(response.value);
     } else {
       el.innerHTML = response.error;
     }

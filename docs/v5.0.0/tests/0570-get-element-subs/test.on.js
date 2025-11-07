@@ -3,6 +3,6 @@ export default class {
     const url = `/v5.0.0/tests/0570-get-element-subs/payload.html`;
     const subs = [[/FAILED/g, "PASSED"]];
     const response = await this.api.getElement(url, subs);
-    el.parentNode.replaceChildren(response.ok);
+    el.parentNode.replaceChildren(response.value);
   }
 }

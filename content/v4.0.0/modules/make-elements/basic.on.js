@@ -1,7 +1,7 @@
 export default class {
-  makeFragmentBasic(_event, el) {
+  makeElementsBasic(_event, el) {
     const html = `<div>The quick brown fox</div>`;
-    const content = this.api.makeFragment(html);
+    const content = this.api.makeElements(html);
     el.replaceChildren(content);
   }
 }

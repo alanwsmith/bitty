@@ -1,11 +1,11 @@
 export default class {
-  async getFragmentOptions(_event, el) {
-    const url =  "/[@ json.version.version_dir @]/payloads/get-fragment/options.html";
+  async getElementsOptions(_event, el) {
+    const url =  "/[@ json.version.version_dir @]/payloads/get-elements/options.html";
     const subs = [];
     const options = {
       "method": "GET"
     };
-    const response = await this.api.getFragment(
+    const response = await this.api.getElements(
       url, subs, options
     );
     if (response.ok) {

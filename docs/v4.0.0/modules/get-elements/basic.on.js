@@ -1,7 +1,7 @@
 export default class {
-  async getFragmentBasic(_event, el) {
-    const response = await this.api.getFragment(
-      "/v4.0.0/payloads/get-fragment/basic.html"
+  async getElementsBasic(_event, el) {
+    const response = await this.api.getElements(
+      "/v4.0.0/payloads/get-elements/basic.html"
     );
     if (response.ok) {
       el.replaceChildren(response.ok);

@@ -1,5 +1,5 @@
 export default class {
-  randomNum(_event, el) {
+  randomNumTake1(_event, el) {
     el.innerHTML = Math.random();
   }
 }

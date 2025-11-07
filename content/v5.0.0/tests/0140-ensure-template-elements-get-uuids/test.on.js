@@ -14,7 +14,7 @@ export default class {
     // sleep for test to wait for observer
     // to update the UUID.
     await sleep(100);
-    if (element.childNodes[0].dataset.uuid !== undefined) {
+    if (element.childNodes[0].dataset.bittyid !== undefined) {
       element.childNodes[0].innerHTML = "PASSED";
     }
   }

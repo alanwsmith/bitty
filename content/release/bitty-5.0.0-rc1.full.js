@@ -52,7 +52,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async connectedCallback() {
-    this.dataset.uuid = getUUID();
+    this.dataset.bittyid = getUUID();
     await this.makeConnection();
     if (this.conn) {
       this.setIds();
@@ -77,7 +77,7 @@ class BittyJs extends HTMLElement {
     }
     this.config.listeners.forEach((listener) => {
       window.addEventListener(listener, (event) => {
-        event.uuid = getUUID();
+        event.bittyid = getUUID();
         if (
           event.target &&
           event.target.nodeName &&
@@ -136,8 +136,8 @@ class BittyJs extends HTMLElement {
         type: "bittyforward",
       };
     }
-    if (!event.uuid) {
-      event.uuid = getUUID();
+    if (!event.bittyid) {
+      event.bittyid = getUUID();
     }
     event.bitty = {
       forward: signal
@@ -346,7 +346,7 @@ class BittyJs extends HTMLElement {
 
   match(event, el, key = null) {
     if (key === null) {
-      key = "uuid";
+      key = "bittyid";
     }
     if (
       event.target.dataset[key] === undefined ||
@@ -383,7 +383,7 @@ class BittyJs extends HTMLElement {
     if (this.dataset.send) {
       this.handleEvent({
         type: "bittytagdatasend",
-        uuid: getUUID(),
+        bittyid: getUUID(),
         target: this,
       });
     }
@@ -392,8 +392,8 @@ class BittyJs extends HTMLElement {
   /** @internal */
   setIds() {
     this.querySelectorAll("*").forEach((el) => {
-      if (!el.dataset.uuid) {
-        el.dataset.uuid = getUUID();
+      if (!el.dataset.bittyid) {
+        el.dataset.bittyid = getUUID();
       }
     });
   }

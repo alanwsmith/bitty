@@ -6,7 +6,7 @@ export default class {
   async bittyInit() {
     await sleep(100) // time pad for test
     const el = this.api.querySelector("div");
-    if (el.dataset.uuid) {
+    if (el.dataset.bittyid) {
       el.innerHTML = "PASSED";
     }
   }

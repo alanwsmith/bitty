@@ -9,7 +9,7 @@ const t = {
 export default class {
   bittyInit() {
     if (this.api.fn.url().hostname !== "localhost") {
-      this.api.appendChild(this.api.useTemplate(t.stars));
+      this.api.appendChild(this.api.makeElement(t.stars));
     }
   }
 }

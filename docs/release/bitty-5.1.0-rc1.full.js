@@ -31,7 +31,9 @@ class BittyError extends Error {
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-listeners
+ * @attribute {string} data-r
  * @attribute {string} data-receive
+ * @attribute {string} data-s
  * @attribute {string} data-send
  */
 
@@ -82,7 +84,7 @@ class BittyJs extends HTMLElement {
           event.target.nodeName &&
           event.target.nodeName.toLowerCase() !== tagName &&
           event.target.dataset &&
-          event.target.dataset.send
+          (event.target.dataset.send || event.target.dataset.s)
         ) {
           this.handleEventBridge.call(this, event);
         } else {
@@ -252,12 +254,17 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    let signals = null;
+    let signals = "";
     if (event.bitty && event.bitty.forward) {
       signals = event.bitty.forward;
       delete event.bitty.forward;
     } else {
-      signals = event.target.dataset.send;
+      if (event.target.dataset.send) {
+        signals += `${event.target.dataset.send} `;
+      }
+      if (event.target.dataset.s) {
+        signals += `${event.target.dataset.s} `;
+      }
     }
     await this.processSignals(event, signals);
   }
@@ -295,6 +302,14 @@ class BittyJs extends HTMLElement {
     this.receivers = [];
     this.querySelectorAll(`[data-receive]`).forEach((el) => {
       el.dataset.receive
+        .split(/\s+/m)
+        .map((signal) => signal.trim())
+        .forEach((signal) => {
+          this.addReceiver(signal, el);
+        });
+    });
+    this.querySelectorAll(`[data-r]`).forEach((el) => {
+      el.dataset.r
         .split(/\s+/m)
         .map((signal) => signal.trim())
         .forEach((signal) => {
@@ -396,7 +411,14 @@ class BittyJs extends HTMLElement {
         bittyid: getUUID(),
         target: this,
       });
-    }
+    } 
+    if (this.dataset.s) {
+      this.handleEvent({
+        type: "bittytagdatasend",
+        bittyid: getUUID(),
+        target: this,
+      });
+    } 
   }
 
   setProp(key, value) {

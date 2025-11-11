@@ -1,16 +1,8 @@
 ## Roadmap 
 
-- TODO: Added `data-s` alias for `data-send`
-and `data-r` attribute for `data-receive`
-
-- TODO: Added `makeTXT` which returns a 
-text value from a template after running
-substitutions over it. 
-
 - TODO: Investigate: Added a `disconnectedCallback()`
 to clean up anything that can be
 removed when a component is removed.
-
 
 - TODO: Set up the `bitty` tag to listen
 for signals with `data-receive` to allow

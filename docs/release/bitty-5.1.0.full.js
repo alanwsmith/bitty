@@ -352,10 +352,7 @@ class BittyJs extends HTMLElement {
     return skeleton.content.cloneNode(true);
   }
 
-  match(event, el, key = null) {
-    if (key === null) {
-      key = "bittyid";
-    }
+  match(event, el, key = "bittyid") {
     if (
       event.target.dataset[key] === undefined ||
       el.dataset[key] === undefined
@@ -386,11 +383,10 @@ class BittyJs extends HTMLElement {
       }
       if (receiverCount === 0) {
         if (this.conn[signal]) {
-
           if (doAwait === true) {
             await this.conn[signal](event, null);
           } else {
-          this.conn[signal](event, null);
+            this.conn[signal](event, null);
           }
         }
       }

@@ -1,7 +1,5 @@
 ## Roadmap 
 
-- TODO: Add more tests for bittyCatch()
-
 - TODO: Added `data-s` alias for `data-send`
 and `data-r` attribute for `data-receive`
 

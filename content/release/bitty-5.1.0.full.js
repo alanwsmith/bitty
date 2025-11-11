@@ -135,7 +135,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   connectedMoveCallback() {
-    // this method exist soley to prevent
+    // this method exist solely to prevent
     // connectedCallback() from firing if
     // a bitty component is moved. 
   }
@@ -238,9 +238,7 @@ class BittyJs extends HTMLElement {
         return payload;
       }
     } catch (error) {
-      console.error(
-       // `BittyError: ${error.method}() returned ${error.status} [${error.statusText}] in:\n${error.incomingMethod}(${error.url}, ${JSON.stringify(error.subs)}, ${JSON.stringify(error.options)})`);
-        `BittyError: ${error.message}`);
+      console.error(`BittyError: ${error.message}`);
       return { error: error };
     }
   }
@@ -332,20 +330,13 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: Refactor to pull from make Fragment
   makeElement(template, subs = []) {
-    subs.forEach((sub) => {
-      template = template.replaceAll(sub[0], sub[1]);
-    });
-    const skeleton = document.createElement("template");
-    skeleton.innerHTML = template.trim();
-    const el = skeleton.content.cloneNode(true);
-    return el.firstChild;
+    return this.makeHTML(template, subs).firstChild;
   }
 
   makeHTML(template, subs = []) {
     const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.makeTXT(template, subs);
+    skeleton.innerHTML = this.makeTXT(template, subs).trim();
     return skeleton.content.cloneNode(true);
   }
 

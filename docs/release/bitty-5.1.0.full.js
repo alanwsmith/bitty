@@ -143,18 +143,22 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    if (!event) {
-      event = {
-        type: "bittyforward",
-      };
-    }
-    if (!event.bittyid) {
-      event.bittyid = getUUID();
-    }
     event.bitty = {
       forward: signal
     };
     this.handleEvent(event);
+  }
+
+  trigger(signal) {
+    this.handleEvent(
+      {
+        type: "bittytrigger",
+        bittyid: getUUID(),
+        bitty: {
+          forward: signal 
+        }
+      }
+    );
   }
 
   async getElement(url, subs = [], options = {}) {

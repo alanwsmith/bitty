@@ -2,13 +2,6 @@
 
 - TODO: Add more tests for bittyCatch()
 
-- TODO: Allow sending forward without
-having to pass a null event. That is, 
-if there's only one argument, it's
-treated as the signal with a null event. 
-So, `this.api.forward("NAME")` is 
-equivalent to `this.api.forward(null, "NAME")`
-
 - TODO: Added `data-s` alias for `data-send`
 and `data-r` attribute for `data-receive`
 

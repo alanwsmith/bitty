@@ -13,9 +13,6 @@ substitutions over it.
 to clean up anything that can be
 removed when a component is removed.
 
-- TODO: Added `await:signal` to `data-send`
-and `this.api.forward(event, "await:signal")`
-to await async methods.
 
 - TODO: Set up the `bitty` tag to listen
 for signals with `data-receive` to allow

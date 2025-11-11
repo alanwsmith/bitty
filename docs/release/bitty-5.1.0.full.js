@@ -389,6 +389,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  setProp(key, value) {
+    document.documentElement.style.setProperty(key, value);
+  }
+
+
   /** @internal */
   setIds() {
     this.querySelectorAll("*").forEach((el) => {

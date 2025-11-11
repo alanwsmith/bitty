@@ -11,8 +11,12 @@ export default class {
     }
   }
 
-  async runTest0630(_event, _el) {
+  async runTest0630(_event, el) {
     await new Promise(resolve => setTimeout(resolve, 300));
+    console.log("\n\n\n\nhere1\n\n---------------------------------------\n\n\n");
     this.#updated = true;
+    el.innerHTML = "FAILED-CHECK";
   }
 }
+
+

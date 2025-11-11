@@ -106,8 +106,11 @@ class BittyJs extends HTMLElement {
     if (this.conn[signal]) {
       this.receivers.push({
         key: signal,
-        f: (event) => {
-          this.conn[signal](event, el);
+        f: async (event) => {
+          console.log(`\n\n\nhere3\n--------------------------------------\n\n`);
+          console.log(event);
+          console.log(`--------------------------------------\n\n`);
+          await this.conn[signal](event, el);
         },
       });
     }
@@ -259,9 +262,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   /** @internal */
-  handleEvent(event) {
+  async handleEvent(event) {
     let signals = null;
     if (event.bitty && event.bitty.forward) {
       signals = event.bitty.forward;
@@ -269,7 +271,7 @@ class BittyJs extends HTMLElement {
     } else {
       signals = event.target.dataset.send;
     }
-    this.processSignals(event, signals);
+    await this.processSignals(event, signals);
   }
 
   /** @internal */
@@ -374,16 +376,32 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  processSignals(event, signals) {
-    signals
-      .split(/\s+/m)
-      .map((signalString) => signalString.trim())
-      .forEach((signalString) => {
-        const signalParts = signalString.split(":");
-        const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
-        const preface = signalParts.length >= 2 ? signalParsts[0] : "";
-        const doAwait = preface === "await" ? true : false;
-        let receiverCount = 0;
+  async processSignals(event, signals) {
+    const signalParts = signals.split(/\s+/m).map((signalBase) => signalBase.trim());
+    for (let signalString of signalParts) {
+      console.log(signalString);
+
+      const signalParts = signalString.split(":");
+      const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
+      const preface = signalParts.length >= 2 ? signalParts[0] : "";
+      const doAwait = preface === "await" ? true : false;
+      let receiverCount = 0;
+      if (doAwait === true) {
+        for (const receiver of this.receivers) {
+          if (receiver.key === signal) {
+            receiverCount += 1;
+            await receiver.f(event);
+            console.log("\n\nhere4\n\ncccccccccccccccccccccccccccccccccc\n\n");
+            console.log(event)
+            console.log("\ncccccccccccccccccccccccccccccccccc\n\n");
+          }
+        }
+        if (receiverCount === 0) {
+          if (this.conn[signal]) {
+            await this.conn[signal](event, null);
+          }
+        }
+      } else {
         this.receivers.forEach((receiver) => {
           if (receiver.key === signal) {
             receiverCount += 1;
@@ -395,7 +413,50 @@ class BittyJs extends HTMLElement {
             this.conn[signal](event, null);
           }
         }
-      });
+      }
+    }
+
+
+
+    // signals
+    //   .split(/\s+/m)
+    //   .map((signalString) => signalString.trim())
+    //   .forEach(async (signalString) => {
+    //     const signalParts = signalString.split(":");
+    //     const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
+    //     const preface = signalParts.length >= 2 ? signalParts[0] : "";
+    //     const doAwait = preface === "await" ? true : false;
+    //     let receiverCount = 0;
+    //     if (doAwait === true) {
+    //       this.receivers.forEach(async (receiver) => {
+    //         if (receiver.key === signal) {
+    //           receiverCount += 1;
+    //           await receiver.f(event);
+    //           console.log("\n\nhere4\n\ncccccccccccccccccccccccccccccccccc\n\n");
+    //           console.log(event)
+    //           console.log("\ncccccccccccccccccccccccccccccccccc\n\n");
+    //         }
+    //       });
+    //       if (receiverCount === 0) {
+    //         if (this.conn[signal]) {
+    //           await this.conn[signal](event, null);
+    //         }
+    //       }
+    //     } else {
+    //       this.receivers.forEach((receiver) => {
+    //         if (receiver.key === signal) {
+    //           receiverCount += 1;
+    //           receiver.f(event);
+    //         }
+    //       });
+    //       if (receiverCount === 0) {
+    //         if (this.conn[signal]) {
+    //           this.conn[signal](event, null);
+    //         }
+    //       }
+    //     }
+    //   });
+
   }
 
   // /** @internal */

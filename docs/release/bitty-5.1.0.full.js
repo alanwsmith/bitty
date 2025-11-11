@@ -352,6 +352,13 @@ class BittyJs extends HTMLElement {
     return skeleton.content.cloneNode(true);
   }
 
+  makeTXT(template, subs = []) {
+    subs.forEach((sub) => {
+      template = template.replaceAll(sub[0], sub[1]);
+    });
+    return template;
+  }
+
   match(event, el, key = "bittyid") {
     if (
       event.target.dataset[key] === undefined ||

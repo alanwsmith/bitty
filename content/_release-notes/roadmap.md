@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: Add a `bittyReady()` call that
+works like `bittyInit()` but happens
+after `this.runSendFromComponent();`
+
 - TODO: Add more tests for bittyCatch()
 
 - TODO: Allow sending forward without

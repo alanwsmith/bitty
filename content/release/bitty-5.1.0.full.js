@@ -65,6 +65,7 @@ class BittyJs extends HTMLElement {
       this.addEventListeners();
       await this.callBittyInit();
       this.runSendFromComponent();
+      await this.callBittyReady();
     }
   }
 
@@ -119,6 +120,17 @@ class BittyJs extends HTMLElement {
         await this.conn.bittyInit();
       } else {
         this.conn.bittyInit();
+      }
+    }
+  }
+
+  /** @internal */
+  async callBittyReady() {
+    if (typeof this.conn.bittyReady === "function") {
+      if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+        await this.conn.bittyReady();
+      } else {
+        this.conn.bittyReady();
       }
     }
   }
@@ -392,7 +404,6 @@ class BittyJs extends HTMLElement {
   setProp(key, value) {
     document.documentElement.style.setProperty(key, value);
   }
-
 
   /** @internal */
   setIds() {

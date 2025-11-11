@@ -41,9 +41,7 @@ class BittyJs extends HTMLElement {
     /** @internal */
     this.config = {
       listeners: ["click", "input"],
-      copyright: "Copyright 2025 - Alan W. Smith",
-      license:
-        "License at: htttp://bitty.alanwsmith.com/ - 2y1pBoEREr3eWA1ubCCOXdmRCdn",
+      license: "MIT",
       version: version,
     };
     /** @internal */

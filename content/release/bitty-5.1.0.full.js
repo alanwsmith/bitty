@@ -344,11 +344,8 @@ class BittyJs extends HTMLElement {
   }
 
   makeHTML(template, subs = []) {
-    subs.forEach((sub) => {
-      template = template.replaceAll(sub[0], sub[1]);
-    });
     const skeleton = document.createElement("template");
-    skeleton.innerHTML = template;
+    skeleton.innerHTML = this.makeTXT(template, subs);
     return skeleton.content.cloneNode(true);
   }
 

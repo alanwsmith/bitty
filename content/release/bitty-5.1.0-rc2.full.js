@@ -55,13 +55,9 @@ class BittyJs extends HTMLElement {
     this.dataset.bittyid = getUUID();
     await this.makeConnection();
     if (this.conn) {
-      this.setIds();
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
-      // this.watchMutations = this.handleMutations.bind(this);
-      this.loadReceivers();
-      // this.addObserver();
       this.addEventListeners();
       await this.callBittyInit();
       this.runSendFromComponent();
@@ -93,13 +89,6 @@ class BittyJs extends HTMLElement {
       });
     });
   }
-
-  /** @internal */
-  // addObserver() {
-  //   this.observerConfig = { childList: true, subtree: true };
-  //   this.observer = new MutationObserver(this.watchMutations);
-  //   this.observer.observe(this, this.observerConfig);
-  // }
 
   /** @internal */
   addReceiver(signal, el) {
@@ -273,21 +262,6 @@ class BittyJs extends HTMLElement {
     await this.processSignals(event, signals);
   }
 
-  /** @internal */
-  // handleMutations(mutationList, _observer) {
-  //   for (const mutation of mutationList) {
-  //     if (mutation.type === "childList") {
-  //       if (
-  //         mutation.addedNodes.length > 0 ||
-  //         mutation.removedNodes.length > 0
-  //       ) {
-  //         this.setIds();
-  //         this.loadReceivers();
-  //       }
-  //     }
-  //   }
-  // }
-
   async loadCSS(url, subs, options) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
     if (response.error) {
@@ -437,7 +411,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   setIds() {
-    this.querySelectorAll("*").forEach((el) => {
+    this.querySelectorAll(":not([data-bittyid])").forEach((el) => {
       if (!el.dataset.bittyid) {
         el.dataset.bittyid = getUUID();
       }

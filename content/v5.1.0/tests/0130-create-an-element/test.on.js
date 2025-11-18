@@ -14,9 +14,6 @@ export default class {
   }
 
    runTest0130(event, el) {
-    console.log("HERE1  -------------------------");
-    console.log(el);
-console.log(event);
     if (el.dataset.bittyid !== undefined) {
       el.innerHTML = "PASSED";
     }

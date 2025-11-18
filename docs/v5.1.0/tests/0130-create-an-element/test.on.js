@@ -1,8 +1,23 @@
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 export default class {
-  async runTest0130(_event, el) {
+  prepTest0130(_event, _el) {
     const newDiv = document.createElement("div");
-    await this.api.appendChild(newDiv);
-    if (newDiv.dataset.bittyid !== undefined) {
+    newDiv.innerHTML = "XXXFAILED";
+    newDiv.classList.add("test");
+    newDiv.classList.add("test-element-wrapper");
+    newDiv.dataset.receive = "runTest0130";
+    this.api.appendChild(newDiv);
+  }
+
+   runTest0130(event, el) {
+    console.log("HERE1  -------------------------");
+    console.log(el);
+console.log(event);
+    if (el.dataset.bittyid !== undefined) {
       el.innerHTML = "PASSED";
     }
   }

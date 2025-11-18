@@ -59,9 +59,9 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
-      this.watchMutations = this.handleMutations.bind(this);
+      // this.watchMutations = this.handleMutations.bind(this);
       this.loadReceivers();
-      this.addObserver();
+      // this.addObserver();
       this.addEventListeners();
       await this.callBittyInit();
       this.runSendFromComponent();
@@ -95,11 +95,11 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  addObserver() {
-    this.observerConfig = { childList: true, subtree: true };
-    this.observer = new MutationObserver(this.watchMutations);
-    this.observer.observe(this, this.observerConfig);
-  }
+  // addObserver() {
+  //   this.observerConfig = { childList: true, subtree: true };
+  //   this.observer = new MutationObserver(this.watchMutations);
+  //   this.observer.observe(this, this.observerConfig);
+  // }
 
   /** @internal */
   addReceiver(signal, el) {
@@ -139,12 +139,12 @@ class BittyJs extends HTMLElement {
   connectedMoveCallback() {
     // this method exist solely to prevent
     // connectedCallback() from firing if
-    // a bitty component is moved. 
+    // a bitty component is moved.
   }
 
   forward(event, signal) {
     event.bitty = {
-      forward: signal
+      forward: signal,
     };
     this.handleEvent(event);
   }
@@ -155,9 +155,9 @@ class BittyJs extends HTMLElement {
         type: "bittytrigger",
         bittyid: getUUID(),
         bitty: {
-          forward: signal 
-        }
-      }
+          forward: signal,
+        },
+      },
     );
   }
 
@@ -196,7 +196,7 @@ class BittyJs extends HTMLElement {
         const data = JSON.parse(response.value);
         const payload = { value: data };
         return payload;
-      } catch(error) {
+      } catch (error) {
         let payloadError = new BittyError({ type: "parsing" });
         const payload = { error: payloadError };
         return payload;
@@ -222,15 +222,19 @@ class BittyJs extends HTMLElement {
     let response = await fetch(url, options);
     try {
       if (!response.ok) {
-        throw new BittyError({ 
+        throw new BittyError({
           type: "fetching",
-          message: `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)}, ${JSON.stringify(options)})`,
-          statusText: response.statusText, 
-          status: response.status, 
-          url: response.url, 
-          incomingMethod: incomingMethod, 
-          subs: subs, 
-          options: options });
+          message:
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
+              JSON.stringify(subs)
+            }, ${JSON.stringify(options)})`,
+          statusText: response.statusText,
+          status: response.status,
+          url: response.url,
+          incomingMethod: incomingMethod,
+          subs: subs,
+          options: options,
+        });
       } else {
         let content = await response.text();
         subs.forEach((sub) => {
@@ -270,19 +274,19 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  handleMutations(mutationList, _observer) {
-    for (const mutation of mutationList) {
-      if (mutation.type === "childList") {
-        if (
-          mutation.addedNodes.length > 0 ||
-          mutation.removedNodes.length > 0
-        ) {
-          this.setIds();
-          this.loadReceivers();
-        }
-      }
-    }
-  }
+  // handleMutations(mutationList, _observer) {
+  //   for (const mutation of mutationList) {
+  //     if (mutation.type === "childList") {
+  //       if (
+  //         mutation.addedNodes.length > 0 ||
+  //         mutation.removedNodes.length > 0
+  //       ) {
+  //         this.setIds();
+  //         this.loadReceivers();
+  //       }
+  //     }
+  //   }
+  // }
 
   async loadCSS(url, subs, options) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
@@ -328,7 +332,9 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.dataset.connect.split(/\s+/m).map((x) => x.trim());
+        const connParts = this.dataset.connect.split(/\s+/m).map((x) =>
+          x.trim()
+        );
         if (typeof window[connParts[0]] !== "undefined") {
           this.conn = new window[connParts[0]]();
         } else {
@@ -374,8 +380,12 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async processSignals(event, signals) {
-    const signalParts = signals.split(/\s+/m).map((signalBase) => signalBase.trim());
+    const signalParts = signals.split(/\s+/m).map((signalBase) =>
+      signalBase.trim()
+    );
     for (let signalString of signalParts) {
+      this.setIds();
+      this.loadReceivers();
       const signalParts = signalString.split(":");
       const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
       const preface = signalParts.length >= 2 ? signalParts[0] : "";
@@ -411,14 +421,14 @@ class BittyJs extends HTMLElement {
         bittyid: getUUID(),
         target: this,
       });
-    } 
+    }
     if (this.dataset.s) {
       this.handleEvent({
         type: "bittytagdatasend",
         bittyid: getUUID(),
         target: this,
       });
-    } 
+    }
   }
 
   setProp(key, value) {

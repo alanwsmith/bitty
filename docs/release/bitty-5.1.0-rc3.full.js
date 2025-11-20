@@ -75,7 +75,6 @@ class BittyJs extends HTMLElement {
     }
     this.config.listeners.forEach((listener) => {
       window.addEventListener(listener, (event) => {
-        event.bittyid = getUUID();
         if (
           event.target &&
           event.target.nodeName &&
@@ -143,7 +142,6 @@ class BittyJs extends HTMLElement {
     this.handleEvent(
       {
         type: "bittytrigger",
-        bittyid: getUUID(),
         bitty: {
           forward: signal,
         },
@@ -408,21 +406,19 @@ class BittyJs extends HTMLElement {
     if (this.dataset.send) {
       this.handleEvent({
         type: "bittytagdatasend",
-        bittyid: getUUID(),
         target: this,
       });
     }
     if (this.dataset.s) {
       this.handleEvent({
         type: "bittytagdatasend",
-        bittyid: getUUID(),
         target: this,
       });
     }
   }
 
   setProp(key, value) {
-    document.documentElement.style.setProperty(key, value);
+    document.documentElement.style.setPropert;
   }
 
   /** @internal */

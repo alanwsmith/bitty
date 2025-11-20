@@ -31,9 +31,7 @@ class BittyError extends Error {
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-listeners
- * @attribute {string} data-r
  * @attribute {string} data-receive
- * @attribute {string} data-s
  * @attribute {string} data-send
  */
 
@@ -285,14 +283,6 @@ class BittyJs extends HTMLElement {
           this.addReceiver(signal, el);
         });
     });
-    this.querySelectorAll(`[data-r]`).forEach((el) => {
-      el.dataset.r
-        .split(/\s+/m)
-        .map((signal) => signal.trim())
-        .forEach((signal) => {
-          this.addReceiver(signal, el);
-        });
-    });
   }
 
   /** @internal */
@@ -418,16 +408,28 @@ class BittyJs extends HTMLElement {
   }
 
   setProp(key, value) {
-    document.documentElement.style.setPropert;
+    document.documentElement.style.setProperty(key, value);
   }
 
   /** @internal */
   setIds() {
-    this.querySelectorAll(":not([data-bittyid])").forEach((el) => {
-      if (!el.dataset.bittyid) {
-        el.dataset.bittyid = getUUID();
-      }
-    });
+    this.querySelectorAll("[data-receive]:not([data-bittyid])").forEach(
+      (el) => {
+        if (!el.dataset.bittyid) {
+          el.dataset.bittyid = getUUID();
+        }
+      },
+    );
+    /*
+    this.querySelectorAll("[data-send]:not([data-bittyid])").forEach(
+      (el) => {
+        if (!el.dataset.bittyid) {
+          el.dataset.bittyid = getUUID();
+        }
+      },
+    );
+
+    */
   }
 }
 

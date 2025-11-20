@@ -2,20 +2,20 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const template = document.createElement("template");
-template.innerHTML =
-  `<div><div><button class="test" data-send="testStub">FAILED</button></div></div>`;
-
 export default class {
-  async runTest0140(_event, element) {
-    let newButton = template.content.cloneNode(true);
-    element.replaceChildren(newButton);
-    element.childNodes[0].classList.add("test");
-    // sleep for test to wait for observer
-    // to update the UUID.
-    await sleep(100);
-    if (element.childNodes[0].dataset.bittyid !== undefined) {
-      element.childNodes[0].innerHTML = "PASSED";
-    }
+  bittyReady() {
+    this.api.trigger("runTest0140");
+  }
+
+  prepTest0140(_event, el) {
+    const template = document.createElement("template");
+    template.innerHTML =
+      `<div><div><div class="test" data-receive="runTest0140">FAILED</div></div></div>`;
+    const newEl = template.content.cloneNode(true);
+    el.replaceChildren(newEl);
+  }
+
+  runTest0140(_event, el) {
+    el.innerHTML = "PASSED";
   }
 }

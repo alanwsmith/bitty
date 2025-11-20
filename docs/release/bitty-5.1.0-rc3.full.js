@@ -349,26 +349,11 @@ class BittyJs extends HTMLElement {
             subContent.push(child.outerHTML);
           });
           template = template.replaceAll(sub[0], subContent.join(""));
-
-
-
       } else if(typeof sub[1] === "object") {
-        const checkObject = Object.prototype.toString.call(sub[1]);
-
-        if (checkObject === "[object DocumentFragment]") {
-          const subContent = [];
-          [...sub[1].children].forEach((child) => {
-            subContent.push(child.outerHTML);
-          });
-          template = template.replaceAll(sub[0], subContent.join(""));
-         } else {
-           template = template.replaceAll(sub[0], sub[1].outerHTML);
-         }
+        template = template.replaceAll(sub[0], sub[1].outerHTML);
       } else {
         template = template.replaceAll(sub[0], sub[1]);
       }
-
-
     });
     return template;
   }

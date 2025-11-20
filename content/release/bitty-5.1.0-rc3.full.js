@@ -326,7 +326,11 @@ class BittyJs extends HTMLElement {
 
   makeTXT(template, subs = []) {
     subs.forEach((sub) => {
-      template = template.replaceAll(sub[0], sub[1]);
+      if(typeof sub[1] === "object") {
+        template = template.replaceAll(sub[0], sub[1].outerHTML);
+      } else {
+        template = template.replaceAll(sub[0], sub[1]);
+      }
     });
     return template;
   }

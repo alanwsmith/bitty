@@ -381,6 +381,7 @@ class BittyJs extends HTMLElement {
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
       const signals = el.dataset.init.split(/\s/);
+      this.setIds();
       signals.forEach((signal) => {
         if (this.conn[signal]) {
           this.conn[signal]({
@@ -413,23 +414,21 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   setIds() {
+    this.querySelectorAll("[data-init]:not([data-bittyid])").forEach(
+      (el) => {
+        el.dataset.bittyid = getUUID();
+      },
+    );
     this.querySelectorAll("[data-receive]:not([data-bittyid])").forEach(
       (el) => {
-        if (!el.dataset.bittyid) {
-          el.dataset.bittyid = getUUID();
-        }
+        el.dataset.bittyid = getUUID();
       },
     );
-    /*
     this.querySelectorAll("[data-send]:not([data-bittyid])").forEach(
       (el) => {
-        if (!el.dataset.bittyid) {
-          el.dataset.bittyid = getUUID();
-        }
+        el.dataset.bittyid = getUUID();
       },
     );
-
-    */
   }
 }
 

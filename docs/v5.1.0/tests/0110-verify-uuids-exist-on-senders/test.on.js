@@ -1,6 +1,9 @@
 export default class {
   runTest0110(event, el) {
-    if (event.target.dataset.bittyid !== undefined) {
+    const checkEl = this.api.querySelector("[data-send]");
+    console.log(checkEl);
+    console.log(checkEl.dataset);
+    if (checkEl.dataset.bittyid !== undefined) {
       el.innerHTML = "PASSED";
     }
   }

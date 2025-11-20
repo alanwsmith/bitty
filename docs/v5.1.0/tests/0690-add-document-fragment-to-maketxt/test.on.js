@@ -2,7 +2,6 @@ const elTemplate = `<div>TARGET</div>`;
 
 export default class {
   runTest0690(_event, el) {
-    console.log("asdf");
     const fragmentTemplate = document.createElement("template");
     fragmentTemplate.innerHTML = "<div>F1</div><div>F2</div>"; 
      const fragment = fragmentTemplate.content.cloneNode(true);

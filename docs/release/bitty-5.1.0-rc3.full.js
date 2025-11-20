@@ -327,12 +327,19 @@ class BittyJs extends HTMLElement {
   makeTXT(template, subs = []) {
     subs.forEach((sub) => {
       if(typeof sub[1] === "object") {
-        if (sub[1].toString() === "[object DocumentFragment]") {
+        const checkObject = Object.prototype.toString.call(sub[1]);
+        if (checkObject === "[object DocumentFragment]") {
           const subContent = [];
           [...sub[1].children].forEach((child) => {
             subContent.push(child.outerHTML);
           });
           template = template.replaceAll(sub[0], subContent.join(""));
+        } else if(checkObject === "[object Array]") {
+          const newContent = [];
+          sub[1].forEach((el) => {
+            newContent.push(el.outerHTML);
+          });
+          template = template.replaceAll(sub[0], newContent.join(""));
         } else {
           template = template.replaceAll(sub[0], sub[1].outerHTML);
         }

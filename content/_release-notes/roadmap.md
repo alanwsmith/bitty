@@ -14,7 +14,7 @@ the contents of the component without
 having to rely on a child element calling
 `.parentNode`. 
 
-- TODO: Consider: `this.api.getData(KEY)`, 
+- TODO: Consider: `this.api.getData(el, KEY)`, 
 which gets the `data-KEY` value of an
 elements attribute or goes up the tree
 to the DOM root for ancestors to find
@@ -24,8 +24,6 @@ would be a payload with either
 
   Should also have: `this.api.getDataInt(KEY)`
   and `this.api.getDataFloat()`.
-
-
 
 
 

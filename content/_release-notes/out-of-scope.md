@@ -3,6 +3,14 @@
 These items are out of scope for 
 bitty:
 
+- Adding a custom template library is
+out of scope. 
+
+- Including any given template library
+directly in bitty is out of scope. 
+(TODO: Confirm you can just call
+one and use it from your class)
+
 - Triggering signals from events on the 
 `bitty` element itself. (e.g. `click` events). 
 The purpose of the element is

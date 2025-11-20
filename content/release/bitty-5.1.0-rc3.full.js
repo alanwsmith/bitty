@@ -326,8 +326,46 @@ class BittyJs extends HTMLElement {
 
   makeTXT(template, subs = []) {
     subs.forEach((sub) => {
-      if(typeof sub[1] === "object") {
+      const outerBaseType = typeof sub[1];
+      const outerDetailType = Object.prototype.toString.call(sub[1]); 
+      if(outerBaseType === "object" && outerDetailType === "[object Array]") {
+        const newContent = sub[1].map((el) => {
+          const innerBaseType = typeof el;
+          const innerDetailType = Object.prototype.toString.call(el); 
+          if(innerBaseType === "object" && innerDetailType === "[object DocumentFragment]") {
+            return [...el.children].map((child) => {
+              return child.outerHTML;
+            }).join("");
+          } else if(innerBaseType === "object") {
+            return el.outerHTML;
+          } else {
+            return el;
+          }
+        }).join("");
+       template = template.replaceAll(sub[0], newContent);
+
+          //   if(typeof sub[1] === "object") {
+          //     const checkInner = Object.prototype.toString.call(sub[1]);
+          //     if (checkInner === "[object DocumentFragment]") {
+          //       const innerContent = [];
+          //       [...sub[1].children].forEach((child) => {
+          //         innerContent.push(child.outerHTML);
+          //       });
+          //       newContent.push(innerContent.join(""));
+          //     }
+          //     newContent.push(el.outerHTML);
+          //   } else {
+          //     newContent.push(el);
+
+      } else if(outerBaseType === "object" && outerDetailType === "[object DocumentFragment]") {
+          const subContent = [];
+          [...sub[1].children].forEach((child) => {
+            subContent.push(child.outerHTML);
+          });
+          template = template.replaceAll(sub[0], subContent.join(""));
+      } else if(typeof sub[1] === "object") {
         const checkObject = Object.prototype.toString.call(sub[1]);
+
         if (checkObject === "[object DocumentFragment]") {
           const subContent = [];
           [...sub[1].children].forEach((child) => {
@@ -337,8 +375,21 @@ class BittyJs extends HTMLElement {
         } else if(checkObject === "[object Array]") {
           const newContent = [];
           sub[1].forEach((el) => {
-            newContent.push(el.outerHTML);
+            if(typeof sub[1] === "object") {
+              const checkInner = Object.prototype.toString.call(sub[1]);
+              if (checkInner === "[object DocumentFragment]") {
+                const innerContent = [];
+                [...sub[1].children].forEach((child) => {
+                  innerContent.push(child.outerHTML);
+                });
+                newContent.push(innerContent.join(""));
+              }
+              newContent.push(el.outerHTML);
+            } else {
+              newContent.push(el);
+            }
           });
+
           template = template.replaceAll(sub[0], newContent.join(""));
         } else {
           template = template.replaceAll(sub[0], sub[1].outerHTML);

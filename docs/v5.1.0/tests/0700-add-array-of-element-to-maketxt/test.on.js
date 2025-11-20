@@ -7,13 +7,14 @@ export default class {
       this.api.makeElement(template),
       this.api.makeElement(template),
     ];
-    console.log(Object.prototype.toString.call(newEls));
-    console.log(newEls.toString());
     const subs = [
       ["TARGET", newEls],
     ];
     const newTXT = this.api.makeTXT(initialTXT, subs);
-    console.log(newTXT);
-    el.innerHTML = "PASSED";
+    // console.log(`700: ${newTXT}`);
+    const targetTXT = `<div><div>ALFA</div><div>ALFA</div><div>ALFA</div></div>`;
+    if (newTXT === targetTXT) {
+      el.innerHTML = "PASSED";
+    }
   }
 }

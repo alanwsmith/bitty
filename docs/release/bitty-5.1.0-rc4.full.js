@@ -315,8 +315,10 @@ class BittyJs extends HTMLElement {
         const receivedSignals = receiver.dataset.receive.split(/\s/);
         for (const receivedSignal of receivedSignals) {
           if (receivedSignal === theSignal) {
-            this.conn[incomingSignal](event, receiver);
-            foundReceivers += 1;
+            if (this.conn[incomingSignal]) {
+              this.conn[incomingSignal](event, receiver);
+              foundReceivers += 1;
+            }
           }
 
           // const receivedSignalParts = receivedSignal.split(":");

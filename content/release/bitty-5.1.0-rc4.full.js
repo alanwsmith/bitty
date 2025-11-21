@@ -131,21 +131,25 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    event.bitty = {
-      forward: signal,
-    };
-    this.handleEvent(event);
+    // TODO: Put this back in place
+
+    // event.bitty = {
+    //   forward: signal,
+    // };
+    // this.handleEvent(event);
   }
 
   trigger(signal) {
-    this.handleEvent(
-      {
-        type: "bittytrigger",
-        bitty: {
-          forward: signal,
-        },
-      },
-    );
+    // TODO: Put this back in place
+
+    // this.handleEvent(
+    //   {
+    //     type: "bittytrigger",
+    //     bitty: {
+    //       forward: signal,
+    //     },
+    //   },
+    // );
   }
 
   async getElement(url, subs = [], options = {}) {
@@ -212,7 +216,8 @@ class BittyJs extends HTMLElement {
         throw new BittyError({
           type: "fetching",
           message:
-            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
+              JSON.stringify(subs)
             }, ${JSON.stringify(options)})`,
           statusText: response.statusText,
           status: response.status,
@@ -230,11 +235,16 @@ class BittyJs extends HTMLElement {
         subs.forEach((sub) => {
           const outerBaseType = typeof sub[1];
           const outerDetailType = Object.prototype.toString.call(sub[1]);
-          if (outerBaseType === "object" && outerDetailType === "[object Array]") {
+          if (
+            outerBaseType === "object" && outerDetailType === "[object Array]"
+          ) {
             const newContent = sub[1].map((el) => {
               const innerBaseType = typeof el;
               const innerDetailType = Object.prototype.toString.call(el);
-              if (innerBaseType === "object" && innerDetailType === "[object DocumentFragment]") {
+              if (
+                innerBaseType === "object" &&
+                innerDetailType === "[object DocumentFragment]"
+              ) {
                 return [...el.children].map((child) => {
                   return child.outerHTML;
                 }).join("");
@@ -245,7 +255,10 @@ class BittyJs extends HTMLElement {
               }
             }).join("");
             content = content.replaceAll(sub[0], newContent);
-          } else if (outerBaseType === "object" && outerDetailType === "[object DocumentFragment]") {
+          } else if (
+            outerBaseType === "object" &&
+            outerDetailType === "[object DocumentFragment]"
+          ) {
             const subContent = [];
             [...sub[1].children].forEach((child) => {
               subContent.push(child.outerHTML);
@@ -274,7 +287,67 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  async handleEvent(event) {
+  handleEvent(event) {
+    // TODO: Handle async/await
+
+    // TODO: Make sure there's a test that checks for
+    // an ID that's added to a new element and put
+    // this back in place if necessary.
+    // this.setIds();
+
+    const receivers = this.querySelectorAll("[data-receive]");
+    const incomingSignals = event.target.dataset.send;
+    incomingSignals.split(/\s+/).forEach((incomingSignal) => {
+      for (const receiver of receivers) {
+        const receivedSignals = receiver.dataset.receive.split(/\s/);
+        for (const receivedSignal of receivedSignals) {
+          const receivedSignalParts = receivedSignal.split(":");
+          if (receivedSignalParts.length === 1) {
+            if (incomingSignal === receivedSignalParts[0]) {
+              this.conn[incomingSignal](event, receiver);
+            }
+          }
+        }
+      }
+    });
+
+    // const els = this.querySelectorAll("[data-receive]");
+    // for (const el of els) {
+    //   const signals = el.dataset.receive.split(/\s/);
+    //   for (const signal of signals) {
+    //     const signalParts = signal.split(":");
+    //     if (signalParts.length === 1) {
+    //       if (!this.holder[signal]) {
+    //         this.holder[signal] = 0;
+    //       }
+    //       this.holder[signal] += 1;
+    //       console.log(`${signal} - ${this.holder[signal]}`);
+    //       if (this.conn[signal]) {
+    //         this.conn[signal](event, el);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // let signals = "";
+    // if (event.bitty && event.bitty.forward) {
+    //   signals = event.bitty.forward;
+    //   delete event.bitty.forward;
+    // } else {
+    //   if (event.target.dataset.send) {
+    //     signals += `${event.target.dataset.send} `;
+    //   }
+    //   if (event.target.dataset.s) {
+    //     signals += `${event.target.dataset.s} `;
+    //   }
+    // }
+
+    //await this.processSignals(event, signals);
+  }
+
+  /** @internal */
+  async _handleEvent(event) {
+    // TODO: See if this still needs to be async
     let signals = "";
     if (event.bitty && event.bitty.forward) {
       signals = event.bitty.forward;
@@ -363,7 +436,10 @@ class BittyJs extends HTMLElement {
         const newContent = sub[1].map((el) => {
           const innerBaseType = typeof el;
           const innerDetailType = Object.prototype.toString.call(el);
-          if (innerBaseType === "object" && innerDetailType === "[object DocumentFragment]") {
+          if (
+            innerBaseType === "object" &&
+            innerDetailType === "[object DocumentFragment]"
+          ) {
             return [...el.children].map((child) => {
               return child.outerHTML;
             }).join("");
@@ -374,7 +450,10 @@ class BittyJs extends HTMLElement {
           }
         }).join("");
         template = template.replaceAll(sub[0], newContent);
-      } else if (outerBaseType === "object" && outerDetailType === "[object DocumentFragment]") {
+      } else if (
+        outerBaseType === "object" &&
+        outerDetailType === "[object DocumentFragment]"
+      ) {
         const subContent = [];
         [...sub[1].children].forEach((child) => {
           subContent.push(child.outerHTML);
@@ -436,6 +515,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   runElementDataInits() {
+    // TODO: Make sure this can handle async/await
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
       const signals = el.dataset.init.split(/\s/);

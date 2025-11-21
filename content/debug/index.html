@@ -1,0 +1,54 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+body {
+  color: goldenrod;
+  background-color: black;
+}
+</style>
+<script>
+const template = `<button data-send="send2">Click me</button>`;
+
+window.BittyClass = class {
+  runThing(_, el) {
+    const button = this.api.makeElement(template);
+    el.replaceChildren(button);
+    button.click()
+
+    // el.innerHTML = "UPDATED";
+    // this.api.trigger("incoming");
+  }
+  send2(_, el) {
+    el.innerHTML = "UPDATED";
+  }
+
+  init(_event, el) {
+    el.click();
+  }
+
+  runTest0010(_event, el) {
+    el.innerHTML = "PASSED";
+  }
+}
+</script>
+</head>
+<body>
+
+<bitty-5-1 data-send="init">
+  <div class="test" data-receive="runTest0010">FAILED</div>
+  <button data-receive="init" data-send="runTest0010">Test Trigger</button>
+</bitty-5-1]>
+
+
+
+<bitty-5-1>
+<div data-init="runThing">WAITING</div>
+  <div data-receive="send2">WAITING</div>
+  <div data-receive="send2">WAITING</div>
+  <div data-receive="send2">WAITING</div>
+  <div data-receive="send2">WAITING</div>
+</bitty-5-1>
+<script src="/release/bitty-5.1.0-rc4.full.js" type="module"></script>
+</body>
+</html>

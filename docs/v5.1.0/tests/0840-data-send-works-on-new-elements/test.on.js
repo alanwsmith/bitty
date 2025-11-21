@@ -1,6 +1,7 @@
 const template = `<button data-send="update0840">Click</button>`;
 
 export default class {
+  /*
   incoming0840(_event, el) {
     const newButton = this.api.makeElement(template);
     el.appendChild(newButton);
@@ -12,4 +13,5 @@ export default class {
   update0840(_event, el) {
     el.innerHTML = "PASSED";
   }
+  */
 }

@@ -140,16 +140,14 @@ class BittyJs extends HTMLElement {
   }
 
   trigger(signal) {
-    // TODO: Put this back in place
-
-    // this.handleEvent(
-    //   {
-    //     type: "bittytrigger",
-    //     bitty: {
-    //       forward: signal,
-    //     },
-    //   },
-    // );
+    this.handleEvent(
+      {
+        type: "bittytrigger",
+        bitty: {
+          forward: signal,
+        },
+      },
+    );
   }
 
   async getElement(url, subs = [], options = {}) {
@@ -290,13 +288,21 @@ class BittyJs extends HTMLElement {
   handleEvent(event) {
     // TODO: Handle async/await
 
+    const receivers = this.querySelectorAll("[data-receive]");
+    let incomingSignals;
+
+    if (event.bitty && event.bitty.forward) {
+      incomingSignals = event.bitty.forward;
+      delete event.bitty.forward;
+    } else {
+      incomingSignals = event.target.dataset.send;
+    }
+
     // TODO: Make sure there's a test that checks for
     // an ID that's added to a new element and put
     // this back in place if necessary.
     // this.setIds();
 
-    const receivers = this.querySelectorAll("[data-receive]");
-    const incomingSignals = event.target.dataset.send;
     incomingSignals.split(/\s+/).forEach((incomingSignal) => {
       for (const receiver of receivers) {
         const receivedSignals = receiver.dataset.receive.split(/\s/);
@@ -355,9 +361,6 @@ class BittyJs extends HTMLElement {
     } else {
       if (event.target.dataset.send) {
         signals += `${event.target.dataset.send} `;
-      }
-      if (event.target.dataset.s) {
-        signals += `${event.target.dataset.s} `;
       }
     }
     await this.processSignals(event, signals);

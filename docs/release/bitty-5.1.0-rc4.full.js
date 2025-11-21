@@ -298,29 +298,51 @@ class BittyJs extends HTMLElement {
       incomingSignals = event.target.dataset.send;
     }
 
-    incomingSignals.split(/\s+/).forEach((incomingSignal) => {
-      // console.log(incomingSignal);
+    for (const incomingSignal of incomingSignals.split(/\s+/)) {
+      let doAwait = false;
+      let theSignal = incomingSignal;
+      const incomingSignalParts = incomingSignal.split(":");
+      if (
+        incomingSignalParts.length === 2 && incomingSignalParts[0] === "await"
+      ) {
+        doAwait = true;
+        theSignal = incomingSignalParts[1];
+      }
       let foundReceivers = 0;
+
       for (const receiver of receivers) {
+        // TODO: map and trim the signals
         const receivedSignals = receiver.dataset.receive.split(/\s/);
         for (const receivedSignal of receivedSignals) {
-          const receivedSignalParts = receivedSignal.split(":");
-          if (receivedSignalParts.length === 1) {
-            if (incomingSignal === receivedSignalParts[0]) {
-              if (this.conn[incomingSignal]) {
-                foundReceivers += 1;
-                this.conn[incomingSignal](event, receiver);
-              }
-            }
+          if (receivedSignal === theSignal) {
+            this.conn[incomingSignal](event, receiver);
+            foundReceivers += 1;
           }
+
+          // const receivedSignalParts = receivedSignal.split(":");
+          // if (receivedSignalParts.length === 1) {
+          //   if (incomingSignal === receivedSignalParts[0]) {
+          //     if (this.conn[incomingSignal]) {
+          //       foundReceivers += 1;
+          //       this.conn[incomingSignal](event, receiver);
+          //     }
+          //   }
+          // } else if (receivedSignalParts[0] === "await") {
+          //   if (incomingSignal === receivedSignalParts[1]) {
+          //     if (this.conn[incomingSignal]) {
+          //       foundReceivers += 1;
+          //       this.conn[incomingSignal](event, receiver);
+          //     }
+          //   }
+          // }
         }
       }
       if (foundReceivers === 0) {
-        if (this.conn[incomingSignal]) {
-          this.conn[incomingSignal](event, null);
+        if (this.conn[theSignal]) {
+          this.conn[theSignal](event, null);
         }
       }
-    });
+    }
 
     // const els = this.querySelectorAll("[data-receive]");
     // for (const el of els) {

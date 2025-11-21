@@ -43,39 +43,44 @@ window.BittyClass = class {
 
   #counter = 0;
 
+  /*
   bittyReady() {
     console.log("HERE1: bittyReady()");
     // this.api.trigger("runTest0077");
     this.api.trigger("runTest0850Alfa");
     this.api.trigger("runTest0850Bravo");
   }
+  */
 
   async doSleep() {
     await sleep(1000);
   }
 
   runTest0850Alfa(_event, el) {
-    const editEl = this.api.querySelector("#testTarget0850");
-    this.#counter += 1;
-    console.log("runTest0850Alfa")
-    findLargePrimes(9000);
-    // el.innerHTML = "ALFA";
-    el.innerHTML = editEl.innerHTML;
-    editEl.innerHTML = "b";
-    findLargePrimes(9000);
+    if (el) {
+      const editEl = this.api.querySelector("#testTarget0850");
+      this.#counter += 1;
+      console.log("runTest0850Alfa")
+      findLargePrimes(9000);
+      // el.innerHTML = "ALFA";
+      el.innerHTML = editEl.innerHTML;
+      editEl.innerHTML = "b";
+      findLargePrimes(9000);
+    }
   }
 
   runTest0850Bravo(_event, el) {
-    const editEl = this.api.querySelector("#testTarget0850");
-    this.#counter += 1;
-    console.log("runTest0850Bravo")
-    findLargePrimes(1000);
-    // el.innerHTML = "BRAVO";
-    //el.innerHTML = this.#counter;
-    el.innerHTML = editEl.innerHTML;
-    editEl.innerHTML = "y";
+    if (el) {
+      const editEl = this.api.querySelector("#testTarget0850");
+      this.#counter += 1;
+      console.log("runTest0850Bravo")
+      findLargePrimes(1000);
+      // el.innerHTML = "BRAVO";
+      //el.innerHTML = this.#counter;
+      el.innerHTML = editEl.innerHTML;
+      editEl.innerHTML = "y";
+    }
   }
-
 
   runTest0077(_event, _el) {
     this.api.trigger("triggerEvent0077");
@@ -114,17 +119,40 @@ window.BittyClass = class {
   forwardEvent0075(_event, el) {
     el.innerHTML = "PASSED";
   }
+
+  #testValue0630 = false;
+
+  checkTest0630(_event, el) {
+    if (this.#testValue0630 === true) {
+      el.innerHTML = "PASSED";
+    } else {
+      el.innerHTML = "FAILED";
+    }
+  }
+
+  async runTest0630(_event, _el) {
+    await sleep(300);
+    // await sleep(300);
+    this.#testValue0630 = true;
+  }
+
 }
 </script>
 </head>
 <body>
 
+
+<bitty-5-1 
+  data-send="await:runTest0630 checkTest0630">
+  <div data-receive="checkTest0630">WAITING</div>
+</bitty-5-1>
+
+      <!--
 <bitty-5-1>
         <div id="testTarget0850">a</div>
   <div class="test" data-receive="runTest0850Alfa">FAILED</div>
   <div class="test" data-receive="runTest0850Bravo">FAILED</div>
 </bitty-5-1>
-      <!--
 
 <bitty-5-1>
   <div class="test" data-receive="triggerEvent0077">FAILED</div>

@@ -43,5 +43,6 @@ export default class {
     if (checkEl.innerHTML === "b" && this.#counter === 2) {
       el.innerHTML = "PASSED";
     }
+    checkEl.innerHTML = "";
   }
 }

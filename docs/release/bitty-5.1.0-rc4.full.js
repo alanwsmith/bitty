@@ -284,7 +284,7 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  handleEvent(event) {
+  async handleEvent(event) {
     // TODO: Handle async/await
     this.setIds();
 
@@ -339,7 +339,11 @@ class BittyJs extends HTMLElement {
       }
       if (foundReceivers === 0) {
         if (this.conn[theSignal]) {
-          this.conn[theSignal](event, null);
+          if (doAwait) {
+            await this.conn[theSignal](event, null);
+          } else {
+            this.conn[theSignal](event, null);
+          }
         }
       }
     }

@@ -114,6 +114,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async callBittyReady() {
+    // TODO: Verify async again here.
     if (typeof this.conn.bittyReady === "function") {
       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
         await this.conn.bittyReady();
@@ -131,12 +132,10 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    // TODO: Put this back in place
-
-    // event.bitty = {
-    //   forward: signal,
-    // };
-    // this.handleEvent(event);
+    event.bitty = {
+      forward: signal,
+    };
+    this.handleEvent(event);
   }
 
   trigger(signal) {
@@ -304,15 +303,25 @@ class BittyJs extends HTMLElement {
     // this.setIds();
 
     incomingSignals.split(/\s+/).forEach((incomingSignal) => {
+      console.log(incomingSignal);
+      let foundReceivers = 0;
       for (const receiver of receivers) {
         const receivedSignals = receiver.dataset.receive.split(/\s/);
         for (const receivedSignal of receivedSignals) {
           const receivedSignalParts = receivedSignal.split(":");
           if (receivedSignalParts.length === 1) {
             if (incomingSignal === receivedSignalParts[0]) {
-              this.conn[incomingSignal](event, receiver);
+              if (this.conn[incomingSignal]) {
+                foundReceivers += 1;
+                this.conn[incomingSignal](event, receiver);
+              }
             }
           }
+        }
+      }
+      if (foundReceivers === 0) {
+        if (this.conn[incomingSignal]) {
+          this.conn[incomingSignal](event, null);
         }
       }
     });

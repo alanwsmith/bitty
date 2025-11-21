@@ -11,16 +11,31 @@ body {
 const template = `<button data-send="send2">Click me</button>`;
 
 window.BittyClass = class {
+  bittyReady() {
+    console.log("HERE1: bittyReady()");
+    this.api.trigger("runTest0077");
+  }
+
+  runTest0077(_event, _el) {
+    this.api.trigger("triggerEvent0077");
+  }
+
+  triggerEvent0077(_event, el) {
+    if (el) {
+    el.innerHTML = "PASSED";
+    }
+  }
+
   runThing(_, el) {
     const button = this.api.makeElement(template);
     el.replaceChildren(button);
     button.click()
-
-    // el.innerHTML = "UPDATED";
-    // this.api.trigger("incoming");
   }
+
   send2(_, el) {
-    el.innerHTML = "UPDATED";
+    if (el) {
+      el.innerHTML = "UPDATED";
+    }
   }
 
   init(_event, el) {
@@ -30,17 +45,32 @@ window.BittyClass = class {
   runTest0010(_event, el) {
     el.innerHTML = "PASSED";
   }
+
+  runTest0075(event, _el) {
+    this.api.forward(event, "forwardEvent0075");
+  }
+
+  forwardEvent0075(_event, el) {
+    el.innerHTML = "PASSED";
+  }
 }
 </script>
 </head>
 <body>
 
-<bitty-5-1 data-send="init">
+<bitty-5-1>
+  <div class="test" data-receive="triggerEvent0077">FAILED</div>
+</bitty-5-1>
+
+<bitty-5-1 data-send="init0010">
   <div class="test" data-receive="runTest0010">FAILED</div>
-  <button data-receive="init" data-send="runTest0010">Test Trigger</button>
-</bitty-5-1]>
+  <button data-receive="init0010" data-send="runTest0010">Test Trigger</button>
+</bitty-5-1>
 
-
+<bitty-5-1>
+  <div data-init="runTest0075">Test Trigger</div>
+  <div class="test" data-receive="forwardEvent0075">FAILED</div>
+</bitty-5-1>
 
 <bitty-5-1>
 <div data-init="runThing">WAITING</div>
@@ -49,6 +79,7 @@ window.BittyClass = class {
   <div data-receive="send2">WAITING</div>
   <div data-receive="send2">WAITING</div>
 </bitty-5-1>
+
 <script src="/release/bitty-5.1.0-rc4.full.js" type="module"></script>
 </body>
 </html>

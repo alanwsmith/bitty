@@ -286,6 +286,7 @@ class BittyJs extends HTMLElement {
   /** @internal */
   handleEvent(event) {
     // TODO: Handle async/await
+    this.setIds();
 
     const receivers = this.querySelectorAll("[data-receive]");
     let incomingSignals;
@@ -296,11 +297,6 @@ class BittyJs extends HTMLElement {
     } else {
       incomingSignals = event.target.dataset.send;
     }
-
-    // TODO: Make sure there's a test that checks for
-    // an ID that's added to a new element and put
-    // this back in place if necessary.
-    // this.setIds();
 
     incomingSignals.split(/\s+/).forEach((incomingSignal) => {
       console.log(incomingSignal);

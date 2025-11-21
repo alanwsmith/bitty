@@ -1,6 +1,6 @@
 export default class {
   async getElementsError(_event, el) {
-    const url = "/v5.0.0/payloads/get-elements/intentionally-missing-file.html";
+    const url = "/v5.1.0/payloads/get-elements/intentionally-missing-file.html";
     const response = await this.api.getElements(url);
     if (response.ok) {
       el.replaceChildren(response.ok);

@@ -1,5 +1,8 @@
 ## Roadmap 
 
+- TODO: Set up so that `data-init` only triggers
+once for any given signal. 
+
 - TODO: Set up so `this.api.trigger()` can 
 make multiple calls (e.g. `this.api.trigger("alfa bravo")`)
 

@@ -299,7 +299,7 @@ class BittyJs extends HTMLElement {
     }
 
     incomingSignals.split(/\s+/).forEach((incomingSignal) => {
-      console.log(incomingSignal);
+      // console.log(incomingSignal);
       let foundReceivers = 0;
       for (const receiver of receivers) {
         const receivedSignals = receiver.dataset.receive.split(/\s/);
@@ -356,20 +356,20 @@ class BittyJs extends HTMLElement {
     //await this.processSignals(event, signals);
   }
 
-  /** @internal */
-  async _handleEvent(event) {
-    // TODO: See if this still needs to be async
-    let signals = "";
-    if (event.bitty && event.bitty.forward) {
-      signals = event.bitty.forward;
-      delete event.bitty.forward;
-    } else {
-      if (event.target.dataset.send) {
-        signals += `${event.target.dataset.send} `;
-      }
-    }
-    await this.processSignals(event, signals);
-  }
+  // /** @internal */
+  // async _handleEvent(event) {
+  //   // TODO: See if this still needs to be async
+  //   let signals = "";
+  //   if (event.bitty && event.bitty.forward) {
+  //     signals = event.bitty.forward;
+  //     delete event.bitty.forward;
+  //   } else {
+  //     if (event.target.dataset.send) {
+  //       signals += `${event.target.dataset.send} `;
+  //     }
+  //   }
+  //   await this.processSignals(event, signals);
+  // }
 
   async loadCSS(url, subs, options) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
@@ -384,18 +384,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
-  loadReceivers() {
-    this.receivers = [];
-    this.querySelectorAll(`[data-receive]`).forEach((el) => {
-      el.dataset.receive
-        .split(/\s+/m)
-        .map((signal) => signal.trim())
-        .forEach((signal) => {
-          this.addReceiver(signal, el);
-        });
-    });
-  }
+  // /** @internal */
+  // loadReceivers() {
+  //   this.receivers = [];
+  //   this.querySelectorAll(`[data-receive]`).forEach((el) => {
+  //     el.dataset.receive
+  //       .split(/\s+/m)
+  //       .map((signal) => signal.trim())
+  //       .forEach((signal) => {
+  //         this.addReceiver(signal, el);
+  //       });
+  //   });
+  // }
 
   /** @internal */
   async makeConnection() {
@@ -486,40 +486,40 @@ class BittyJs extends HTMLElement {
     return event.target.dataset[key] === el.dataset[key];
   }
 
-  /** @internal */
-  async processSignals(event, signals) {
-    const signalParts = signals.split(/\s+/m).map((signalBase) =>
-      signalBase.trim()
-    );
-    for (let signalString of signalParts) {
-      this.setIds();
-      this.loadReceivers();
-      const signalParts = signalString.split(":");
-      const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
-      const preface = signalParts.length >= 2 ? signalParts[0] : "";
-      const doAwait = preface === "await" ? true : false;
-      let receiverCount = 0;
-      for (const receiver of this.receivers) {
-        if (receiver.key === signal) {
-          receiverCount += 1;
-          if (doAwait === true) {
-            await receiver.f(event);
-          } else {
-            receiver.f(event);
-          }
-        }
-      }
-      if (receiverCount === 0) {
-        if (this.conn[signal]) {
-          if (doAwait === true) {
-            await this.conn[signal](event, null);
-          } else {
-            this.conn[signal](event, null);
-          }
-        }
-      }
-    }
-  }
+  // /** @internal */
+  // async processSignals(event, signals) {
+  //   const signalParts = signals.split(/\s+/m).map((signalBase) =>
+  //     signalBase.trim()
+  //   );
+  //   for (let signalString of signalParts) {
+  //     this.setIds();
+  //     this.loadReceivers();
+  //     const signalParts = signalString.split(":");
+  //     const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
+  //     const preface = signalParts.length >= 2 ? signalParts[0] : "";
+  //     const doAwait = preface === "await" ? true : false;
+  //     let receiverCount = 0;
+  //     for (const receiver of this.receivers) {
+  //       if (receiver.key === signal) {
+  //         receiverCount += 1;
+  //         if (doAwait === true) {
+  //           await receiver.f(event);
+  //         } else {
+  //           receiver.f(event);
+  //         }
+  //       }
+  //     }
+  //     if (receiverCount === 0) {
+  //       if (this.conn[signal]) {
+  //         if (doAwait === true) {
+  //           await this.conn[signal](event, null);
+  //         } else {
+  //           this.conn[signal](event, null);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   /** @internal */
   runElementDataInits() {

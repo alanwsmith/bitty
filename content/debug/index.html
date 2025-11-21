@@ -10,11 +10,72 @@ body {
 <script>
 const template = `<button data-send="send2">Click me</button>`;
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function findLargePrimes(limit) {
+    const primes = [];
+    function isPrime(num) {
+        // Intentionally inefficient primality test with O(n) complexity
+        if (num <= 1) return false;
+        for (let i = 2; i < num; i++) {
+            // Deliberately slow checking process
+            for (let j = 0; j < 1000; j++) {
+                Math.sqrt(j); // Add some extra computational overhead
+            }
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // Nested loops to make the function extremely time-consuming
+    for (let num = 2; num < limit; num++) {
+        if (isPrime(num)) {
+            primes.push(num);
+        }
+    }
+    return primes;
+}
+
 window.BittyClass = class {
+
+  #counter = 0;
+
   bittyReady() {
     console.log("HERE1: bittyReady()");
-    this.api.trigger("runTest0077");
+    // this.api.trigger("runTest0077");
+    this.api.trigger("runTest0850Alfa");
+    this.api.trigger("runTest0850Bravo");
   }
+
+  async doSleep() {
+    await sleep(1000);
+  }
+
+  runTest0850Alfa(_event, el) {
+    const editEl = this.api.querySelector("#testTarget0850");
+    this.#counter += 1;
+    console.log("runTest0850Alfa")
+    findLargePrimes(9000);
+    // el.innerHTML = "ALFA";
+    el.innerHTML = editEl.innerHTML;
+    editEl.innerHTML = "b";
+    findLargePrimes(9000);
+  }
+
+  runTest0850Bravo(_event, el) {
+    const editEl = this.api.querySelector("#testTarget0850");
+    this.#counter += 1;
+    console.log("runTest0850Bravo")
+    findLargePrimes(1000);
+    // el.innerHTML = "BRAVO";
+    //el.innerHTML = this.#counter;
+    el.innerHTML = editEl.innerHTML;
+    editEl.innerHTML = "y";
+  }
+
 
   runTest0077(_event, _el) {
     this.api.trigger("triggerEvent0077");
@@ -59,6 +120,13 @@ window.BittyClass = class {
 <body>
 
 <bitty-5-1>
+        <div id="testTarget0850">a</div>
+  <div class="test" data-receive="runTest0850Alfa">FAILED</div>
+  <div class="test" data-receive="runTest0850Bravo">FAILED</div>
+</bitty-5-1>
+      <!--
+
+<bitty-5-1>
   <div class="test" data-receive="triggerEvent0077">FAILED</div>
 </bitty-5-1>
 
@@ -79,6 +147,8 @@ window.BittyClass = class {
   <div data-receive="send2">WAITING</div>
   <div data-receive="send2">WAITING</div>
 </bitty-5-1>
+
+-->
 
 <script src="/release/bitty-5.1.0-rc4.full.js" type="module"></script>
 </body>

@@ -285,12 +285,9 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    // TODO: Handle async/await
     this.setIds();
-
     const receivers = this.querySelectorAll("[data-receive]");
     let incomingSignals;
-
     if (event.bitty && event.bitty.forward) {
       incomingSignals = event.bitty.forward;
       delete event.bitty.forward;
@@ -314,14 +311,27 @@ class BittyJs extends HTMLElement {
         // TODO: map and trim the signals
         const receivedSignals = receiver.dataset.receive.split(/\s/);
         for (const receivedSignal of receivedSignals) {
-          if (receivedSignal === theSignal) {
+          let rSignal = receivedSignal;
+          const receivedSignalParts = receivedSignal.split(":");
+          if (
+            receivedSignalParts.length === 2 &&
+            receivedSignalParts[0] === "await"
+          ) {
+            rSignal = receivedSignalParts[1];
+            doAwait = true;
+          }
+
+          if (rSignal === theSignal) {
             if (this.conn[incomingSignal]) {
-              this.conn[incomingSignal](event, receiver);
+              if (doAwait) {
+                await this.conn[incomingSignal](event, receiver);
+              } else {
+                this.conn[incomingSignal](event, receiver);
+              }
               foundReceivers += 1;
             }
           }
 
-          // const receivedSignalParts = receivedSignal.split(":");
           // if (receivedSignalParts.length === 1) {
           //   if (incomingSignal === receivedSignalParts[0]) {
           //     if (this.conn[incomingSignal]) {

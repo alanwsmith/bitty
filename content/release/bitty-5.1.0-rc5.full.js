@@ -155,15 +155,14 @@ class BittyJs extends HTMLElement {
   }
 
   async getElement(url, subs = [], options = {}) {
-    let response = await this.getTXT(url, subs, options, "getElement");
-    if (response.error) {
-      return response;
-    } else {
-      const template = document.createElement("template");
-      template.innerHTML = response.value;
-      const fragment = template.content.cloneNode(true);
-      const payload = { value: fragment.firstChild };
+    const response = await this.getHTML(url, subs, options, "getElement");
+    if (response.value) {
+      const el = response.value.firstChild;
+      this.addId(el);
+      const payload = { value: el };
       return payload;
+    } else {
+      return response;
     }
   }
 
@@ -487,8 +486,10 @@ class BittyJs extends HTMLElement {
   }
 
   addId(el) {
-    if (!el.dataset.bittyid) {
-      el.dataset.bittyid = getUUID();
+    if (el.dataset.receive || el.dataset.send || el.dataset.init) {
+      if (!el.dataset.bittyid) {
+        el.dataset.bittyid = getUUID();
+      }
     }
   }
 

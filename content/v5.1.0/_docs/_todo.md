@@ -1,5 +1,3 @@
-## Documentation TODO
-
 - Document that only elements with
 `data-send`, `data-receive`, and
 `data-init` get `data-bittyid` IDs. 
@@ -24,4 +22,12 @@ via listeners. (I think one example was
 some message passing events)
 
 - Note that the element is set to be a block. 
+
+- Note that `data-init` attrs are only processed
+when the bitty element loads. (i.e. if you 
+add new elements with `this.api.makeElement()`, etc...
+that have `data-init`, they won't fire. The 
+idea is that if you're adding an element
+you just take care of everything at that
+point directly. 
 

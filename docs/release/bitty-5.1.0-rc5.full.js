@@ -447,6 +447,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   runElementDataInits() {
+    // TODO: Make sure this is only called once.
     // TODO: Make sure this can handle async/await
     // TODO: Consider if this should be a custom
     // event that bubbles. Probably not but
@@ -481,11 +482,12 @@ class BittyJs extends HTMLElement {
   /** @internal */
   setIds(input) {
     input.querySelectorAll("*").forEach((el) => {
+      const ds = el.dataset;
       if (
-        el.dataset.receive || el.dataset.send ||
-        el.dataset.init && !el.dataset.bittyid
+        ds.receive || ds.send ||
+        ds.init && !ds.bittyid
       ) {
-        el.dataset.bittyid = self.crypto.randomUUID();
+        ds.bittyid = self.crypto.randomUUID();
       }
     });
   }

@@ -332,6 +332,56 @@ examples as well.
 </details>
 </summary>
  
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - TODO</summary>
+    <p>Documentation changes to make and add:</p>
+<ul>
+<li>
+<p>Document that only elements with
+<code>data-send</code>, <code>data-receive</code>, and
+<code>data-init</code> get <code>data-bittyid</code> IDs.
+They are added when the element
+is connected.</p>
+</li>
+<li>
+<p>Elements added with <code>this.api.makeElement()</code>,
+<code>this.api.makeHTML()</code>, <code>this.api.getElement()</code>, or
+<code>this.api.getHTML()</code> that have bitty <code>data-*</code>
+attributes get <code>data-bittyid</code> attrs
+when they are created.</p>
+</li>
+<li>
+<p>Elements that are created outside
+of <code>this.api</code> (e.g. with <code>document.createElement()</code>
+don't get <code>data-bittyid</code> attrs automatically.
+They have to be added manually if
+they are needed.</p>
+</li>
+<li>
+<p>Note that <code>bittyCatch</code> is there for events
+that don't have a good way to define them
+via listeners. (I think one example was
+some message passing events)</p>
+</li>
+<li>
+<p>Note that the element is set to be a block.</p>
+</li>
+<li>
+<p>Note that <code>data-init</code> attrs are only processed
+when the bitty element loads. (i.e. if you
+add new elements with <code>this.api.makeElement()</code>, etc...
+that have <code>data-init</code>, they won't fire. The
+idea is that if you're adding an element
+you just take care of everything at that
+point directly.</p>
+</li>
+</ul>
+  </details>
+</section>
+
+ 
 
 <section class="default-flow">
 
@@ -345,7 +395,6 @@ events occur. Defining the signals and the events
 that trigger them is done with four <code><span class="line-marker"></span><span class="text html basic">data-*</span></code>
 attributes that are added to <code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-5-1</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>
 tags and their children. The four attributes are:</p>
-
 
     <details class="sub-section-details">
       <summary class="docs-summary">data-connect</summary>
@@ -5345,7 +5394,7 @@ mechanisms.</p>
 </ul></details> 
 <details class="section-details">
   <summary>Test Suite</summary>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="test-output-wrapper">

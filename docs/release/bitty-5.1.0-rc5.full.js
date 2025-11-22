@@ -390,9 +390,7 @@ class BittyJs extends HTMLElement {
 
   makeElement(template, subs = []) {
     const el = this.makeHTML(template, subs).firstChild;
-    if (el.dataset.receive || el.dataset.send || el.dataset.init) {
-      this.addId(el);
-    }
+    this.addId(el);
     return el;
   }
 

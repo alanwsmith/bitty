@@ -512,21 +512,25 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   setIds() {
-    this.querySelectorAll("[data-init]:not([data-bittyid])").forEach(
-      (el) => {
-        el.dataset.bittyid = getUUID();
-      },
-    );
-    this.querySelectorAll("[data-receive]:not([data-bittyid])").forEach(
-      (el) => {
-        el.dataset.bittyid = getUUID();
-      },
-    );
-    this.querySelectorAll("[data-send]:not([data-bittyid])").forEach(
-      (el) => {
-        el.dataset.bittyid = getUUID();
-      },
-    );
+    this.querySelectorAll("*").forEach((el) => {
+      this.addId(el);
+    });
+
+    // this.querySelectorAll("[data-init]:not([data-bittyid])").forEach(
+    //   (el) => {
+    //     el.dataset.bittyid = getUUID();
+    //   },
+    // );
+    // this.querySelectorAll("[data-receive]:not([data-bittyid])").forEach(
+    //   (el) => {
+    //     el.dataset.bittyid = getUUID();
+    //   },
+    // );
+    // this.querySelectorAll("[data-send]:not([data-bittyid])").forEach(
+    //   (el) => {
+    //     el.dataset.bittyid = getUUID();
+    //   },
+    // );
   }
 }
 

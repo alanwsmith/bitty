@@ -1,5 +1,10 @@
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export class AlfaWidget {
-  bittyReady() {
+  async bittyReady() {
+    await sleep(100);
     this.api.querySelector("button").click();
   }
 

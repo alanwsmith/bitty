@@ -158,7 +158,6 @@ class BittyJs extends HTMLElement {
     const response = await this.getHTML(url, subs, options, "getElement");
     if (response.value) {
       const el = response.value.firstChild;
-      this.addId(el);
       const payload = { value: el };
       return payload;
     } else {
@@ -174,6 +173,9 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = response.value;
       const fragment = template.content.cloneNode(true);
+      fragment.querySelectorAll("*").forEach((check) => {
+        this.addId(check);
+      });
       const payload = { value: fragment };
       return payload;
     }
@@ -390,14 +392,17 @@ class BittyJs extends HTMLElement {
 
   makeElement(template, subs = []) {
     const el = this.makeHTML(template, subs).firstChild;
-    this.addId(el);
     return el;
   }
 
   makeHTML(template, subs = []) {
     const skeleton = document.createElement("template");
     skeleton.innerHTML = this.makeTXT(template, subs).trim();
-    return skeleton.content.cloneNode(true);
+    const el = skeleton.content.cloneNode(true);
+    el.querySelectorAll("*").forEach((check) => {
+      this.addId(check);
+    });
+    return el;
   }
 
   makeTXT(template, subs = []) {
@@ -453,6 +458,9 @@ class BittyJs extends HTMLElement {
   /** @internal */
   runElementDataInits() {
     // TODO: Make sure this can handle async/await
+    // TODO: Consider if this should be a custom
+    // event that bubbles. Probably not but
+    // need to think about it a little more.
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
       const signals = el.dataset.init.split(/\s/);

@@ -4015,16 +4015,32 @@ that bubbles up to the document root</p>
 that bubbles up to the document root</p>
 </li>
 <li>
-<p>TODO: Set up so bittyids are added on
-connectedcallback</p>
+<p>Set up so <code>data-bittyid</code> attrs are added on
+connectedCallback instead of at each event
+call.</p>
 </li>
 <li>
-<p>TODO: Set up so bittyids are added on
-makeHTML, getHTML, makeElement, getElement
-when those fire. The net result is that
-anything added with the <code>this.api.WHATEVER</code>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.makeElement()</code></p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.getElement()</code></p>
+</li>
+<li>
+<p>TODO: Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.makeHTML()</code></p>
+</li>
+<li>
+<p>TODO: Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.getHTML()</code></p>
+</li>
+<li>
+<p>TODO: The net result is the <code>data-bittyid</code>
+updates is that anything added with the <code>this.api.WHATEVER</code>
 that has a <code>data-send</code>, <code>data-receive</code>,
-or <code>data-init</code>, will have an ID. Anything
+or <code>data-init</code>, will have a <code>data-bittyid</code>
+added. Anything
 that's added outside the API won't, event
 if it has one of the bitty <code>data-*</code>
 attributes.</p>
@@ -8368,7 +8384,7 @@ TEST: Add array of element to makeHTML()      </h5>
     </div>
       <div>
       <h5 class="test-title">
-TEST: Add Array of doc fragments to makeHTML()      </h5>
+TEST: Add Array of doc fragments to makeHTML() and make sure `data-bittyid` attrs are added      </h5>
       <div class="test-output-wrapper">
 
         <div class="test-output">
@@ -8377,8 +8393,6 @@ TEST: Add Array of doc fragments to makeHTML()      </h5>
 >
   <div data-init="runTest0760">FAILED</div>
 </bitty-5-1>
-
-
         </div>
 
         <div class="test-details">
@@ -8393,7 +8407,8 @@ TEST: Add Array of doc fragments to makeHTML()      </h5>
             <pre class="code-block">
 <span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0760</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">t1</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;&lt;/div&gt;&lt;div&gt;TARGET&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">t1</span> <span class="keyword operator assignment js">=</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div data-send=&quot;stub0760&quot; class=&quot;test&quot;&gt;FAILED&lt;/div&gt;&lt;div&gt;TARGET&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">t2</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;&lt;/div&gt;&lt;div class=&quot;test&quot;&gt;PASSED&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">items</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
 <span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">t2</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation separator comma js">,</span>
@@ -8404,6 +8419,9 @@ TEST: Add Array of doc fragments to makeHTML()      </h5>
 <span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TARGET<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">items</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>    <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newFragment</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">t1</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">newFragment</span><span class="punctuation accessor js">.</span><span class="meta property object js">firstChild</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">newFragment</span><span class="punctuation accessor js">.</span><span class="meta property object js">firstChild</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">newFragment</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>

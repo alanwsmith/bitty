@@ -23,4 +23,5 @@ that don't have a good way to define them
 via listeners. (I think one example was
 some message passing events)
 
+- Note that the element is set to be a block. 
 

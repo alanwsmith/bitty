@@ -9,11 +9,6 @@ const blockStylesheet = new CSSStyleSheet();
 blockStylesheet.replaceSync(`${tagName} { display: block; }`);
 document.adoptedStyleSheets.push(blockStylesheet);
 
-/** @ignore */
-function getUUID() {
-  return self.crypto.randomUUID();
-}
-
 /** @internal */
 class BittyError extends Error {
   constructor(payload) {
@@ -66,7 +61,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async connectedCallback() {
-    this.dataset.bittyid = getUUID();
+    this.dataset.bittyid = self.crypto.randomUUID();
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
@@ -490,7 +485,7 @@ class BittyJs extends HTMLElement {
         el.dataset.receive || el.dataset.send ||
         el.dataset.init && !el.dataset.bittyid
       ) {
-        el.dataset.bittyid = getUUID();
+        el.dataset.bittyid = self.crypto.randomUUID();
       }
     });
   }

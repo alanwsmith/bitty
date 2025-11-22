@@ -74,7 +74,7 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
-      this.setIds();
+      this.setIds(this);
       this.addEventListeners();
       await this.callBittyInit();
       this.runElementDataInits();
@@ -173,9 +173,7 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = response.value;
       const fragment = template.content.cloneNode(true);
-      fragment.querySelectorAll("*").forEach((check) => {
-        this.addId(check);
-      });
+      this.setIds(fragment);
       const payload = { value: fragment };
       return payload;
     }
@@ -399,9 +397,7 @@ class BittyJs extends HTMLElement {
     const skeleton = document.createElement("template");
     skeleton.innerHTML = this.makeTXT(template, subs).trim();
     const el = skeleton.content.cloneNode(true);
-    el.querySelectorAll("*").forEach((check) => {
-      this.addId(check);
-    });
+    this.setIds(el);
     return el;
   }
 
@@ -488,19 +484,15 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
-  addId(el) {
-    if (
-      el.dataset.receive || el.dataset.send ||
-      el.dataset.init && !el.dataset.bittyid
-    ) {
-      el.dataset.bittyid = getUUID();
-    }
-  }
-
   /** @internal */
-  setIds() {
-    this.querySelectorAll("*").forEach((el) => {
-      this.addId(el);
+  setIds(input) {
+    input.querySelectorAll("*").forEach((el) => {
+      if (
+        el.dataset.receive || el.dataset.send ||
+        el.dataset.init && !el.dataset.bittyid
+      ) {
+        el.dataset.bittyid = getUUID();
+      }
     });
   }
 }

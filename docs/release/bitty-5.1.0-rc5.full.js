@@ -150,8 +150,8 @@ class BittyJs extends HTMLElement {
   }
 
   trigger(signal) {
-    const forwardEvent = new BittyTriggerEvent(signal);
-    this.dispatchEvent(forwardEvent);
+    const triggerEvent = new BittyTriggerEvent(signal);
+    this.dispatchEvent(triggerEvent);
   }
 
   async getElement(url, subs = [], options = {}) {

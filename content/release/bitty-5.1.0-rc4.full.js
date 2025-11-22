@@ -90,18 +90,6 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  addReceiver(signal, el) {
-    if (this.conn[signal]) {
-      this.receivers.push({
-        key: signal,
-        f: async (event) => {
-          await this.conn[signal](event, el);
-        },
-      });
-    }
-  }
-
-  /** @internal */
   async callBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
@@ -225,7 +213,6 @@ class BittyJs extends HTMLElement {
         });
       } else {
         let content = await response.text();
-
         // TODO: Pull this and the duplicated
         // copy from makeTXT() into a single
         // function.
@@ -294,7 +281,6 @@ class BittyJs extends HTMLElement {
     } else {
       incomingSignals = event.target.dataset.send;
     }
-
     for (const incomingSignal of incomingSignals.split(/\s+/)) {
       let doAwait = false;
       let theSignal = incomingSignal;
@@ -306,7 +292,6 @@ class BittyJs extends HTMLElement {
         theSignal = incomingSignalParts[1];
       }
       let foundReceivers = 0;
-
       for (const receiver of receivers) {
         // TODO: map and trim the signals
         const receivedSignals = receiver.dataset.receive.split(/\s/);
@@ -320,7 +305,6 @@ class BittyJs extends HTMLElement {
             rSignal = receivedSignalParts[1];
             doAwait = true;
           }
-
           if (rSignal === theSignal) {
             if (this.conn[incomingSignal]) {
               if (doAwait) {
@@ -331,22 +315,6 @@ class BittyJs extends HTMLElement {
               foundReceivers += 1;
             }
           }
-
-          // if (receivedSignalParts.length === 1) {
-          //   if (incomingSignal === receivedSignalParts[0]) {
-          //     if (this.conn[incomingSignal]) {
-          //       foundReceivers += 1;
-          //       this.conn[incomingSignal](event, receiver);
-          //     }
-          //   }
-          // } else if (receivedSignalParts[0] === "await") {
-          //   if (incomingSignal === receivedSignalParts[1]) {
-          //     if (this.conn[incomingSignal]) {
-          //       foundReceivers += 1;
-          //       this.conn[incomingSignal](event, receiver);
-          //     }
-          //   }
-          // }
         }
       }
       if (foundReceivers === 0) {
@@ -359,55 +327,7 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-
-    // const els = this.querySelectorAll("[data-receive]");
-    // for (const el of els) {
-    //   const signals = el.dataset.receive.split(/\s/);
-    //   for (const signal of signals) {
-    //     const signalParts = signal.split(":");
-    //     if (signalParts.length === 1) {
-    //       if (!this.holder[signal]) {
-    //         this.holder[signal] = 0;
-    //       }
-    //       this.holder[signal] += 1;
-    //       console.log(`${signal} - ${this.holder[signal]}`);
-    //       if (this.conn[signal]) {
-    //         this.conn[signal](event, el);
-    //       }
-    //     }
-    //   }
-    // }
-
-    // let signals = "";
-    // if (event.bitty && event.bitty.forward) {
-    //   signals = event.bitty.forward;
-    //   delete event.bitty.forward;
-    // } else {
-    //   if (event.target.dataset.send) {
-    //     signals += `${event.target.dataset.send} `;
-    //   }
-    //   if (event.target.dataset.s) {
-    //     signals += `${event.target.dataset.s} `;
-    //   }
-    // }
-
-    //await this.processSignals(event, signals);
   }
-
-  // /** @internal */
-  // async _handleEvent(event) {
-  //   // TODO: See if this still needs to be async
-  //   let signals = "";
-  //   if (event.bitty && event.bitty.forward) {
-  //     signals = event.bitty.forward;
-  //     delete event.bitty.forward;
-  //   } else {
-  //     if (event.target.dataset.send) {
-  //       signals += `${event.target.dataset.send} `;
-  //     }
-  //   }
-  //   await this.processSignals(event, signals);
-  // }
 
   async loadCSS(url, subs, options) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
@@ -421,19 +341,6 @@ class BittyJs extends HTMLElement {
       return payload;
     }
   }
-
-  // /** @internal */
-  // loadReceivers() {
-  //   this.receivers = [];
-  //   this.querySelectorAll(`[data-receive]`).forEach((el) => {
-  //     el.dataset.receive
-  //       .split(/\s+/m)
-  //       .map((signal) => signal.trim())
-  //       .forEach((signal) => {
-  //         this.addReceiver(signal, el);
-  //       });
-  //   });
-  // }
 
   /** @internal */
   async makeConnection() {
@@ -523,41 +430,6 @@ class BittyJs extends HTMLElement {
     }
     return event.target.dataset[key] === el.dataset[key];
   }
-
-  // /** @internal */
-  // async processSignals(event, signals) {
-  //   const signalParts = signals.split(/\s+/m).map((signalBase) =>
-  //     signalBase.trim()
-  //   );
-  //   for (let signalString of signalParts) {
-  //     this.setIds();
-  //     this.loadReceivers();
-  //     const signalParts = signalString.split(":");
-  //     const signal = signalParts.length === 1 ? signalParts[0] : signalParts[1];
-  //     const preface = signalParts.length >= 2 ? signalParts[0] : "";
-  //     const doAwait = preface === "await" ? true : false;
-  //     let receiverCount = 0;
-  //     for (const receiver of this.receivers) {
-  //       if (receiver.key === signal) {
-  //         receiverCount += 1;
-  //         if (doAwait === true) {
-  //           await receiver.f(event);
-  //         } else {
-  //           receiver.f(event);
-  //         }
-  //       }
-  //     }
-  //     if (receiverCount === 0) {
-  //       if (this.conn[signal]) {
-  //         if (doAwait === true) {
-  //           await this.conn[signal](event, null);
-  //         } else {
-  //           this.conn[signal](event, null);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
   /** @internal */
   runElementDataInits() {

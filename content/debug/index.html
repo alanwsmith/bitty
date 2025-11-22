@@ -136,19 +136,47 @@ window.BittyClass = class {
     // await sleep(300);
     this.#testValue0630 = true;
   }
+}
 
+window.debug0880Alfa = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+  run0880(event, _el) {
+    this.api.forward(event, 'debug0880BravoForward');
+  }
+}
+
+window.debug0880Bravo = class {
+  /*
+  bittyReady() {
+    this.api.trigger('debug0880BravoForward');
+  }
+  */
+
+  debug0880BravoForward(event, el) {
+    el.innerHTML = "PASSED";
+  }
 }
 </script>
 </head>
 <body>
 
+      <bitty-5-1 data-connect="debug0880Alfa">
+        <button data-send="run0880">Run 0880</button>
+      </bitty-5-1>
 
+      <bitty-5-1 data-connect="debug0880Bravo">
+        <div data-receive="debug0880BravoForward">FAILED</div>
+      </bitty-5-1>
+
+
+      <!--
 <bitty-5-1 
   data-send="asdf await:runTest0630 checkTest0630">
   <div data-receive="asdf checkTest0630">WAITING</div>
 </bitty-5-1>
 
-      <!--
 <bitty-5-1>
         <div id="testTarget0850">a</div>
   <div class="test" data-receive="runTest0850Alfa">FAILED</div>
@@ -179,6 +207,6 @@ window.BittyClass = class {
 
 -->
 
-<script src="/release/bitty-5.1.0-rc4.full.js" type="module"></script>
+<script src="/release/bitty-5.1.0-rc5.full.js" type="module"></script>
 </body>
 </html>

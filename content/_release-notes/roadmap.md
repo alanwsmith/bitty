@@ -1,5 +1,31 @@
 ## Roadmap 
 
+- TODO: Consider: `this.api.getData("KEY")`
+which would get a data key either in the 
+element or pull from the first ancestor
+that has it. 
+
+- TODO: Consider: adding the state object that
+has built-in `.isReady()` promise check. 
+
+- TODO: Set up a way to send do something like 
+`this.api.trigger(SIGNAL)`, and `this.api.forward(EVENT, SIGNAL)`, 
+but send the signals to the document root
+so they can trigger events in other bitty elements. 
+(events already bubble from `data-send` this 
+is so you can forward/trigger)
+
+  Probably just use forward/trigger but have
+  them send events that get picked up 
+  by the listeners. 
+
+  Look into extending events instead of
+  doing custom event types to see if
+  that's an option that lets you do
+  `type` directly along with the payload
+  instead of having to use the custom
+  event format. 
+
 - TODO: Set up so that `data-init` only triggers
 once for any given signal. 
 
@@ -27,6 +53,5 @@ would be a payload with either
 
   Should also have: `this.api.getDataInt(KEY)`
   and `this.api.getDataFloat()`.
-
 
 

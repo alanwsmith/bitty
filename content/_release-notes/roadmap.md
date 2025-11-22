@@ -1,5 +1,11 @@
 ## Roadmap 
 
+- TODO: Consider: next major version: 
+change `<bitty-#-# data-send="SIGNAL">`
+`<bitty-#-# data-init="SIGNAL">` since
+that key exists now and is a little
+more inline with the functionality. 
+
 - TODO: Consider: `this.api.getData("KEY")`
 which would get a data key either in the 
 element or pull from the first ancestor

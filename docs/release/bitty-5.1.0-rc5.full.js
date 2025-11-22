@@ -84,12 +84,18 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   addEventListeners() {
+    ["bittyforward", "bittytrigger"].forEach(
+      (bittyEvent) => {
+        document.addEventListener(bittyEvent, (event) => {
+          this.handleEventBridge.call(this, event);
+        });
+      },
+    );
     if (this.dataset.listeners) {
       this.config.listeners = this.dataset.listeners
         .split(/\s+/m)
         .map((l) => l.trim());
     }
-
     this.config.listeners.forEach((listener) => {
       document.addEventListener(listener, (event) => {
         if (
@@ -103,12 +109,6 @@ class BittyJs extends HTMLElement {
         } else {
           this.handleCatchBridge.call(this, event);
         }
-      });
-    });
-
-    ["bittyforward", "bittytrigger"].forEach((bittyEvent) => {
-      document.addEventListener(bittyEvent, (event) => {
-        this.handleEventBridge.call(this, event);
       });
     });
   }
@@ -144,29 +144,13 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    console.log(`Forward: ${signal}`);
     const forwardEvent = new BittyForwardEvent(event, signal);
     this.dispatchEvent(forwardEvent);
-
-    // event.bitty = {
-    //   forward: signal,
-    // };
-    // this.handleEvent(event);
   }
 
   trigger(signal) {
-    console.log(`Forward: ${signal}`);
     const forwardEvent = new BittyTriggerEvent(signal);
     this.dispatchEvent(forwardEvent);
-
-    // this.handleEvent(
-    //   {
-    //     type: "bittytrigger",
-    //     bitty: {
-    //       forward: signal,
-    //     },
-    //   },
-    // );
   }
 
   async getElement(url, subs = [], options = {}) {
@@ -310,7 +294,6 @@ class BittyJs extends HTMLElement {
     const receivers = this.querySelectorAll("[data-receive]");
     let incomingSignals;
     if (event.type === "bittyforward") {
-      console.log(`HERE3: ${event.fSignal}`);
       incomingSignals = event.fSignal;
       event = event.fEvent;
     } else if (event.type === "bittytrigger") {
@@ -474,6 +457,9 @@ class BittyJs extends HTMLElement {
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
       const signals = el.dataset.init.split(/\s/);
+      // TODO: Remove this set ids when
+      // make/getHTML/Element is in place for adding
+      // ids.
       this.setIds();
       signals.forEach((signal) => {
         if (this.conn[signal]) {
@@ -488,12 +474,6 @@ class BittyJs extends HTMLElement {
   /** @internal */
   runSendFromComponent() {
     if (this.dataset.send) {
-      this.handleEvent({
-        type: "bittytagdatasend",
-        target: this,
-      });
-    }
-    if (this.dataset.s) {
       this.handleEvent({
         type: "bittytagdatasend",
         target: this,

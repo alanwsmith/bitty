@@ -18,5 +18,9 @@ don't get `data-bittyid` attrs automatically.
 They have to be added manually if
 they are needed. 
 
+- Note that `bittyCatch` is there for events
+that don't have a good way to define them 
+via listeners. (I think one example was
+some message passing events)
 
 

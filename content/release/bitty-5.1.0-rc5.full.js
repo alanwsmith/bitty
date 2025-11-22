@@ -62,8 +62,6 @@ class BittyJs extends HTMLElement {
       license: "MIT",
       version: version,
     };
-    /** @internal */
-    this.receivers = [];
   }
 
   /** @internal */
@@ -116,6 +114,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async callBittyInit() {
+    // TODO: Verify async again here.
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
         await this.conn.bittyInit();

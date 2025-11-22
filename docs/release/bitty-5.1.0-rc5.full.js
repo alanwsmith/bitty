@@ -74,6 +74,7 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
+      this.setIds();
       this.addEventListeners();
       await this.callBittyInit();
       this.runElementDataInits();
@@ -288,9 +289,6 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    // TODO: remove this and just set ids at the
-    // connected and via makeHTML, getHMTL, makeElement, getElement.
-    this.setIds();
     const receivers = this.querySelectorAll("[data-receive]");
     let incomingSignals;
     if (event.type === "bittyforward") {
@@ -392,7 +390,11 @@ class BittyJs extends HTMLElement {
   }
 
   makeElement(template, subs = []) {
-    return this.makeHTML(template, subs).firstChild;
+    const el = this.makeHTML(template, subs).firstChild;
+    if (el.dataset.receive || el.dataset.send || el.dataset.init) {
+      this.addId(el);
+    }
+    return el;
   }
 
   makeHTML(template, subs = []) {
@@ -460,7 +462,6 @@ class BittyJs extends HTMLElement {
       // TODO: Remove this set ids when
       // make/getHTML/Element is in place for adding
       // ids.
-      this.setIds();
       signals.forEach((signal) => {
         if (this.conn[signal]) {
           this.conn[signal]({
@@ -483,6 +484,31 @@ class BittyJs extends HTMLElement {
 
   setProp(key, value) {
     document.documentElement.style.setProperty(key, value);
+  }
+
+  addId(el) {
+    if (!el.dataset.bittyid) {
+      el.dataset.bittyid = getUUID();
+    }
+  }
+
+  /** @internal */
+  setIdsDev(inputEl) {
+    inputEl.querySelectorAll("[data-init]:not([data-bittyid])").forEach(
+      (el) => {
+        this.addId(el);
+      },
+    );
+    inputEl.querySelectorAll("[data-receive]:not([data-bittyid])").forEach(
+      (el) => {
+        this.addId(el);
+      },
+    );
+    inputEl.querySelectorAll("[data-send]:not([data-bittyid])").forEach(
+      (el) => {
+        this.addId(el);
+      },
+    );
   }
 
   /** @internal */

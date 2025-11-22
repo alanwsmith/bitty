@@ -456,9 +456,6 @@ class BittyJs extends HTMLElement {
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
       const signals = el.dataset.init.split(/\s/);
-      // TODO: Remove this set ids when
-      // make/getHTML/Element is in place for adding
-      // ids.
       signals.forEach((signal) => {
         if (this.conn[signal]) {
           this.conn[signal]({
@@ -484,10 +481,11 @@ class BittyJs extends HTMLElement {
   }
 
   addId(el) {
-    if (el.dataset.receive || el.dataset.send || el.dataset.init) {
-      if (!el.dataset.bittyid) {
-        el.dataset.bittyid = getUUID();
-      }
+    if (
+      el.dataset.receive || el.dataset.send ||
+      el.dataset.init && !el.dataset.bittyid
+    ) {
+      el.dataset.bittyid = getUUID();
     }
   }
 

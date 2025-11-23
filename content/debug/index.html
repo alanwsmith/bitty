@@ -209,9 +209,12 @@ window.Test = class {
       <script>
 window.Test0630 = class {
   #updated = false;
-
   bittyReady() {
     this.api.querySelector("button").click();
+  }
+
+  tmpCheck0630(event, el) {
+    el.innerHTML = "PASSED - Basic call";
   }
 
   checkTest0630(_event, el) {
@@ -224,12 +227,13 @@ window.Test0630 = class {
     await new Promise((resolve) => setTimeout(resolve, 300));
     this.#updated = true;
   }
-
 }
       </script>
+
       <bitty-6-0 data-connect="Test0630">
-  <button data-send="await:runTest0630 checkTest0630">Test Target</button>
-  <div class="test" data-receive="checkTest0630">FAILED</div>
+        <div data-receive="tmpCheck0630">FAILED</div>
+        <button data-send="await:runTest0630 tmpCheck0630 checkTest0630">Test Target</button>
+        <div class="test" data-receive="checkTest0630">FAILED</div>
       </bitty-6-0>
 
 

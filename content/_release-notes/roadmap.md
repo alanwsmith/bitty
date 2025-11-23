@@ -58,6 +58,8 @@ it?)
 elements and make sure listeners don't
 explode. 
 
+- TODO: Make sure that `data-receive="await:SIG"`
+gets added at some point. 
 
 
 

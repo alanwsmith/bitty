@@ -102,7 +102,6 @@ class BittyJs extends HTMLElement {
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
-      this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
       // TODO: do everything not just data-* elements
       this.setIds(this);
@@ -146,19 +145,6 @@ class BittyJs extends HTMLElement {
       // between windows
       window.addEventListener(listener, (event) => {
         this.handleEventBridge.call(this, event);
-
-        // if (
-        //   event.target &&
-        //   event.target.nodeName &&
-        //   event.target.nodeName.toLowerCase() !== tagName &&
-        //   event.target.dataset &&
-        //   (event.target.dataset.send)
-        // ) {
-        //   this.handleEventBridge.call(this, event);
-        // } else {
-        //   // TODO: this may go away when
-        //   this.handleCatchBridge.call(this, event);
-        // }
       });
     });
   }
@@ -348,13 +334,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
-  async handleCatch(event) {
-    if (typeof this.conn.bittyCatch === "function") {
-      await this.conn.bittyCatch(event);
-    }
-  }
-
   findSender(event, checkElement) {
     if (checkElement.dataset && checkElement.dataset.send) {
       event.sender = checkElement;
@@ -388,6 +367,10 @@ class BittyJs extends HTMLElement {
         signal.trim()
       );
       for (const signal of signals) {
+        let doAwait = false;
+        const iSigParts = signal.split(":").map((x) => x.trim());
+        console.log(iSigParts);
+
         const receivers = this.querySelectorAll("[data-receive]");
         let foundReceiver = false;
         for (let receiver of receivers) {
@@ -445,18 +428,53 @@ class BittyJs extends HTMLElement {
       if (event.sender) {
         const signals = event.sender.dataset.send.trim().split(/\s+/m);
         const receivers = this.querySelectorAll("[data-receive]");
-        for (let receiver of receivers) {
-          const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
-            text,
-          ) => text.trim());
-          for (let receptor of receptors) {
-            if (
-              signals.includes(receptor) && this.conn[receptor]
-            ) {
-              this.conn[receptor](event, receiver);
+        for (let signal of signals) {
+          let doAwait = false;
+          const iSigParts = signal.split(":");
+          if (iSigParts.length === 2 && iSigParts[0] === "await") {
+            doAwait = true;
+            signal = iSigParts[1];
+          }
+          if (this.conn[signal]) {
+            let foundReceiver = false;
+            for (let receiver of receivers) {
+              const receptors = receiver.dataset.receive.trim().split(/\s+/m)
+                .map((x) => x.trim());
+              for (const receptor of receptors) {
+                if (receptor === signal) {
+                  foundReceiver = true;
+                  if (doAwait) {
+                    await this.conn[signal](event, receiver);
+                  } else {
+                    this.conn[signal](event, receiver);
+                  }
+                }
+              }
+            }
+            if (foundReceiver === false) {
+              if (doAwait) {
+                await this.conn[signal](event, null);
+              } else {
+                this.conn[signal](event, null);
+              }
             }
           }
         }
+
+        // for (let receiver of receivers) {
+        //   const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
+        //     text,
+        //   ) => text.trim());
+        //   for (let receptor of receptors) {
+        //     if (
+        //       signals.includes(receptor) && this.conn[receptor]
+        //     ) {
+        //       this.conn[receptor](event, receiver);
+        //     }
+        //   }
+        // }
+
+        //
       }
     }
 
@@ -506,6 +524,7 @@ class BittyJs extends HTMLElement {
     //  } else {
     //    incomingSignals = event.sender.dataset.send;
     //  }
+
     //  for (const incomingSignal of incomingSignals.split(/\s+/)) {
     //    let doAwait = false;
     //    let theSignal = incomingSignal;

@@ -1,5 +1,8 @@
 ## Roadmap 
 
+- TODO: Make stress test pages with tons
+of nesting, elements, updates, etc...
+
 - TODO: Consider: Adding `this.api.makeSVG()`
 like `this.api.getSVG()` with all the
 replacment stuff. 

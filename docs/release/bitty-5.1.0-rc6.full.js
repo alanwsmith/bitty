@@ -154,8 +154,14 @@ class BittyJs extends HTMLElement {
             innerBaseType === "object" &&
             innerDetailType === "[object DocumentFragment]"
           ) {
-            return [...el.children].map((child) => {
-              return child.outerHTML;
+            return [...el.childNodes].map((child) => {
+              if (
+                Object.prototype.toString.call(child) === "[object Text]"
+              ) {
+                return child.wholeText;
+              } else {
+                return child.outerHTML;
+              }
             }).join("");
           } else if (innerBaseType === "object") {
             return el.outerHTML;

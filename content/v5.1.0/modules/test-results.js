@@ -27,9 +27,6 @@ export default class {
   #failed = 0;
 
   async showResults(_event, element) {
-    const headsUpText = 
-      `########## HEAD'S UP ########## There are intentional 404 errors on this page! The code on the page is live. That includes the examples and tests demonstrating failing fetch calls that throw errors. Any 404s can safely be disregarded.`;
-    console.error(headsUpText);
     await sleep(2000);
     const els = document.querySelectorAll(".test");
     [...els].forEach((el) => {
@@ -52,6 +49,5 @@ export default class {
       ];
       element.replaceChildren(this.api.makeHTML(t.failed, subs));
     }
-    console.error(headsUpText);
   }
 }

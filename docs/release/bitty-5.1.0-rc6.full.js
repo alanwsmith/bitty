@@ -135,7 +135,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   connectedMoveCallback() {
-    // this prevents connectedCallback() from firing 
+    // this prevents connectedCallback() from firing
     // if a bitty component is moved.
   }
 
@@ -169,8 +169,14 @@ class BittyJs extends HTMLElement {
         outerDetailType === "[object DocumentFragment]"
       ) {
         const subContent = [];
-        [...sub[1].children].forEach((child) => {
-          subContent.push(child.outerHTML);
+        [...sub[1].childNodes].forEach((child) => {
+          if (
+            Object.prototype.toString.call(child) === "[object Text]"
+          ) {
+            subContent.push(child.wholeText);
+          } else {
+            subContent.push(child.outerHTML);
+          }
         });
         content = content.replaceAll(sub[0], subContent.join(""));
       } else if (typeof sub[1] === "object") {
@@ -208,7 +214,7 @@ class BittyJs extends HTMLElement {
     if (response.error) {
       return response;
     } else {
-      return { value: this.makeHTML(response.value, subs) }
+      return { value: this.makeHTML(response.value, subs) };
     }
   }
 
@@ -250,7 +256,8 @@ class BittyJs extends HTMLElement {
         throw new BittyError({
           type: "fetching",
           message:
-            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
+              JSON.stringify(subs)
             }, ${JSON.stringify(options)})`,
           statusText: response.statusText,
           status: response.status,

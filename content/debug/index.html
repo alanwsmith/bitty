@@ -165,10 +165,37 @@ window.ElementSendEventTest = class {
   }
 }
 
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const postTemplate2 = `<div>here is what the inner is: POST_INNER</div>`;
+const postContentTemplate = `hello world RAND`;
+
+window.makeHTMLDebug = class {
+  debugTest0890(_, el) {
+    const content = this.api.makeHTML(postContentTemplate, [
+      ["RAND", randInt(0, 1000)],
+    ]);
+    // console.log(content);
+    const post = this.api.makeHTML(postTemplate2, [
+      ["POST_INNER", content],
+    ]);
+    el.appendChild(post);
+  }
+}
+
 </script>
 </head>
 <body>
 
+<bitty-5-1 data-connect="makeHTMLDebug">
+  <div data-init="debugTest0890">FAILED</div>
+</bitty-5-1>
+
+
+
+      <!--
       <bitty-5-1 data-connect="ElementSendEventTest" 
         data-send="triggerSendEvent"
       >
@@ -176,7 +203,6 @@ window.ElementSendEventTest = class {
       </bitty-5-1>
 
 
-      <!--
       <bitty-5-1 data-connect="debug0880Alfa">
         <button data-send="run0880">Run 0880</button>
       </bitty-5-1>

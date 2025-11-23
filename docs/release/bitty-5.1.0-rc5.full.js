@@ -266,50 +266,6 @@ class BittyJs extends HTMLElement {
       } else {
         const content = this.doSubs(await response.text(), subs);
         return { value: content };
-
-
-        // subs.forEach((sub) => {
-        //   const outerBaseType = typeof sub[1];
-        //   const outerDetailType = Object.prototype.toString.call(sub[1]);
-        //   if (
-        //     outerBaseType === "object" && outerDetailType === "[object Array]"
-        //   ) {
-        //     const newContent = sub[1].map((el) => {
-        //       const innerBaseType = typeof el;
-        //       const innerDetailType = Object.prototype.toString.call(el);
-        //       if (
-        //         innerBaseType === "object" &&
-        //         innerDetailType === "[object DocumentFragment]"
-        //       ) {
-        //         return [...el.children].map((child) => {
-        //           return child.outerHTML;
-        //         }).join("");
-        //       } else if (innerBaseType === "object") {
-        //         return el.outerHTML;
-        //       } else {
-        //         return el;
-        //       }
-        //     }).join("");
-        //     content = content.replaceAll(sub[0], newContent);
-        //   } else if (
-        //     outerBaseType === "object" &&
-        //     outerDetailType === "[object DocumentFragment]"
-        //   ) {
-        //     const subContent = [];
-        //     [...sub[1].children].forEach((child) => {
-        //       subContent.push(child.outerHTML);
-        //     });
-        //     content = content.replaceAll(sub[0], subContent.join(""));
-        //   } else if (typeof sub[1] === "object") {
-        //     content = content.replaceAll(sub[0], sub[1].outerHTML);
-        //   } else {
-        //     content = content.replaceAll(sub[0], sub[1]);
-        //   }
-        // });
-
-
-
-
       }
     } catch (error) {
       console.error(`BittyError: ${error.message}`);
@@ -440,46 +396,7 @@ class BittyJs extends HTMLElement {
   }
 
   makeTXT(template, subs = []) {
-    const content = this.doSubs(template, subs);
-    return content;
-
-    // subs.forEach((sub) => {
-    //   const outerBaseType = typeof sub[1];
-    //   const outerDetailType = Object.prototype.toString.call(sub[1]);
-    //   if (outerBaseType === "object" && outerDetailType === "[object Array]") {
-    //     const newContent = sub[1].map((el) => {
-    //       const innerBaseType = typeof el;
-    //       const innerDetailType = Object.prototype.toString.call(el);
-    //       if (
-    //         innerBaseType === "object" &&
-    //         innerDetailType === "[object DocumentFragment]"
-    //       ) {
-    //         return [...el.children].map((child) => {
-    //           return child.outerHTML;
-    //         }).join("");
-    //       } else if (innerBaseType === "object") {
-    //         return el.outerHTML;
-    //       } else {
-    //         return el;
-    //       }
-    //     }).join("");
-    //     template = template.replaceAll(sub[0], newContent);
-    //   } else if (
-    //     outerBaseType === "object" &&
-    //     outerDetailType === "[object DocumentFragment]"
-    //   ) {
-    //     const subContent = [];
-    //     [...sub[1].children].forEach((child) => {
-    //       subContent.push(child.outerHTML);
-    //     });
-    //     template = template.replaceAll(sub[0], subContent.join(""));
-    //   } else if (typeof sub[1] === "object") {
-    //     template = template.replaceAll(sub[0], sub[1].outerHTML);
-    //   } else {
-    //     template = template.replaceAll(sub[0], sub[1]);
-    //   }
-    // });
-    // return template;
+    return this.doSubs(template, subs);
   }
 
   match(event, el, key = "bittyid") {

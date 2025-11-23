@@ -1,31 +1,11 @@
 ## Roadmap 
 
-- TODO: Consider adding `this.api.triggerLocal()`
-and `this.api.forwardLocal()` to send events
-that don't bubble. 
-
 - TODO: Make stress test pages with tons
 of nesting, elements, updates, etc...
 
 - TODO: Consider: Adding `this.api.makeSVG()`
 like `this.api.getSVG()` with all the
 replacment stuff. 
-
-- TODO: Consider: next major version: 
-change `<bitty-#-# data-send="SIGNAL">`
-`<bitty-#-# data-init="SIGNAL">` since
-that key exists now and is a little
-more inline with the functionality. 
-
-- TODO: Consider: `this.api.getData("KEY")`
-which would get a data key either in the 
-element or pull from the first ancestor
-that has it. (After some initial consideration
-this isn't something to implement at this
-point. Need more interactions to see
-if something like this can be done in
-generic enough of a way that it makes
-sense without adding a bunch of overhead. 
 
 - TODO: Consider: adding the state object that
 has built-in `.isReady()` promise check. 
@@ -34,10 +14,6 @@ sure it makes sense for direct integration
 because loading the data will be so
 application specific.)
 
-- TODO: Set up so `this.api.trigger()` can 
-make multiple calls (e.g. `this.api.trigger("alfa bravo")`)
-(I think this is already in place, just
-need to confirm)
 
 - TODO: Investigate: Added a `disconnectedCallback()`
 to clean up anything that can be

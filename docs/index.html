@@ -1415,9 +1415,16 @@ signal. The event which triggered the
 first signal can be sent to the second.</li>
 </ul>
 
+
+<h3>TODO</h3>
+
+<ul>
+<li>Confirm that forward can have multiple signals
+    `this.api.forward("alfa bravo")`</li>
+</ul>
   <div><strong>Parameters</strong></div>
   <ul><li><p>event</p>
-<p>The event to forward, can be null.</p>    </li><li><p>signal</p>
+<p>The event to forward.</p>    </li><li><p>signal</p>
 <p>The name of the signal to forward to (required)</p>    </li></ul>
 
   <div><strong>Examples</strong></div>
@@ -1461,54 +1468,6 @@ first signal can be sent to the second.</li>
       </div>
   </div>
 </div>    </details>
-    <details class="member-example-summary"><summary>this.api.forward() - Forwarding a null event</summary>
-
-<div class="default-flow example-wrapper">
-  <div class="default-flow">
-      <div class="code-block-wrapper">
-          <div class="code-block-title">/v6.0.0&#x2f;modules&#x2f;forward&#x2f;null.on.js</div>
-          <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  #count = 0;
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">incrementThenBranch</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span> <span class="keyword operator arithmetic js">%</span> <span class="constant numeric js">2</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="constant language null js">null</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>branchAlfa<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forward</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="constant language null js">null</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>branchBravo<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">branchAlfa</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">branchBravo</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">count</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
-      </div>
-
-      <div class="code-block-wrapper">
-          <div class="code-block-title">page.html</div>
-          <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/modules/forward/null.on.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>incrementThenBranch<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Forward null Event<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>branchAlfa<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (alfa)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>branchBravo<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>waiting (bravo)<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-      </div>
-
-      <div class="example-output-wrapper">
-      <div class="example-output-title">Example</div>
-      <div class="example-output">
-<bitty-6-0 data-connect="/v6.0.0/modules/forward/null.on.js">
-  <button data-send="incrementThenBranch">Forward null Event</button>
-  <div data-receive="branchAlfa">waiting (alfa)</div>
-  <div data-receive="branchBravo">waiting (bravo)</div>
-</bitty-6-0>      </div>
-      </div>
-  </div>
-</div>    </details>
 
 </details>
 
@@ -1519,6 +1478,13 @@ first signal can be sent to the second.</li>
   <div><strong>Overview</strong></div>
 
 <h2>TODO: this.api.trigger()</h2>
+
+<h3>TODO</h3>
+
+<ul>
+<li>Confirm that trigger can have multiple signals
+    `this.api.trigger("alfa bravo")`</li>
+</ul>
   <div><strong>Parameters</strong></div>
   <ul><li><p>signal</p>
 <h3>TODO: signal</h3>    </li></ul>
@@ -4111,8 +4077,11 @@ goes up the DOM looking for a matching
 <li>
 <p>TODO: Cleaned up tests</p>
 </li>
-</ul>
-<h3>Version: 5.1.0-rc6</h3>
+<li>
+<p>TODO: VERIFY: <code>this.api.trigger()</code> can
+make multiple calls (e.g. <code>this.api.trigger(&quot;alfa bravo&quot;)</code>)</p>
+</li>
+</ul><h3>Version: 5.1.0-rc6</h3>
 <p>Nov. 22, 2025</p>
 <ul>
 <li>Fixed bug where Text Nodes didn't
@@ -5328,11 +5297,6 @@ choice to use the light DOM instead of the shadow DOM.</p>
 </ul><h2>Roadmap</h2>
 <ul>
 <li>
-<p>TODO: Consider adding <code>this.api.triggerLocal()</code>
-and <code>this.api.forwardLocal()</code> to send events
-that don't bubble.</p>
-</li>
-<li>
 <p>TODO: Make stress test pages with tons
 of nesting, elements, updates, etc...</p>
 </li>
@@ -5342,36 +5306,12 @@ like <code>this.api.getSVG()</code> with all the
 replacment stuff.</p>
 </li>
 <li>
-<p>TODO: Consider: next major version:
-change <code>&lt;bitty-#-# data-send=&quot;SIGNAL&quot;&gt;</code>
-<code>&lt;bitty-#-# data-init=&quot;SIGNAL&quot;&gt;</code> since
-that key exists now and is a little
-more inline with the functionality.</p>
-</li>
-<li>
-<p>TODO: Consider: <code>this.api.getData(&quot;KEY&quot;)</code>
-which would get a data key either in the
-element or pull from the first ancestor
-that has it. (After some initial consideration
-this isn't something to implement at this
-point. Need more interactions to see
-if something like this can be done in
-generic enough of a way that it makes
-sense without adding a bunch of overhead.</p>
-</li>
-<li>
 <p>TODO: Consider: adding the state object that
 has built-in <code>.isReady()</code> promise check.
 (Thinking about this a little more, I'm not
 sure it makes sense for direct integration
 because loading the data will be so
 application specific.)</p>
-</li>
-<li>
-<p>TODO: Set up so <code>this.api.trigger()</code> can
-make multiple calls (e.g. <code>this.api.trigger(&quot;alfa bravo&quot;)</code>)
-(I think this is already in place, just
-need to confirm)</p>
 </li>
 <li>
 <p>TODO: Investigate: Added a <code>disconnectedCallback()</code>
@@ -5479,7 +5419,7 @@ mechanisms.</p>
 </ul></details> 
 <details class="section-details">
   <summary>Test Suite</summary>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <div>
       <h5 class="test-title">
 bittyInit is called automatically      </h5>
       <div class="test-output-wrapper">

@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest0380forward(event, el) {
-    if (event.type === "bittytagdatasend") {
+    if (event.type === "bittyinitself") {
       el.innerHTML = "PASSED";
     }
   }

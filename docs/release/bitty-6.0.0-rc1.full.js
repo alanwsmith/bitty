@@ -298,7 +298,7 @@ class BittyJs extends HTMLElement {
       event = event.fEvent;
     } else if (event.type === "bittytrigger") {
       incomingSignals = event.fSignal;
-    } else if (event.type === "bittyselfinit") {
+    } else if (event.type === "bittyinitself") {
       incomingSignals = event.target.dataset.init;
     } else {
       incomingSignals = event.target.dataset.send;
@@ -441,7 +441,7 @@ class BittyJs extends HTMLElement {
     // to `data-init` in version 6.x.x
     if (this.dataset.init) {
       this.handleEvent({
-        type: "bittyselfinit",
+        type: "bittyinitself",
         target: this,
       });
     }

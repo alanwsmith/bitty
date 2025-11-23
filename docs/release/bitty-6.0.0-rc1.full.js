@@ -419,7 +419,7 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       const signals = event.forwardedSignal.split(/\s+/m);
-      event = event.forwaredEvent;
+      event = event.forwardedEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
         const receptors = receiver.dataset.receive.split(/\s+/m).map((

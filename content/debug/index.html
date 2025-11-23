@@ -195,6 +195,84 @@ window.BittyClass = class {
 </head>
 <body>
 
+<!--
+
+      <script>
+      </script>
+      <bitty-6-0 data-connect="">
+      </bitty-6-0>
+-->
+
+
+      <script>
+
+      window.TestCase0220 = class {
+  #counterAlfa = 0;
+  #counterBravo = 0;
+  #counterCharlie = 0;
+  #counterDelta = 0;
+
+  bittyInit() {
+    const button = this.api.querySelector("button");
+    button.click();
+    button.click();
+    button.click();
+    button.click();
+  }
+
+  runTest0220(event, element) {
+    this.#counterAlfa += 1;
+    event.target.dataset.counter = `${this.#counterAlfa}`;
+    if (event.target.dataset.counter == "4") {
+      element.innerHTML = "PASSED";
+    }
+     this.api.forward(event, "secondSignal0220");
+  }
+
+  secondSignal0220(event, element) {
+
+    this.#counterBravo += 1;
+    event.sender.dataset.counter = `${this.#counterBravo}`;
+    if (event.target.dataset.counter == "4") {
+      element.innerHTML = "PASSED";
+    }
+    this.api.forward(event, "thirdSignal0220");
+  }
+
+  thirdSignal0220(event, element) {
+    this.#counterCharlie += 1;
+    event.target.dataset.counter = `${this.#counterCharlie}`;
+    if (event.target.dataset.counter == "4") {
+      element.innerHTML = "PASSED";
+    }
+    this.api.forward(event, "fourthSignal0220");
+  }
+
+  fourthSignal0220(event, element) {
+    this.#counterDelta += 1;
+    event.target.dataset.counter = `${this.#counterDelta}`;
+    if (event.target.dataset.counter == "4") {
+      element.innerHTML = "PASSED";
+    }
+
+      }
+}
+
+      </script>
+      <bitty-6-0 data-connect="TestCase0220">
+
+    <button data-send="runTest0220">Test Trigger</button>
+    <div class="test" data-receive="runTest0220">FAILED</div>
+    <div class="test" data-receive="secondSignal0220">FAILED</div>
+    <div class="test" data-receive="thirdSignal0220">FAILED</div>
+    <div class="test" data-receive="fourthSignal0220">FAILED</div>
+
+      </bitty-6-0>
+
+
+
+
+      <!--
       <script>
       window.RunTest0077 = class {
         bittyReady() {
@@ -217,6 +295,7 @@ window.BittyClass = class {
         <div class="test" data-receive="triggerEvent0077">FAILED</div>
       </bitty-6-0>
 
+-->
 
 
       <!--

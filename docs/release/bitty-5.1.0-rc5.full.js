@@ -110,32 +110,33 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async callBittyInit() {
     // TODO: Verify async again here.
-    if (typeof this.conn.bittyInit === "function") {
-      if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-        await this.conn.bittyInit();
-      } else {
-        this.conn.bittyInit();
-      }
+    if (typeof this.conn.bittyInit !== "function") {
+      return;
+    }
+    if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+      await this.conn.bittyInit();
+    } else {
+      this.conn.bittyInit();
     }
   }
 
   /** @internal */
   async callBittyReady() {
     // TODO: Verify async again here.
-    if (typeof this.conn.bittyReady === "function") {
-      if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-        await this.conn.bittyReady();
-      } else {
-        this.conn.bittyReady();
-      }
+    if (typeof this.conn.bittyReady !== "function") {
+      return;
+    }
+    if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+      await this.conn.bittyReady();
+    } else {
+      this.conn.bittyReady();
     }
   }
 
   /** @internal */
   connectedMoveCallback() {
-    // this method exist solely to prevent
-    // connectedCallback() from firing if
-    // a bitty component is moved.
+    // this prevents connectedCallback() from firing 
+    // if a bitty component is moved.
   }
 
   /** @internal */

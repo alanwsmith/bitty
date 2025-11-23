@@ -1,6 +1,6 @@
 export default class {
-  init(_event, el) {
-    el.click();
+  bittyInit() {
+    this.api.querySelector("button").click();
   }
   runTestAlfa0035(_event, el) {
     el.innerHTML = "PASSED";

@@ -1,5 +1,5 @@
 export default class {
-  async bittyInit() {
+  bittyInit() {
     this.api.addEventListener("altevent", () => {
       this.api.trigger("runTest0350");
     });

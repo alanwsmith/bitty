@@ -1,4 +1,4 @@
-# bitty
+# bitty - a bit of interactivity
 
 bitty is a web component for making
 reactive web pages. Details are

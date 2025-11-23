@@ -1,7 +1,3 @@
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export default class {
   bittyReady() {
     this.api.trigger("runTest0140");

@@ -1,16 +1,10 @@
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export default class {
-  async bittyInit() {
-    await sleep(100);
+  bittyInit() {
     const newTree = document.createElement("div");
     newTree.innerHTML = `<div>
     <div class="test" data-receive="runTest0300">FAILED</div>
     </div>`;
     this.api.appendChild(newTree);
-    await sleep(100);
     this.api.trigger("runTest0300");
   }
 

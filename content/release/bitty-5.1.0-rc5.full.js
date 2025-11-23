@@ -207,12 +207,7 @@ class BittyJs extends HTMLElement {
     if (response.error) {
       return response;
     } else {
-      const template = document.createElement("template");
-      template.innerHTML = response.value;
-      const fragment = template.content.cloneNode(true);
-      this.setIds(fragment);
-      const payload = { value: fragment };
-      return payload;
+      return { value: this.makeHTML(response.value, subs) }
     }
   }
 

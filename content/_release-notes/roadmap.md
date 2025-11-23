@@ -1,5 +1,8 @@
 ## Roadmap 
 
+- TODO: Consider: Adding `this.api.makeSVG()`
+like `this.api.getSVG()` with all the
+replacment stuff. 
 
 - TODO: Consider: next major version: 
 change `<bitty-#-# data-send="SIGNAL">`

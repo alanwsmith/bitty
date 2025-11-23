@@ -404,7 +404,6 @@ class BittyJs extends HTMLElement {
     return event.target.dataset[key] === el.dataset[key];
   }
 
-
   /** @internal */
   runElementDataInits() {
     // TODO: Make sure this can handle async/await

@@ -31,3 +31,5 @@ idea is that if you're adding an element
 you just take care of everything at that
 point directly. 
 
+- Note that `data-send` on a `bitty-#-#` tag
+only goes

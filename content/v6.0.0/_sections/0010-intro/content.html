@@ -9,9 +9,8 @@
     </p>
 
     <p>
-    For example, click/tap this
-    button a few times in differnet places to get the coordinates
-    of where the interaction occurred:
+    For example, click/tap this button to show
+      the current date:
   </p>
 
   <div class="default-flow">
@@ -31,15 +30,11 @@
         <pre class="code-block"><code>
           [!- filter highlight_html|safe -!]
             [! include version_dir + "/_snippets/overview.html" !]
-          [!- endfilter -!]
-        </code></pre>
-      </div>
-
-      <div class="code-block-wrapper">
-        <div class="code-block-title">/[@ version_dir @]/modules/get-coords.js</div>
-        <pre class="code-block"><code>
-          [!- filter highlight_javascript|safe -!]
-            [! include version_dir + "/modules/get-coords.js" !]
+<script>
+  window.BittyClass = class {
+    [! include version_dir + "/_snippets/bitty-function-for-intro.js" !]
+  }
+</script>
           [!- endfilter -!]
         </code></pre>
       </div>
@@ -53,30 +48,24 @@
     <strong>bitty</strong> uses signals to associate events with elements. They're
     connected through methods you write to provide functionality.
     For example:</p>
+    <!--
 <ul>
-<li>[@ highlight_code('<button data-send="coords">', 'html')|safe @] sends
-a signal named <code>coords</code> when it's clicked</li>
+<li>[@ highlight_code('<button data-send="theDate">', 'html')|safe @] sends
+a signal named <code>theDate</code> when it's clicked.</li>
 
-<li>[@ highlight_code('<div data-receive="coords">', 'html')|safe @]
-receives <code>coords</code> signals</li>
+<li>[@ highlight_code('<div data-receive="theDate">', 'html')|safe @]
+receives <code>theDate</code> signals.</li>
 
-<li><p><code>[@ highlight_code('coords(event, el) {}', 'js')|safe @]</code> sets the [@ highlight_code('.innerHTML', 'js')|safe @] value of
-the [@ highlight_code('<div>', 'html')|safe @] to the 
-[@ highlight_code('.offsetX', 'js')|safe @] and [@ highlight_code('.offsetY', 'js')|safe @]
-values from the click event of the <code>coords</code> signal. </p>
-
-<p>(Signal names map to method names which is why this
-one is named <code>coords</code>.)</p>
-</li>
+<li><p>The <code>[@ highlight_code('theDate(_event, el) {}', 'js')|safe @]</code> 
+        sets the [@ highlight_code('.innerHTML', 'js')|safe @] value of
+        the [@ highlight_code('<div>', 'html')|safe @] to the current date.</p></li>
 </ul>
+-->
 
-<p>That's pretty much it. <strong>bitty</strong> has some helper functions. 
-They do things like load external 
-HTML, JSON, and SVG files, etc... but that's all secondary. At its core,
-<strong>bitty</strong> sets you up to create your functionality and
-then gets out of the way. 
-</p>
+    <p>The incoming event is ignored (i.e.
+ [@ highlight_code('_event', 'js')|safe @]) because it's not used
+      in this example. There's more about it in the docs below.</p>
 
-
+    <p>That's all you need to know to get started.</p>
 </details>
 </section>

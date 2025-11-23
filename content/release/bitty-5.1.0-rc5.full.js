@@ -304,8 +304,7 @@ class BittyJs extends HTMLElement {
       }
       let foundReceivers = 0;
       for (const receiver of receivers) {
-        // TODO: map and trim the signals
-        const receivedSignals = receiver.dataset.receive.split(/\s/);
+        const receivedSignals = receiver.dataset.receive.split(/\s+/m);
         for (const receivedSignal of receivedSignals) {
           let rSignal = receivedSignal;
           const receivedSignalParts = receivedSignal.split(":");
@@ -414,7 +413,7 @@ class BittyJs extends HTMLElement {
     // TODO: Make sure this can handle async/await
     const els = this.querySelectorAll("[data-init]");
     els.forEach((el) => {
-      const signals = el.dataset.init.split(/\s/);
+      const signals = el.dataset.init.split(/\s+/m);
       signals.forEach((signal) => {
         if (this.conn[signal]) {
           this.conn[signal]({
@@ -427,6 +426,8 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   runSendFromComponent() {
+    // TODO: Rename `data-send` on the bitty tag
+    // to `data-init` in version 6.x.x
     if (this.dataset.send) {
       this.handleEvent({
         type: "bittytagdatasend",

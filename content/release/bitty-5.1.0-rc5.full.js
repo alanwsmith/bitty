@@ -302,7 +302,7 @@ class BittyJs extends HTMLElement {
         doAwait = true;
         theSignal = incomingSignalParts[1];
       }
-      let foundReceivers = 0;
+      let foundReceivers = false;
       for (const receiver of receivers) {
         const receivedSignals = receiver.dataset.receive.split(/\s+/m);
         for (const receivedSignal of receivedSignals) {
@@ -321,11 +321,11 @@ class BittyJs extends HTMLElement {
             } else {
               this.conn[incomingSignal](event, receiver);
             }
-            foundReceivers += 1;
+            foundReceivers = true;
           }
         }
       }
-      if (foundReceivers === 0 && this.conn[theSignal]) {
+      if (!foundReceivers && this.conn[theSignal]) {
         if (doAwait) {
           await this.conn[theSignal](event, null);
         } else {

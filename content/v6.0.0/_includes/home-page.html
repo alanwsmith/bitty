@@ -1,0 +1,24 @@
+[!- extends json.version.version_dir + "/_wrappers/wrapper.html" -!]
+[!- block main -!]
+
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="/release/[@- script_min_file_name -@]" download>
+
+      <div class="center small-font">Download</div>
+      <div class="center">
+      Version[@ " " @] 
+[@- config.major_version -@].[@- config.minor_version -@]
+      </div>
+      <div class="center small-font">[@ script_min_file_name -@]</div></a>
+  </div>
+</div>
+
+[! for folder in folders !]
+  [! if folder.parent == version_dir + "/_sections" !]
+      [! include folder.parent + "/" + folder.name + "/content.html" !] 
+  [! endif !]
+[! endfor !]
+
+
+[!- endblock -!]

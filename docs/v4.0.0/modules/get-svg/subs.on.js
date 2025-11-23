@@ -1,6 +1,6 @@
 export default class {
   async getSVGSubs(_event, el) {
-    const url = "/v5.1.0/payloads/get-svg/subs.svg";
+    const url = "/v6.0.0/payloads/get-svg/subs.svg";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]

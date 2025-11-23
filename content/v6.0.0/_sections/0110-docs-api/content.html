@@ -1,0 +1,72 @@
+[! set docs = json.release["custom-elements"].modules[0].declarations[1] !]
+<section class="default-flow">
+
+<details class="section-details">
+  <summary>Docs - Signal Method API</summary>
+<p>
+  Signals names are mapped to method names in
+  the class that provides funcionality to
+  the component. Check out the demo
+  in the overview for a basic example. 
+</p>
+
+[! filter markdown|safe !]
+The `bitty` element is exposed to
+  the class providing functionality via
+  <code>[! filter highlight_javascript|safe !]this.api[! endfilter !]</code>. The `bitty` component adds the following 
+  supplemental methods to the standard
+  element methods and properties. 
+[! endfilter !]
+
+  [! for member in docs.members !]
+    [! set member_folder = version_dir + "/_docs/members/" + member.name !]
+    [! set examples_folder = member_folder + "/examples" !]
+    [! set params_folder = member_folder + "/params" !]
+
+<details class="sub-section-details"><summary class="docs-summary">[@ member.name @](
+    [!- for param in member.parameters -!]
+    [@- param.name -@]
+    [!- if param.default -!]
+    [@- " " -@]
+    = 
+    [@- " " -@]
+    [@- param.default -@]
+    [!- endif -!]
+    [!- if not loop.last -!], [@- " " -@][!- endif -!]
+    [!- endfor -!]
+    )</summary>
+
+
+  <div><strong>Overview</strong></div>
+
+    [! include member_folder + "/overview.html" !]
+
+  <div><strong>Parameters</strong></div>
+  <ul>
+    [!- for param in member.parameters -!]
+    <li><p>[@- param.name -@]</p>
+      [! include params_folder + "/" + param.name + ".html" !]
+    </li>
+    [!- endfor -!]
+  </ul>
+
+  <div><strong>Examples</strong></div>
+
+  [! for folder in folders !]
+    [! if folder.parent == examples_folder !]
+      [! set example_folder = examples_folder + "/" + folder.name !]
+    <details class="member-example-summary"><summary>this.api.[@ member.name @]() - [! include example_folder + "/title.txt" !]</summary>
+      [! include example_folder + "/content.html" !]
+    </details>
+    [! endif !]
+  [! endfor !]
+
+</details>
+
+  [! endfor !]
+
+
+
+  </details>
+
+</section>

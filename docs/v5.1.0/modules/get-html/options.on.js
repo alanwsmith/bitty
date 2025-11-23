@@ -1,6 +1,6 @@
 export default class {
   async getHTMLOptions(_event, el) {
-    const url =  "/v5.1.0/payloads/get-html/options.html";
+    const url =  "/v6.0.0/payloads/get-html/options.html";
     const subs = [];
     const options = {
       "method": "GET"

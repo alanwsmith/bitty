@@ -5,7 +5,7 @@ export default class {
       [/KIND/g, "arctic"]
     ];
     const response = await this.api.getHTML(
-      "/v5.1.0/payloads/get-html/regex.html",
+      "/v6.0.0/payloads/get-html/regex.html",
       subs
     );
     if (response.value) {

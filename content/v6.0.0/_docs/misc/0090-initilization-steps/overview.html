@@ -1,0 +1,66 @@
+<details>
+<summary class="docs-summary">Initialization Steps</summary>
+
+<p>
+When a web component (like bitty) is
+attached to a page's DOM it fires a
+`connectedCallback` event. bitty
+uses the event to do the following
+notable steps in this order:
+</p>
+
+<ul>
+  <li>
+    load supplemental function into `this.api.fn`.
+  </li>
+  <li>
+    automatically generate `data-bittyid` attributes
+with unique IDs for the bitty element and 
+all children elements if they don't
+already exist.
+  </li>
+  <li>
+    Attempt to make a connection to a supporting
+class either on the page or in an external module file.
+If the connection can't be made, an error is thrown
+and the process stops. Otherwise, the following
+steps are taken:
+  </li>
+  <li>
+    Find any child elements with `data-receive` attributes
+and add them to the internal list of receivers. 
+  </li>
+  <li>
+    Add a mutation observer that watches for changes
+and refreshes receivers when new elements are added
+or removed. New elements also receive a `data-bittyid`
+if they don't already have one.
+  </li>
+  <li>
+    Add event event listeners at the document level. 
+The defaults are `click` and `input` but can be changed
+with a `data-listeners` attribute on the bitty component
+tag. 
+  </li>
+  <li>
+    Check for a `bittyInit()` method in the
+  connected class and call it if it exists. (If
+the method is defined with `async bittyInit()` it
+is called with `await`.)
+  </li>
+
+  <li>
+    Check for a `data-send` attribute on the
+`bitty` component tag. Trigger it to send
+its signals if it exists. The signal is
+set with a type of `bittytagdatasend`.
+The target is the bitty element itself. 
+    </li>
+</ul>
+
+<p>
+bitty this proceeds to listen for events
+and send signals when they are triggered.
+</p>
+
+</details>

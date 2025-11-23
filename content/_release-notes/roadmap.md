@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: Consider adding `this.api.triggerLocal()`
+and `this.api.forwardLocal()` to send events
+that don't bubble. 
+
 - TODO: Make stress test pages with tons
 of nesting, elements, updates, etc...
 

@@ -2,7 +2,7 @@ export default class {
   #message = null;
 
   async bittyInit() {
-    const url = "/v5.1.0/payloads/bitty-init/basic.txt";
+    const url = "/v6.0.0/payloads/bitty-init/basic.txt";
     const response = await this.api.getTXT(url);
     if (response.value) {
       this.#message = response.value;

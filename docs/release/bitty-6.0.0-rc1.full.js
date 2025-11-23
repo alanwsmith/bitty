@@ -379,18 +379,19 @@ class BittyJs extends HTMLElement {
         if (this.conn[signal]) {
           let foundReceiver = false;
           for (let receiver of receivers) {
-            //     const receptors = receiver.dataset.receive.trim().split(/\s+/m)
-            //       .map((x) => x.trim());
-            //     for (const receptor of receptors) {
-            //       if (receptor === signal) {
-            //         foundReceiver = true;
-            //         if (doAwait) {
-            //           await this.conn[signal](event, receiver);
-            //         } else {
-            //           this.conn[signal](event, receiver);
-            //         }
-            //       }
-            //     }
+            const receptors = receiver.dataset.receive.trim().split(/\s+/m)
+              .map((x) => x.trim());
+            for (const receptor of receptors) {
+              if (receptor === signal) {
+                //console.log(signal);
+                //         foundReceiver = true;
+                //         if (doAwait) {
+                //           await this.conn[signal](event, receiver);
+                //         } else {
+                //           this.conn[signal](event, receiver);
+                //         }
+              }
+            }
           }
           //   if (foundReceiver === false) {
           //     if (doAwait) {

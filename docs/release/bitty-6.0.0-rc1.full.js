@@ -15,9 +15,10 @@ class ModuleInitEvent extends Event {
 
 /** @ignore */
 class DataInitEvent extends Event {
-  constructor(signal) {
+  constructor(signal, el) {
     super("bittydatainit", { bubbles: true });
     this.signal = signal;
+    this.el = el;
   }
 }
 
@@ -386,19 +387,27 @@ class BittyJs extends HTMLElement {
       // TODO: Handle async
       event.sender = event.target;
       const signals = event.signal.split(/\s+/m);
-      const receivers = this.querySelectorAll("[data-receive]");
-      for (let receiver of receivers) {
-        const receptors = receiver.dataset.receive.split(/\s+/m).map((
-          text,
-        ) => text.trim());
-        for (let receptor of receptors) {
-          if (
-            signals.includes(receptor) && this.conn[receptor]
-          ) {
-            this.conn[receptor](event, receiver);
-          }
+      for (const signal of signals) {
+        if (this.conn[signal]) {
+          this.conn[signal](event, event.el);
         }
       }
+
+      // const receivers = this.querySelectorAll("[data-init]");
+      // for (let receiver of receivers) {
+      //   console.log(receiver);
+      //   const receptors = receiver.dataset.init.split(/\s+/m).map((
+      //     text,
+      //   ) => text.trim());
+      //   for (let receptor of receptors) {
+      //     console.log(receptor);
+      //     if (
+      //       signals.includes(receptor) && this.conn[receptor]
+      //     ) {
+      //       this.conn[receptor](event, receiver);
+      //     }
+      //   }
+      // }
     } else if (
       event.type === "bittyforward"
     ) {
@@ -610,11 +619,27 @@ class BittyJs extends HTMLElement {
   /** @internal */
   runDataInits() {
     if (this.dataset.init) {
-      const event = new DataInitEvent(this.dataset.init);
+      const event = new DataInitEvent(this.dataset.init, this);
       this.dispatchEvent(event);
+    } else {
+      const els = this.querySelectorAll("[data-init]");
+      els.forEach((el) => {
+        console.log(el);
+        console.log(el.dataset.init);
+        const event = new DataInitEvent(el.dataset.init, el);
+        console.log(event);
+
+        this.dispatchEvent(event);
+        //   signals.forEach((signal) => {
+        //     if (this.conn[signal]) {
+        //       this.conn[signal]({
+        //         type: "bittydatainit",
+        //       }, el);
+        //     }
+        //   });
+      });
     }
 
-    // const els = this.querySelectorAll("[data-init]");
     // console.log(els);
     // console.log(this.dataset);
 

@@ -198,12 +198,82 @@ window.BittyClass = class {
 <!--
 
       <script>
+window.Test = class {
+}
       </script>
-      <bitty-6-0 data-connect="">
+      <bitty-6-0 data-connect="Test">
       </bitty-6-0>
+
 -->
 
+      <script>
+window.Test0630 = class {
+  #updated = false;
 
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+
+  checkTest0630(_event, el) {
+    if (this.#updated === true) {
+      el.innerHTML = "PASSED";
+    }
+  }
+
+  async runTest0630(_event, _el) {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    this.#updated = true;
+  }
+
+}
+      </script>
+      <bitty-6-0 data-connect="Test0630">
+  <button data-send="await:runTest0630 checkTest0630">Test Target</button>
+  <div class="test" data-receive="checkTest0630">FAILED</div>
+      </bitty-6-0>
+
+
+
+      <!--
+
+      <script>
+window.Test0480 = class {
+  bittyInit() {
+    this.api.trigger(`
+  spacerAlfa 
+
+  runTest0480 
+
+
+  spacerBravo
+
+  `);
+  }
+
+  runTest0480(_event, el) {
+    el.innerHTML = "PASSED";
+  }
+}
+      </script>
+
+      <bitty-6-0 data-connect="Test0480">
+  <div class="test" data-receive="
+    spacerCharlie
+
+
+    runTest0480
+
+
+    spacerDelta 
+
+    ">FAILED</div>
+
+
+      </bitty-6-0>
+
+      -->
+
+      <!--
       <script>
 
       window.TestCase0220 = class {
@@ -269,7 +339,7 @@ window.BittyClass = class {
 
       </bitty-6-0>
 
-
+      -->
 
 
       <!--

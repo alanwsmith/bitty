@@ -11,8 +11,8 @@ export default class {
     }
   }
 
-  runTest0630(_event, _el) {
-    //  await new Promise((resolve) => setTimeout(resolve, 300));
+  async runTest0630(_event, _el) {
+    await new Promise((resolve) => setTimeout(resolve, 300));
     this.#updated = true;
   }
 }

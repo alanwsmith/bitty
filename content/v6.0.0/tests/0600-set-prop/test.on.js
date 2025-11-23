@@ -1,6 +1,7 @@
 export default class {
   bittyInit() {
     this.api.setProp("--test0600", "1rem");
+    this.api.trigger("runTest0600");
   }
 
   runTest0600(_event, el) {

@@ -136,6 +136,7 @@ class BittyJs extends HTMLElement {
       );
     if (this.dataset.listeners) {
       this.config.listeners = this.dataset.listeners
+        .trim()
         .split(/\s+/m)
         .map((l) => l.trim());
     }
@@ -383,24 +384,30 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = event.signal.split(/\s+/m).map((signal) => signal.trim());
+      const signals = event.signal.trim().split(/\s+/m).map((signal) =>
+        signal.trim()
+      );
       for (const signal of signals) {
         const receivers = this.querySelectorAll("[data-receive]");
         let foundReceiver = false;
         for (let receiver of receivers) {
-          const receptors = receiver.dataset.receive.split(/\s+/m).map((
+          const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
             text,
           ) => text.trim());
           for (let receptor of receptors) {
             if (receptor === signal) {
-              foundReceiver = true;
-              this.conn[receptor](event, receiver);
+              if (typeof this.conn[receptor] === "function") {
+                foundReceiver = true;
+                this.conn[receptor](event, receiver);
+              }
             }
           }
         }
         if (!foundReceiver) {
           // TODO: Handle async
-          this.conn[signal](event, null);
+          if (typeof this.conn[signal] === "function") {
+            this.conn[signal](event, null);
+          }
         }
       }
     } else if (
@@ -408,7 +415,7 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = event.signal.split(/\s+/m);
+      const signals = event.signal.trim().split(/\s+/m);
       for (const signal of signals) {
         if (this.conn[signal]) {
           this.conn[signal](event, event.el);
@@ -418,11 +425,11 @@ class BittyJs extends HTMLElement {
       event.type === "bittyforward"
     ) {
       // TODO: Handle async
-      const signals = event.forwardedSignal.split(/\s+/m);
+      const signals = event.forwardedSignal.trim().split(/\s+/m);
       event = event.forwardedEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
-        const receptors = receiver.dataset.receive.split(/\s+/m).map((
+        const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
           text,
         ) => text.trim());
         for (let receptor of receptors) {
@@ -436,10 +443,10 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
-        const signals = event.sender.dataset.send.split(/\s+/m);
+        const signals = event.sender.dataset.send.trim().split(/\s+/m);
         const receivers = this.querySelectorAll("[data-receive]");
         for (let receiver of receivers) {
-          const receptors = receiver.dataset.receive.split(/\s+/m).map((
+          const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
             text,
           ) => text.trim());
           for (let receptor of receptors) {
@@ -571,7 +578,7 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.dataset.connect.split(/\s+/m).map((x) =>
+        const connParts = this.dataset.connect.trim().split(/\s+/m).map((x) =>
           x.trim()
         );
         if (typeof window[connParts[0]] !== "undefined") {

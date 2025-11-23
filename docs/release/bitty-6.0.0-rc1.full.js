@@ -7,9 +7,16 @@ class TriggerEvent extends Event {
 }
 
 /** @ignore */
-class ModuleInitEvent extends Event {
+class BittyInitEvent extends Event {
   constructor() {
-    super("bittymoduleinit", { bubbles: true });
+    super("bittybittyinit", { bubbles: true });
+  }
+}
+
+/** @ignore */
+class BittyReadyEvent extends Event {
+  constructor() {
+    super("bittybittyready", { bubbles: true });
   }
 }
 
@@ -100,23 +107,21 @@ class BittyJs extends HTMLElement {
       // TODO: do everything not just data-* elements
       this.setIds(this);
       this.addEventListeners();
-      await this.runModuleInit();
+      await this.runBittyInit();
       this.runDataInits();
-      // TODO: Migrate runSelfInit() into
-      // runChildInits() (assuming that works)
-      // this.runSelfInit();
-      // await this.callBittyReady();
+      await this.runBittyReady();
     }
   }
 
   /** @internal */
   addEventListeners() {
     [
-      "bittymoduleinit",
+      "bittybittyinit",
+      "bittybittyready",
       "bittytrigger",
       "bittydatainit",
       "bittyforward",
-      // "bittymoduleinit",
+      // "bittybittyinit",
       // "bittyselfinit",
     ]
       .forEach(
@@ -158,9 +163,9 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  async runModuleInit() {
+  async runBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
-      const event = new ModuleInitEvent();
+      const event = new BittyInitEvent();
       this.dispatchEvent(event);
     }
 
@@ -176,16 +181,21 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  async callBittyReady() {
-    // TODO: Verify async again here.
-    if (typeof this.conn.bittyReady !== "function") {
-      return;
+  async runBittyReady() {
+    if (typeof this.conn.bittyReady === "function") {
+      const event = new BittyReadyEvent();
+      this.dispatchEvent(event);
     }
-    if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-      await this.conn.bittyReady();
-    } else {
-      this.conn.bittyReady();
-    }
+
+    // // TODO: Verify async again here.
+    // if (typeof this.conn.bittyReady !== "function") {
+    //   return;
+    // }
+    // if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+    //   await this.conn.bittyReady();
+    // } else {
+    //   this.conn.bittyReady();
+    // }
   }
 
   /** @internal */
@@ -354,7 +364,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    if (event.type === "bittymoduleinit") {
+    if (event.type === "bittybittyinit") {
       if (typeof this.conn.bittyInit === "function") {
         if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
           await this.conn.bittyInit();
@@ -362,23 +372,35 @@ class BittyJs extends HTMLElement {
           this.conn.bittyInit();
         }
       }
+    } else if (event.type === "bittybittyready") {
+      if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+        await this.conn.bittyReady();
+      } else {
+        this.conn.bittyReady();
+      }
     } else if (
       event.type === "bittytrigger"
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = event.signal.split(/\s+/m);
-      const receivers = this.querySelectorAll("[data-receive]");
-      for (let receiver of receivers) {
-        const receptors = receiver.dataset.receive.split(/\s+/m).map((
-          text,
-        ) => text.trim());
-        for (let receptor of receptors) {
-          if (
-            signals.includes(receptor) && this.conn[receptor]
-          ) {
-            this.conn[receptor](event, receiver);
+      const signals = event.signal.split(/\s+/m).map((signal) => signal.trim());
+      for (const signal of signals) {
+        const receivers = this.querySelectorAll("[data-receive]");
+        let foundReceiver = false;
+        for (let receiver of receivers) {
+          const receptors = receiver.dataset.receive.split(/\s+/m).map((
+            text,
+          ) => text.trim());
+          for (let receptor of receptors) {
+            if (receptor === signal) {
+              foundReceiver = true;
+              this.conn[receptor](event, receiver);
+            }
           }
+        }
+        if (!foundReceiver) {
+          // TODO: Handle async
+          this.conn[signal](event, null);
         }
       }
     } else if (
@@ -435,7 +457,7 @@ class BittyJs extends HTMLElement {
     // console.log(signals);
     //const receivers = this.querySelectorAll("[data-receive]");
 
-    //if (event.type === "bittymoduleinit") {
+    //if (event.type === "bittybittyinit") {
     //} else if (event.type === "bittydatainit") {
     //  console.log("HERE7");
     //  console.log(event);
@@ -636,8 +658,8 @@ class BittyJs extends HTMLElement {
 
   ///** @internal */
   //runSelfInit() {
-  //  //const bittyModuleInitEvent = new BittyModuleInitEvent();
-  //  // this.dispatchEvent(bittyModuleInitEvent);
+  //  //const bittyBittyInitEvent = new BittyBittyInitEvent();
+  //  // this.dispatchEvent(bittyBittyInitEvent);
   //  // TODO: Rename `data-send` on the bitty tag
   //  // to `data-init` in version 6.x.x
   //  if (this.dataset.init) {

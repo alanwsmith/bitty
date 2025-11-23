@@ -195,6 +195,30 @@ window.BittyClass = class {
 </head>
 <body>
 
+      <script>
+      window.RunTest0077 = class {
+        bittyReady() {
+          console.log("here1");
+          this.api.trigger("runTest0077");
+        }
+
+        runTest0077(_event, _el) {
+          console.log("here2");
+          this.api.trigger("triggerEvent0077");
+        }
+
+        triggerEvent0077(_event, el) {
+          console.log("here3");
+          el.innerHTML = "PASSED";
+        }
+      }
+      </script>
+      <bitty-6-0 data-connect="RunTest0077">
+        <div class="test" data-receive="triggerEvent0077">FAILED</div>
+      </bitty-6-0>
+
+
+
       <!--
       <script>
       window.RunTest0075b = class {
@@ -228,6 +252,7 @@ window.BittyClass = class {
       </bitty-6-0>
 -->
 
+      <!--
 
       <script>
       window.RunTest0020 = class {
@@ -240,6 +265,7 @@ window.BittyClass = class {
         <div class="test" data-receive="runTest0020">FAILED</div>
       </bitty-6-0>
 
+-->
 
       <!--
       <script>

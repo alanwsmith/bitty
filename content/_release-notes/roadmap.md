@@ -54,6 +54,10 @@ it?)
   allow for children to call up to
   a parent to get a value. 
 
+- TODO: Make sure to cover the removal of
+elements and make sure listeners don't
+explode. 
+
 
 
 

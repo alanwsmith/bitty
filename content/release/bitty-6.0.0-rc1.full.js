@@ -1,4 +1,12 @@
 /** @ignore */
+class BittyDataInitEvent extends Event {
+  constructor(signal) {
+    super("bittydatainit", { bubbles: true });
+    this.signal = signal;
+  }
+}
+
+/** @ignore */
 const version = [6, 0, 0];
 
 /** @ignore */
@@ -33,11 +41,16 @@ class BittyForwardEvent extends Event {
 }
 
 /** @internal */
-class BittyModuleInitEvent extends Event {
+class BittyChildInitEvent extends Event {
   constructor() {
-    super("bittymoduleinit", { bubbles: true });
-    // this.fEvent = event;
-    // this.fSignal = signal;
+    super("bittychildinit", { bubbles: true });
+  }
+}
+
+/** @internal */
+class BittySelfInitEvent extends Event {
+  constructor() {
+    super("bittyselfinit", { bubbles: true });
   }
 }
 
@@ -79,26 +92,33 @@ class BittyJs extends HTMLElement {
       this.setIds(this);
       this.addEventListeners();
       await this.callBittyInit();
-      this.runChildInits();
+      this.runDataInits();
       // TODO: Migrate runSelfInit() into
       // runChildInits() (assuming that works)
-      this.runSelfInit();
+      // this.runSelfInit();
       await this.callBittyReady();
     }
   }
 
   /** @internal */
   addEventListeners() {
-    ["bittyforward", "bittymoduleinit", "bittytrigger"].forEach(
-      (bittyEvent) => {
-        // TODO: Confirm this needs to be on the window
-        // to capture message passing stuff
-        // between windows
-        window.addEventListener(bittyEvent, (event) => {
-          this.handleEventBridge.call(this, event);
-        });
-      },
-    );
+    [
+      "bittydatainit",
+      "bittyforward",
+      "bittymoduleinit",
+      "bittyselfinit",
+      "bittytrigger",
+    ]
+      .forEach(
+        (bittyEvent) => {
+          // TODO: Confirm this needs to be on the window
+          // to capture message passing stuff
+          // between windows
+          window.addEventListener(bittyEvent, (event) => {
+            this.handleEventBridge.call(this, event);
+          });
+        },
+      );
     if (this.dataset.listeners) {
       this.config.listeners = this.dataset.listeners
         .split(/\s+/m)
@@ -109,7 +129,7 @@ class BittyJs extends HTMLElement {
       // to capture message passing stuff
       // between windows
       window.addEventListener(listener, (event) => {
-        this.handleEventBridge.call(this, event);
+        // this.handleEventBridge.call(this, event);
 
         // if (
         //   event.target &&
@@ -129,8 +149,8 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async callBittyInit() {
-    const bittyModuleInitEvent = new BittyModuleInitEvent();
-    this.dispatchEvent(bittyModuleInitEvent);
+    //const bittyModuleInitEvent = new BittyModuleInitEvent();
+    // this.dispatchEvent(bittyModuleInitEvent);
 
     // // TODO: Verify async again here.
     // if (typeof this.conn.bittyInit !== "function") {
@@ -322,76 +342,91 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
+    console.log(event);
     if (event.type === "bittymoduleinit") {
+    } else if (event.type === "bittydatainit") {
+      console.log("HERE7");
+      console.log(event);
       event.sender = event.target;
-      if (this.dataset.bittyid === event.sender.dataset.bittyid) {
-        // TODO: Verify async again here.
-        if (typeof this.conn.bittyInit !== "function") {
-          return;
+      const signals = event.target.dataset.init.split(/\s+/m);
+      console.log(signals);
+
+      signals.forEach((signal) => {
+        if (this.conn[signal]) {
+          console.log("------------------------ HERE8");
+          this.conn[signal](event, event.target);
         }
-        if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-          await this.conn.bittyInit();
-        } else {
-          this.conn.bittyInit();
-        }
-      }
+      });
+    } else if (event.type === "bittyinitself") {
+      // event.sender = event.target;
+      // if (this.dataset.bittyid === event.sender.dataset.bittyid) {
+      //   // TODO: Verify async again here.
+      //   if (typeof this.conn.bittyInit !== "function") {
+      //     return;
+      //   }
+      //   if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+      //     await this.conn.bittyInit();
+      //   } else {
+      //     this.conn.bittyInit();
+      //   }
+      // }
     } else {
       this.findSender(event, event.target);
-      if (event.sender) {
-        const receivers = this.querySelectorAll("[data-receive]");
-        let incomingSignals;
-        if (event.type === "bittyforward") {
-          incomingSignals = event.fSignal;
-          event = event.fEvent;
-        } else if (event.type === "bittytrigger") {
-          incomingSignals = event.fSignal;
-        } else if (event.type === "bittyinitself") {
-          incomingSignals = event.sender.dataset.init;
-        } else {
-          incomingSignals = event.sender.dataset.send;
+      //if (event.sender) {
+      const receivers = this.querySelectorAll("[data-receive]");
+      let incomingSignals;
+      if (event.type === "bittyforward") {
+        incomingSignals = event.fSignal;
+        event = event.fEvent;
+      } else if (event.type === "bittytrigger") {
+        incomingSignals = event.fSignal;
+      } else if (event.type === "bittyselfinit") {
+        incomingSignals = event.target.dataset.init;
+      } else {
+        incomingSignals = event.sender.dataset.send;
+      }
+      for (const incomingSignal of incomingSignals.split(/\s+/)) {
+        let doAwait = false;
+        let theSignal = incomingSignal;
+        const incomingSignalParts = incomingSignal.split(":");
+        if (
+          incomingSignalParts.length === 2 &&
+          incomingSignalParts[0] === "await"
+        ) {
+          doAwait = true;
+          theSignal = incomingSignalParts[1];
         }
-        for (const incomingSignal of incomingSignals.split(/\s+/)) {
-          let doAwait = false;
-          let theSignal = incomingSignal;
-          const incomingSignalParts = incomingSignal.split(":");
-          if (
-            incomingSignalParts.length === 2 &&
-            incomingSignalParts[0] === "await"
-          ) {
-            doAwait = true;
-            theSignal = incomingSignalParts[1];
-          }
-          let foundReceivers = false;
-          for (const receiver of receivers) {
-            const receivedSignals = receiver.dataset.receive.split(/\s+/m);
-            for (const receivedSignal of receivedSignals) {
-              let rSignal = receivedSignal;
-              const receivedSignalParts = receivedSignal.split(":");
-              if (
-                receivedSignalParts.length === 2 &&
-                receivedSignalParts[0] === "await"
-              ) {
-                rSignal = receivedSignalParts[1];
-                doAwait = true;
-              }
-              if (rSignal === theSignal && this.conn[theSignal]) {
-                if (doAwait) {
-                  await this.conn[theSignal](event, receiver);
-                } else {
-                  this.conn[theSignal](event, receiver);
-                }
-                foundReceivers = true;
-              }
+        let foundReceivers = false;
+        for (const receiver of receivers) {
+          const receivedSignals = receiver.dataset.receive.split(/\s+/m);
+          for (const receivedSignal of receivedSignals) {
+            let rSignal = receivedSignal;
+            const receivedSignalParts = receivedSignal.split(":");
+            if (
+              receivedSignalParts.length === 2 &&
+              receivedSignalParts[0] === "await"
+            ) {
+              rSignal = receivedSignalParts[1];
+              doAwait = true;
             }
-          }
-          if (!foundReceivers && this.conn[theSignal]) {
-            if (doAwait) {
-              await this.conn[theSignal](event, null);
-            } else {
-              this.conn[theSignal](event, null);
+            if (rSignal === theSignal && this.conn[theSignal]) {
+              if (doAwait) {
+                await this.conn[theSignal](event, receiver);
+              } else {
+                this.conn[theSignal](event, receiver);
+              }
+              foundReceivers = true;
             }
           }
         }
+        if (!foundReceivers && this.conn[theSignal]) {
+          if (doAwait) {
+            await this.conn[theSignal](event, null);
+          } else {
+            this.conn[theSignal](event, null);
+          }
+        }
+        // }
       }
 
       //
@@ -473,36 +508,48 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  runChildInits() {
+  runDataInits() {
     // TODO: Make sure this can handle async/await
-    const els = this.querySelectorAll("[data-init]");
-    els.forEach((el) => {
-      const signals = el.dataset.init.split(/\s+/m);
-      signals.forEach((signal) => {
-        if (this.conn[signal]) {
-          this.conn[signal]({
-            type: "bittydatainit",
-          }, el);
-        }
-      });
-    });
+
+    if (this.dataset.init) {
+      console.log("HERE4: hasinit");
+      const dataInitEvent = new BittyDataInitEvent(this.dataset.init);
+      this.dispatchEvent(dataInitEvent);
+    }
+
+    // const els = this.querySelectorAll("[data-init]");
+    // console.log(els);
+    // console.log(this.dataset);
+
+    // els.forEach((el) => {
+    //   const signals = el.dataset.init.split(/\s+/m);
+    //   signals.forEach((signal) => {
+    //     if (this.conn[signal]) {
+    //       this.conn[signal]({
+    //         type: "bittydatainit",
+    //       }, el);
+    //     }
+    //   });
+    // });
   }
 
-  /** @internal */
-  runSelfInit() {
-    // TODO: Rename `data-send` on the bitty tag
-    // to `data-init` in version 6.x.x
-    if (this.dataset.init) {
-      // TODO: See if this can just be run
-      // with the child elements. So the
-      // behavior would be the same across
-      // the board.
-      this.handleEvent({
-        type: "bittyinitself",
-        target: this,
-      });
-    }
-  }
+  ///** @internal */
+  //runSelfInit() {
+  //  //const bittyModuleInitEvent = new BittyModuleInitEvent();
+  //  // this.dispatchEvent(bittyModuleInitEvent);
+  //  // TODO: Rename `data-send` on the bitty tag
+  //  // to `data-init` in version 6.x.x
+  //  if (this.dataset.init) {
+  //    // TODO: See if this can just be run
+  //    // with the child elements. So the
+  //    // behavior would be the same across
+  //    // the board.
+  //    this.handleEvent({
+  //      type: "bittyinitself",
+  //      target: this,
+  //    });
+  //  }
+  //}
 
   setProp(key, value) {
     document.documentElement.style.setProperty(key, value);

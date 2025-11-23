@@ -26,6 +26,10 @@ export default class {
   #passed = 0;
   #failed = 0;
 
+  bittyInit() {
+    this.api.trigger("showResults");
+  }
+
   async showResults(_event, element) {
     await sleep(2000);
     const els = document.querySelectorAll(".test");

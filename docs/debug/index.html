@@ -197,39 +197,27 @@ window.BittyClass = class {
 <body>
 
       <script>
-      window.NestedChildrenTest = class {
-        nestedChildrenTest(event, el) {
-          console.log(event);
-          el.innerHTML = `${event.target.localName} - ${event.sender.localName}`;
+      window.SelfInitTest = class {
+        constructor(){
+          console.log("connected");
+        }
+        selfInitTest(event, el) {
+          console.log("asdf");
+          el.innerHTML = "asdfasdfas";
         }
       }
       </script>
       <style>
-      [data-send=nestedChildrenTest] {
-        margin: 2rem;
-        outline: 1px solid red;
-        & div {
-          outline: 1px solid blue;
-        }
-      }
       </style>
-
-      <bitty-6-0 data-connect="NestedChildrenTest" 
- data-send="nestedChildrenTest"
-      >
-this is the bitty
-          <div data-receive="nestedChildrenTest">waiting</div>
-
-        <!--
-        <div>
-          <button>Click Me</button>
-          <div>some text that is just here</div>
-          <div data-receive="nestedChildrenTest">waiting</div>
-        </div>
-        <div>This has no data-send above it</div>
--->
+      <bitty-6-0 data-connect="SelfInitTest" data-init="selfInitTest">
+          <div data-receive="selfInitTest">waiting</div>
       </bitty-6-0>
 
+      <!--
+      <bitty-6-0 data-connect="SelfInitTest">
+          <div data-receive="selfInitTest">waiting</div>
+      </bitty-6-0>
+-->
 
 
 

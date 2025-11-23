@@ -316,7 +316,7 @@ class BittyJs extends HTMLElement {
             doAwait = true;
           }
           if (rSignal === theSignal) {
-            if (this.conn[incomingSignal]) {
+            if (this.conn[theSignal]) {
               if (doAwait) {
                 await this.conn[incomingSignal](event, receiver);
               } else {
@@ -328,11 +328,11 @@ class BittyJs extends HTMLElement {
         }
       }
       if (foundReceivers === 0 && this.conn[theSignal]) {
-          if (doAwait) {
-            await this.conn[theSignal](event, null);
-          } else {
-            this.conn[theSignal](event, null);
-          }
+        if (doAwait) {
+          await this.conn[theSignal](event, null);
+        } else {
+          this.conn[theSignal](event, null);
+        }
       }
     }
   }
@@ -397,10 +397,10 @@ class BittyJs extends HTMLElement {
   }
 
   match(event, el, key = "bittyid") {
-  // TODO: Consider adding `matchData` which would does the match
-  // doing up the DOM ancestors. Idea being to make it easy
-  // to see when an `event.target` and an `el` have the
-  // same ancestor.
+    // TODO: Consider adding `matchData` which would does the match
+    // doing up the DOM ancestors. Idea being to make it easy
+    // to see when an `event.target` and an `el` have the
+    // same ancestor.
     if (
       event.target.dataset[key] === undefined ||
       el.dataset[key] === undefined

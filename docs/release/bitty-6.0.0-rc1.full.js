@@ -138,7 +138,7 @@ class BittyJs extends HTMLElement {
       // to capture message passing stuff
       // between windows
       window.addEventListener(listener, (event) => {
-        // this.handleEventBridge.call(this, event);
+        this.handleEventBridge.call(this, event);
 
         // if (
         //   event.target &&
@@ -366,6 +366,7 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
+
       const signals = event.signal.split(/\s+/m);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
@@ -377,6 +378,24 @@ class BittyJs extends HTMLElement {
             signals.includes(receptor) && this.conn[receptor]
           ) {
             this.conn[receptor](event, receiver);
+          }
+        }
+      }
+    } else {
+      this.findSender(event, event.target);
+      if (event.sender) {
+        const signals = event.sender.dataset.send.split(/\s+/m);
+        const receivers = this.querySelectorAll("[data-receive]");
+        for (let receiver of receivers) {
+          const receptors = receiver.dataset.receive.split(/\s+/m).map((
+            text,
+          ) => text.trim());
+          for (let receptor of receptors) {
+            if (
+              signals.includes(receptor) && this.conn[receptor]
+            ) {
+              this.conn[receptor](event, receiver);
+            }
           }
         }
       }

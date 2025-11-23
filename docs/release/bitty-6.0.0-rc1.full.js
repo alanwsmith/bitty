@@ -345,19 +345,23 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async handleEvent(event) {
     if (event.type === "bittybittyinit") {
-      if (typeof this.conn.bittyInit === "function") {
-        if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-          await this.conn.bittyInit();
-        } else {
-          this.conn.bittyInit();
+      if (this.dataset.bittyid === event.target.dataset.bittyid) {
+        if (typeof this.conn.bittyInit === "function") {
+          if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+            await this.conn.bittyInit();
+          } else {
+            this.conn.bittyInit();
+          }
         }
       }
     } else if (event.type === "bittybittyready") {
-      if (typeof this.conn.bittyReady === "function") {
-        if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-          await this.conn.bittyReady();
-        } else {
-          this.conn.bittyReady();
+      if (this.dataset.bittyid === event.target.dataset.bittyid) {
+        if (typeof this.conn.bittyReady === "function") {
+          if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+            await this.conn.bittyReady();
+          } else {
+            this.conn.bittyReady();
+          }
         }
       }
     } else if (

@@ -317,9 +317,9 @@ class BittyJs extends HTMLElement {
           }
           if (rSignal === theSignal && this.conn[theSignal]) {
             if (doAwait) {
-              await this.conn[incomingSignal](event, receiver);
+              await this.conn[theSignal](event, receiver);
             } else {
-              this.conn[incomingSignal](event, receiver);
+              this.conn[theSignal](event, receiver);
             }
             foundReceivers = true;
           }

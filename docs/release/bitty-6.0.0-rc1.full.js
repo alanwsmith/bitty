@@ -392,28 +392,11 @@ class BittyJs extends HTMLElement {
           this.conn[signal](event, event.el);
         }
       }
-
-      // const receivers = this.querySelectorAll("[data-init]");
-      // for (let receiver of receivers) {
-      //   console.log(receiver);
-      //   const receptors = receiver.dataset.init.split(/\s+/m).map((
-      //     text,
-      //   ) => text.trim());
-      //   for (let receptor of receptors) {
-      //     console.log(receptor);
-      //     if (
-      //       signals.includes(receptor) && this.conn[receptor]
-      //     ) {
-      //       this.conn[receptor](event, receiver);
-      //     }
-      //   }
-      // }
     } else if (
       event.type === "bittyforward"
     ) {
       // TODO: Handle async
       const signals = event.forwardedSignal.split(/\s+/m);
-      console.log(signals);
       event = event.forwaredEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
@@ -624,11 +607,7 @@ class BittyJs extends HTMLElement {
     } else {
       const els = this.querySelectorAll("[data-init]");
       els.forEach((el) => {
-        console.log(el);
-        console.log(el.dataset.init);
         const event = new DataInitEvent(el.dataset.init, el);
-        console.log(event);
-
         this.dispatchEvent(event);
         //   signals.forEach((signal) => {
         //     if (this.conn[signal]) {

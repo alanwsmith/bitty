@@ -97,7 +97,7 @@ class BittyJs extends HTMLElement {
           event.target.nodeName &&
           event.target.nodeName.toLowerCase() !== tagName &&
           event.target.dataset &&
-          (event.target.dataset.send || event.target.dataset.s)
+          (event.target.dataset.send)
         ) {
           this.handleEventBridge.call(this, event);
         } else {

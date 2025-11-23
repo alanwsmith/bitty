@@ -3,6 +3,9 @@ function sleep(ms) {
 }
 
 export default class {
+  bittyInit() {
+    this.api.trigger("runTest0860Alfa runTest0860Bravo");
+  }
   async runTest0860Alfa(_event, el) {
     await sleep(300);
     el.innerHTML = "PASSED";

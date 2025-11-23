@@ -353,10 +353,12 @@ class BittyJs extends HTMLElement {
         }
       }
     } else if (event.type === "bittybittyready") {
-      if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-        await this.conn.bittyReady();
-      } else {
-        this.conn.bittyReady();
+      if (typeof this.conn.bittyReady === "function") {
+        if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+          await this.conn.bittyReady();
+        } else {
+          this.conn.bittyReady();
+        }
       }
     } else if (
       event.type === "bittytrigger"
@@ -366,33 +368,69 @@ class BittyJs extends HTMLElement {
       const signals = event.signal.trim().split(/\s+/m).map((signal) =>
         signal.trim()
       );
-      for (const signal of signals) {
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let signal of signals) {
         let doAwait = false;
-        const iSigParts = signal.split(":").map((x) => x.trim());
-        console.log(iSigParts);
+        const iSigParts = signal.split(":");
+        if (iSigParts.length === 2 && iSigParts[0] === "await") {
+          doAwait = true;
+          signal = iSigParts[1];
+        }
+        if (this.conn[signal]) {
+          let foundReceiver = false;
+          for (let receiver of receivers) {
+            //     const receptors = receiver.dataset.receive.trim().split(/\s+/m)
+            //       .map((x) => x.trim());
+            //     for (const receptor of receptors) {
+            //       if (receptor === signal) {
+            //         foundReceiver = true;
+            //         if (doAwait) {
+            //           await this.conn[signal](event, receiver);
+            //         } else {
+            //           this.conn[signal](event, receiver);
+            //         }
+            //       }
+            //     }
+          }
+          //   if (foundReceiver === false) {
+          //     if (doAwait) {
+          //       await this.conn[signal](event, null);
+          //     } else {
+          //       this.conn[signal](event, null);
+          //     }
+          //   }
+        }
 
-        const receivers = this.querySelectorAll("[data-receive]");
-        let foundReceiver = false;
-        for (let receiver of receivers) {
-          const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
-            text,
-          ) => text.trim());
-          for (let receptor of receptors) {
-            if (receptor === signal) {
-              if (typeof this.conn[receptor] === "function") {
-                foundReceiver = true;
-                this.conn[receptor](event, receiver);
-              }
-            }
-          }
-        }
-        if (!foundReceiver) {
-          // TODO: Handle async
-          if (typeof this.conn[signal] === "function") {
-            this.conn[signal](event, null);
-          }
-        }
+        //
       }
+
+      // for (const signal of signals) {
+      //   let doAwait = false;
+      //   const iSigParts = signal.split(":").map((x) => x.trim());
+      //   const receivers = this.querySelectorAll("[data-receive]");
+      //   let foundReceiver = false;
+      //   for (let receiver of receivers) {
+      //     const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
+      //       text,
+      //     ) => text.trim());
+      //     for (let receptor of receptors) {
+      //       if (receptor === signal) {
+      //         if (typeof this.conn[receptor] === "function") {
+      //           foundReceiver = true;
+      //           this.conn[receptor](event, receiver);
+      //         }
+      //       }
+      //     }
+      //   }
+      //   if (!foundReceiver) {
+      //     // TODO: Handle async
+      //     if (typeof this.conn[signal] === "function") {
+      //       this.conn[signal](event, null);
+      //     }
+      //   }
+      // }
+
+      //
     } else if (
       event.type === "bittydatainit"
     ) {

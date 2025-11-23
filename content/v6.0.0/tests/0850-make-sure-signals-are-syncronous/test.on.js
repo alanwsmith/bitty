@@ -26,8 +26,15 @@ function findLargePrimes(limit) {
 export default class {
   // NOTE: The display might/probably wont'
   // refresh until the full event set of
+  //
   // signals has been processed.
+
   #counter = 0;
+
+  bittyInit() {
+    this.api.trigger("runTest0850Alfa runTest0850Bravo");
+  }
+
   runTest0850Alfa(_event, el) {
     this.#counter += 1;
     const checkEl = this.api.querySelector(".testTarget0850");

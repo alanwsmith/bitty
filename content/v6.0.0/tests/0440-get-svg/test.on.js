@@ -2,6 +2,7 @@ export default class {
   bittyInit() {
     this.api.trigger("runTest0440");
   }
+
   async runTest0440(_event, el) {
     const url =
       `/[@ json.version.version_dir @]/tests/0440-get-svg/payload.svg`;

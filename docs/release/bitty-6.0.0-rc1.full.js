@@ -1,4 +1,11 @@
 /** @ignore */
+class ModuleInitEvent extends Event {
+  constructor() {
+    super("bittymoduleinit", { bubbles: true });
+  }
+}
+
+/** @ignore */
 class BittyDataInitEvent extends Event {
   constructor(signal) {
     super("bittydatainit", { bubbles: true });
@@ -89,25 +96,27 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleCatchBridge = this.handleCatch.bind(this);
       this.handleEventBridge = this.handleEvent.bind(this);
+      // TODO: do everything not just data-* elements
       this.setIds(this);
       this.addEventListeners();
-      await this.callBittyInit();
-      this.runDataInits();
+      await this.runModuleInit();
+      // this.runDataInits();
       // TODO: Migrate runSelfInit() into
       // runChildInits() (assuming that works)
       // this.runSelfInit();
-      await this.callBittyReady();
+      // await this.callBittyReady();
     }
   }
 
   /** @internal */
   addEventListeners() {
     [
-      "bittydatainit",
-      "bittyforward",
       "bittymoduleinit",
-      "bittyselfinit",
-      "bittytrigger",
+      // "bittydatainit",
+      // "bittyforward",
+      // "bittymoduleinit",
+      // "bittyselfinit",
+      // "bittytrigger",
     ]
       .forEach(
         (bittyEvent) => {
@@ -148,9 +157,12 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  async callBittyInit() {
-    //const bittyModuleInitEvent = new BittyModuleInitEvent();
-    // this.dispatchEvent(bittyModuleInitEvent);
+  async runModuleInit() {
+    if (typeof this.conn.bittyInit === "function") {
+      console.log("HERE8");
+      const event = new ModuleInitEvent();
+      this.dispatchEvent(event);
+    }
 
     // // TODO: Verify async again here.
     // if (typeof this.conn.bittyInit !== "function") {
@@ -342,95 +354,108 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    console.log(event);
     if (event.type === "bittymoduleinit") {
-    } else if (event.type === "bittydatainit") {
-      console.log("HERE7");
-      console.log(event);
-      event.sender = event.target;
-      const signals = event.target.dataset.init.split(/\s+/m);
-      console.log(signals);
-
-      signals.forEach((signal) => {
-        if (this.conn[signal]) {
-          console.log("------------------------ HERE8");
-          this.conn[signal](event, event.target);
+      if (typeof this.conn.bittyInit === "function") {
+        if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+          await this.conn.bittyInit();
+        } else {
+          this.conn.bittyInit();
         }
-      });
-    } else if (event.type === "bittyinitself") {
-      // event.sender = event.target;
-      // if (this.dataset.bittyid === event.sender.dataset.bittyid) {
-      //   // TODO: Verify async again here.
-      //   if (typeof this.conn.bittyInit !== "function") {
-      //     return;
-      //   }
-      //   if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-      //     await this.conn.bittyInit();
-      //   } else {
-      //     this.conn.bittyInit();
-      //   }
-      // }
-    } else {
-      this.findSender(event, event.target);
-      //if (event.sender) {
-      const receivers = this.querySelectorAll("[data-receive]");
-      let incomingSignals;
-      if (event.type === "bittyforward") {
-        incomingSignals = event.fSignal;
-        event = event.fEvent;
-      } else if (event.type === "bittytrigger") {
-        incomingSignals = event.fSignal;
-      } else if (event.type === "bittyselfinit") {
-        incomingSignals = event.target.dataset.init;
-      } else {
-        incomingSignals = event.sender.dataset.send;
       }
-      for (const incomingSignal of incomingSignals.split(/\s+/)) {
-        let doAwait = false;
-        let theSignal = incomingSignal;
-        const incomingSignalParts = incomingSignal.split(":");
-        if (
-          incomingSignalParts.length === 2 &&
-          incomingSignalParts[0] === "await"
-        ) {
-          doAwait = true;
-          theSignal = incomingSignalParts[1];
-        }
-        let foundReceivers = false;
-        for (const receiver of receivers) {
-          const receivedSignals = receiver.dataset.receive.split(/\s+/m);
-          for (const receivedSignal of receivedSignals) {
-            let rSignal = receivedSignal;
-            const receivedSignalParts = receivedSignal.split(":");
-            if (
-              receivedSignalParts.length === 2 &&
-              receivedSignalParts[0] === "await"
-            ) {
-              rSignal = receivedSignalParts[1];
-              doAwait = true;
-            }
-            if (rSignal === theSignal && this.conn[theSignal]) {
-              if (doAwait) {
-                await this.conn[theSignal](event, receiver);
-              } else {
-                this.conn[theSignal](event, receiver);
-              }
-              foundReceivers = true;
-            }
-          }
-        }
-        if (!foundReceivers && this.conn[theSignal]) {
-          if (doAwait) {
-            await this.conn[theSignal](event, null);
-          } else {
-            this.conn[theSignal](event, null);
-          }
-        }
-        // }
-      }
-
-      //
     }
+
+    //const signals = event.target.dataset.init.split(/\s+/m);
+    // console.log(signals);
+    //const receivers = this.querySelectorAll("[data-receive]");
+
+    //if (event.type === "bittymoduleinit") {
+    //} else if (event.type === "bittydatainit") {
+    //  console.log("HERE7");
+    //  console.log(event);
+    //  event.sender = event.target;
+    //  const signals = event.target.dataset.init.split(/\s+/m);
+    //  console.log(signals);
+    //  signals.forEach((signal) => {
+    //    if (this.conn[signal]) {
+    //      console.log("------------------------ HERE8");
+    //      // TODO: check async here and do await.
+    //      this.conn[signal](event, event.target);
+    //    }
+    //  });
+    //} else if (event.type === "bittyinitself") {
+    //  // event.sender = event.target;
+    //  // if (this.dataset.bittyid === event.sender.dataset.bittyid) {
+    //  //   // TODO: Verify async again here.
+    //  //   if (typeof this.conn.bittyInit !== "function") {
+    //  //     return;
+    //  //   }
+    //  //   if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+    //  //     await this.conn.bittyInit();
+    //  //   } else {
+    //  //     this.conn.bittyInit();
+    //  //   }
+    //  // }
+    //} else {
+    //  this.findSender(event, event.target);
+    //  //if (event.sender) {
+    //  const receivers = this.querySelectorAll("[data-receive]");
+    //  let incomingSignals;
+    //  if (event.type === "bittyforward") {
+    //    incomingSignals = event.fSignal;
+    //    event = event.fEvent;
+    //  } else if (event.type === "bittytrigger") {
+    //    incomingSignals = event.fSignal;
+    //  } else if (event.type === "bittyselfinit") {
+    //    incomingSignals = event.target.dataset.init;
+    //  } else {
+    //    incomingSignals = event.sender.dataset.send;
+    //  }
+    //  for (const incomingSignal of incomingSignals.split(/\s+/)) {
+    //    let doAwait = false;
+    //    let theSignal = incomingSignal;
+    //    const incomingSignalParts = incomingSignal.split(":");
+    //    if (
+    //      incomingSignalParts.length === 2 &&
+    //      incomingSignalParts[0] === "await"
+    //    ) {
+    //      doAwait = true;
+    //      theSignal = incomingSignalParts[1];
+    //    }
+    //    let foundReceivers = false;
+    //    for (const receiver of receivers) {
+    //      const receivedSignals = receiver.dataset.receive.split(/\s+/m);
+    //      for (const receivedSignal of receivedSignals) {
+    //        let rSignal = receivedSignal;
+    //        const receivedSignalParts = receivedSignal.split(":");
+    //        if (
+    //          receivedSignalParts.length === 2 &&
+    //          receivedSignalParts[0] === "await"
+    //        ) {
+    //          rSignal = receivedSignalParts[1];
+    //          doAwait = true;
+    //        }
+    //        if (rSignal === theSignal && this.conn[theSignal]) {
+    //          if (doAwait) {
+    //            await this.conn[theSignal](event, receiver);
+    //          } else {
+    //            this.conn[theSignal](event, receiver);
+    //          }
+    //          foundReceivers = true;
+    //        }
+    //      }
+    //    }
+    //    if (!foundReceivers && this.conn[theSignal]) {
+    //      if (doAwait) {
+    //        await this.conn[theSignal](event, null);
+    //      } else {
+    //        this.conn[theSignal](event, null);
+    //      }
+    //    }
+    //    // }
+    //  }
+
+    //
+    //}
     //
   }
 

@@ -364,7 +364,18 @@ point directly.</p>
 <p>Note that <code>data-send</code> on a <code>bitty-#-#</code> tag
 only goes</p>
 </li>
+<li>
+<p>NOTE that if there's a data-receive that's
+nested under multiple bitty elements that
+all have the same signal name, every bitty
+element will fire its own version of the
+function.</p>
+</li>
+<li>
+<p>NOTE that bitty can use <code>data-send</code> now.</p>
+</li>
 </ul>
+
   </details>
 </section>
  
@@ -4004,6 +4015,31 @@ by using <code>this.api.forward()</code></p>
   <summary>Release Notes</summary>
 <h3>Version 6.0.0-rc1</h3>
 <ul>
+<li>
+<p>TODO: Added <code>data-bittyid</code> attrs to
+everything so they can be used for comparisons.</p>
+</li>
+<li>
+<p>TODO: For the bitty events, include the
+target that the event happened on and then
+the <code>sender</code> that is the element that
+had the <code>data-send</code> on it. (e.g. if
+a child element is clicked, it's the
+target and then bubbles up to the closest
+<code>data-send</code> attr which becomes the sender)</p>
+</li>
+<li>
+<p>TODO: split <code>this.api.match()</code>, to
+<code>this.api.matchTarget()</code> and <code>this.api.matchSender()</code>
+so you can match the two different
+elements coming in from the event.</p>
+</li>
+<li>
+<p>TODO: Set up so events bubble up for
+everything (e.g. to ensure that clicking on
+child elements triggers the <code>data-send</code> for
+the parent element)</p>
+</li>
 <li>
 <p>TODO: NOTE: Review all <code>bitty...</code> event names
 and line things up consistently.</p>

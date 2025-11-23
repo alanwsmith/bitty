@@ -33,3 +33,15 @@ point directly.
 
 - Note that `data-send` on a `bitty-#-#` tag
 only goes
+
+- NOTE that if there's a data-receive that's
+nested under multiple bitty elements that
+all have the same signal name, every bitty
+element will fire its own version of the
+function. 
+
+- NOTE that bitty can use `data-send` now.
+
+
+
+

@@ -364,32 +364,22 @@ class BittyJs extends HTMLElement {
     } else if (
       event.type === "bittytrigger"
     ) {
-      console.log("HERE9");
-      console.log(event);
-
+      // TODO: Handle async
       event.sender = event.target;
       const signals = event.signal.split(/\s+/m);
-      console.log(signals);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
-        console.log(receiver);
         const receptors = receiver.dataset.receive.split(/\s+/m).map((
           text,
         ) => text.trim());
-        console.log(receptors);
         for (let receptor of receptors) {
-          console.log(receptor);
-          console.log(signals);
           if (
             signals.includes(receptor) && this.conn[receptor]
           ) {
-            console.log("HERE5");
-            console.log(receptor);
             this.conn[receptor](event, receiver);
           }
         }
       }
-      console.log("HERE9");
     }
 
     //const signals = event.target.dataset.init.split(/\s+/m);

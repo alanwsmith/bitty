@@ -1,3 +1,11 @@
+/** @internal */
+class TriggerEvent extends Event {
+  constructor(signal) {
+    super("bittytrigger", { bubbles: true });
+    this.signal = signal;
+  }
+}
+
 /** @ignore */
 class ModuleInitEvent extends Event {
   constructor() {
@@ -61,14 +69,6 @@ class BittySelfInitEvent extends Event {
   }
 }
 
-/** @internal */
-class BittyTriggerEvent extends Event {
-  constructor(signal) {
-    super("bittytrigger", { bubbles: true });
-    this.fSignal = signal;
-  }
-}
-
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-init
@@ -112,11 +112,11 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     [
       "bittymoduleinit",
+      "bittytrigger",
       // "bittydatainit",
       // "bittyforward",
       // "bittymoduleinit",
       // "bittyselfinit",
-      // "bittytrigger",
     ]
       .forEach(
         (bittyEvent) => {
@@ -159,7 +159,6 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async runModuleInit() {
     if (typeof this.conn.bittyInit === "function") {
-      console.log("HERE8");
       const event = new ModuleInitEvent();
       this.dispatchEvent(event);
     }
@@ -255,8 +254,8 @@ class BittyJs extends HTMLElement {
   }
 
   trigger(signal) {
-    const triggerEvent = new BittyTriggerEvent(signal);
-    this.dispatchEvent(triggerEvent);
+    const event = new TriggerEvent(signal);
+    this.dispatchEvent(event);
   }
 
   async getElement(url, subs = [], options = {}) {
@@ -362,6 +361,35 @@ class BittyJs extends HTMLElement {
           this.conn.bittyInit();
         }
       }
+    } else if (
+      event.type === "bittytrigger"
+    ) {
+      console.log("HERE9");
+      console.log(event);
+
+      event.sender = event.target;
+      const signals = event.signal.split(/\s+/m);
+      console.log(signals);
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let receiver of receivers) {
+        console.log(receiver);
+        const receptors = receiver.dataset.receive.split(/\s+/m).map((
+          text,
+        ) => text.trim());
+        console.log(receptors);
+        for (let receptor of receptors) {
+          console.log(receptor);
+          console.log(signals);
+          if (
+            signals.includes(receptor) && this.conn[receptor]
+          ) {
+            console.log("HERE5");
+            console.log(receptor);
+            this.conn[receptor](event, receiver);
+          }
+        }
+      }
+      console.log("HERE9");
     }
 
     //const signals = event.target.dataset.init.split(/\s+/m);

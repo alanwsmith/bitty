@@ -385,25 +385,29 @@ class BittyJs extends HTMLElement {
           for (let receiver of receivers) {
             const receptors = receiver.dataset.receive.trim().split(/\s+/m)
               .map((x) => x.trim());
-            for (const receptor of receptors) {
+            for (let receptor of receptors) {
+              const rSigParts = receptor.split(":");
+              if (rSigParts.length === 2 && rSigParts[0] === "await") {
+                doAwait = true;
+                receptor = rSigParts[1];
+              }
               if (receptor === signal) {
-                //console.log(signal);
-                //         foundReceiver = true;
-                //         if (doAwait) {
-                //           await this.conn[signal](event, receiver);
-                //         } else {
-                //           this.conn[signal](event, receiver);
-                //         }
+                foundReceiver = true;
+                if (doAwait) {
+                  await this.conn[signal](event, receiver);
+                } else {
+                  this.conn[signal](event, receiver);
+                }
               }
             }
           }
-          //   if (foundReceiver === false) {
-          //     if (doAwait) {
-          //       await this.conn[signal](event, null);
-          //     } else {
-          //       this.conn[signal](event, null);
-          //     }
-          //   }
+          if (foundReceiver === false) {
+            if (doAwait) {
+              await this.conn[signal](event, null);
+            } else {
+              this.conn[signal](event, null);
+            }
+          }
         }
 
         //
@@ -484,6 +488,11 @@ class BittyJs extends HTMLElement {
               const receptors = receiver.dataset.receive.trim().split(/\s+/m)
                 .map((x) => x.trim());
               for (const receptor of receptors) {
+                const rSignalParts = receptor.split(":");
+                if (rSignalParts.length === 2 && rSignalParts[0] === "await") {
+                  receptor = rSignalParts[1];
+                  doAwait == true;
+                }
                 if (receptor === signal) {
                   foundReceiver = true;
                   if (doAwait) {

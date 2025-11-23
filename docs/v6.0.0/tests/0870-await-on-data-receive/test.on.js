@@ -10,7 +10,10 @@ export default class {
     await sleep(300);
     el.innerHTML = "FAILED_ALFA";
   }
+
   runTest0870Bravo(_event, el) {
-    el.innerHTML = "PASSED";
+    if (el.innerHTML === "FAILED_ALFA") {
+      el.innerHTML = "PASSED";
+    }
   }
 }

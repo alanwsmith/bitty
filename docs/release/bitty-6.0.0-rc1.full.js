@@ -14,7 +14,7 @@ class ModuleInitEvent extends Event {
 }
 
 /** @ignore */
-class BittyDataInitEvent extends Event {
+class DataInitEvent extends Event {
   constructor(signal) {
     super("bittydatainit", { bubbles: true });
     this.signal = signal;
@@ -100,7 +100,7 @@ class BittyJs extends HTMLElement {
       this.setIds(this);
       this.addEventListeners();
       await this.runModuleInit();
-      // this.runDataInits();
+      this.runDataInits();
       // TODO: Migrate runSelfInit() into
       // runChildInits() (assuming that works)
       // this.runSelfInit();
@@ -113,7 +113,7 @@ class BittyJs extends HTMLElement {
     [
       "bittymoduleinit",
       "bittytrigger",
-      // "bittydatainit",
+      "bittydatainit",
       // "bittyforward",
       // "bittymoduleinit",
       // "bittyselfinit",
@@ -366,7 +366,25 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-
+      const signals = event.signal.split(/\s+/m);
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let receiver of receivers) {
+        const receptors = receiver.dataset.receive.split(/\s+/m).map((
+          text,
+        ) => text.trim());
+        for (let receptor of receptors) {
+          if (
+            signals.includes(receptor) && this.conn[receptor]
+          ) {
+            this.conn[receptor](event, receiver);
+          }
+        }
+      }
+    } else if (
+      event.type === "bittydatainit"
+    ) {
+      // TODO: Handle async
+      event.sender = event.target;
       const signals = event.signal.split(/\s+/m);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
@@ -571,12 +589,9 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   runDataInits() {
-    // TODO: Make sure this can handle async/await
-
     if (this.dataset.init) {
-      console.log("HERE4: hasinit");
-      const dataInitEvent = new BittyDataInitEvent(this.dataset.init);
-      this.dispatchEvent(dataInitEvent);
+      const event = new DataInitEvent(this.dataset.init);
+      this.dispatchEvent(event);
     }
 
     // const els = this.querySelectorAll("[data-init]");

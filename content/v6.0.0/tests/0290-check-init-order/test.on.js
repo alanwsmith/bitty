@@ -1,6 +1,10 @@
 export default class {
   #textString = "FAILED";
 
+  bittyReady() {
+    this.api.trigger("runTest0290");
+  }
+
   bittyInit() {
     this.#textString = "PASSED";
   }

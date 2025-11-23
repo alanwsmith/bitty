@@ -334,9 +334,10 @@ examples as well.
  
 <section class="default-flow">
 
-<details class="section-details">
-  <summary>Docs - TODO</summary>
+  <details class="section-details">
+    <summary>Docs - TODO</summary>
     <p>Documentation changes to make and add:</p>
+
 <ul>
 <li>
 <p>Document that only elements with
@@ -378,17 +379,15 @@ you just take care of everything at that
 point directly.</p>
 </li>
 </ul>
+
   </details>
 </section>
-
  
 
 <section class="default-flow">
 
-
 <details class="section-details">
   <summary>Docs - The HTML data-* API</summary>
-
 
 <p>bitty sends signals to elements when
 events occur. Defining the signals and the events
@@ -1390,7 +1389,6 @@ keeps them in sync</p>
 `data-send`. That's coming in a future release.)</p>    </details>
 
   </details>
-
 
 </section> 
 <section class="default-flow">
@@ -4077,15 +4075,15 @@ on <code>this.api.makeElement()</code></p>
 on <code>this.api.getElement()</code></p>
 </li>
 <li>
-<p>TODO: Set up so <code>data-bittyid</code> attrs are added
+<p>Set up so <code>data-bittyid</code> attrs are added
 on <code>this.api.makeHTML()</code></p>
 </li>
 <li>
-<p>TODO: Set up so <code>data-bittyid</code> attrs are added
+<p>Set up so <code>data-bittyid</code> attrs are added
 on <code>this.api.getHTML()</code></p>
 </li>
 <li>
-<p>TODO: The net result is the <code>data-bittyid</code>
+<p>The net result is the <code>data-bittyid</code>
 updates is that anything added with the <code>this.api.WHATEVER</code>
 that has a <code>data-send</code>, <code>data-receive</code>,
 or <code>data-init</code>, will have a <code>data-bittyid</code>
@@ -5271,36 +5269,26 @@ more inline with the functionality.</p>
 <p>TODO: Consider: <code>this.api.getData(&quot;KEY&quot;)</code>
 which would get a data key either in the
 element or pull from the first ancestor
-that has it.</p>
+that has it. (After some initial consideration
+this isn't something to implement at this
+point. Need more interactions to see
+if something like this can be done in
+generic enough of a way that it makes
+sense without adding a bunch of overhead.</p>
 </li>
 <li>
 <p>TODO: Consider: adding the state object that
-has built-in <code>.isReady()</code> promise check.</p>
-</li>
-<li>
-<p>TODO: Set up a way to send do something like
-<code>this.api.trigger(SIGNAL)</code>, and <code>this.api.forward(EVENT, SIGNAL)</code>,
-but send the signals to the document root
-so they can trigger events in other bitty elements.
-(events already bubble from <code>data-send</code> this
-is so you can forward/trigger)</p>
-<p>Probably just use forward/trigger but have
-them send events that get picked up
-by the listeners.</p>
-<p>Look into extending events instead of
-doing custom event types to see if
-that's an option that lets you do
-<code>type</code> directly along with the payload
-instead of having to use the custom
-event format.</p>
-</li>
-<li>
-<p>TODO: Set up so that <code>data-init</code> only triggers
-once for any given signal.</p>
+has built-in <code>.isReady()</code> promise check.
+(Thinking about this a little more, I'm not
+sure it makes sense for direct integration
+because loading the data will be so
+application specific.)</p>
 </li>
 <li>
 <p>TODO: Set up so <code>this.api.trigger()</code> can
-make multiple calls (e.g. <code>this.api.trigger(&quot;alfa bravo&quot;)</code>)</p>
+make multiple calls (e.g. <code>this.api.trigger(&quot;alfa bravo&quot;)</code>)
+(I think this is already in place, just
+need to confirm)</p>
 </li>
 <li>
 <p>TODO: Investigate: Added a <code>disconnectedCallback()</code>
@@ -5316,15 +5304,29 @@ having to rely on a child element calling
 <code>.parentNode</code>.</p>
 </li>
 <li>
-<p>TODO: Consider: <code>this.api.getData(el, KEY)</code>,
+<p>TODO: Consider: Adding a method
+to elements so you can do <code>el.getData(el, KEY)</code>,
 which gets the <code>data-KEY</code> value of an
 elements attribute or goes up the tree
 to the DOM root for ancestors to find
 the first one that's available. Result
 would be a payload with either
-<code>{ value: 'the-value'}</code> or <code>{ error: PAYLOAD}</code></p>
-<p>Should also have: <code>this.api.getDataInt(KEY)</code>
-and <code>this.api.getDataFloat()</code>.</p>
+<code>{ value: 'the-value'}</code> or <code>{ error: PAYLOAD}</code>
+(or maybe just null if it doesn't get
+it?)</p>
+<p>Should also have: <code>el.getDataInt(KEY)</code>
+and <code>el.getDataFloat()</code>.</p>
+<p>Could also add the mend to the
+events?</p>
+<p>This feels like maybe a little
+more complexisty for the event,
+but the element might make sense
+especially since the <code>.getDataInt</code>
+version would do the explict
+conversion for you.</p>
+<p>The element level would also
+allow for children to call up to
+a parent to get a value.</p>
 </li>
 </ul>
 <h2>Out of Scope</h2>

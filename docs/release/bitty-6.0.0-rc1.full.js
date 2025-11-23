@@ -47,11 +47,11 @@ class BittyError extends Error {
 }
 
 /** @internal */
-class BittyForwardEvent extends Event {
+class ForwardEvent extends Event {
   constructor(event, signal) {
     super("bittyforward", { bubbles: true });
-    this.fEvent = event;
-    this.fSignal = signal;
+    this.forwardedEvent = event;
+    this.forwardedSignal = signal;
   }
 }
 
@@ -114,7 +114,7 @@ class BittyJs extends HTMLElement {
       "bittymoduleinit",
       "bittytrigger",
       "bittydatainit",
-      // "bittyforward",
+      "bittyforward",
       // "bittymoduleinit",
       // "bittyselfinit",
     ]
@@ -249,7 +249,7 @@ class BittyJs extends HTMLElement {
   }
 
   forward(event, signal) {
-    const forwardEvent = new BittyForwardEvent(event, signal);
+    const forwardEvent = new ForwardEvent(event, signal);
     this.dispatchEvent(forwardEvent);
   }
 
@@ -386,6 +386,26 @@ class BittyJs extends HTMLElement {
       // TODO: Handle async
       event.sender = event.target;
       const signals = event.signal.split(/\s+/m);
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let receiver of receivers) {
+        const receptors = receiver.dataset.receive.split(/\s+/m).map((
+          text,
+        ) => text.trim());
+        for (let receptor of receptors) {
+          if (
+            signals.includes(receptor) && this.conn[receptor]
+          ) {
+            this.conn[receptor](event, receiver);
+          }
+        }
+      }
+    } else if (
+      event.type === "bittyforward"
+    ) {
+      // TODO: Handle async
+      const signals = event.forwardedSignal.split(/\s+/m);
+      console.log(signals);
+      event = event.forwaredEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
         const receptors = receiver.dataset.receive.split(/\s+/m).map((

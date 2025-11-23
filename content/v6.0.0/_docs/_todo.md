@@ -1,3 +1,7 @@
+- Document: data-send is not available on the
+bitty object itself. That's what `bittyInit()`
+in the class is for. 
+
 - Document that only elements with
 `data-send`, `data-receive`, and
 `data-init` get `data-bittyid` IDs. 

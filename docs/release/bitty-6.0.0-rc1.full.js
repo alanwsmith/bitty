@@ -67,16 +67,14 @@ class TriggerEvent extends Event {
 }
 
 function findDataKey(el, key) {
-  // console.log("HERE5");
-  // console.log(el);
-  if (el.dataset && el.dataset[key]) {
+  if (el.dataset[key]) {
     return el.dataset[key];
   } else if (
     el.parentNode
   ) {
-    return this.findDataKey(el.parentNode, key);
-    // } else {
-    //   return null;
+    return findDataKey(el.parentNode, key);
+  } else {
+    return null;
   }
 }
 

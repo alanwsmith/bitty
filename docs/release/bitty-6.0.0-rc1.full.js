@@ -56,6 +56,14 @@ class ForwardEvent extends Event {
 }
 
 /** @internal */
+class LocalTriggerEvent extends Event {
+  constructor(signal) {
+    super("bittylocaltrigger", { bubbles: true });
+    this.signal = signal;
+  }
+}
+
+/** @internal */
 class TriggerEvent extends Event {
   constructor(signal) {
     super("bittytrigger", { bubbles: true });
@@ -99,33 +107,29 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   addEventListeners() {
-    [
+    const listeners = [
       "bittybittyinit",
       "bittybittyready",
       "bittytrigger",
       "bittydatainit",
       "bittyforward",
-    ]
-      .forEach(
-        (bittyEvent) => {
-          window.addEventListener(bittyEvent, (event) => {
-            this.handleEventBridge.call(this, event);
-          });
-        },
-      );
+      "bittylocaltrigger",
+    ];
     if (this.dataset.listeners) {
-      this.config.listeners = this.dataset.listeners
-        .trim()
-        .split(/\s+/m)
-        .map((l) => l.trim());
-    }
-    this.config.listeners.forEach((listener) => {
-      // NOTE: this is on window to pick up messaging
-      // events between widows.
-      window.addEventListener(listener, (event) => {
-        this.handleEventBridge.call(this, event);
+      this.trimInput(this.dataset.listeners).forEach((listener) => {
+        listeners.push(listener);
       });
-    });
+    } else {
+      listeners.push("click");
+      listeners.push("input");
+    }
+    listeners.forEach(
+      (bittyEvent) => {
+        window.addEventListener(bittyEvent, (event) => {
+          this.handleEventBridge.call(this, event);
+        });
+      },
+    );
   }
 
   /** @internal */
@@ -209,12 +213,6 @@ class BittyJs extends HTMLElement {
     const forwardEvent = new ForwardEvent(event, signal);
     this.dispatchEvent(forwardEvent);
   }
-
-  trigger(signal) {
-    const event = new TriggerEvent(signal);
-    this.dispatchEvent(event);
-  }
-
   async getElement(url, subs = [], options = {}) {
     const response = await this.getHTML(url, subs, options, "getElement");
     if (response.value) {
@@ -446,6 +444,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  localTrigger(signal) {
+    const event = new LocalTriggerEvent(signal);
+    this.dispatchEvent(event);
+  }
+
   async loadCSS(url, subs, options) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
     if (response.error) {
@@ -551,6 +554,20 @@ class BittyJs extends HTMLElement {
         ds.bittyid = self.crypto.randomUUID();
       }
     });
+  }
+
+  trigger(signal) {
+    const event = new TriggerEvent(signal);
+    this.dispatchEvent(event);
+  }
+
+  /** @internal */
+  trimInput(input) {
+    // TODO: Moved to alphabetized location
+    return input
+      .trim()
+      .split(/\s+/m)
+      .map((l) => l.trim());
   }
 }
 

@@ -1,4 +1,4 @@
-    theDate(_event, el) {
+    theDate(event, el) {
       el.innerHTML = new Date();
     }
 

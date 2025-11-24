@@ -2,17 +2,17 @@
 bitty object itself. That's what `bittyInit()`
 in the class is for. 
 
-- Document that only elements with
-`data-send`, `data-receive`, and
-`data-init` get `data-bittyid` IDs. 
-They are added when the element
-is connected. 
+- Every child element of a [@ bitty_tag @] gets
+a `data-bittyid` attribute with a UUID. 
 
-- Elements added with `this.api.makeElement()`, 
+- Every elements added with `this.api.makeElement()`, 
 `this.api.makeHTML()`, `this.api.getElement()`, or 
-`this.api.getHTML()` that have bitty `data-*`
-attributes get `data-bittyid` attrs
-when they are created. 
+`this.api.getHTML()` gets a `data-bittyid` attribute 
+with a UUID.
+
+- Any element created outside the API need to have
+`data-bittyid` attributes added manually if they need
+to be used to send events (e.g. `click` or `input`)
 
 - Elements that are created outside
 of `this.api` (e.g. with `document.createElement()`

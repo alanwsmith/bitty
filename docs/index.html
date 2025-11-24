@@ -333,18 +333,19 @@ bitty object itself. That's what <code>bittyInit()</code>
 in the class is for.</p>
 </li>
 <li>
-<p>Document that only elements with
-<code>data-send</code>, <code>data-receive</code>, and
-<code>data-init</code> get <code>data-bittyid</code> IDs.
-They are added when the element
-is connected.</p>
+<p>Every child element of a bitty-6-0 gets
+a <code>data-bittyid</code> attribute with a UUID.</p>
 </li>
 <li>
-<p>Elements added with <code>this.api.makeElement()</code>,
+<p>Every elements added with <code>this.api.makeElement()</code>,
 <code>this.api.makeHTML()</code>, <code>this.api.getElement()</code>, or
-<code>this.api.getHTML()</code> that have bitty <code>data-*</code>
-attributes get <code>data-bittyid</code> attrs
-when they are created.</p>
+<code>this.api.getHTML()</code> gets a <code>data-bittyid</code> attribute
+with a UUID.</p>
+</li>
+<li>
+<p>Any element created outside the API need to have
+<code>data-bittyid</code> attributes added manually if they need
+to be used to send events (e.g. <code>click</code> or <code>input</code>)</p>
 </li>
 <li>
 <p>Elements that are created outside
@@ -418,7 +419,6 @@ tags and their children. The four attributes are:</p>
     requires an external class
     to provide its functionality. The class can reside in one of
             four locations:</p>
-
 
 <ol>
     <li><p>If there is no <code>data-connect</code> attribute
@@ -4019,7 +4019,7 @@ by using <code>this.api.forward()</code></p>
 <h3>Version 6.0.0-rc1</h3>
 <ul>
 <li>
-<p>TODO: Added <code>data-bittyid</code> attrs to
+<p>Added <code>data-bittyid</code> attrs to
 everything so they can be used for comparisons.</p>
 </li>
 <li>
@@ -9034,6 +9034,53 @@ TEST: All child elements get bittyid attributes      </h5>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0930</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">checkEl</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>.add-id<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">checkEl</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>
+          </details>
+        </div>
+      </div>
+    </div>
+      <div>
+      <h5 class="test-title">
+      </h5>
+      <div class="test-output-wrapper">
+
+        <div class="test-output">
+<bitty-6-0 
+  data-connect="/v6.0.0/tests/0940-new-elements-get-bittyid-attrs/test.on.js"
+>
+  <div class="test" data-receive="runTest0940">FAILED</div>
+
+</bitty-6-0>
+
+
+
+
+
+        </div>
+
+        <div class="test-details">
+          <details class="test-code">
+            <summary>Test Code<br>ID: 0940-new-elements-get-bittyid-attrs</summary>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/tests/0940-new-elements-get-bittyid-attrs/test.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest0940<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>FAILED<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span></span>            </pre>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>runTest0940<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest0940</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">template</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;FAILED&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newEl</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">template</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">newEl</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>

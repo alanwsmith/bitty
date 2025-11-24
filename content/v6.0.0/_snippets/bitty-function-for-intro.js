@@ -1,4 +1,4 @@
-    theDate(event, el) {
+    showDate(event, el) {
       el.innerHTML = new Date();
     }
 

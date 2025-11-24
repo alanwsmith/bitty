@@ -578,7 +578,10 @@ class BittyJs extends HTMLElement {
       return findDataKey.call(null, el, x);
     };
     el.getInt = (x) => {
-      return parseInt(findDataKey.call(null, el, x));
+      return parseInt(findDataKey.call(null, el, x), 10);
+    };
+    el.getFloat = (x) => {
+      return parseFloat(findDataKey.call(null, el, x));
     };
   }
 

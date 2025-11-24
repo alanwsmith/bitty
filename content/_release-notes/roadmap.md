@@ -1,11 +1,14 @@
 ## Roadmap 
 
-- TODO: Make stress test pages with tons
-of nesting, elements, updates, etc...
+- TODO: Add discotedCallback() to do cleanup
+if a bitty element is removed. 
+
+- TODO: Make stress test pages with
+nesting, large numbers of elements, updates, etc...
 
 - TODO: Consider: Adding `this.api.makeSVG()`
 like `this.api.getSVG()` with all the
-replacment stuff. 
+replacement stuff. 
 
 - TODO: Consider: adding the state object that
 has built-in `.isReady()` promise check. 

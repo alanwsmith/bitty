@@ -16,12 +16,21 @@ are passed to the signal functions:
 
     - el.getString(KEY) - 
     goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
 
     - el.getInt(KEY) - 
     goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
 
     - el.getFloat(KEY) - 
     goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
 
 
 - `this.api.localTrigger()` only runs 

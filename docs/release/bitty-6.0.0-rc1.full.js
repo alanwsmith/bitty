@@ -63,20 +63,6 @@ class ForwardEvent extends Event {
   }
 }
 
-/** @internal */
-class BittyChildInitEvent extends Event {
-  constructor() {
-    super("bittychildinit", { bubbles: true });
-  }
-}
-
-/** @internal */
-class BittySelfInitEvent extends Event {
-  constructor() {
-    super("bittyselfinit", { bubbles: true });
-  }
-}
-
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-init

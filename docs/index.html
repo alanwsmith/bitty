@@ -4072,12 +4072,28 @@ target and then bubbles up to the closest
 <code>data-send</code> attr which becomes the sender)</p>
 </li>
 <li>
-<p>Split <code>this.api.match()</code>, to
+<p>TODO: Added <code>el.bittyParent</code> that
+contains a reference to the bitty parent
+element</p>
+</li>
+<li>
+<p>TODO: Added <code>el.bittyParentId</code> that
+contains a reference to the bitty parent
+element's data-bittyid</p>
+</li>
+<li>
+<p>TODO: Remove <code>this.api.match()</code> in
+favor of <code>el.isTarget</code> and <code>el.isSender</code></p>
+</li>
+</ul>
+<p>OLD NOTES:Split <code>this.api.match()</code>, to
 <code>this.api.matchTarget()</code> and <code>this.api.matchSender()</code>
 so you can match the two different
 elements coming in from the event
 (i.e. <code>event.target</code> and <code>event.sender</code>)</p>
-</li>
+<p>IN FAVOR OF: <code>el.isTarget()</code> and
+<code>el.isSender()</code></p>
+<ul>
 <li>
 <p>TODO: Set up so events bubble up for
 everything (e.g. to ensure that clicking on
@@ -4104,30 +4120,23 @@ classes extended from <code>Event</code>. All events
 are set to bubble up the document.</p>
 </li>
 <li>
-<p>TODO: Created <code>this.api.localTrigger(SIGNAL)</code>
+<p>Created <code>this.api.localTrigger(SIGNAL_STRING)</code>
 that only sends the signal to the local element
-without bubbling (maybe: or descending to build
-bitty-#-# elements)</p>
+without bubbling and without descending into
+child bitty elements.</p>
 </li>
-</ul>
-<p>TODO: Determine if the localTrigger should
-go down to child elements. Maybe there
-needs to be triggerDown to go
-down the tree (along with the current
-element)</p>
-<ul>
 <li>
-<p>TODO: Added <code>this.api.getString(KEY)</code> which
+<p>TODO: Added <code>el.getDataString(KEY)</code> which
 goes up the DOM looking for a matching
 <code>dataset.KEY</code> that's a String.</p>
 </li>
 <li>
-<p>TODO: Added <code>this.api.getInt(KEY)</code> which
+<p>TODO: Added <code>el.getDataInt(KEY)</code> which
 goes up the DOM looking for a matching
 <code>dataset.KEY</code> that's an Int.</p>
 </li>
 <li>
-<p>TODO: Added <code>this.api.getFloat(KEY)</code> which
+<p>TODO: Added <code>el.getDataFloat(KEY)</code> which
 goes up the DOM looking for a matching
 <code>dataset.KEY</code> that's a Float.</p>
 </li>

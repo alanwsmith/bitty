@@ -11,12 +11,37 @@ body {
       <body>
 
         <script>
+        window.Test3 = class {
+          bittyReady() {
+            this.api.localTrigger("ping3");
+          }
+          click3(event, el) {
+            el.innerHTML = el.isTarget;
+          }
+          click3b(event, el) {
+            el.innerHTML = el.isSender;
+          }
+          ping3(event, el) {
+            el.innerHTML = el.isTarget ;
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test3">
+          <div data-receive="ping3">PING</div>
+          <button data-send="click3" data-receive="click3">Click me</button>
+          <button data-send="click3b" data-receive="click3b">Click me</button>
+        </bitty-6-0>
+
+<!--
+        <script>
         window.Test2 = class {
           bittyInit() {
           }
         }
         </script>
         <bitty-6-0 data-connect="Test2"></bitty-6-0>
+
+-->
 
 <!--
         <script>

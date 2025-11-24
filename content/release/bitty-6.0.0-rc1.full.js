@@ -354,6 +354,7 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
+                  this.prepReceiver(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
                   } else {
@@ -474,6 +475,7 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
+                  this.prepReceiver(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
                   } else {
@@ -574,6 +576,11 @@ class BittyJs extends HTMLElement {
       return false;
     }
     return event.target.dataset[key] === el.dataset[key];
+  }
+
+  prepReceiver(event, el) {
+    el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
+    el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
   }
 
   /** @internal */

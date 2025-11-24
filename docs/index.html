@@ -4039,7 +4039,15 @@ by using <code>this.api.forward()</code></p>
 <ul>
 <li>
 <p>Added <code>data-bittyid</code> attrs to
-everything so they can be used for comparisons.</p>
+everything so they can be used for
+comparisons.</p>
+</li>
+<li>
+<p>Events are captured from every
+element (not just those with <code>data-send</code> and
+<code>data-receive</code>). Events bubble up
+the document where bitty looks for
+them on the window object.</p>
 </li>
 <li>
 <p>TODO: For the bitty events, include the
@@ -4051,10 +4059,11 @@ target and then bubbles up to the closest
 <code>data-send</code> attr which becomes the sender)</p>
 </li>
 <li>
-<p>TODO: split <code>this.api.match()</code>, to
+<p>Split <code>this.api.match()</code>, to
 <code>this.api.matchTarget()</code> and <code>this.api.matchSender()</code>
 so you can match the two different
-elements coming in from the event.</p>
+elements coming in from the event
+(i.e. <code>event.target</code> and <code>event.sender</code>)</p>
 </li>
 <li>
 <p>TODO: Set up so events bubble up for
@@ -4073,18 +4082,19 @@ behavior on child elements (i.e. only fires
 once when the elemnt is initialized)</p>
 </li>
 <li>
-<p>TODO: Renamed <code>bittytagdatasend</code> pseudoevent to
-<code>bittyselfinit</code>.</p>
+<p>TODO: Confirm you can click on a bitty
+tag with <code>data-send</code> and it sends the event.</p>
 </li>
 <li>
-<p>TODO: Renamed <code>bittyOLDNAMEGOESHERE</code> to
-<code>bittychildinit</code></p>
+<p>Converted <code>bitty...</code> pseudo-events to
+classes extended from <code>Event</code>. All events
+are set to bubble up the document.</p>
 </li>
 <li>
 <p>TODO: Created <code>this.api.localTrigger(SIGNAL)</code>
 that only sends the signal to the local element
-without bubbling or descending to build
-bitty-#-# elements</p>
+without bubbling (maybe: or descending to build
+bitty-#-# elements)</p>
 </li>
 </ul>
 <p>TODO: Determine if the localTrigger should
@@ -4093,21 +4103,6 @@ needs to be triggerDown to go
 down the tree (along with the current
 element)</p>
 <ul>
-<li>
-<p>TODO: Renamed <code>this.api.match()</code> to
-<code>this.api.matchString()</code></p>
-<p>NOTE: See if you can do the
-matches without havint to send
-the <code>event</code> and <code>el</code> in explicity
-(e.g. can they be picked up
-from the scope)</p>
-</li>
-<li>
-<p>TODO: Added <code>this.api.matchInt()</code></p>
-</li>
-<li>
-<p>TODO: Added <code>this.api.matchFloat()</code></p>
-</li>
 <li>
 <p>TODO: Added <code>this.api.getString(KEY)</code> which
 goes up the DOM looking for a matching
@@ -4124,14 +4119,14 @@ goes up the DOM looking for a matching
 <code>dataset.KEY</code> that's a Float.</p>
 </li>
 <li>
-<p>TODO: Cleaned up tests</p>
+<p>Cleaned up tests</p>
 </li>
 <li>
 <p>TODO: VERIFY: <code>this.api.trigger()</code> can
 make multiple calls (e.g. <code>this.api.trigger(&quot;alfa bravo&quot;)</code>)</p>
 </li>
 <li>
-<p>TODO: Remove bittyCatch. It's not necessary
+<p>Remove bittyCatch. It's not necessary
 now that all events are examined by
 this listener without extra filtering.</p>
 </li>

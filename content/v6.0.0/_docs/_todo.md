@@ -1,6 +1,4 @@
-
-
-
+### Documentation To Add
 
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element

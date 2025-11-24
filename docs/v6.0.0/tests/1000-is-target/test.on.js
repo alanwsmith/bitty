@@ -5,14 +5,20 @@ export default class {
     });
   }
 
-  runTest0990Alfa(_event, el) {
-    if (el.isSender) {
+  runTest1000Alfa(_event, el) {
+    if (el.isTarget) {
       el.innerHTML = "PASSED";
     }
   }
 
-  runTest0990Bravo(_event, el) {
-    if (!el.isSender) {
+  runTest1000Bravo(_event, el) {
+    if (el.isTarget) {
+      el.innerHTML = "PASSED";
+    }
+  }
+
+  runTest1000Charlie(_event, el) {
+    if (!el.isTarget) {
       el.innerHTML = "PASSED";
     }
   }

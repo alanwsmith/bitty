@@ -6,8 +6,13 @@ export default class {
   }
 
   runTest0990Alfa(_event, el) {
-    el.classList.add("test");
     if (el.isSender) {
+      el.innerHTML = "PASSED";
+    }
+  }
+
+  runTest0990Bravo(_event, el) {
+    if (!el.isSender) {
       el.innerHTML = "PASSED";
     }
   }

@@ -124,30 +124,13 @@ class BittyJs extends HTMLElement {
       listeners.push("input");
     }
     listeners.forEach(
-      (bittyEvent) => {
-        window.addEventListener(bittyEvent, (event) => {
+      (listener) => {
+        window.addEventListener(listener, (event) => {
           this.handleEventBridge.call(this, event);
         });
       },
     );
   }
-
-  /** @internal */
-  async runBittyInit() {
-    if (typeof this.conn.bittyInit === "function") {
-      const event = new BittyInitEvent();
-      this.dispatchEvent(event);
-    }
-  }
-
-  /** @internal */
-  async runBittyReady() {
-    if (typeof this.conn.bittyReady === "function") {
-      const event = new BittyReadyEvent();
-      this.dispatchEvent(event);
-    }
-  }
-
   /** @internal */
   connectedMoveCallback() {
     // this prevents connectedCallback() from firing
@@ -526,6 +509,22 @@ class BittyJs extends HTMLElement {
       return false;
     }
     return event.target.dataset[key] === el.dataset[key];
+  }
+
+  /** @internal */
+  async runBittyInit() {
+    if (typeof this.conn.bittyInit === "function") {
+      const event = new BittyInitEvent();
+      this.dispatchEvent(event);
+    }
+  }
+
+  /** @internal */
+  async runBittyReady() {
+    if (typeof this.conn.bittyReady === "function") {
+      const event = new BittyReadyEvent();
+      this.dispatchEvent(event);
+    }
   }
 
   /** @internal */

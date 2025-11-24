@@ -196,6 +196,15 @@ class BittyJs extends HTMLElement {
     const forwardEvent = new ForwardEvent(event, signal);
     this.dispatchEvent(forwardEvent);
   }
+
+  getBittyParent(el) {
+    if (el.localName.toLowerCase() === tagName) {
+      return el;
+    } else {
+      return this.getBittyParent(el.parentNode);
+    }
+  }
+
   async getElement(url, subs = [], options = {}) {
     const response = await this.getHTML(url, subs, options, "getElement");
     if (response.value) {
@@ -306,10 +315,68 @@ class BittyJs extends HTMLElement {
         }
       }
     } else if (
+      event.type === "bittylocaltrigger"
+    ) {
+      // TODO: Handle async
+      event.sender = event.target;
+      // console.log("TODO: Fix repated calls that are here");
+      const signals = this.trimInput(event.signal);
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let signal of signals) {
+        let doAwait = false;
+        const iSigParts = signal.split(":");
+        if (iSigParts.length === 2 && iSigParts[0] === "await") {
+          doAwait = true;
+          signal = iSigParts[1];
+        }
+        if (this.conn[signal]) {
+          const bittyTargetParent = this.getBittyParent(event.target);
+          let foundReceiver = false;
+          for (let receiver of receivers) {
+            const bittyReceiverParent = this.getBittyParent(receiver);
+            if (
+              bittyTargetParent.dataset.bittyid ===
+                bittyReceiverParent.dataset.bittyid
+            ) {
+              const receptors = this.trimInput(receiver.dataset.receive);
+              for (let receptor of receptors) {
+                const rSigParts = receptor.split(":");
+                if (rSigParts.length === 2 && rSigParts[0] === "await") {
+                  doAwait = true;
+                  receptor = rSigParts[1];
+                }
+                if (receptor === signal) {
+                  foundReceiver = true;
+                  if (doAwait) {
+                    await this.conn[signal](event, receiver);
+                  } else {
+                    this.conn[signal](event, receiver);
+                  }
+                }
+              }
+            }
+          }
+          if (foundReceiver === false) {
+            // if (
+            //   bittyTargetParent.dataset.bittyid ===
+            //     this.dataset.bittyid
+            // ) {
+            if (doAwait) {
+              await this.conn[signal](event, null);
+            } else {
+              this.conn[signal](event, null);
+            }
+            //            }
+          }
+        }
+      }
+    } else if (
       event.type === "bittytrigger"
     ) {
       // TODO: Handle async
       event.sender = event.target;
+      // console.log("TODO: Fix the repeated call here");
+      //console.log(event.target.dataset.bittyid);
       const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {

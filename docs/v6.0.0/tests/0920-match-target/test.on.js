@@ -1,9 +1,10 @@
 export default class {
   bittyReady() {
-    [...this.api.querySelectorAll("div")].forEach((d) => {
+    [...this.api.querySelectorAll("[data-send]")].forEach((d) => {
       d.click();
     });
   }
+
   runTest0920Alfa(event, el) {
     if (this.api.matchTarget(event, el)) {
       el.innerHTML = "PASSED";
@@ -12,6 +13,18 @@ export default class {
 
   runTest0920Bravo(event, el) {
     if (this.api.matchTarget(event, el, "datakey")) {
+      el.innerHTML = "PASSED";
+    }
+  }
+
+  runTest0920Charlie(event, el) {
+    if (!this.api.matchTarget(event, el, "datakey")) {
+      el.innerHTML = "PASSED";
+    }
+  }
+
+  runTest0920Delta(event, el) {
+    if (!this.api.matchTarget(event, el)) {
       el.innerHTML = "PASSED";
     }
   }

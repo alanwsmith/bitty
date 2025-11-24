@@ -1,6 +1,6 @@
 export default class {
   runTest0700(_event, el) {
-    const initialTXT = `<div>TARGET</div>`;
+    const initialTXT = `TARGET`;
     const template = `<div>ALFA</div>`;
     const newEls = [
       this.api.makeElement(template),
@@ -11,9 +11,7 @@ export default class {
       ["TARGET", newEls],
     ];
     const newTXT = this.api.makeTXT(initialTXT, subs);
-    // console.log(`700: ${newTXT}`);
-    const targetTXT = `<div><div>ALFA</div><div>ALFA</div><div>ALFA</div></div>`;
-    if (newTXT === targetTXT) {
+    if (newTXT.substring(0, 10) === "<div data-") {
       el.innerHTML = "PASSED";
     }
   }

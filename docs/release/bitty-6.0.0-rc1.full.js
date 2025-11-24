@@ -721,10 +721,7 @@ class BittyJs extends HTMLElement {
   setIds(input) {
     input.querySelectorAll("*").forEach((el) => {
       const ds = el.dataset;
-      if (
-        ds.receive || ds.send ||
-        ds.init && !ds.bittyid
-      ) {
+      if (!ds.bittyid) {
         ds.bittyid = self.crypto.randomUUID();
       }
     });

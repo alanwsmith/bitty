@@ -120,8 +120,6 @@ class BittyJs extends HTMLElement {
       "bittytrigger",
       "bittydatainit",
       "bittyforward",
-      // "bittybittyinit",
-      // "bittyselfinit",
     ]
       .forEach(
         (bittyEvent) => {
@@ -334,6 +332,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** @internal */
   findSender(event, checkElement) {
     if (checkElement.dataset && checkElement.dataset.send) {
       event.sender = checkElement;

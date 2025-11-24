@@ -14,6 +14,15 @@ are passed to the signal functions:
 
     - el.bittyId
 
+    - el.getString(KEY) - 
+    goes up the DOM looking for `data-key`
+
+    - el.getInt(KEY) - 
+    goes up the DOM looking for `data-key`
+
+    - el.getFloat(KEY) - 
+    goes up the DOM looking for `data-key`
+
 
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element

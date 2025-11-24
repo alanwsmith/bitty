@@ -66,6 +66,20 @@ class TriggerEvent extends Event {
   }
 }
 
+function findDataKey(el, key) {
+  // console.log("HERE5");
+  // console.log(el);
+  if (el.dataset && el.dataset[key]) {
+    return el.dataset[key];
+  } else if (
+    el.parentNode
+  ) {
+    return this.findDataKey(el.parentNode, key);
+    // } else {
+    //   return null;
+  }
+}
+
 /**
  * @attribute {string} data-connect
  * @attribute {string} data-init
@@ -351,7 +365,7 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  this.prepReceiver(event, receiver);
+                  this.prepElements(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
                   } else {
@@ -403,6 +417,7 @@ class BittyJs extends HTMLElement {
               }
               if (receptor === signal) {
                 foundReceiver = true;
+                this.prepElements(event, receiver);
                 if (doAwait) {
                   await this.conn[signal](event, receiver);
                 } else {
@@ -472,7 +487,7 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  this.prepReceiver(event, receiver);
+                  this.prepElements(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
                   } else {
@@ -555,12 +570,15 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  prepReceiver(event, el) {
+  prepElements(event, el) {
     el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
     el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
     el.bittyParent = this.getBittyParent(el);
     el.bittyParentId = el.bittyParent.dataset.bittyid;
     el.bittyId = el.dataset.bittyid;
+    el.getString = (x) => {
+      return findDataKey.call(null, el, x);
+    };
   }
 
   /** @internal */

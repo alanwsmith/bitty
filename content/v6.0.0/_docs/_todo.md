@@ -1,3 +1,14 @@
+
+- `this.api.getBittyParent(el)` gets the 
+nearest ancestor bitty element for the 
+element in the arguments. if the element
+is a bitty element, it returns itself. 
+
+- `this.api.localTrigger()` only runs 
+function inside the same bitty element
+(i.e. no functions are called in ancestor
+or child bitty elements)
+
 - Document: data-send is not available on the
 bitty object itself. That's what `bittyInit()`
 in the class is for. 

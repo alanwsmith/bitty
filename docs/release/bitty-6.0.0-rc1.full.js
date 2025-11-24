@@ -200,8 +200,15 @@ class BittyJs extends HTMLElement {
   getBittyParent(el) {
     if (el.localName.toLowerCase() === tagName) {
       return el;
-    } else {
+    } else if (el.parentNode) {
       return this.getBittyParent(el.parentNode);
+    } else {
+      // TODO test returning null if no
+      // bitty parent is found. (need to
+      // load an element via a document
+      // query selector that's outside
+      // a bitty element to do the test.
+      return null;
     }
   }
 
@@ -357,16 +364,16 @@ class BittyJs extends HTMLElement {
             }
           }
           if (foundReceiver === false) {
-            // if (
-            //   bittyTargetParent.dataset.bittyid ===
-            //     this.dataset.bittyid
-            // ) {
-            if (doAwait) {
-              await this.conn[signal](event, null);
-            } else {
-              this.conn[signal](event, null);
+            if (
+              bittyTargetParent.dataset.bittyid ===
+                this.dataset.bittyid
+            ) {
+              if (doAwait) {
+                await this.conn[signal](event, null);
+              } else {
+                this.conn[signal](event, null);
+              }
             }
-            //            }
           }
         }
       }

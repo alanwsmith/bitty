@@ -1,7 +1,7 @@
-/** @ignore */
+/** @internal */
 const version = [6, 0, 0];
 
-/** @ignore */
+/** @internal */
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 /** @internal */
@@ -18,21 +18,21 @@ class BittyError extends Error {
   }
 }
 
-/** @ignore */
+/** @internal */
 class BittyInitEvent extends Event {
   constructor() {
     super("bittybittyinit", { bubbles: true });
   }
 }
 
-/** @ignore */
+/** @internal */
 class BittyReadyEvent extends Event {
   constructor() {
     super("bittybittyready", { bubbles: true });
   }
 }
 
-/** @ignore */
+/** @internal */
 class DataInitEvent extends Event {
   constructor(signal, el) {
     super("bittydatainit", { bubbles: true });
@@ -568,6 +568,7 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
+  /** @internal */
   prepElements(event, el) {
     el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
     el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;

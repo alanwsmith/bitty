@@ -310,9 +310,7 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = event.signal.trim().split(/\s+/m).map((signal) =>
-        signal.trim()
-      );
+      const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {
         let doAwait = false;
@@ -324,8 +322,7 @@ class BittyJs extends HTMLElement {
         if (this.conn[signal]) {
           let foundReceiver = false;
           for (let receiver of receivers) {
-            const receptors = receiver.dataset.receive.trim().split(/\s+/m)
-              .map((x) => x.trim());
+            const receptors = this.trimInput(receiver.dataset.receive);
             for (let receptor of receptors) {
               const rSigParts = receptor.split(":");
               if (rSigParts.length === 2 && rSigParts[0] === "await") {
@@ -356,7 +353,7 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = event.signal.trim().split(/\s+/m);
+      const signals = this.trimInput(event.signal);
       for (const signal of signals) {
         if (this.conn[signal]) {
           this.conn[signal](event, event.el);
@@ -366,13 +363,11 @@ class BittyJs extends HTMLElement {
       event.type === "bittyforward"
     ) {
       // TODO: Handle async
-      const signals = event.forwardedSignal.trim().split(/\s+/m);
+      const signals = this.trimInput(event.forwardedSignal);
       event = event.forwardedEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
-        const receptors = receiver.dataset.receive.trim().split(/\s+/m).map((
-          text,
-        ) => text.trim());
+        const receptors = this.trimInput(receiver.dataset.receive);
         for (let receptor of receptors) {
           if (
             signals.includes(receptor) && this.conn[receptor]
@@ -384,7 +379,7 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
-        const signals = event.sender.dataset.send.trim().split(/\s+/m);
+        const signals = this.trimInput(event.sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");
         for (let signal of signals) {
           let doAwait = false;
@@ -396,8 +391,7 @@ class BittyJs extends HTMLElement {
           if (this.conn[signal]) {
             let foundReceiver = false;
             for (let receiver of receivers) {
-              const receptors = receiver.dataset.receive.trim().split(/\s+/m)
-                .map((x) => x.trim());
+              const receptors = this.trimInput(receiver.dataset.receive);
               for (const receptor of receptors) {
                 const rSignalParts = receptor.split(":");
                 if (rSignalParts.length === 2 && rSignalParts[0] === "await") {
@@ -440,8 +434,7 @@ class BittyJs extends HTMLElement {
       const newStylesheet = new CSSStyleSheet();
       newStylesheet.replaceSync(response.value);
       document.adoptedStyleSheets.push(newStylesheet);
-      const payload = { value: response.value };
-      return payload;
+      return { value: response.value };
     }
   }
 
@@ -455,9 +448,7 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.dataset.connect.trim().split(/\s+/m).map((x) =>
-          x.trim()
-        );
+        const connParts = this.trimInput(this.dataset.connect);
         if (typeof window[connParts[0]] !== "undefined") {
           this.conn = new window[connParts[0]]();
         } else {
@@ -513,6 +504,8 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async runBittyInit() {
+    // TODO check async nature here. It might
+    // not only be needed in the handler
     if (typeof this.conn.bittyInit === "function") {
       const event = new BittyInitEvent();
       this.dispatchEvent(event);
@@ -521,6 +514,8 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async runBittyReady() {
+    // TODO check async nature here. It might
+    // not only be needed in the handler
     if (typeof this.conn.bittyReady === "function") {
       const event = new BittyReadyEvent();
       this.dispatchEvent(event);

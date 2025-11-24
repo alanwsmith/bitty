@@ -533,8 +533,7 @@ class BittyJs extends HTMLElement {
       const event = new DataInitEvent(this.dataset.init, this);
       this.dispatchEvent(event);
     } else {
-      const els = this.querySelectorAll("[data-init]");
-      els.forEach((el) => {
+      this.querySelectorAll("[data-init]").forEach((el) => {
         const event = new DataInitEvent(el.dataset.init, el);
         this.dispatchEvent(event);
       });

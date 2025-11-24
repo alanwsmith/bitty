@@ -1,6 +1,6 @@
 ## Roadmap 
 
-- TODO: Add discotedCallback() to do cleanup
+- TODO: Add disconnectedCallback() to do cleanup
 if a bitty element is removed. 
 
 - TODO: Make stress test pages with

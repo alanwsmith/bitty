@@ -92,7 +92,7 @@ class BittyJs extends HTMLElement {
     /** @internal */
     this.config = {
       listeners: ["click", "input"],
-      license: "MIT",
+      license: "CC0",
       version: version,
     };
   }

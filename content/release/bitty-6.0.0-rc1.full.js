@@ -4,11 +4,6 @@ const version = [6, 0, 0];
 /** @ignore */
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-/** @ignore */
-const blockStylesheet = new CSSStyleSheet();
-blockStylesheet.replaceSync(`${tagName} { display: block; }`);
-document.adoptedStyleSheets.push(blockStylesheet);
-
 /** @internal */
 class BittyError extends Error {
   constructor(payload) {
@@ -93,6 +88,7 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async connectedCallback() {
     this.dataset.bittyid = self.crypto.randomUUID();
+    this.style.display = "block";
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
@@ -197,6 +193,7 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(forwardEvent);
   }
 
+  /** @internal */
   getBittyParent(el) {
     if (el.localName.toLowerCase() === tagName) {
       return el;
@@ -581,6 +578,9 @@ class BittyJs extends HTMLElement {
   prepReceiver(event, el) {
     el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
     el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
+    el.bittyParent = this.getBittyParent(el);
+    el.bittyParentId = el.bittyParent.dataset.bittyid;
+    el.bittyId = el.dataset.bittyid;
   }
 
   /** @internal */

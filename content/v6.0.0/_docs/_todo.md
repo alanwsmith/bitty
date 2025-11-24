@@ -1,8 +1,6 @@
 
-- `this.api.getBittyParent(el)` gets the 
-nearest ancestor bitty element for the 
-element in the arguments. if the element
-is a bitty element, it returns itself. 
+
+
 
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element

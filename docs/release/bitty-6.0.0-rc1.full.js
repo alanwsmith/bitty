@@ -139,16 +139,6 @@ class BittyJs extends HTMLElement {
       const event = new BittyInitEvent();
       this.dispatchEvent(event);
     }
-
-    // // TODO: Verify async again here.
-    // if (typeof this.conn.bittyInit !== "function") {
-    //   return;
-    // }
-    // if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-    //   await this.conn.bittyInit();
-    // } else {
-    //   this.conn.bittyInit();
-    // }
   }
 
   /** @internal */
@@ -157,16 +147,6 @@ class BittyJs extends HTMLElement {
       const event = new BittyReadyEvent();
       this.dispatchEvent(event);
     }
-
-    // // TODO: Verify async again here.
-    // if (typeof this.conn.bittyReady !== "function") {
-    //   return;
-    // }
-    // if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-    //   await this.conn.bittyReady();
-    // } else {
-    //   this.conn.bittyReady();
-    // }
   }
 
   /** @internal */
@@ -670,11 +650,7 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  match(event, el, key = "bittyid") {
-    // TODO: Consider adding `matchData` which would does the match
-    // doing up the DOM ancestors. Idea being to make it easy
-    // to see when an `event.target` and an `el` have the
-    // same ancestor.
+  matchTarget(event, el, key = "bittyid") {
     if (
       event.target.dataset[key] === undefined ||
       el.dataset[key] === undefined

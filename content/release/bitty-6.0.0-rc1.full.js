@@ -110,10 +110,10 @@ class BittyJs extends HTMLElement {
     const listeners = [
       "bittybittyinit",
       "bittybittyready",
-      "bittytrigger",
       "bittydatainit",
       "bittyforward",
       "bittylocaltrigger",
+      "bittytrigger",
     ];
     if (this.dataset.listeners) {
       this.trimInput(this.dataset.listeners).forEach((listener) => {
@@ -563,7 +563,6 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   trimInput(input) {
-    // TODO: Moved to alphabetized location
     return input
       .trim()
       .split(/\s+/m)

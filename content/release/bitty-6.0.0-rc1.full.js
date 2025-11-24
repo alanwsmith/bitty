@@ -555,26 +555,6 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  matchSender(event, el, key = "bittyid") {
-    if (
-      event.sender.dataset[key] === undefined ||
-      el.dataset[key] === undefined
-    ) {
-      return false;
-    }
-    return event.sender.dataset[key] === el.dataset[key];
-  }
-
-  matchTarget(event, el, key = "bittyid") {
-    if (
-      event.target.dataset[key] === undefined ||
-      el.dataset[key] === undefined
-    ) {
-      return false;
-    }
-    return event.target.dataset[key] === el.dataset[key];
-  }
-
   prepReceiver(event, el) {
     el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
     el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;

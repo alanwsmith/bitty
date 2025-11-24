@@ -1,5 +1,20 @@
 ### Documentation To Add
 
+- TODO: Create a section for properties/methods
+that are added to the elements that
+are passed to the signal functions:
+
+    - el.isSender
+
+    - el.isTarget
+
+    - el.bittyParent
+
+    - el.bittyParentId
+
+    - el.bittyId
+
+
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element
 (i.e. no functions are called in ancestor

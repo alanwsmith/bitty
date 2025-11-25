@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: Add console log message if a signal is
+sent that doesn't have a corresponding function
+to handle it. 
+
 - TODO: Add disconnectedCallback() to do cleanup
 if a bitty element is removed. 
 

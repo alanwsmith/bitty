@@ -9,6 +9,7 @@ export default class {
     } else {
       this.#message = response.error;
     }
+    this.api.localTrigger("update");
   }
 
   update(_event, el) {

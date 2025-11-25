@@ -444,59 +444,6 @@ receives <code>showDate</code> signals.</li>
 <h3>Documentation To Add</h3>
 <ul>
 <li>
-<p>TODO: Cover <code>event.target</code> and <code>event.sender</code>
-based on which element has the <code>data-send</code>
-attribute with it. (i.e. <code>event.target</code>
-and <code>event.sender</code> are the same element if
-the <code>event.target</code> has the <code>data-send</code>
-attribute. If it doesn't, and an ancestor
-element with <code>data-send</code> is used, that ancestor
-becomes <code>event.sender</code></p>
-</li>
-<li>
-<p>TODO: Create a section for properties/methods
-that are added to the elements that
-are passed to the signal functions:</p>
-<ul>
-<li>
-<p>el.isSender</p>
-</li>
-<li>
-<p>el.isTarget</p>
-</li>
-<li>
-<p>el.bittyParent</p>
-</li>
-<li>
-<p>el.bittyParentId</p>
-</li>
-<li>
-<p>el.bittyId</p>
-</li>
-<li>
-<p>el.getString(KEY) -
-goes up the DOM looking for <code>data-key</code>
-Note that if you don't want to
-traverse up you can always do
-<code>el.dataset.KEY</code> directly</p>
-</li>
-<li>
-<p>el.getInt(KEY) -
-goes up the DOM looking for <code>data-key</code>
-Note that if you don't want to
-traverse up you can always do
-<code>el.dataset.KEY</code> directly</p>
-</li>
-<li>
-<p>el.getFloat(KEY) -
-goes up the DOM looking for <code>data-key</code>
-Note that if you don't want to
-traverse up you can always do
-<code>el.dataset.KEY</code> directly</p>
-</li>
-</ul>
-</li>
-<li>
 <p><code>this.api.localTrigger()</code> only runs
 function inside the same bitty element
 (i.e. no functions are called in ancestor
@@ -1585,17 +1532,18 @@ up the DOM that have `data-send` they
 <details class="section-details main-section">
   <summary>Docs - Signal Method event Arguments</summary>
     <p>The methods that handle signals take two arguments: 1. the event
-      that triggered the signal, and 2. an element that'
-      receiving the signal. For example:<p>
+      that triggered the signal, and 2. an element that's
+      receiving the signal. For example, this
+      method logs the type of event to the console:
+    </p>
 
     <div>
       <pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signalHandler</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>updated<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta function-call method js"><span class="support type object console js">console</span><span class="punctuation accessor js">.</span><span class="support function console js">log</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">event</span><span class="punctuation accessor js">.</span><span class="meta property object js">type</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
     </div>
     <p>
-      This section discusses
-      the events. 
+      The event details are as follows:
     </p>
     <ul>
       <li><strong>bitty</strong> uses event listeners
@@ -1629,6 +1577,71 @@ up the DOM that have `data-send` they
       </li>
 
     </ul>
+
+  </details>
+ 
+<section class="default-flow">
+
+<details class="section-details main-section">
+  <summary>Docs - Signal Method element Arguments</summary>
+    <p>The methods that handle signals take two arguments: 1. the event
+      that triggered the signal, and 2. an element that's
+      receiving the signal. For example,
+      this method updates the `.innerHTML` content 
+      of the element with the word `updated`:
+    </p>
+
+    <div>
+      <pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signalHandler</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>updated<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
+    </div>
+
+    <p>The details on the elements are:</p>
+
+    <ul>
+      <li>Each element with a `data-receive` value
+      that corresponds to the name of the method
+        is sent through the method individually. 
+      </li>
+      <li>The elements are extended from standard <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">HTML
+        Elements</a> that you'd get from a querySelector.
+      </li>
+
+    </ul>
+
+
+- TODO: Create a section for properties/methods
+that are added to the elements that
+are passed to the signal functions:
+
+    - el.isSender
+
+    - el.isTarget
+
+    - el.bittyParent
+
+    - el.bittyParentId
+
+    - el.bittyId
+
+    - el.getString(KEY) - 
+    goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
+
+    - el.getInt(KEY) - 
+    goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
+
+    - el.getFloat(KEY) - 
+    goes up the DOM looking for `data-key`
+    Note that if you don't want to 
+    traverse up you can always do
+    `el.dataset.KEY` directly
 
   </details>
  
@@ -5604,7 +5617,7 @@ mechanisms.</p>
 </ul></details> 
 <details class="section-details main-section">
   <summary>Test Suite</summary>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div>
       <div class="test-output-wrapper">
 
         <div class="test-output">

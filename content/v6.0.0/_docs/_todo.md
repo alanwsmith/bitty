@@ -1,48 +1,6 @@
 ### Documentation To Add
 
 
-- TODO: Cover `event.target` and `event.sender`
-based on which element has the `data-send` 
-attribute with it. (i.e. `event.target`
-and `event.sender` are the same element if
-the `event.target` has the `data-send` 
-attribute. If it doesn't, and an ancestor
-element with `data-send` is used, that ancestor
-becomes `event.sender`
-
-- TODO: Create a section for properties/methods
-that are added to the elements that
-are passed to the signal functions:
-
-    - el.isSender
-
-    - el.isTarget
-
-    - el.bittyParent
-
-    - el.bittyParentId
-
-    - el.bittyId
-
-    - el.getString(KEY) - 
-    goes up the DOM looking for `data-key`
-    Note that if you don't want to 
-    traverse up you can always do
-    `el.dataset.KEY` directly
-
-    - el.getInt(KEY) - 
-    goes up the DOM looking for `data-key`
-    Note that if you don't want to 
-    traverse up you can always do
-    `el.dataset.KEY` directly
-
-    - el.getFloat(KEY) - 
-    goes up the DOM looking for `data-key`
-    Note that if you don't want to 
-    traverse up you can always do
-    `el.dataset.KEY` directly
-
-
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element
 (i.e. no functions are called in ancestor

@@ -1,9 +1,5 @@
 ### Documentation To Add
 
-- `this.api.localTrigger()` only runs 
-function inside the same bitty element
-(i.e. no functions are called in ancestor
-or child bitty elements)
 
 - Every child element of a [@ bitty_tag @] gets
 a `data-bittyid` attribute with a UUID 

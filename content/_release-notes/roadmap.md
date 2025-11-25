@@ -64,6 +64,11 @@ explode.
 - TODO: Make sure that `data-receive="await:SIG"`
 gets added at some point. 
 
+- TODO: Document behavior of `el.bittyId()`
+if the element was added outside the
+`this.api...` methods and doesn't have an
+id. 
+
 
 
 

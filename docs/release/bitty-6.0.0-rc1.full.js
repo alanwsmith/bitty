@@ -67,7 +67,7 @@ class TriggerEvent extends Event {
 }
 
 function findDataKey(el, key) {
-  if (el.dataset[key]) {
+  if (el.dataset[key] !== undefined) {
     return el.dataset[key];
   } else if (
     el.parentNode

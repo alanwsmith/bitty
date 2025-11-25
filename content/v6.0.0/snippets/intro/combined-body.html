@@ -1,0 +1,19 @@
+[!- set config = json[json.version.version_dir].config -!]
+[!- set bitty_tag -!]
+bitty-[@ config.major_version @]-[@ config.minor_version @]
+[!- endset -!]
+
+[!- filter highlight_html|safe -!]
+            <[@ bitty_tag @]>
+            [! include json.version.version_dir + "/snippets/intro/body.html" !]</[@ bitty_tag @]>
+
+<script>
+  window.BittyClass = class {
+    [! include json.version.version_dir + "/snippets/intro/script.js" !]
+  }
+</script>
+
+<script src="/release/[@ script_min_file_name @]" type="module"></script>
+          [!- endfilter -!]
+
+

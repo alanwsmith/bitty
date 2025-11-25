@@ -3928,14 +3928,10 @@ the result as a document fragment.</p>
 When a web component (like bitty) is
 attached to a page's DOM it fires a
 `connectedCallback` event. bitty
-uses the event to do the following
-notable steps in this order:
+uses the event to do the following:
 </p>
 
 <ul>
-  <li>
-    load supplemental function into `this.api.fn`.
-  </li>
   <li>
     automatically generate `data-bittyid` attributes
 with unique IDs for the bitty element and 
@@ -3946,21 +3942,10 @@ already exist.
     Attempt to make a connection to a supporting
 class either on the page or in an external module file.
 If the connection can't be made, an error is thrown
-and the process stops. Otherwise, the following
-steps are taken:
+and the process stops. 
   </li>
   <li>
-    Find any child elements with `data-receive` attributes
-and add them to the internal list of receivers. 
-  </li>
-  <li>
-    Add a mutation observer that watches for changes
-and refreshes receivers when new elements are added
-or removed. New elements also receive a `data-bittyid`
-if they don't already have one.
-  </li>
-  <li>
-    Add event event listeners at the document level. 
+    Add event event listeners at the `window` level. 
 The defaults are `click` and `input` but can be changed
 with a `data-listeners` attribute on the bitty component
 tag. 
@@ -3971,20 +3956,20 @@ tag.
 the method is defined with `async bittyInit()` it
 is called with `await`.)
   </li>
-
-  <li>
-    Check for a `data-send` attribute on the
-`bitty` component tag. Trigger it to send
-its signals if it exists. The signal is
-set with a type of `bittytagdatasend`.
-The target is the bitty element itself. 
+    <li>
+      Process any elements with `data-init`
+      attributes.
     </li>
-</ul>
+    <li>
+      Check for `bittyReady()` on the connected
+      class and run it if it exists. (If
+the method is defined with `async bittyInit()` it
+is called with `await`.)
 
-<p>
-bitty this proceeds to listen for events
-and send signals when they are triggered.
-</p>
+    </li>
+
+
+</ul>
 
 </details><details>
 <summary class="docs-summary">bittyInit()</summary>
@@ -4001,6 +3986,7 @@ and send signals when they are triggered.
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyInit</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">9000</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>update<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
@@ -4012,8 +3998,7 @@ and send signals when they are triggered.
       <div class="code-block-wrapper">
           <div class="code-block-title">page.html</div>
           <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/modules/bitty-init/basic.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/modules/bitty-init/basic.on.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
       </div>
@@ -4022,8 +4007,7 @@ and send signals when they are triggered.
         <div class="example-output-title">Example</div>
         <div class="example-output">
 <bitty-6-0 
-    data-connect="/v6.0.0/modules/bitty-init/basic.on.js"
-    data-send="update">
+    data-connect="/v6.0.0/modules/bitty-init/basic.on.js">
   <div data-receive="update"></div>
 </bitty-6-0>        </div>
       </div>
@@ -4047,6 +4031,7 @@ and send signals when they are triggered.
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">message</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">error</span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>update<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">update</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
@@ -4058,8 +4043,7 @@ and send signals when they are triggered.
       <div class="code-block-wrapper">
           <div class="code-block-title">page.html</div>
           <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/modules/bitty-init/async.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/modules/bitty-init/async.on.js<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>update<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
       </div>
@@ -4068,14 +4052,22 @@ and send signals when they are triggered.
         <div class="example-output-title">Example</div>
         <div class="example-output">
 <bitty-6-0 
-    data-connect="/v6.0.0/modules/bitty-init/async.on.js"
-    data-send="update">
+    data-connect="/v6.0.0/modules/bitty-init/async.on.js">
   <div data-receive="update"></div>
 </bitty-6-0>        </div>
       </div>
   </div>
 </div>
 </details><details>
+<summary class="docs-summary">bittyReady()</summary>
+
+  <p>Functions that same as `bittyInit()` but fires
+    after all the `data-init` methods
+    have been run
+  </p>
+  <p>TODO: Add `bittyReady()` examples</p>
+</details>
+<details>
 <summary class="docs-summary">Block Styling</summary>
 
   <p>
@@ -4083,16 +4075,6 @@ and send signals when they are triggered.
     a block via:
   </p>
   <pre class="code-block-wrapper"><code>this.style.display = "block";</code></pre>
-
-
-</details><details>
-<summary class="docs-summary">Custom data-* Attributes</summary>
-<p>
-bitty uses native `data-*` attributes for set up. It's
-also designed to work with arbitrary `data-*` attributes.
-Specifically, the `this.api.match` helper function compares
-`event.target.dataset.KEY` and `el.dataset.KEY`
-for matches.</p>
 
 
 </details><details>
@@ -4112,15 +4094,6 @@ automatically receive a `data-bittyid` attribute with a UUID.</li>
     </li>
   </ul>
 
-</details><details>
-<summary class="docs-summary">No Events From the Bitty Component</summary>
-<p>
-bitty components send a one time `bittytagdatasend` with signals from
-a `data-send` attribute if one exists. Other than that, no
-events from the bitty component itself are used. This
-helps avoid duplication from events that would otherwise
-bubble and trigger twice. 
-</p>
 </details>
 </details>
 </summary>
@@ -5621,7 +5594,7 @@ mechanisms.</p>
 </ul></details> 
 <details class="section-details main-section">
   <summary>Test Suite</summary>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <div>
       <div class="test-output-wrapper">
 
         <div class="test-output">

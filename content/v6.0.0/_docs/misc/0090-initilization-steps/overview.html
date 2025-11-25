@@ -5,14 +5,10 @@
 When a web component (like bitty) is
 attached to a page's DOM it fires a
 `connectedCallback` event. bitty
-uses the event to do the following
-notable steps in this order:
+uses the event to do the following:
 </p>
 
 <ul>
-  <li>
-    load supplemental function into `this.api.fn`.
-  </li>
   <li>
     automatically generate `data-bittyid` attributes
 with unique IDs for the bitty element and 
@@ -23,21 +19,10 @@ already exist.
     Attempt to make a connection to a supporting
 class either on the page or in an external module file.
 If the connection can't be made, an error is thrown
-and the process stops. Otherwise, the following
-steps are taken:
+and the process stops. 
   </li>
   <li>
-    Find any child elements with `data-receive` attributes
-and add them to the internal list of receivers. 
-  </li>
-  <li>
-    Add a mutation observer that watches for changes
-and refreshes receivers when new elements are added
-or removed. New elements also receive a `data-bittyid`
-if they don't already have one.
-  </li>
-  <li>
-    Add event event listeners at the document level. 
+    Add event event listeners at the `window` level. 
 The defaults are `click` and `input` but can be changed
 with a `data-listeners` attribute on the bitty component
 tag. 
@@ -48,19 +33,19 @@ tag.
 the method is defined with `async bittyInit()` it
 is called with `await`.)
   </li>
-
-  <li>
-    Check for a `data-send` attribute on the
-`bitty` component tag. Trigger it to send
-its signals if it exists. The signal is
-set with a type of `bittytagdatasend`.
-The target is the bitty element itself. 
+    <li>
+      Process any elements with `data-init`
+      attributes.
     </li>
-</ul>
+    <li>
+      Check for `bittyReady()` on the connected
+      class and run it if it exists. (If
+the method is defined with `async bittyInit()` it
+is called with `await`.)
 
-<p>
-bitty this proceeds to listen for events
-and send signals when they are triggered.
-</p>
+    </li>
+
+
+</ul>
 
 </details>

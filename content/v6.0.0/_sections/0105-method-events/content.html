@@ -1,0 +1,55 @@
+<section class="default-flow">
+
+<details class="section-details main-section">
+  <summary>Docs - Signal Method event Arguments</summary>
+    <p>The methods that handle signals take two arguments: 1. the event
+      that triggered the signal, and 2. an element that'
+      receiving the signal. For example:<p>
+
+    <div>
+      <pre class="code-block-wrapper"><code>
+        [!- filter highlight_javascript|safe !]
+signalHandler(event, el) {
+  el.innerHTML = "updated";
+}
+        [!- endfilter !]</code></pre>
+    </div>
+    <p>
+      This section discusses
+      the events. 
+    </p>
+    <ul>
+      <li><strong>bitty</strong> uses event listeners
+        on the `window` object to catch events from signals. 
+      </li>
+      <li>The events passed to the methods are extended from 
+        standard <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events">DOM Events</a>.
+      </li>
+      <li>
+        The event's `.target` property is the element that
+        triggered the signal.
+      </li>
+      <li>Events from signals are modified to add a `.sender`
+        property. The value is a reference to the element
+        with the `data-send` attribute that sent the event. 
+      </li>
+      <li>If the element that triggered the signal has a
+        `data-send` attribute, then it populates both the
+        `.target` and `.sender` properties.
+      </li>
+      <li>
+        If the element that triggered the signal does
+        not have a `data-send` attribute, then it's
+        only referenced in the `.target` property. 
+        <strong>bitty</strong> goes up the DOM 
+        searching for the nearest ancestor that
+        has a `data-send` attribute. When it finds
+        one, that element is used to populate
+        the `.sender` property and the event is
+        dispatched. 
+      </li>
+
+    </ul>
+
+  </details>
+

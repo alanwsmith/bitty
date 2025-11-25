@@ -455,6 +455,7 @@ class BittyJs extends HTMLElement {
       event = event.forwardedEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
+        this.prepElements(event, receiver);
         const receptors = this.trimInput(receiver.dataset.receive);
         for (let receptor of receptors) {
           if (

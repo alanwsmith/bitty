@@ -1,10 +1,5 @@
 ### Documentation To Add
 
-- TODO: Cover that events only go up to the
-first element with a `data-send` attribute
-on them. (i.e. if there are ancestors further
-up the DOM that have `data-send` they 
-are not triggered)
 
 - TODO: Cover `event.target` and `event.sender`
 based on which element has the `data-send` 

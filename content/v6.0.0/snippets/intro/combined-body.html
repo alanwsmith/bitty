@@ -3,6 +3,19 @@
 bitty-[@ config.major_version @]-[@ config.minor_version @]
 [!- endset -!]
 
+[!- set script_min_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.[@- config.min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.full.js
+[!- endset -!]
+
+
 [!- filter highlight_html|safe -!]
             <[@ bitty_tag @]>
             [! include json.version.version_dir + "/snippets/intro/body.html" !]</[@ bitty_tag @]>

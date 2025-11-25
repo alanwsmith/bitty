@@ -29,46 +29,13 @@ the contents of the component without
 having to rely on a child element calling
 `.parentNode`. 
 
-- TODO: Consider: Adding a method
-to elements so you can do `el.getData(el, KEY)`, 
-which gets the `data-KEY` value of an
-elements attribute or goes up the tree
-to the DOM root for ancestors to find
-the first one that's available. Result
-would be a payload with either 
-`{ value: 'the-value'}` or `{ error: PAYLOAD}`
-(or maybe just null if it doesn't get 
-it?)
-
-  Should also have: `el.getDataInt(KEY)`
-  and `el.getDataFloat()`.
-
-  Could also add the mend to the 
-  events?
-
-  This feels like maybe a little
-  more complexisty for the event, 
-  but the element might make sense
-  especially since the `.getDataInt`
-  version would do the explict
-  conversion for you. 
-
-  The element level would also 
-  allow for children to call up to
-  a parent to get a value. 
-
 - TODO: Make sure to cover the removal of
 elements and make sure listeners don't
 explode. 
 
-- TODO: Make sure that `data-receive="await:SIG"`
-gets added at some point. 
-
-- TODO: Document behavior of `el.bittyId()`
+- TODO: Document behavior of `el.bittyId`
 if the element was added outside the
 `this.api...` methods and doesn't have an
 id. 
-
-
 
 

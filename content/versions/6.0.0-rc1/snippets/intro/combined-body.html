@@ -1,3 +1,4 @@
+[#
 [!- set config = json[version_dir].config -!]
 [!- set bitty_tag -!]
 bitty-[@ config.major_version @]-[@ config.minor_version @]
@@ -15,6 +16,7 @@ bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_vers
 .full.js
 [!- endset -!]
 
+#]
 
 [!- filter highlight_html|safe -!]
             <[@ bitty_tag @]>
@@ -26,7 +28,7 @@ bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_vers
   }
 </script>
 
-<script src="/release/[@ script_min_file_name @]" type="module"></script>
-          [!- endfilter -!]
+[@ bitty_script_tag @]
 
+          [!- endfilter -!]
 

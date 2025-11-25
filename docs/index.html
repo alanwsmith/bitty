@@ -50,36 +50,55 @@ window.BittyClass = class {
 </script>
     <script>
 window.BittyCodeExample1 = class {
-  async example(_, el) {
-    const url =
-      "/v6.0.0/snippets/intro/combined-body.html";
-    const response = await this.api.getTXT(url);
-    if (response.value) {
-      const payload = [];
-      const lines = [null];
-      response.value.split("\n").forEach((line) => {
-        lines.push(line);
-      });
-      const script = el.getString("script").split("\n").map((line) =>
-        line.trim()
-      ).filter((line) => {
-        return line !== "";
-      });
-      script.forEach((item) => {
-        const startDetails = item.split(":");
-        const details = [
-          startDetails[0].trim(),
-          startDetails.slice(1).join(":").trim(),
-        ];
-        if (details[0] === "line") {
-          payload.push(lines[parseInt(details[1])]);
-        } else if (details[0] === "newline") {
-          payload.push("");
-        }
-      });
-      el.innerHTML = payload.join("\n");
-    }
+  example(_, el) {
+    // console.log(el.bittyParentId);
+    // console.log(this.api.dataset.bittyid);
+    el.innerHTML = "eeeeeeeeeeeeeeeeeee";
   }
+
+  // async exampled(_, el) {
+  //   console.log("asdf");
+  //   const url =
+  //     "/v6.0.0/snippets/intro/combined-body.html";
+  //   const response = await this.api.getTXT(url);
+  //   if (response.value) {
+  //     console.log("here2eeeeeeeeeeeeeeeeeeeeeeee");
+  //     const payload = [];
+  //     const lines = [null];
+  //     response.value.split("\n").forEach((line) => {
+  //       lines.push(line);
+  //     });
+  //     const script = el.getString("script").split("|").map((line) =>
+  //       line.trim()
+  //     ).filter((line) => {
+  //       return line !== "";
+  //     });
+  //     console.log(script);
+  //     script.forEach((item) => {
+  //       const startDetails = item.split(":");
+  //       const details = [
+  //         startDetails[0].trim(),
+  //         startDetails.slice(1).join(":").trim(),
+  //       ];
+  //       if (details[0] === "line") {
+  //         payload.push(lines[parseInt(details[1])]);
+  //       } else if (details[0] === "newline") {
+  //         payload.push("");
+  //       } else if (details[0] === "line-chars") {
+  //         console.log("here1---------------------");
+  //         const assembler = [];
+  //         const params = details[1].split("~").map((x) => x.trim());
+  //         const segments = params.slice(1);
+  //         segments.forEach((seg) => {
+  //           const chars = seg.split("-").map((x) => parseInt(x.trim()));
+  //           console.log(chars);
+  //         });
+  //         // payload.push(lines[parseInt(params[0])]);
+  //       }
+  //     });
+  //     el.innerHTML = payload.join("\n");
+  //   }
+  //  }
 };    </script>
 
     <script src="/release/bitty-6.0.0-rc1.full.js" type="module"></script>
@@ -207,21 +226,26 @@ receives <code>showDate</code> signals.</li>
 <h3>The Walk-Through</h3>
 
 <ol>
-<li><p>We'll start by adding the bitty component tag. </p>
 
+<li><p>Start by adding the bitty component tag.</p>
+<bitty-6-0 data-connect="BittyCodeExample1">
+  <pre class="code-block-wrapper"><code
+      data-script="line: 1|newline|newline|line: 4"
+    ></code></pre>
+</bitty-6-0>
+</li>
+
+<li><p>Add a button.</p>
 <bitty-6-0 data-connect="BittyCodeExample1">
   <pre class="code-block-wrapper"><code
       data-init="example"
-      data-script="
-      line: 1
-newline
-newline
-      line: 4"
+      data-script="line: 1|
+      line-chars: 2 ~ 3-20 ~ 22-27
+      |newline|line: 4"
     ></code></pre>
-
 </bitty-6-0>
-
 </li>
+
 </ol>
 
 <h4>The Result</h4>
@@ -9691,6 +9715,62 @@ TEST: el.bittyParent and el.bittyParentId are set properly      </h5>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest1070Bravo</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyParent</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span> <span class="keyword operator comparison js">===</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PASSED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>
+          </details>
+        </div>
+      </div>
+    </div>
+      <div>
+      <div class="test-output-wrapper">
+
+        <div class="test-output">
+<bitty-6-0 
+  data-connect="/v6.0.0/tests/1080-data-init-fires-once/test.on.js"
+>
+<!-- NOTE: there has to be a `data-init` in each 
+bitty_tag to ensure eventual consistency instead
+of ending up in a race condition if there was
+only one `data-init` involved -->
+<div class="test" data-init="runTest1080">PASSED</div>
+</bitty-6-0>
+
+<bitty-6-0 
+  data-connect="/v6.0.0/tests/1080-data-init-fires-once/test.on.js"
+>
+<div class="test" data-init="runTest1080">PASSED</div>
+</bitty-6-0>        </div>
+
+        <div class="test-details">
+      <h5 class="test-title">
+TEST: data-init only fires once inside it's instance      </h5>
+          <details class="test-code">
+            <summary>Test Code<br>ID: 1080-data-init-fires-once</summary>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/tests/1080-data-init-fires-once/test.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="comment block html"><span class="punctuation definition comment begin html">&lt;!--</span> NOTE: there has to be a `data-init` in each 
+<span class="line-marker"></span>bitty_tag to ensure eventual consistency instead
+<span class="line-marker"></span>of ending up in a race condition if there was
+<span class="line-marker"></span>only one `data-init` involved <span class="punctuation definition comment end html">--&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest1080<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>PASSED<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-6-0</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v6.0.0/tests/1080-data-init-fires-once/test.on.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runTest1080<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>PASSED<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-6-0</span><span class="punctuation definition tag end html">&gt;</span></span></span>            </pre>
+            <pre class="code-block">
+<span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #counter = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runTest1080</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_event</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">2</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>FAILED<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span>            </pre>

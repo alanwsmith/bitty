@@ -438,11 +438,13 @@ class BittyJs extends HTMLElement {
     ) {
       // TODO: Handle async
       event.sender = event.target;
-      const signals = this.trimInput(event.signal);
-      for (const signal of signals) {
-        this.prepElements(event, event.el);
-        if (this.conn[signal]) {
-          this.conn[signal](event, event.el);
+      this.prepElements(event, event.el);
+      if (this.dataset.bittyid === event.el.bittyParentId) {
+        const signals = this.trimInput(event.signal);
+        for (const signal of signals) {
+          if (this.conn[signal]) {
+            this.conn[signal](event, event.el);
+          }
         }
       }
     } else if (

@@ -1,6 +1,6 @@
 export default class {
   async getSubsJSON(_event, el) {
-    const url = "/v6.0.0/payloads/get-json/subs.on.json";
+    const url = "//payloads/get-json/subs.on.json";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]

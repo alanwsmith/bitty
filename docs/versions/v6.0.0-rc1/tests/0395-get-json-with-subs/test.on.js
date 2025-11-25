@@ -5,7 +5,7 @@ export default class {
 
   async runTest0395(_event, el) {
     const url =
-      "/v6.0.0/tests/0395-get-json-with-subs/payload.json";
+      "//tests/0395-get-json-with-subs/payload.json";
     const subs = [
       [/FAILED/g, "PASSED"],
     ];

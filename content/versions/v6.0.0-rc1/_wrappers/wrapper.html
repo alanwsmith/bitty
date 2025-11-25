@@ -1,41 +1,18 @@
-[!- set version_key = "v6.0.0-rc1" -!]
-[!- set version_dir = "versions/" + version_key  -!]
-[!- set config = json.versions[version_key].config -!]
+[!- extends "versions/v6.0.0-rc1/vars.html" -!]
 
-[!- set script_min_file_name -!]
-bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
-[@- config.rc_string -@]
-.[@- config.min_switch -@].js
-[!- endset -!]
+[!- block payload -!]
 
-[!- set script_full_file_name -!]
-bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
-[@- config.rc_string -@]
-.full.js
-[!- endset -!]
-
-[!- set bitty_tag -!]
-bitty-[@ config.major_version @]-[@ config.minor_version @]
-[!- endset -!]
-
-[!- set bitty_js_path -!]
-/release/ [@- script_min_file_name -@]
-[!- endset -!]
-
-
+[#
 <!DOCTYPE html>
 <html lang="en">
   <head>
     [! include version_dir + "/_wrappers/head.html" !]
     [! include version_dir + "/_wrappers/bitty-page-class.html" !]
     [! include version_dir + "/_wrappers/docs-alt-class.html" !]
-
     <script>
     [! include version_dir + "/_wrappers/code-example.on.js" !]
     </script>
-
     <script src="[@ bitty_js_path @]" type="module"></script>
-
   </head>
 
   <body>
@@ -49,7 +26,13 @@ bitty-[@ config.major_version @]-[@ config.minor_version @]
           a bit of interactivity
         </div>
       </hgroup>
+
+      #]
+
 [! block main !][! endblock !] 
+
+      [#
+
     </main>
 
     <footer>
@@ -128,3 +111,35 @@ bitty-[@ config.major_version @]-[@ config.minor_version @]
     <script src="/components/github-stars-beta-1.js" type="module"></script>
   </body>
 </html>
+
+
+#]
+
+
+[!- endblock -!]
+
+[#
+[!- set version_key = "v6.0.0-rc1" -!]
+[!- set version_dir = "versions/" + version_key  -!]
+[!- set config = json.versions[version_key].config -!]
+
+[!- set script_min_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.[@- config.min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.full.js
+[!- endset -!]
+
+[!- set bitty_tag -!]
+bitty-[@ config.major_version @]-[@ config.minor_version @]
+[!- endset -!]
+
+[!- set bitty_js_path -!]
+/release/ [@- script_min_file_name -@]
+[!- endset -!]
+#]

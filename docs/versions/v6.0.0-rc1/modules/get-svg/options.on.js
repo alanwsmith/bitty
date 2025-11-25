@@ -1,6 +1,6 @@
 export default class {
   async getSVGOptions(_event, el) {
-    const url = "/v6.0.0/payloads/get-svg/options.svg";
+    const url = "//payloads/get-svg/options.svg";
     const subs = [];
     const options = {
       method: "GET",

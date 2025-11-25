@@ -9,7 +9,7 @@ window.BittyCodeExample1 = class {
     let prepSpacer = script.map((line) => "\n");
     el.innerHTML = prepSpacer.join("");
     const url =
-      "/[@ json.version.version_dir @]/snippets/intro/combined-body.html";
+      "/[@ version_dir @]/snippets/intro/combined-body.html";
     const response = await this.api.getTXT(url);
     if (response.value) {
       response.value.split("\n").forEach((line) => {

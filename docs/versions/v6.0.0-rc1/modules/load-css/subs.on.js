@@ -1,6 +1,6 @@
 export default class {
   async loadCSSSubs(_event, el) {
-    const url = "/v6.0.0/payloads/load-css/subs.css";
+    const url = "//payloads/load-css/subs.css";
     const subs = [
       ["COLOR_NAME", "red"]
     ];

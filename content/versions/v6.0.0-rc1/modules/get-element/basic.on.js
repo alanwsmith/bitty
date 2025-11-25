@@ -1,6 +1,6 @@
 export default class {
   async getElementBasic(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-element/basic.html";
+    const url = "/[@ version_dir @]/payloads/get-element/basic.html";
     const response = await this.api.getElement(url);
     if (response.value) {
       el.replaceChildren(response.value);

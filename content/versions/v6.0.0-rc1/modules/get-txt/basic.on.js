@@ -1,6 +1,6 @@
 export default class {
   async getTXTBasic(_event, el) {
-    const url = "/[@ json.version.version_dir @]/payloads/get-txt/basic.txt";
+    const url = "/[@ version_dir @]/payloads/get-txt/basic.txt";
     const response = await this.api.getTXT(url);
     if (response.value) {
       el.innerHTML = response.value;

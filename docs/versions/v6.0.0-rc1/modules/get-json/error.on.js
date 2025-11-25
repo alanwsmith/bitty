@@ -1,6 +1,6 @@
 export default class {
   async getErrorJSON(_event, el) {
-    const url =  "/v6.0.0/payloads/get-json/intentionally-missing-file.on.json";
+    const url =  "//payloads/get-json/intentionally-missing-file.on.json";
     const response = await this.api.getJSON(
       url
     );

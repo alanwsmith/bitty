@@ -5,7 +5,7 @@ export default class {
     const subs = [
       ["TARGET", newEl]
     ];
-    const url = "/v6.0.0/tests/0830-add-element-to-gettxt/payload.txt";
+    const url = "//tests/0830-add-element-to-gettxt/payload.txt";
     const response = await this.api.getTXT(url, subs);
     if (response.value !== undefined) { 
       const finalTarget = `Test <div>UPDATED</div> Test`;

@@ -1,6 +1,5 @@
 ### Documentation To Add
 
-
 - `this.api.localTrigger()` only runs 
 function inside the same bitty element
 (i.e. no functions are called in ancestor

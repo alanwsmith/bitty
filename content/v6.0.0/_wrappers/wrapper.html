@@ -1,0 +1,128 @@
+[!- set version_dir = json.version.version_dir -!]
+[!- set config = json[version_dir].config -!]
+
+[!- set script_min_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.[@- config.min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ config.major_version @].[@ config.minor_version @].[@ config.patch_version -@]
+[@- config.rc_string -@]
+.full.js
+[!- endset -!]
+
+[!- set bitty_tag -!]
+bitty-[@ config.major_version @]-[@ config.minor_version @]
+[!- endset -!]
+
+[!- set bitty_js_path -!]
+/release/ [@- script_min_file_name -@]
+[!- endset -!]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    [! include version_dir + "/_wrappers/head.html" !]
+    [! include version_dir + "/_wrappers/bitty-page-class.html" !]
+    [! include version_dir + "/_wrappers/docs-alt-class.html" !]
+
+    <script>
+    [! include version_dir + "/_wrappers/code-example.on.js" !]
+    </script>
+
+    <script src="[@ bitty_js_path @]" type="module"></script>
+
+  </head>
+
+  <body>
+    <main class="default-wrapper default-flow xlarge-top-padding">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+        </div>
+        <div class="small-font accent-faded">
+          a bit of interactivity
+        </div>
+      </hgroup>
+[! block main !][! endblock !] 
+    </main>
+
+    <footer>
+      <hr />
+      <div class="footer-wrapper">
+        <div>
+        <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+        </div>
+        <div>This work has been marked as dedicated to the public domain.</div>
+        <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+      </div>
+
+      <hr />
+      <div class="footer-wrapper">
+      <div>from <a href="https://www.alanwsmith.com/">alan w smith</a></div>
+      <div>
+        <a href="https://github.com/alanwsmith/bitty">source</a> ~
+        <a href="https://socials.alanwsmith.com/">socials</a> ~
+        <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+        <a href="https://links.alanwsmith.com/">other projects</a>
+      </div>
+      </div>
+    </footer>
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+  </body>
+</html>

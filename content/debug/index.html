@@ -7,248 +7,124 @@ body {
   background-color: black;
 }
 </style>
+
+    </head>
+      <body>
+
+
 <script>
-const template = `<button data-send="send2">Click me</button>`;
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function findLargePrimes(limit) {
-    const primes = [];
-    function isPrime(num) {
-        // Intentionally inefficient primality test with O(n) complexity
-        if (num <= 1) return false;
-        for (let i = 2; i < num; i++) {
-            // Deliberately slow checking process
-            for (let j = 0; j < 1000; j++) {
-                Math.sqrt(j); // Add some extra computational overhead
-            }
-            if (num % i === 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-    // Nested loops to make the function extremely time-consuming
-    for (let num = 2; num < limit; num++) {
-        if (isPrime(num)) {
-            primes.push(num);
-        }
-    }
-    return primes;
-}
-
-window.BittyClass = class {
-
-  #counter = 0;
-
-  /*
-  bittyReady() {
-    console.log("HERE1: bittyReady()");
-    // this.api.trigger("runTest0077");
-    this.api.trigger("runTest0850Alfa");
-    this.api.trigger("runTest0850Bravo");
-  }
-  */
-
-  async doSleep() {
-    await sleep(1000);
-  }
-
-  runTest0850Alfa(_event, el) {
-    if (el) {
-      const editEl = this.api.querySelector("#testTarget0850");
-      this.#counter += 1;
-      console.log("runTest0850Alfa")
-      findLargePrimes(9000);
-      // el.innerHTML = "ALFA";
-      el.innerHTML = editEl.innerHTML;
-      editEl.innerHTML = "b";
-      findLargePrimes(9000);
+  window.BittyClass = class {
+    ping(event, el) {
+      console.log(el);
+      el.innerHTML = new Date();
     }
   }
-
-  runTest0850Bravo(_event, el) {
-    if (el) {
-      const editEl = this.api.querySelector("#testTarget0850");
-      this.#counter += 1;
-      console.log("runTest0850Bravo")
-      findLargePrimes(1000);
-      // el.innerHTML = "BRAVO";
-      //el.innerHTML = this.#counter;
-      el.innerHTML = editEl.innerHTML;
-      editEl.innerHTML = "y";
-    }
-  }
-
-  runTest0077(_event, _el) {
-    this.api.trigger("triggerEvent0077");
-  }
-
-  triggerEvent0077(_event, el) {
-    if (el) {
-    el.innerHTML = "PASSED";
-    }
-  }
-
-  runThing(_, el) {
-    const button = this.api.makeElement(template);
-    el.replaceChildren(button);
-    button.click()
-  }
-
-  send2(_, el) {
-    if (el) {
-      el.innerHTML = "UPDATED";
-    }
-  }
-
-  init(_event, el) {
-    el.click();
-  }
-
-  runTest0010(_event, el) {
-    el.innerHTML = "PASSED";
-  }
-
-  runTest0075(event, _el) {
-    this.api.forward(event, "forwardEvent0075");
-  }
-
-  forwardEvent0075(_event, el) {
-    el.innerHTML = "PASSED";
-  }
-
-  #testValue0630 = false;
-
-  checkTest0630(_event, el) {
-    if (this.#testValue0630 === true) {
-      el.innerHTML = "PASSED";
-    } else {
-      el.innerHTML = "FAILED";
-    }
-  }
-
-  async runTest0630(_event, _el) {
-    console.log(`doing: runTest0630`);
-    await sleep(300);
-    // await sleep(300);
-    this.#testValue0630 = true;
-  }
-}
-
-window.debug0880Alfa = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  run0880(event, _el) {
-    this.api.forward(event, 'debug0880BravoForward');
-  }
-}
-
-window.debug0880Bravo = class {
-  /*
-  bittyReady() {
-    this.api.trigger('debug0880BravoForward');
-  }
-  */
-
-  debug0880BravoForward(event, el) {
-    el.innerHTML = "PASSED";
-  }
-}
-
-window.ElementSendEventTest = class {
-  triggerSendEvent(_event, el) {
-    el.innerHTML = "PASSED";
-  }
-}
-
-function randInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const postTemplate2 = `<div>here is what the inner is: POST_INNER</div>`;
-const postContentTemplate = `hello world RAND`;
-
-window.makeHTMLDebug = class {
-  debugTest0890(_, el) {
-    const content = this.api.makeHTML(postContentTemplate, [
-      ["RAND", randInt(0, 1000)],
-    ]);
-    // console.log(content);
-    const post = this.api.makeHTML(postTemplate2, [
-      ["POST_INNER", content],
-    ]);
-    el.appendChild(post);
-  }
-}
-
 </script>
-</head>
-<body>
+<bitty-6-0>
+  <div data-init="ping">waiting</div>
+</bitty-6-0>
+<bitty-6-0>
+</bitty-6-0>
 
-<bitty-5-1 data-connect="makeHTMLDebug">
-  <div data-init="debugTest0890">FAILED</div>
-</bitty-5-1>
-
-
-
-      <!--
-      <bitty-5-1 data-connect="ElementSendEventTest" 
-        data-send="triggerSendEvent"
-      >
-        <div data-receive="triggerSendEvent">FAILED</div>
-      </bitty-5-1>
-
-
-      <bitty-5-1 data-connect="debug0880Alfa">
-        <button data-send="run0880">Run 0880</button>
-      </bitty-5-1>
-
-      <bitty-5-1 data-connect="debug0880Bravo">
-        <div data-receive="debug0880BravoForward">FAILED</div>
-      </bitty-5-1>
--->
 
 
       <!--
-<bitty-5-1 
-  data-send="asdf await:runTest0630 checkTest0630">
-  <div data-receive="asdf checkTest0630">WAITING</div>
-</bitty-5-1>
+<script>
+  window.BittyClass = class {
+    showDate(event, el) {
+      el.innerHTML = new Date();
+    }
+  }
+</script>
+<bitty-6-0>
+  <button data-send="showDate">Show Date</button>
+  <div data-receive="showDate">waiting</div>
+</bitty-6-0>
 
-<bitty-5-1>
-        <div id="testTarget0850">a</div>
-  <div class="test" data-receive="runTest0850Alfa">FAILED</div>
-  <div class="test" data-receive="runTest0850Bravo">FAILED</div>
-</bitty-5-1>
-
-<bitty-5-1>
-  <div class="test" data-receive="triggerEvent0077">FAILED</div>
-</bitty-5-1>
-
-<bitty-5-1 data-send="init0010">
-  <div class="test" data-receive="runTest0010">FAILED</div>
-  <button data-receive="init0010" data-send="runTest0010">Test Trigger</button>
-</bitty-5-1>
-
-<bitty-5-1>
-  <div data-init="runTest0075">Test Trigger</div>
-  <div class="test" data-receive="forwardEvent0075">FAILED</div>
-</bitty-5-1>
-
-<bitty-5-1>
-<div data-init="runThing">WAITING</div>
-  <div data-receive="send2">WAITING</div>
-  <div data-receive="send2">WAITING</div>
-  <div data-receive="send2">WAITING</div>
-  <div data-receive="send2">WAITING</div>
-</bitty-5-1>
+<bitty-6-0>
+  <button data-send="showDate">Show Date</button>
+  <div data-receive="showDate">waiting</div>
+</bitty-6-0>
 
 -->
 
-<script src="/release/bitty-5.1.0-rc5.full.js" type="module"></script>
+
+
+        <!--
+        <script>
+        window.Test3 = class {
+          bittyReady() {
+            this.api.localTrigger("ping3");
+          }
+          click3(event, el) {
+            el.innerHTML = el.isTarget;
+          }
+          click3b(event, el) {
+            el.innerHTML = el.isSender;
+          }
+          ping3(event, el) {
+            el.innerHTML = `${el.isTarget} - ${el.bittyParentId} - ${el.bittyId}` ;
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test3">
+          <div data-receive="ping3">PING</div>
+          <button data-send="click3" data-receive="click3">Click me</button>
+          <button data-send="click3b" data-receive="click3b">Click me</button>
+        </bitty-6-0>
+-->
+
+<!--
+        <script>
+        window.Test2 = class {
+          bittyInit() {
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test2"></bitty-6-0>
+
+-->
+
+<!--
+        <script>
+        window.Test1 = class {
+          bittyInit() {
+            console.log("x");
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test1"></bitty-6-0>
+
+        <script>
+        window.Test2 = class {
+          bittyInit() {
+            console.log("y");
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test2"></bitty-6-0>
+
+        <script>
+        window.Test3 = class {
+          bittyInit() {
+            console.log("z");
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test3"></bitty-6-0>
+
+        <script>
+        window.Test4 = class {
+          bittyInit() {
+            console.log("a");
+          }
+        }
+        </script>
+        <bitty-6-0 data-connect="Test4"></bitty-6-0>
+
+
+        -->
+
+<script src="/release/bitty-6.0.0-rc1.full.js" type="module"></script>
 </body>
 </html>

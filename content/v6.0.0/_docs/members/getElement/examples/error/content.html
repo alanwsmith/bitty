@@ -1,0 +1,52 @@
+[! set member_key = "getElement" !]
+[! set url_key = "get-element" !]
+[! set name_key = "error" !]
+[! set extension = ".html" !]
+[! set tail_string = "/index" + extension !]
+
+[! set bitty = version_dir + "/_docs/members/" + member_key + "/examples/" + name_key + "/bitty.html" !]
+[! set script = version_dir + "/modules/" + url_key + "/" + name_key + ".on.js" !]
+[#
+[! set payload = version_dir + "/payloads/" + url_key + "/" + name_key + extension !]
+[! set payload_string = version_dir + "/payloads/" + url_key + "/" + name_key + tail_string !]
+#]
+
+<div class="default-flow example-wrapper">
+  <div class="default-flow">
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/[@ script @]</div>
+          <pre class="code-block"><code>
+          [!- filter highlight_javascript|safe -!]
+                  [! include script|safe !]
+          [!- endfilter -!]
+          </code></pre>
+      </div>
+[#
+      <div class="code-block-wrapper">
+          <div class="code-block-title">/[@ payload_string @]</div>
+          <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+                  [! include payload|safe !]
+          [!- endfilter -!]
+          </code></pre>
+      </div>
+#]
+
+      <div class="code-block-wrapper">
+          <div class="code-block-title">page.html</div>
+          <pre class="code-block"><code>
+          [!- filter highlight_html|safe -!]
+                  [! include bitty|safe !]
+          [!- endfilter -!]
+          </code></pre>
+      </div>
+
+
+      <div class="example-output-wrapper">
+      <div class="example-output-title">Example</div>
+      <div class="example-output">
+          [! include bitty !]
+      </div>
+      </div>
+  </div>
+</div>

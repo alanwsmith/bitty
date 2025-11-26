@@ -1,14 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
+export default class {
+  bittyInit() {
+    this.api.trigger("runTest0493");
+  }
+  async runTest0493(_event, el) {
+    const url =
+      "/versions/6.0.0-rc3/tests/0493-get-txt-subs/payload.txt";
+    const subs = [[/FAILED/g, "PASSED"]];
+    const options = {};
+    const response = await this.api.getTXT(url, subs, options);
+    if (response.value) {
+      el.innerHTML = response.value;
     }
-    </style></head><body><pre>
-A MiniJinja error occurred
-
-Could not render template:
-template not found: tried to include non-existing template "versions/6.0.0-rc2/vars.html" (in versions/6.0.0-rc3/tests/0493-get-txt-subs/test.on.js:1)</p>
-</pre></body></html>
+  }
+}

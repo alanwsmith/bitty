@@ -1,4 +1,4 @@
-[!- include "versions/6.0.0-rc2/vars.html" -!]
+[!- include "versions/6.0.0-rc3/vars.html" -!]
 
 export default class {
   async runTest0570(_event, el) {

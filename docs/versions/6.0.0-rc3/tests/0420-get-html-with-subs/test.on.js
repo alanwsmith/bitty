@@ -1,14 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
-    }
-    </style></head><body><pre>
-A MiniJinja error occurred
-
-Could not render template:
-template not found: tried to include non-existing template "versions/6.0.0-rc2/vars.html" (in versions/6.0.0-rc3/tests/0420-get-html-with-subs/test.on.js:1)</p>
-</pre></body></html>
+export default class {
+  async runTest0420(_event, el) {
+    const url = `/versions/6.0.0-rc3/tests/0420-get-html-with-subs/payload.html`;
+    const subs = [["FAILED", "PASSED"]];
+    const response = await this.api.getHTML(url, subs);
+    el.parentNode.replaceChildren(response.value);
+  }
+}

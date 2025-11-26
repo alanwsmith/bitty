@@ -1,14 +1,13 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
-    }
-    </style></head><body><pre>
-A MiniJinja error occurred
+export default class {
+  bittyInit() {
+    this.api.trigger("runTest0440");
+  }
 
-Could not render template:
-template not found: tried to include non-existing template "versions/6.0.0-rc2/vars.html" (in versions/6.0.0-rc3/tests/0440-get-svg/test.on.js:1)</p>
-</pre></body></html>
+  async runTest0440(_event, el) {
+    const url =
+      `/versions/6.0.0-rc3/tests/0440-get-svg/payload.svg`;
+    const subs = [[/FAILED/g, "PASSED"]];
+    const response = await this.api.getSVG(url, subs);
+    el.parentNode.replaceChildren(response.value);
+  }
+}

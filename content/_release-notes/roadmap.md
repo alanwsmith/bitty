@@ -1,5 +1,10 @@
 ## Roadmap 
 
+- TODO: Examine if there's a way to guarantee
+that each import only happens once even if
+multiple bitty instances call the same
+external module file. 
+
 - TODO: Set up so that `data-connect` can use
 relative file paths (e.g. `./here.js`)
 instead of being limited to `http` and `/`

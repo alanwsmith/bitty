@@ -1,3 +1,5 @@
+[!- include "versions/6.0.0-rc2/vars.html" -!]
+
 export default class {
   async runTest0560(_event, el) {
     const url =

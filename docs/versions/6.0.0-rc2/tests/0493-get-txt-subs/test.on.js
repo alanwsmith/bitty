@@ -4,7 +4,7 @@ export default class {
   }
   async runTest0493(_event, el) {
     const url =
-      "//tests/0493-get-txt-subs/payload.txt";
+      "/versions/6.0.0-rc2/tests/0493-get-txt-subs/payload.txt";
     const subs = [[/FAILED/g, "PASSED"]];
     const options = {};
     const response = await this.api.getTXT(url, subs, options);

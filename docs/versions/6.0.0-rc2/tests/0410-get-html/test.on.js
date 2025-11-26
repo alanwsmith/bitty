@@ -1,6 +1,6 @@
 export default class {
   async runTest0410(_event, el) {
-    const url = `//tests/0410-get-html/payload.html`;
+    const url = `/versions/6.0.0-rc2/tests/0410-get-html/payload.html`;
     const response = await this.api.getHTML(url);
     el.parentNode.replaceChildren(response.value);
   }

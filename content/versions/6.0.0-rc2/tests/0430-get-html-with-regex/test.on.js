@@ -1,3 +1,5 @@
+[!- include "versions/6.0.0-rc2/vars.html" -!]
+
 export default class {
   async runTest0430(_event, el) {
     const url = `/[@ version_dir @]/tests/0430-get-html-with-regex/payload.html`;

@@ -538,15 +538,25 @@ class BittyJs extends HTMLElement {
           console.error(`${tagName} error: No class to connect to.`);
         }
       } else {
-        const connParts = this.trimInput(this.dataset.connect);
+        let connParts = this.trimInput(this.dataset.connect);
         if (typeof window[connParts[0]] !== "undefined") {
           this.conn = new window[connParts[0]]();
         } else {
-          const mod = await import(connParts[0]);
-          if (connParts[1] === undefined) {
-            this.conn = new mod.default();
+          if (connParts[0].substring(0, 1) === "/") {
+            const windowURL = new URL(window.location.href);
+            connParts[0] = new URL(connParts[0], windowURL.origin).toString();
+          }
+          if (connParts[0].substring(0, 4) === "http") {
+            const mod = await import(connParts[0]);
+            if (connParts[1] === undefined) {
+              this.conn = new mod.default();
+            } else {
+              this.conn = new mod[connParts[1]]();
+            }
           } else {
-            this.conn = new mod[connParts[1]]();
+            console.error(
+              "The value of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported",
+            );
           }
         }
       }

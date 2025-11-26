@@ -1,5 +1,10 @@
 ## Roadmap 
 
+- TODO: Set up so that `data-connect` can use
+relative file paths (e.g. `./here.js`)
+instead of being limited to `http` and `/`
+urls. 
+
 - TODO: Add console log message if a signal is
 sent that doesn't have a corresponding function
 to handle it. 

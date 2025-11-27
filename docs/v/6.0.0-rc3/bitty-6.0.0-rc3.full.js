@@ -497,17 +497,14 @@ class BittyJs extends HTMLElement {
           return findDataKey.call(null, event.sender, x);
         };
 
-        /*
-    eventElement.getInt = (x) => {
-      return parseInt(findDataKey.call(null, eventElement, x));
-    };
-    eventElement.getFloat = (x) => {
-      return parseFloat(findDataKey.call(null, eventElement, x));
-    };
+        event.sender.getInt = (x) => {
+          return parseInt(findDataKey.call(null, event.sender, x));
+        };
 
-        */
+        event.sender.getFloat = (x) => {
+          return parseFloat(findDataKey.call(null, event.sender, x));
+        };
 
-        // this.prepSenderElement(event.sender);
         const signals = this.trimInput(event.sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");
         for (let signal of signals) {
@@ -637,19 +634,6 @@ class BittyJs extends HTMLElement {
     };
     el.getFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
-    };
-  }
-
-  /** @internal */
-  prepSenderElement(eventElement) {
-    eventElement.getString = (x) => {
-      return findDataKey.call(null, eventElement, x);
-    };
-    eventElement.getInt = (x) => {
-      return parseInt(findDataKey.call(null, eventElement, x));
-    };
-    eventElement.getFloat = (x) => {
-      return parseFloat(findDataKey.call(null, eventElement, x));
     };
   }
 

@@ -5,14 +5,14 @@ export default class {
     });
   }
 
-  _runTest1200Alfa(ev, el) {
-    if (ev.sender.getFloat("key") === 4.2) {
+  runTest1200Alfa(ev, el) {
+    if (ev.sender.getFloat("key") === 99.7) {
       el.innerHTML = "PASSED";
     }
   }
 
-  _runTest1200Bravo(ev, el) {
-    if (ev.sender.getFloat("key") === 4.5) {
+  runTest1200Bravo(ev, el) {
+    if (ev.sender.getFloat("key") === 77.9) {
       el.innerHTML = "PASSED";
     }
   }

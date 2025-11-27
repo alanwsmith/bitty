@@ -309,27 +309,6 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    if (event.target) {
-      // event.getString = (x) => {
-      //   return findDataKey.call(null, event, x);
-      // };
-      // event.getInt = (x) => {
-      //   return parseInt(findDataKey.call(null, event, x));
-      // };
-      // event.getFloat = (x) => {
-      //   return parseFloat(findDataKey.call(null, event, x));
-      // };
-
-      // event.sender = event.target;
-      /*
-      if (event.sender.value) {
-        event.sender.stringValue = event.sender.value;
-        event.sender.intValue = parseInt(event.sender.value, 10);
-        event.sender.floatValue = parseFloat(event.sender.value);
-      }
-      */
-    }
-
     if (event.target.value) {
       event.target.stringValue = event.target.value;
       event.target.intValue = parseInt(event.target.value, 10);

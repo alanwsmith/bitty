@@ -310,13 +310,26 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async handleEvent(event) {
     if (event.target) {
-      event.sender = event.target;
+      // event.getString = (x) => {
+      //   return findDataKey.call(null, event, x);
+      // };
+      // event.getInt = (x) => {
+      //   return parseInt(findDataKey.call(null, event, x));
+      // };
+      // event.getFloat = (x) => {
+      //   return parseFloat(findDataKey.call(null, event, x));
+      // };
+
+      // event.sender = event.target;
+      /*
       if (event.sender.value) {
         event.sender.stringValue = event.sender.value;
         event.sender.intValue = parseInt(event.sender.value, 10);
         event.sender.floatValue = parseFloat(event.sender.value);
       }
+      */
     }
+
     if (event.target.value) {
       event.target.stringValue = event.target.value;
       event.target.intValue = parseInt(event.target.value, 10);
@@ -346,6 +359,7 @@ class BittyJs extends HTMLElement {
       event.type === "bittylocaltrigger"
     ) {
       // TODO: Handle async
+      event.sender = event.target;
       // console.log("TODO: Fix repated calls that are here");
       const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");
@@ -479,6 +493,21 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
+        event.sender.getString = (x) => {
+          return findDataKey.call(null, event.sender, x);
+        };
+
+        /*
+    eventElement.getInt = (x) => {
+      return parseInt(findDataKey.call(null, eventElement, x));
+    };
+    eventElement.getFloat = (x) => {
+      return parseFloat(findDataKey.call(null, eventElement, x));
+    };
+
+        */
+
+        // this.prepSenderElement(event.sender);
         const signals = this.trimInput(event.sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");
         for (let signal of signals) {
@@ -608,6 +637,19 @@ class BittyJs extends HTMLElement {
     };
     el.getFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
+    };
+  }
+
+  /** @internal */
+  prepSenderElement(eventElement) {
+    eventElement.getString = (x) => {
+      return findDataKey.call(null, eventElement, x);
+    };
+    eventElement.getInt = (x) => {
+      return parseInt(findDataKey.call(null, eventElement, x));
+    };
+    eventElement.getFloat = (x) => {
+      return parseFloat(findDataKey.call(null, eventElement, x));
     };
   }
 

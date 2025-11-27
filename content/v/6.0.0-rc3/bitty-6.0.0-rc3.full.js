@@ -614,6 +614,11 @@ class BittyJs extends HTMLElement {
     el.getFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
     };
+    el.matchTargetString = (x) => {
+      const eventKey = findDataKey.call(null, event.target, x);
+      const elKey = findDataKey.call(null, el, x);
+      return eventKey === elKey;
+    };
   }
 
   /** @internal */

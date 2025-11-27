@@ -309,6 +309,19 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
+    if (event.target) {
+      event.sender = event.target;
+      if (event.sender.value) {
+        event.sender.stringValue = event.sender.value;
+        event.sender.intValue = parseInt(event.sender.value, 10);
+        event.sender.floatValue = parseFloat(event.sender.value);
+      }
+    }
+    if (event.target.value) {
+      event.target.stringValue = event.target.value;
+      event.target.intValue = parseInt(event.target.value, 10);
+      event.target.floatValue = parseFloat(event.target.value);
+    }
     if (event.type === "bittybittyinit") {
       if (this.dataset.bittyid === event.target.dataset.bittyid) {
         if (typeof this.conn.bittyInit === "function") {
@@ -333,7 +346,6 @@ class BittyJs extends HTMLElement {
       event.type === "bittylocaltrigger"
     ) {
       // TODO: Handle async
-      event.sender = event.target;
       // console.log("TODO: Fix repated calls that are here");
       const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");

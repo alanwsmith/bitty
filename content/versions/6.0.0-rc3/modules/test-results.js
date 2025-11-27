@@ -33,7 +33,7 @@ export default class {
   }
 
   async showResults(_event, element) {
-    console.error(t.message);
+    //console.error(t.message);
     await sleep(2000);
     const els = document.querySelectorAll(".test");
     [...els].forEach((el) => {
@@ -56,6 +56,6 @@ export default class {
       ];
       element.replaceChildren(this.api.makeHTML(t.failed, subs));
     }
-    console.error(t.message);
+    //    console.error(t.message);
   }
 }

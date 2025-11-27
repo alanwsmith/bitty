@@ -1,5 +1,3 @@
-[!- include "versions/6.0.0-rc3/vars.html" -!]
-
 export default class {
   bittyReady() {
     this.api.localTrigger("runTest0397");

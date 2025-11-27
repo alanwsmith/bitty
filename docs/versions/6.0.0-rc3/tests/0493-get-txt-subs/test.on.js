@@ -3,8 +3,7 @@ export default class {
     this.api.trigger("runTest0493");
   }
   async runTest0493(_event, el) {
-    const url =
-      "/versions/6.0.0-rc3/tests/0493-get-txt-subs/payload.txt";
+    const url = "/versions/6.0.0-rc3/tests/0493-get-txt-subs/payload.txt";
     const subs = [[/FAILED/g, "PASSED"]];
     const options = {};
     const response = await this.api.getTXT(url, subs, options);

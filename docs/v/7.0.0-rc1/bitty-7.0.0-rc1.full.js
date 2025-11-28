@@ -2,13 +2,11 @@
 const version = [7, 0, 0];
 
 /** @internal */
-
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function findSender(evTarget) {
   if (evTarget.dataset && evTarget.dataset.send) {
     return evTarget;
-    //el.sender = evTarget;
   } else if (evTarget.parentNode) {
     return findSender(evTarget.parentNode);
   }
@@ -48,18 +46,11 @@ function findSender(evTarget) {
  */
 
 function expandElement(ev, el) {
-  // console.log(el.sender.dataset);
-  // findSender(ev.target, el);
-
   el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
   el.isSender = el.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
-
-  // TODO: TMP: copy ev.sender to el.sender until
-  // el.sender is created directly.
-  //el.sender = ev.sender;
 
   el.stringData = (x) => {
     return findDataKey.call(null, el, x);
@@ -73,21 +64,19 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
-  if (ev.target) {
-    el.targetBittyId = ev.target.dataset.bittyid;
+  el.targetBittyId = ev.target.dataset.bittyid;
 
-    el.targetStringData = (x) => {
-      return findDataKey.call(null, ev.target, x);
-    };
+  el.targetStringData = (x) => {
+    return findDataKey.call(null, ev.target, x);
+  };
 
-    el.targetIntData = (x) => {
-      return parseInt(findDataKey.call(null, ev.target, x));
-    };
+  el.targetIntData = (x) => {
+    return parseInt(findDataKey.call(null, ev.target, x));
+  };
 
-    el.targetFloatData = (x) => {
-      return parseFloat(findDataKey.call(null, ev.target, x));
-    };
-  }
+  el.targetFloatData = (x) => {
+    return parseFloat(findDataKey.call(null, ev.target, x));
+  };
 
   el.senderStringData = (x) => {
     return findDataKey.call(null, el.sender, x);
@@ -136,30 +125,6 @@ function expandElement(ev, el) {
     }
     return eventKey === elKey;
   };
-
-  // TODO: targetStringData, targetIntData, targetFloatData
-  // TODO: senderStringData, senderIntData, senderFloatData
-
-  // el.matchTarget = (x) => {
-  //   const eventKey = findDataKey.call(null, event.target, x);
-  //   const elKey = findDataKey.call(null, el, x);
-  //   return eventKey === elKey;
-  // };
-
-  // el.matchSender = (x) => {
-  //   const eventKey = findDataKey.call(null, event.sender, x);
-  //   const elKey = findDataKey.call(null, el, x);
-  //   return eventKey === elKey;
-  // };
-}
-
-/**
- * An Expanded Event
- * @typedef {Object} ExpandedEvent
- * @property {Object} sendstr- T
- */
-
-function expandEvent(event) {
 }
 
 /** @internal */
@@ -486,13 +451,6 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    // DEPRECATED in favor of element values
-    // if (event.target.value) {
-    //   event.target.stringValue = event.target.value;
-    //   event.target.intValue = parseInt(event.target.value, 10);
-    //   event.target.floatValue = parseFloat(event.target.value);
-    // }
-
     if (event.type === "bittybittyinit") {
       if (this.dataset.bittyid === event.target.dataset.bittyid) {
         if (typeof this.conn.bittyInit === "function") {
@@ -517,8 +475,6 @@ class BittyJs extends HTMLElement {
       event.type === "bittylocaltrigger"
     ) {
       // TODO: Handle async
-      // event.sender = event.target;
-      // console.log("TODO: Fix repated calls that are here");
       const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {
@@ -529,12 +485,10 @@ class BittyJs extends HTMLElement {
           signal = iSigParts[1];
         }
         if (this.conn[signal]) {
-          // const bittyTargetParent = this.getBittyParent(event.target);
           const bittyTargetParent = getBittyParent(event.target);
           let foundReceiver = false;
           for (let receiver of receivers) {
             receiver.sender = event.target;
-            // const bittyReceiverParent = this.getBittyParent(receiver);
             const bittyReceiverParent = getBittyParent(receiver);
             if (
               bittyTargetParent.dataset.bittyid ===
@@ -549,7 +503,6 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  this.prepElements(event, receiver);
                   expandElement(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
@@ -578,9 +531,6 @@ class BittyJs extends HTMLElement {
       event.type === "bittytrigger"
     ) {
       // TODO: Handle async
-      //event.sender = event.target;
-      // console.log("TODO: Fix the repeated call here");
-      //console.log(event.target.dataset.bittyid);
       const signals = this.trimInput(event.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {
@@ -603,7 +553,6 @@ class BittyJs extends HTMLElement {
               }
               if (receptor === signal) {
                 foundReceiver = true;
-                this.prepElements(event, receiver);
                 expandElement(event, receiver);
                 if (doAwait) {
                   await this.conn[signal](event, receiver);
@@ -626,8 +575,6 @@ class BittyJs extends HTMLElement {
       event.type === "bittydatainit"
     ) {
       // TODO: Handle async
-      // event.sender = event.target;
-      this.prepElements(event, event.el);
       event.el.sender = event.target;
       expandElement(event, event.el);
       if (this.dataset.bittyid === event.el.bittyParentBittyId) {
@@ -647,7 +594,6 @@ class BittyJs extends HTMLElement {
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
         receiver.sender = event.target;
-        this.prepElements(event, receiver);
         expandElement(event, receiver);
         const receptors = this.trimInput(receiver.dataset.receive);
         for (let receptor of receptors) {
@@ -659,31 +605,9 @@ class BittyJs extends HTMLElement {
         }
       }
     } else {
-      // this.findSender(event, event.target);
-      // if (event.sender) {
-
-      //console.log(event.target);
       const sender = findSender(event.target);
-
-      // console.log(sender);
       if (sender) {
-        //  DEPREACTED in favor of element version
-        // event.sender.stringData = (x) => {
-        //   return findDataKey.call(null, event.sender, x);
-        // };
-
-        //  DEPREACTED in favor of element version
-        // event.senderIntData = (x) => {
-        //   return parseInt(findDataKey.call(null, event.sender, x));
-        // };
-
-        //  DEPREACTED in favor of element version
-        // event.sender.getFloat = (x) => {
-        //   return parseFloat(findDataKey.call(null, event.sender, x));
-        // };
-
         const signals = this.trimInput(sender.dataset.send);
-        // const signals = this.trimInput(event.sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");
         for (let signal of signals) {
           let doAwait = false;
@@ -705,7 +629,6 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  this.prepElements(event, receiver);
                   expandElement(event, receiver);
                   if (doAwait) {
                     await this.conn[signal](event, receiver);
@@ -797,41 +720,6 @@ class BittyJs extends HTMLElement {
 
   makeTXT(template, subs = []) {
     return this.doSubs(template, subs);
-  }
-
-  /** @internal */
-  // TODO: DEPRECATE in favor of expandElement
-  prepElements(event, el) {
-    /** @prop {boolean} */
-    // el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
-    // el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
-    // el.bittyParent = this.getBittyParent(el);
-    // el.bittyParentId = el.bittyParent.dataset.bittyid;
-
-    // el.bittyId = el.dataset.bittyid;
-
-    // el.getString = (x) => {
-    //   return findDataKey.call(null, el, x);
-    // };
-
-    // el.getInt = (x) => {
-    //   return parseInt(findDataKey.call(null, el, x));
-    // };
-
-    // el.getFloat = (x) => {
-    //   return parseFloat(findDataKey.call(null, el, x));
-    // };
-
-    // el.matchTarget = (x) => {
-    //   const eventKey = findDataKey.call(null, event.target, x);
-    //   const elKey = findDataKey.call(null, el, x);
-    //   return eventKey === elKey;
-    // };
-    // el.matchSender = (x) => {
-    //   const eventKey = findDataKey.call(null, event.sender, x);
-    //   const elKey = findDataKey.call(null, el, x);
-    //   return eventKey === elKey;
-    // };
   }
 
   /** @internal */

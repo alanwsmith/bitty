@@ -9,6 +9,9 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * @typedef {Object} ExpandedElement
  * @property {boolean} isTarget - The element is also the target of the event
  * @property {boolean} isSender - The element is also the sender of the event
+ * @property {Element} bittyParent- The bitty parent element
+ * @property {String} bittyParentId- The bitty parent element's data-bittyid
+ * @property {String} bittyId - The element's data-bittyid
  */
 
 function expandElement(event, el) {
@@ -16,10 +19,27 @@ function expandElement(event, el) {
   el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
   el.bittyParentId = el.bittyParent.dataset.bittyid;
-  if (el.bittyParentId === undefined) {
-    console.log(el.bittyParent);
-  }
-  // console.log(el.bittyParentId);
+  el.bittyId = el.dataset.bittyid;
+
+  // el.getString = (x) => {
+  //   return findDataKey.call(null, el, x);
+  // };
+  // el.getInt = (x) => {
+  //   return parseInt(findDataKey.call(null, el, x));
+  // };
+  // el.getFloat = (x) => {
+  //   return parseFloat(findDataKey.call(null, el, x));
+  // };
+  // el.matchTarget = (x) => {
+  //   const eventKey = findDataKey.call(null, event.target, x);
+  //   const elKey = findDataKey.call(null, el, x);
+  //   return eventKey === elKey;
+  // };
+  // el.matchSender = (x) => {
+  //   const eventKey = findDataKey.call(null, event.sender, x);
+  //   const elKey = findDataKey.call(null, el, x);
+  //   return eventKey === elKey;
+  // };
 }
 
 /**
@@ -656,7 +676,8 @@ class BittyJs extends HTMLElement {
     // el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
     // el.bittyParent = this.getBittyParent(el);
     // el.bittyParentId = el.bittyParent.dataset.bittyid;
-    el.bittyId = el.dataset.bittyid;
+
+    // el.bittyId = el.dataset.bittyid;
     el.getString = (x) => {
       return findDataKey.call(null, el, x);
     };

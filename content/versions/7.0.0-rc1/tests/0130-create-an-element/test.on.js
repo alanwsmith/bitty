@@ -10,6 +10,7 @@ export default class {
       this.api.makeElement(template),
     );
     this.api.trigger("runTest0130");
+    el.classList.remove("test");
   }
 
   runTest0130(event, el) {

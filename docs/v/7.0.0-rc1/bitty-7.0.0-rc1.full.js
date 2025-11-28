@@ -499,8 +499,6 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-
-      //
     } else if (
       event.type === "bittyforward"
     ) {

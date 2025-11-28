@@ -16,5 +16,6 @@ export default class {
       newFragment.firstChild.innerHTML = "PASSED";
     }
     el.replaceChildren(newFragment);
+    el.classList.remove("test");
   }
 }

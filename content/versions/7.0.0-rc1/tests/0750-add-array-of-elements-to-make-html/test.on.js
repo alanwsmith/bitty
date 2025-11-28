@@ -12,6 +12,6 @@ export default class {
     ];
     const newFragment = this.api.makeHTML(t1, subs);
     el.replaceChildren(newFragment);
+    el.classList.remove("test");
   }
 }
-

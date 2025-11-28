@@ -41,7 +41,7 @@ function expandElement(ev, el) {
   el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
   el.bittyParentId = el.bittyParent.dataset.bittyid;
-  el.bittyId = el.dataset.bittyid;
+  el.id = el.dataset.bittyid;
 
   el.stringData = (x) => {
     return findDataKey.call(null, el, x);

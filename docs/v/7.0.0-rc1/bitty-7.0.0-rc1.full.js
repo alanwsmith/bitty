@@ -34,9 +34,9 @@ function expandElement(event, el) {
     return parseInt(findDataKey.call(null, el, x));
   };
 
-  // el.getFloat = (x) => {
-  //   return parseFloat(findDataKey.call(null, el, x));
-  // };
+  el.floatData = (x) => {
+    return parseFloat(findDataKey.call(null, el, x));
+  };
 
   // el.matchTarget = (x) => {
   //   const eventKey = findDataKey.call(null, event.target, x);

@@ -487,6 +487,7 @@ class BittyJs extends HTMLElement {
       event.sender = event.target;
       this.prepElements(event, event.el);
       expandElement(event, event.el);
+      // console.log(event.el);
       if (this.dataset.bittyid === event.el.bittyParentId) {
         const signals = this.trimInput(event.signal);
         for (const signal of signals) {

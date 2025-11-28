@@ -18,13 +18,22 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * @method {Int} intData(KEY) - Gets the data-KEY from the element as an int. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
  * @method {Float} floatData(KEY) - Gets the data-KEY from the element as a float. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
  * x@method {String} targetStringData(KEY)
- * x@method {String} targetIntData(KEY)
- * x@method {String} targetFloatData(KEY)
+ * x@method {Int} targetIntData(KEY)
+ * x@method {Float} targetFloatData(KEY)
  * x@method {String} senderStringData(KEY)
- * x@method {String} senderIntData(KEY)
- * x@method {String} senderFloatData(KEY)
+ * x@method {Int} senderIntData(KEY)
+ * x@method {Float} senderFloatData(KEY)
  * x@method {boolean} matchTargetData(KEY) - Return's true if the element and the target have the same `data-KEY` attribute and if they match. Otherwise, returns false
  * x@method {boolean} matchSenderData(KEY) - Return's true if the element and the sender have the same `data-KEY` attribute and if they match. Otherwise, returns false
+ * x@method {String} stringValue
+ * x@method {Int} intValue
+ * x@method {Float} floatValue
+ * x@method {String} targetStringValue
+ * x@method {Int} targetIntValue
+ * x@method {Float} targetFloatValue
+ * x@method {String} senderStringValue
+ * x@method {Int} senderIntValue
+ * x@method {Float} senderFloatValue
  */
 
 function expandElement(ev, el) {
@@ -57,6 +66,30 @@ function expandElement(ev, el) {
   el.targetFloatData = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
+
+  el.senderStringData = (x) => {
+    return findDataKey.call(null, ev.sender, x);
+  };
+
+  el.senderIntData = (x) => {
+    return parseInt(findDataKey.call(null, ev.sender, x));
+  };
+
+  el.senderFloatData = (x) => {
+    return parseFloat(findDataKey.call(null, ev.sender, x));
+  };
+
+  if (ev.target.value) {
+    el.targetStringValue = ev.target.value;
+    el.targetIntValue = parseInt(ev.target.value, 10);
+    el.targetFloatValue = parseFloat(ev.target.value);
+  }
+
+  if (ev.sender.value) {
+    el.senderStringValue = ev.sender.value;
+    el.senderIntValue = parseInt(ev.sender.value, 10);
+    el.senderFloatValue = parseFloat(ev.sender.value);
+  }
 
   // TODO: targetStringData, targetIntData, targetFloatData
   // TODO: senderStringData, senderIntData, senderFloatData
@@ -404,11 +437,13 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   async handleEvent(event) {
-    if (event.target.value) {
-      event.target.stringValue = event.target.value;
-      event.target.intValue = parseInt(event.target.value, 10);
-      event.target.floatValue = parseFloat(event.target.value);
-    }
+    // DEPRECATED in favor of element values
+    // if (event.target.value) {
+    //   event.target.stringValue = event.target.value;
+    //   event.target.intValue = parseInt(event.target.value, 10);
+    //   event.target.floatValue = parseFloat(event.target.value);
+    // }
+
     if (event.type === "bittybittyinit") {
       if (this.dataset.bittyid === event.target.dataset.bittyid) {
         if (typeof this.conn.bittyInit === "function") {
@@ -573,20 +608,20 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
-        // TODO: move into expandEvent
-        event.sender.stringData = (x) => {
-          return findDataKey.call(null, event.sender, x);
-        };
+        //  DEPREACTED in favor of element version
+        // event.sender.stringData = (x) => {
+        //   return findDataKey.call(null, event.sender, x);
+        // };
 
-        // TODO: rename to intData and move into expandEvent
-        event.senderIntData = (x) => {
-          return parseInt(findDataKey.call(null, event.sender, x));
-        };
+        //  DEPREACTED in favor of element version
+        // event.senderIntData = (x) => {
+        //   return parseInt(findDataKey.call(null, event.sender, x));
+        // };
 
-        // TODO: rename to floatData and move into expandEvent
-        event.sender.getFloat = (x) => {
-          return parseFloat(findDataKey.call(null, event.sender, x));
-        };
+        //  DEPREACTED in favor of element version
+        // event.sender.getFloat = (x) => {
+        //   return parseFloat(findDataKey.call(null, event.sender, x));
+        // };
 
         const signals = this.trimInput(event.sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");

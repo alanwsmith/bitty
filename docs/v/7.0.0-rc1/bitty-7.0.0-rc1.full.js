@@ -13,10 +13,26 @@ function findSender(evTarget) {
 }
 
 /**
+ * An Expanded Event
+ * @typedef {Object} ExpandedEvent
+ * @property {String} stringValue - The .value for the event.target if it exists.
+ * @property {Int} intValue - The .value for the event.target if it exists as an int
+ * @property {Float} floatValue - The .value for the event.target if it exists as a float
+ */
+
+function expandEvent(ev) {
+  if (ev.target.value !== undefined) {
+    ev.stringValue = ev.target.value;
+    ev.intValue = parseInt(ev.target.value, 10);
+    ev.floatValue = parseFloat(event.target.value);
+  }
+}
+
+/**
  * An Expanded Element
  * @typedef {Object} ExpandedElement
- * @property {boolean} isTarget - The element is also the target of the event
- * @property {boolean} isSender - The element is also the sender of the event
+ * @property {boolean} isTarget - The element is also the target of the ev
+ * @property {boolean} isSender - The element is also the sender of the ev
  * x@property {String} id - The element's data-bittyid
  * @property {Element} bittyParent- The bitty parent element
  * @property {String} bittyParentBittyId- The bitty parent element's data-bittyid
@@ -109,21 +125,21 @@ function expandElement(ev, el) {
   }
 
   el.matchTargetData = (x) => {
-    const eventKey = findDataKey.call(null, event.target, x);
+    const evKey = findDataKey.call(null, ev.target, x);
     const elKey = findDataKey.call(null, el, x);
-    if (eventKey === undefined || elKey === undefined) {
+    if (evKey === undefined || elKey === undefined) {
       return false;
     }
-    return eventKey === elKey;
+    return evKey === elKey;
   };
 
   el.matchSenderData = (x) => {
-    const eventKey = findDataKey.call(null, el.sender, x);
+    const evKey = findDataKey.call(null, el.sender, x);
     const elKey = findDataKey.call(null, el, x);
-    if (eventKey === undefined || elKey === undefined) {
+    if (evKey === undefined || elKey === undefined) {
       return false;
     }
-    return eventKey === elKey;
+    return evKey === elKey;
   };
 }
 
@@ -181,9 +197,9 @@ class DataInitEvent extends Event {
 
 /** @internal */
 class ForwardEvent extends Event {
-  constructor(event, signal) {
+  constructor(ev, signal) {
     super("bittyforward", { bubbles: true });
-    this.forwardedEvent = event;
+    this.forwardedEvent = ev;
     this.forwardedSignal = signal;
   }
 }
@@ -273,15 +289,15 @@ class BittyJs extends HTMLElement {
     }
     listeners.forEach(
       (listener) => {
-        window.addEventListener(listener, (event) => {
-          this.handleEventBridge.call(this, event);
+        window.addEventListener(listener, (ev) => {
+          this.handleEventBridge.call(this, ev);
         });
       },
     );
   }
   /** @internal */
   connectedMoveCallback() {
-    // this prevents connectedCallback() from firing
+    // this prevs connectedCallback() from firing
     // if a bitty component is moved.
   }
 
@@ -340,8 +356,8 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
-  forward(event, signal) {
-    const forwardEvent = new ForwardEvent(event, signal);
+  forward(ev, signal) {
+    const forwardEvent = new ForwardEvent(ev, signal);
     this.dispatchEvent(forwardEvent);
   }
 
@@ -441,18 +457,19 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  findSender(event, checkElement) {
+  findSender(ev, checkElement) {
     if (checkElement.dataset && checkElement.dataset.send) {
-      event.sender = checkElement;
+      ev.sender = checkElement;
     } else if (checkElement.parentNode) {
-      this.findSender(event, checkElement.parentNode);
+      this.findSender(ev, checkElement.parentNode);
     }
   }
 
   /** @internal */
-  async handleEvent(event) {
-    if (event.type === "bittybittyinit") {
-      if (this.dataset.bittyid === event.target.dataset.bittyid) {
+  async handleEvent(ev) {
+    expandEvent(ev);
+    if (ev.type === "bittybittyinit") {
+      if (this.dataset.bittyid === ev.target.dataset.bittyid) {
         if (typeof this.conn.bittyInit === "function") {
           if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
             await this.conn.bittyInit();
@@ -461,8 +478,8 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-    } else if (event.type === "bittybittyready") {
-      if (this.dataset.bittyid === event.target.dataset.bittyid) {
+    } else if (ev.type === "bittybittyready") {
+      if (this.dataset.bittyid === ev.target.dataset.bittyid) {
         if (typeof this.conn.bittyReady === "function") {
           if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
             await this.conn.bittyReady();
@@ -472,10 +489,10 @@ class BittyJs extends HTMLElement {
         }
       }
     } else if (
-      event.type === "bittylocaltrigger"
+      ev.type === "bittylocaltrigger"
     ) {
       // TODO: Handle async
-      const signals = this.trimInput(event.signal);
+      const signals = this.trimInput(ev.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {
         let doAwait = false;
@@ -485,10 +502,10 @@ class BittyJs extends HTMLElement {
           signal = iSigParts[1];
         }
         if (this.conn[signal]) {
-          const bittyTargetParent = getBittyParent(event.target);
+          const bittyTargetParent = getBittyParent(ev.target);
           let foundReceiver = false;
           for (let receiver of receivers) {
-            receiver.sender = event.target;
+            receiver.sender = ev.target;
             const bittyReceiverParent = getBittyParent(receiver);
             if (
               bittyTargetParent.dataset.bittyid ===
@@ -503,11 +520,11 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  expandElement(event, receiver);
+                  expandElement(ev, receiver);
                   if (doAwait) {
-                    await this.conn[signal](event, receiver);
+                    await this.conn[signal](ev, receiver);
                   } else {
-                    this.conn[signal](event, receiver);
+                    this.conn[signal](ev, receiver);
                   }
                 }
               }
@@ -519,19 +536,19 @@ class BittyJs extends HTMLElement {
                 this.dataset.bittyid
             ) {
               if (doAwait) {
-                await this.conn[signal](event, null);
+                await this.conn[signal](ev, null);
               } else {
-                this.conn[signal](event, null);
+                this.conn[signal](ev, null);
               }
             }
           }
         }
       }
     } else if (
-      event.type === "bittytrigger"
+      ev.type === "bittytrigger"
     ) {
       // TODO: Handle async
-      const signals = this.trimInput(event.signal);
+      const signals = this.trimInput(ev.signal);
       const receivers = this.querySelectorAll("[data-receive]");
       for (let signal of signals) {
         let doAwait = false;
@@ -543,7 +560,7 @@ class BittyJs extends HTMLElement {
         if (this.conn[signal]) {
           let foundReceiver = false;
           for (let receiver of receivers) {
-            receiver.sender = event.target;
+            receiver.sender = ev.target;
             const receptors = this.trimInput(receiver.dataset.receive);
             for (let receptor of receptors) {
               const rSigParts = receptor.split(":");
@@ -553,59 +570,59 @@ class BittyJs extends HTMLElement {
               }
               if (receptor === signal) {
                 foundReceiver = true;
-                expandElement(event, receiver);
+                expandElement(ev, receiver);
                 if (doAwait) {
-                  await this.conn[signal](event, receiver);
+                  await this.conn[signal](ev, receiver);
                 } else {
-                  this.conn[signal](event, receiver);
+                  this.conn[signal](ev, receiver);
                 }
               }
             }
           }
           if (foundReceiver === false) {
             if (doAwait) {
-              await this.conn[signal](event, null);
+              await this.conn[signal](ev, null);
             } else {
-              this.conn[signal](event, null);
+              this.conn[signal](ev, null);
             }
           }
         }
       }
     } else if (
-      event.type === "bittydatainit"
+      ev.type === "bittydatainit"
     ) {
       // TODO: Handle async
-      event.el.sender = event.target;
-      expandElement(event, event.el);
-      if (this.dataset.bittyid === event.el.bittyParentBittyId) {
-        const signals = this.trimInput(event.signal);
+      ev.el.sender = ev.target;
+      expandElement(ev, ev.el);
+      if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
+        const signals = this.trimInput(ev.signal);
         for (const signal of signals) {
           if (this.conn[signal]) {
-            this.conn[signal](event, event.el);
+            this.conn[signal](ev, ev.el);
           }
         }
       }
     } else if (
-      event.type === "bittyforward"
+      ev.type === "bittyforward"
     ) {
       // TODO: Handle async
-      const signals = this.trimInput(event.forwardedSignal);
-      event = event.forwardedEvent;
+      const signals = this.trimInput(ev.forwardedSignal);
+      ev = ev.forwardedEvent;
       const receivers = this.querySelectorAll("[data-receive]");
       for (let receiver of receivers) {
-        receiver.sender = event.target;
-        expandElement(event, receiver);
+        receiver.sender = ev.target;
+        expandElement(ev, receiver);
         const receptors = this.trimInput(receiver.dataset.receive);
         for (let receptor of receptors) {
           if (
             signals.includes(receptor) && this.conn[receptor]
           ) {
-            this.conn[receptor](event, receiver);
+            this.conn[receptor](ev, receiver);
           }
         }
       }
     } else {
-      const sender = findSender(event.target);
+      const sender = findSender(ev.target);
       if (sender) {
         const signals = this.trimInput(sender.dataset.send);
         const receivers = this.querySelectorAll("[data-receive]");
@@ -629,20 +646,20 @@ class BittyJs extends HTMLElement {
                 }
                 if (receptor === signal) {
                   foundReceiver = true;
-                  expandElement(event, receiver);
+                  expandElement(ev, receiver);
                   if (doAwait) {
-                    await this.conn[signal](event, receiver);
+                    await this.conn[signal](ev, receiver);
                   } else {
-                    this.conn[signal](event, receiver);
+                    this.conn[signal](ev, receiver);
                   }
                 }
               }
             }
             if (foundReceiver === false) {
               if (doAwait) {
-                await this.conn[signal](event, null);
+                await this.conn[signal](ev, null);
               } else {
-                this.conn[signal](event, null);
+                this.conn[signal](ev, null);
               }
             }
           }
@@ -652,8 +669,8 @@ class BittyJs extends HTMLElement {
   }
 
   localTrigger(signal) {
-    const event = new LocalTriggerEvent(signal);
-    this.dispatchEvent(event);
+    const ev = new LocalTriggerEvent(signal);
+    this.dispatchEvent(ev);
   }
 
   async loadCSS(url, subs, options) {
@@ -727,8 +744,8 @@ class BittyJs extends HTMLElement {
     // TODO check async nature here. It might
     // not only be needed in the handler
     if (typeof this.conn.bittyInit === "function") {
-      const event = new BittyInitEvent();
-      this.dispatchEvent(event);
+      const ev = new BittyInitEvent();
+      this.dispatchEvent(ev);
     }
   }
 
@@ -737,8 +754,8 @@ class BittyJs extends HTMLElement {
     // TODO check async nature here. It might
     // not only be needed in the handler
     if (typeof this.conn.bittyReady === "function") {
-      const event = new BittyReadyEvent();
-      this.dispatchEvent(event);
+      const ev = new BittyReadyEvent();
+      this.dispatchEvent(ev);
     }
   }
 
@@ -746,13 +763,13 @@ class BittyJs extends HTMLElement {
   runDataInits() {
     // Run data-init on <bitty-#-#> tags
     if (this.dataset.init) {
-      const event = new DataInitEvent(this.dataset.init, this);
-      this.dispatchEvent(event);
+      const ev = new DataInitEvent(this.dataset.init, this);
+      this.dispatchEvent(ev);
     } else {
       // Run data-init on all the other tags
       this.querySelectorAll("[data-init]").forEach((el) => {
-        const event = new DataInitEvent(el.dataset.init, el);
-        this.dispatchEvent(event);
+        const ev = new DataInitEvent(el.dataset.init, el);
+        this.dispatchEvent(ev);
       });
     }
   }
@@ -771,8 +788,8 @@ class BittyJs extends HTMLElement {
   }
 
   trigger(signal) {
-    const event = new TriggerEvent(signal);
-    this.dispatchEvent(event);
+    const ev = new TriggerEvent(signal);
+    this.dispatchEvent(ev);
   }
 
   /** @internal */

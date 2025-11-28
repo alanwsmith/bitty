@@ -5,7 +5,7 @@ export default class {
     });
   }
   runTest1070Alfa(_event, el) {
-    if (el.bittyParentId === this.api.dataset.bittyid) {
+    if (el.bittyParentBittyId === this.api.dataset.bittyid) {
       el.innerHTML = "PASSED";
     }
   }

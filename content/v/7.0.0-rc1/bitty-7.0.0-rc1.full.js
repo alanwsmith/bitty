@@ -11,7 +11,7 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * @property {boolean} isSender - The element is also the sender of the event
  * x@property {String} id - The element's data-bittyid
  * @property {Element} bittyParent- The bitty parent element
- * @property {String} bittyParentId- The bitty parent element's data-bittyid
+ * @property {String} bittyParentBittyId- The bitty parent element's data-bittyid
  * x@property {String} targetId- The bitty parent element's data-bittyid
  * x@property {String} senderId- The target element's data-bittyid
  * @method {String} stringData(KEY) - Gets the data-KEY from the element as a string. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
@@ -40,8 +40,8 @@ function expandElement(ev, el) {
   el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
   el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
-  el.bittyParentId = el.bittyParent.dataset.bittyid;
-  el.id = el.dataset.bittyid;
+  el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
+  el.bittyId = el.dataset.bittyid;
 
   el.stringData = (x) => {
     return findDataKey.call(null, el, x);
@@ -55,17 +55,21 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
-  el.targetStringData = (x) => {
-    return findDataKey.call(null, ev.target, x);
-  };
+  if (ev.target) {
+    el.targetBittyId = ev.target.dataset.bittyid;
 
-  el.targetIntData = (x) => {
-    return parseInt(findDataKey.call(null, ev.target, x));
-  };
+    el.targetStringData = (x) => {
+      return findDataKey.call(null, ev.target, x);
+    };
 
-  el.targetFloatData = (x) => {
-    return parseFloat(findDataKey.call(null, ev.target, x));
-  };
+    el.targetIntData = (x) => {
+      return parseInt(findDataKey.call(null, ev.target, x));
+    };
+
+    el.targetFloatData = (x) => {
+      return parseFloat(findDataKey.call(null, ev.target, x));
+    };
+  }
 
   el.senderStringData = (x) => {
     return findDataKey.call(null, ev.sender, x);
@@ -607,7 +611,7 @@ class BittyJs extends HTMLElement {
       event.sender = event.target;
       this.prepElements(event, event.el);
       expandElement(event, event.el);
-      if (this.dataset.bittyid === event.el.bittyParentId) {
+      if (this.dataset.bittyid === event.el.bittyParentBittyId) {
         const signals = this.trimInput(event.signal);
         for (const signal of signals) {
           if (this.conn[signal]) {

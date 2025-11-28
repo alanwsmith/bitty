@@ -9,19 +9,27 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * @typedef {Object} ExpandedElement
  * @property {boolean} isTarget - The element is also the target of the event
  * @property {boolean} isSender - The element is also the sender of the event
+ * x@property {String} id - The element's data-bittyid
  * @property {Element} bittyParent- The bitty parent element
  * @property {String} bittyParentId- The bitty parent element's data-bittyid
- * @property {String} bittyId - The element's data-bittyid
+ * x@property {String} targetId- The bitty parent element's data-bittyid
+ * x@property {String} senderId- The target element's data-bittyid
  * @method {String} stringData(KEY) - Gets the data-KEY from the element as a string. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * @method {String} intData(KEY) - Gets the data-KEY from the element as an int. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * @method {String} floatData(KEY) - Gets the data-KEY from the element as a float. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * @method {boolean} matchTargetData(KEY) - Return's true if the element and the target have the same `data-KEY` attribute and if they match. Otherwise, returns false
- * @method {boolean} matchSenderData(KEY) - Return's true if the element and the sender have the same `data-KEY` attribute and if they match. Otherwise, returns false
+ * @method {Int} intData(KEY) - Gets the data-KEY from the element as an int. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
+ * @method {Float} floatData(KEY) - Gets the data-KEY from the element as a float. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
+ * x@method {String} targetStringData(KEY)
+ * x@method {String} targetIntData(KEY)
+ * x@method {String} targetFloatData(KEY)
+ * x@method {String} senderStringData(KEY)
+ * x@method {String} senderIntData(KEY)
+ * x@method {String} senderFloatData(KEY)
+ * x@method {boolean} matchTargetData(KEY) - Return's true if the element and the target have the same `data-KEY` attribute and if they match. Otherwise, returns false
+ * x@method {boolean} matchSenderData(KEY) - Return's true if the element and the sender have the same `data-KEY` attribute and if they match. Otherwise, returns false
  */
 
-function expandElement(event, el) {
-  el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
-  el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
+function expandElement(ev, el) {
+  el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
+  el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
   el.bittyParentId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
@@ -37,6 +45,21 @@ function expandElement(event, el) {
   el.floatData = (x) => {
     return parseFloat(findDataKey.call(null, el, x));
   };
+
+  el.targetStringData = (x) => {
+    return findDataKey.call(null, ev.target, x);
+  };
+
+  el.targetIntData = (x) => {
+    return parseInt(findDataKey.call(null, ev.target, x));
+  };
+
+  el.targetFloatData = (x) => {
+    return parseFloat(findDataKey.call(null, ev.target, x));
+  };
+
+  // TODO: targetStringData, targetIntData, targetFloatData
+  // TODO: senderStringData, senderIntData, senderFloatData
 
   // el.matchTarget = (x) => {
   //   const eventKey = findDataKey.call(null, event.target, x);
@@ -550,13 +573,13 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
-        // TODO: rename to stringData and move into expandEvent
+        // TODO: move into expandEvent
         event.sender.stringData = (x) => {
           return findDataKey.call(null, event.sender, x);
         };
 
         // TODO: rename to intData and move into expandEvent
-        event.sender.getInt = (x) => {
+        event.senderIntData = (x) => {
           return parseInt(findDataKey.call(null, event.sender, x));
         };
 
@@ -699,9 +722,10 @@ class BittyJs extends HTMLElement {
     //   return parseInt(findDataKey.call(null, el, x));
     // };
 
-    el.getFloat = (x) => {
-      return parseFloat(findDataKey.call(null, el, x));
-    };
+    // el.getFloat = (x) => {
+    //   return parseFloat(findDataKey.call(null, el, x));
+    // };
+
     el.matchTarget = (x) => {
       const eventKey = findDataKey.call(null, event.target, x);
       const elKey = findDataKey.call(null, el, x);

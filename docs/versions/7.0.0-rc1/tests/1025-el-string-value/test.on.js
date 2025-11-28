@@ -4,7 +4,6 @@ export default class {
   }
 
   runTest1025(ev, el) {
-    console.log(el.value);
     if (el.stringValue === "1025 string") {
       this.api.localTrigger("markPassed1025");
       el.hidden = true;

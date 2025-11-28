@@ -12,6 +12,11 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * @property {Element} bittyParent- The bitty parent element
  * @property {String} bittyParentId- The bitty parent element's data-bittyid
  * @property {String} bittyId - The element's data-bittyid
+ * @method {String} stringData(KEY) - Gets the data-KEY from the element as a string. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
+ * @method {String} intData(KEY) - Gets the data-KEY from the element as an int. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
+ * @method {String} floatData(KEY) - Gets the data-KEY from the element as a float. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
+ * @method {boolean} matchTargetData(KEY) - Return's true if the element and the target have the same `data-KEY` attribute and if they match. Otherwise, returns false
+ * @method {boolean} matchSenderData(KEY) - Return's true if the element and the sender have the same `data-KEY` attribute and if they match. Otherwise, returns false
  */
 
 function expandElement(event, el) {
@@ -21,9 +26,9 @@ function expandElement(event, el) {
   el.bittyParentId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
 
-  // el.getString = (x) => {
-  //   return findDataKey.call(null, el, x);
-  // };
+  el.stringData = (x) => {
+    return findDataKey.call(null, el, x);
+  };
   // el.getInt = (x) => {
   //   return parseInt(findDataKey.call(null, el, x));
   // };
@@ -678,9 +683,11 @@ class BittyJs extends HTMLElement {
     // el.bittyParentId = el.bittyParent.dataset.bittyid;
 
     // el.bittyId = el.dataset.bittyid;
-    el.getString = (x) => {
-      return findDataKey.call(null, el, x);
-    };
+
+    // el.getString = (x) => {
+    //   return findDataKey.call(null, el, x);
+    // };
+
     el.getInt = (x) => {
       return parseInt(findDataKey.call(null, el, x));
     };

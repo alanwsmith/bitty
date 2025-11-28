@@ -4,6 +4,7 @@ export default class {
       el.click();
     });
   }
+
   runTest1270(ev, el) {
     if (el.senderBittyId = el.dataset.bittyid) {
       el.innerHTML = "PASSED";

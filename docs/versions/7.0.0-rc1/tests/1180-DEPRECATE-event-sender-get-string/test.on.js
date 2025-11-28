@@ -6,13 +6,13 @@ export default class {
   }
 
   runTest1180Alfa(ev, el) {
-    if (ev.sender.getString("key") === "echo") {
+    if (ev.sender.stringData("key") === "echo") {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1180Bravo(ev, el) {
-    if (ev.sender.getString("key") === "foxtrot") {
+    if (ev.sender.stringData("key") === "foxtrot") {
       el.innerHTML = "PASSED";
     }
   }

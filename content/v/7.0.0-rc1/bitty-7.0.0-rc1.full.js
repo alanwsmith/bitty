@@ -550,14 +550,17 @@ class BittyJs extends HTMLElement {
     } else {
       this.findSender(event, event.target);
       if (event.sender) {
-        event.sender.getString = (x) => {
+        // TODO: rename to stringData and move into expandEvent
+        event.sender.stringData = (x) => {
           return findDataKey.call(null, event.sender, x);
         };
 
+        // TODO: rename to intData and move into expandEvent
         event.sender.getInt = (x) => {
           return parseInt(findDataKey.call(null, event.sender, x));
         };
 
+        // TODO: rename to floatData and move into expandEvent
         event.sender.getFloat = (x) => {
           return parseFloat(findDataKey.call(null, event.sender, x));
         };

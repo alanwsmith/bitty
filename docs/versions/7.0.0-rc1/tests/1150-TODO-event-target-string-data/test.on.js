@@ -6,13 +6,13 @@ export default class {
   }
 
   runTest1150Alfa(ev, el) {
-    if (ev.target.getString("key") === "alfa") {
+    if (ev.target.stringData("key") === "alfa") {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1150Bravo(ev, el) {
-    if (ev.target.getString("key") === "bravo") {
+    if (ev.target.stringData("key") === "bravo") {
       el.innerHTML = "PASSED";
     }
   }

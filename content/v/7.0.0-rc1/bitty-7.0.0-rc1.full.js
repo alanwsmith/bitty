@@ -29,17 +29,21 @@ function expandElement(event, el) {
   el.stringData = (x) => {
     return findDataKey.call(null, el, x);
   };
-  // el.getInt = (x) => {
-  //   return parseInt(findDataKey.call(null, el, x));
-  // };
+
+  el.intData = (x) => {
+    return parseInt(findDataKey.call(null, el, x));
+  };
+
   // el.getFloat = (x) => {
   //   return parseFloat(findDataKey.call(null, el, x));
   // };
+
   // el.matchTarget = (x) => {
   //   const eventKey = findDataKey.call(null, event.target, x);
   //   const elKey = findDataKey.call(null, el, x);
   //   return eventKey === elKey;
   // };
+
   // el.matchSender = (x) => {
   //   const eventKey = findDataKey.call(null, event.sender, x);
   //   const elKey = findDataKey.call(null, el, x);
@@ -688,9 +692,10 @@ class BittyJs extends HTMLElement {
     //   return findDataKey.call(null, el, x);
     // };
 
-    el.getInt = (x) => {
-      return parseInt(findDataKey.call(null, el, x));
-    };
+    // el.getInt = (x) => {
+    //   return parseInt(findDataKey.call(null, el, x));
+    // };
+
     el.getFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
     };

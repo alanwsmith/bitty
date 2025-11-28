@@ -15,7 +15,11 @@ function expandElement(event, el) {
   el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
   el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
   el.bittyParent = getBittyParent(el);
-  el.bittyParentID = el.bittyParent.dataset.bittyid;
+  el.bittyParentId = el.bittyParent.dataset.bittyid;
+  if (el.bittyParentId === undefined) {
+    console.log(el.bittyParent);
+  }
+  // console.log(el.bittyParentId);
 }
 
 /**
@@ -487,7 +491,6 @@ class BittyJs extends HTMLElement {
       event.sender = event.target;
       this.prepElements(event, event.el);
       expandElement(event, event.el);
-      // console.log(event.el);
       if (this.dataset.bittyid === event.el.bittyParentId) {
         const signals = this.trimInput(event.signal);
         for (const signal of signals) {
@@ -496,6 +499,8 @@ class BittyJs extends HTMLElement {
           }
         }
       }
+
+      //
     } else if (
       event.type === "bittyforward"
     ) {
@@ -697,10 +702,12 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   runDataInits() {
+    // Run data-init on <bitty-#-#> tags
     if (this.dataset.init) {
       const event = new DataInitEvent(this.dataset.init, this);
       this.dispatchEvent(event);
     } else {
+      // Run data-init on all the other tags
       this.querySelectorAll("[data-init]").forEach((el) => {
         const event = new DataInitEvent(el.dataset.init, el);
         this.dispatchEvent(event);

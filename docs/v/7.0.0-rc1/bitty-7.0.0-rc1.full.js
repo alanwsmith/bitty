@@ -113,17 +113,15 @@ function expandElement(ev, el) {
     el.targetFloatValue = parseFloat(ev.target.value);
   }
 
-  // if (el.sender.value) {
-  //   el.senderStringValue = el.sender.value;
-  //   el.senderIntValue = parseInt(el.sender.value, 10);
-  //   el.senderFloatValue = parseFloat(el.sender.value);
-  // }
+  if (el.sender.value) {
+    el.senderStringValue = el.sender.value;
+    el.senderIntValue = parseInt(el.sender.value, 10);
+    el.senderFloatValue = parseFloat(el.sender.value);
+  }
 
   el.matchTargetData = (x) => {
     const eventKey = findDataKey.call(null, event.target, x);
     const elKey = findDataKey.call(null, el, x);
-    // console.log(eventKey);
-    // console.log(elKey);
     if (eventKey === undefined || elKey === undefined) {
       return false;
     }

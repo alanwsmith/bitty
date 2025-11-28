@@ -28,12 +28,12 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
  * x@method {String} stringValue
  * x@method {Int} intValue
  * x@method {Float} floatValue
- * x@method {String} targetStringValue
- * x@method {Int} targetIntValue
- * x@method {Float} targetFloatValue
- * x@method {String} senderStringValue
- * x@method {Int} senderIntValue
- * x@method {Float} senderFloatValue
+ * @method {String} targetStringValue
+ * @method {Int} targetIntValue
+ * @method {Float} targetFloatValue
+ * @method {String} senderStringValue
+ * @method {Int} senderIntValue
+ * @method {Float} senderFloatValue
  */
 
 function expandElement(ev, el) {
@@ -78,6 +78,12 @@ function expandElement(ev, el) {
   el.senderFloatData = (x) => {
     return parseFloat(findDataKey.call(null, ev.sender, x));
   };
+
+  if (el.value) {
+    el.stringValue = el.value;
+    el.intValue = parseInt(el.value, 10);
+    el.floatValue = parseFloat(el.value);
+  }
 
   if (ev.target.value) {
     el.targetStringValue = ev.target.value;

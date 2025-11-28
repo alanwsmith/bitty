@@ -5,6 +5,7 @@ export default class {
 
   runTest1120(ev, el) {
     if (el.senderStringValue === "target string") {
+      ev.target.hidden = true;
       el.innerHTML = "PASSED";
     }
   }

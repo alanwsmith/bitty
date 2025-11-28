@@ -5,6 +5,7 @@ export default class {
 
   runTest1100(ev, el) {
     if (el.targetIntValue === 9000) {
+      ev.target.hidden = true;
       el.innerHTML = "PASSED";
     }
   }

@@ -5,6 +5,7 @@ export default class {
 
   runTest1140(ev, el) {
     if (el.senderFloatValue === 1.1) {
+      ev.target.hidden = true;
       el.innerHTML = "PASSED";
     }
   }

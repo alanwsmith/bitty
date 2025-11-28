@@ -43,6 +43,10 @@ function expandElement(ev, el) {
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
 
+  // TODO: TMP: copy ev.sender to el.sender until
+  // el.sender is created directly.
+  el.sender = ev.sender;
+
   el.stringData = (x) => {
     return findDataKey.call(null, el, x);
   };

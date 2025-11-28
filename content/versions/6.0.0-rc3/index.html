@@ -1,7 +1,46 @@
 [!- extends "versions/6.0.0-rc3/_wrappers/wrapper.html" -!] 
 
+
 [!- block main -!]
 
+<h1>Hello, world!</h1>
+
+<p>You can do stuff like:</p>
+
+<ul>
+[! for folder in folders !]
+[! if folder.folder_parts[1] == "6.0.0-rc3"!]
+[! if folder.folder_parts[2] == "examples" !]
+
+  [! set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
+  [! set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
+  [! set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
+  [! set url = folder.parent + "/" + folder.name + "/" !]
+
+
+  <li>
+    <p>[! include title_path !]</p>
+
+    [#
+    [! include "versions/6.0.0-rc3/examples/plus-minus/_content.html" !]
+    #]
+
+<style>
+  [!- include style_path -!]
+    </style>
+    <a href="[@url @]">asdf</a>
+    [!- include content_path -!]
+
+  </li>
+
+[! endif !]
+[! endif !]
+[! endfor !]
+</ul>
+
+
+
+[#
 <div class="download-div">
   <div class="download-link-wrapper">
     <a class="download-link" href="[@ bitty_js_path @]" download>
@@ -20,6 +59,6 @@
       [! include include_path !] 
   [! endif !]
 [! endfor !]
-
+#]
 
 [!- endblock -!]

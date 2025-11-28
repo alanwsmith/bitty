@@ -1,0 +1,44 @@
+[!- extends "versions/6.0.0-rc3/_wrappers/wrapper.html" -!]
+[!- set content_dir = "plus-minus" -!]
+[!- set connect_url = "versions/6.0.0-rc3/examples/" + content_dir + "/_content.html" -!]
+[!- block main -!]
+
+<style>
+[data-connect="[@ connect_url @]"] {
+  display: flex;
+}
+</style>
+
+[! include connect_url !]
+
+<h3>The HTML</h3>
+
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_html|safe !]
+[! include "versions/6.0.0-rc3/examples/" + content_dir + "/_content.html" !]
+
+<script src="[@ bitty_js_path|safe @]" type="module"></script>
+[!- endfilter !]
+</code></pre>
+
+<h3>The JavaScript</h3>
+
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_javascript|safe !]
+[! include "versions/6.0.0-rc3/examples/" + content_dir + "/bitty-script.js" !]
+[!- endfilter !]
+</code></pre>
+
+[#
+<h3>The CSS<h3>
+
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_css|safe !]
+[!- include "versions/6.0.0-rc3/examples/change-color/styles.css" !]
+[!- endfilter !]
+</code></pre>
+#]
+
+[! endblock !]
+
+

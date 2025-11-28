@@ -16,4 +16,10 @@ export default class {
       el.innerHTML = "PASSED";
     }
   }
+
+  runTest1210Charlie(ev, el) {
+    if (!el.matchTargetData("key")) {
+      el.innerHTML = "PASSED";
+    }
+  }
 }

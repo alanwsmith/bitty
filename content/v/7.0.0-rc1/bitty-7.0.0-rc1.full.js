@@ -100,12 +100,20 @@ function expandElement(ev, el) {
   el.matchTargetData = (x) => {
     const eventKey = findDataKey.call(null, event.target, x);
     const elKey = findDataKey.call(null, el, x);
+    // console.log(eventKey);
+    // console.log(elKey);
+    if (eventKey === undefined || elKey === undefined) {
+      return false;
+    }
     return eventKey === elKey;
   };
 
   el.matchSenderData = (x) => {
     const eventKey = findDataKey.call(null, event.sender, x);
     const elKey = findDataKey.call(null, el, x);
+    if (eventKey === undefined || elKey === undefined) {
+      return false;
+    }
     return eventKey === elKey;
   };
 
@@ -212,6 +220,9 @@ class TriggerEvent extends Event {
 }
 
 function findDataKey(el, key) {
+  if (el.dataset === undefined) {
+    return undefined;
+  }
   if (el.dataset[key] !== undefined) {
     return el.dataset[key];
   } else if (
@@ -219,7 +230,7 @@ function findDataKey(el, key) {
   ) {
     return findDataKey(el.parentNode, key);
   } else {
-    return null;
+    return undefined;
   }
 }
 

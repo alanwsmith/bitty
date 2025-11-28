@@ -26,6 +26,18 @@ function expandEvent(ev) {
     ev.intValue = parseInt(ev.target.value, 10);
     ev.floatValue = parseFloat(event.target.value);
   }
+
+  ev.stringData = (x) => {
+    return findDataKey.call(null, ev.target, x);
+  };
+
+  ev.intData = (x) => {
+    return parseInt(findDataKey.call(null, ev.target, x));
+  };
+
+  ev.floatData = (x) => {
+    return parseFloat(findDataKey.call(null, ev.target, x));
+  };
 }
 
 /**

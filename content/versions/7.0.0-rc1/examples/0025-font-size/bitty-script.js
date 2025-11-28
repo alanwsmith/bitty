@@ -6,8 +6,7 @@ export default class {
   }
   changeFontSize(ev, _el) {
     window.requestAnimationFrame(() => {
-      const value = `${ev.target.value}rem`;
-      console.log(value);
+      const value = `${ev.stringValue}rem`;
       this.api.setProp(`--example-font-size`, value);
     });
   }

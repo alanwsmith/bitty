@@ -79,6 +79,24 @@ function findDataKey(el, key) {
 }
 
 /**
+ * An Expanded Event
+ * @typedef {Object} ExpandedEvent
+ * @property {Object} sendstr- T
+ */
+
+function expandEvent(event) {
+}
+
+/**
+ * An Expanded Element
+ * @property {boolean} isTarget - The element is also the target of the event
+ * @property {boolean} isSender - The element is also the sender of the event
+ */
+
+function expandElement(event, el) {
+}
+
+/**
  * @attribute {string} data-connect
  * @attribute {string} data-init
  * @attribute {string} data-listeners
@@ -600,6 +618,7 @@ class BittyJs extends HTMLElement {
 
   /** @internal */
   prepElements(event, el) {
+    /** @prop {boolean} */
     el.isTarget = event.target.dataset.bittyid === el.dataset.bittyid;
     el.isSender = event.sender.dataset.bittyid === el.dataset.bittyid;
     el.bittyParent = this.getBittyParent(el);

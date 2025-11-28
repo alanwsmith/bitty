@@ -97,6 +97,18 @@ function expandElement(ev, el) {
     el.senderFloatValue = parseFloat(ev.sender.value);
   }
 
+  el.matchTargetData = (x) => {
+    const eventKey = findDataKey.call(null, event.target, x);
+    const elKey = findDataKey.call(null, el, x);
+    return eventKey === elKey;
+  };
+
+  el.matchSenderData = (x) => {
+    const eventKey = findDataKey.call(null, event.sender, x);
+    const elKey = findDataKey.call(null, el, x);
+    return eventKey === elKey;
+  };
+
   // TODO: targetStringData, targetIntData, targetFloatData
   // TODO: senderStringData, senderIntData, senderFloatData
 
@@ -767,16 +779,16 @@ class BittyJs extends HTMLElement {
     //   return parseFloat(findDataKey.call(null, el, x));
     // };
 
-    el.matchTarget = (x) => {
-      const eventKey = findDataKey.call(null, event.target, x);
-      const elKey = findDataKey.call(null, el, x);
-      return eventKey === elKey;
-    };
-    el.matchSender = (x) => {
-      const eventKey = findDataKey.call(null, event.sender, x);
-      const elKey = findDataKey.call(null, el, x);
-      return eventKey === elKey;
-    };
+    // el.matchTarget = (x) => {
+    //   const eventKey = findDataKey.call(null, event.target, x);
+    //   const elKey = findDataKey.call(null, el, x);
+    //   return eventKey === elKey;
+    // };
+    // el.matchSender = (x) => {
+    //   const eventKey = findDataKey.call(null, event.sender, x);
+    //   const elKey = findDataKey.call(null, el, x);
+    //   return eventKey === elKey;
+    // };
   }
 
   /** @internal */

@@ -1,0 +1,55 @@
+[!- extends "versions/6.0.0-rc3/_wrappers/wrapper.html" -!] 
+
+[!- block main -!]
+
+<h1>Test Suite</h1>
+
+  [! for folder in folders !] [! if folder.parent == version_dir + "/tests" !]
+    <div>
+      <div class="test-output-wrapper">
+
+        <div class="test-output">
+          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
+        </div>
+
+        <div class="test-details">
+      <h5 class="test-title">
+        [! include version_dir + "/tests/" + folder.name + "/title.txt" !]
+      </h5>
+          <details class="test-code">
+            <summary>Test Code<br>ID: [@ folder.name @]</summary>
+            <pre class="code-block">
+        [! filter highlight_html|safe !]
+          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
+        [! endfilter !]
+            </pre>
+            <pre class="code-block">
+            [! filter highlight_javascript|safe !]
+              [! include version_dir + "/tests/" + folder.name + "/test.on.js" !]
+            [! endfilter !]
+            </pre>
+          </details>
+        </div>
+      </div>
+    </div>
+  [! endif !] [! endfor !]
+
+  <hr />
+
+  <[@ bitty_tag @]
+    data-connect="/[@ version_dir @]/modules/test-results.js"
+    class="default-flow">
+  <div>Currently tested file<br /> [@ bitty_js_path @]</div>
+    <div data-receive="showResults">
+      <div>Gather results...</div>
+      <div>&nbsp;</div>
+      <noscript>
+        JavaScript must be enabled and working to calculate test results 
+      </noscript>
+    </div>
+  </[@ bitty_tag @]>
+
+  <p>TODO: <a href="/[@ version_dir @]/test-errors/">rewire tests with intentional errors</a></p>
+
+[!- endblock -!]
+

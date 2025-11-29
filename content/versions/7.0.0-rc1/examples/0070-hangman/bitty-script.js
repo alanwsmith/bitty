@@ -1,11 +1,13 @@
 const words = ["toolkit", "website", "creator", "builder", "maker"];
 
 const templates = {
-  gameover:
-    `<div>Game Over - <button data-send="hangmanStartGame">Restart</button></div>`,
+  loser:
+    `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
   input:
     `<label>Guess:<input data-send="hangmanGuess" type="text" size="3" /></label>`,
   start: `<button data-send="hangmanStartGame">Start Game</button>`,
+  winner:
+    `<div>You Won! <button data-send="hangmanStartGame">Play Again</button></div>`,
 };
 
 function sleep(ms) {
@@ -78,17 +80,12 @@ export default class {
   hangmanInterface(_ev, el) {
     const word = words[this.#wordIndex];
     if (countMisses(word, this.#guesses) === 4) {
-      el.replaceChildren(this.api.makeHTML(templates.gameover));
-    }
-
-    if (this.#guesses.size === 0) {
+      el.replaceChildren(this.api.makeHTML(templates.loser));
+    } else if (hasWon(word, this.#guesses)) {
+      el.replaceChildren(this.api.makeHTML(templates.winner));
+    } else if (this.#guesses.size === 0) {
       el.replaceChildren(this.api.makeHTML(templates.input));
     }
-    //   if (this.#playing === "playing") {
-    //     el.replaceChildren(this.api.makeHTML(inputTemplate));
-    //   } else if (this.#playing === "over") {
-    //     el.replaceChildren(this.api.makeHTML(gameOverTemplate));
-    //   }
   }
 
   // hangmanRestart(_ev, el) {

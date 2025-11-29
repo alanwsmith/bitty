@@ -648,7 +648,6 @@ class BittyJs extends HTMLElement {
                   receiver.sender = sender;
                   expandElement(ev, receiver);
                   if (receiver.bittyId === receiver.senderBittyId) {
-                    console.log(`HERE0 - ${receiver.bittyId}`);
                     if (doAwait) {
                       await this.conn[signal](ev, receiver);
                     } else {

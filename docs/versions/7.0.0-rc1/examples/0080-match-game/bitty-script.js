@@ -53,9 +53,8 @@ export default class {
   }
 
   matchGameMakePick(_ev, el) {
-    console.log(el);
+    el.dataset.state = "try";
     //  if (this.#currentPicks.length === 0 && el.isSender) {
-    // el.dataset.state = "try";
     // }
   }
 

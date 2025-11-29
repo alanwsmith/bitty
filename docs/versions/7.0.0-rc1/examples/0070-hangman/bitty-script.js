@@ -12,7 +12,6 @@ const templates = {
     `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
   input:
     `<label>Guess:<input data-send="hangmanGuess" type="text" size="3" /></label>`,
-  start: `<button data-send="hangmanStartGame">Start Game</button>`,
   winner:
     `<div>You Won! <button data-send="hangmanStartGame">Play Again</button></div>`,
 };
@@ -35,6 +34,10 @@ export default class {
   #wordIndex = -1;
   #guesses = null;
   #maxGuesses = 6;
+
+  bittyReady() {
+    this.api.trigger("hangmanStartGame");
+  }
 
   hangmanStartInterface(_ev, el) {
     el.replaceChildren(this.api.makeHTML(templates.start));

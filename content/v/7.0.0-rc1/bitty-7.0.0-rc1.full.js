@@ -473,15 +473,6 @@ class BittyJs extends HTMLElement {
   }
 
   /** @internal */
-  findSender(ev, checkElement) {
-    if (checkElement.dataset && checkElement.dataset.send) {
-      ev.sender = checkElement;
-    } else if (checkElement.parentNode) {
-      this.findSender(ev, checkElement.parentNode);
-    }
-  }
-
-  /** @internal */
   async handleEvent(ev) {
     expandEvent(ev);
     if (ev.type === "bittybittyinit") {

@@ -108,6 +108,8 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 
+  el.senderBittyId = el.sender.dataset.bittyid;
+
   el.senderStringData = (x) => {
     return findDataKey.call(null, el.sender, x);
   };
@@ -652,7 +654,10 @@ class BittyJs extends HTMLElement {
               }
               if (this.conn[signal]) {
                 for (let receiver of receivers) {
-                  if (receiver.bittyId === receiver.senderBittyID) {
+                  receiver.sender = sender;
+                  expandElement(ev, receiver);
+                  if (receiver.bittyId === receiver.senderBittyId) {
+                    console.log(`HERE0 - ${receiver.bittyId}`);
                     if (doAwait) {
                       await this.conn[signal](ev, receiver);
                     } else {

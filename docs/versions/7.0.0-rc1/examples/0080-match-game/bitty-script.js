@@ -53,11 +53,12 @@ export default class {
   }
 
   matchGameMakePick(_ev, el) {
-    if (this.#currentPicks.length === 0 && el.isSender) {
-      el.dataset.state = "try";
-    }
+    console.log(el);
+    //  if (this.#currentPicks.length === 0 && el.isSender) {
+    // el.dataset.state = "try";
+    // }
   }
 
-  matchGameUpdateTile(_ev, el) {
-  }
+  // matchGameUpdateTile(_ev, el) {
+  // }
 }

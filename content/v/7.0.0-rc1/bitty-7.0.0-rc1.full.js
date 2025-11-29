@@ -76,8 +76,11 @@ function expandEvent(ev) {
  */
 
 function expandElement(ev, el) {
-  el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
-  el.isSender = el.sender.dataset.bittyid === el.dataset.bittyid;
+  if (ev !== null) {
+    el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
+    el.isSender = el.sender.dataset.bittyid === el.dataset.bittyid;
+  }
+
   el.bittyParent = getBittyParent(el);
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
@@ -94,7 +97,9 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
-  el.targetBittyId = ev.target.dataset.bittyid;
+  if (ev !== null) {
+    el.targetBittyId = ev.target.dataset.bittyid;
+  }
 
   el.targetStringData = (x) => {
     return findDataKey.call(null, ev.target, x);
@@ -108,7 +113,9 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 
-  el.senderBittyId = el.sender.dataset.bittyid;
+  if (ev !== null) {
+    el.senderBittyId = el.sender.dataset.bittyid;
+  }
 
   el.senderStringData = (x) => {
     return findDataKey.call(null, el.sender, x);
@@ -128,16 +135,20 @@ function expandElement(ev, el) {
     el.floatValue = parseFloat(el.value);
   }
 
-  if (ev.target.value) {
-    el.targetStringValue = ev.target.value;
-    el.targetIntValue = parseInt(ev.target.value, 10);
-    el.targetFloatValue = parseFloat(ev.target.value);
+  if (ev !== null) {
+    if (ev.target.value) {
+      el.targetStringValue = ev.target.value;
+      el.targetIntValue = parseInt(ev.target.value, 10);
+      el.targetFloatValue = parseFloat(ev.target.value);
+    }
   }
 
-  if (el.sender.value) {
-    el.senderStringValue = el.sender.value;
-    el.senderIntValue = parseInt(el.sender.value, 10);
-    el.senderFloatValue = parseFloat(el.sender.value);
+  if (ev !== null) {
+    if (el.sender.value) {
+      el.senderStringValue = el.sender.value;
+      el.senderIntValue = parseInt(el.sender.value, 10);
+      el.senderFloatValue = parseFloat(el.sender.value);
+    }
   }
 
   el.matchTargetData = (x) => {
@@ -189,27 +200,13 @@ class BittyError extends Error {
 }
 
 // /** @internal */
-// class BittyInitEvent extends Event {
-//   constructor() {
-//     super("bittybittyinit", { bubbles: true });
+// class DataInitEvent extends Event {
+//   constructor(signal, el) {
+//     super("bittydatainit", { bubbles: true });
+//     this.signal = signal;
+//     this.el = el;
 //   }
 // }
-
-/** @internal */
-class BittyReadyEvent extends Event {
-  constructor() {
-    super("bittybittyready", { bubbles: true });
-  }
-}
-
-/** @internal */
-class DataInitEvent extends Event {
-  constructor(signal, el) {
-    super("bittydatainit", { bubbles: true });
-    this.signal = signal;
-    this.el = el;
-  }
-}
 
 /** @internal */
 class ForwardEvent extends Event {
@@ -280,7 +277,7 @@ class BittyJs extends HTMLElement {
       this.setIds(this);
       this.addEventListeners();
       await this.runBittyInit();
-      this.runDataInits();
+      await this.runDataInits();
       await this.runBittyReady();
     }
   }
@@ -288,9 +285,7 @@ class BittyJs extends HTMLElement {
   /** @internal */
   addEventListeners() {
     const listeners = [
-      //"bittybittyinit",
-      "bittybittyready",
-      "bittydatainit",
+      // "bittydatainit",
       "bittyforward",
       "bittylocaltrigger",
       "bittytrigger",
@@ -475,30 +470,6 @@ class BittyJs extends HTMLElement {
   /** @internal */
   async handleEvent(ev) {
     expandEvent(ev);
-
-    // if (ev.type === "bittybittyinit") {
-    //   if (this.dataset.bittyid === ev.target.dataset.bittyid) {
-    //     if (typeof this.conn.bittyInit === "function") {
-    //       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-    //         console.log("HERE3");
-    //         await this.conn.bittyInit();
-    //       } else {
-    //         this.conn.bittyInit();
-    //       }
-    //     }
-    //   }
-    // } else if (ev.type === "bittybittyready") {
-    //   if (this.dataset.bittyid === ev.target.dataset.bittyid) {
-    //     if (typeof this.conn.bittyReady === "function") {
-    //       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-    //         await this.conn.bittyReady();
-    //       } else {
-    //         this.conn.bittyReady();
-    //       }
-    //     }
-    //   }
-    // }
-
     if (
       ev.type === "bittylocaltrigger"
     ) {
@@ -599,20 +570,23 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-    } else if (
-      ev.type === "bittydatainit"
-    ) {
-      // TODO: Handle async
-      ev.el.sender = ev.target;
-      expandElement(ev, ev.el);
-      if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
-        const signals = this.trimInput(ev.signal);
-        for (const signal of signals) {
-          if (this.conn[signal]) {
-            this.conn[signal](ev, ev.el);
-          }
-        }
-      }
+
+      // } else if (
+      //   ev.type === "bittydatainit"
+      // ) {
+      //   // TODO: Handle async
+      //   ev.el.sender = ev.target;
+      //   expandElement(ev, ev.el);
+      //   if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
+      //     const signals = this.trimInput(ev.signal);
+      //     for (const signal of signals) {
+      //       if (this.conn[signal]) {
+      //         this.conn[signal](ev, ev.el);
+      //       }
+      //     }
+      //   }
+
+      //
     } else if (
       ev.type === "bittyforward"
     ) {
@@ -787,9 +761,7 @@ class BittyJs extends HTMLElement {
   async runBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
-        console.log("HERE3");
         await this.conn.bittyInit();
-        console.log("HERE4");
       } else {
         this.conn.bittyInit();
       }
@@ -805,30 +777,72 @@ class BittyJs extends HTMLElement {
         this.conn.bittyReady();
       }
     }
-
-    // // TODO check async nature here. It might
-    // // not only be needed in the handler
-    // if (typeof this.conn.bittyReady === "function") {
-    //   const ev = new BittyReadyEvent();
-    //   this.dispatchEvent(ev);
-    // }
-
-    //
   }
 
   /** @internal */
-  runDataInits() {
-    // Run data-init on <bitty-#-#> tags
+  async runDataInits() {
     if (this.dataset.init) {
-      const ev = new DataInitEvent(this.dataset.init, this);
-      this.dispatchEvent(ev);
-    } else {
-      // Run data-init on all the other tags
-      this.querySelectorAll("[data-init]").forEach((el) => {
-        const ev = new DataInitEvent(el.dataset.init, el);
-        this.dispatchEvent(ev);
-      });
+      const signals = this.trimInput(this.dataset.init);
+      for (let signal of signals) {
+        if (typeof this.conn[signal] === "function") {
+          if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
+            await this.conn[signal](null, this);
+          } else {
+            this.conn[signal](null, this);
+          }
+        }
+      }
     }
+
+    this.querySelectorAll("[data-init]").forEach((el) => {
+      if (el.dataset.init) {
+        expandElement(null, el);
+        const signals = this.trimInput(el.dataset.init);
+        for (let signal of signals) {
+          if (typeof this.conn[signal] === "function") {
+            if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
+              // await this.conn[signal](null, el);
+            } else {
+              console.log(signal);
+              this.conn[signal](null, el);
+            }
+          }
+        }
+      }
+    });
+
+    //   ev.el.sender = ev.target;
+    //   expandElement(ev, ev.el);
+    //   if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
+    //     const signals = this.trimInput(ev.signal);
+    //     for (const signal of signals) {
+    //       if (this.conn[signal]) {
+    //         this.conn[signal](ev, ev.el);
+    //       }
+    //     }
+    //   }
+
+    // if (typeof this.conn.bittyReady === "function") {
+    //   if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+    //     await this.conn.bittyReady();
+    //   } else {
+    //     this.conn.bittyReady();
+    //   }
+    // }
+
+    // // Run data-init on <bitty-#-#> tags
+    // if (this.dataset.init) {
+    //   const ev = new DataInitEvent(this.dataset.init, this);
+    //   this.dispatchEvent(ev);
+    // } else {
+    //   // Run data-init on all the other tags
+    //   this.querySelectorAll("[data-init]").forEach((el) => {
+    //     const ev = new DataInitEvent(el.dataset.init, el);
+    //     this.dispatchEvent(ev);
+    //   });
+    // }
+
+    //
   }
 
   setProp(key, value) {

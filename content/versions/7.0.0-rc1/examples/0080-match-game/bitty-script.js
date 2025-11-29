@@ -6,6 +6,8 @@ const templates = {
   data-use="matchGameMakePick"
   data-receive="matchGameUpdateTile"
 >PAIR_NUM</button>`,
+  winner:
+    `<div>You Win! <button data-send="matchGameGrid">Play Again</button></div>`,
 };
 
 function shuffleArray(array) {
@@ -29,6 +31,7 @@ export default class {
 
   matchGameGrid(ev, el) {
     this.#turns = 0;
+    this.#matchCount = 0;
     const nums = [];
     [...Array(this.#tileCount / 2)].forEach((i, indx) => {
       nums.push(indx);
@@ -42,6 +45,7 @@ export default class {
       ];
       el.appendChild(this.api.makeHTML(templates.tile, subs));
     });
+    this.api.trigger("matchGameStatus");
   }
 
   matchGameMakePick(_ev, el) {
@@ -54,7 +58,7 @@ export default class {
       el.dataset.state = "hide";
       this.#tries.pop();
     }
-    this.api.localTrigger(`
+    this.api.trigger(`
       matchGameUpdateTile
       matchGameClearTries
       matchGameStatus
@@ -95,9 +99,9 @@ export default class {
       el.innerHTML = "Ready";
     } else {
       if (this.#matchCount === this.#tileCount) {
-        el.innerHTML = `You Win!`;
+        el.replaceChildren(this.api.makeHTML(templates.winner));
       } else {
-        el.innerHTML = `Turns: ${this.#turns} - ${this.#matchCount}`;
+        el.innerHTML = `Turns: ${this.#turns}`;
       }
     }
   }

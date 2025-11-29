@@ -30,7 +30,7 @@ export default class {
   }
 
   sortColumn(ev, el) {
-    const rowToSortOn = ev.target.getInt("index");
+    const rowToSortOn = ev.intData("index");
     let rows = [];
     el.querySelectorAll("tr").forEach((tr) => {
       const cells = [];

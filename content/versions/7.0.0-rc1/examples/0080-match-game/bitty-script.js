@@ -1,7 +1,7 @@
 const templates = {
   startButton: `<button data-send="matchGameGrid">Start Game</button>`,
   tile:
-    `<button data-state="hide" data-set="SET" data-send="matchGameMakePick" data-receive="matchGameMakePick">SET</button>`,
+    `<button data-state="hide" data-set="SET" data-use="matchGameMakePick">SET</button>`,
 };
 
 function shuffleArray(array) {
@@ -21,19 +21,20 @@ export default class {
   #currentPicks = null;
 
   bittyInit() {
-    this.api.trigger("matchGameStartButton");
   }
 
   bittyReady() {
     // tmp auto-start
-    this.api.querySelector("button").click();
+    // this.api.querySelector("button").click();
+    //this.api.trigger("matchGameStartButton");
   }
 
-  matchGameStartButton(_ev, el) {
+  matchGameStartButton(ev, el) {
     el.replaceChildren(this.api.makeHTML(templates.startButton));
   }
 
-  matchGameGrid(_ev, el) {
+  matchGameGrid(ev, el) {
+    el.replaceChildren();
     const nums = [];
     [...Array(18)].forEach((i, indx) => {
       nums.push(indx);

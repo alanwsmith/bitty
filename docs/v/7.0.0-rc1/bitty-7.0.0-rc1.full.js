@@ -7,6 +7,8 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 function findSender(evTarget) {
   if (evTarget.dataset && evTarget.dataset.send) {
     return evTarget;
+  } else if (evTarget.dataset && evTarget.dataset.use) {
+    return evTarget;
   } else if (evTarget.parentNode) {
     return findSender(evTarget.parentNode);
   }
@@ -636,42 +638,73 @@ class BittyJs extends HTMLElement {
     } else {
       const sender = findSender(ev.target);
       if (sender) {
-        const signals = this.trimInput(sender.dataset.send);
-        const receivers = this.querySelectorAll("[data-receive]");
-        for (let signal of signals) {
-          let doAwait = false;
-          const iSigParts = signal.split(":");
-          if (iSigParts.length === 2 && iSigParts[0] === "await") {
-            doAwait = true;
-            signal = iSigParts[1];
-          }
-          if (this.conn[signal]) {
-            let foundReceiver = false;
-            for (let receiver of receivers) {
-              receiver.sender = sender;
-              const receptors = this.trimInput(receiver.dataset.receive);
-              for (const receptor of receptors) {
-                const rSignalParts = receptor.split(":");
-                if (rSignalParts.length === 2 && rSignalParts[0] === "await") {
-                  receptor = rSignalParts[1];
-                  doAwait == true;
-                }
-                if (receptor === signal) {
-                  foundReceiver = true;
-                  expandElement(ev, receiver);
-                  if (doAwait) {
-                    await this.conn[signal](ev, receiver);
-                  } else {
-                    this.conn[signal](ev, receiver);
+        // Process data-use element if there is one
+        const receivers = this.querySelectorAll("[data-use]");
+        if (sender.dataset.use) {
+          const signals = this.trimInput(sender.dataset.use);
+          if (receivers.length > 0) {
+            for (let signal of signals) {
+              let doAwait = false;
+              const iSigParts = signal.split(":");
+              if (iSigParts.length === 2 && iSigParts[0] === "await") {
+                doAwait = true;
+                signal = iSigParts[1];
+              }
+              if (this.conn[signal]) {
+                for (let receiver of receivers) {
+                  if (receiver.bittyId === receiver.senderBittyID) {
+                    if (doAwait) {
+                      await this.conn[signal](ev, receiver);
+                    } else {
+                      this.conn[signal](ev, receiver);
+                    }
                   }
                 }
               }
             }
-            if (foundReceiver === false) {
-              if (doAwait) {
-                await this.conn[signal](ev, null);
-              } else {
-                this.conn[signal](ev, null);
+          }
+        }
+        if (sender.dataset.send) {
+          // Process data-receive elements
+          const signals = this.trimInput(sender.dataset.send);
+          const receivers = this.querySelectorAll("[data-receive]");
+          for (let signal of signals) {
+            let doAwait = false;
+            const iSigParts = signal.split(":");
+            if (iSigParts.length === 2 && iSigParts[0] === "await") {
+              doAwait = true;
+              signal = iSigParts[1];
+            }
+            if (this.conn[signal]) {
+              let foundReceiver = false;
+              for (let receiver of receivers) {
+                receiver.sender = sender;
+                const receptors = this.trimInput(receiver.dataset.receive);
+                for (const receptor of receptors) {
+                  const rSignalParts = receptor.split(":");
+                  if (
+                    rSignalParts.length === 2 && rSignalParts[0] === "await"
+                  ) {
+                    receptor = rSignalParts[1];
+                    doAwait == true;
+                  }
+                  if (receptor === signal) {
+                    foundReceiver = true;
+                    expandElement(ev, receiver);
+                    if (doAwait) {
+                      await this.conn[signal](ev, receiver);
+                    } else {
+                      this.conn[signal](ev, receiver);
+                    }
+                  }
+                }
+              }
+              if (foundReceiver === false) {
+                if (doAwait) {
+                  await this.conn[signal](ev, null);
+                } else {
+                  this.conn[signal](ev, null);
+                }
               }
             }
           }

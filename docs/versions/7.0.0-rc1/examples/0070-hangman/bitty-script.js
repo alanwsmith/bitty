@@ -1,94 +1,131 @@
-const startTemplate = `
-<button data-send="hangmanStartGame">Start Game</button> 
-`;
-const inputTemplate = `
-<label>Guess:
-<input data-send="hangmanLetter" type="text" size=3" />
-</label>`;
+const words = ["toolkit", "website", "creator", "builder", "maker"];
 
-const gameOverTemplate = `
-<div>Game Over - <button data-send="hangmanRestart">Restart</button></div>
-`;
+const templates = {
+  gameover:
+    `<div>Game Over - <button data-send="hangmanStartGame">Restart</button></div>`,
+  input:
+    `<label>Guess:<input data-send="hangmanGuess" type="text" size="3" /></label>`,
+  start: `<button data-send="hangmanStartGame">Start Game</button>`,
+};
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export default class {
-  #letters = "football".split("");
-  #matches = new Set();
-  #guesses = new Set();
-  #playing = "starting";
+function countMisses(word, guesses) {
+  const letters = new Set(word.split(""));
+  return guesses.difference(letters).size;
+}
 
-  bittyInit() {
-    //this.api.trigger("hangmanInterface");
-  }
+function hasWon(word, guesses) {
+  const letters = new Set(word.split(""));
+  return letters.isSubsetOf(guesses);
+}
+
+export default class {
+  #wordIndex = -1;
+  #guesses = null;
 
   bittyReady() {
-    //this.api.trigger("hangmanGallows hangmanDisplay");
+    this.api.querySelector("button").click();
   }
 
-  hangmanStartButton(_ev, el) {
-    el.replaceChildren(this.api.makeHTML(startTemplate));
+  hangmanStartInterface(_ev, el) {
+    el.replaceChildren(this.api.makeHTML(templates.start));
   }
 
   hangmanStartGame(_ev, el) {
-    this.#playing = "playing";
+    this.#wordIndex += 1;
+    if (this.#wordIndex >= words.length) {
+      this.#wordIndex = 0;
+    }
+    this.#guesses = new Set();
+    this.api.trigger("hangmanUpdate");
+  }
+
+  hangmanUpdate(_ev, _el) {
     this.api.trigger("hangmanGallows hangmanDisplay hangmanInterface");
   }
 
-  hangmanInterface(_ev, el) {
-    if (this.#playing === "playing") {
-      el.replaceChildren(this.api.makeHTML(inputTemplate));
-    } else if (this.#playing === "over") {
-      el.replaceChildren(this.api.makeHTML(gameOverTemplate));
-    }
-  }
-
-  hangmanRestart(_ev, el) {
-    this.#playing = "playing";
-    this.#guesses = new Set();
-    this.api.trigger(`
-      hangmanInterface
-      hangmanGallows
-      hangmanDisplay`);
-  }
-
   hangmanGallows(_ev, el) {
-    let misses = 0;
-    this.#guesses.forEach((guess) => {
-      if (!this.#letters.includes(guess)) {
-        misses += 1;
-      } else {
-        this.#matches.add(guess);
-      }
-    });
+    const misses = countMisses(
+      words[this.#wordIndex],
+      this.#guesses,
+    );
     el.innerHTML = misses;
-    if (misses === 5) {
-      this.#playing = "over";
-      this.api.trigger("hangmanInterface");
-    }
   }
 
-  hangmanDisplay(_ev, el) {
-    const output = this.#letters.map((letter) => {
-      if (this.#guesses.has(letter)) {
-        return letter;
-      } else {
-        return "_";
-      }
-    });
-    el.innerHTML = output.join(" ");
-  }
-
-  async hangmanLetter(ev, _el) {
+  async hangmanGuess(ev, _el) {
     if (ev.stringValue !== "") {
       ev.target.readOnly = true;
       this.#guesses.add(ev.stringValue);
-      this.api.trigger("hangmanDisplay hangmanGallows");
+      this.api.trigger("hangmanUpdate");
       await sleep(100);
       ev.target.value = "";
       ev.target.readOnly = false;
     }
   }
+
+  // hangmanGuess(ev, _el) {
+  //   this.#guesses.add(ev.stringValue);
+  //   this.api.trigger("hangmanGallows hangmanDisplay");
+  // }
+
+  hangmanDisplay(_ev, el) {
+    el.innerHTML = "asdf";
+  }
+
+  hangmanInterface(_ev, el) {
+    const word = words[this.#wordIndex];
+    if (countMisses(word, this.#guesses) === 4) {
+      el.replaceChildren(this.api.makeHTML(templates.gameover));
+    }
+
+    if (this.#guesses.size === 0) {
+      el.replaceChildren(this.api.makeHTML(templates.input));
+    }
+    //   if (this.#playing === "playing") {
+    //     el.replaceChildren(this.api.makeHTML(inputTemplate));
+    //   } else if (this.#playing === "over") {
+    //     el.replaceChildren(this.api.makeHTML(gameOverTemplate));
+    //   }
+  }
+
+  // hangmanRestart(_ev, el) {
+  //   this.#playing = "playing";
+  //   this.#guesses = new Set();
+  //   this.api.trigger(`
+  //     hangmanInterface
+  //     hangmanGallows
+  //     hangmanDisplay`);
+  // }
+
+  // hangmanGallows(_ev, el) {
+  //   let misses = 0;
+  //   this.#guesses.forEach((guess) => {
+  //     if (!this.#letters.includes(guess)) {
+  //       misses += 1;
+  //     } else {
+  //       this.#matches.add(guess);
+  //     }
+  //   });
+  //   el.innerHTML = misses;
+  //   if (misses === 5) {
+  //     this.#playing = "over";
+  //     this.api.trigger("hangmanInterface");
+  //   }
+  // }
+
+  // hangmanDisplay(_ev, el) {
+  //   const output = this.#letters.map((letter) => {
+  //     if (this.#guesses.has(letter)) {
+  //       return letter;
+  //     } else {
+  //       return "_";
+  //     }
+  //   });
+  //   el.innerHTML = output.join(" ");
+  // }
+
+  //
 }

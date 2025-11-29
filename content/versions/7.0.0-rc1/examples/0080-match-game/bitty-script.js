@@ -5,10 +5,14 @@ const templates = {
   data-pair="PAIR_NUM" 
   data-use="matchGameMakePick"
   data-receive="matchGameUpdateTile"
->PAIR_NUM</button>`,
+>?</button>`,
   winner:
     `<div>You Win! <button data-send="matchGameGrid">Play Again</button></div>`,
 };
+
+const heads = [];
+
+const faces = [];
 
 function shuffleArray(array) {
   let currentIndex = array.length;
@@ -29,6 +33,17 @@ export default class {
   #matchCount = 0;
   #tileCount = 20;
 
+  async bittyInit() {
+    for (let i = 0; i < 10; i += 1) {
+      const url = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
+      const response = await this.api.getSVG(url);
+      if (response.value) {
+        console.log("HERE7");
+        heads.push(response.value);
+      }
+    }
+  }
+
   matchGameGrid(ev, el) {
     this.#turns = 0;
     this.#matchCount = 0;
@@ -43,7 +58,9 @@ export default class {
       const subs = [
         ["PAIR_NUM", nums.pop()],
       ];
-      el.appendChild(this.api.makeHTML(templates.tile, subs));
+      el.replaceChildren(heads[0]);
+      console.log("HERE6");
+      // el.appendChild(this.api.makeHTML(templates.tile, subs));
     });
     this.api.trigger("matchGameStatus");
   }
@@ -54,9 +71,6 @@ export default class {
     ) {
       el.dataset.state = "try";
       this.#tries.push(el.intData("pair"));
-    } else if (el.stringData("state") === "try") {
-      el.dataset.state = "hide";
-      this.#tries.pop();
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -84,6 +98,13 @@ export default class {
       if (el.stringData("state") === "miss") {
         el.dataset.state = "hide";
       }
+    }
+    if (
+      el.stringData("state") === "hide"
+    ) {
+      el.innerHTML = "?";
+    } else {
+      el.innerHTML = el.intData("pair");
     }
   }
 

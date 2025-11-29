@@ -1,7 +1,11 @@
 const templates = {
-  startButton: `<button data-send="matchGameGrid">Start Game</button>`,
-  tile:
-    `<button data-state="hide" data-set="SET" data-use="matchGameMakePick">SET</button>`,
+  tile: `
+<button 
+  data-state="hide" 
+  data-pair="PAIR_NUM" 
+  data-use="matchGameMakePick"
+  data-receive="matchGameUpdateTile"
+>PAIR_NUM</button>`,
 };
 
 function shuffleArray(array) {
@@ -18,46 +22,83 @@ function shuffleArray(array) {
 }
 
 export default class {
-  #currentPicks = null;
-
-  bittyInit() {
-  }
-
-  bittyReady() {
-    // tmp auto-start
-    // this.api.querySelector("button").click();
-    //this.api.trigger("matchGameStartButton");
-  }
-
-  matchGameStartButton(ev, el) {
-    el.replaceChildren(this.api.makeHTML(templates.startButton));
-  }
+  #tries = [];
+  #turns = 0;
+  #matchCount = 0;
+  #tileCount = 20;
 
   matchGameGrid(ev, el) {
-    el.replaceChildren();
+    this.#turns = 0;
     const nums = [];
-    [...Array(18)].forEach((i, indx) => {
+    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
       nums.push(indx);
       nums.push(indx);
     });
     shuffleArray(nums);
     el.replaceChildren();
-    for (let row = 0; row < 6; row += 1) {
-      for (let col = 0; col < 6; col += 1) {
-        const subs = [
-          ["SET", nums.pop()],
-        ];
-        el.appendChild(this.api.makeHTML(templates.tile, subs));
+    [...Array(this.#tileCount)].forEach((_) => {
+      const subs = [
+        ["PAIR_NUM", nums.pop()],
+      ];
+      el.appendChild(this.api.makeHTML(templates.tile, subs));
+    });
+  }
+
+  matchGameMakePick(_ev, el) {
+    if (
+      el.stringData("state") === "hide" || el.stringData("state") === "miss"
+    ) {
+      el.dataset.state = "try";
+      this.#tries.push(el.intData("pair"));
+    } else if (el.stringData("state") === "try") {
+      el.dataset.state = "hide";
+      this.#tries.pop();
+    }
+    this.api.localTrigger(`
+      matchGameUpdateTile
+      matchGameClearTries
+      matchGameStatus
+    `);
+  }
+
+  matchGameUpdateTile(_ev, el) {
+    if (
+      this.#tries.length === 2 &&
+      this.#tries.includes(el.intData("pair"))
+    ) {
+      if (
+        this.#tries[0] === this.#tries[1]
+      ) {
+        el.dataset.state = "match";
+        this.#matchCount += 1;
+      } else {
+        if (el.stringData("state") === "try") {
+          el.dataset.state = "miss";
+        }
+      }
+    } else {
+      if (el.stringData("state") === "miss") {
+        el.dataset.state = "hide";
       }
     }
   }
 
-  matchGameMakePick(_ev, el) {
-    el.dataset.state = "try";
-    //  if (this.#currentPicks.length === 0 && el.isSender) {
-    // }
+  matchGameClearTries(_ev, _el) {
+    if (this.#tries.length === 2) {
+      this.#turns += 1;
+      this.#tries = [];
+    }
   }
 
-  // matchGameUpdateTile(_ev, el) {
-  // }
+  matchGameStatus(_ev, el) {
+    if (this.#turns === 0) {
+      el.innerHTML = "Ready";
+    } else {
+      if (this.#matchCount === this.#tileCount) {
+        el.innerHTML = `You Win!`;
+      } else {
+        el.innerHTML = `Turns: ${this.#turns} - ${this.#matchCount}`;
+      }
+    }
+  }
 }

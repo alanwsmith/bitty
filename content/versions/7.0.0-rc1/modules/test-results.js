@@ -28,7 +28,7 @@ export default class {
   #passed = 0;
   #failed = 0;
 
-  bittyInit() {
+  bittyReady() {
     this.api.trigger("showResults");
   }
 

@@ -16,17 +16,40 @@ body {
         bittyReady() {
           this.api.querySelector("[data-send]").click();
         }
+
+        runTestForward(ev, el) {
+          this.api.forward(ev, "fromForward");
+          // el.innerHTML ="PASSED";
+        }
+
+        fromForward(ev, el) {
+          console.log(el);
+        }
+      }
+      </script>
+
+      <bitty-7-0>
+          <button data-send="runTestForward">Click Me</button>
+          <div data-receive="fromForward">here</div>
+      </bitty-7-0>
+
+      <!--
+      <script>
+      window.BittyClass = class {
+        bittyReady() {
+          this.api.querySelector("[data-send]").click();
+        }
         runTest0950(ev, el) {
           el.innerHTML ="PASSED";
         }
       }
       </script>
-
-<bitty-7-0>
-    <button class="test" data-send="runTest0950">FAILED</button>
-      <div data-receive="runTest0950">
-    </div>
-</bitty-7-0>
+      <bitty-7-0>
+          <button class="test" data-send="runTest0950">FAILED</button>
+            <div data-receive="runTest0950">
+          </div>
+      </bitty-7-0>
+-->
 
 
 

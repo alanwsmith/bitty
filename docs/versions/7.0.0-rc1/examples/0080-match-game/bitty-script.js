@@ -38,7 +38,7 @@ export default class {
       const url = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
       const response = await this.api.getSVG(url);
       if (response.value) {
-        console.log("HERE7");
+        // console.log("HERE7");
         heads.push(response.value);
       }
     }
@@ -59,7 +59,7 @@ export default class {
         ["PAIR_NUM", nums.pop()],
       ];
       el.replaceChildren(heads[0]);
-      console.log("HERE6");
+      // console.log("HERE6");
       // el.appendChild(this.api.makeHTML(templates.tile, subs));
     });
     this.api.trigger("matchGameStatus");

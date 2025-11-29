@@ -199,15 +199,6 @@ class BittyError extends Error {
   }
 }
 
-// /** @internal */
-// class DataInitEvent extends Event {
-//   constructor(signal, el) {
-//     super("bittydatainit", { bubbles: true });
-//     this.signal = signal;
-//     this.el = el;
-//   }
-// }
-
 /** @internal */
 class ForwardEvent extends Event {
   constructor(ev, signal) {
@@ -285,7 +276,6 @@ class BittyJs extends HTMLElement {
   /** @internal */
   addEventListeners() {
     const listeners = [
-      // "bittydatainit",
       "bittyforward",
       "bittylocaltrigger",
       "bittytrigger",
@@ -570,23 +560,6 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-
-      // } else if (
-      //   ev.type === "bittydatainit"
-      // ) {
-      //   // TODO: Handle async
-      //   ev.el.sender = ev.target;
-      //   expandElement(ev, ev.el);
-      //   if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
-      //     const signals = this.trimInput(ev.signal);
-      //     for (const signal of signals) {
-      //       if (this.conn[signal]) {
-      //         this.conn[signal](ev, ev.el);
-      //       }
-      //     }
-      //   }
-
-      //
     } else if (
       ev.type === "bittyforward"
     ) {
@@ -794,54 +767,21 @@ class BittyJs extends HTMLElement {
       }
     }
 
-    this.querySelectorAll("[data-init]").forEach((el) => {
+    for (let el of this.querySelectorAll("[data-init]")) {
       if (el.dataset.init) {
         expandElement(null, el);
         const signals = this.trimInput(el.dataset.init);
         for (let signal of signals) {
           if (typeof this.conn[signal] === "function") {
             if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
-              // await this.conn[signal](null, el);
+              await this.conn[signal](null, el);
             } else {
               this.conn[signal](null, el);
             }
           }
         }
       }
-    });
-
-    //   ev.el.sender = ev.target;
-    //   expandElement(ev, ev.el);
-    //   if (this.dataset.bittyid === ev.el.bittyParentBittyId) {
-    //     const signals = this.trimInput(ev.signal);
-    //     for (const signal of signals) {
-    //       if (this.conn[signal]) {
-    //         this.conn[signal](ev, ev.el);
-    //       }
-    //     }
-    //   }
-
-    // if (typeof this.conn.bittyReady === "function") {
-    //   if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-    //     await this.conn.bittyReady();
-    //   } else {
-    //     this.conn.bittyReady();
-    //   }
-    // }
-
-    // // Run data-init on <bitty-#-#> tags
-    // if (this.dataset.init) {
-    //   const ev = new DataInitEvent(this.dataset.init, this);
-    //   this.dispatchEvent(ev);
-    // } else {
-    //   // Run data-init on all the other tags
-    //   this.querySelectorAll("[data-init]").forEach((el) => {
-    //     const ev = new DataInitEvent(el.dataset.init, el);
-    //     this.dispatchEvent(ev);
-    //   });
-    // }
-
-    //
+    }
   }
 
   setProp(key, value) {

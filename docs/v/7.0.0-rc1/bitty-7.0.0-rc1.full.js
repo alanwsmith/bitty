@@ -803,7 +803,6 @@ class BittyJs extends HTMLElement {
             if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
               // await this.conn[signal](null, el);
             } else {
-              console.log(signal);
               this.conn[signal](null, el);
             }
           }

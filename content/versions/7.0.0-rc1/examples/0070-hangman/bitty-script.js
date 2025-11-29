@@ -1,4 +1,11 @@
-const words = ["toolkit", "website", "creator", "builder", "maker"];
+const words = [
+  "toolkit",
+  "website",
+  "creator",
+  "builder",
+  "browser",
+  "hypertext",
+];
 
 const templates = {
   loser:
@@ -14,9 +21,9 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function countMisses(word, guesses) {
+function misses(word, guesses) {
   const letters = new Set(word.split(""));
-  return guesses.difference(letters).size;
+  return guesses.difference(letters);
 }
 
 function hasWon(word, guesses) {
@@ -27,10 +34,7 @@ function hasWon(word, guesses) {
 export default class {
   #wordIndex = -1;
   #guesses = null;
-
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
+  #maxGuesses = 6;
 
   hangmanStartInterface(_ev, el) {
     el.replaceChildren(this.api.makeHTML(templates.start));
@@ -46,15 +50,18 @@ export default class {
   }
 
   hangmanUpdate(_ev, _el) {
-    this.api.trigger("hangmanGallows hangmanDisplay hangmanInterface");
+    this.api.trigger(`
+      hangmanGallows 
+      hangmanDisplay 
+      hangmanInterface
+      hangmanMisses`);
   }
 
   hangmanGallows(_ev, el) {
-    const misses = countMisses(
+    el.innerHTML = misses(
       words[this.#wordIndex],
       this.#guesses,
-    );
-    el.innerHTML = misses;
+    ).size;
   }
 
   async hangmanGuess(ev, _el) {
@@ -68,18 +75,30 @@ export default class {
     }
   }
 
-  // hangmanGuess(ev, _el) {
-  //   this.#guesses.add(ev.stringValue);
-  //   this.api.trigger("hangmanGallows hangmanDisplay");
-  // }
+  hangmanMisses(_ev, el) {
+    const missList = [
+      ...misses(
+        words[this.#wordIndex],
+        this.#guesses,
+      ).values(),
+    ];
+    el.innerHTML = `Misses: ${missList.sort()}`;
+  }
 
   hangmanDisplay(_ev, el) {
-    el.innerHTML = "asdf";
+    const output = words[this.#wordIndex].split("").map((letter) => {
+      if (this.#guesses.has(letter)) {
+        return letter;
+      } else {
+        return "_";
+      }
+    });
+    el.innerHTML = output.join(" ");
   }
 
   hangmanInterface(_ev, el) {
     const word = words[this.#wordIndex];
-    if (countMisses(word, this.#guesses) === 4) {
+    if (misses(word, this.#guesses).size === this.#maxGuesses) {
       el.replaceChildren(this.api.makeHTML(templates.loser));
     } else if (hasWon(word, this.#guesses)) {
       el.replaceChildren(this.api.makeHTML(templates.winner));
@@ -87,42 +106,4 @@ export default class {
       el.replaceChildren(this.api.makeHTML(templates.input));
     }
   }
-
-  // hangmanRestart(_ev, el) {
-  //   this.#playing = "playing";
-  //   this.#guesses = new Set();
-  //   this.api.trigger(`
-  //     hangmanInterface
-  //     hangmanGallows
-  //     hangmanDisplay`);
-  // }
-
-  // hangmanGallows(_ev, el) {
-  //   let misses = 0;
-  //   this.#guesses.forEach((guess) => {
-  //     if (!this.#letters.includes(guess)) {
-  //       misses += 1;
-  //     } else {
-  //       this.#matches.add(guess);
-  //     }
-  //   });
-  //   el.innerHTML = misses;
-  //   if (misses === 5) {
-  //     this.#playing = "over";
-  //     this.api.trigger("hangmanInterface");
-  //   }
-  // }
-
-  // hangmanDisplay(_ev, el) {
-  //   const output = this.#letters.map((letter) => {
-  //     if (this.#guesses.has(letter)) {
-  //       return letter;
-  //     } else {
-  //       return "_";
-  //     }
-  //   });
-  //   el.innerHTML = output.join(" ");
-  // }
-
-  //
 }

@@ -75,15 +75,15 @@ function expandElement(ev, el) {
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
 
-  el.stringData = (x) => {
+  el.data = (x) => {
     return findDataKey.call(null, el, x);
   };
 
-  el.intData = (x) => {
+  el.dataInt = (x) => {
     return parseInt(findDataKey.call(null, el, x));
   };
 
-  el.floatData = (x) => {
+  el.dataFloat = (x) => {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
@@ -91,15 +91,15 @@ function expandElement(ev, el) {
     el.targetBittyId = ev.target.dataset.bittyid;
   }
 
-  el.targetStringData = (x) => {
+  el.targetData = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
-  el.targetIntData = (x) => {
+  el.targetDataInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  el.targetFloatData = (x) => {
+  el.targetDataFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 
@@ -107,37 +107,37 @@ function expandElement(ev, el) {
     el.senderBittyId = el.sender.dataset.bittyid;
   }
 
-  el.senderStringData = (x) => {
+  el.senderData = (x) => {
     return findDataKey.call(null, el.sender, x);
   };
 
-  el.senderIntData = (x) => {
+  el.senderDataInt = (x) => {
     return parseInt(findDataKey.call(null, el.sender, x));
   };
 
-  el.senderFloatData = (x) => {
+  el.senderDataFloat = (x) => {
     return parseFloat(findDataKey.call(null, el.sender, x));
   };
 
   if (el.value) {
-    el.stringValue = el.value;
-    el.intValue = parseInt(el.value, 10);
-    el.floatValue = parseFloat(el.value);
+    el.value = el.value;
+    el.valueInt = parseInt(el.value, 10);
+    el.valueFloat = parseFloat(el.value);
   }
 
   if (ev !== null) {
     if (ev.target.value) {
-      el.targetStringValue = ev.target.value;
-      el.targetIntValue = parseInt(ev.target.value, 10);
-      el.targetFloatValue = parseFloat(ev.target.value);
+      el.targetValue = ev.target.value;
+      el.targetValueInt = parseInt(ev.target.value, 10);
+      el.targetValueFloat = parseFloat(ev.target.value);
     }
   }
 
   if (ev !== null) {
     if (el.sender.value) {
-      el.senderStringValue = el.sender.value;
-      el.senderIntValue = parseInt(el.sender.value, 10);
-      el.senderFloatValue = parseFloat(el.sender.value);
+      el.senderValue = el.sender.value;
+      el.senderValueInt = parseInt(el.sender.value, 10);
+      el.senderValueFloat = parseFloat(el.sender.value);
     }
   }
 

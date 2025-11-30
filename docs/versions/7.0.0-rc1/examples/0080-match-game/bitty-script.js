@@ -36,9 +36,8 @@ export default class {
   async bittyInit() {
     for (let i = 0; i < 10; i += 1) {
       const url = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
-      const response = await this.api.getSVG(url);
+      const response = await this.api.getTXT(url);
       if (response.value) {
-        // console.log("HERE7");
         heads.push(response.value);
       }
     }
@@ -55,12 +54,22 @@ export default class {
     shuffleArray(nums);
     el.replaceChildren();
     [...Array(this.#tileCount)].forEach((_) => {
+      const num = nums.pop();
       const subs = [
-        ["PAIR_NUM", nums.pop()],
+        ["PAIR_NUM", num],
       ];
-      el.replaceChildren(heads[0]);
+      const svg = this.api.makeSVG(heads[num]);
+      el.appendChild(svg);
+
+      // el.replaceChildren(heads[0]);
       // console.log("HERE6");
       // el.appendChild(this.api.makeHTML(templates.tile, subs));
+      //el.appendChild(this.api.makeSVG(heads[num]));
+
+      // const svg = this.api.makeSVG(heads[num]);
+      // console.log(svg);
+
+      //console.log(heads[num]);
     });
     this.api.trigger("matchGameStatus");
   }

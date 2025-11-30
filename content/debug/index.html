@@ -7,6 +7,11 @@ body {
   background-color: black;
 }
 </style>
+      <script>
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+      </script>
 
     </head>
       <body>
@@ -17,19 +22,32 @@ body {
           this.api.querySelector("[data-send]").click();
         }
 
-        runTestForward(ev, el) {
-          this.api.forward(ev, "fromForward");
-          // el.innerHTML ="PASSED";
+        async runTestForward(ev, el) {
+          console.log("HERE1");
+          await sleep(1000);
+          await this.api.forward(ev, "fromForward");
+          await sleep(1000);
+          console.log("HERE5");
+          await sleep(2000);
+          console.log("HERE6");
         }
 
-        fromForward(ev, el) {
-          console.log(el);
+        async fromForward(ev, el) {
+          console.log("HERE2");
+          await sleep(1300);
+          console.log("HERE3");
+          await sleep(2500);
+          console.log("HERE4");
+        }
+
+        runTest2(ev, el) {
+          console.log("HERE7");
         }
       }
       </script>
 
       <bitty-7-0>
-          <button data-send="runTestForward">Click Me</button>
+          <button data-send="await:runTestForward runTest2">Click Me</button>
           <div data-receive="fromForward">here</div>
       </bitty-7-0>
 

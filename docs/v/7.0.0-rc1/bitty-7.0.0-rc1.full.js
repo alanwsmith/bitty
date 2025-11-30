@@ -726,6 +726,25 @@ class BittyJs extends HTMLElement {
     return el;
   }
 
+  makeSVG(template, subs = []) {
+    const tmpl = document.createElement("template");
+    tmpl.innerHTML = this.makeTXT(template, subs).trim();
+    const wrapper = tmpl.content.cloneNode(true);
+    const svg = wrapper.querySelector("svg");
+    return svg;
+
+    // tmpl.innerHTML = response.value;
+    // const wrapper = tmpl.content.cloneNode(true);
+    // const svg = wrapper.querySelector("svg");
+    // const payload = { value: svg };
+
+    // const skeleton = document.createElement("svg");
+    // skeleton.innerHTML = this.makeTXT(template, subs).trim();
+    // const el = skeleton.content.cloneNode(true);
+    // this.setIds(el);
+    // return el;
+  }
+
   makeTXT(template, subs = []) {
     return this.doSubs(template, subs);
   }

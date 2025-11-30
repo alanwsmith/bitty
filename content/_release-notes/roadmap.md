@@ -1,5 +1,17 @@
 ## Roadmap 
 
+- TODO: set up async/await so that anything
+that happens with .forward, .trigger, or
+.localTrigger inside a specific bitty
+tag uses await properly? not sure about
+this since there's no practical way to
+deal with awaiting from other elements. 
+
+  TODO: Ensure that anything using
+  `async/await` directly from `data-send`
+  `awaits` properly. 
+
+
 - TODO: Examine if there's a way to guarantee
 that each import only happens once even if
 multiple bitty instances call the same

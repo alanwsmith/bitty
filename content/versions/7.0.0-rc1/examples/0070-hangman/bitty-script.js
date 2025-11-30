@@ -68,9 +68,9 @@ export default class {
   }
 
   async hangmanGuess(ev, _el) {
-    if (ev.stringValue !== "") {
+    if (ev.target.value !== "") {
       ev.target.readOnly = true;
-      this.#guesses.add(ev.stringValue);
+      this.#guesses.add(ev.target.value);
       this.api.trigger("hangmanUpdate");
       await sleep(100);
       ev.target.value = "";

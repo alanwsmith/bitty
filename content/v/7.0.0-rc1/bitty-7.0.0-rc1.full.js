@@ -14,20 +14,20 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function expandEvent(ev) {
   if (ev.target.value !== undefined) {
-    ev.value = ev.target.value;
-    ev.valueInt = parseInt(ev.target.value, 10);
-    ev.valueFloat = parseFloat(event.target.value);
+    ev.val = ev.target.value;
+    ev.valInt = parseInt(ev.target.value, 10);
+    ev.valFloat = parseFloat(event.target.value);
   }
 
-  ev.data = (x) => {
+  ev.ds = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
-  ev.dataInt = (x) => {
+  ev.dsInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  ev.dataFloat = (x) => {
+  ev.dsFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
@@ -75,15 +75,15 @@ function expandElement(ev, el) {
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
   el.bittyId = el.dataset.bittyid;
 
-  el.data = (x) => {
+  el.ds = (x) => {
     return findDataKey.call(null, el, x);
   };
 
-  el.dataInt = (x) => {
+  el.dsInt = (x) => {
     return parseInt(findDataKey.call(null, el, x));
   };
 
-  el.dataFloat = (x) => {
+  el.dsFloat = (x) => {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
@@ -91,15 +91,15 @@ function expandElement(ev, el) {
     el.targetBittyId = ev.target.dataset.bittyid;
   }
 
-  el.targetData = (x) => {
+  el.targetDs = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
-  el.targetDataInt = (x) => {
+  el.targetDsInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  el.targetDataFloat = (x) => {
+  el.targetDsFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 
@@ -107,41 +107,41 @@ function expandElement(ev, el) {
     el.senderBittyId = el.sender.dataset.bittyid;
   }
 
-  el.senderData = (x) => {
+  el.senderDs = (x) => {
     return findDataKey.call(null, el.sender, x);
   };
 
-  el.senderDataInt = (x) => {
+  el.senderDsInt = (x) => {
     return parseInt(findDataKey.call(null, el.sender, x));
   };
 
-  el.senderDataFloat = (x) => {
+  el.senderDsFloat = (x) => {
     return parseFloat(findDataKey.call(null, el.sender, x));
   };
 
   if (el.value) {
-    el.value = el.value;
-    el.valueInt = parseInt(el.value, 10);
-    el.valueFloat = parseFloat(el.value);
+    el.val = el.value;
+    el.valInt = parseInt(el.value, 10);
+    el.valFloat = parseFloat(el.value);
   }
 
   if (ev !== null) {
     if (ev.target.value) {
-      el.targetValue = ev.target.value;
-      el.targetValueInt = parseInt(ev.target.value, 10);
-      el.targetValueFloat = parseFloat(ev.target.value);
+      el.targetVal = ev.target.value;
+      el.targetValInt = parseInt(ev.target.value, 10);
+      el.targetValFloat = parseFloat(ev.target.value);
     }
   }
 
   if (ev !== null) {
     if (el.sender.value) {
-      el.senderValue = el.sender.value;
-      el.senderValueInt = parseInt(el.sender.value, 10);
-      el.senderValueFloat = parseFloat(el.sender.value);
+      el.senderVal = el.sender.value;
+      el.senderValInt = parseInt(el.sender.value, 10);
+      el.senderValFloat = parseFloat(el.sender.value);
     }
   }
 
-  el.matchTargetData = (x) => {
+  el.matchTargetDs = (x) => {
     const evKey = findDataKey.call(null, ev.target, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {
@@ -150,7 +150,7 @@ function expandElement(ev, el) {
     return evKey === elKey;
   };
 
-  el.matchSenderData = (x) => {
+  el.matchSenderDs = (x) => {
     const evKey = findDataKey.call(null, el.sender, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {

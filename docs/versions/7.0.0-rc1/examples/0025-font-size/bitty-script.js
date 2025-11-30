@@ -4,9 +4,10 @@ export default class {
     el.value = initialValue;
     this.api.setProp(`--example-font-size`, `${initialValue}rem`);
   }
+
   changeFontSize(ev, _el) {
     window.requestAnimationFrame(() => {
-      const value = `${ev.stringValue}rem`;
+      const value = `${ev.value}rem`;
       this.api.setProp(`--example-font-size`, value);
     });
   }

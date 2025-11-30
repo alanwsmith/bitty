@@ -28,8 +28,8 @@ export default class {
   updateColor(ev, el) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.stringData("param")}`,
-        ev.floatValue,
+        `--${ev.data("param")}`,
+        ev.valueFloat,
       );
     });
   }

@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1330(ev, _el) {
-    if (ev.intData("key") === 1330) {
+    if (ev.dataInt("key") === 1330) {
       ev.target.innerHTML = "PASSED";
     }
   }

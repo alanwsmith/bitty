@@ -4,16 +4,6 @@ const version = [7, 0, 0];
 /** @internal */
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-function findSender(evTarget) {
-  if (evTarget.dataset && evTarget.dataset.send) {
-    return evTarget;
-  } else if (evTarget.dataset && evTarget.dataset.use) {
-    return evTarget;
-  } else if (evTarget.parentNode) {
-    return findSender(evTarget.parentNode);
-  }
-}
-
 /**
  * An Expanded Event
  * @typedef {Object} ExpandedEvent
@@ -24,20 +14,20 @@ function findSender(evTarget) {
 
 function expandEvent(ev) {
   if (ev.target.value !== undefined) {
-    ev.stringValue = ev.target.value;
-    ev.intValue = parseInt(ev.target.value, 10);
-    ev.floatValue = parseFloat(event.target.value);
+    ev.value = ev.target.value;
+    ev.valueInt = parseInt(ev.target.value, 10);
+    ev.valueFloat = parseFloat(event.target.value);
   }
 
-  ev.stringData = (x) => {
+  ev.data = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
-  ev.intData = (x) => {
+  ev.dataInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  ev.floatData = (x) => {
+  ev.dataFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
@@ -168,6 +158,16 @@ function expandElement(ev, el) {
     }
     return evKey === elKey;
   };
+}
+
+function findSender(evTarget) {
+  if (evTarget.dataset && evTarget.dataset.send) {
+    return evTarget;
+  } else if (evTarget.dataset && evTarget.dataset.use) {
+    return evTarget;
+  } else if (evTarget.parentNode) {
+    return findSender(evTarget.parentNode);
+  }
 }
 
 /** @internal */

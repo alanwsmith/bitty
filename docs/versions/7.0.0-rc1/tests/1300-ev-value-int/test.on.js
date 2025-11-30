@@ -3,14 +3,14 @@ export default class {
     this.api.querySelector("input").click();
   }
 
-  passTest1310(_ev, el) {
+  passTest1300(_ev, el) {
     el.innerHTML = "PASSED";
   }
 
-  runTest1310(ev, el) {
+  runTest1300(ev, el) {
     ev.target.hidden = true;
-    if (ev.floatValue === 13.10) {
-      this.api.trigger("passTest1310");
+    if (ev.valueInt === 1300) {
+      this.api.trigger("passTest1300");
     }
   }
 }

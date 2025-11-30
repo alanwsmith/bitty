@@ -9,7 +9,7 @@ export default class {
 
   runTest1300(ev, el) {
     ev.target.hidden = true;
-    if (ev.intValue === 1300) {
+    if (ev.valueInt === 1300) {
       this.api.trigger("passTest1300");
     }
   }

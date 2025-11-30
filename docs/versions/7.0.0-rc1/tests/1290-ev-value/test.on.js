@@ -8,7 +8,7 @@ export default class {
 
   runTest1290(ev, el) {
     ev.target.hidden = true;
-    if (ev.stringValue === "String For 1290") {
+    if (ev.value === "String For 1290") {
       this.api.trigger("passTest1290");
     }
   }

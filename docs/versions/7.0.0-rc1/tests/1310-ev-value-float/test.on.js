@@ -2,14 +2,15 @@ export default class {
   bittyReady() {
     this.api.querySelector("input").click();
   }
-  passTest1290(_ev, el) {
+
+  passTest1310(_ev, el) {
     el.innerHTML = "PASSED";
   }
 
-  runTest1290(ev, el) {
+  runTest1310(ev, el) {
     ev.target.hidden = true;
-    if (ev.stringValue === "String For 1290") {
-      this.api.trigger("passTest1290");
+    if (ev.valueFloat === 13.10) {
+      this.api.trigger("passTest1310");
     }
   }
 }

@@ -3,8 +3,8 @@ export default class {
     this.api.querySelector("div").click();
   }
 
-  runTest1340(ev, _el) {
-    if (ev.floatData("key") === 13.40) {
+  runTest1330(ev, _el) {
+    if (ev.dataInt("key") === 1330) {
       ev.target.innerHTML = "PASSED";
     }
   }

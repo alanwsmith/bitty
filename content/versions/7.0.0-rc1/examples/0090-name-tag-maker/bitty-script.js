@@ -1,41 +1,41 @@
 const templates = {
-  colorBlock: `<div 
-class="name-tag-color name-tag-color-COLOR"
-data-color="COLOR"
-data-send="nameTagSwitchColor"
-data-receive="nameTagSwitchColor"
-></div>`,
-  colorStyle: `.name-tag-color-COLOR {
+  colorBlock: `
+<div 
+  class="name-tag-color-block"
+  style="--color: COLOR"
+  data-color="COLOR"
+  data-send="updateNameTagColor"
+  data-receive="updateNameTagColor"></div>`,
+
+  colorStyle: `
+.name-tag-color-COLOR {
   background-color: COLOR;
 }`,
+
+  nameTag: `
+<div class="name-tag-wrapper" style="--color: COLOR">
+  <div class="name-tag-hello" style="--color: COLOR">Hello, my name is:</div>
+  <div class="name-tag-name">NAME</div>
+</div>`,
 };
 
 const colors = [
   "firebrick",
-  "gold",
+  "goldenrod",
   "rebeccapurple",
   "slateblue",
   "cadetblue",
 ];
 
 export default class {
-  #currentName = "Unknown Name";
-  #currentColor = "gold";
+  #currentName = "";
+  #currentColor = colors[1];
 
-  bittyInit() {
-    this.api.trigger("makeNameTagColorStyles");
-  }
+  // TODO: Remove this temp button clicker
+  // that's just for dev
 
-  makeNameTagColorStyles(_ev, _el) {
-    const content = colors.map((color) => {
-      const subs = [
-        ["COLOR", color],
-      ];
-      return this.api.makeTXT(templates.colorStyle, subs);
-    });
-    const sheet = new CSSStyleSheet();
-    sheet.replaceSync(content.join(""));
-    document.adoptedStyleSheets.push(sheet);
+  bittyReady() {
+    this.api.trigger("showNameTag");
   }
 
   nameTagColors(_ev, el) {
@@ -47,8 +47,6 @@ export default class {
         templates.colorBlock,
         subs,
       );
-      console.log(this.#currentColor);
-      console.log(color);
       if (color === this.#currentColor) {
         newEl.innerHTML = "x";
       }
@@ -56,21 +54,27 @@ export default class {
     });
   }
 
-  nameTagName(ev, el) {
+  updateNameTagName(ev, el) {
     this.#currentName = ev.val;
-    console.log(this.#currentName);
+    this.api.trigger("showNameTag");
   }
 
-  nameTagSubmit(_ev, el) {
-    el.innerHTML = "asdf";
+  showNameTag(_ev, el) {
+    const subs = [
+      ["COLOR", this.#currentColor],
+      ["NAME", this.#currentName],
+    ];
+    const newTag = this.api.makeHTML(templates.nameTag, subs);
+    el.replaceChildren(newTag);
   }
 
-  nameTagSwitchColor(ev, el) {
+  updateNameTagColor(ev, el) {
     if (el.isSender) {
       el.innerHTML = "x";
       this.#currentColor = el.ds("color");
     } else {
       el.innerHTML = "";
     }
+    this.api.trigger("showNameTag");
   }
 }

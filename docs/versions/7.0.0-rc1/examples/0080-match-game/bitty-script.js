@@ -32,7 +32,7 @@ export default class {
   #tries = [];
   #turns = 0;
   #matchCount = 0;
-  #tileCount = 20;
+  #tileCount = 16;
   #heads = [];
   #faces = [];
 
@@ -123,7 +123,7 @@ export default class {
     } else {
       el.replaceChildren();
       el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsaInt("index")]);
+      el.appendChild(this.#faces[el.dsInt("index")]);
     }
   }
 

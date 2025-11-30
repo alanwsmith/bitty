@@ -7,17 +7,9 @@
   [! for folder in folders !] [! if folder.parent == version_dir + "/tests" !]
     <div>
       <div class="test-output-wrapper">
-
-        <div class="test-output">
-          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
-        </div>
-
         <div class="test-details">
-      <h5 class="test-title">
-        [! include version_dir + "/tests/" + folder.name + "/title.txt" !]
-      </h5>
           <details class="test-code">
-            <summary>Test Code<br>ID: [@ folder.name @]</summary>
+            <summary>TEST: [@ folder.name @]</summary>
             <pre class="code-block">
         [! filter highlight_html|safe !]
           [! include version_dir + "/tests/" + folder.name + "/index.html" !]
@@ -29,6 +21,10 @@
             [! endfilter !]
             </pre>
           </details>
+        </div>
+
+        <div class="test-output">
+          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
         </div>
       </div>
     </div>

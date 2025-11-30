@@ -84,10 +84,10 @@ export default class {
 
   matchGameMakePick(_ev, el) {
     if (
-      el.data("state") === "hide" || el.data("state") === "miss"
+      el.ds("state") === "hide" || el.ds("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.dataInt("pair"));
+      this.#tries.push(el.dsInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -99,7 +99,7 @@ export default class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.dataInt("pair"))
+      this.#tries.includes(el.dsInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -107,23 +107,23 @@ export default class {
         el.dataset.state = "match";
         this.#matchCount += 1;
       } else {
-        if (el.data("state") === "try") {
+        if (el.ds("state") === "try") {
           el.dataset.state = "miss";
         }
       }
     } else {
-      if (el.data("state") === "miss") {
+      if (el.ds("state") === "miss") {
         el.dataset.state = "hide";
       }
     }
     if (
-      el.data("state") === "hide"
+      el.ds("state") === "hide"
     ) {
       el.innerHTML = "?";
     } else {
       el.replaceChildren();
-      el.appendChild(this.#heads[el.dataInt("index")]);
-      el.appendChild(this.#faces[el.dataInt("index")]);
+      el.appendChild(this.#heads[el.dsInt("index")]);
+      el.appendChild(this.#faces[el.dsInt("index")]);
     }
   }
 

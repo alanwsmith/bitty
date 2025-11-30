@@ -123,7 +123,7 @@ export default class {
     } else {
       el.replaceChildren();
       el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsInt("index")]);
+      el.appendChild(this.#faces[el.dsaInt("index")]);
     }
   }
 

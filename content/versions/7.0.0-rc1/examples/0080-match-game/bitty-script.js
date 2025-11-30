@@ -4,16 +4,16 @@ const templates = {
   class="tile-button"
   data-state="hide" 
   data-pair="PAIR_NUM" 
+  data-index="INDEX"
   data-use="matchGameMakePick"
   data-receive="matchGameUpdateTile"
 >?</button>`,
   winner:
-    `<div>You Win! <button data-send="matchGameGrid">Play Again</button></div>`,
+    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
 };
 
-const heads = [];
-
-const faces = [];
+const sourceHeads = [];
+const sourceFaces = [];
 
 function shuffleArray(array) {
   let currentIndex = array.length;
@@ -33,13 +33,20 @@ export default class {
   #turns = 0;
   #matchCount = 0;
   #tileCount = 20;
+  #heads = [];
+  #faces = [];
 
   async bittyInit() {
     for (let i = 0; i < 10; i += 1) {
-      const url = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
-      const response = await this.api.getTXT(url);
-      if (response.value) {
-        heads.push(response.value);
+      const headURL = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
+      const headResponse = await this.api.getTXT(headURL);
+      if (headResponse.value) {
+        sourceHeads.push(headResponse.value);
+      }
+      const faceURL = `/versions/7.0.0-rc1/svgs/faces/${i}.svg`;
+      const faceResponse = await this.api.getTXT(faceURL);
+      if (faceResponse.value) {
+        sourceFaces.push(faceResponse.value);
       }
     }
   }
@@ -47,6 +54,8 @@ export default class {
   matchGameGrid(ev, el) {
     this.#turns = 0;
     this.#matchCount = 0;
+    this.#heads = [];
+    this.#faces = [];
     const nums = [];
     [...Array(this.#tileCount / 2)].forEach((i, indx) => {
       nums.push(indx);
@@ -54,15 +63,21 @@ export default class {
     });
     shuffleArray(nums);
     el.replaceChildren();
-    [...Array(this.#tileCount)].forEach((_) => {
+    [...Array(this.#tileCount)].forEach((_, index) => {
       const num = nums.pop();
       const subs = [
+        ["INDEX", index],
         ["PAIR_NUM", num],
       ];
-
       el.appendChild(
         this.api.makeHTML(templates.tile, subs),
       );
+      const head = this.api.makeSVG(sourceHeads[num]);
+      head.classList.add("svg-head");
+      this.#heads.push(head);
+      const face = this.api.makeSVG(sourceFaces[num]);
+      face.classList.add("svg-face");
+      this.#faces.push(face);
     });
     this.api.trigger("matchGameStatus");
   }
@@ -106,7 +121,9 @@ export default class {
     ) {
       el.innerHTML = "?";
     } else {
-      el.innerHTML = el.dataInt("pair");
+      el.replaceChildren();
+      el.appendChild(this.#heads[el.dataInt("index")]);
+      el.appendChild(this.#faces[el.dataInt("index")]);
     }
   }
 
@@ -122,7 +139,11 @@ export default class {
       el.innerHTML = "Ready";
     } else {
       if (this.#matchCount === this.#tileCount) {
-        el.replaceChildren(this.api.makeHTML(templates.winner));
+        const subs = [
+          ["TURNS", this.#turns],
+        ];
+        const winner = this.api.makeHTML(templates.winner, subs);
+        el.replaceChildren(winner);
       } else {
         el.innerHTML = `Turns: ${this.#turns}`;
       }

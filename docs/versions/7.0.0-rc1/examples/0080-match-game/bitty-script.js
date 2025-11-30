@@ -61,21 +61,18 @@ export default class {
       ];
 
       el.appendChild(
-        this.api.makeHTML(templates.tile),
+        this.api.makeHTML(templates.tile, subs),
       );
-
-      //const svg = this.api.makeSVG(heads[num]);
-      //el.appendChild(svg);
     });
     this.api.trigger("matchGameStatus");
   }
 
   matchGameMakePick(_ev, el) {
     if (
-      el.stringData("state") === "hide" || el.stringData("state") === "miss"
+      el.data("state") === "hide" || el.data("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.intData("pair"));
+      this.#tries.push(el.dataInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -87,7 +84,7 @@ export default class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.intData("pair"))
+      this.#tries.includes(el.dataInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -95,21 +92,21 @@ export default class {
         el.dataset.state = "match";
         this.#matchCount += 1;
       } else {
-        if (el.stringData("state") === "try") {
+        if (el.data("state") === "try") {
           el.dataset.state = "miss";
         }
       }
     } else {
-      if (el.stringData("state") === "miss") {
+      if (el.data("state") === "miss") {
         el.dataset.state = "hide";
       }
     }
     if (
-      el.stringData("state") === "hide"
+      el.data("state") === "hide"
     ) {
       el.innerHTML = "?";
     } else {
-      el.innerHTML = el.intData("pair");
+      el.innerHTML = el.dataInt("pair");
     }
   }
 

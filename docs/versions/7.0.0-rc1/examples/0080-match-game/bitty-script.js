@@ -1,6 +1,7 @@
 const templates = {
   tile: `
 <button 
+  class="tile-button"
   data-state="hide" 
   data-pair="PAIR_NUM" 
   data-use="matchGameMakePick"
@@ -58,18 +59,13 @@ export default class {
       const subs = [
         ["PAIR_NUM", num],
       ];
-      const svg = this.api.makeSVG(heads[num]);
-      el.appendChild(svg);
 
-      // el.replaceChildren(heads[0]);
-      // console.log("HERE6");
-      // el.appendChild(this.api.makeHTML(templates.tile, subs));
-      //el.appendChild(this.api.makeSVG(heads[num]));
+      el.appendChild(
+        this.api.makeHTML(templates.tile),
+      );
 
-      // const svg = this.api.makeSVG(heads[num]);
-      // console.log(svg);
-
-      //console.log(heads[num]);
+      //const svg = this.api.makeSVG(heads[num]);
+      //el.appendChild(svg);
     });
     this.api.trigger("matchGameStatus");
   }

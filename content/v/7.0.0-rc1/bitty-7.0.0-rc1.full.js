@@ -732,17 +732,6 @@ class BittyJs extends HTMLElement {
     const wrapper = tmpl.content.cloneNode(true);
     const svg = wrapper.querySelector("svg");
     return svg;
-
-    // tmpl.innerHTML = response.value;
-    // const wrapper = tmpl.content.cloneNode(true);
-    // const svg = wrapper.querySelector("svg");
-    // const payload = { value: svg };
-
-    // const skeleton = document.createElement("svg");
-    // skeleton.innerHTML = this.makeTXT(template, subs).trim();
-    // const el = skeleton.content.cloneNode(true);
-    // this.setIds(el);
-    // return el;
   }
 
   makeTXT(template, subs = []) {

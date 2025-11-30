@@ -14,7 +14,7 @@ const sliderTemplate = `
 export default class {
   makeSliders(_, el) {
     params.forEach((param) => {
-      const value = 200;
+      const value = Math.floor(Math.random() * 250);
       this.api.setProp(`--${param}`, value);
       const subs = [
         ["PARAM", param],

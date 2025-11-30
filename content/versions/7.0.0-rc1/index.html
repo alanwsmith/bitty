@@ -9,37 +9,41 @@
   You can do stuff like:</p>
 
 <div class="hp-examples">
-[! for folder in folders !]
-[! if folder.folder_parts[1] == version_key !]
-[! if folder.folder_parts[2] == "examples" !]
+[!-for folder in folders !]
+[!-if folder.folder_parts[1] == version_key !]
+[!-if folder.folder_parts[2] == "examples" !]
 
-  [! set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
-  [! set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
-  [! set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
-  [! set url = folder.parent + "/" + folder.name + "/" !]
+  [!-set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
+  [!-set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
+  [!-set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
+  [!-set url = folder.parent + "/" + folder.name + "/" !]
+
+<style>
+[!- include style_path -!]
+</style>
 
 <div class="hp-example">
-    <p>[! include title_path !]</p>
-  <style>
-  [!- include style_path -!]
-    </style>
-    [!- include content_path -!]
-
-    <div>
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">[!-include title_path !]</div>
+    <div class="hp-example-content">
+      [!- include content_path -!]
+    </div>
+    <div class="hp-example-code-link">
       <a href="[@ url @]">view code</a>
     </div>
+  </div>
 </div>
 
-[! endif !]
-[! endif !]
-[! endfor !]
+[!-endif !]
+[!-endif !]
+[!-endfor !]
 
   </div>
 
 
 <h2>Examples to make</h2>
 
-[! filter markdown|safe !]
+[!-filter markdown|safe !]
 
 - [x] basic counter 
 
@@ -106,7 +110,7 @@ every time you submit it makes a new card)
 
 - [] make a digital fish tank
 
-[! endfilter !]
+[!-endfilter !]
 
 [#
 <div class="download-div">
@@ -121,12 +125,12 @@ every time you submit it makes a new card)
   </div>
 </div>
 
-[! for folder in folders !]
-  [! if folder.parent == version_dir + "/_sections" !]
-    [! set include_path =  folder.parent + "/" + folder.name + "/content.html" !] 
-      [! include include_path !] 
-  [! endif !]
-[! endfor !]
+[!-for folder in folders !]
+  [!-if folder.parent == version_dir + "/_sections" !]
+    [!-set include_path =  folder.parent + "/" + folder.name + "/content.html" !] 
+      [!-include include_path !] 
+  [!-endif !]
+[!-endfor !]
 #]
 
 [!- endblock -!]

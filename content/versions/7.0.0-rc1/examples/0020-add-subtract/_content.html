@@ -1,31 +1,22 @@
-[! set page_config = namespace() !]
-[! if file.folder_parts[1] !]
-[! set page_config.version = file.folder_parts[1] !]
-[! else !]
-[! set page_config.version = current_version !]
-[! endif !]
+[!- set page_config = namespace() !]
+[!- if file.folder_parts[1] !]
+[!- set page_config.version = file.folder_parts[1] !]
+[!- else !]
+[!- set page_config.version = current_version !]
+[!- endif !]
 
-[! if file.parent_folder !]
-[! set page_config.parent_folder = file.parent_folder !]
-[! else !]
-[! set page_config.parent_folder = folder.name !]
-[! endif !]
+[!- if file.parent_folder !]
+[!- set page_config.parent_folder = file.parent_folder !]
+[!- else !]
+[!- set page_config.parent_folder = folder.name !]
+[!- endif !]
 
-<[@ bitty_tag @] 
-  class="bitty-example"
-  data-connect="/versions/[@ page_config.version @]/examples/[@ page_config.parent_folder @]/bitty-script.js" 
->
 
-  <button data-send="plus">Add 1</button>
-
-<div>
-  Value: 
-  <span
-    data-init="startCounter"
-    data-receive="plus minus"></span>
-</div>
-
-  <button data-send="minus">Subtract 1</button>
-
+<[@ bitty_tag @] data-connect="AddSubtract">
+  <div>
+    Value: <span data-receive="add subtract">0</span>
+  </div>
+  <button data-send="add">Add 1</button>
+  <button data-send="subtract">Subtract 1</button>
 </[@ bitty_tag @]>
 

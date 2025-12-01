@@ -16,6 +16,7 @@
 <link rel="manifest" href="/images/favicons/site.webmanifest" />
 <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
 <link rel="stylesheet" href="/versions&#x2f;7.0.0-rc1/styles/main.css" />
+<link rel="stylesheet" href="/versions&#x2f;7.0.0-rc1/styles/custom-css-to-add.css" />
 <script>
 window.BittyClass = class {
 
@@ -115,7 +116,7 @@ window.BittyCodeBlockMaker = class {
           <bitty-7-0 data-connect="/versions&#x2f;7.0.0-rc1/modules/github-stars.js"></bitty-7-0>
         </div>
         <div class="small-font accent-faded">
-          a tool for the web
+          a little tool for dynamic web pages
         </div>
       </hgroup>
 
@@ -126,22 +127,52 @@ window.BittyCodeBlockMaker = class {
   You can do stuff like:</p>
 
 <div class="hp-examples">
-<style></style>
+<style>[data-connect=ShowDate] > button {
+  width: 7rem;
+  height: 14rem;
+}</style>
+
+<script>window.ShowDate = class {
+  getDate(_, el) {
+    el.innerHTML = new Date();
+  }
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
-    <div class="hp-example-title">Click Counter</div>
+    <div class="hp-example-title">Show The Date</div>
     <div class="hp-example-content">
-
-<bitty-7-0 
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
-<button 
-    data-send="count" 
-    data-receive="count" 
-    data-init="initButton">
+<bitty-7-0 data-connect="ShowDate">
+  <button data-use="getDate">
+    Click Here to get the Current Date and Time
   </button>
+</bitty-7-0>
+</div>
+    <div class="hp-example-code-link">
+      <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0005-show-date&#x2f;">view code</a>
+    </div>
+  </div>
+</div>
+<style>[data-connect=ClickCounter] > button {
+  width: 7rem;
+  height: 4rem;
+}</style>
+
+<script>window.ClickCounter = class {
+  #counter = 0;
+
+  count(_, el) {
+    this.#counter += 1;
+    el.innerHTML = `Clicks: ${this.#counter}`;
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">Count Clicks</div>
+    <div class="hp-example-content">
+<bitty-7-0 data-connect="ClickCounter">
+  <button data-use="count">Start Counting</button>
 </bitty-7-0>
 </div>
     <div class="hp-example-code-link">
@@ -149,29 +180,42 @@ window.BittyCodeBlockMaker = class {
     </div>
   </div>
 </div>
-<style></style>
+<style>[data-connect=AddSubtract] {
+  display: grid;
+  gap: 1rem;
+}
+
+[data-connect=AddSubtract] > button {
+  width: 7rem;
+  height: 2.4rem;
+}
+</style>
+
+<script>window.AddSubtract = class {
+  #counter = 0;
+
+  add(_, el) {
+    this.#counter += 1;
+    el.innerHTML = this.#counter;
+  }
+
+  subtract(_, el) {
+    this.#counter -= 1;
+    el.innerHTML = this.#counter;
+  }
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Add/Subtract</div>
     <div class="hp-example-content">
 
-<bitty-7-0 
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js" 
->
-
-  <button data-send="plus">Add 1</button>
-
-<div>
-  Value: 
-  <span
-    data-init="startCounter"
-    data-receive="plus minus"></span>
-</div>
-
-  <button data-send="minus">Subtract 1</button>
-
+<bitty-7-0 data-connect="AddSubtract">
+  <div>
+    Value: <span data-receive="add subtract">0</span>
+  </div>
+  <button data-send="add">Add 1</button>
+  <button data-send="subtract">Subtract 1</button>
 </bitty-7-0>
 </div>
     <div class="hp-example-code-link">
@@ -182,6 +226,21 @@ window.BittyCodeBlockMaker = class {
 <style>.example-font-size {
   font-size: var(--example-font-size);
 }</style>
+
+<script>export default class {
+  setStartingFontSize(_ev, el) {
+    const initialValue = 1.1;
+    el.value = initialValue;
+    this.api.setProp(`--example-font-size`, `${initialValue}rem`);
+  }
+
+  changeFontSize(ev, _el) {
+    window.requestAnimationFrame(() => {
+      const value = `${ev.val}rem`;
+      this.api.setProp(`--example-font-size`, value);
+    });
+  }
+}</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -209,22 +268,62 @@ window.BittyCodeBlockMaker = class {
     </div>
   </div>
 </div>
-<style>.change-color-display {
+<style>[data-connect=ChangeColor] {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.change-color-display {
   border-radius: 0.4rem;
   background-color: rgb(var(--red) var(--green) var(--blue));
   width: 100px;
   height: 100px;
 }</style>
 
+<script>const params = ["red", "green", "blue"];
+
+const sliderTemplate = `
+<label>PARAM
+<input 
+  data-send="updateColor" 
+  value="VALUE"
+  data-param="PARAM"
+  type="range" 
+  min="0"
+  max="255" />
+</label>`;
+
+window.ChangeColor = class {
+  makeSliders(_, el) {
+    params.forEach((param) => {
+      const value = Math.floor(Math.random() * 250);
+      this.api.setProp(`--${param}`, value);
+      const subs = [
+        ["PARAM", param],
+        ["VALUE", value],
+      ];
+      const slider = this.api.makeHTML(sliderTemplate, subs);
+      el.appendChild(slider);
+    });
+  }
+
+  updateColor(ev, el) {
+    window.requestAnimationFrame(() => {
+      this.api.setProp(
+        `--${ev.ds("param")}`,
+        ev.valFloat,
+      );
+    });
+  }
+};</script>
+
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Color Picker</div>
     <div class="hp-example-content">
 
-<bitty-7-0 
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
+
+<bitty-7-0 data-connect="ChangeColor">
   <div class="change-color-display"></div>
   <div data-init="makeSliders"></div>
 </bitty-7-0>
@@ -235,6 +334,39 @@ window.BittyCodeBlockMaker = class {
   </div>
 </div>
 <style></style>
+
+<script>const quotes = [
+  { text: "this quick brown fox", citation: "waerqwerwqer" },
+  { text: "jumps over the lazy dog", citation: "luklulul" },
+  { text: "more stuff here", citation: "anoter cite" },
+];
+
+function randInt() {
+  return Math.floor(Math.random() * quotes.length);
+}
+
+export default class {
+  #quoteIndex = 0;
+
+  bittyReady() {
+    this.api.trigger("exampleQuote exampleCitation");
+  }
+
+  exampleQuote(_ev, el) {
+    for (let i = 0; i < 10; i += 1) {
+      const newIndex = randInt(0, quotes.length - 1);
+      if (newIndex !== this.#quoteIndex) {
+        this.#quoteIndex = newIndex;
+        break;
+      }
+    }
+    el.innerHTML = quotes[this.#quoteIndex].text;
+  }
+
+  exampleCitation(_ev, el) {
+    el.innerHTML = quotes[this.#quoteIndex].citation;
+  }
+}</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -255,6 +387,73 @@ window.BittyCodeBlockMaker = class {
   </div>
 </div>
 <style></style>
+
+<script>const buttonTemplate = `
+  <button 
+    data-receive="selectButton"
+    data-send="sortColumn selectButton" 
+    data-index="INDEX">TEXT</button>
+`;
+
+const rowTemplate = `
+  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
+`;
+
+export default class {
+  makeButtons(_ev, el) {
+    el.querySelectorAll("th").forEach((cell, cellIndex) => {
+      const subs = [
+        ["INDEX", cellIndex],
+        ["TEXT", cell.innerHTML],
+      ];
+      const output = this.api.makeHTML(buttonTemplate, subs);
+      cell.replaceChildren(output);
+    });
+  }
+
+  selectButton(_ev, el) {
+    if (el.isTarget) {
+      el.classList.add("active-button");
+    } else {
+      el.classList.remove("active-button");
+    }
+  }
+
+  sortColumn(ev, el) {
+    const rowToSortOn = ev.dsInt("index");
+    let rows = [];
+    el.querySelectorAll("tr").forEach((tr) => {
+      const cells = [];
+      tr.querySelectorAll("td").forEach((td) => {
+        cells.push(td.innerHTML);
+      });
+      rows.push(cells);
+    });
+
+    rows.sort((a, b) => {
+      const aCheck = a[rowToSortOn].toLowerCase();
+      const bCheck = b[rowToSortOn].toLowerCase();
+      if (aCheck < bCheck) {
+        return -1;
+      }
+      if (aCheck > bCheck) {
+        return 1;
+      }
+      return 0;
+    });
+
+    el.replaceChildren();
+    rows.forEach((row) => {
+      const subs = [
+        ["COL1", row[0]],
+        ["COL2", row[1]],
+        ["COL3", row[2]],
+      ];
+      const updatedRow = this.api.makeHTML(rowTemplate, subs);
+      el.appendChild(updatedRow);
+    });
+  }
+}</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -303,6 +502,43 @@ window.BittyCodeBlockMaker = class {
 }
 </style>
 
+<script>const buttonTemplate = `
+  <button 
+    data-send="followButtonClick" 
+    data-receive="followButtonClick" 
+    data-row="ROW"
+    data-col="COL"
+  >-</button>
+`;
+
+export default class {
+  loadButtons(_ev, el) {
+    for (let row = 0; row < 5; row += 1) {
+      for (let col = 0; col < 5; col += 1) {
+        const subs = [
+          ["ROW", row],
+          ["COL", col],
+        ];
+        const button = this.api.makeHTML(
+          buttonTemplate,
+          subs,
+        );
+        el.appendChild(button);
+      }
+    }
+  }
+
+  followButtonClick(_ev, el) {
+    if (el.isTarget) {
+      el.innerHTML = "+";
+      el.classList.add("active-button");
+    } else {
+      el.innerHTML = "-";
+      el.classList.remove("active-button");
+    }
+  }
+}</script>
+
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Select a Button</div>
@@ -322,7 +558,211 @@ window.BittyCodeBlockMaker = class {
     </div>
   </div>
 </div>
+<style>[data-connect="GetWeather"] {
+  height: 12rem;
+}</style>
+
+<script>/**/
+
+const templates = {
+  selector: `<select data-send="changeStation"></select>`,
+  stationOption: `<option value="STATION">STATION - CITY, STATE</option>`,
+  report: `<div>
+<div>DESC<br />TEMPF°F (TEMPC°C)</div>
+<div><img src="IMG" /></div>
+</div>
+`,
+};
+
+function c2f(c) {
+  return (c * 9 / 5) + 32;
+}
+
+window.GetWeather = class {
+  #stations = null;
+
+  async bittyInit() {
+    const url =
+      `/versions/7.0.0-rc1/examples/7.0/stations.json`;
+    const response = await this.api.getJSON(url);
+    if (response.value) {
+      this.#stations = response.value;
+    }
+    this.api.trigger("changeStation");
+  }
+
+  async changeStation(ev, el) {
+    el.innerHTML = "...";
+    let stationId = ev.val;
+    if (stationId === undefined) {
+      stationId = Object.keys(this.#stations)[0];
+    }
+    const url =
+      `https://api.weather.gov/stations/${stationId}/observations/latest`;
+    const response = await this.api.getJSON(url);
+    if (response.value) {
+      const data = response.value.properties;
+      const tmpC = data.temperature.value;
+      const tmpF = c2f(tmpC);
+      const subs = [
+        ["TEMPC", tmpC],
+        ["TEMPF", tmpF],
+        ["DESC", data.textDescription],
+        ["IMG", data.icon],
+      ];
+      const output = this.api.makeHTML(templates.report, subs);
+      el.replaceChildren(output);
+    }
+  }
+
+  weatherStations(_, el) {
+    const selector = this.api.makeElement(templates.selector);
+    Object.keys(this.#stations).forEach((station) => {
+      const subs = [
+        ["STATION", station],
+        ["CITY", this.#stations[station].city],
+        ["STATE", this.#stations[station].state],
+      ];
+      const option = this.api.makeElement(templates.stationOption, subs);
+      selector.appendChild(option);
+    });
+    el.appendChild(selector);
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">Get Weather</div>
+    <div class="hp-example-content">
+
+<bitty-7-0 
+  data-listeners="input" 
+  data-connect="GetWeather"
+>
+  <div data-init="weatherStations"></div>
+  <div data-receive="changeStation"></div>
+</bitty-7-0>
+
+</div>
+    <div class="hp-example-code-link">
+      <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0065-get-weather&#x2f;">view code</a>
+    </div>
+  </div>
+</div>
 <style></style>
+
+<script>const words = [
+  "toolkit",
+  "website",
+  "creator",
+  "builder",
+  "browser",
+  "hypertext",
+];
+
+const templates = {
+  loser:
+    `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
+  input:
+    `<label>Guess:<input data-send="hangmanGuess" type="text" size="3" /></label>`,
+  winner:
+    `<div>You Won! <button data-send="hangmanStartGame">Play Again</button></div>`,
+};
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function misses(word, guesses) {
+  const letters = new Set(word.split(""));
+  return guesses.difference(letters);
+}
+
+function hasWon(word, guesses) {
+  const letters = new Set(word.split(""));
+  return letters.isSubsetOf(guesses);
+}
+
+export default class {
+  #wordIndex = -1;
+  #guesses = null;
+  #maxGuesses = 6;
+
+  bittyReady() {
+    this.api.trigger("hangmanStartGame");
+  }
+
+  hangmanStartInterface(_ev, el) {
+    el.replaceChildren(this.api.makeHTML(templates.start));
+  }
+
+  hangmanStartGame(_ev, el) {
+    this.#wordIndex += 1;
+    if (this.#wordIndex >= words.length) {
+      this.#wordIndex = 0;
+    }
+    this.#guesses = new Set();
+    this.api.trigger("hangmanUpdate");
+  }
+
+  hangmanUpdate(_ev, _el) {
+    this.api.trigger(`
+      hangmanGallows 
+      hangmanDisplay 
+      hangmanInterface
+      hangmanMisses`);
+  }
+
+  hangmanGallows(_ev, el) {
+    el.innerHTML = misses(
+      words[this.#wordIndex],
+      this.#guesses,
+    ).size;
+  }
+
+  async hangmanGuess(ev, _el) {
+    if (ev.target.value !== "") {
+      ev.target.readOnly = true;
+      this.#guesses.add(ev.target.value);
+      this.api.trigger("hangmanUpdate");
+      await sleep(100);
+      ev.target.value = "";
+      ev.target.readOnly = false;
+    }
+  }
+
+  hangmanMisses(_ev, el) {
+    const missList = [
+      ...misses(
+        words[this.#wordIndex],
+        this.#guesses,
+      ).values(),
+    ];
+    el.innerHTML = `Misses: ${missList.sort()}`;
+  }
+
+  hangmanDisplay(_ev, el) {
+    const output = words[this.#wordIndex].split("").map((letter) => {
+      if (this.#guesses.has(letter)) {
+        return letter;
+      } else {
+        return "_";
+      }
+    });
+    el.innerHTML = output.join(" ");
+  }
+
+  hangmanInterface(_ev, el) {
+    const word = words[this.#wordIndex];
+    if (misses(word, this.#guesses).size === this.#maxGuesses) {
+      el.replaceChildren(this.api.makeHTML(templates.loser));
+    } else if (hasWon(word, this.#guesses)) {
+      el.replaceChildren(this.api.makeHTML(templates.winner));
+    } else if (this.#guesses.size === 0) {
+      el.replaceChildren(this.api.makeHTML(templates.input));
+    }
+  }
+}</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -387,6 +827,159 @@ window.BittyCodeBlockMaker = class {
 }
 </style>
 
+<script>const templates = {
+  tile: `
+<button 
+  class="tile-button"
+  data-state="hide" 
+  data-pair="PAIR_NUM" 
+  data-index="INDEX"
+  data-use="matchGameMakePick"
+  data-receive="matchGameUpdateTile"
+>?</button>`,
+  winner:
+    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
+};
+
+const sourceHeads = [];
+const sourceFaces = [];
+
+function shuffleArray(array) {
+  let currentIndex = array.length;
+  let randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+}
+
+export default class {
+  #tries = [];
+  #turns = 0;
+  #matchCount = 0;
+  #tileCount = 16;
+  #heads = [];
+  #faces = [];
+
+  async bittyInit() {
+    for (let i = 0; i < 10; i += 1) {
+      const headURL = `/versions/7.0.0-rc1/svgs/heads/${i}.svg`;
+      const headResponse = await this.api.getTXT(headURL);
+      if (headResponse.value) {
+        sourceHeads.push(headResponse.value);
+      }
+      const faceURL = `/versions/7.0.0-rc1/svgs/faces/${i}.svg`;
+      const faceResponse = await this.api.getTXT(faceURL);
+      if (faceResponse.value) {
+        sourceFaces.push(faceResponse.value);
+      }
+    }
+  }
+
+  matchGameGrid(ev, el) {
+    this.#turns = 0;
+    this.#matchCount = 0;
+    this.#heads = [];
+    this.#faces = [];
+    const nums = [];
+    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
+      nums.push(indx);
+      nums.push(indx);
+    });
+    shuffleArray(nums);
+    el.replaceChildren();
+    [...Array(this.#tileCount)].forEach((_, index) => {
+      const num = nums.pop();
+      const subs = [
+        ["INDEX", index],
+        ["PAIR_NUM", num],
+      ];
+      el.appendChild(
+        this.api.makeHTML(templates.tile, subs),
+      );
+      const head = this.api.makeSVG(sourceHeads[num]);
+      head.classList.add("svg-head");
+      this.#heads.push(head);
+      const face = this.api.makeSVG(sourceFaces[num]);
+      face.classList.add("svg-face");
+      this.#faces.push(face);
+    });
+    this.api.trigger("matchGameStatus");
+  }
+
+  matchGameMakePick(_ev, el) {
+    if (
+      el.ds("state") === "hide" || el.ds("state") === "miss"
+    ) {
+      el.dataset.state = "try";
+      this.#tries.push(el.dsInt("pair"));
+    }
+    this.api.trigger(`
+      matchGameUpdateTile
+      matchGameClearTries
+      matchGameStatus
+    `);
+  }
+
+  matchGameUpdateTile(_ev, el) {
+    if (
+      this.#tries.length === 2 &&
+      this.#tries.includes(el.dsInt("pair"))
+    ) {
+      if (
+        this.#tries[0] === this.#tries[1]
+      ) {
+        el.dataset.state = "match";
+        this.#matchCount += 1;
+      } else {
+        if (el.ds("state") === "try") {
+          el.dataset.state = "miss";
+        }
+      }
+    } else {
+      if (el.ds("state") === "miss") {
+        el.dataset.state = "hide";
+      }
+    }
+    if (
+      el.ds("state") === "hide"
+    ) {
+      el.innerHTML = "?";
+    } else {
+      el.replaceChildren();
+      el.appendChild(this.#heads[el.dsInt("index")]);
+      el.appendChild(this.#faces[el.dsInt("index")]);
+    }
+  }
+
+  matchGameClearTries(_ev, _el) {
+    if (this.#tries.length === 2) {
+      this.#turns += 1;
+      this.#tries = [];
+    }
+  }
+
+  matchGameStatus(_ev, el) {
+    if (this.#turns === 0) {
+      el.innerHTML = "Ready";
+    } else {
+      if (this.#matchCount === this.#tileCount) {
+        const subs = [
+          ["TURNS", this.#turns],
+        ];
+        const winner = this.api.makeHTML(templates.winner, subs);
+        el.replaceChildren(winner);
+      } else {
+        el.innerHTML = `Turns: ${this.#turns}`;
+      }
+    }
+  }
+}</script>
+
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Match Game</div>
@@ -450,6 +1043,87 @@ window.BittyCodeBlockMaker = class {
   color: var(--color);
 }</style>
 
+<script>const templates = {
+  colorBlock: `
+<div 
+  class="name-tag-color-block"
+  style="--color: COLOR"
+  data-color="COLOR"
+  data-send="updateNameTagColor"
+  data-receive="updateNameTagColor"></div>`,
+
+  colorStyle: `
+.name-tag-color-COLOR {
+  background-color: COLOR;
+}`,
+
+  nameTag: `
+<div class="name-tag-wrapper" style="--color: COLOR">
+  <div class="name-tag-hello" style="--color: COLOR">Hello, my name is:</div>
+  <div class="name-tag-name">NAME</div>
+</div>`,
+};
+
+const colors = [
+  "firebrick",
+  "goldenrod",
+  "rebeccapurple",
+  "slateblue",
+  "cadetblue",
+];
+
+export default class {
+  #currentName = "";
+  #currentColor = colors[1];
+
+  // TODO: Remove this temp button clicker
+  // that's just for dev
+
+  bittyReady() {
+    this.api.trigger("showNameTag");
+  }
+
+  nameTagColors(_ev, el) {
+    colors.forEach((color) => {
+      const subs = [
+        ["COLOR", color],
+      ];
+      const newEl = this.api.makeElement(
+        templates.colorBlock,
+        subs,
+      );
+      if (color === this.#currentColor) {
+        newEl.innerHTML = "x";
+      }
+      el.appendChild(newEl);
+    });
+  }
+
+  updateNameTagName(ev, el) {
+    this.#currentName = ev.val;
+    this.api.trigger("showNameTag");
+  }
+
+  showNameTag(_ev, el) {
+    const subs = [
+      ["COLOR", this.#currentColor],
+      ["NAME", this.#currentName],
+    ];
+    const newTag = this.api.makeHTML(templates.nameTag, subs);
+    el.replaceChildren(newTag);
+  }
+
+  updateNameTagColor(ev, el) {
+    if (el.isSender) {
+      el.innerHTML = "x";
+      this.#currentColor = el.ds("color");
+    } else {
+      el.innerHTML = "";
+    }
+    this.api.trigger("showNameTag");
+  }
+}</script>
+
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Name Tag Maker</div>
@@ -475,6 +1149,97 @@ window.BittyCodeBlockMaker = class {
 </div>
     <div class="hp-example-code-link">
       <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0090-name-tag-maker&#x2f;">view code</a>
+    </div>
+  </div>
+</div>
+<style>[data-status=done] {
+  text-decoration: line-through;
+}
+</style>
+
+<script>const templates = {
+  item: `
+<div 
+  data-itemid="ITEM_ID" 
+  data-receive="updateTodoItem deleteItem" 
+  data-status="not-done"
+>
+  <label data-send="updateTodoItem removeDelete">
+    <input type="checkbox" />ITEM_TEXT
+  </label>
+</div>`,
+
+  deleteButton: `
+<button 
+  data-send="deleteItem" 
+  data-receive="removeDelete"
+>delete</button>`,
+};
+
+export default class {
+  addTodoItem(ev, el) {
+    if (ev.type === "keyup" && ev.keyCode === 13) {
+      const subs = [
+        ["ITEM_ID", self.crypto.randomUUID()],
+        ["ITEM_TEXT", el.targetVal],
+      ];
+      const newEl = this.api.makeHTML(templates.item, subs);
+      el.appendChild(newEl);
+      ev.target.value = "";
+    }
+  }
+
+  deleteItem(ev, el) {
+    if (el.matchTargetDs("itemid")) {
+      el.remove();
+    }
+  }
+
+  removeDelete(ev, el) {
+    if (el && el.matchTargetDs("itemid")) {
+      el.remove();
+    }
+  }
+
+  updateTodoItem(ev, el) {
+    if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
+      if (el.ds("status") === "not-done") {
+        el.dataset.status = "done";
+        const deleteButton = this.api.makeHTML(templates.deleteButton);
+        el.appendChild(deleteButton);
+      } else {
+        el.dataset.status = "not-done";
+      }
+    }
+  }
+}</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">TODO List</div>
+    <div class="hp-example-content">
+
+<bitty-7-0
+  class="bitty-example"
+  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
+  data-listeners="click keyup"
+>
+
+<div data-send="addTodoItem">
+  <div>
+    <label>Add Item<br />
+      <input type="text" />
+    </label>
+  </div>
+  <div data-receive="addTodoItem"></div>
+</div>
+
+
+</bitty-7-0>
+
+</div>
+    <div class="hp-example-code-link">
+      <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0100-todo-list&#x2f;">view code</a>
     </div>
   </div>
 </div>
@@ -504,6 +1269,9 @@ window.BittyCodeBlockMaker = class {
 <p>[x] follow the button you just clicked on</p>
 </li>
 <li>
+<p>[x] Make Hello My Name Is name cards</p>
+</li>
+<li>
 <p>[] flip a coin</p>
 </li>
 <li>
@@ -517,10 +1285,6 @@ window.BittyCodeBlockMaker = class {
 </li>
 <li>
 <p>[] Get weather data or movie data or whatever to pull JSONs</p>
-</li>
-<li>
-<p>[] Fill in templates for name cards. (e.g. two entire fields and
-every time you submit it makes a new card)</p>
 </li>
 <li>
 <p>[] Video controls</p>
@@ -578,6 +1342,9 @@ every time you submit it makes a new card)</p>
 </li>
 <li>
 <p>[] make a digital fish tank</p>
+</li>
+<li>
+<p>[] Whack-a-mole</p>
 </li>
 </ul>
  

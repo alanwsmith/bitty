@@ -1,0 +1,32 @@
+[! set page_config = namespace() !]
+[! if file.folder_parts[1] !]
+[! set page_config.version = file.folder_parts[1] !]
+[! else !]
+[! set page_config.version = current_version !]
+[! endif !]
+
+[! if file.parent_folder !]
+[! set page_config.parent_folder = file.parent_folder !]
+[! else !]
+[! set page_config.parent_folder = folder.name !]
+[! endif !]
+
+<[@ bitty_tag @]
+  class="bitty-example"
+  data-connect="/versions/[@ page_config.version @]/examples/[@ page_config.parent_folder @]/bitty-script.js"
+  data-listeners="click keyup"
+>
+
+<div data-send="addTodoItem">
+  <div>
+    <label>Add Item<br />
+      <input type="text" />
+    </label>
+  </div>
+  <div data-receive="addTodoItem"></div>
+</div>
+
+
+</[@ bitty_tag @]>
+
+

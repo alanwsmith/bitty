@@ -1,5 +1,38 @@
 ## Roadmap 
 
+
+- TODO: consider if `data-init` should fire
+on elements added through `this.api` .
+Current thinking is 'no' because there's
+not a good way to know where it's gonna
+be on the DOM:
+
+```
+<script>
+  window.BittyClass = class {
+    example(ev, el) {
+      const e = this.api.makeElement('<div data-init=exampleInit>ONE</div>');
+      document.getElementById('test').appendChild(e);
+    }
+
+    exampleInit(ev, el) {
+      el.innerHTML = 'TWO';
+    }
+  }
+</script>
+
+<bitty-7-0>
+  <button data-send='example' data-receive='example'>Click me</button>
+</bitty-7-0>
+
+<div id='test'>Waiting</div>
+```
+
+
+
+- TODO: Consider adding a setter/updater
+for dataset (e.g. `el.setDs("KEY", "VALUE"))
+
 - TODO: set up async/await so that anything
 that happens with .forward, .trigger, or
 .localTrigger inside a specific bitty

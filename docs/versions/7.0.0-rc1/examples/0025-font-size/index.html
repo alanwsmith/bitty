@@ -16,6 +16,7 @@
 <link rel="manifest" href="/images/favicons/site.webmanifest" />
 <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
 <link rel="stylesheet" href="/versions&#x2f;7.0.0-rc1/styles/main.css" />
+<link rel="stylesheet" href="/versions&#x2f;7.0.0-rc1/styles/custom-css-to-add.css" />
 <script>
 window.BittyClass = class {
 
@@ -115,11 +116,36 @@ window.BittyCodeBlockMaker = class {
           <bitty-7-0 data-connect="/versions&#x2f;7.0.0-rc1/modules/github-stars.js"></bitty-7-0>
         </div>
         <div class="small-font accent-faded">
-          a tool for the web
+          a little tool for dynamic web pages
         </div>
       </hgroup>
 
+<style>
+.example-font-size {
+  font-size: var(--example-font-size);
+}</style>
 
+<script>
+export default class {
+  setStartingFontSize(_ev, el) {
+    const initialValue = 1.1;
+    el.value = initialValue;
+    this.api.setProp(`--example-font-size`, `${initialValue}rem`);
+  }
+
+  changeFontSize(ev, _el) {
+    window.requestAnimationFrame(() => {
+      const value = `${ev.val}rem`;
+      this.api.setProp(`--example-font-size`, value);
+    });
+  }
+}</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">
+Change Font Size    </div>
+    <div class="hp-example-content">
 
 <bitty-7-0 
   class="bitty-example"
@@ -136,12 +162,43 @@ window.BittyCodeBlockMaker = class {
   <div class="example-font-size">Hello</div>
 </bitty-7-0>
 
+    </div>
+  </div>
+</div>
 
-<style>
-.example-font-size {
-  font-size: var(--example-font-size);
-}</style>
+<h2>HTML</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">bitty-example</span><span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/versions/7.0.0-rc1/examples/0025-font-size/bitty-script.js<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>range<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>setStartingFontSize<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>changeFontSize<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">min</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>0.7<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">max</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>2.3<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">step</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>0.01<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span> <span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">example-font-size</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Hello<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 
+<h2>JavaScript</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">setStartingFontSize</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">initialValue</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">1.1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">initialValue</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setProp</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>--example-font-size<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span></span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">initialValue</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">rem<span class="punctuation definition string template end js">`</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">changeFontSize</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">requestAnimationFrame</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">value</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span></span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">val</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">rem<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setProp</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>--example-font-size<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">value</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+
+<h2>Notes</h2>
  
 
     </main>

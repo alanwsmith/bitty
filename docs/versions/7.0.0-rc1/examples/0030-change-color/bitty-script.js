@@ -1,17 +1,17 @@
 const params = ["red", "green", "blue"];
 
 const sliderTemplate = `
-<div><label>PARAM
+<label>PARAM
 <input 
-  type="range" 
-  data-param="PARAM"
-  min="0"
-  max="255"
+  data-send="updateColor" 
   value="VALUE"
-  data-send="updateColor" />
-</label></div>`;
+  data-param="PARAM"
+  type="range" 
+  min="0"
+  max="255" />
+</label>`;
 
-export default class {
+window.ChangeColor = class {
   makeSliders(_, el) {
     params.forEach((param) => {
       const value = Math.floor(Math.random() * 250);
@@ -33,4 +33,4 @@ export default class {
       );
     });
   }
-}
+};

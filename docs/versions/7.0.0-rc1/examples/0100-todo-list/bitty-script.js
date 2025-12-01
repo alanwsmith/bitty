@@ -1,10 +1,9 @@
-const templates = {
+const todoTemplates = {
   item: `
 <div 
   data-itemid="ITEM_ID" 
   data-receive="updateTodoItem deleteItem" 
-  data-status="not-done"
->
+  data-status="not-done">
   <label data-send="updateTodoItem removeDelete">
     <input type="checkbox" />ITEM_TEXT
   </label>
@@ -17,14 +16,14 @@ const templates = {
 >delete</button>`,
 };
 
-export default class {
+window.ToDoList = class {
   addTodoItem(ev, el) {
     if (ev.type === "keyup" && ev.keyCode === 13) {
       const subs = [
         ["ITEM_ID", self.crypto.randomUUID()],
         ["ITEM_TEXT", el.targetVal],
       ];
-      const newEl = this.api.makeHTML(templates.item, subs);
+      const newEl = this.api.makeHTML(todoTemplates.item, subs);
       el.appendChild(newEl);
       ev.target.value = "";
     }
@@ -46,11 +45,11 @@ export default class {
     if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
       if (el.ds("status") === "not-done") {
         el.dataset.status = "done";
-        const deleteButton = this.api.makeHTML(templates.deleteButton);
+        const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
         el.appendChild(deleteButton);
       } else {
         el.dataset.status = "not-done";
       }
     }
   }
-}
+};

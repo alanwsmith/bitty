@@ -1,4 +1,4 @@
-export default class {
+window.FontSize = class {
   setStartingFontSize(_ev, el) {
     const initialValue = 1.1;
     el.value = initialValue;
@@ -11,4 +11,4 @@ export default class {
       this.api.setProp(`--example-font-size`, value);
     });
   }
-}
+};

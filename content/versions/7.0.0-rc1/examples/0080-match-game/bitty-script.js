@@ -1,4 +1,4 @@
-const templates = {
+const matchGameTemplates = {
   tile: `
 <button 
   class="tile-button"
@@ -28,7 +28,7 @@ function shuffleArray(array) {
   }
 }
 
-export default class {
+window.MatchGame = class {
   #tries = [];
   #turns = 0;
   #matchCount = 0;
@@ -70,7 +70,7 @@ export default class {
         ["PAIR_NUM", num],
       ];
       el.appendChild(
-        this.api.makeHTML(templates.tile, subs),
+        this.api.makeHTML(matchGameTemplates.tile, subs),
       );
       const head = this.api.makeSVG(sourceHeads[num]);
       head.classList.add("svg-head");
@@ -142,11 +142,11 @@ export default class {
         const subs = [
           ["TURNS", this.#turns],
         ];
-        const winner = this.api.makeHTML(templates.winner, subs);
+        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
         el.replaceChildren(winner);
       } else {
         el.innerHTML = `Turns: ${this.#turns}`;
       }
     }
   }
-}
+};

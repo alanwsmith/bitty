@@ -1,4 +1,4 @@
-const buttonTemplate = `
+const sortColumnsTemplate = `
   <button 
     data-receive="selectButton"
     data-send="sortColumn selectButton" 
@@ -9,14 +9,14 @@ const rowTemplate = `
   <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
 `;
 
-export default class {
+window.SortColumns = class {
   makeButtons(_ev, el) {
     el.querySelectorAll("th").forEach((cell, cellIndex) => {
       const subs = [
         ["INDEX", cellIndex],
         ["TEXT", cell.innerHTML],
       ];
-      const output = this.api.makeHTML(buttonTemplate, subs);
+      const output = this.api.makeHTML(sortColumnsTemplate, subs);
       cell.replaceChildren(output);
     });
   }
@@ -63,4 +63,4 @@ export default class {
       el.appendChild(updatedRow);
     });
   }
-}
+};

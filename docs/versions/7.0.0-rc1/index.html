@@ -227,7 +227,7 @@ window.BittyCodeBlockMaker = class {
   font-size: var(--example-font-size);
 }</style>
 
-<script>export default class {
+<script>window.FontSize = class {
   setStartingFontSize(_ev, el) {
     const initialValue = 1.1;
     el.value = initialValue;
@@ -240,7 +240,7 @@ window.BittyCodeBlockMaker = class {
       this.api.setProp(`--example-font-size`, value);
     });
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -248,8 +248,7 @@ window.BittyCodeBlockMaker = class {
     <div class="hp-example-content">
 
 <bitty-7-0 
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
+  data-connect="FontSize"
 >
   <input 
     type="range" 
@@ -345,7 +344,7 @@ function randInt() {
   return Math.floor(Math.random() * quotes.length);
 }
 
-export default class {
+window.RandomQuote = class {
   #quoteIndex = 0;
 
   bittyReady() {
@@ -366,7 +365,7 @@ export default class {
   exampleCitation(_ev, el) {
     el.innerHTML = quotes[this.#quoteIndex].citation;
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -374,8 +373,7 @@ export default class {
     <div class="hp-example-content">
 
 <bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
+  data-connect="RandomQuote"
 >
   <div data-receive="exampleQuote"></div>
   <div data-receive="exampleCitation"></div>
@@ -388,7 +386,7 @@ export default class {
 </div>
 <style></style>
 
-<script>const buttonTemplate = `
+<script>const sortColumnsTemplate = `
   <button 
     data-receive="selectButton"
     data-send="sortColumn selectButton" 
@@ -399,14 +397,14 @@ const rowTemplate = `
   <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
 `;
 
-export default class {
+window.SortColumns = class {
   makeButtons(_ev, el) {
     el.querySelectorAll("th").forEach((cell, cellIndex) => {
       const subs = [
         ["INDEX", cellIndex],
         ["TEXT", cell.innerHTML],
       ];
-      const output = this.api.makeHTML(buttonTemplate, subs);
+      const output = this.api.makeHTML(sortColumnsTemplate, subs);
       cell.replaceChildren(output);
     });
   }
@@ -453,7 +451,7 @@ export default class {
       el.appendChild(updatedRow);
     });
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -461,8 +459,7 @@ export default class {
     <div class="hp-example-content">
 
 <bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
+  data-connect="SortColumns"
 >
   <table>
     <thead>
@@ -511,7 +508,7 @@ export default class {
   >-</button>
 `;
 
-export default class {
+window.SelectButton = class {
   loadButtons(_ev, el) {
     for (let row = 0; row < 5; row += 1) {
       for (let col = 0; col < 5; col += 1) {
@@ -537,20 +534,15 @@ export default class {
       el.classList.remove("active-button");
     }
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Select a Button</div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
-
+<bitty-7-0 data-connect="SelectButton">
   <div data-init="loadButtons"></div>
-
 </bitty-7-0>
 </div>
     <div class="hp-example-code-link">
@@ -564,7 +556,7 @@ export default class {
 
 <script>/**/
 
-const templates = {
+const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
   stationOption: `<option value="STATION">STATION - CITY, STATE</option>`,
   report: `<div>
@@ -610,20 +602,20 @@ window.GetWeather = class {
         ["DESC", data.textDescription],
         ["IMG", data.icon],
       ];
-      const output = this.api.makeHTML(templates.report, subs);
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
       el.replaceChildren(output);
     }
   }
 
   weatherStations(_, el) {
-    const selector = this.api.makeElement(templates.selector);
+    const selector = this.api.makeElement(weatherTemplates.selector);
     Object.keys(this.#stations).forEach((station) => {
       const subs = [
         ["STATION", station],
         ["CITY", this.#stations[station].city],
         ["STATE", this.#stations[station].state],
       ];
-      const option = this.api.makeElement(templates.stationOption, subs);
+      const option = this.api.makeElement(weatherTemplates.stationOption, subs);
       selector.appendChild(option);
     });
     el.appendChild(selector);
@@ -660,7 +652,7 @@ window.GetWeather = class {
   "hypertext",
 ];
 
-const templates = {
+const hangmanTemplates = {
   loser:
     `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
   input:
@@ -683,7 +675,7 @@ function hasWon(word, guesses) {
   return letters.isSubsetOf(guesses);
 }
 
-export default class {
+window.Hangman = class {
   #wordIndex = -1;
   #guesses = null;
   #maxGuesses = 6;
@@ -693,7 +685,7 @@ export default class {
   }
 
   hangmanStartInterface(_ev, el) {
-    el.replaceChildren(this.api.makeHTML(templates.start));
+    el.replaceChildren(this.api.makeHTML(hangmanTemplates.start));
   }
 
   hangmanStartGame(_ev, el) {
@@ -755,32 +747,26 @@ export default class {
   hangmanInterface(_ev, el) {
     const word = words[this.#wordIndex];
     if (misses(word, this.#guesses).size === this.#maxGuesses) {
-      el.replaceChildren(this.api.makeHTML(templates.loser));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.loser));
     } else if (hasWon(word, this.#guesses)) {
-      el.replaceChildren(this.api.makeHTML(templates.winner));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.winner));
     } else if (this.#guesses.size === 0) {
-      el.replaceChildren(this.api.makeHTML(templates.input));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.input));
     }
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Hangman</div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
-
+<bitty-7-0 data-connect="Hangman">
   <div data-receive="hangmanGallows"></div>
   <pre data-receive="hangmanDisplay"></pre>
   <div data-receive="hangmanInterface"></div>
   <div data-receive="hangmanMisses"></div>
-
 </bitty-7-0>
-
 </div>
     <div class="hp-example-code-link">
       <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0070-hangman&#x2f;">view code</a>
@@ -827,7 +813,7 @@ export default class {
 }
 </style>
 
-<script>const templates = {
+<script>const matchGameTemplates = {
   tile: `
 <button 
   class="tile-button"
@@ -857,7 +843,7 @@ function shuffleArray(array) {
   }
 }
 
-export default class {
+window.MatchGame = class {
   #tries = [];
   #turns = 0;
   #matchCount = 0;
@@ -899,7 +885,7 @@ export default class {
         ["PAIR_NUM", num],
       ];
       el.appendChild(
-        this.api.makeHTML(templates.tile, subs),
+        this.api.makeHTML(matchGameTemplates.tile, subs),
       );
       const head = this.api.makeSVG(sourceHeads[num]);
       head.classList.add("svg-head");
@@ -971,25 +957,21 @@ export default class {
         const subs = [
           ["TURNS", this.#turns],
         ];
-        const winner = this.api.makeHTML(templates.winner, subs);
+        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
         el.replaceChildren(winner);
       } else {
         el.innerHTML = `Turns: ${this.#turns}`;
       }
     }
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Match Game</div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
-
+<bitty-7-0 data-connect="MatchGame">
 <div 
   class="match-game-grid" 
   data-init="matchGameGrid"
@@ -997,14 +979,17 @@ export default class {
 <div 
   data-init="matchGameStatus"
   data-receive="matchGameStatus"></div>
-
 </bitty-7-0></div>
     <div class="hp-example-code-link">
       <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0080-match-game&#x2f;">view code</a>
     </div>
   </div>
 </div>
-<style>[data-init=nameTagColors] {
+<style>[data-connect=NameTagMaker] > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+[data-init=nameTagColors] {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -1043,7 +1028,7 @@ export default class {
   color: var(--color);
 }</style>
 
-<script>const templates = {
+<script>const nameTagTemplates = {
   colorBlock: `
 <div 
   class="name-tag-color-block"
@@ -1072,12 +1057,9 @@ const colors = [
   "cadetblue",
 ];
 
-export default class {
+window.NameTagMaker = class {
   #currentName = "";
   #currentColor = colors[1];
-
-  // TODO: Remove this temp button clicker
-  // that's just for dev
 
   bittyReady() {
     this.api.trigger("showNameTag");
@@ -1089,7 +1071,7 @@ export default class {
         ["COLOR", color],
       ];
       const newEl = this.api.makeElement(
-        templates.colorBlock,
+        nameTagTemplates.colorBlock,
         subs,
       );
       if (color === this.#currentColor) {
@@ -1109,7 +1091,7 @@ export default class {
       ["COLOR", this.#currentColor],
       ["NAME", this.#currentName],
     ];
-    const newTag = this.api.makeHTML(templates.nameTag, subs);
+    const newTag = this.api.makeHTML(nameTagTemplates.nameTag, subs);
     el.replaceChildren(newTag);
   }
 
@@ -1122,29 +1104,23 @@ export default class {
     }
     this.api.trigger("showNameTag");
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Name Tag Maker</div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
->
-
+<bitty-7-0 data-connect="NameTagMaker">
 <div data-init="nameTagColors"></div>
-
-<div><label>Name
-<input type="text" size="10" data-send="updateNameTagName" />
-</label></div>
-
-<div>
-<div data-receive="showNameTag"></div>
-</div>
-
-
+  <div>
+    <label>Name
+      <input type="text" size="10" data-send="updateNameTagName" />
+    </label>
+  </div>
+  <div>
+    <div data-receive="showNameTag"></div>
+  </div>
 </bitty-7-0>
 </div>
     <div class="hp-example-code-link">
@@ -1152,18 +1128,21 @@ export default class {
     </div>
   </div>
 </div>
-<style>[data-status=done] {
+<style>[data-connect=ToDoList] {
+  min-height: 14rem;
+}
+
+[data-status=done] {
   text-decoration: line-through;
 }
 </style>
 
-<script>const templates = {
+<script>const todoTemplates = {
   item: `
 <div 
   data-itemid="ITEM_ID" 
   data-receive="updateTodoItem deleteItem" 
-  data-status="not-done"
->
+  data-status="not-done">
   <label data-send="updateTodoItem removeDelete">
     <input type="checkbox" />ITEM_TEXT
   </label>
@@ -1176,14 +1155,14 @@ export default class {
 >delete</button>`,
 };
 
-export default class {
+window.ToDoList = class {
   addTodoItem(ev, el) {
     if (ev.type === "keyup" && ev.keyCode === 13) {
       const subs = [
         ["ITEM_ID", self.crypto.randomUUID()],
         ["ITEM_TEXT", el.targetVal],
       ];
-      const newEl = this.api.makeHTML(templates.item, subs);
+      const newEl = this.api.makeHTML(todoTemplates.item, subs);
       el.appendChild(newEl);
       ev.target.value = "";
     }
@@ -1205,14 +1184,14 @@ export default class {
     if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
       if (el.ds("status") === "not-done") {
         el.dataset.status = "done";
-        const deleteButton = this.api.makeHTML(templates.deleteButton);
+        const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
         el.appendChild(deleteButton);
       } else {
         el.dataset.status = "not-done";
       }
     }
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -1220,11 +1199,8 @@ export default class {
     <div class="hp-example-content">
 
 <bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/7.0/bitty-script.js"
-  data-listeners="click keyup"
->
-
+  data-connect="ToDoList" 
+  data-listeners="click keyup">
 <div data-send="addTodoItem">
   <div>
     <label>Add Item<br />
@@ -1233,8 +1209,6 @@ export default class {
   </div>
   <div data-receive="addTodoItem"></div>
 </div>
-
-
 </bitty-7-0>
 
 </div>

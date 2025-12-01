@@ -1,4 +1,4 @@
-const templates = {
+const nameTagTemplates = {
   colorBlock: `
 <div 
   class="name-tag-color-block"
@@ -27,12 +27,9 @@ const colors = [
   "cadetblue",
 ];
 
-export default class {
+window.NameTagMaker = class {
   #currentName = "";
   #currentColor = colors[1];
-
-  // TODO: Remove this temp button clicker
-  // that's just for dev
 
   bittyReady() {
     this.api.trigger("showNameTag");
@@ -44,7 +41,7 @@ export default class {
         ["COLOR", color],
       ];
       const newEl = this.api.makeElement(
-        templates.colorBlock,
+        nameTagTemplates.colorBlock,
         subs,
       );
       if (color === this.#currentColor) {
@@ -64,7 +61,7 @@ export default class {
       ["COLOR", this.#currentColor],
       ["NAME", this.#currentName],
     ];
-    const newTag = this.api.makeHTML(templates.nameTag, subs);
+    const newTag = this.api.makeHTML(nameTagTemplates.nameTag, subs);
     el.replaceChildren(newTag);
   }
 
@@ -77,4 +74,4 @@ export default class {
     }
     this.api.trigger("showNameTag");
   }
-}
+};

@@ -121,6 +121,10 @@ window.BittyCodeBlockMaker = class {
       </hgroup>
 
 <style>
+[data-connect=NameTagMaker] > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
 [data-init=nameTagColors] {
   display: flex;
   flex-wrap: wrap;
@@ -161,7 +165,7 @@ window.BittyCodeBlockMaker = class {
 }</style>
 
 <script>
-const templates = {
+const nameTagTemplates = {
   colorBlock: `
 <div 
   class="name-tag-color-block"
@@ -190,12 +194,9 @@ const colors = [
   "cadetblue",
 ];
 
-export default class {
+window.NameTagMaker = class {
   #currentName = "";
   #currentColor = colors[1];
-
-  // TODO: Remove this temp button clicker
-  // that's just for dev
 
   bittyReady() {
     this.api.trigger("showNameTag");
@@ -207,7 +208,7 @@ export default class {
         ["COLOR", color],
       ];
       const newEl = this.api.makeElement(
-        templates.colorBlock,
+        nameTagTemplates.colorBlock,
         subs,
       );
       if (color === this.#currentColor) {
@@ -227,7 +228,7 @@ export default class {
       ["COLOR", this.#currentColor],
       ["NAME", this.#currentName],
     ];
-    const newTag = this.api.makeHTML(templates.nameTag, subs);
+    const newTag = this.api.makeHTML(nameTagTemplates.nameTag, subs);
     el.replaceChildren(newTag);
   }
 
@@ -240,7 +241,7 @@ export default class {
     }
     this.api.trigger("showNameTag");
   }
-}</script>
+};</script>
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -248,48 +249,36 @@ export default class {
 Name Tag Maker    </div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  class="bitty-example"
-  data-connect="/versions/7.0.0-rc1/examples/0090-name-tag-maker/bitty-script.js"
->
-
+<bitty-7-0 data-connect="NameTagMaker">
 <div data-init="nameTagColors"></div>
-
-<div><label>Name
-<input type="text" size="10" data-send="updateNameTagName" />
-</label></div>
-
-<div>
-<div data-receive="showNameTag"></div>
-</div>
-
-
+  <div>
+    <label>Name
+      <input type="text" size="10" data-send="updateNameTagName" />
+    </label>
+  </div>
+  <div>
+    <div data-receive="showNameTag"></div>
+  </div>
 </bitty-7-0>
     </div>
   </div>
 </div>
 
 <h2>HTML</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span>
-<span class="line-marker"></span>  <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">bitty-example</span><span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/versions/7.0.0-rc1/examples/0090-name-tag-maker/bitty-script.js<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>NameTagMaker<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>nameTagColors<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">label</span><span class="punctuation definition tag end html">&gt;</span></span>Name
-<span class="line-marker"></span><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>text<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">size</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>10<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>updateNameTagName<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html"> /&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">label</span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>showNameTag<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">label</span><span class="punctuation definition tag end html">&gt;</span></span>Name
+<span class="line-marker"></span>      <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>text<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">size</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>10<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>updateNameTagName<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">label</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>showNameTag<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 
 <h2>JavaScript</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">templates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">nameTagTemplates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="meta object-literal key js">colorBlock</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
 <span class="line-marker"></span>&lt;div 
 <span class="line-marker"></span>  class=&quot;name-tag-color-block&quot;
@@ -318,13 +307,10 @@ Name Tag Maker    </div>
 <span class="line-marker"></span>  <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>cadetblue<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
-<span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="keyword control import-export js">default</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">NameTagMaker</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  #currentName = &quot;&quot;;
 <span class="line-marker"></span>  #currentColor = colors[1];
 <span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> TODO: Remove this temp button clicker
-<span class="line-marker"></span></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> that&#39;s just for dev
-<span class="line-marker"></span></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>showNameTag<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -335,7 +321,7 @@ Name Tag Maker    </div>
 <span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>COLOR<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">color</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">newEl</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeElement</span><span class="meta group js"><span class="punctuation section group js">(</span>
-<span class="line-marker"></span>        <span class="variable other object js">templates</span><span class="punctuation accessor js">.</span><span class="meta property object js">colorBlock</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="variable other object js">nameTagTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">colorBlock</span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>        <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">color</span> <span class="keyword operator comparison js">===</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">currentColor</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
@@ -355,7 +341,7 @@ Name Tag Maker    </div>
 <span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>COLOR<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">currentColor</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>NAME<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">currentName</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>    <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newTag</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">templates</span><span class="punctuation accessor js">.</span><span class="meta property object js">nameTag</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">newTag</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">nameTagTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">nameTag</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">newTag</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
@@ -368,7 +354,7 @@ Name Tag Maker    </div>
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>showNameTag<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></span></code></pre>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
 
 <h2>Notes</h2>
  

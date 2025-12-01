@@ -8,7 +8,7 @@ function randInt() {
   return Math.floor(Math.random() * quotes.length);
 }
 
-export default class {
+window.RandomQuote = class {
   #quoteIndex = 0;
 
   bittyReady() {
@@ -29,4 +29,4 @@ export default class {
   exampleCitation(_ev, el) {
     el.innerHTML = quotes[this.#quoteIndex].citation;
   }
-}
+};

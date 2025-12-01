@@ -7,7 +7,7 @@ const words = [
   "hypertext",
 ];
 
-const templates = {
+const hangmanTemplates = {
   loser:
     `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
   input:
@@ -30,7 +30,7 @@ function hasWon(word, guesses) {
   return letters.isSubsetOf(guesses);
 }
 
-export default class {
+window.Hangman = class {
   #wordIndex = -1;
   #guesses = null;
   #maxGuesses = 6;
@@ -40,7 +40,7 @@ export default class {
   }
 
   hangmanStartInterface(_ev, el) {
-    el.replaceChildren(this.api.makeHTML(templates.start));
+    el.replaceChildren(this.api.makeHTML(hangmanTemplates.start));
   }
 
   hangmanStartGame(_ev, el) {
@@ -102,11 +102,11 @@ export default class {
   hangmanInterface(_ev, el) {
     const word = words[this.#wordIndex];
     if (misses(word, this.#guesses).size === this.#maxGuesses) {
-      el.replaceChildren(this.api.makeHTML(templates.loser));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.loser));
     } else if (hasWon(word, this.#guesses)) {
-      el.replaceChildren(this.api.makeHTML(templates.winner));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.winner));
     } else if (this.#guesses.size === 0) {
-      el.replaceChildren(this.api.makeHTML(templates.input));
+      el.replaceChildren(this.api.makeHTML(hangmanTemplates.input));
     }
   }
-}
+};

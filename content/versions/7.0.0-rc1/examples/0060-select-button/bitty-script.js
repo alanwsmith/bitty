@@ -7,7 +7,7 @@ const buttonTemplate = `
   >-</button>
 `;
 
-export default class {
+window.SelectButton = class {
   loadButtons(_ev, el) {
     for (let row = 0; row < 5; row += 1) {
       for (let col = 0; col < 5; col += 1) {
@@ -33,4 +33,4 @@ export default class {
       el.classList.remove("active-button");
     }
   }
-}
+};

@@ -13,7 +13,7 @@
 [!- endif !]
 */
 
-const templates = {
+const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
   stationOption: `<option value="STATION">STATION - CITY, STATE</option>`,
   report: `<div>
@@ -59,20 +59,20 @@ window.GetWeather = class {
         ["DESC", data.textDescription],
         ["IMG", data.icon],
       ];
-      const output = this.api.makeHTML(templates.report, subs);
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
       el.replaceChildren(output);
     }
   }
 
   weatherStations(_, el) {
-    const selector = this.api.makeElement(templates.selector);
+    const selector = this.api.makeElement(weatherTemplates.selector);
     Object.keys(this.#stations).forEach((station) => {
       const subs = [
         ["STATION", station],
         ["CITY", this.#stations[station].city],
         ["STATE", this.#stations[station].state],
       ];
-      const option = this.api.makeElement(templates.stationOption, subs);
+      const option = this.api.makeElement(weatherTemplates.stationOption, subs);
       selector.appendChild(option);
     });
     el.appendChild(selector);

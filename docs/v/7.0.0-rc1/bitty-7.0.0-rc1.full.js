@@ -703,7 +703,7 @@ class BittyJs extends HTMLElement {
             }
           } else {
             console.error(
-              "The value of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported",
+              `Tried to use 'data-connect="${this.dataset.connect}" which did not match a class on the page which means an attempt to use it as a URL was made. It failed becasue the URL version of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported`,
             );
           }
         }

@@ -223,11 +223,12 @@ window.BittyCodeBlockMaker = class {
     </div>
   </div>
 </div>
-<style>.example-font-size {
-  font-size: var(--example-font-size);
-}</style>
+<style>[data-connect=ChangeFontSize] {
+  min-height: 14rem;
+}
+</style>
 
-<script>window.FontSize = class {
+<script>window.ChangeFontSize = class {
   setStartingFontSize(_ev, el) {
     const initialValue = 1.1;
     el.value = initialValue;
@@ -247,9 +248,13 @@ window.BittyCodeBlockMaker = class {
     <div class="hp-example-title">Change Font Size</div>
     <div class="hp-example-content">
 
-<bitty-7-0 
-  data-connect="FontSize"
->
+<style>
+.example-font-size {
+  font-size: var(--example-font-size);
+}
+</style>
+
+<bitty-7-0 data-connect="ChangeFontSize">
   <input 
     type="range" 
     data-init="setStartingFontSize"
@@ -329,6 +334,89 @@ window.ChangeColor = class {
 </div>
     <div class="hp-example-code-link">
       <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0030-change-color&#x2f;">view code</a>
+    </div>
+  </div>
+</div>
+<style>[data-connect=ChangeSVGColor] {
+  display: grid;
+  gap: 0.9rem;
+}
+
+[data-init=makeSliders] {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.example-face {
+  width: 9rem;
+  height: auto;
+}
+
+.example-face path {
+  fill: rgb(var(--svg-red) var(--svg-green) var(--svg-blue));
+}</style>
+
+<script>/**/
+
+const svgParams = ["svg-red", "svg-green", "svg-blue"];
+
+const svgSliderTemplates = `
+<label>PARAM
+<input 
+  data-send="updateColor" 
+  value="VALUE"
+  data-param="PARAM"
+  type="range" 
+  min="0"
+  max="255" />
+</label>`;
+
+window.ChangeSVGColor = class {
+  async loadSVG(_, el) {
+    const faceURL = `/versions/7.0.0-rc1/svgs/faces/9.svg`;
+    const faceResponse = await this.api.getSVG(faceURL);
+    if (faceResponse.value) {
+      const faceSVG = faceResponse.value;
+      faceSVG.classList.add("example-face");
+      el.appendChild(faceSVG);
+    }
+  }
+
+  makeSliders(_, el) {
+    svgParams.forEach((param) => {
+      const value = Math.floor(Math.random() * 250);
+      this.api.setProp(`--${param}`, value);
+      const subs = [
+        ["PARAM", param],
+        ["VALUE", value],
+      ];
+      const slider = this.api.makeHTML(svgSliderTemplates, subs);
+      el.appendChild(slider);
+    });
+  }
+
+  updateColor(ev, el) {
+    window.requestAnimationFrame(() => {
+      this.api.setProp(
+        `--${ev.ds("param")}`,
+        ev.valFloat,
+      );
+    });
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">Change SVG Colors</div>
+    <div class="hp-example-content">
+
+<bitty-7-0 data-connect="ChangeSVGColor">
+  <div data-init="loadSVG"></div>
+  <div data-init="makeSliders"></div>
+</bitty-7-0>
+</div>
+    <div class="hp-example-code-link">
+      <a href="versions&#x2f;7.0.0-rc1&#x2f;examples&#x2f;0035-change-svg-color&#x2f;">view code</a>
     </div>
   </div>
 </div>
@@ -1002,7 +1090,11 @@ window.MatchGame = class {
 }
 
 .name-tag-color-block {
+  font-size: 1.2rem;
   background-color: var(--color);
+  color: #111;
+  font-weight: 900;
+  text-align: center;
 }
 
 .name-tag-wrapper {

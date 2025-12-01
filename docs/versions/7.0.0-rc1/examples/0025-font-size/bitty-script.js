@@ -1,4 +1,4 @@
-window.FontSize = class {
+window.ChangeFontSize = class {
   setStartingFontSize(_ev, el) {
     const initialValue = 1.1;
     el.value = initialValue;

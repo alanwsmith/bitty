@@ -24,7 +24,7 @@ const weatherTemplates = {
 };
 
 function c2f(c) {
-  return (c * 9 / 5) + 32;
+  return Math.round((c * 9 / 5) + 32);
 }
 
 window.GetWeather = class {

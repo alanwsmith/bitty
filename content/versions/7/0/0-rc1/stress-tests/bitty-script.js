@@ -2,6 +2,12 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+class Reporter {
+  constructor() {}
+}
+
+const reporter = new Reporter();
+
 const templates = {
   reportItem: `<div>
   <h4>TITLE</h4>
@@ -14,10 +20,7 @@ const tests = {
   test0010: {
     description:
       `Make 1000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
-    prep: `<div data-receive="test0010run">
-<button data-send="test0010send">Test Trigger</button>
-<div data-receive="test0010send"></div>
-</div>`,
+    prep: `<div data-receive="runTest"></div>`,
     template: `<span>x </span>`,
   },
 
@@ -32,9 +35,8 @@ const tests = {
 
   test0030: {
     description: `[@ file @] - One top level bitty element `,
-    prep: `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>
-
-</bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>
+    prep: `
+<button>Run test</button>
 `,
   },
 };
@@ -51,10 +53,10 @@ window.TestRunner = class {
   #reports = [];
 
   async bittyReady() {
-    this.api.trigger("runTest");
+    this.api.trigger("testReporter");
   }
 
-  runTest(_, el) {
+  testReporter(_, el) {
     this.#currentTestIndex += 1;
 
     if (Object.keys(tests).length === this.#currentTestIndex) {
@@ -62,8 +64,9 @@ window.TestRunner = class {
       const currentTest = Object.keys(tests)[this.#currentTestIndex];
       const template = [
         `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
-data-connect="${currentTest}Class"
->`,
+data-connect="${currentTest}Class">
+<button data-send="runTest">Run ${currentTest}</button>
+`,
       ];
       template.push(tests[currentTest].prep);
       template.push(
@@ -72,7 +75,6 @@ data-connect="${currentTest}Class"
       const payload = template.join("\n");
       const testUnderTest = this.api.makeElement(payload);
       document.querySelector(".testArea").replaceChildren(testUnderTest);
-      testUnderTest.querySelector("button").click();
     }
   }
 
@@ -169,17 +171,13 @@ data-connect="${currentTest}Class"
 };
 
 window.test0010Class = class {
-  bittyInit() {
-    console.log("asdf");
-  }
-  async bittyReady() {
-    await sleep(500);
+  bittyReady() {
     this.api.trigger("runTest");
   }
 };
 
 window.test0020Class = class {
-  bittyInit() {
+  bittyReady() {
     console.log("0020sdf");
     this.api.trigger("runTest");
   }

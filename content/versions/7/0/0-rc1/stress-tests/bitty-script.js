@@ -23,20 +23,26 @@ const templates = {
 const tests = {
   test0010: {
     description:
-      `Make 1000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
+      `Make 1,000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
     prep: ``,
     template: `<span>x </span>`,
   },
 
   test0020: {
     description:
-      `Make 1000 elements in one go with this.api.makeHTML(TEMPLATE) and append them all at the same time with .appendChild()`,
+      `Make 1,000 elements in one go with this.api.makeHTML(TEMPLATE) and append them all at the same time with .appendChild()`,
     prep: ``,
   },
 
   test0030: {
     description:
-      `One top level bitty element that sends a signal to 1000 data-receive elements`,
+      `One top level bitty element that sends a signal to 1,000 data-receive elements`,
+    prep: ``,
+  },
+
+  test0040: {
+    description:
+      `One top level bitty element that sends a signal to 10,000 data-receive elements`,
     prep: ``,
   },
 };
@@ -50,7 +56,7 @@ window.TestRunner = class {
   }
 
   async testReporter(_, el) {
-    await sleep(800);
+    await sleep(100);
     this.#currentTestIndex += 1;
     if (Object.keys(tests).length === this.#currentTestIndex) {
       document.querySelector(".testArea").replaceChildren();
@@ -74,11 +80,11 @@ window.TestRunner = class {
       const template = [
         `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
 data-connect="${currentTest}Class">
-    <div data-receive="testBed"></div>`,
+    <div data-receive="testBed">`,
       ];
       template.push(tests[currentTest].prep);
       template.push(
-        `</bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>`,
+        `</div></bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>`,
       );
       const payload = template.join("\n");
       const testUnderTest = this.api.makeElement(payload);
@@ -122,13 +128,67 @@ window.test0020Class = class {
 };
 
 window.test0030Class = class {
+  #counter = 0;
+  #totalEls = 1000;
+
   bittyReady() {
     this.api.localTrigger("testBed");
   }
 
   testBed(_, el) {
+    const trigger = this.api.makeElement(
+      `<button data-send="testTrigger">Trigger Test</button>`,
+    );
+    el.replaceChildren(trigger);
+    const payload = [];
+    [...Array(this.#totalEls)].forEach((_, index) => {
+      payload.push(`<span data-receive="testTrigger">-</span>`);
+    });
+    const content = this.api.makeHTML(payload.join(""));
+    el.appendChild(content);
     markStart();
-    this.api.trigger("testReporter");
-    markEnd();
+    trigger.click();
+  }
+
+  testTrigger(_, el) {
+    el.innerHTML = "q";
+    this.#counter += 1;
+    if (this.#counter === this.#totalEls) {
+      markEnd();
+      this.api.trigger("testReporter");
+    }
+  }
+};
+
+window.test0040Class = class {
+  #counter = 0;
+  #totalEls = 10000;
+
+  bittyReady() {
+    this.api.localTrigger("testBed");
+  }
+
+  testBed(_, el) {
+    const trigger = this.api.makeElement(
+      `<button data-send="testTrigger">Trigger Test</button>`,
+    );
+    el.replaceChildren(trigger);
+    const payload = [];
+    [...Array(this.#totalEls)].forEach((_, index) => {
+      payload.push(`<span data-receive="testTrigger">-</span>`);
+    });
+    const content = this.api.makeHTML(payload.join(""));
+    el.appendChild(content);
+    markStart();
+    trigger.click();
+  }
+
+  testTrigger(_, el) {
+    el.innerHTML = "q";
+    this.#counter += 1;
+    if (this.#counter === this.#totalEls) {
+      markEnd();
+      this.api.trigger("testReporter");
+    }
   }
 };

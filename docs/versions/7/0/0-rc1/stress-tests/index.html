@@ -44,7 +44,10 @@ const tests = {
 
   test0030: {
     description: `{"extension": "html", "file_move_type": "Transform", "folder": "versions/7/0/0-rc1/stress-tests", "folder_parts": ["versions", "7", "0", "0-rc1", "stress-tests"], "input_path": "versions/7/0/0-rc1/stress-tests/index.html", "name": "index.html", "output_folder": "versions/7/0/0-rc1/stress-tests", "output_name": "index.html", "parent_folder": "stress-tests", "stem": "index"} - One top level bitty element `,
-    prep: ``,
+    prep: `<bitty-7-0>
+
+</bitty-7-0>
+`,
   },
 };
 
@@ -55,7 +58,7 @@ class Report {
   }
 }
 
-window.StressTest0010 = class {
+window.TestRunner = class {
   #currentTestIndex = -1;
   #reports = [];
 
@@ -142,6 +145,7 @@ window.StressTest0010 = class {
   }
 
   test0030prep(_, el) {
+    console.log(tests["test0030"].prep);
     this.api.trigger("test0030run");
   }
 
@@ -152,13 +156,24 @@ window.StressTest0010 = class {
   }
 
   //
+};
+
+window.test0010 = class {
+};
+
+window.test0020 = class {
+};
+
+window.test0030 = class {
 };</script>
 
 <h1>Stress Test 0010</h1>
 
-<bitty-7-0 data-connect="StressTest0010">
+<bitty-7-0 data-connect="TestRunner">
 <div data-receive="runTest"></div>
 </bitty-7-0>
+
+<div class="testArea"></div>
 
     <script src="&#x2f;v&#x2f;7.0.0-rc1&#x2f;bitty-7.0.0-rc1.full.js" type="module"></script>
   </body>

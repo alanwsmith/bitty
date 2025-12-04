@@ -32,7 +32,10 @@ const tests = {
 
   test0030: {
     description: `[@ file @] - One top level bitty element `,
-    prep: `[@ file.folders @]`,
+    prep: `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>
+
+</bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>
+`,
   },
 };
 
@@ -43,7 +46,7 @@ class Report {
   }
 }
 
-window.StressTest0010 = class {
+window.TestRunner = class {
   #currentTestIndex = -1;
   #reports = [];
 
@@ -130,6 +133,7 @@ window.StressTest0010 = class {
   }
 
   test0030prep(_, el) {
+    console.log(tests["test0030"].prep);
     this.api.trigger("test0030run");
   }
 
@@ -140,4 +144,13 @@ window.StressTest0010 = class {
   }
 
   //
+};
+
+window.test0010 = class {
+};
+
+window.test0020 = class {
+};
+
+window.test0030 = class {
 };

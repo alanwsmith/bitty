@@ -66,105 +66,122 @@ window.TestRunner = class {
     this.api.trigger("runTest");
   }
 
-  async runTest(_, el) {
-    await sleep(400);
-    this.#currentTestIndex += 1;
-    if (Object.keys(tests).length === this.#currentTestIndex) {
-      el.innerHTML = "this is the report";
-      for (const key of Object.keys(tests)) {
-        performance.measure(
-          `${key}-duration`,
-          `${key}-start`,
-          `${key}-end`,
-        );
-        const entry = performance.getEntriesByName(`${key}-duration`);
-        const subs = [
-          ["TITLE", key],
-          ["DESCRIPTION", tests[key].description],
-          ["DURATION", Math.round(entry[0].duration)],
-        ];
-        el.appendChild(this.api.makeHTML(templates.reportItem, subs));
-      }
-    } else {
-      const currentTest = Object.keys(tests)[this.#currentTestIndex];
-      el.replaceChildren(this.api.makeElement(
-        tests[currentTest].prep,
-      ));
-      this.api.trigger(
-        `${currentTest}prep`,
-      );
-    }
+  runTest(_, el) {
+    const template = [
+      `<bitty-7-0
+data-connect="test0010Class"
+>`,
+    ];
+    template.push(tests["test0010"].prep);
+    template.push(
+      `</bitty-7-0>`,
+    );
+    const payload = template.join("\n");
+    console.log(payload);
+    const testUnderTest = this.api.makeElement(template.join(""));
+    document.querySelector(".testArea").replaceChildren(testUnderTest);
+    testUnderTest.querySelector("button").click();
   }
 
-  markStart() {
-    const currentTest = Object.keys(tests)[this.#currentTestIndex];
-    performance.mark(`${currentTest}-start`);
-  }
+  // async runTest(_, el) {
+  //   await sleep(400);
+  //   this.#currentTestIndex += 1;
+  //   if (Object.keys(tests).length === this.#currentTestIndex) {
+  //     el.innerHTML = "this is the report";
+  //     for (const key of Object.keys(tests)) {
+  //       performance.measure(
+  //         `${key}-duration`,
+  //         `${key}-start`,
+  //         `${key}-end`,
+  //       );
+  //       const entry = performance.getEntriesByName(`${key}-duration`);
+  //       const subs = [
+  //         ["TITLE", key],
+  //         ["DESCRIPTION", tests[key].description],
+  //         ["DURATION", Math.round(entry[0].duration)],
+  //       ];
+  //       el.appendChild(this.api.makeHTML(templates.reportItem, subs));
+  //     }
+  //   } else {
+  //     const currentTest = Object.keys(tests)[this.#currentTestIndex];
+  //     el.replaceChildren(this.api.makeElement(
+  //       tests[currentTest].prep,
+  //     ));
+  //     this.api.trigger(
+  //       `${currentTest}prep`,
+  //     );
+  //   }
+  // }
 
-  markEnd() {
-    const currentTest = Object.keys(tests)[this.#currentTestIndex];
-    performance.mark(`${currentTest}-end`);
-  }
+  // markStart() {
+  //   const currentTest = Object.keys(tests)[this.#currentTestIndex];
+  //   performance.mark(`${currentTest}-start`);
+  // }
 
-  test0010prep(_, el) {
-    this.api.trigger("test0010run");
-  }
+  // markEnd() {
+  //   const currentTest = Object.keys(tests)[this.#currentTestIndex];
+  //   performance.mark(`${currentTest}-end`);
+  // }
 
-  test0010run(_, el) {
-    this.markStart();
-    el.querySelector("button").click();
-  }
+  // test0010prep(_, el) {
+  //   this.api.trigger("test0010run");
+  // }
 
-  test0010send(_, el) {
-    [...Array(1000)].forEach((_, index) => {
-      el.appendChild(this.api.makeElement(tests.test0010.template));
-    });
-    this.markEnd();
-    this.api.trigger("runTest");
-  }
+  // test0010run(_, el) {
+  //   this.markStart();
+  //   el.querySelector("button").click();
+  // }
 
-  test0020prep(_, el) {
-    this.api.trigger("test0020run");
-  }
+  // test0010send(_, el) {
+  //   [...Array(1000)].forEach((_, index) => {
+  //     el.appendChild(this.api.makeElement(tests.test0010.template));
+  //   });
+  //   this.markEnd();
+  //   this.api.trigger("runTest");
+  // }
 
-  test0020run(_, el) {
-    el.querySelector("button").click();
-  }
+  // test0020prep(_, el) {
+  //   this.api.trigger("test0020run");
+  // }
 
-  test0020send(_, el) {
-    const template = [`<div>`];
-    [...Array(1000)].forEach((_, index) => {
-      template.push(`<span>x </span>`);
-    });
-    template.push(`</div>`);
-    const incoming = template.join("");
-    this.markStart();
-    el.replaceChildren(this.api.makeHTML(incoming));
-    this.markEnd();
-    this.api.trigger("runTest");
-  }
+  // test0020run(_, el) {
+  //   el.querySelector("button").click();
+  // }
 
-  test0030prep(_, el) {
-    console.log(tests["test0030"].prep);
-    this.api.trigger("test0030run");
-  }
+  // test0020send(_, el) {
+  //   const template = [`<div>`];
+  //   [...Array(1000)].forEach((_, index) => {
+  //     template.push(`<span>x </span>`);
+  //   });
+  //   template.push(`</div>`);
+  //   const incoming = template.join("");
+  //   this.markStart();
+  //   el.replaceChildren(this.api.makeHTML(incoming));
+  //   this.markEnd();
+  //   this.api.trigger("runTest");
+  // }
 
-  test0030run(_, el) {
-    this.markStart();
-    this.markEnd();
-    this.api.trigger("runTest");
-  }
+  // test0030prep(_, el) {
+  //   console.log(tests["test0030"].prep);
+  //   this.api.trigger("test0030run");
+  // }
+
+  // test0030run(_, el) {
+  //   this.markStart();
+  //   this.markEnd();
+  //   this.api.trigger("runTest");
+  // }
 
   //
 };
 
-window.test0010 = class {
+window.test0010Class = class {
 };
 
-window.test0020 = class {
+window.test0020Class = class {
 };
 
-window.test0030 = class {
+window.test0030Class = class {
 };</script>
 
 <h1>Stress Test 0010</h1>

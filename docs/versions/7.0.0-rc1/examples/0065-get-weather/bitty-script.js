@@ -15,12 +15,13 @@
 
 const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
-  stationOption: `<option value="STATION">STATION - CITY, STATE</option>`,
+
+  stationOption: `<option value="URL">CITY, STATE</option>`,
+
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
 <div><img src="IMG" /></div>
-</div>
-`,
+</div>`,
 };
 
 function c2f(c) {
@@ -42,35 +43,33 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    let stationId = ev.val;
-    if (stationId === undefined) {
-      stationId = Object.keys(this.#stations)[0];
-    }
+    const station = ev.val === undefined ? "PAJN" : ev.val;
     const url =
-      `https://api.weather.gov/stations/${stationId}/observations/latest`;
+      `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-    if (response.value) {
-      const data = response.value.properties;
-      const tmpC = data.temperature.value;
-      const tmpF = c2f(tmpC);
-      const subs = [
-        ["TEMPC", tmpC],
-        ["TEMPF", tmpF],
-        ["DESC", data.textDescription],
-        ["IMG", data.icon],
-      ];
-      const output = this.api.makeHTML(weatherTemplates.report, subs);
-      el.replaceChildren(output);
-    }
+
+    const data = response.value.properties;
+    const tmpC = data.temperature.value;
+    const tmpF = c2f(tmpC);
+    const subs = [
+      ["TEMPC", tmpC],
+      ["TEMPF", tmpF],
+      ["DESC", data.textDescription],
+      ["IMG", data.icon],
+    ];
+    const output = this.api.makeHTML(weatherTemplates.report, subs);
+    el.replaceChildren(output);
+
+    //
   }
 
   weatherStations(_, el) {
     const selector = this.api.makeElement(weatherTemplates.selector);
-    Object.keys(this.#stations).forEach((station) => {
+    Object.values(this.#stations.capitals).forEach((station) => {
       const subs = [
-        ["STATION", station],
-        ["CITY", this.#stations[station].city],
-        ["STATE", this.#stations[station].state],
+        ["CITY", station.city_name],
+        ["STATE", station.state_name],
+        ["URL", station.weather_station_id],
       ];
       const option = this.api.makeElement(weatherTemplates.stationOption, subs);
       selector.appendChild(option);

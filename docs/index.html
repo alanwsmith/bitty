@@ -646,12 +646,13 @@ window.SelectButton = class {
 
 const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
-  stationOption: `<option value="STATION">STATION - CITY, STATE</option>`,
+
+  stationOption: `<option value="URL">CITY, STATE</option>`,
+
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
 <div><img src="IMG" /></div>
-</div>
-`,
+</div>`,
 };
 
 function c2f(c) {
@@ -673,35 +674,33 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    let stationId = ev.val;
-    if (stationId === undefined) {
-      stationId = Object.keys(this.#stations)[0];
-    }
+    const station = ev.val === undefined ? "PAJN" : ev.val;
     const url =
-      `https://api.weather.gov/stations/${stationId}/observations/latest`;
+      `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-    if (response.value) {
-      const data = response.value.properties;
-      const tmpC = data.temperature.value;
-      const tmpF = c2f(tmpC);
-      const subs = [
-        ["TEMPC", tmpC],
-        ["TEMPF", tmpF],
-        ["DESC", data.textDescription],
-        ["IMG", data.icon],
-      ];
-      const output = this.api.makeHTML(weatherTemplates.report, subs);
-      el.replaceChildren(output);
-    }
+
+    const data = response.value.properties;
+    const tmpC = data.temperature.value;
+    const tmpF = c2f(tmpC);
+    const subs = [
+      ["TEMPC", tmpC],
+      ["TEMPF", tmpF],
+      ["DESC", data.textDescription],
+      ["IMG", data.icon],
+    ];
+    const output = this.api.makeHTML(weatherTemplates.report, subs);
+    el.replaceChildren(output);
+
+    //
   }
 
   weatherStations(_, el) {
     const selector = this.api.makeElement(weatherTemplates.selector);
-    Object.keys(this.#stations).forEach((station) => {
+    Object.values(this.#stations.capitals).forEach((station) => {
       const subs = [
-        ["STATION", station],
-        ["CITY", this.#stations[station].city],
-        ["STATE", this.#stations[station].state],
+        ["CITY", station.city_name],
+        ["STATE", station.state_name],
+        ["URL", station.weather_station_id],
       ];
       const option = this.api.makeElement(weatherTemplates.stationOption, subs);
       selector.appendChild(option);
@@ -1376,131 +1375,27 @@ window.YouTubeControls = class {
   </div>
 
 
-<h2>Examples to make</h2><ul>
-<li>
-<p>[x] basic counter</p>
-</li>
-<li>
-<p>[x] increment/decrement</p>
-</li>
-<li>
-<p>[x] change font size</p>
-</li>
-<li>
-<p>[x] change rgb color</p>
-</li>
-<li>
-<p>[x] Random quotes</p>
-</li>
-<li>
-<p>[x] sort columns of data</p>
-</li>
-<li>
-<p>[x] follow the button you just clicked on</p>
-</li>
-<li>
-<p>[x] Make Hello My Name Is name cards</p>
-</li>
-<li>
-<p>[] flip a coin</p>
-</li>
-<li>
-<p>[] roll some dice</p>
-</li>
-<li>
-<p>[] move an image where you click</p>
-</li>
-<li>
-<p>[] Make a drum machine</p>
-</li>
-<li>
-<p>[] Get weather data or movie data or whatever to pull JSONs</p>
-</li>
-<li>
-<p>[] Video controls</p>
-</li>
-<li>
-<p>[] type racer</p>
-</li>
-<li>
-<p>[] Apply SVG filters</p>
-</li>
-<li>
-<p>[] Update styles on SVG images</p>
-</li>
-<li>
-<p>[] Countdown to the equinox</p>
-</li>
-<li>
-<p>[] load an svg that you can change styles on</p>
-</li>
-<li>
-<p>[] set a timer</p>
-</li>
-<li>
-<p>[] zoom in on an image.</p>
-</li>
-<li>
-<p>[] light up a web page. (toggle switch)</p>
-</li>
-<li>
-<p>[] try out different styles (glasses switch from weird web october)</p>
-</li>
-<li>
-<p>[] create a magic 8-ball</p>
-</li>
-<li>
-<p>[] make a photo gallery</p>
-</li>
-<li>
-<p>[] make a todo do list</p>
-</li>
-<li>
-<p>[] make chess</p>
-</li>
-<li>
-<p>[] temperature conversion</p>
-</li>
-<li>
-<p>[] work with p5 (without conflict)</p>
-</li>
-<li>
-<p>[] work with d3 (without conflict)</p>
-</li>
-<li>
-<p>[] make a digital fireplace</p>
-</li>
-<li>
-<p>[] make a digital fish tank</p>
-</li>
-<li>
-<p>[] Whack-a-mole</p>
-</li>
-</ul>
  
 
     </main>
+
 
     <footer>
       <hr />
       <div class="footer-wrapper">
         <div>
-        <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
-        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+          <a href="https://github.com/alanwsmith/bitty">source</a> ~
+          <a href="https://socials.alanwsmith.com/">socials</a> ~
+          <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+          <a href="https://links.alanwsmith.com/">other projects</a>
         </div>
-        <div>This work has been marked as dedicated to the public domain.</div>
-        <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
-      </div>
 
-      <hr />
-      <div class="footer-wrapper">
-      <div>from <a href="https://www.alanwsmith.com/">alan w smith</a></div>
-      <div>
-        <a href="https://github.com/alanwsmith/bitty">source</a> ~
-        <a href="https://socials.alanwsmith.com/">socials</a> ~
-        <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
-        <a href="https://links.alanwsmith.com/">other projects</a>
-      </div>
+        <div>
+          <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        </div>
+        <details><summary>This work has been dedicated to the public domain.</summary>
+          <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+        </details>
       </div>
     </footer>
 

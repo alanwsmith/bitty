@@ -29,6 +29,11 @@ const tests = {
 <div data-receive="test0020send"></div>
 </div>`,
   },
+
+  test0030: {
+    description: `[@ file @] - One top level bitty element `,
+    prep: `[@ file.folders @]`,
+  },
 };
 
 class Report {
@@ -120,6 +125,16 @@ window.StressTest0010 = class {
     const incoming = template.join("");
     this.markStart();
     el.replaceChildren(this.api.makeHTML(incoming));
+    this.markEnd();
+    this.api.trigger("runTest");
+  }
+
+  test0030prep(_, el) {
+    this.api.trigger("test0030run");
+  }
+
+  test0030run(_, el) {
+    this.markStart();
     this.markEnd();
     this.api.trigger("runTest");
   }

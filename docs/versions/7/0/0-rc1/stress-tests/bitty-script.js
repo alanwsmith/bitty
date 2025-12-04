@@ -1,5 +1,8 @@
 let currentTest = null;
 
+const bittyTagName =
+  `bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]`;
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -45,6 +48,12 @@ const tests = {
       `One top level bitty element that sends a signal to 10,000 data-receive elements`,
     prep: ``,
   },
+
+  test0050: {
+    description:
+      `Add 1,000 bitty elements to a page inside a single document fragment`,
+    prep: ``,
+  },
 };
 
 window.TestRunner = class {
@@ -61,7 +70,7 @@ window.TestRunner = class {
     if (Object.keys(tests).length === this.#currentTestIndex) {
       document.querySelector(".testArea").replaceChildren();
       el.innerHTML = "this is the report";
-      for (const key of Object.keys(tests)) {
+      for (const key of Object.keys(tests).reverse()) {
         performance.measure(
           `${key}-duration`,
           `${key}-start`,
@@ -184,11 +193,37 @@ window.test0040Class = class {
   }
 
   testTrigger(_, el) {
-    el.innerHTML = "q";
+    el.innerHTML = "t";
     this.#counter += 1;
     if (this.#counter === this.#totalEls) {
       markEnd();
       this.api.trigger("testReporter");
     }
+  }
+};
+
+window.test0050Alfa = class {
+};
+
+window.test0050Class = class {
+  #counter = 0;
+  #totalEls = 10000;
+
+  bittyReady() {
+    this.api.localTrigger("testBed");
+  }
+
+  testBed(_, el) {
+    const payload = [];
+    [...Array(this.#totalEls)].forEach((_, index) => {
+      payload.push(
+        `<${bittyTagName} data-connect="test0050Alfa">8</${bittyTagName}>`,
+      );
+    });
+    markStart();
+    const content = this.api.makeHTML(payload.join(""));
+    el.appendChild(content);
+    markEnd();
+    this.api.trigger("testReporter");
   }
 };

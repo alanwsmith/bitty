@@ -13,12 +13,21 @@ const templates = {
 const tests = {
   test0010: {
     description:
-      `Make 1000 element with this.api.makeElement and append them one at a time with .appendChild()`,
-    template: `<div data-receive="test0010run">
+      `Make 1000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
+    prep: `<div data-receive="test0010run">
 <button data-send="test0010send">Test Trigger</button>
 <div data-receive="test0010send"></div>
 </div>`,
-    output: `<span>x </span>`,
+    template: `<span>x </span>`,
+  },
+
+  test0020: {
+    description:
+      `Make 1000 elements in one go with this.api.makeHTML(TEMPLATE) and append them all at the same time with .appendChild()`,
+    prep: `<div data-receive="test0020run">
+<button data-send="test0020send">Test Trigger</button>
+<div data-receive="test0020send"></div>
+</div>`,
   },
 };
 
@@ -34,39 +43,32 @@ window.StressTest0010 = class {
   #reports = [];
 
   async bittyReady() {
-    await sleep(300);
     this.api.trigger("runTest");
   }
 
-  async report(_, el) {
-    await sleep(300);
-    el.innerHTML = "this is the report";
-    for (const key of Object.keys(tests)) {
-      performance.measure(
-        `${key}-duration`,
-        `${key}-start`,
-        `${key}-end`,
-      );
-      const entry = performance.getEntriesByName(`${key}-duration`);
-      console.log(entry);
-      const subs = [
-        ["TITLE", key],
-        ["DESCRIPTION", tests[key].description],
-        ["DURATION", Math.round(entry[0].duration)],
-      ];
-      el.appendChild(this.api.makeHTML(templates.reportItem, subs));
-    }
-  }
-
-  runTest(_, el) {
+  async runTest(_, el) {
+    await sleep(400);
     this.#currentTestIndex += 1;
     if (Object.keys(tests).length === this.#currentTestIndex) {
-      this.api.trigger("report");
-      console.log("run report");
+      el.innerHTML = "this is the report";
+      for (const key of Object.keys(tests)) {
+        performance.measure(
+          `${key}-duration`,
+          `${key}-start`,
+          `${key}-end`,
+        );
+        const entry = performance.getEntriesByName(`${key}-duration`);
+        const subs = [
+          ["TITLE", key],
+          ["DESCRIPTION", tests[key].description],
+          ["DURATION", Math.round(entry[0].duration)],
+        ];
+        el.appendChild(this.api.makeHTML(templates.reportItem, subs));
+      }
     } else {
       const currentTest = Object.keys(tests)[this.#currentTestIndex];
       el.replaceChildren(this.api.makeElement(
-        tests[currentTest].template,
+        tests[currentTest].prep,
       ));
       this.api.trigger(
         `${currentTest}prep`,
@@ -95,25 +97,32 @@ window.StressTest0010 = class {
 
   test0010send(_, el) {
     [...Array(1000)].forEach((_, index) => {
-      el.appendChild(this.api.makeElement(tests.test0010.output));
+      el.appendChild(this.api.makeElement(tests.test0010.template));
     });
     this.markEnd();
     this.api.trigger("runTest");
-
-    //performance.mark("test0010-finished");
-    //performance.measure(
-    //  "test0010-duration",
-    //  "test0010-start",
-    //  "test0010-finished",
-    //);
-    ////const entries = performance.getEntries();
-    //console.log(entries);
   }
 
-  // async test0010(_, el) {
-  //   await sleep(100);
-  //   el.querySelector("button").click();
-  // }
+  test0020prep(_, el) {
+    this.api.trigger("test0020run");
+  }
+
+  test0020run(_, el) {
+    el.querySelector("button").click();
+  }
+
+  test0020send(_, el) {
+    const template = [`<div>`];
+    [...Array(1000)].forEach((_, index) => {
+      template.push(`<span>x </span>`);
+    });
+    template.push(`</div>`);
+    const incoming = template.join("");
+    this.markStart();
+    el.replaceChildren(this.api.makeHTML(incoming));
+    this.markEnd();
+    this.api.trigger("runTest");
+  }
 
   //
 };

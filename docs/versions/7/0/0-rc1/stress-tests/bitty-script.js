@@ -1,12 +1,16 @@
+let currentTest = null;
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-class Reporter {
-  constructor() {}
+function markStart() {
+  performance.mark(`${currentTest}-start`);
 }
 
-const reporter = new Reporter();
+function markEnd() {
+  performance.mark(`${currentTest}-end`);
+}
 
 const templates = {
   reportItem: `<div>
@@ -20,7 +24,7 @@ const tests = {
   test0010: {
     description:
       `Make 1000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
-    prep: `<div data-receive="runTest"></div>`,
+    prep: `<div data-receive="runTest">asdf</div>`,
     template: `<span>x </span>`,
   },
 
@@ -28,16 +32,12 @@ const tests = {
     description:
       `Make 1000 elements in one go with this.api.makeHTML(TEMPLATE) and append them all at the same time with .appendChild()`,
     prep: `<div data-receive="test0020run">
-<button data-send="test0020send">Test Trigger</button>
-<div data-receive="test0020send"></div>
 </div>`,
   },
 
   test0030: {
     description: `[@ file @] - One top level bitty element `,
-    prep: `
-<button>Run test</button>
-`,
+    prep: `<button>Run test</button>`,
   },
 };
 
@@ -56,17 +56,35 @@ window.TestRunner = class {
     this.api.trigger("testReporter");
   }
 
-  testReporter(_, el) {
+  async testReporter(_, el) {
+    await sleep(400);
     this.#currentTestIndex += 1;
-
     if (Object.keys(tests).length === this.#currentTestIndex) {
+      document.querySelector(".testArea").replaceChildren();
+      el.innerHTML = "this is the report";
+      //
+
+      for (const key of Object.keys(tests)) {
+        performance.measure(
+          `${key}-duration`,
+          `${key}-start`,
+          `${key}-end`,
+        );
+        const entry = performance.getEntriesByName(`${key}-duration`);
+        const subs = [
+          ["TITLE", key],
+          ["DESCRIPTION", tests[key].description],
+          ["DURATION", Math.round(entry[0].duration)],
+        ];
+        el.appendChild(this.api.makeHTML(templates.reportItem, subs));
+      }
+
+      //
     } else {
-      const currentTest = Object.keys(tests)[this.#currentTestIndex];
+      currentTest = Object.keys(tests)[this.#currentTestIndex];
       const template = [
         `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
-data-connect="${currentTest}Class">
-<button data-send="runTest">Run ${currentTest}</button>
-`,
+data-connect="${currentTest}Class">`,
       ];
       template.push(tests[currentTest].prep);
       template.push(
@@ -106,11 +124,6 @@ data-connect="${currentTest}Class">
   //       `${currentTest}prep`,
   //     );
   //   }
-  // }
-
-  // markStart() {
-  //   const currentTest = Object.keys(tests)[this.#currentTestIndex];
-  //   performance.mark(`${currentTest}-start`);
   // }
 
   // markEnd() {
@@ -174,17 +187,27 @@ window.test0010Class = class {
   bittyReady() {
     this.api.trigger("runTest");
   }
+
+  runTest(_, el) {
+    markStart();
+    el.innerHTML = "something else";
+    markEnd();
+    this.api.trigger("testReporter");
+  }
 };
 
 window.test0020Class = class {
   bittyReady() {
-    console.log("0020sdf");
-    this.api.trigger("runTest");
+    markStart();
+    this.api.trigger("testReporter");
+    markEnd();
   }
 };
 
 window.test0030Class = class {
   bittyInit() {
-    console.log("0030sdf");
+    markStart();
+    this.api.trigger("testReporter");
+    markEnd();
   }
 };

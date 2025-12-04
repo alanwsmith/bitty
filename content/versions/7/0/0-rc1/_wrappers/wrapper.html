@@ -1,0 +1,117 @@
+[!- extends "versions/7/0/0-rc1/vars.html" -!]
+
+[!- block payload -!]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    [! include version_dir + "/_wrappers/head.html" !]
+    [! include version_dir + "/_wrappers/bitty-page-class.html" !]
+    [! include version_dir + "/_wrappers/docs-alt-class.html" !]
+    <script>
+    [! include version_dir + "/snippets/code-block-maker/code-block-maker.on.js" !]
+    </script>
+    <script src="[@ bitty_js_path @]" type="module"></script>
+  </head>
+
+  <body>
+    <header class="default-wrapper">
+      <a href="/">bitty</a>
+      ~
+      <a href="/[@ version_dir @]/test-suite/">tests</a>
+      ~
+      <a href="/[@ version_dir @]/examples/">examples</a>
+    </header>
+    <main class="default-wrapper default-flow xlarge-top-padding">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+        </div>
+        <div class="small-font accent-faded">
+          a little tool for dynamic web pages
+        </div>
+      </hgroup>
+
+[! block main !][! endblock !] 
+
+    </main>
+
+
+    <footer>
+      <hr />
+      <div class="footer-wrapper">
+        <div>
+          <a href="https://github.com/alanwsmith/bitty">source</a> ~
+          <a href="https://socials.alanwsmith.com/">socials</a> ~
+          <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+          <a href="https://links.alanwsmith.com/">other projects</a>
+        </div>
+
+        <div>
+          <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        </div>
+        <details><summary>This work has been dedicated to the public domain.</summary>
+          <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+        </details>
+      </div>
+    </footer>
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+      <pre>
+        [! filter highlight_html|safe !]<script src="[@ bitty_js_path|safe @]" type="module"></script>[! endfilter !]
+      </pre>
+  </body>
+</html>
+[!- endblock -!]
+

@@ -24,15 +24,14 @@ const tests = {
   test0010: {
     description:
       `Make 1000 elements with this.api.makeElement('<span>x </span>') and append them one at a time with .appendChild()`,
-    prep: `<div data-receive="runTest">asdf</div>`,
+    prep: ``,
     template: `<span>x </span>`,
   },
 
   test0020: {
     description:
       `Make 1000 elements in one go with this.api.makeHTML(TEMPLATE) and append them all at the same time with .appendChild()`,
-    prep: `<div data-receive="test0020run">
-</div>`,
+    prep: ``,
   },
 
   test0030: {
@@ -57,7 +56,7 @@ window.TestRunner = class {
   }
 
   async testReporter(_, el) {
-    await sleep(400);
+    await sleep(800);
     this.#currentTestIndex += 1;
     if (Object.keys(tests).length === this.#currentTestIndex) {
       document.querySelector(".testArea").replaceChildren();
@@ -84,7 +83,9 @@ window.TestRunner = class {
       currentTest = Object.keys(tests)[this.#currentTestIndex];
       const template = [
         `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
-data-connect="${currentTest}Class">`,
+data-connect="${currentTest}Class">
+    <div data-receive="runTest"></div>
+`,
       ];
       template.push(tests[currentTest].prep);
       template.push(
@@ -185,12 +186,14 @@ data-connect="${currentTest}Class">`,
 
 window.test0010Class = class {
   bittyReady() {
-    this.api.trigger("runTest");
+    this.api.localTrigger("runTest");
   }
 
   runTest(_, el) {
     markStart();
-    el.innerHTML = "something else";
+    [...Array(1000)].forEach((_, index) => {
+      el.appendChild(this.api.makeElement(tests.test0010.template));
+    });
     markEnd();
     this.api.trigger("testReporter");
   }
@@ -198,9 +201,20 @@ window.test0010Class = class {
 
 window.test0020Class = class {
   bittyReady() {
+    this.api.localTrigger("runTest");
+  }
+
+  runTest(_, el) {
+    const template = [`<div>`];
+    [...Array(1000)].forEach((_, index) => {
+      template.push(`<span>y </span>`);
+    });
+    template.push(`</div>`);
+    const incoming = template.join("");
     markStart();
-    this.api.trigger("testReporter");
+    el.replaceChildren(this.api.makeHTML(incoming));
     markEnd();
+    this.api.trigger("testReporter");
   }
 };
 

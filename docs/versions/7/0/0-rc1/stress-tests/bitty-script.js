@@ -55,20 +55,25 @@ window.TestRunner = class {
   }
 
   runTest(_, el) {
-    const template = [
-      `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
-data-connect="test0010Class"
+    this.#currentTestIndex += 1;
+
+    if (Object.keys(tests).length === this.#currentTestIndex) {
+    } else {
+      const currentTest = Object.keys(tests)[this.#currentTestIndex];
+      const template = [
+        `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
+data-connect="${currentTest}Class"
 >`,
-    ];
-    template.push(tests["test0010"].prep);
-    template.push(
-      `</bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>`,
-    );
-    const payload = template.join("\n");
-    console.log(payload);
-    const testUnderTest = this.api.makeElement(template.join(""));
-    document.querySelector(".testArea").replaceChildren(testUnderTest);
-    testUnderTest.querySelector("button").click();
+      ];
+      template.push(tests[currentTest].prep);
+      template.push(
+        `</bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]>`,
+      );
+      const payload = template.join("\n");
+      const testUnderTest = this.api.makeElement(payload);
+      document.querySelector(".testArea").replaceChildren(testUnderTest);
+      testUnderTest.querySelector("button").click();
+    }
   }
 
   // async runTest(_, el) {
@@ -164,10 +169,24 @@ data-connect="test0010Class"
 };
 
 window.test0010Class = class {
+  bittyInit() {
+    console.log("asdf");
+  }
+  async bittyReady() {
+    await sleep(500);
+    this.api.trigger("runTest");
+  }
 };
 
 window.test0020Class = class {
+  bittyInit() {
+    console.log("0020sdf");
+    this.api.trigger("runTest");
+  }
 };
 
 window.test0030Class = class {
+  bittyInit() {
+    console.log("0030sdf");
+  }
 };

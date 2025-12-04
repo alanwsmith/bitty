@@ -1,5 +1,7 @@
 let currentTest = null;
 
+let testCounter = null;
+
 const bittyTagName =
   `bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]`;
 
@@ -54,6 +56,18 @@ const tests = {
       `Add 1,000 bitty elements to a page inside a single document fragment`,
     prep: ``,
   },
+
+  test0060: {
+    description:
+      `Add 10,000 bitty elements to a page inside a single document fragment`,
+    prep: ``,
+  },
+
+  test0070: {
+    description:
+      `Have 10,000 bitty elements on the page with the same 'data-reveice="incoming"' receive a signal`,
+    prep: ``,
+  },
 };
 
 window.TestRunner = class {
@@ -85,7 +99,10 @@ window.TestRunner = class {
         el.appendChild(this.api.makeHTML(templates.reportItem, subs));
       }
     } else {
+      // Clear first to make sure there's no cruft from prior tests
+      document.querySelector(".testArea").replaceChildren();
       currentTest = Object.keys(tests)[this.#currentTestIndex];
+      console.log(currentTest);
       const template = [
         `<bitty-[@ file.folder_parts[1] @]-[@ file.folder_parts[2] @]
 data-connect="${currentTest}Class">
@@ -151,7 +168,7 @@ window.test0030Class = class {
     el.replaceChildren(trigger);
     const payload = [];
     [...Array(this.#totalEls)].forEach((_, index) => {
-      payload.push(`<span data-receive="testTrigger">-</span>`);
+      payload.push(`<span data-receive="testTrigger">l </span>`);
     });
     const content = this.api.makeHTML(payload.join(""));
     el.appendChild(content);
@@ -160,7 +177,7 @@ window.test0030Class = class {
   }
 
   testTrigger(_, el) {
-    el.innerHTML = "q";
+    el.innerHTML = "q ";
     this.#counter += 1;
     if (this.#counter === this.#totalEls) {
       markEnd();
@@ -184,7 +201,7 @@ window.test0040Class = class {
     el.replaceChildren(trigger);
     const payload = [];
     [...Array(this.#totalEls)].forEach((_, index) => {
-      payload.push(`<span data-receive="testTrigger">-</span>`);
+      payload.push(`<span data-receive="testTrigger">- </span>`);
     });
     const content = this.api.makeHTML(payload.join(""));
     el.appendChild(content);
@@ -193,7 +210,7 @@ window.test0040Class = class {
   }
 
   testTrigger(_, el) {
-    el.innerHTML = "t";
+    el.innerHTML = "t ";
     this.#counter += 1;
     if (this.#counter === this.#totalEls) {
       markEnd();
@@ -207,6 +224,32 @@ window.test0050Alfa = class {
 
 window.test0050Class = class {
   #counter = 0;
+  #totalEls = 1000;
+
+  bittyReady() {
+    this.api.localTrigger("testBed");
+  }
+
+  testBed(_, el) {
+    const payload = [];
+    [...Array(this.#totalEls)].forEach((_, index) => {
+      payload.push(
+        `<${bittyTagName} data-connect="${currentTest}Alfa">8 </${bittyTagName}>`,
+      );
+    });
+    markStart();
+    const content = this.api.makeHTML(payload.join(""));
+    el.appendChild(content);
+    markEnd();
+    this.api.trigger("testReporter");
+  }
+};
+
+window.test0060Alfa = class {
+};
+
+window.test0060Class = class {
+  #counter = 0;
   #totalEls = 10000;
 
   bittyReady() {
@@ -217,12 +260,57 @@ window.test0050Class = class {
     const payload = [];
     [...Array(this.#totalEls)].forEach((_, index) => {
       payload.push(
-        `<${bittyTagName} data-connect="test0050Alfa">8</${bittyTagName}>`,
+        `<${bittyTagName} data-connect="${currentTest}Alfa">9 </${bittyTagName}>`,
       );
     });
     markStart();
     const content = this.api.makeHTML(payload.join(""));
     el.appendChild(content);
+    markEnd();
+    this.api.trigger("testReporter");
+  }
+};
+
+window.test0070Alfa = class {
+};
+
+window.test0070Class = class {
+  #counter = 0;
+  #totalEls = 10000;
+
+  bittyReady() {
+    this.api.localTrigger("testBed");
+  }
+
+  testBed(_, el) {
+    testCounter = 0;
+    const trigger = this.api.makeElement(
+      `<button data-send="test0070Trigger">Trigger Test</button>`,
+    );
+    el.replaceChildren(trigger);
+    const payload = [];
+    [...Array(this.#totalEls)].forEach((_, index) => {
+      payload.push(
+        `<${bittyTagName} data-connect="${currentTest}Alfa">
+<span data-receive="test0070Trigger">i </span>
+</${bittyTagName}>`,
+      );
+    });
+    const content = this.api.makeHTML(payload.join(""));
+    el.appendChild(content);
+    markStart();
+    trigger.click();
+  }
+
+  test0070Trigger(_, el) {
+    testCounter += 1;
+    el.innerHTML = `${testCounter} `;
+    if (testCounter === this.#totalEls) {
+      this.api.localTrigger("test0070Done");
+    }
+  }
+
+  test0070Done(_, el) {
     markEnd();
     this.api.trigger("testReporter");
   }

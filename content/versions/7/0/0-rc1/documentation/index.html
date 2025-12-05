@@ -7,16 +7,11 @@
 #]
 
 
-<ul>
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
-<li>[@ item.name @]</li>
-[! endif !]
-[! endfor !]
-</ul>
+
 
 
 <h1>Documentation</h1>
+
 <h2>HTML Elemnet data-* API</h2>
 [! for f in files !]
   [! if f.folder_parts[1] == file.folder_parts[1] 
@@ -31,5 +26,38 @@
 </details>
   [!- endif !]
 [!- endfor !]
+
+
+<h2>this.api Methods</h2>
+
+<ul>
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
+<li>[@ item.name @]</li>
+[! endif !]
+[! endfor !]
+</ul>
+
+<h2>Event Argument Helpers</h2>
+
+
+
+
+<h2>Element Argument Helpers</h2>
+
+<ul>
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.name == "expandElement" !]
+[! for var in item.meta.vars !]
+[! if var != "" !]
+<li>[@ var @]</li>
+[! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+</ul>
+
+
+
 [!- endblock !]
 

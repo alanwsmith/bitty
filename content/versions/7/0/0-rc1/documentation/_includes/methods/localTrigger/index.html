@@ -1,0 +1,24 @@
+
+<details class="docs-sub-details">
+	[!- set args_string_path = file.folder + "/_includes/methods/localTrigger/_args.txt" -!]
+	<summary>localTrigger(
+		[!- include args_string_path !]
+		
+	)</summary>
+
+
+	<h5>Arguments</h5>
+	[! set args_path = file.folder + "/_includes/methods/localTrigger/_includes/args" !]
+
+	[! for f in folders !]
+	[! if f.parent == args_path !]
+	[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+	[! set content_path = args_path + "/" + f.name + "/index.html" !]
+	<details class="args-details">
+	<summary>[! include title_path !]</summary>
+	[! include content_path !]
+	[! endif !]
+	</details>
+	[! endfor !]
+
+</details>

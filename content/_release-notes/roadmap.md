@@ -1,5 +1,10 @@
 ## Roadmap 
 
+- TODO: Make md5 hashes of files and check them
+before deployment. 
+
+- TODO: make sure to clean up event listeners
+when bitty elements are removed from the page. 
 
 - TODO: consider if `data-init` should fire
 on elements added through `this.api` .

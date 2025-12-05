@@ -28,7 +28,8 @@ const svgSliderTemplates = `
 
 window.ChangeSVGColor = class {
   async loadSVG(_, el) {
-    const faceURL = `/versions/[@ page_config.version @]/svgs/faces/9.svg`;
+    const faceURL =
+      `/versions/[@ major_dir @]/[@ minor_dir @]/[@ patch_dir @]/svgs/faces/9.svg`;
     const faceResponse = await this.api.getSVG(faceURL);
     if (faceResponse.value) {
       const faceSVG = faceResponse.value;

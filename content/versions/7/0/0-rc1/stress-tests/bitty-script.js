@@ -68,6 +68,12 @@ const tests = {
       `Have 10,000 bitty elements on the page with the same 'data-reveice="incoming"' receive a signal`,
     prep: ``,
   },
+
+  test0080: {
+    description:
+      `Comparison tests, 10,000 elements updates via .querySelector() instead of via bitty.`,
+    prep: ``,
+  },
 };
 
 window.TestRunner = class {
@@ -79,7 +85,7 @@ window.TestRunner = class {
   }
 
   async testReporter(_, el) {
-    await sleep(100);
+    await sleep(1000);
     this.#currentTestIndex += 1;
     if (Object.keys(tests).length === this.#currentTestIndex) {
       document.querySelector(".testArea").replaceChildren();
@@ -279,6 +285,7 @@ window.test0070Class = class {
   #totalEls = 10000;
 
   bittyReady() {
+    console.log(`${currentTest} - starting`);
     this.api.localTrigger("testBed");
   }
 
@@ -296,22 +303,67 @@ window.test0070Class = class {
 </${bittyTagName}>`,
       );
     });
+    console.log(`${currentTest} - adding bitty elements`);
     const content = this.api.makeHTML(payload.join(""));
     el.appendChild(content);
     markStart();
+    console.log(`${currentTest} - triggering`);
     trigger.click();
   }
 
   test0070Trigger(_, el) {
+    el.innerHTML = `. `;
     testCounter += 1;
-    el.innerHTML = `${testCounter} `;
     if (testCounter === this.#totalEls) {
       this.api.localTrigger("test0070Done");
     }
   }
 
   test0070Done(_, el) {
+    console.log(`${currentTest} - done`);
     markEnd();
-    this.api.trigger("testReporter");
+    // this.api.trigger("testReporter");
   }
+};
+
+window.test0080Class = class {
+  #counter = 0;
+  #totalEls = 10000;
+
+  bittyReady() {
+    this.api.localTrigger("testBed");
+  }
+
+  testBed(_, el) {
+    testCounter = 0;
+    const trigger = this.api.makeElement(
+      `<button>Trigger Test ${currentTest}</button>`,
+    );
+    el.replaceChildren(trigger);
+    // const payload = [];
+    // [...Array(this.#totalEls)].forEach((_, index) => {
+    //   payload.push(
+    //     `<${bittyTagName} data-connect="${currentTest}Alfa">
+    // <span data-receive="test0070Trigger">i </span>
+    // </${bittyTagName}>`,
+    //   );
+    // });
+    // const content = this.api.makeHTML(payload.join(""));
+    // el.appendChild(content);
+    // markStart();
+    // trigger.click();
+  }
+
+  // test0070Trigger(_, el) {
+  //   testCounter += 1;
+  //   el.innerHTML = `${testCounter} `;
+  //   if (testCounter === this.#totalEls) {
+  //     this.api.localTrigger("test0070Done");
+  //   }
+  // }
+
+  // test0070Done(_, el) {
+  //   markEnd();
+  //   this.api.trigger("testReporter");
+  // }
 };

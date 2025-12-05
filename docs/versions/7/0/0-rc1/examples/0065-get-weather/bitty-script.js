@@ -1,5 +1,6 @@
 /*
 [!- set page_config = namespace() !]
+
 [!- if file.folder_parts[1] !]
 [!- set page_config.version = file.folder_parts[1] !]
 [!- else !]
@@ -33,7 +34,7 @@ window.GetWeather = class {
 
   async bittyInit() {
     const url =
-      `/versions/[@ page_config.version @]/examples/[@ page_config.parent_folder @]/stations.json`;
+      `/versions/[@ major_dir @]/[@ minor_dir @]/[@ patch_dir @]/examples/[@ page_config.parent_folder @]/stations.json`;
     const response = await this.api.getJSON(url);
     if (response.value) {
       this.#stations = response.value;

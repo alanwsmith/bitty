@@ -1,14 +1,44 @@
 
+	[! set args_path = file.folder + "/_includes/methods/loadCSS/_includes/args" !]
+
 <details class="docs-sub-details">
+[#
 	[!- set args_string_path = file.folder + "/_includes/methods/loadCSS/_args.txt" -!]
-	<summary>loadCSS(
 		[!- include args_string_path !]
-		
+
+{%- set config = namespace() -%}
+{%- set config.counter = 0 -%}
+#]
+
+
+[! set counters = namespace() !]
+[! set counters.initial = 0 !]
+[! set counters.count = 0 !]
+
+[! for f in folders !]
+[! if f.parent == args_path !]
+[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+[! set counters.initial = counters.initial + 1 !]
+[! endif !]
+[! endfor !]
+
+
+	<summary>loadCSS(
+[! for f in folders !]
+[! if f.parent == args_path !]
+[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+
+[! include title_path !]
+
+[! set counters.count = counters.count + 1 !]
+[! if counters.count != counters.initial !],[! endif !]
+
+[! endif !]
+[! endfor !]
 	)</summary>
 
 
 	<h5>Arguments</h5>
-	[! set args_path = file.folder + "/_includes/methods/loadCSS/_includes/args" !]
 
 	[! for f in folders !]
 	[! if f.parent == args_path !]

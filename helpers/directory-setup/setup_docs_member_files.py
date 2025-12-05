@@ -22,17 +22,47 @@ lines = data.split("\n")
 
 parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc1/documentation/_includes/methods"
 
-
 skeleton = """
+	[! set args_path = file.folder + "/_includes/methods/$VALUE/_includes/args" !]
+
 <details class="docs-sub-details">
+[#
 	[!- set args_string_path = file.folder + "/_includes/methods/$VALUE/_args.txt" -!]
-	<summary>$VALUE(
 		[!- include args_string_path !]
+
+{%- set config = namespace() -%}
+{%- set config.counter = 0 -%}
+#]
+
+
+[! set counters = namespace() !]
+[! set counters.initial = 0 !]
+[! set counters.count = 0 !]
+
+[! for f in folders !]
+[! if f.parent == args_path !]
+[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+[! set counters.initial = counters.initial + 1 !]
+[! endif !]
+[! endfor !]
+
+
+	<summary>$VALUE(
+[! for f in folders !]
+[! if f.parent == args_path !]
+[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+
+[! include title_path !]
+
+[! set counters.count = counters.count + 1 !]
+[! if counters.count != counters.initial !],[! endif !]
+
+[! endif !]
+[! endfor !]
 	)</summary>
 
 
 	<h5>Arguments</h5>
-	[! set args_path = file.folder + "/_includes/methods/$VALUE/_includes/args" !]
 
 	[! for f in folders !]
 	[! if f.parent == args_path !]
@@ -57,7 +87,6 @@ for line in lines:
 	args_dir = f"{content_dir}/_includes/args"
 	
 	
-	
 #	print(content_dir)	
 	
 	Path(includes_dir).mkdir(exist_ok=True)	
@@ -71,10 +100,10 @@ for line in lines:
 		_out.write(output)
 	
 		
-	arg_string_path = f"{content_dir}/_args.txt"
-	with open(arg_string_path, "w") as _out:
-		print(arg_string_path)
-		_out.write("TODO: Fill in args")
+#	arg_string_path = f"{content_dir}/_args.txt"
+#	with open(arg_string_path, "w") as _out:
+#		print(arg_string_path)
+#		_out.write("TODO: Fill in args")
 		
 		
 	

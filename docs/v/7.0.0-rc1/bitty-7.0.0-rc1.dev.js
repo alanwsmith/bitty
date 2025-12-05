@@ -1,16 +1,6 @@
-/** @internal */
 const version = [7, 0, 0];
 
-/** @internal */
 const tagName = `bitty-${version[0]}-${version[1]}`;
-
-/**
- * An Expanded Event
- * @typedef {Object} ExpandedEvent
- * @property {String} stringValue - The .value for the event.target if it exists.
- * @property {Int} intValue - The .value for the event.target if it exists as an int
- * @property {Float} floatValue - The .value for the event.target if it exists as a float
- */
 
 function expandEvent(ev) {
   if (ev.target.value !== undefined) {
@@ -31,39 +21,6 @@ function expandEvent(ev) {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
-
-/**
- * An Expanded Element
- * @typedef {Object} ExpandedElement
- * @property {boolean} isTarget - The element is also the target of the ev
- * @property {boolean} isSender - The element is also the sender of the ev
- * x@property {String} id - The element's data-bittyid
- * @property {Element} bittyParent- The bitty parent element
- * @property {String} bittyParentBittyId- The bitty parent element's data-bittyid
- * x@property {String} targetId- The bitty parent element's data-bittyid
- * x@property {String} senderId- The target element's data-bittyid
- * x@property {Element} sender - The sending element
- * @method {String} stringData(KEY) - Gets the data-KEY from the element as a string. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * @method {Int} intData(KEY) - Gets the data-KEY from the element as an int. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * @method {Float} floatData(KEY) - Gets the data-KEY from the element as a float. If the element doesn't have a data-KEY, then the value from the first ancestor `data-KEY` is used. If there is no ancestor, returns null.
- * x@method {String} targetStringData(KEY)
- * x@method {Int} targetIntData(KEY)
- * x@method {Float} targetFloatData(KEY)
- * x@method {String} senderStringData(KEY)
- * x@method {Int} senderIntData(KEY)
- * x@method {Float} senderFloatData(KEY)
- * x@method {boolean} matchTargetData(KEY) - Return's true if the element and the target have the same `data-KEY` attribute and if they match. Otherwise, returns false
- * x@method {boolean} matchSenderData(KEY) - Return's true if the element and the sender have the same `data-KEY` attribute and if they match. Otherwise, returns false
- * x@method {String} stringValue
- * x@method {Int} intValue
- * x@method {Float} floatValue
- * @method {String} targetStringValue
- * @method {Int} targetIntValue
- * @method {Float} targetFloatValue
- * @method {String} senderStringValue
- * @method {Int} senderIntValue
- * @method {Float} senderFloatValue
- */
 
 function expandElement(ev, el) {
   if (ev !== null) {
@@ -170,7 +127,6 @@ function findSender(evTarget) {
   }
 }
 
-/** @internal */
 function getBittyParent(el) {
   if (el.localName.toLowerCase() === tagName) {
     return el;
@@ -185,7 +141,7 @@ function getBittyParent(el) {
     return null;
   }
 }
-/** @internal */
+
 class BittyError extends Error {
   constructor(payload) {
     super();
@@ -199,7 +155,6 @@ class BittyError extends Error {
   }
 }
 
-/** @internal */
 class ForwardEvent extends Event {
   constructor(ev, signal) {
     super("bittyforward", { bubbles: true });
@@ -208,7 +163,6 @@ class ForwardEvent extends Event {
   }
 }
 
-/** @internal */
 class LocalTriggerEvent extends Event {
   constructor(signal) {
     super("bittylocaltrigger", { bubbles: true });
@@ -216,7 +170,6 @@ class LocalTriggerEvent extends Event {
   }
 }
 
-/** @internal */
 class TriggerEvent extends Event {
   constructor(signal) {
     super("bittytrigger", { bubbles: true });
@@ -239,14 +192,6 @@ function findDataKey(el, key) {
   }
 }
 
-/**
- * @attribute {string} data-connect
- * @attribute {string} data-init
- * @attribute {string} data-listeners
- * @attribute {string} data-receive
- * @attribute {string} data-send
- */
-
 class BittyJs extends HTMLElement {
   constructor() {
     super();
@@ -258,7 +203,6 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  /** @internal */
   async connectedCallback() {
     this.dataset.bittyid = self.crypto.randomUUID();
     await this.makeConnection();
@@ -273,7 +217,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
   addEventListeners() {
     const listeners = [
       "bittyforward",
@@ -296,13 +239,12 @@ class BittyJs extends HTMLElement {
       },
     );
   }
-  /** @internal */
+
   connectedMoveCallback() {
     // this prevs connectedCallback() from firing
     // if a bitty component is moved.
   }
 
-  /** @internal */
   doSubs(content, subs) {
     subs.forEach((sub) => {
       const outerBaseType = typeof sub[1];
@@ -362,7 +304,6 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(forwardEvent);
   }
 
-  /** @internal */
   // TODO: Deprecate in favor of top level function
   getBittyParent(el) {
     if (el.localName.toLowerCase() === tagName) {
@@ -457,7 +398,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
   async handleEvent(ev) {
     expandEvent(ev);
     if (
@@ -676,7 +616,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
   async makeConnection() {
     try {
       if (!this.dataset.connect) {
@@ -754,7 +693,6 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  /** @internal */
   async runBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
@@ -765,7 +703,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
   async runBittyReady() {
     if (typeof this.conn.bittyReady === "function") {
       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
@@ -776,7 +713,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  /** @internal */
   async runDataInits() {
     if (this.dataset.init) {
       const signals = this.trimInput(this.dataset.init);
@@ -812,7 +748,6 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
-  /** @internal */
   setIds(input) {
     input.querySelectorAll("*").forEach((el) => {
       if (!el.dataset.bittyid) {
@@ -826,7 +761,6 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(ev);
   }
 
-  /** @internal */
   trimInput(input) {
     return input
       .trim()

@@ -683,7 +683,9 @@ class BittyJs extends HTMLElement {
         if (window.BittyClass) {
           this.conn = new window.BittyClass();
         } else {
-          console.error(`${tagName} error: No class to connect to.`);
+          console.error(
+            `${tagName} error: Could not find "window.BittyClass" on the page to connect to (which is needed because there is no "data-connect" attribute).`,
+          );
         }
       } else {
         let connParts = this.trimInput(this.dataset.connect);
@@ -697,19 +699,25 @@ class BittyJs extends HTMLElement {
           if (connParts[0].substring(0, 4) === "http") {
             const mod = await import(connParts[0]);
             if (connParts[1] === undefined) {
-              this.conn = new mod.default();
+              try {
+                this.conn = new mod.default();
+              } catch (error) {
+                console.error(
+                  `${tagName} error [${error}] - Check the file "${this.dataset.connect}" to make sure it has an "export default class {}"`,
+                );
+              }
             } else {
               this.conn = new mod[connParts[1]]();
             }
           } else {
             console.error(
-              `Tried to use 'data-connect="${this.dataset.connect}" which did not match a class on the page which means an attempt to use it as a URL was made. It failed becasue the URL version of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported`,
+              `${tagName} error: Tried to use 'data-connect="${this.dataset.connect}" which did not match a class on the page which means an attempt to use it as a URL was made. It failed becasue the URL version of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported`,
             );
           }
         }
       }
     } catch (error) {
-      console.error(`${tagName} error: ${error} - ${this.dataset.connect}`);
+      console.error(`${tagName} error: [${error}] - ${this.dataset.connect}`);
     }
   }
 

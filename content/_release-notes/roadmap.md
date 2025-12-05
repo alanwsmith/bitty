@@ -1,5 +1,7 @@
 ## Roadmap 
 
+- TODO: Improve connection error messages
+
 - TODO: Make md5 hashes of files and check them
 before deployment. 
 

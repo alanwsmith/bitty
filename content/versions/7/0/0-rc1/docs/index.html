@@ -1,0 +1,24 @@
+[!- extends file.output_folder + "/_wrapper.html" -!]
+
+
+[! block main !]
+
+[@ file @]
+
+<h1>Documentation</h1>
+<h2>HTML Elemnet data-* API</h2>
+[! for f in files !]
+  [! if f.folder_parts[1] == file.folder_parts[1] 
+    and f.folder_parts[2] == file.folder_parts[2] 
+    and f.folder_parts[3] == file.folder_parts[3] 
+    and f.folder_parts[4] == "docs"
+    and f.folder_parts[6] == "attrs"
+    and f.path_parts[8] == "index.html"
+ !]
+<details><summary class="docs-details-section">[@ f.parent_folder @]</summary>
+[! include f.input_path !]
+</details>
+  [! endif !]
+[! endfor !]
+[! endblock !]
+

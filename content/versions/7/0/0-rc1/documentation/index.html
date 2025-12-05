@@ -2,6 +2,20 @@
 
 [!- block main -!]
 
+[#
+[@ json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output @]
+#]
+
+
+<ul>
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
+<li>[@ item.name @]</li>
+[! endif !]
+[! endfor !]
+</ul>
+
+
 <h1>Documentation</h1>
 <h2>HTML Elemnet data-* API</h2>
 [! for f in files !]

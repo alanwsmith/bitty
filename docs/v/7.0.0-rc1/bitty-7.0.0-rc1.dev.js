@@ -203,6 +203,7 @@ class BittyJs extends HTMLElement {
     };
   }
 
+  /** internal */
   async connectedCallback() {
     this.dataset.bittyid = self.crypto.randomUUID();
     await this.makeConnection();
@@ -217,6 +218,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   addEventListeners() {
     const listeners = [
       "bittyforward",
@@ -240,11 +242,13 @@ class BittyJs extends HTMLElement {
     );
   }
 
+  /** internal */
   connectedMoveCallback() {
     // this prevs connectedCallback() from firing
     // if a bitty component is moved.
   }
 
+  /** internal */
   doSubs(content, subs) {
     subs.forEach((sub) => {
       const outerBaseType = typeof sub[1];
@@ -302,22 +306,6 @@ class BittyJs extends HTMLElement {
   forward(ev, signal) {
     const forwardEvent = new ForwardEvent(ev, signal);
     this.dispatchEvent(forwardEvent);
-  }
-
-  // TODO: Deprecate in favor of top level function
-  getBittyParent(el) {
-    if (el.localName.toLowerCase() === tagName) {
-      return el;
-    } else if (el.parentNode) {
-      return this.getBittyParent(el.parentNode);
-    } else {
-      // TODO test returning null if no
-      // bitty parent is found. (need to
-      // load an element via a document
-      // query selector that's outside
-      // a bitty element to do the test.
-      return null;
-    }
   }
 
   async getElement(url, subs = [], options = {}) {
@@ -398,6 +386,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   async handleEvent(ev) {
     expandEvent(ev);
     if (
@@ -616,6 +605,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   async makeConnection() {
     try {
       if (!this.dataset.connect) {
@@ -693,6 +683,7 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
+  /** internal */
   async runBittyInit() {
     if (typeof this.conn.bittyInit === "function") {
       if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
@@ -703,6 +694,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   async runBittyReady() {
     if (typeof this.conn.bittyReady === "function") {
       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
@@ -713,6 +705,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   async runDataInits() {
     if (this.dataset.init) {
       const signals = this.trimInput(this.dataset.init);
@@ -726,7 +719,6 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-
     for (let el of this.querySelectorAll("[data-init]")) {
       if (el.dataset.init) {
         expandElement(null, el);
@@ -748,6 +740,7 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
+  /** internal */
   setIds(input) {
     input.querySelectorAll("*").forEach((el) => {
       if (!el.dataset.bittyid) {
@@ -761,6 +754,8 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(ev);
   }
 
+
+  /** internal */
   trimInput(input) {
     return input
       .trim()

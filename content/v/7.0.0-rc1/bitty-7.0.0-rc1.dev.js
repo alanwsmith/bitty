@@ -703,11 +703,19 @@ class BittyJs extends HTMLElement {
                 this.conn = new mod.default();
               } catch (error) {
                 console.error(
-                  `${tagName} error [${error}] - Check the file "${this.dataset.connect}" to make sure it has an "export default class {}"`,
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${this.dataset.connect}" to make sure it has an "export default class {}"`,
                 );
               }
             } else {
-              this.conn = new mod[connParts[1]]();
+              try {
+                this.conn = new mod[connParts[1]]();
+              } catch (error) {
+                console.error(
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${
+                    connParts[0]
+                  }" to make sure it has an "export class ${connParts[1]} {}"`,
+                );
+              }
             }
           } else {
             console.error(

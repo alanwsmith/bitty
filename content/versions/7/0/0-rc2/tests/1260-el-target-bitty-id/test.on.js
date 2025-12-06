@@ -5,7 +5,7 @@ export default class {
     });
   }
   runTest1260(ev, el) {
-    if (el.targetBittyId = el.dataset.bittyid) {
+    if (ev.bittyId === el.dataset.bittyid) {
       el.innerHTML = "PASSED";
     }
   }

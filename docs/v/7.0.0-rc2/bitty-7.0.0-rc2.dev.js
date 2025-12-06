@@ -3,24 +3,36 @@ const version = [7, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function expandEvent(ev) {
-  if (ev.target.value !== undefined) {
-    // xTODO: See if can change .val to .value
-    ev.val = ev.target.value;
-    // xTODO: Change .valInt to .valueInt
-    ev.valInt = parseInt(ev.target.value, 10);
-    // xTODO: Change .valFloat to .valueFloat
-    ev.valFloat = parseFloat(event.target.value);
+  ev.sender = findSender(ev.target);
+
+  if (ev.sender && ev.sender.value) {
+    ev.sender.valueAsInt = parseInt(ev.sender.value, 10);
+    ev.sender.valueAsFloat = parseFloat(ev.sender.value);
   }
 
-  ev.ds = (x) => {
+  if (ev.target.value !== undefined) {
+    // xTODOx: See if can change .val to .value
+    ev.value = ev.target.value;
+    // xTODOx: Change .valInt to .valueInt
+    ev.valueAsInt = parseInt(ev.target.value, 10);
+    // xTODOx: Change .valFloat to .valueFloat
+    ev.valueAsFloat = parseFloat(event.target.value);
+  }
+
+  ev.bittyId = ev.target.dataset.bittyid;
+
+  // xTODOx: Rename .ds to .param
+  ev.param = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
-  ev.dsInt = (x) => {
+  // xTODOx: Rename .ds to .param
+  ev.paramAsInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  ev.dsFloat = (x) => {
+  // xTODOx: Rename .ds to .param
+  ev.paramAsFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
@@ -48,9 +60,9 @@ function expandElement(ev, el) {
   };
 
   // xTODO: DEPRECATE and move to ev.bittyId
-  if (ev !== null) {
-    el.targetBittyId = ev.target.dataset.bittyid;
-  }
+  // if (ev !== null) {
+  //   el.targetBittyId = ev.target.dataset.bittyid;
+  // }
 
   // xTODO: DEPRECATE and use already existing ev.ds()
   el.targetDs = (x) => {
@@ -107,14 +119,15 @@ function expandElement(ev, el) {
   }
 
   // xTODO: DEPRECATE and move to ev.senderValue, etc...
-  if (ev !== null) {
-    if (el.sender.value) {
-      el.senderVal = el.sender.value;
-      el.senderValInt = parseInt(el.sender.value, 10);
-      el.senderValFloat = parseFloat(el.sender.value);
-    }
-  }
+  // if (ev !== null) {
+  //   if (el.sender.value) {
+  //     el.senderVal = el.sender.value;
+  //     el.senderValInt = parseInt(el.sender.value, 10);
+  //     el.senderValFloat = parseFloat(el.sender.value);
+  //   }
+  // }
 
+  // xTODOx: Rename to .matchTarget
   el.matchTarget = (x) => {
     const evKey = findDataKey.call(null, ev.target, x);
     const elKey = findDataKey.call(null, el, x);
@@ -124,6 +137,7 @@ function expandElement(ev, el) {
     return evKey === elKey;
   };
 
+  // xTODOx: Rename to .matchSender
   el.matchSender = (x) => {
     const evKey = findDataKey.call(null, el.sender, x);
     const elKey = findDataKey.call(null, el, x);
@@ -141,6 +155,8 @@ function findSender(evTarget) {
     return evTarget;
   } else if (evTarget.parentNode) {
     return findSender(evTarget.parentNode);
+  } else {
+    return null;
   }
 }
 

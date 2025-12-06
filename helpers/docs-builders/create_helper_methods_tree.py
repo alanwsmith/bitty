@@ -5,6 +5,8 @@
 # as you only put content inside the 
 # `_args` and `_exampels` folders
 
+import os
+
 from pathlib import Path 
 from string import Template
 
@@ -30,11 +32,36 @@ patch_version = "0-rc2"
 parent_dir = f"/Users/alan/workshop/bitty/content/versions/{major_version}/{minor_version}/{patch_version}/documentation/_includes/helper-methods"
 
 
-for key in lines:
-	base_dir = f"{parent_dir}/{key}"
-	args_dir = f"{base_dir}/_args"
-	examples_dir = f"{base_dir}/_examples"
-	print(base_dir)
+def make_directories():
+	for key in lines:
+		base_dir = f"{parent_dir}/{key}"
+		if not os.path.isdir(base_dir):
+			print(f"mkdir: {base_dir}")
+			Path(base_dir).mkdir(exist_ok=True)
+		
+		args_dir = f"{base_dir}/_args"
+		if not os.path.isdir(args_dir):
+			print(f"mkdir: {args_dir}")
+			Path(args_dir).mkdir(exist_ok=True)		
+			
+		examples_dir = f"{base_dir}/_examples"
+		if not os.path.isdir(examples_dir):
+			print(f"mkdir: {examples_dir}")
+			Path(examples_dir).mkdir(exist_ok=True)
+			
+
+def make_index_files():
+	for key in lines:
+		index_path = f"{parent_dir}/{key}/index.html"
+		print(f"Generating: {index_path}")
+		with open(index_path, "w") as _out:
+			_out.write("TODO")
+	
+	
+
+if __name__ == "__main__":
+	make_directories()
+	make_index_files()
 
 
 #skeleton = """

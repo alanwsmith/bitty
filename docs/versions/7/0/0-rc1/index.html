@@ -1425,15 +1425,15 @@ window.ToDoList = class {
 </style>
 
 <script>window.ChangeFontSize = class {
-  setStartingFontSize(_ev, el) {
+  setStartingFontSize(_, el) {
     const initialValue = 1.1;
     el.value = initialValue;
     this.api.setProp(`--example-font-size`, `${initialValue}rem`);
   }
 
-  changeFontSize(ev, _el) {
+  changeFontSize(ev, _) {
     window.requestAnimationFrame(() => {
-      const value = `${ev.val}rem`;
+      const value = `${ev.value}rem`;
       this.api.setProp(`--example-font-size`, value);
     });
   }
@@ -1508,11 +1508,11 @@ window.ChangeColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateColor(ev, _) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }
@@ -1561,7 +1561,7 @@ const svgParams = ["svg-red", "svg-green", "svg-blue"];
 const svgSliderTemplates = `
 <label>PARAM
 <input 
-  data-send="updateColor" 
+  data-send="updateSVGColor" 
   value="VALUE"
   data-param="PARAM"
   type="range" 
@@ -1594,11 +1594,11 @@ window.ChangeSVGColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateSVGColor(ev, el) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }
@@ -1707,7 +1707,7 @@ window.SortColumns = class {
   }
 
   sortColumn(ev, el) {
-    const rowToSortOn = ev.dsInt("index");
+    const rowToSortOn = ev.propToInt("index");
     let rows = [];
     el.querySelectorAll("tr").forEach((tr) => {
       const cells = [];
@@ -1854,7 +1854,7 @@ const weatherTemplates = {
 
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
-<div><img src="IMG" /></div>
+<div>IMG</div>
 </div>`,
 };
 
@@ -1877,24 +1877,29 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    const station = ev.val === undefined ? "PAJN" : ev.val;
+    const station = ev.value === undefined ? "PAJN" : ev.value;
     const url =
       `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-
-    const data = response.value.properties;
-    const tmpC = data.temperature.value;
-    const tmpF = c2f(tmpC);
-    const subs = [
-      ["TEMPC", tmpC],
-      ["TEMPF", tmpF],
-      ["DESC", data.textDescription],
-      ["IMG", data.icon],
-    ];
-    const output = this.api.makeHTML(weatherTemplates.report, subs);
-    el.replaceChildren(output);
-
-    //
+    if (response.value) {
+      const data = response.value.properties;
+      const tmpC = data.temperature.value;
+      const tmpF = c2f(tmpC);
+      const subs = [
+        ["TEMPC", tmpC],
+        ["TEMPF", tmpF],
+        ["DESC", data.textDescription],
+      ];
+      if (data.icon) {
+        subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
+      } else {
+        subs.push(["IMG", ""]);
+      }
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
+      el.replaceChildren(output);
+    } else {
+      el.innerHTML = "Could not get feed";
+    }
   }
 
   weatherStations(_, el) {
@@ -2193,10 +2198,10 @@ window.MatchGame = class {
 
   matchGameMakePick(_ev, el) {
     if (
-      el.ds("state") === "hide" || el.ds("state") === "miss"
+      el.prop("state") === "hide" || el.prop("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.dsInt("pair"));
+      this.#tries.push(el.propToInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -2208,7 +2213,7 @@ window.MatchGame = class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.dsInt("pair"))
+      this.#tries.includes(el.propToInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -2216,23 +2221,23 @@ window.MatchGame = class {
         el.dataset.state = "match";
         this.#matchCount += 1;
       } else {
-        if (el.ds("state") === "try") {
+        if (el.prop("state") === "try") {
           el.dataset.state = "miss";
         }
       }
     } else {
-      if (el.ds("state") === "miss") {
+      if (el.prop("state") === "miss") {
         el.dataset.state = "hide";
       }
     }
     if (
-      el.ds("state") === "hide"
+      el.prop("state") === "hide"
     ) {
       el.innerHTML = "?";
     } else {
       el.replaceChildren();
-      el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsInt("index")]);
+      el.appendChild(this.#heads[el.propToInt("index")]);
+      el.appendChild(this.#faces[el.propToInt("index")]);
     }
   }
 
@@ -2381,7 +2386,7 @@ window.NameTagMaker = class {
   }
 
   updateNameTagName(ev, el) {
-    this.#currentName = ev.val;
+    this.#currentName = ev.value;
     this.api.trigger("showNameTag");
   }
 
@@ -2397,7 +2402,7 @@ window.NameTagMaker = class {
   updateNameTagColor(ev, el) {
     if (el.isSender) {
       el.innerHTML = "x";
-      this.#currentColor = el.ds("color");
+      this.#currentColor = el.prop("color");
     } else {
       el.innerHTML = "";
     }
@@ -2460,7 +2465,7 @@ window.ToDoList = class {
     if (ev.type === "keyup" && ev.keyCode === 13) {
       const subs = [
         ["ITEM_ID", self.crypto.randomUUID()],
-        ["ITEM_TEXT", el.targetVal],
+        ["ITEM_TEXT", ev.value],
       ];
       const newEl = this.api.makeHTML(todoTemplates.item, subs);
       el.appendChild(newEl);
@@ -2469,20 +2474,20 @@ window.ToDoList = class {
   }
 
   deleteItem(ev, el) {
-    if (el.matchTargetDs("itemid")) {
+    if (el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   removeDelete(ev, el) {
-    if (el && el.matchTargetDs("itemid")) {
+    if (el && el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
-      if (el.ds("status") === "not-done") {
+    if (ev.target.nodeName === "INPUT" && el.matchesTarget("itemid")) {
+      if (el.prop("status") === "not-done") {
         el.dataset.status = "done";
         const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
         el.appendChild(deleteButton);

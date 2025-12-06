@@ -18,7 +18,7 @@ const svgParams = ["svg-red", "svg-green", "svg-blue"];
 const svgSliderTemplates = `
 <label>PARAM
 <input 
-  data-send="updateColor" 
+  data-send="updateSVGColor" 
   value="VALUE"
   data-param="PARAM"
   type="range" 
@@ -51,11 +51,11 @@ window.ChangeSVGColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateSVGColor(ev, el) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }

@@ -21,7 +21,7 @@ const weatherTemplates = {
 
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
-<div><img src="IMG" /></div>
+<div>IMG</div>
 </div>`,
 };
 
@@ -44,24 +44,29 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    const station = ev.val === undefined ? "PAJN" : ev.val;
+    const station = ev.value === undefined ? "PAJN" : ev.value;
     const url =
       `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-
-    const data = response.value.properties;
-    const tmpC = data.temperature.value;
-    const tmpF = c2f(tmpC);
-    const subs = [
-      ["TEMPC", tmpC],
-      ["TEMPF", tmpF],
-      ["DESC", data.textDescription],
-      ["IMG", data.icon],
-    ];
-    const output = this.api.makeHTML(weatherTemplates.report, subs);
-    el.replaceChildren(output);
-
-    //
+    if (response.value) {
+      const data = response.value.properties;
+      const tmpC = data.temperature.value;
+      const tmpF = c2f(tmpC);
+      const subs = [
+        ["TEMPC", tmpC],
+        ["TEMPF", tmpF],
+        ["DESC", data.textDescription],
+      ];
+      if (data.icon) {
+        subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
+      } else {
+        subs.push(["IMG", ""]);
+      }
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
+      el.replaceChildren(output);
+    } else {
+      el.innerHTML = "Could not get feed";
+    }
   }
 
   weatherStations(_, el) {

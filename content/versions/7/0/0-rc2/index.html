@@ -1,24 +1,27 @@
 [!- extends "versions/7/0/0-rc2/_wrappers/wrapper.html" -!] 
 
 [!- block main -!]
-
 <h1>Welcome to bitty!</h1>
 
 <p>
   <strong>bitty</strong> is a tool for making things on the web.
-  You can do stuff like:</p>
+  You can do stuff like:
+</p>
 
 <div class="hp-examples">
-[!-for folder in folders !]
-[!-if folder.folder_parts[1] == major_version !]
-[!-if folder.folder_parts[2] == minor_version !]
-[!-if folder.folder_parts[4] == "examples" !]
+[!- for folder in folders !]
+[!- if folder.folder_parts[1] == major_version !]
+[!- if folder.folder_parts[2] == minor_version !]
+[!- if folder.folder_parts[3] == patch_dir -!]
+[!- if folder.folder_parts[4] == "examples" !]
+
 
   [!-set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
   [!-set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
   [!-set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
   [!-set script_path = folder.parent + "/" + folder.name + "/bitty-script.js" !]
   [!-set url = "/" + folder.parent + "/" + folder.name + "/" !]
+
 
 <style>
 [!- include style_path -!]
@@ -44,10 +47,10 @@
 [!-endif !]
 [!-endif !]
 [!-endif !]
+[!-endif !]
 [!-endfor !]
 
   </div>
-
 
 [#
 <div class="download-div">

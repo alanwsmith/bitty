@@ -52,7 +52,7 @@ window.NameTagMaker = class {
   }
 
   updateNameTagName(ev, el) {
-    this.#currentName = ev.val;
+    this.#currentName = ev.value;
     this.api.trigger("showNameTag");
   }
 
@@ -68,7 +68,7 @@ window.NameTagMaker = class {
   updateNameTagColor(ev, el) {
     if (el.isSender) {
       el.innerHTML = "x";
-      this.#currentColor = el.ds("color");
+      this.#currentColor = el.prop("color");
     } else {
       el.innerHTML = "";
     }

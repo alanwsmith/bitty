@@ -86,10 +86,10 @@ window.MatchGame = class {
 
   matchGameMakePick(_ev, el) {
     if (
-      el.ds("state") === "hide" || el.ds("state") === "miss"
+      el.prop("state") === "hide" || el.prop("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.dsInt("pair"));
+      this.#tries.push(el.propToInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -101,7 +101,7 @@ window.MatchGame = class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.dsInt("pair"))
+      this.#tries.includes(el.propToInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -109,23 +109,23 @@ window.MatchGame = class {
         el.dataset.state = "match";
         this.#matchCount += 1;
       } else {
-        if (el.ds("state") === "try") {
+        if (el.prop("state") === "try") {
           el.dataset.state = "miss";
         }
       }
     } else {
-      if (el.ds("state") === "miss") {
+      if (el.prop("state") === "miss") {
         el.dataset.state = "hide";
       }
     }
     if (
-      el.ds("state") === "hide"
+      el.prop("state") === "hide"
     ) {
       el.innerHTML = "?";
     } else {
       el.replaceChildren();
-      el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsInt("index")]);
+      el.appendChild(this.#heads[el.propToInt("index")]);
+      el.appendChild(this.#faces[el.propToInt("index")]);
     }
   }
 

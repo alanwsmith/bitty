@@ -114,7 +114,6 @@ window.BittyCodeBlockMaker = class {
         </div>
       </hgroup>
 
-
 <style>
 [data-connect="GetWeather"] {
   height: 12rem;
@@ -130,7 +129,7 @@ const weatherTemplates = {
 
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
-<div><img src="IMG" /></div>
+<div>IMG</div>
 </div>`,
 };
 
@@ -143,7 +142,7 @@ window.GetWeather = class {
 
   async bittyInit() {
     const url =
-      `/versions////examples/0065-get-weather/stations.json`;
+      `/versions///0-rc2/examples/0065-get-weather/stations.json`;
     const response = await this.api.getJSON(url);
     if (response.value) {
       this.#stations = response.value;
@@ -153,24 +152,29 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    const station = ev.val === undefined ? "PAJN" : ev.val;
+    const station = ev.value === undefined ? "PAJN" : ev.value;
     const url =
       `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-
-    const data = response.value.properties;
-    const tmpC = data.temperature.value;
-    const tmpF = c2f(tmpC);
-    const subs = [
-      ["TEMPC", tmpC],
-      ["TEMPF", tmpF],
-      ["DESC", data.textDescription],
-      ["IMG", data.icon],
-    ];
-    const output = this.api.makeHTML(weatherTemplates.report, subs);
-    el.replaceChildren(output);
-
-    //
+    if (response.value) {
+      const data = response.value.properties;
+      const tmpC = data.temperature.value;
+      const tmpF = c2f(tmpC);
+      const subs = [
+        ["TEMPC", tmpC],
+        ["TEMPF", tmpF],
+        ["DESC", data.textDescription],
+      ];
+      if (data.icon) {
+        subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
+      } else {
+        subs.push(["IMG", ""]);
+      }
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
+      el.replaceChildren(output);
+    } else {
+      el.innerHTML = "Could not get feed";
+    }
   }
 
   weatherStations(_, el) {
@@ -225,7 +229,7 @@ Get Weather    </div>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta object-literal key js">report</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;
 <span class="line-marker"></span>&lt;div&gt;DESC&lt;br /&gt;TEMPF°F (TEMPC°C)&lt;/div&gt;
-<span class="line-marker"></span>&lt;div&gt;&lt;img src=&quot;IMG&quot; /&gt;&lt;/div&gt;
+<span class="line-marker"></span>&lt;div&gt;IMG&lt;/div&gt;
 <span class="line-marker"></span>&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
@@ -238,7 +242,7 @@ Get Weather    </div>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">bittyInit</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span>
-<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions////examples/0065-get-weather/stations.json<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions///0-rc2/examples/0065-get-weather/stations.json<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getJSON</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">stations</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
@@ -248,25 +252,30 @@ Get Weather    </div>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">changeStation</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>...<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">station</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">val</span> <span class="keyword operator comparison js">===</span> <span class="constant language undefined js">undefined</span> <span class="keyword operator ternary js">?</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PAJN<span class="punctuation definition string end js">&quot;</span></span> <span class="keyword operator ternary js">:</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">val</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">station</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span> <span class="keyword operator comparison js">===</span> <span class="constant language undefined js">undefined</span> <span class="keyword operator ternary js">?</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PAJN<span class="punctuation definition string end js">&quot;</span></span> <span class="keyword operator ternary js">:</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span>
 <span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>https://api.weather.gov/stations/</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">station</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">/observations/latest<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">response</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getJSON</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">data</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation accessor js">.</span><span class="meta property object js">properties</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">tmpC</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">temperature</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">tmpF</span> <span class="keyword operator assignment js">=</span> <span class="meta function-call js"><span class="variable function js">c2f</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">tmpC</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
-<span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TEMPC<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">tmpC</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TEMPF<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">tmpF</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>DESC<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">textDescription</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>      <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>IMG<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">icon</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>    <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">output</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">weatherTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">report</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">output</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span>
-<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">data</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">response</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation accessor js">.</span><span class="meta property object js">properties</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">tmpC</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">temperature</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">tmpF</span> <span class="keyword operator assignment js">=</span> <span class="meta function-call js"><span class="variable function js">c2f</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">tmpC</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TEMPC<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">tmpC</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TEMPF<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">tmpF</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>DESC<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">textDescription</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">icon</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">subs</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>IMG<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;img src=&quot;</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">icon</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">&quot; alt=&quot;weather icon&quot; /&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">subs</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>IMG<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span><span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">output</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">weatherTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">report</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">output</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Could not get feed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">weatherStations</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">selector</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">weatherTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">selector</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
@@ -295,9 +304,7 @@ just use the <code>input</code> event type.</p>
 </li>
 </ul>
  
-
     </main>
-
 
     <footer>
       <hr />

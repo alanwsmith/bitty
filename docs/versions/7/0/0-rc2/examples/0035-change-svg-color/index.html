@@ -114,7 +114,6 @@ window.BittyCodeBlockMaker = class {
         </div>
       </hgroup>
 
-
 <style>
 [data-connect=ChangeSVGColor] {
   display: grid;
@@ -143,7 +142,7 @@ const svgParams = ["svg-red", "svg-green", "svg-blue"];
 const svgSliderTemplates = `
 <label>PARAM
 <input 
-  data-send="updateColor" 
+  data-send="updateSVGColor" 
   value="VALUE"
   data-param="PARAM"
   type="range" 
@@ -154,7 +153,7 @@ const svgSliderTemplates = `
 window.ChangeSVGColor = class {
   async loadSVG(_, el) {
     const faceURL =
-      `/versions////svgs/faces/9.svg`;
+      `/versions///0-rc2/svgs/faces/9.svg`;
     const faceResponse = await this.api.getSVG(faceURL);
     if (faceResponse.value) {
       const faceSVG = faceResponse.value;
@@ -176,11 +175,11 @@ window.ChangeSVGColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateSVGColor(ev, el) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }
@@ -214,7 +213,7 @@ Change SVG Colors    </div>
 <span class="line-marker"></span><span class="storage type js">const</span> <span class="variable other readwrite js">svgSliderTemplates</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
 <span class="line-marker"></span>&lt;label&gt;PARAM
 <span class="line-marker"></span>&lt;input 
-<span class="line-marker"></span>  data-send=&quot;updateColor&quot; 
+<span class="line-marker"></span>  data-send=&quot;updateSVGColor&quot; 
 <span class="line-marker"></span>  value=&quot;VALUE&quot;
 <span class="line-marker"></span>  data-param=&quot;PARAM&quot;
 <span class="line-marker"></span>  type=&quot;range&quot; 
@@ -225,7 +224,7 @@ Change SVG Colors    </div>
 <span class="line-marker"></span><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ChangeSVGColor</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">loadSVG</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">faceURL</span> <span class="keyword operator assignment js">=</span>
-<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions////svgs/faces/9.svg<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions///0-rc2/svgs/faces/9.svg<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">faceResponse</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getSVG</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">faceURL</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">faceResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">faceSVG</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">faceResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
@@ -247,11 +246,11 @@ Change SVG Colors    </div>
 <span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">updateColor</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">updateSVGColor</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">requestAnimationFrame</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setProp</span><span class="meta group js"><span class="punctuation section group js">(</span>
-<span class="line-marker"></span>        <span class="string template js"><span class="punctuation definition string template begin js">`</span>--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">ds</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>param<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
-<span class="line-marker"></span>        <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">valFloat</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="string template js"><span class="punctuation definition string template begin js">`</span>--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>param<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">valueToFloat</span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -259,9 +258,7 @@ Change SVG Colors    </div>
 
 <h2>Notes</h2>
  
-
     </main>
-
 
     <footer>
       <hr />

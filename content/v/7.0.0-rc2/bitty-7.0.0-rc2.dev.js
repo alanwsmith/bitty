@@ -14,13 +14,13 @@ function expandEvent(ev) {
   }
 
   if (ev.sender) {
-    ev.sender.param = (x) => {
+    ev.sender.prop = (x) => {
       return findDataKey.call(null, ev.sender, x);
     };
-    ev.sender.paramToInt = (x) => {
+    ev.sender.propToInt = (x) => {
       return parseInt(findDataKey.call(null, ev.sender, x), 10);
     };
-    ev.sender.paramToFloat = (x) => {
+    ev.sender.propToFloat = (x) => {
       return parseFloat(findDataKey.call(null, ev.sender, x));
     };
   }
@@ -37,17 +37,17 @@ function expandEvent(ev) {
   ev.bittyId = ev.target.dataset.bittyid;
 
   // xTODOx: Rename .ds to .param
-  ev.param = (x) => {
+  ev.prop = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
   // xTODOx: Rename .ds to .param
-  ev.paramToInt = (x) => {
+  ev.propToInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
   // xTODOx: Rename .ds to .param
-  ev.paramToFloat = (x) => {
+  ev.propToFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
@@ -73,17 +73,17 @@ function expandElement(ev, el) {
   el.bittyId = el.dataset.bittyid;
 
   // xTODOx: Rename to .param
-  el.param = (x) => {
+  el.prop = (x) => {
     return findDataKey.call(null, el, x);
   };
 
   // xTODOx: Rename to .paramAsInt
-  el.paramToInt = (x) => {
+  el.propToInt = (x) => {
     return parseInt(findDataKey.call(null, el, x));
   };
 
   // xTODOx: Rename to .paramAsFloat
-  el.paramToFloat = (x) => {
+  el.propToFloat = (x) => {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
@@ -830,4 +830,3 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define(tagName, BittyJs);
-

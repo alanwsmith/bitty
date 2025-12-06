@@ -21,7 +21,7 @@ window.ToDoList = class {
     if (ev.type === "keyup" && ev.keyCode === 13) {
       const subs = [
         ["ITEM_ID", self.crypto.randomUUID()],
-        ["ITEM_TEXT", el.targetVal],
+        ["ITEM_TEXT", ev.value],
       ];
       const newEl = this.api.makeHTML(todoTemplates.item, subs);
       el.appendChild(newEl);
@@ -30,20 +30,20 @@ window.ToDoList = class {
   }
 
   deleteItem(ev, el) {
-    if (el.matchTargetDs("itemid")) {
+    if (el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   removeDelete(ev, el) {
-    if (el && el.matchTargetDs("itemid")) {
+    if (el && el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
-      if (el.ds("status") === "not-done") {
+    if (ev.target.nodeName === "INPUT" && el.matchesTarget("itemid")) {
+      if (el.prop("status") === "not-done") {
         el.dataset.status = "done";
         const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
         el.appendChild(deleteButton);

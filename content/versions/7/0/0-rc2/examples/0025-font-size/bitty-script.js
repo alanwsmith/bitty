@@ -1,13 +1,13 @@
 window.ChangeFontSize = class {
-  setStartingFontSize(_ev, el) {
+  setStartingFontSize(_, el) {
     const initialValue = 1.1;
     el.value = initialValue;
     this.api.setProp(`--example-font-size`, `${initialValue}rem`);
   }
 
-  changeFontSize(ev, _el) {
+  changeFontSize(ev, _) {
     window.requestAnimationFrame(() => {
-      const value = `${ev.val}rem`;
+      const value = `${ev.value}rem`;
       this.api.setProp(`--example-font-size`, value);
     });
   }

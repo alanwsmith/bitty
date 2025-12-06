@@ -25,11 +25,11 @@ window.ChangeColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateColor(ev, _) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }

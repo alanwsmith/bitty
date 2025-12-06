@@ -12,16 +12,16 @@ from string import Template
 
 
 data = """ev.param
-ev.paramToFloat
-ev.paramToInt
-ev.sender.param
-ev.sender.paramToFloat
-ev.sender.paramToInt
+ev.propToFloat
+ev.propToInt
+ev.sender.prop
+ev.sender.propToFloat
+ev.sender.propToInt
 el.matchesSender
 el.matchesTarget
-el.param
-el.paramToFloat
-el.paramToInt"""
+el.prop
+el.propToFloat
+el.propToInt"""
 
 lines = data.split("\n")
 

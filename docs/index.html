@@ -114,1212 +114,15 @@ window.BittyCodeBlockMaker = class {
         </div>
       </hgroup>
 
-
 <h1>Welcome to bitty!</h1>
 
 <p>
   <strong>bitty</strong> is a tool for making things on the web.
-  You can do stuff like:</p>
+  You can do stuff like:
+</p>
 
 <div class="hp-examples">
-<style>[data-connect=ShowDate] > button {
-  width: 7rem;
-  height: 14rem;
-}</style>
 
-<script>window.ShowDate = class {
-  getDate(_, el) {
-    el.innerHTML = new Date();
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Show The Date</div>
-    <div class="hp-example-content">
-<bitty-7-0 data-connect="ShowDate">
-  <button data-use="getDate">
-    Click Here to get the Current Date and Time
-  </button>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0005-show-date&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=ClickCounter] > button {
-  width: 7rem;
-  height: 4rem;
-}</style>
-
-<script>window.ClickCounter = class {
-  #counter = 0;
-
-  count(_, el) {
-    this.#counter += 1;
-    el.innerHTML = `Clicks: ${this.#counter}`;
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Count Clicks</div>
-    <div class="hp-example-content">
-<bitty-7-0 data-connect="ClickCounter">
-  <button data-use="count">Start Counting</button>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0010-counter&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=AddSubtract] {
-  display: grid;
-  gap: 1rem;
-}
-
-[data-connect=AddSubtract] > button {
-  width: 7rem;
-  height: 2.4rem;
-}
-</style>
-
-<script>window.AddSubtract = class {
-  #counter = 0;
-
-  add(_, el) {
-    this.#counter += 1;
-    el.innerHTML = this.#counter;
-  }
-
-  subtract(_, el) {
-    this.#counter -= 1;
-    el.innerHTML = this.#counter;
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Add/Subtract</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="AddSubtract">
-  <div>
-    Value: <span data-receive="add subtract">0</span>
-  </div>
-  <button data-send="add">Add 1</button>
-  <button data-send="subtract">Subtract 1</button>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0020-add-subtract&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=ChangeFontSize] {
-  min-height: 14rem;
-}
-</style>
-
-<script>window.ChangeFontSize = class {
-  setStartingFontSize(_ev, el) {
-    const initialValue = 1.1;
-    el.value = initialValue;
-    this.api.setProp(`--example-font-size`, `${initialValue}rem`);
-  }
-
-  changeFontSize(ev, _el) {
-    window.requestAnimationFrame(() => {
-      const value = `${ev.val}rem`;
-      this.api.setProp(`--example-font-size`, value);
-    });
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Change Font Size</div>
-    <div class="hp-example-content">
-
-<style>
-.example-font-size {
-  font-size: var(--example-font-size);
-}
-</style>
-
-<bitty-7-0 data-connect="ChangeFontSize">
-  <input 
-    type="range" 
-    data-init="setStartingFontSize"
-    data-send="changeFontSize" 
-    min="0.7"
-    max="2.3"
-    step="0.01"
-  />
-  <div class="example-font-size">Hello</div>
-</bitty-7-0>
-
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0025-font-size&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=ChangeColor] {
-  display: grid;
-  gap: 0.9rem;
-}
-
-.change-color-display {
-  border-radius: 0.4rem;
-  background-color: rgb(var(--red) var(--green) var(--blue));
-  width: 100px;
-  height: 100px;
-}</style>
-
-<script>const params = ["red", "green", "blue"];
-
-const sliderTemplate = `
-<label>PARAM
-<input 
-  data-send="updateColor" 
-  value="VALUE"
-  data-param="PARAM"
-  type="range" 
-  min="0"
-  max="255" />
-</label>`;
-
-window.ChangeColor = class {
-  makeSliders(_, el) {
-    params.forEach((param) => {
-      const value = Math.floor(Math.random() * 250);
-      this.api.setProp(`--${param}`, value);
-      const subs = [
-        ["PARAM", param],
-        ["VALUE", value],
-      ];
-      const slider = this.api.makeHTML(sliderTemplate, subs);
-      el.appendChild(slider);
-    });
-  }
-
-  updateColor(ev, el) {
-    window.requestAnimationFrame(() => {
-      this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
-      );
-    });
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Color Picker</div>
-    <div class="hp-example-content">
-
-
-<bitty-7-0 data-connect="ChangeColor">
-  <div class="change-color-display"></div>
-  <div data-init="makeSliders"></div>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0030-change-color&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=ChangeSVGColor] {
-  display: grid;
-  gap: 0.9rem;
-}
-
-[data-init=makeSliders] {
-  display: grid;
-  gap: 0.3rem;
-}
-
-.example-face {
-  width: 9rem;
-  height: auto;
-}
-
-.example-face path {
-  fill: rgb(var(--svg-red) var(--svg-green) var(--svg-blue));
-}</style>
-
-<script>/**/
-
-const svgParams = ["svg-red", "svg-green", "svg-blue"];
-
-const svgSliderTemplates = `
-<label>PARAM
-<input 
-  data-send="updateColor" 
-  value="VALUE"
-  data-param="PARAM"
-  type="range" 
-  min="0"
-  max="255" />
-</label>`;
-
-window.ChangeSVGColor = class {
-  async loadSVG(_, el) {
-    const faceURL =
-      `/versions/7/0/0-rc2/svgs/faces/9.svg`;
-    const faceResponse = await this.api.getSVG(faceURL);
-    if (faceResponse.value) {
-      const faceSVG = faceResponse.value;
-      faceSVG.classList.add("example-face");
-      el.appendChild(faceSVG);
-    }
-  }
-
-  makeSliders(_, el) {
-    svgParams.forEach((param) => {
-      const value = Math.floor(Math.random() * 250);
-      this.api.setProp(`--${param}`, value);
-      const subs = [
-        ["PARAM", param],
-        ["VALUE", value],
-      ];
-      const slider = this.api.makeHTML(svgSliderTemplates, subs);
-      el.appendChild(slider);
-    });
-  }
-
-  updateColor(ev, el) {
-    window.requestAnimationFrame(() => {
-      this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
-      );
-    });
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Change SVG Colors</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="ChangeSVGColor">
-  <div data-init="loadSVG"></div>
-  <div data-init="makeSliders"></div>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0035-change-svg-color&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style></style>
-
-<script>const quotes = [
-  { text: "this quick brown fox", citation: "waerqwerwqer" },
-  { text: "jumps over the lazy dog", citation: "luklulul" },
-  { text: "more stuff here", citation: "anoter cite" },
-];
-
-function randInt() {
-  return Math.floor(Math.random() * quotes.length);
-}
-
-window.RandomQuote = class {
-  #quoteIndex = 0;
-
-  bittyReady() {
-    this.api.trigger("exampleQuote exampleCitation");
-  }
-
-  exampleQuote(_ev, el) {
-    for (let i = 0; i < 10; i += 1) {
-      const newIndex = randInt(0, quotes.length - 1);
-      if (newIndex !== this.#quoteIndex) {
-        this.#quoteIndex = newIndex;
-        break;
-      }
-    }
-    el.innerHTML = quotes[this.#quoteIndex].text;
-  }
-
-  exampleCitation(_ev, el) {
-    el.innerHTML = quotes[this.#quoteIndex].citation;
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Random Quote</div>
-    <div class="hp-example-content">
-
-<bitty-7-0
-  data-connect="RandomQuote"
->
-  <div data-receive="exampleQuote"></div>
-  <div data-receive="exampleCitation"></div>
-  <button data-send="exampleQuote exampleCitation">Get Quote</button>
-</bitty-7-0></div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0040-random-quote&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style></style>
-
-<script>const sortColumnsTemplate = `
-  <button 
-    data-receive="selectButton"
-    data-send="sortColumn selectButton" 
-    data-index="INDEX">TEXT</button>
-`;
-
-const rowTemplate = `
-  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
-`;
-
-window.SortColumns = class {
-  makeButtons(_ev, el) {
-    el.querySelectorAll("th").forEach((cell, cellIndex) => {
-      const subs = [
-        ["INDEX", cellIndex],
-        ["TEXT", cell.innerHTML],
-      ];
-      const output = this.api.makeHTML(sortColumnsTemplate, subs);
-      cell.replaceChildren(output);
-    });
-  }
-
-  selectButton(_ev, el) {
-    if (el.isTarget) {
-      el.classList.add("active-button");
-    } else {
-      el.classList.remove("active-button");
-    }
-  }
-
-  sortColumn(ev, el) {
-    const rowToSortOn = ev.dsInt("index");
-    let rows = [];
-    el.querySelectorAll("tr").forEach((tr) => {
-      const cells = [];
-      tr.querySelectorAll("td").forEach((td) => {
-        cells.push(td.innerHTML);
-      });
-      rows.push(cells);
-    });
-
-    rows.sort((a, b) => {
-      const aCheck = a[rowToSortOn].toLowerCase();
-      const bCheck = b[rowToSortOn].toLowerCase();
-      if (aCheck < bCheck) {
-        return -1;
-      }
-      if (aCheck > bCheck) {
-        return 1;
-      }
-      return 0;
-    });
-
-    el.replaceChildren();
-    rows.forEach((row) => {
-      const subs = [
-        ["COL1", row[0]],
-        ["COL2", row[1]],
-        ["COL3", row[2]],
-      ];
-      const updatedRow = this.api.makeHTML(rowTemplate, subs);
-      el.appendChild(updatedRow);
-    });
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Sort Data</div>
-    <div class="hp-example-content">
-
-<bitty-7-0
-  data-connect="SortColumns"
->
-  <table>
-    <thead>
-      <tr data-init="makeButtons">
-        <th>Col 1</th>
-        <th>Col 2</th>
-        <th>Col 3</th>
-      </tr>
-    </thead>
-    <tbody data-receive="sortColumn">
-      <tr>
-        <td>alfa</td>
-        <td>foxtrot</td>
-        <td>tango</td>
-      </tr>
-      <tr>
-        <td>charlie</td>
-        <td>delta</td>
-        <td>sierra</td>
-      </tr>
-      <tr>
-        <td>bravo</td>
-        <td>echo</td>
-        <td>hotel</td>
-      </tr>
-    </tbody>
-  </table>
-</bitty-7-0></div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0050-sort-columns&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-init="loadButtons"] {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-</style>
-
-<script>const buttonTemplate = `
-  <button 
-    data-send="followButtonClick" 
-    data-receive="followButtonClick" 
-    data-row="ROW"
-    data-col="COL"
-  >-</button>
-`;
-
-window.SelectButton = class {
-  loadButtons(_ev, el) {
-    for (let row = 0; row < 5; row += 1) {
-      for (let col = 0; col < 5; col += 1) {
-        const subs = [
-          ["ROW", row],
-          ["COL", col],
-        ];
-        const button = this.api.makeHTML(
-          buttonTemplate,
-          subs,
-        );
-        el.appendChild(button);
-      }
-    }
-  }
-
-  followButtonClick(_ev, el) {
-    if (el.isTarget) {
-      el.innerHTML = "+";
-      el.classList.add("active-button");
-    } else {
-      el.innerHTML = "-";
-      el.classList.remove("active-button");
-    }
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Select a Button</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="SelectButton">
-  <div data-init="loadButtons"></div>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0060-select-button&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect="GetWeather"] {
-  height: 12rem;
-}</style>
-
-<script>/**/
-
-const weatherTemplates = {
-  selector: `<select data-send="changeStation"></select>`,
-
-  stationOption: `<option value="URL">CITY, STATE</option>`,
-
-  report: `<div>
-<div>DESC<br />TEMPF°F (TEMPC°C)</div>
-<div><img src="IMG" /></div>
-</div>`,
-};
-
-function c2f(c) {
-  return Math.round((c * 9 / 5) + 32);
-}
-
-window.GetWeather = class {
-  #stations = null;
-
-  async bittyInit() {
-    const url =
-      `/versions/7/0/0-rc2/examples/0065-get-weather/stations.json`;
-    const response = await this.api.getJSON(url);
-    if (response.value) {
-      this.#stations = response.value;
-    }
-    this.api.trigger("changeStation");
-  }
-
-  async changeStation(ev, el) {
-    el.innerHTML = "...";
-    const station = ev.val === undefined ? "PAJN" : ev.val;
-    const url =
-      `https://api.weather.gov/stations/${station}/observations/latest`;
-    const response = await this.api.getJSON(url);
-
-    const data = response.value.properties;
-    const tmpC = data.temperature.value;
-    const tmpF = c2f(tmpC);
-    const subs = [
-      ["TEMPC", tmpC],
-      ["TEMPF", tmpF],
-      ["DESC", data.textDescription],
-      ["IMG", data.icon],
-    ];
-    const output = this.api.makeHTML(weatherTemplates.report, subs);
-    el.replaceChildren(output);
-
-    //
-  }
-
-  weatherStations(_, el) {
-    const selector = this.api.makeElement(weatherTemplates.selector);
-    Object.values(this.#stations.capitals).forEach((station) => {
-      const subs = [
-        ["CITY", station.city_name],
-        ["STATE", station.state_name],
-        ["URL", station.weather_station_id],
-      ];
-      const option = this.api.makeElement(weatherTemplates.stationOption, subs);
-      selector.appendChild(option);
-    });
-    el.appendChild(selector);
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Get Weather</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 
-  data-listeners="input" 
-  data-connect="GetWeather"
->
-  <div data-init="weatherStations"></div>
-  <div data-receive="changeStation"></div>
-</bitty-7-0>
-
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0065-get-weather&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style></style>
-
-<script>const words = [
-  "toolkit",
-  "website",
-  "creator",
-  "builder",
-  "browser",
-  "hypertext",
-];
-
-const hangmanTemplates = {
-  loser:
-    `<div>You Lost... <button data-send="hangmanStartGame">Play Again</button></div>`,
-  input:
-    `<label>Guess:<input data-send="hangmanGuess" type="text" size="3" /></label>`,
-  winner:
-    `<div>You Won! <button data-send="hangmanStartGame">Play Again</button></div>`,
-};
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function misses(word, guesses) {
-  const letters = new Set(word.split(""));
-  return guesses.difference(letters);
-}
-
-function hasWon(word, guesses) {
-  const letters = new Set(word.split(""));
-  return letters.isSubsetOf(guesses);
-}
-
-window.Hangman = class {
-  #wordIndex = -1;
-  #guesses = null;
-  #maxGuesses = 6;
-
-  bittyReady() {
-    this.api.trigger("hangmanStartGame");
-  }
-
-  hangmanStartInterface(_ev, el) {
-    el.replaceChildren(this.api.makeHTML(hangmanTemplates.start));
-  }
-
-  hangmanStartGame(_ev, el) {
-    this.#wordIndex += 1;
-    if (this.#wordIndex >= words.length) {
-      this.#wordIndex = 0;
-    }
-    this.#guesses = new Set();
-    this.api.trigger("hangmanUpdate");
-  }
-
-  hangmanUpdate(_ev, _el) {
-    this.api.trigger(`
-      hangmanGallows 
-      hangmanDisplay 
-      hangmanInterface
-      hangmanMisses`);
-  }
-
-  hangmanGallows(_ev, el) {
-    el.innerHTML = misses(
-      words[this.#wordIndex],
-      this.#guesses,
-    ).size;
-  }
-
-  async hangmanGuess(ev, _el) {
-    if (ev.target.value !== "") {
-      ev.target.readOnly = true;
-      this.#guesses.add(ev.target.value);
-      this.api.trigger("hangmanUpdate");
-      await sleep(100);
-      ev.target.value = "";
-      ev.target.readOnly = false;
-    }
-  }
-
-  hangmanMisses(_ev, el) {
-    const missList = [
-      ...misses(
-        words[this.#wordIndex],
-        this.#guesses,
-      ).values(),
-    ];
-    el.innerHTML = `Misses: ${missList.sort()}`;
-  }
-
-  hangmanDisplay(_ev, el) {
-    const output = words[this.#wordIndex].split("").map((letter) => {
-      if (this.#guesses.has(letter)) {
-        return letter;
-      } else {
-        return "_";
-      }
-    });
-    el.innerHTML = output.join(" ");
-  }
-
-  hangmanInterface(_ev, el) {
-    const word = words[this.#wordIndex];
-    if (misses(word, this.#guesses).size === this.#maxGuesses) {
-      el.replaceChildren(this.api.makeHTML(hangmanTemplates.loser));
-    } else if (hasWon(word, this.#guesses)) {
-      el.replaceChildren(this.api.makeHTML(hangmanTemplates.winner));
-    } else if (this.#guesses.size === 0) {
-      el.replaceChildren(this.api.makeHTML(hangmanTemplates.input));
-    }
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Hangman</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="Hangman">
-  <div data-receive="hangmanGallows"></div>
-  <pre data-receive="hangmanDisplay"></pre>
-  <div data-receive="hangmanInterface"></div>
-  <div data-receive="hangmanMisses"></div>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0070-hangman&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>.match-game-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr ;
-}
-
-.tile-button {
-  position: relative;
-  width: 50px;
-  height: 50px;
-}
-
-[data-state=try] {
-  background-color: goldenrod;
-}
-
-[data-state=match] {
-  background-color: green;
-}
-
-[data-state=miss] {
-  background-color: red;
-}
-
-.svg-head {
-  position: absolute;
-  top: 0px;
-  left: 4px;
-  width: 40px;
-  height: auto;
-}
-
-.svg-face {
-  position: absolute;
-  top: 13px;
-  left: 15px;
-  width: 26px;
-  height: auto;
-}
-</style>
-
-<script>const matchGameTemplates = {
-  tile: `
-<button 
-  class="tile-button"
-  data-state="hide" 
-  data-pair="PAIR_NUM" 
-  data-index="INDEX"
-  data-use="matchGameMakePick"
-  data-receive="matchGameUpdateTile"
->?</button>`,
-  winner:
-    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
-};
-
-const sourceHeads = [];
-const sourceFaces = [];
-
-function shuffleArray(array) {
-  let currentIndex = array.length;
-  let randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-}
-
-window.MatchGame = class {
-  #tries = [];
-  #turns = 0;
-  #matchCount = 0;
-  #tileCount = 16;
-  #heads = [];
-  #faces = [];
-
-  async bittyInit() {
-    for (let i = 0; i < 10; i += 1) {
-      const headURL =
-        `/versions/7/0/0-rc2/svgs/heads/${i}.svg`;
-      const headResponse = await this.api.getTXT(headURL);
-      if (headResponse.value) {
-        sourceHeads.push(headResponse.value);
-      }
-      const faceURL =
-        `/versions/7/0/0-rc2/svgs/faces/${i}.svg`;
-      const faceResponse = await this.api.getTXT(faceURL);
-      if (faceResponse.value) {
-        sourceFaces.push(faceResponse.value);
-      }
-    }
-  }
-
-  matchGameGrid(ev, el) {
-    this.#turns = 0;
-    this.#matchCount = 0;
-    this.#heads = [];
-    this.#faces = [];
-    const nums = [];
-    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
-      nums.push(indx);
-      nums.push(indx);
-    });
-    shuffleArray(nums);
-    el.replaceChildren();
-    [...Array(this.#tileCount)].forEach((_, index) => {
-      const num = nums.pop();
-      const subs = [
-        ["INDEX", index],
-        ["PAIR_NUM", num],
-      ];
-      el.appendChild(
-        this.api.makeHTML(matchGameTemplates.tile, subs),
-      );
-      const head = this.api.makeSVG(sourceHeads[num]);
-      head.classList.add("svg-head");
-      this.#heads.push(head);
-      const face = this.api.makeSVG(sourceFaces[num]);
-      face.classList.add("svg-face");
-      this.#faces.push(face);
-    });
-    this.api.trigger("matchGameStatus");
-  }
-
-  matchGameMakePick(_ev, el) {
-    if (
-      el.ds("state") === "hide" || el.ds("state") === "miss"
-    ) {
-      el.dataset.state = "try";
-      this.#tries.push(el.dsInt("pair"));
-    }
-    this.api.trigger(`
-      matchGameUpdateTile
-      matchGameClearTries
-      matchGameStatus
-    `);
-  }
-
-  matchGameUpdateTile(_ev, el) {
-    if (
-      this.#tries.length === 2 &&
-      this.#tries.includes(el.dsInt("pair"))
-    ) {
-      if (
-        this.#tries[0] === this.#tries[1]
-      ) {
-        el.dataset.state = "match";
-        this.#matchCount += 1;
-      } else {
-        if (el.ds("state") === "try") {
-          el.dataset.state = "miss";
-        }
-      }
-    } else {
-      if (el.ds("state") === "miss") {
-        el.dataset.state = "hide";
-      }
-    }
-    if (
-      el.ds("state") === "hide"
-    ) {
-      el.innerHTML = "?";
-    } else {
-      el.replaceChildren();
-      el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsInt("index")]);
-    }
-  }
-
-  matchGameClearTries(_ev, _el) {
-    if (this.#tries.length === 2) {
-      this.#turns += 1;
-      this.#tries = [];
-    }
-  }
-
-  matchGameStatus(_ev, el) {
-    if (this.#turns === 0) {
-      el.innerHTML = "Ready";
-    } else {
-      if (this.#matchCount === this.#tileCount) {
-        const subs = [
-          ["TURNS", this.#turns],
-        ];
-        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
-        el.replaceChildren(winner);
-      } else {
-        el.innerHTML = `Turns: ${this.#turns}`;
-      }
-    }
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Match Game</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="MatchGame">
-<div 
-  class="match-game-grid" 
-  data-init="matchGameGrid"
-  data-receive="matchGameGrid"></div>
-<div 
-  data-init="matchGameStatus"
-  data-receive="matchGameStatus"></div>
-</bitty-7-0></div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0080-match-game&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=NameTagMaker] > :where(:not(:first-child)) {
-  margin-top: var(--flow-space, var(--default-flow));
-}
-
-[data-init=nameTagColors] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-[data-init=nameTagColors] > div {
-  border: 1px solid #888;
-  width: 50px;
-  height: 34px;
-}
-
-.name-tag-color-block {
-  font-size: 1.2rem;
-  background-color: var(--color);
-  color: #111;
-  font-weight: 900;
-  text-align: center;
-}
-
-.name-tag-wrapper {
-  display: inline-block;
-  width: 16rem;
-  background-color: white;
-  border-radius: 0.7rem;
-  border: 4px solid var(--color);
-}
-
-.name-tag-name {
-  font-size: 2rem;
-  font-weight: 900;
-  color: black;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-  text-align: center;
-  min-height: 7rem;
-}
-
-.name-tag-hello {
-  text-align: center;
-  color: var(--color);
-}</style>
-
-<script>const nameTagTemplates = {
-  colorBlock: `
-<div 
-  class="name-tag-color-block"
-  style="--color: COLOR"
-  data-color="COLOR"
-  data-send="updateNameTagColor"
-  data-receive="updateNameTagColor"></div>`,
-
-  colorStyle: `
-.name-tag-color-COLOR {
-  background-color: COLOR;
-}`,
-
-  nameTag: `
-<div class="name-tag-wrapper" style="--color: COLOR">
-  <div class="name-tag-hello" style="--color: COLOR">Hello, my name is:</div>
-  <div class="name-tag-name">NAME</div>
-</div>`,
-};
-
-const colors = [
-  "firebrick",
-  "goldenrod",
-  "rebeccapurple",
-  "slateblue",
-  "cadetblue",
-];
-
-window.NameTagMaker = class {
-  #currentName = "";
-  #currentColor = colors[1];
-
-  bittyReady() {
-    this.api.trigger("showNameTag");
-  }
-
-  nameTagColors(_ev, el) {
-    colors.forEach((color) => {
-      const subs = [
-        ["COLOR", color],
-      ];
-      const newEl = this.api.makeElement(
-        nameTagTemplates.colorBlock,
-        subs,
-      );
-      if (color === this.#currentColor) {
-        newEl.innerHTML = "x";
-      }
-      el.appendChild(newEl);
-    });
-  }
-
-  updateNameTagName(ev, el) {
-    this.#currentName = ev.val;
-    this.api.trigger("showNameTag");
-  }
-
-  showNameTag(_ev, el) {
-    const subs = [
-      ["COLOR", this.#currentColor],
-      ["NAME", this.#currentName],
-    ];
-    const newTag = this.api.makeHTML(nameTagTemplates.nameTag, subs);
-    el.replaceChildren(newTag);
-  }
-
-  updateNameTagColor(ev, el) {
-    if (el.isSender) {
-      el.innerHTML = "x";
-      this.#currentColor = el.ds("color");
-    } else {
-      el.innerHTML = "";
-    }
-    this.api.trigger("showNameTag");
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Name Tag Maker</div>
-    <div class="hp-example-content">
-
-<bitty-7-0 data-connect="NameTagMaker">
-<div data-init="nameTagColors"></div>
-  <div>
-    <label>Name
-      <input type="text" size="10" data-send="updateNameTagName" />
-    </label>
-  </div>
-  <div>
-    <div data-receive="showNameTag"></div>
-  </div>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0090-name-tag-maker&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
-<style>[data-connect=ToDoList] {
-  min-height: 14rem;
-}
-
-[data-status=done] {
-  text-decoration: line-through;
-}
-</style>
-
-<script>const todoTemplates = {
-  item: `
-<div 
-  data-itemid="ITEM_ID" 
-  data-receive="updateTodoItem deleteItem" 
-  data-status="not-done">
-  <label data-send="updateTodoItem removeDelete">
-    <input type="checkbox" />ITEM_TEXT
-  </label>
-</div>`,
-
-  deleteButton: `
-<button 
-  data-send="deleteItem" 
-  data-receive="removeDelete"
->delete</button>`,
-};
-
-window.ToDoList = class {
-  addTodoItem(ev, el) {
-    if (ev.type === "keyup" && ev.keyCode === 13) {
-      const subs = [
-        ["ITEM_ID", self.crypto.randomUUID()],
-        ["ITEM_TEXT", el.targetVal],
-      ];
-      const newEl = this.api.makeHTML(todoTemplates.item, subs);
-      el.appendChild(newEl);
-      ev.target.value = "";
-    }
-  }
-
-  deleteItem(ev, el) {
-    if (el.matchTargetDs("itemid")) {
-      el.remove();
-    }
-  }
-
-  removeDelete(ev, el) {
-    if (el && el.matchTargetDs("itemid")) {
-      el.remove();
-    }
-  }
-
-  updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
-      if (el.ds("status") === "not-done") {
-        el.dataset.status = "done";
-        const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
-        el.appendChild(deleteButton);
-      } else {
-        el.dataset.status = "not-done";
-      }
-    }
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">TODO List</div>
-    <div class="hp-example-content">
-
-<bitty-7-0
-  data-connect="ToDoList" 
-  data-listeners="click keyup">
-<div data-send="addTodoItem">
-  <div>
-    <label>Add Item<br />
-      <input type="text" />
-    </label>
-  </div>
-  <div data-receive="addTodoItem"></div>
-</div>
-</bitty-7-0>
-
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc1&#x2f;examples&#x2f;0100-todo-list&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
 <style>[data-connect=ShowDate] > button {
   width: 7rem;
   height: 14rem;
@@ -1347,6 +150,7 @@ window.ToDoList = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=ClickCounter] > button {
   width: 7rem;
   height: 4rem;
@@ -1375,6 +179,7 @@ window.ToDoList = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=AddSubtract] {
   display: grid;
   gap: 1rem;
@@ -1419,21 +224,22 @@ window.ToDoList = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=ChangeFontSize] {
   min-height: 14rem;
 }
 </style>
 
 <script>window.ChangeFontSize = class {
-  setStartingFontSize(_ev, el) {
+  setStartingFontSize(_, el) {
     const initialValue = 1.1;
     el.value = initialValue;
     this.api.setProp(`--example-font-size`, `${initialValue}rem`);
   }
 
-  changeFontSize(ev, _el) {
+  changeFontSize(ev, _) {
     window.requestAnimationFrame(() => {
-      const value = `${ev.val}rem`;
+      const value = `${ev.value}rem`;
       this.api.setProp(`--example-font-size`, value);
     });
   }
@@ -1469,6 +275,7 @@ window.ToDoList = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=ChangeColor] {
   display: grid;
   gap: 0.9rem;
@@ -1508,11 +315,11 @@ window.ChangeColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateColor(ev, _) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }
@@ -1535,6 +342,7 @@ window.ChangeColor = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=ChangeSVGColor] {
   display: grid;
   gap: 0.9rem;
@@ -1561,7 +369,7 @@ const svgParams = ["svg-red", "svg-green", "svg-blue"];
 const svgSliderTemplates = `
 <label>PARAM
 <input 
-  data-send="updateColor" 
+  data-send="updateSVGColor" 
   value="VALUE"
   data-param="PARAM"
   type="range" 
@@ -1594,11 +402,11 @@ window.ChangeSVGColor = class {
     });
   }
 
-  updateColor(ev, el) {
+  updateSVGColor(ev, el) {
     window.requestAnimationFrame(() => {
       this.api.setProp(
-        `--${ev.ds("param")}`,
-        ev.valFloat,
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
       );
     });
   }
@@ -1620,6 +428,7 @@ window.ChangeSVGColor = class {
     </div>
   </div>
 </div>
+
 <style></style>
 
 <script>const quotes = [
@@ -1673,6 +482,7 @@ window.RandomQuote = class {
     </div>
   </div>
 </div>
+
 <style></style>
 
 <script>const sortColumnsTemplate = `
@@ -1707,7 +517,7 @@ window.SortColumns = class {
   }
 
   sortColumn(ev, el) {
-    const rowToSortOn = ev.dsInt("index");
+    const rowToSortOn = ev.propToInt("index");
     let rows = [];
     el.querySelectorAll("tr").forEach((tr) => {
       const cells = [];
@@ -1783,6 +593,7 @@ window.SortColumns = class {
     </div>
   </div>
 </div>
+
 <style>[data-init="loadButtons"] {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -1841,6 +652,7 @@ window.SelectButton = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect="GetWeather"] {
   height: 12rem;
 }</style>
@@ -1854,7 +666,7 @@ const weatherTemplates = {
 
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
-<div><img src="IMG" /></div>
+<div>IMG</div>
 </div>`,
 };
 
@@ -1877,24 +689,29 @@ window.GetWeather = class {
 
   async changeStation(ev, el) {
     el.innerHTML = "...";
-    const station = ev.val === undefined ? "PAJN" : ev.val;
+    const station = ev.value === undefined ? "PAJN" : ev.value;
     const url =
       `https://api.weather.gov/stations/${station}/observations/latest`;
     const response = await this.api.getJSON(url);
-
-    const data = response.value.properties;
-    const tmpC = data.temperature.value;
-    const tmpF = c2f(tmpC);
-    const subs = [
-      ["TEMPC", tmpC],
-      ["TEMPF", tmpF],
-      ["DESC", data.textDescription],
-      ["IMG", data.icon],
-    ];
-    const output = this.api.makeHTML(weatherTemplates.report, subs);
-    el.replaceChildren(output);
-
-    //
+    if (response.value) {
+      const data = response.value.properties;
+      const tmpC = data.temperature.value;
+      const tmpF = c2f(tmpC);
+      const subs = [
+        ["TEMPC", tmpC],
+        ["TEMPF", tmpF],
+        ["DESC", data.textDescription],
+      ];
+      if (data.icon) {
+        subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
+      } else {
+        subs.push(["IMG", ""]);
+      }
+      const output = this.api.makeHTML(weatherTemplates.report, subs);
+      el.replaceChildren(output);
+    } else {
+      el.innerHTML = "Could not get feed";
+    }
   }
 
   weatherStations(_, el) {
@@ -1932,6 +749,7 @@ window.GetWeather = class {
     </div>
   </div>
 </div>
+
 <style></style>
 
 <script>const words = [
@@ -2065,6 +883,7 @@ window.Hangman = class {
     </div>
   </div>
 </div>
+
 <style>.match-game-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr ;
@@ -2193,10 +1012,10 @@ window.MatchGame = class {
 
   matchGameMakePick(_ev, el) {
     if (
-      el.ds("state") === "hide" || el.ds("state") === "miss"
+      el.prop("state") === "hide" || el.prop("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.dsInt("pair"));
+      this.#tries.push(el.propToInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -2208,7 +1027,7 @@ window.MatchGame = class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.dsInt("pair"))
+      this.#tries.includes(el.propToInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -2216,23 +1035,23 @@ window.MatchGame = class {
         el.dataset.state = "match";
         this.#matchCount += 1;
       } else {
-        if (el.ds("state") === "try") {
+        if (el.prop("state") === "try") {
           el.dataset.state = "miss";
         }
       }
     } else {
-      if (el.ds("state") === "miss") {
+      if (el.prop("state") === "miss") {
         el.dataset.state = "hide";
       }
     }
     if (
-      el.ds("state") === "hide"
+      el.prop("state") === "hide"
     ) {
       el.innerHTML = "?";
     } else {
       el.replaceChildren();
-      el.appendChild(this.#heads[el.dsInt("index")]);
-      el.appendChild(this.#faces[el.dsInt("index")]);
+      el.appendChild(this.#heads[el.propToInt("index")]);
+      el.appendChild(this.#faces[el.propToInt("index")]);
     }
   }
 
@@ -2280,6 +1099,7 @@ window.MatchGame = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=NameTagMaker] > :where(:not(:first-child)) {
   margin-top: var(--flow-space, var(--default-flow));
 }
@@ -2381,7 +1201,7 @@ window.NameTagMaker = class {
   }
 
   updateNameTagName(ev, el) {
-    this.#currentName = ev.val;
+    this.#currentName = ev.value;
     this.api.trigger("showNameTag");
   }
 
@@ -2397,7 +1217,7 @@ window.NameTagMaker = class {
   updateNameTagColor(ev, el) {
     if (el.isSender) {
       el.innerHTML = "x";
-      this.#currentColor = el.ds("color");
+      this.#currentColor = el.prop("color");
     } else {
       el.innerHTML = "";
     }
@@ -2428,6 +1248,7 @@ window.NameTagMaker = class {
     </div>
   </div>
 </div>
+
 <style>[data-connect=ToDoList] {
   min-height: 14rem;
 }
@@ -2460,7 +1281,7 @@ window.ToDoList = class {
     if (ev.type === "keyup" && ev.keyCode === 13) {
       const subs = [
         ["ITEM_ID", self.crypto.randomUUID()],
-        ["ITEM_TEXT", el.targetVal],
+        ["ITEM_TEXT", ev.value],
       ];
       const newEl = this.api.makeHTML(todoTemplates.item, subs);
       el.appendChild(newEl);
@@ -2469,20 +1290,20 @@ window.ToDoList = class {
   }
 
   deleteItem(ev, el) {
-    if (el.matchTargetDs("itemid")) {
+    if (el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   removeDelete(ev, el) {
-    if (el && el.matchTargetDs("itemid")) {
+    if (el && el.matchesTarget("itemid")) {
       el.remove();
     }
   }
 
   updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchTargetDs("itemid")) {
-      if (el.ds("status") === "not-done") {
+    if (ev.target.nodeName === "INPUT" && el.matchesTarget("itemid")) {
+      if (el.prop("status") === "not-done") {
         el.dataset.status = "done";
         const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
         el.appendChild(deleteButton);
@@ -2520,11 +1341,8 @@ window.ToDoList = class {
 </div>
   </div>
 
-
  
-
     </main>
-
 
     <footer>
       <hr />

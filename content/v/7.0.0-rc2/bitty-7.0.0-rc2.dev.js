@@ -115,23 +115,23 @@ function expandElement(ev, el) {
   // };
 
   if (el.value) {
-    // xTODO: Deprecate el.val
+    // xTODOx: Deprecate el.val
     // el.val = el.value;
-    // xTODO: Change .valInt to .valueInt
+    // xTODOx: Change .valInt to .valueInt
     el.valueAsInt = parseInt(el.value, 10);
-    // xTODO: Change .valFloat to .valueFloat
+    // xTODOx: Change .valFloat to .valueFloat
     el.valueAsFloat = parseFloat(el.value);
   }
 
-  // xTODO: DEPRECATE - Remove in favor of existing
+  // xTODOx: DEPRECATE - Remove in favor of existing
   // ev.value, ev.valueInt, ev.valueFloat
-  if (ev !== null) {
-    if (ev.target.value) {
-      el.targetVal = ev.target.value;
-      el.targetValInt = parseInt(ev.target.value, 10);
-      el.targetValFloat = parseFloat(ev.target.value);
-    }
-  }
+  // if (ev !== null) {
+  //   if (ev.target.value) {
+  //     el.targetVal = ev.target.value;
+  //     el.targetValInt = parseInt(ev.target.value, 10);
+  //     el.targetValFloat = parseFloat(ev.target.value);
+  //   }
+  // }
 
   // xTODO: DEPRECATE and move to ev.senderValue, etc...
   // if (ev !== null) {

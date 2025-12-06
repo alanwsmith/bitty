@@ -24,13 +24,23 @@ makeTXT
 setProp
 trigger"""
 
-lines = data.split("\n")
+keys = data.split("\n")
 
 parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc2/documentation/_includes/methods"
 
 
 
-skeleton = """
+index_file_skeleton = """
+[#- ####################################################
+
+DO NOTE EDIT THIS FILE MANUALLY
+This file is created by:
+
+helpers/docs-builders/create_methods_tree.py
+
+######################################################## -#]
+
+[!- set preface_path = file.folder + "/_includes/methods/$VALUE/preface.html" -!]
 [!- set args_path = file.folder + "/_includes/methods/$VALUE/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/methods/$VALUE/_examples" -!]
 
@@ -40,10 +50,8 @@ skeleton = """
 [!- set counters.initial = 0 !]
 [!- set counters.count = 0 !]
 
-
 [!- set counters.initial_examples = 0 !]
 [!- set counters.count_examples = 0 !]
-
 
 [!- for f in folders !]
 [!- if f.parent == args_path !]
@@ -61,6 +69,11 @@ skeleton = """
 [!- endif !]
 [!- endfor -!]
 	)</summary>
+
+
+	<div class="docs-preface-wrapper">
+		[!- include preface_path -!]
+	</div>
 
 	<div class="doc-sub-header">Arguments</div>
 
@@ -82,7 +95,6 @@ skeleton = """
 [!- endif !]
 [!- endfor -!]
 
-
 	<div class="doc-sub-header">Examples</div>
 
 	[! for f in folders !]
@@ -102,7 +114,7 @@ skeleton = """
 
 def holding():
 	
-	for line in lines:
+	for key in keys:
 		
 		content_dir = f"{parent_dir}/{line}"
 		index_file = f"{content_dir}/index.html"
@@ -114,29 +126,44 @@ def holding():
 		Path(examples_dir).mkdir(parents=True, exist_ok=True)
 		
 		data = { "VALUE": line }
-		template = Template(skeleton)
+		template = Template(index_file_skeleton)
 		output = template.substitute(data)
 		with open(index_file, "w") as _out:
 			print(index_file)
 			_out.write(output)
-		
 			
-	#	arg_string_path = f"{content_dir}/_args.txt"
-	#	with open(arg_string_path, "w") as _out:
-	#		print(arg_string_path)
-	#		_out.write("TODO: Fill in args")
+
+def make_method_dirs():
+	for key in keys:
+		method_dir = f"{parent_dir}/{key}"
+		if not os.path.isdir(method_dir):
+			print(f"mkdir: {method_dir}")
+			Path(method_dir).mkdir(exist_ok=True)
+	
 		
-
-
 def make_preface_if_necessary():
-	for key in lines:
+	for key in keys:
 		preface_path = f"{parent_dir}/{key}/preface.html"
 		if not os.path.isfile(preface_path):
 			print(preface_path)
 			with open (preface_path, "w") as _pref:
 				_pref.write("<p>TODO</p>")
-			
+				
+
+def make_index_files():
+	for key in keys:
+		index_file = f"{parent_dir}/{key}/index.html"
+		data = { "VALUE": key }
+		template = Template(index_file_skeleton)
+		output = template.substitute(data)
+		with open(index_file, "w") as _out:
+			print(index_file)
+			_out.write(output)
+				
 	
 if __name__ == "__main__":
+	make_method_dirs()
 	make_preface_if_necessary()
+	make_index_files()
+	
 	

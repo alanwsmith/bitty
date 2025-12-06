@@ -1,4 +1,14 @@
 
+[#- ####################################################
+
+DO NOTE EDIT THIS FILE MANUALLY
+This file is created by:
+
+helpers/docs-builders/create_methods_tree.py
+
+######################################################## -#]
+
+[!- set preface_path = file.folder + "/_includes/methods/getElement/preface.html" -!]
 [!- set args_path = file.folder + "/_includes/methods/getElement/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/methods/getElement/_examples" -!]
 
@@ -8,10 +18,8 @@
 [!- set counters.initial = 0 !]
 [!- set counters.count = 0 !]
 
-
 [!- set counters.initial_examples = 0 !]
 [!- set counters.count_examples = 0 !]
-
 
 [!- for f in folders !]
 [!- if f.parent == args_path !]
@@ -29,6 +37,11 @@
 [!- endif !]
 [!- endfor -!]
 	)</summary>
+
+
+	<div class="docs-preface-wrapper">
+		[!- include preface_path -!]
+	</div>
 
 	<div class="doc-sub-header">Arguments</div>
 
@@ -50,21 +63,17 @@
 [!- endif !]
 [!- endfor -!]
 
-
 	<div class="doc-sub-header">Examples</div>
 
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
 	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
 	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
-	<details class="args-details">
+	<details class="example-details">
 	<summary>[! include name_path !]</summary>
 	[! include content_path !]
 	</details>
 	[! endif !]
 	[! endfor !]
-
-
-
 
 </details>

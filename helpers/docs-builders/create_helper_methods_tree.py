@@ -78,16 +78,17 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 <div class="doc-sub-header">Arguments</div>
 
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
 [! for f in folders !]
 [! if f.parent == args_path !]
 [! set name_path = args_path + "/" + f.name + "/name.txt" !]
 [! set content_path = args_path + "/" + f.name + "/index.html" !]
-<details class="args-details">
-<summary>[! include name_path !]</summary>
-[! include content_path !]
-</details>
+<li>[! include name_path !] [! include content_path !]</li>
 [! endif !]
 [! endfor !]
+</ul>
+</div>
 
 
 
@@ -100,6 +101,8 @@ helpers/docs-builders/create_helper_methods_tree.py
 	<div class="doc-sub-header">Examples</div>
 
 	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+
+<div class="docs-examples-wrapper">
 
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
@@ -117,6 +120,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[! endif !]
 	[! endfor !]
 
+</div>
 
 
 </details>

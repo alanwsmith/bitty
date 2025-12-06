@@ -30,18 +30,44 @@
 [! endfor !]
 
 <h2>Event Argument Helpers</h2>
-
+<h3>Methods</h3>
 <ul>
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
 [! if item.name == "expandEvent" !]
 [! for var in item.meta.vars !]
 [! if var != "" !]
-<li>[@ var @]</li>
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+    [! if item.longname == var and item.kind == "function" !]
+    <li>
+    [@ var @] - [@ item.kind @]
+    </li>
+    [! endif !]
+[! endfor !]
 [! endif !]
 [! endfor !]
 [! endif !]
 [! endfor !]
 </ul>
+
+<h3>Properties</h3>
+<ul>
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.name == "expandEvent" !]
+[! for var in item.meta.vars !]
+[! if var != "" !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+    [! if item.longname == var and item.kind == "member" !]
+    <li>
+    [@ var @] - [@ item.kind @]
+    </li>
+    [! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+</ul>
+
 
 
 <h2>Element Argument Helpers</h2>

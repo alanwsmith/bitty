@@ -78,17 +78,18 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
+	[! set example_display_path = file.folder + "/_includes/helper-properties/_display.html" !]
+
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
 	[! set example_dir = examples_dir + "/" + f.name !]
 	[! set name_path = example_dir + "/name.txt" !]
-	[! set index_path = example_dir + "/index.html" !]
 	[! set html_path = example_dir + "/_html.html" !]
 	[! set javascript_path = example_dir + "/_javascript.js" !]
 
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
-	[! include index_path !]
+	[! include example_display_path !]
 	</details>
 	[! endif !]
 	[! endfor !]

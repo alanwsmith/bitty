@@ -5,14 +5,14 @@ export default class {
     });
   }
 
-  runTest1190Alfa(ev, el) {
-    if (el.senderDsInt("key") === 6767) {
+  runTest1180Alfa(ev, el) {
+    if (el.sender.param("key") === "echo") {
       el.innerHTML = "PASSED";
     }
   }
 
-  runTest1190Bravo(ev, el) {
-    if (el.senderDsInt("key") === 3434) {
+  runTest1180Bravo(ev, el) {
+    if (el.sender.param("key") === "foxtrot") {
       el.innerHTML = "PASSED";
     }
   }

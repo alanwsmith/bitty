@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1045(ev, el) {
-    if (el.valFloat === 123.456) {
+    if (el.valueAsFloat === 123.456) {
       this.api.localTrigger("markPassed1045");
       el.hidden = true;
     }

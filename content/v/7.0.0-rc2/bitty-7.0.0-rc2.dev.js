@@ -13,6 +13,18 @@ function expandEvent(ev) {
     ev.sender.valueAsFloat = parseFloat(ev.sender.value);
   }
 
+  if (ev.sender) {
+    ev.sender.param = (x) => {
+      return findDataKey.call(null, ev.sender, x);
+    };
+    ev.sender.paramAsInt = (x) => {
+      return parseInt(findDataKey.call(null, ev.sender, x), 10);
+    };
+    ev.sender.paramAsFloat = (x) => {
+      return parseFloat(findDataKey.call(null, ev.sender, x));
+    };
+  }
+
   if (ev.target.value !== undefined) {
     // xTODOx: See if can change .val to .value
     ev.value = ev.target.value;
@@ -82,33 +94,33 @@ function expandElement(ev, el) {
   //   return parseFloat(findDataKey.call(null, ev.target, x));
   // };
 
-  // // xTODO: DEPRECATE and move to ev.
+  // // xTODOx: DEPRECATE and move to ev.
   // if (ev !== null) {
   //   el.senderBittyId = el.sender.dataset.bittyid;
   // }
 
-  // xTODO: DEPRECATE and move to ev.senderDs()
-  el.senderDs = (x) => {
-    return findDataKey.call(null, el.sender, x);
-  };
+  // // xTODOx: DEPRECATE and move to ev.sender.param()
+  // el.senderDs = (x) => {
+  //   return findDataKey.call(null, el.sender, x);
+  // };
 
-  // xTODO: DEPRECATE and move to ev.senderDsInt()
-  el.senderDsInt = (x) => {
-    return parseInt(findDataKey.call(null, el.sender, x));
-  };
+  // // xTODOx: DEPRECATE and move to ev.senderDsInt()
+  // el.senderDsInt = (x) => {
+  //   return parseInt(findDataKey.call(null, el.sender, x));
+  // };
 
-  // xTODO: DEPRECATE and move to ev.senderDsFloat()
-  el.senderDsFloat = (x) => {
-    return parseFloat(findDataKey.call(null, el.sender, x));
-  };
+  // // xTODOx: DEPRECATE and move to ev.senderDsFloat()
+  // el.senderDsFloat = (x) => {
+  //   return parseFloat(findDataKey.call(null, el.sender, x));
+  // };
 
   if (el.value) {
     // xTODO: Deprecate el.val
-    el.val = el.value;
+    // el.val = el.value;
     // xTODO: Change .valInt to .valueInt
-    el.valInt = parseInt(el.value, 10);
+    el.valueAsInt = parseInt(el.value, 10);
     // xTODO: Change .valFloat to .valueFloat
-    el.valFloat = parseFloat(el.value);
+    el.valueAsFloat = parseFloat(el.value);
   }
 
   // xTODO: DEPRECATE - Remove in favor of existing

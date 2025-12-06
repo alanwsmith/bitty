@@ -6,13 +6,13 @@ export default class {
   }
 
   runTest1190Alfa(ev, el) {
-    if (el.senderDsInt("key") === 6767) {
+    if (el.sender.paramAsInt("key") === 6767) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1190Bravo(ev, el) {
-    if (el.senderDsInt("key") === 3434) {
+    if (el.sender.paramAsInt("key") === 3434) {
       el.innerHTML = "PASSED";
     }
   }

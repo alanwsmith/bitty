@@ -3,14 +3,14 @@ export default class {
     this.api.querySelector("input").click();
   }
 
-  runTest1035(ev, el) {
-    if (el.valInt === 7878) {
-      this.api.localTrigger("markPassed1035");
+  runTest1045(ev, el) {
+    if (el.valueAsFloat === 123.456) {
+      this.api.localTrigger("markPassed1045");
       el.hidden = true;
     }
   }
 
-  markPassed1035(_, el) {
+  markPassed1045(_, el) {
     el.innerHTML = "PASSED";
   }
 }

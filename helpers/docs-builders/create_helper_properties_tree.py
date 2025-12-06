@@ -80,11 +80,15 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
-	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
-	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	[! set example_dir = examples_dir + "/" + f.name !]
+	[! set name_path = example_dir + "/name.txt" !]
+	[! set index_path = example_dir + "/index.html" !]
+	[! set html_path = example_dir + "/_html.html" !]
+	[! set javascript_path = example_dir + "/_javascript.js" !]
+
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
-	[! include content_path !]
+	[! include index_path !]
 	</details>
 	[! endif !]
 	[! endfor !]
@@ -124,9 +128,10 @@ def make_index_files():
 def make_preface_files():
 	for key in lines:
 		preface_path = f"{parent_dir}/{key}/_preface.html"
-		print(f"Generating: {preface_path}")
-		with open(preface_path, "w") as _out:
-			_out.write("<p>TODO</p>")
+		if not os.path.isfile(preface_path):
+			print(f"Generating: {preface_path}")
+			with open(preface_path, "w") as _out:
+				_out.write("<p>TODO</p>")
 				
 
 if __name__ == "__main__":

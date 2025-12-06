@@ -29,8 +29,16 @@
      [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
     [! include inc_path !]
     [! else !]
-[! if item.longname == var and item.kind == "member" and item.memberof == "ev.sender" !]
-     [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
+    [! if item.longname == var and item.kind == "member" and item.memberof == "ev.sender" !]
+
+            [# HARD CODE OUTPUT ev.sender.value before ev.sender.valueToFloat since it comes from the native element #]
+            [! if item.longname == "ev.sender.valueToFloat" !]
+                [!- set inc_path = file.folder + "/_includes/helper-properties/ev.sender.value/index.html" -!]
+                [! include inc_path !]
+            [! endif !]
+
+
+    [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
     [! include inc_path !]
     [! endif !]
     [! endif !]

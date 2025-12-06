@@ -7,6 +7,7 @@
 
 from pathlib import Path 
 from string import Template
+import os
 
 data = """forward
 getElement
@@ -25,7 +26,9 @@ trigger"""
 
 lines = data.split("\n")
 
-parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc1/documentation/_includes/methods"
+parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc2/documentation/_includes/methods"
+
+
 
 skeleton = """
 [!- set args_path = file.folder + "/_includes/methods/$VALUE/_args" -!]
@@ -93,37 +96,47 @@ skeleton = """
 	[! endif !]
 	[! endfor !]
 
-
-
-
 </details>
 """
 
 
-for line in lines:
+def holding():
 	
-	content_dir = f"{parent_dir}/{line}"
-	index_file = f"{content_dir}/index.html"
-	
-	args_dir = f"{content_dir}/_args"
-	Path(args_dir).mkdir(parents=True, exist_ok=True)
-	
-	examples_dir = f"{content_dir}/_examples"
-	Path(examples_dir).mkdir(parents=True, exist_ok=True)
-	
-	data = { "VALUE": line }
-	template = Template(skeleton)
-	output = template.substitute(data)
-	with open(index_file, "w") as _out:
-		print(index_file)
-		_out.write(output)
-	
+	for line in lines:
 		
-#	arg_string_path = f"{content_dir}/_args.txt"
-#	with open(arg_string_path, "w") as _out:
-#		print(arg_string_path)
-#		_out.write("TODO: Fill in args")
+		content_dir = f"{parent_dir}/{line}"
+		index_file = f"{content_dir}/index.html"
 		
+		args_dir = f"{content_dir}/_args"
+		Path(args_dir).mkdir(parents=True, exist_ok=True)
 		
+		examples_dir = f"{content_dir}/_examples"
+		Path(examples_dir).mkdir(parents=True, exist_ok=True)
+		
+		data = { "VALUE": line }
+		template = Template(skeleton)
+		output = template.substitute(data)
+		with open(index_file, "w") as _out:
+			print(index_file)
+			_out.write(output)
+		
+			
+	#	arg_string_path = f"{content_dir}/_args.txt"
+	#	with open(arg_string_path, "w") as _out:
+	#		print(arg_string_path)
+	#		_out.write("TODO: Fill in args")
+		
+
+
+def make_preface_if_necessary():
+	for key in lines:
+		preface_path = f"{parent_dir}/{key}/preface.html"
+		if not os.path.isfile(preface_path):
+			print(preface_path)
+			with open (preface_path, "w") as _pref:
+				_pref.write("<p>TODO</p>")
+			
 	
+if __name__ == "__main__":
+	make_preface_if_necessary()
 	

@@ -9,18 +9,18 @@ function expandEvent(ev) {
   }
 
   if (ev.sender && ev.sender.value) {
-    ev.sender.valueAsInt = parseInt(ev.sender.value, 10);
-    ev.sender.valueAsFloat = parseFloat(ev.sender.value);
+    ev.sender.valueToInt = parseInt(ev.sender.value, 10);
+    ev.sender.valueToFloat = parseFloat(ev.sender.value);
   }
 
   if (ev.sender) {
     ev.sender.param = (x) => {
       return findDataKey.call(null, ev.sender, x);
     };
-    ev.sender.paramAsInt = (x) => {
+    ev.sender.paramToInt = (x) => {
       return parseInt(findDataKey.call(null, ev.sender, x), 10);
     };
-    ev.sender.paramAsFloat = (x) => {
+    ev.sender.paramToFloat = (x) => {
       return parseFloat(findDataKey.call(null, ev.sender, x));
     };
   }
@@ -29,9 +29,9 @@ function expandEvent(ev) {
     // xTODOx: See if can change .val to .value
     ev.value = ev.target.value;
     // xTODOx: Change .valInt to .valueInt
-    ev.valueAsInt = parseInt(ev.target.value, 10);
+    ev.valueToInt = parseInt(ev.target.value, 10);
     // xTODOx: Change .valFloat to .valueFloat
-    ev.valueAsFloat = parseFloat(event.target.value);
+    ev.valueToFloat = parseFloat(event.target.value);
   }
 
   ev.bittyId = ev.target.dataset.bittyid;
@@ -42,12 +42,12 @@ function expandEvent(ev) {
   };
 
   // xTODOx: Rename .ds to .param
-  ev.paramAsInt = (x) => {
+  ev.paramToInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
   // xTODOx: Rename .ds to .param
-  ev.paramAsFloat = (x) => {
+  ev.paramToFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 }
@@ -58,19 +58,32 @@ function expandElement(ev, el) {
     el.isSender = el.sender.dataset.bittyid === el.dataset.bittyid;
   }
 
+  /** internal */
+  // TODO: Refactor this out so it's not exposed
+  // as part of the element. `this.api` should
+  // be used in the userside code.
   el.bittyParent = getBittyParent(el);
+
+  /** internal */
+  // TODO: Refactor this out so it's not exposed
+  // as part of the element. `this.api` should
+  // be used in the userside code.
   el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
+
   el.bittyId = el.dataset.bittyid;
 
-  el.ds = (x) => {
+  // xTODOx: Rename to .param
+  el.param = (x) => {
     return findDataKey.call(null, el, x);
   };
 
-  el.dsInt = (x) => {
+  // xTODOx: Rename to .paramAsInt
+  el.paramToInt = (x) => {
     return parseInt(findDataKey.call(null, el, x));
   };
 
-  el.dsFloat = (x) => {
+  // xTODOx: Rename to .paramAsFloat
+  el.paramToFloat = (x) => {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
@@ -118,9 +131,9 @@ function expandElement(ev, el) {
     // xTODOx: Deprecate el.val
     // el.val = el.value;
     // xTODOx: Change .valInt to .valueInt
-    el.valueAsInt = parseInt(el.value, 10);
+    el.valueToInt = parseInt(el.value, 10);
     // xTODOx: Change .valFloat to .valueFloat
-    el.valueAsFloat = parseFloat(el.value);
+    el.valueToFloat = parseFloat(el.value);
   }
 
   // xTODOx: DEPRECATE - Remove in favor of existing

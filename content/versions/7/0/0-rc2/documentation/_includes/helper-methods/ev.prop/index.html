@@ -8,9 +8,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/helper-methods/ev.param/_preface.html" -!]
-[!- set args_path = file.folder + "/_includes/helper-methods/ev.param/_args" -!]
-[!- set examples_dir = file.folder + "/_includes/helper-methods/ev.param/_examples" -!]
+[!- set preface_path = file.folder + "/_includes/helper-methods/ev.prop/_preface.html" -!]
+[!- set args_path = file.folder + "/_includes/helper-methods/ev.prop/_args" -!]
+[!- set examples_dir = file.folder + "/_includes/helper-methods/ev.prop/_examples" -!]
 
 <details class="docs-sub-details">
 
@@ -27,7 +27,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<summary>ev.param(
+	<summary>ev.prop(
 [!- for f in folders !]
 [!- if f.parent == args_path !]
 [!- set name_path = args_path + "/" + f.name + "/name.txt" !]
@@ -65,19 +65,23 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
+	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
-	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
-	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	[! set example_dir = examples_dir + "/" + f.name !]
+	[! set name_path = example_dir + "/name.txt" !]
+	[! set html_path = example_dir + "/html.html" !]
+	[! set javascript_path = example_dir + "/javascript.js" !]
+	[! set description_path = example_dir + "/description.html" !]
+	[! set postscript_path = example_dir + "/postscript.html" !]
+
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
-	[! include content_path !]
+	[! include example_display_path !]
 	</details>
 	[! endif !]
 	[! endfor !]
-
-
-
 
 
 

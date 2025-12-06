@@ -11,7 +11,7 @@ from pathlib import Path
 from string import Template
 
 
-data = """ev.param
+data = """ev.prop
 ev.propToFloat
 ev.propToInt
 ev.sender.prop
@@ -99,13 +99,20 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
+	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
-	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
-	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	[! set example_dir = examples_dir + "/" + f.name !]
+	[! set name_path = example_dir + "/name.txt" !]
+	[! set html_path = example_dir + "/html.html" !]
+	[! set javascript_path = example_dir + "/javascript.js" !]
+	[! set description_path = example_dir + "/description.html" !]
+	[! set postscript_path = example_dir + "/postscript.html" !]
+
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
-	[! include content_path !]
+	[! include example_display_path !]
 	</details>
 	[! endif !]
 	[! endfor !]
@@ -151,9 +158,10 @@ def make_index_files():
 def make_preface_files():
 	for key in lines:
 		preface_path = f"{parent_dir}/{key}/_preface.html"
-		print(f"Generating: {preface_path}")
-		with open(preface_path, "w") as _out:
-			_out.write("<p>TODO</p>")
+		if not os.path.isfile(preface_path):
+			print(f"Generating: {preface_path}")
+			with open(preface_path, "w") as _out:
+				_out.write("<p>TODO</p>")
 				
 
 if __name__ == "__main__":
@@ -161,106 +169,4 @@ if __name__ == "__main__":
 	make_preface_files()
 	make_index_files()
 
-
-#skeleton = """
-#
-#
-#[#
-#[!- set args_path = file.folder + "/_includes/methods/$VALUE/_args" -!]
-#[!- set examples_dir = file.folder + "/_includes/methods/$VALUE/_examples" -!]
-#
-#<details class="docs-sub-details">
-#
-#[!- set counters = namespace() !]
-#[!- set counters.initial = 0 !]
-#[!- set counters.count = 0 !]
-#
-#
-#[!- set counters.initial_examples = 0 !]
-#[!- set counters.count_examples = 0 !]
-#
-#
-#[!- for f in folders !]
-#[!- if f.parent == args_path !]
-#[!- set counters.initial = counters.initial + 1 !]
-#[!- endif !]
-#[!- endfor -!]
-#
-#	<summary>$VALUE(
-#[!- for f in folders !]
-#[!- if f.parent == args_path !]
-#[!- set name_path = args_path + "/" + f.name + "/name.txt" !]
-#[!- include name_path !]
-#[!- set counters.count = counters.count + 1 !]
-#[!- if counters.count != counters.initial !],[@ " " @][! endif !]
-#[!- endif !]
-#[!- endfor -!]
-#	)</summary>
-#
-#	<div class="doc-sub-header">Arguments</div>
-#
-#	[! for f in folders !]
-#	[! if f.parent == args_path !]
-#	[! set name_path = args_path + "/" + f.name + "/name.txt" !]
-#	[! set content_path = args_path + "/" + f.name + "/index.html" !]
-#	<details class="args-details">
-#	<summary>[! include name_path !]</summary>
-#	[! include content_path !]
-#	</details>
-#	[! endif !]
-#	[! endfor !]
-#
-#
-#[!- for f in folders !]
-#[!- if f.parent == examples_dir !]
-#[!- set counters.initial_examples = counters.initial_examples + 1 !]
-#[!- endif !]
-#[!- endfor -!]
-#
-#
-#	<div class="doc-sub-header">Examples</div>
-#
-#	[! for f in folders !]
-#	[! if f.parent == examples_dir !]
-#	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
-#	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
-#	<details class="example-details">
-#	<summary>[! include name_path !]</summary>
-#	[! include content_path !]
-#	</details>
-#	[! endif !]
-#	[! endfor !]
-#
-#
-#
-#
-#</details>
-#
-#
-##]
-#
-#"""
-
-
-#for line in lines:
-#	
-#	pass
 	
-#	content_dir = f"{parent_dir}/{line}"
-#	index_file = f"{content_dir}/index.html"
-#	
-#	args_dir = f"{content_dir}/_args"
-#	Path(args_dir).mkdir(parents=True, exist_ok=True)
-#	
-#	examples_dir = f"{content_dir}/_examples"
-#	Path(examples_dir).mkdir(parents=True, exist_ok=True)
-#	
-#	data = { "VALUE": line }
-#	template = Template(skeleton)
-#	output = template.substitute(data)
-#	with open(index_file, "w") as _out:
-#		print(index_file)
-#		_out.write(output)
-#	
-#
-#	

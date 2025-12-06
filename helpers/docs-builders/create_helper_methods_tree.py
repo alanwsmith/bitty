@@ -23,7 +23,12 @@ el.paramToInt"""
 
 lines = data.split("\n")
 
-parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc2/documentation/_includes/arg-methods"
+major_version = "7"
+minor_version = "0"
+patch_version = "0-rc2"
+
+parent_dir = f"/Users/alan/workshop/bitty/content/versions/{major_version}/{minor_version}/{patch_version}/documentation/_includes/helper-methods"
+
 
 for key in lines:
 	base_dir = f"{parent_dir}/{key}"

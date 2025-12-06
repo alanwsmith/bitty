@@ -26,8 +26,11 @@ trigger"""
 
 keys = data.split("\n")
 
-parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc2/documentation/_includes/methods"
+major_version = "7"
+minor_version = "0"
+patch_version = "0-rc2"
 
+parent_dir = f"/Users/alan/workshop/bitty/content/versions/{major_version}/{minor_version}/{patch_version}/documentation/_includes/this-api-methods"
 
 
 index_file_skeleton = """
@@ -40,9 +43,9 @@ helpers/docs-builders/create_methods_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/methods/$VALUE/preface.html" -!]
-[!- set args_path = file.folder + "/_includes/methods/$VALUE/_args" -!]
-[!- set examples_dir = file.folder + "/_includes/methods/$VALUE/_examples" -!]
+[!- set preface_path = file.folder + "/_includes/this-api-methods/$VALUE/preface.html" -!]
+[!- set args_path = file.folder + "/_includes/this-api-methods/$VALUE/_args" -!]
+[!- set examples_dir = file.folder + "/_includes/this-api-methods/$VALUE/_examples" -!]
 
 <details class="docs-sub-details">
 

@@ -4,8 +4,11 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function expandEvent(ev) {
   if (ev.target.value !== undefined) {
+    // xTODO: See if can change .val to .value
     ev.val = ev.target.value;
+    // xTODO: Change .valInt to .valueInt
     ev.valInt = parseInt(ev.target.value, 10);
+    // xTODO: Change .valFloat to .valueFloat
     ev.valFloat = parseFloat(event.target.value);
   }
 
@@ -44,44 +47,57 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
+  // xTODO: DEPRECATE and move to ev.bittyId
   if (ev !== null) {
     el.targetBittyId = ev.target.dataset.bittyid;
   }
 
+  // xTODO: DEPRECATE and use already existing ev.ds()
   el.targetDs = (x) => {
     return findDataKey.call(null, ev.target, x);
   };
 
+  // xTODO: DEPRECATE and use already existing ev.dsInt()
   el.targetDsInt = (x) => {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
+  // xTODO: DEPRECATE and use already existing ev.dsFloat()
   el.targetDsFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
 
+  // xTODO: DEPRECATE and move to ev.
   if (ev !== null) {
     el.senderBittyId = el.sender.dataset.bittyid;
   }
 
+  // xTODO: DEPRECATE and move to ev.senderDs()
   el.senderDs = (x) => {
     return findDataKey.call(null, el.sender, x);
   };
 
+  // xTODO: DEPRECATE and move to ev.senderDsInt()
   el.senderDsInt = (x) => {
     return parseInt(findDataKey.call(null, el.sender, x));
   };
 
+  // xTODO: DEPRECATE and move to ev.senderDsFloat()
   el.senderDsFloat = (x) => {
     return parseFloat(findDataKey.call(null, el.sender, x));
   };
 
   if (el.value) {
+    // xTODO: Deprecate el.val
     el.val = el.value;
+    // xTODO: Change .valInt to .valueInt
     el.valInt = parseInt(el.value, 10);
+    // xTODO: Change .valFloat to .valueFloat
     el.valFloat = parseFloat(el.value);
   }
 
+  // xTODO: DEPRECATE - Remove in favor of existing
+  // ev.value, ev.valueInt, ev.valueFloat
   if (ev !== null) {
     if (ev.target.value) {
       el.targetVal = ev.target.value;
@@ -90,6 +106,7 @@ function expandElement(ev, el) {
     }
   }
 
+  // xTODO: DEPRECATE and move to ev.senderValue, etc...
   if (ev !== null) {
     if (el.sender.value) {
       el.senderVal = el.sender.value;
@@ -98,7 +115,7 @@ function expandElement(ev, el) {
     }
   }
 
-  el.matchTargetDs = (x) => {
+  el.matchTarget = (x) => {
     const evKey = findDataKey.call(null, ev.target, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {
@@ -107,7 +124,7 @@ function expandElement(ev, el) {
     return evKey === elKey;
   };
 
-  el.matchSenderDs = (x) => {
+  el.matchSender = (x) => {
     const evKey = findDataKey.call(null, el.sender, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {
@@ -754,7 +771,6 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(ev);
   }
 
-
   /** internal */
   trimInput(input) {
     return input
@@ -765,3 +781,4 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define(tagName, BittyJs);
+

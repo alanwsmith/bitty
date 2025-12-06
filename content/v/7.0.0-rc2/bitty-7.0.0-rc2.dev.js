@@ -156,7 +156,7 @@ function expandElement(ev, el) {
   // }
 
   // xTODOx: Rename to .matchTarget
-  el.matchTarget = (x) => {
+  el.matchesTarget = (x) => {
     const evKey = findDataKey.call(null, ev.target, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {
@@ -165,8 +165,8 @@ function expandElement(ev, el) {
     return evKey === elKey;
   };
 
-  // xTODOx: Rename to .matchSender
-  el.matchSender = (x) => {
+  // xTODOx: Rename to .matchSenderOn
+  el.matchesSender = (x) => {
     const evKey = findDataKey.call(null, el.sender, x);
     const elKey = findDataKey.call(null, el, x);
     if (evKey === undefined || elKey === undefined) {

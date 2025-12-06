@@ -6,19 +6,19 @@ export default class {
   }
 
   runTest1210Alfa(ev, el) {
-    if (el.matchTarget("key")) {
+    if (el.matchesTarget("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1210Bravo(ev, el) {
-    if (!el.matchTarget("key")) {
+    if (!el.matchesTarget("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1210Charlie(ev, el) {
-    if (!el.matchTarget("key")) {
+    if (!el.matchesTarget("key")) {
       el.innerHTML = "PASSED";
     }
   }

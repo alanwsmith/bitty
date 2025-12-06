@@ -1,5 +1,5 @@
 
-	[! set args_path = file.folder + "/_includes/methods/makeTXT/_includes/args" !]
+	[! set args_path = file.folder + "/_includes/methods/makeTXT/_args" !]
 
 <details class="docs-sub-details">
 [#
@@ -17,24 +17,19 @@
 
 [! for f in folders !]
 [! if f.parent == args_path !]
-[! set title_path = args_path + "/" + f.name + "/title.txt" !]
 [! set counters.initial = counters.initial + 1 !]
 [! endif !]
 [! endfor !]
 
-
 	<summary>makeTXT(
-[! for f in folders !]
-[! if f.parent == args_path !]
-[! set title_path = args_path + "/" + f.name + "/title.txt" !]
-
-[! include title_path !]
-
-[! set counters.count = counters.count + 1 !]
-[! if counters.count != counters.initial !],[! endif !]
-
-[! endif !]
-[! endfor !]
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set name_path = args_path + "/" + f.name + "/name.txt" !]
+[!- include name_path !]
+[!- set counters.count = counters.count + 1 !]
+[!- if counters.count != counters.initial !],[@ " " @][! endif !]
+[!- endif !]
+[!- endfor -!]
 	)</summary>
 
 
@@ -42,10 +37,10 @@
 
 	[! for f in folders !]
 	[! if f.parent == args_path !]
-	[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+	[! set name_path = args_path + "/" + f.name + "/name.txt" !]
 	[! set content_path = args_path + "/" + f.name + "/index.html" !]
 	<details class="args-details">
-	<summary>[! include title_path !]</summary>
+	<summary>[! include name_path !]</summary>
 	[! include content_path !]
 	[! endif !]
 	</details>

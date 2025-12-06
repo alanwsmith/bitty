@@ -23,7 +23,7 @@ lines = data.split("\n")
 parent_dir = "/Users/alan/workshop/bitty/content/versions/7/0/0-rc1/documentation/_includes/methods"
 
 skeleton = """
-	[! set args_path = file.folder + "/_includes/methods/$VALUE/_includes/args" !]
+	[! set args_path = file.folder + "/_includes/methods/$VALUE/_args" !]
 
 <details class="docs-sub-details">
 [#
@@ -41,24 +41,19 @@ skeleton = """
 
 [! for f in folders !]
 [! if f.parent == args_path !]
-[! set title_path = args_path + "/" + f.name + "/title.txt" !]
 [! set counters.initial = counters.initial + 1 !]
 [! endif !]
 [! endfor !]
 
-
 	<summary>$VALUE(
-[! for f in folders !]
-[! if f.parent == args_path !]
-[! set title_path = args_path + "/" + f.name + "/title.txt" !]
-
-[! include title_path !]
-
-[! set counters.count = counters.count + 1 !]
-[! if counters.count != counters.initial !],[! endif !]
-
-[! endif !]
-[! endfor !]
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set name_path = args_path + "/" + f.name + "/name.txt" !]
+[!- include name_path !]
+[!- set counters.count = counters.count + 1 !]
+[!- if counters.count != counters.initial !],[@ " " @][! endif !]
+[!- endif !]
+[!- endfor -!]
 	)</summary>
 
 
@@ -66,10 +61,10 @@ skeleton = """
 
 	[! for f in folders !]
 	[! if f.parent == args_path !]
-	[! set title_path = args_path + "/" + f.name + "/title.txt" !]
+	[! set name_path = args_path + "/" + f.name + "/name.txt" !]
 	[! set content_path = args_path + "/" + f.name + "/index.html" !]
 	<details class="args-details">
-	<summary>[! include title_path !]</summary>
+	<summary>[! include name_path !]</summary>
 	[! include content_path !]
 	[! endif !]
 	</details>
@@ -83,13 +78,8 @@ for line in lines:
 	
 	content_dir = f"{parent_dir}/{line}"
 	index_file = f"{content_dir}/index.html"
-	includes_dir = f"{content_dir}/_includes"
-	args_dir = f"{content_dir}/_includes/args"
+	args_dir = f"{content_dir}/_args"
 	
-	
-#	print(content_dir)	
-	
-	Path(includes_dir).mkdir(exist_ok=True)	
 	Path(args_dir).mkdir(exist_ok=True)
 	
 	data = { "VALUE": line }

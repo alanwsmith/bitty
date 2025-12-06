@@ -1,12 +1,12 @@
 window.[@ item.name|title @][@ item.memberof|title @] = class {
   #incomingValue = null;
 
-  valueToIntElExample(_, el) {
+  valueToIntEl(_, el) {
     this.#incomingValue = el.valueToInt;
-    this.api.localTrigger("valueToIntElExampleOutput");
+    this.api.localTrigger("valueToIntElOutput");
   }
 
-  valueToIntElExampleOutput(_, el) {
+  valueToIntElOutput(_, el) {
     el.innerHTML = this.#incomingValue;
   }
 }

@@ -1,0 +1,73 @@
+[!- extends "versions/7/0/0-rc2/_wrappers/wrapper.html" -!] 
+
+[!- block main -!]
+
+<h1>Welcome to bitty!</h1>
+
+<p>
+  <strong>bitty</strong> is a tool for making things on the web.
+  You can do stuff like:</p>
+
+<div class="hp-examples">
+[!-for folder in folders !]
+[!-if folder.folder_parts[1] == major_version !]
+[!-if folder.folder_parts[2] == minor_version !]
+[!-if folder.folder_parts[4] == "examples" !]
+
+  [!-set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
+  [!-set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
+  [!-set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
+  [!-set script_path = folder.parent + "/" + folder.name + "/bitty-script.js" !]
+  [!-set url = "/" + folder.parent + "/" + folder.name + "/" !]
+
+<style>
+[!- include style_path -!]
+</style>
+
+<script>
+[!- include script_path -!]
+</script>
+
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">[!-include title_path !]</div>
+    <div class="hp-example-content">
+      [!- include content_path -!]
+    </div>
+    <div class="hp-example-code-link">
+      <a href="[@ url @]">view code</a>
+    </div>
+  </div>
+</div>
+
+[!-endif !]
+[!-endif !]
+[!-endif !]
+[!-endfor !]
+
+  </div>
+
+
+[#
+<div class="download-div">
+  <div class="download-link-wrapper">
+    <a class="download-link" href="[@ bitty_js_path @]" download>
+      <div class="center small-font">Download</div>
+      <div class="center">
+      Version[@ " " @] 
+[@- major_version -@].[@- minor_version -@]
+      </div>
+      <div class="center small-font">[@ script_min_file_name -@]</div></a>
+  </div>
+</div>
+
+[!-for folder in folders !]
+  [!-if folder.parent == version_dir + "/_sections" !]
+    [!-set include_path =  folder.parent + "/" + folder.name + "/content.html" !] 
+      [!-include include_path !] 
+  [!-endif !]
+[!-endfor !]
+#]
+
+[!- endblock -!]

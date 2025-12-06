@@ -1,0 +1,101 @@
+<section class="default-flow">
+
+<details class="section-details main-section">
+  <summary>Docs - Signal Method element Arguments</summary>
+    <p>The methods that handle signals take two arguments: 1. the event
+      that triggered the signal, and 2. an element that's
+      receiving the signal. For example,
+      this method updates the `.innerHTML` content 
+      of the element with the word `updated`:
+    </p>
+
+    <div>
+      <pre class="code-block-wrapper"><code>
+        [!- filter highlight_javascript|safe !]
+signalHandler(event, el) {
+  el.innerHTML = "updated";
+}
+        [!- endfilter !]</code></pre>
+    </div>
+
+    <p>The details on the elements are:</p>
+
+    <ul>
+      <li>Each element with a `data-receive` value
+      that corresponds to the name of the method
+        is sent through the method individually. 
+      </li>
+      <li>The elements are extended from standard <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">HTML
+        Elements</a> that you'd get from a querySelector.
+      </li>
+      <li><p>The following properties are added to the elements
+      </p>
+        <ul>
+          <li>
+            .isSender - boolean - true if the receiving element is 
+            the same one that sent the signal (i.e. it has
+            the `data-send` attribute). Otherwise, it's false.
+          </li>
+          <li>.isTarget - boolean - true the receiving element
+            is the one that triggered the event (e.g. the element that
+            was clicked on. If the element has `data-send` both
+            this and `.isSender` will be true. If the element doesn't
+            have `data-send` then `.isTarget` will still be 
+            true but `.isSender` will be false).
+          </li>
+          <li>.bittyParent - a reference to the 
+            nearest &lt;bitty-#-#&gt; tag ancestor. 
+          </li>
+          <li>.bittyParentId - the `data-bittyid` value 
+            of the `.bittyParent` element.
+          </li>
+          <li>.bittyId - an alias to `el.dataset.bittyid`</li>
+        </ul>
+      </li>
+      <li><p>The following methods are added to the elements</p>
+        <ul>
+          <li>.getString(KEY) - get the value
+            of a `data-KEY` attribute as a string. 
+            The element's `data-KEY` value is used
+            if it has one. If the element does not
+            have a `data-KEY` attribute the method
+            goes up the DOM searching ancestors
+            for the nearest one that has the 
+            attribute. The first one that's
+            found is used. If none are available,
+            the return value is `null`.
+          </li>
+
+
+          <li>.getInt(KEY) - get the value
+            of a `data-KEY` attribute as an integer
+            (via `.parseInt(VALUE)`). 
+            The element's `data-KEY` value is used
+            if it has one. If the element does not
+            have a `data-KEY` attribute the method
+            goes up the DOM searching ancestors
+            for the nearest one that has the 
+            attribute. The first one that's
+            found is used. If none are available,
+            the return value is `null`.
+          </li>
+
+          <li>.getFloat(KEY) - get the value
+            of a `data-KEY` attribute as an integer
+            (via `.parseFloat(VALUE)`). 
+            The element's `data-KEY` value is used
+            if it has one. If the element does not
+            have a `data-KEY` attribute the method
+            goes up the DOM searching ancestors
+            for the nearest one that has the 
+            attribute. The first one that's
+            found is used. If none are available,
+            the return value is `null`.
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+
+  </details>
+

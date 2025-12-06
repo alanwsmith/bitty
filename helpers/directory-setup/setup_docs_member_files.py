@@ -56,7 +56,6 @@ skeleton = """
 [!- endfor -!]
 	)</summary>
 
-
 	<h5>Arguments</h5>
 
 	[! for f in folders !]
@@ -80,7 +79,7 @@ for line in lines:
 	index_file = f"{content_dir}/index.html"
 	args_dir = f"{content_dir}/_args"
 	
-	Path(args_dir).mkdir(exist_ok=True)
+	Path(args_dir).mkdir(parents=True, exist_ok=True)
 	
 	data = { "VALUE": line }
 	template = Template(skeleton)

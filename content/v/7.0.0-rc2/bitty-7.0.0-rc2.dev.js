@@ -4,6 +4,9 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function expandEvent(ev) {
   ev.sender = findSender(ev.target);
+  if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
+    ev.sender.bittyId = ev.sender.dataset.bittyid;
+  }
 
   if (ev.sender && ev.sender.value) {
     ev.sender.valueAsInt = parseInt(ev.sender.value, 10);
@@ -59,30 +62,30 @@ function expandElement(ev, el) {
     return parseFloat(findDataKey.call(null, el, x));
   };
 
-  // xTODO: DEPRECATE and move to ev.bittyId
+  // xTODOx: DEPRECATE and move to ev.bittyId
   // if (ev !== null) {
   //   el.targetBittyId = ev.target.dataset.bittyid;
   // }
 
-  // xTODO: DEPRECATE and use already existing ev.ds()
-  el.targetDs = (x) => {
-    return findDataKey.call(null, ev.target, x);
-  };
+  // // xTODOx: DEPRECATE and use already existing ev.ds()
+  // el.targetDs = (x) => {
+  //   return findDataKey.call(null, ev.target, x);
+  // };
 
-  // xTODO: DEPRECATE and use already existing ev.dsInt()
-  el.targetDsInt = (x) => {
-    return parseInt(findDataKey.call(null, ev.target, x));
-  };
+  // // xTODOx: DEPRECATE and use already existing ev.dsInt()
+  // el.targetDsInt = (x) => {
+  //   return parseInt(findDataKey.call(null, ev.target, x));
+  // };
 
-  // xTODO: DEPRECATE and use already existing ev.dsFloat()
-  el.targetDsFloat = (x) => {
-    return parseFloat(findDataKey.call(null, ev.target, x));
-  };
+  // // xTODOx: DEPRECATE and use already existing ev.dsFloat()
+  // el.targetDsFloat = (x) => {
+  //   return parseFloat(findDataKey.call(null, ev.target, x));
+  // };
 
-  // xTODO: DEPRECATE and move to ev.
-  if (ev !== null) {
-    el.senderBittyId = el.sender.dataset.bittyid;
-  }
+  // // xTODO: DEPRECATE and move to ev.
+  // if (ev !== null) {
+  //   el.senderBittyId = el.sender.dataset.bittyid;
+  // }
 
   // xTODO: DEPRECATE and move to ev.senderDs()
   el.senderDs = (x) => {
@@ -439,6 +442,7 @@ class BittyJs extends HTMLElement {
           const bittyTargetParent = getBittyParent(ev.target);
           let foundReceiver = false;
           for (let receiver of receivers) {
+            // TODO: Remove
             receiver.sender = ev.target;
             const bittyReceiverParent = getBittyParent(receiver);
             if (
@@ -542,12 +546,14 @@ class BittyJs extends HTMLElement {
         }
       }
     } else {
+      // TODO: Remove this sender in favor of ev.sender which is
+      // already added via expand Event.
       const sender = findSender(ev.target);
       if (sender) {
         // Process data-use element if there is one
         const receivers = this.querySelectorAll("[data-use]");
-        if (sender.dataset.use) {
-          const signals = this.trimInput(sender.dataset.use);
+        if (ev.sender.dataset.use) {
+          const signals = this.trimInput(ev.sender.dataset.use);
           if (receivers.length > 0) {
             for (let signal of signals) {
               let doAwait = false;
@@ -558,9 +564,10 @@ class BittyJs extends HTMLElement {
               }
               if (this.conn[signal]) {
                 for (let receiver of receivers) {
+                  // TODO Deprecate this.
                   receiver.sender = sender;
                   expandElement(ev, receiver);
-                  if (receiver.bittyId === receiver.senderBittyId) {
+                  if (receiver.bittyId === ev.sender.bittyId) {
                     if (doAwait) {
                       await this.conn[signal](ev, receiver);
                     } else {
@@ -572,9 +579,9 @@ class BittyJs extends HTMLElement {
             }
           }
         }
-        if (sender.dataset.send) {
+        if (ev.sender.dataset.send) {
           // Process data-receive elements
-          const signals = this.trimInput(sender.dataset.send);
+          const signals = this.trimInput(ev.sender.dataset.send);
           const receivers = this.querySelectorAll("[data-receive]");
           for (let signal of signals) {
             let doAwait = false;
@@ -586,6 +593,7 @@ class BittyJs extends HTMLElement {
             if (this.conn[signal]) {
               let foundReceiver = false;
               for (let receiver of receivers) {
+                // TODO: Remove this
                 receiver.sender = sender;
                 const receptors = this.trimInput(receiver.dataset.receive);
                 for (const receptor of receptors) {

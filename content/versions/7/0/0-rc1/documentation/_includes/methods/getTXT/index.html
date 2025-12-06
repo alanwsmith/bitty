@@ -1,25 +1,23 @@
 
-	[! set args_path = file.folder + "/_includes/methods/getTXT/_args" !]
+[!- set args_path = file.folder + "/_includes/methods/getTXT/_args" -!]
+[!- set examples_dir = file.folder + "/_includes/methods/getTXT/_examples" -!]
 
 <details class="docs-sub-details">
-[#
-	[!- set args_string_path = file.folder + "/_includes/methods/getTXT/_args.txt" -!]
-		[!- include args_string_path !]
 
-{%- set config = namespace() -%}
-{%- set config.counter = 0 -%}
-#]
+[!- set counters = namespace() !]
+[!- set counters.initial = 0 !]
+[!- set counters.count = 0 !]
 
 
-[! set counters = namespace() !]
-[! set counters.initial = 0 !]
-[! set counters.count = 0 !]
+[!- set counters.initial_examples = 0 !]
+[!- set counters.count_examples = 0 !]
 
-[! for f in folders !]
-[! if f.parent == args_path !]
-[! set counters.initial = counters.initial + 1 !]
-[! endif !]
-[! endfor !]
+
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set counters.initial = counters.initial + 1 !]
+[!- endif !]
+[!- endfor -!]
 
 	<summary>getTXT(
 [!- for f in folders !]
@@ -32,7 +30,7 @@
 [!- endfor -!]
 	)</summary>
 
-	<h5>Arguments</h5>
+	<div class="doc-sub-header">Arguments</div>
 
 	[! for f in folders !]
 	[! if f.parent == args_path !]
@@ -41,8 +39,32 @@
 	<details class="args-details">
 	<summary>[! include name_path !]</summary>
 	[! include content_path !]
-	[! endif !]
 	</details>
+	[! endif !]
 	[! endfor !]
+
+
+[!- for f in folders !]
+[!- if f.parent == examples_dir !]
+[!- set counters.initial_examples = counters.initial_examples + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+
+	<div class="doc-sub-header">Examples</div>
+
+	[! for f in folders !]
+	[! if f.parent == examples_dir !]
+	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
+	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	<details class="args-details">
+	<summary>[! include name_path !]</summary>
+	[! include content_path !]
+	</details>
+	[! endif !]
+	[! endfor !]
+
+
+
 
 </details>

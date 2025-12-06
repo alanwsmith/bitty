@@ -1,0 +1,59 @@
+
+[#- ####################################################
+
+DO NOTE EDIT THIS FILE MANUALLY
+This file is created by:
+
+helpers/docs-builders/create_helper_properties_tree.py
+
+######################################################## -#]
+
+[!- set preface_path = file.folder + "/_includes/helper-properties/ev.valueToFloat/_preface.html" -!]
+[!- set examples_dir = file.folder + "/_includes/helper-properties/ev.valueToFloat/_examples" -!]
+
+<details class="docs-sub-details">
+
+[!- set counters = namespace() !]
+[!- set counters.initial = 0 !]
+[!- set counters.count = 0 !]
+
+[!- set counters.initial_examples = 0 !]
+[!- set counters.count_examples = 0 !]
+
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set counters.initial = counters.initial + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+	<summary>ev.valueToFloat</summary>
+
+<div class="docs-preface-wrapper">
+	[!- include preface_path -!]
+</div>
+
+
+[!- for f in folders !]
+[!- if f.parent == examples_dir !]
+[!- set counters.initial_examples = counters.initial_examples + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+	<div class="doc-sub-header">Examples</div>
+
+	[! for f in folders !]
+	[! if f.parent == examples_dir !]
+	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
+	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	<details class="example-details">
+	<summary>[! include name_path !]</summary>
+	[! include content_path !]
+	</details>
+	[! endif !]
+	[! endfor !]
+
+
+</details>
+
+
+

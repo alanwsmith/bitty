@@ -17,7 +17,7 @@
 [! endfor !]
 
 <h3>Properties</h3>
-<ul>
+
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
 [! if item.name == "expandElement" !]
 [! for var in item.meta.vars !]
@@ -31,14 +31,11 @@
         
         [# HARD CODE OUTPUT el.value since it comes from the native element #]
         [! if item.longname == "el.valueToFloat" !]
-        <li>
-       el.value
-        </li>
+     [!- set inc_path = file.folder + "/_includes/helper-properties/el.value/index.html" -!]
+    [! include inc_path !]
         [! endif !]
-
-        <li>
-        [@ var @]
-        </li>
+     [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
+    [! include inc_path !]
         [! endif !]
 
     [! endif !]
@@ -47,4 +44,3 @@
 [! endfor !]
 [! endif !]
 [! endfor !]
-</ul>

@@ -20,22 +20,18 @@
 [! endfor !]
 
 <h3>Properties</h3>
-<ul>
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
 [! if item.name == "expandEvent" !]
 [! for var in item.meta.vars !]
 [! if var != "" !]
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-       
     [! if var == "ev.sender" and item.longname == var !]    
-    <li>
-    [@ var @] 
-    </li>
+     [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
+    [! include inc_path !]
     [! else !]
 [! if item.longname == var and item.kind == "member" and item.memberof == "ev.sender" !]
-    <li>
-    [@ var @]
-    </li>
+     [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
+    [! include inc_path !]
     [! endif !]
     [! endif !]
 [! endfor !]
@@ -43,4 +39,3 @@
 [! endfor !]
 [! endif !]
 [! endfor !]
-</ul>

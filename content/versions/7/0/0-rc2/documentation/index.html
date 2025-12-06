@@ -4,120 +4,22 @@
 
 <h1>Documentation</h1>
 
-<h2>HTML Element data-* API</h2>
-[! for f in files !]
-  [! if f.folder_parts[1] == file.folder_parts[1] 
-    and f.folder_parts[2] == file.folder_parts[2] 
-    and f.folder_parts[3] == file.folder_parts[3] 
-    and f.folder_parts[4] == "documentation"
-    and f.folder_parts[6] == "attrs"
-    and f.path_parts[8] == "index.html"
- !]
-<details><summary class="documentation-details-section">[@ f.parent_folder @]</summary>
-[! include f.input_path !]
-</details>
-  [!- endif !]
-[!- endfor !]
-
-
-<h2>this.api Methods</h2>
-
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
-[! set include_path = version_dir + "/documentation/_includes/methods/" + item.name + "/index.html" !]
-[! include include_path !]
-[! endif !]
-[! endfor !]
-
-<h2>Event Argument Helpers</h2>
-<h3>Methods</h3>
-<ul>
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.name == "expandEvent" !]
-[! for var in item.meta.vars !]
-[! if var != "" !]
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-    [! if item.longname == var and item.kind == "function" !]
-    <li>
-    [@ var @] - [@ item.kind @]
-    </li>
+[! for fldr in folders !]
+    [! if 
+        fldr.folder_parts[1] == file.path_parts[1]
+        and
+        fldr.folder_parts[2] == file.path_parts[2]
+        and
+        fldr.folder_parts[3] == file.path_parts[3]
+        and
+        fldr.folder_parts[4] == file.path_parts[4]
+        and
+        fldr.folder_parts[5] == "_index_page_parts"
+    !]
+    [! set page_part_path = fldr.parent + "/" + fldr.name + "/index.html" !]
+    [! include page_part_path !]
     [! endif !]
 [! endfor !]
-[! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-</ul>
-
-<h3>Properties</h3>
-<ul>
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.name == "expandEvent" !]
-[! for var in item.meta.vars !]
-[! if var != "" !]
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-    [! if item.longname == var and item.kind == "member" !]
-    <li>
-    [@ var @] - [@ item.kind @]
-    </li>
-    [! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-</ul>
-
-
-
-<h2>Element Argument Helpers</h2>
-<h3>Methods</h3>
-<ul>
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.name == "expandElement" !]
-[! for var in item.meta.vars !]
-[! if var != "" !]
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-    [! if item.longname == var and item.kind == "function" !]
-    <li>
-    [@ var @] - [@ item.kind @]
-    </li>
-    [! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-</ul>
-
-<h3>Properties</h3>
-<ul>
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-[! if item.name == "expandElement" !]
-[! for var in item.meta.vars !]
-[! if var != "" !]
-[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
-    [! if item.longname == var and item.kind == "member" !]
-
-        [# TEMP HARD CODE REMOVE el.bittyParent and el.bittyParentBittyId since
-        they should not be in the public API #]
-        [! if item.longname != "el.bittyParent" and item.longname != "el.bittyParentBittyId" !]
-        <li>
-        [@ var @] - [@ item.kind @]
-        </li>
-        [! endif !]
-
-    [! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-[! endif !]
-[! endfor !]
-</ul>
-
-
-
 
 
 [!- endblock !]
-

@@ -39,11 +39,11 @@ index_file_skeleton = """
 DO NOTE EDIT THIS FILE MANUALLY
 This file is created by:
 
-helpers/docs-builders/create_methods_tree.py
+helpers/docs-builders/create_this_api_methods_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/this-api-methods/$VALUE/preface.html" -!]
+[!- set preface_path = file.folder + "/_includes/this-api-methods/$VALUE/_preface.html" -!]
 [!- set args_path = file.folder + "/_includes/this-api-methods/$VALUE/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/this-api-methods/$VALUE/_examples" -!]
 
@@ -146,7 +146,7 @@ def make_method_dirs():
 		
 def make_preface_if_necessary():
 	for key in keys:
-		preface_path = f"{parent_dir}/{key}/preface.html"
+		preface_path = f"{parent_dir}/{key}/_preface.html"
 		if not os.path.isfile(preface_path):
 			print(preface_path)
 			with open (preface_path, "w") as _pref:

@@ -654,12 +654,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  localTrigger(signal) {
-    const ev = new LocalTriggerEvent(signal);
-    this.dispatchEvent(ev);
-  }
-
-  async loadCSS(url, subs, options) {
+  async loadCSS(url, subs = [], options = {}) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
     if (response.error) {
       return response;
@@ -669,6 +664,11 @@ class BittyJs extends HTMLElement {
       document.adoptedStyleSheets.push(newStylesheet);
       return { value: response.value };
     }
+  }
+
+  localTrigger(signal) {
+    const ev = new LocalTriggerEvent(signal);
+    this.dispatchEvent(ev);
   }
 
   /** internal */

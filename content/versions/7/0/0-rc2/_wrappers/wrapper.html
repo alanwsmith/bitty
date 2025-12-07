@@ -7,18 +7,21 @@
   <head>
     [! include version_dir + "/_wrappers/includes/css-colors.html" !]
     [! include version_dir + "/_wrappers/includes/css-styles.html" !]
-    [! include version_dir + "/styles/main.html" !]
     [! include version_dir + "/_wrappers/head.html" !]
     [! include version_dir + "/_wrappers/bitty-page-class.html" !]
+    [! include version_dir + "/styles/main.html" !]
     <script>
     [! include version_dir + "/snippets/code-block-maker/code-block-maker.on.js" !]
+    [! include version_dir + "/_wrappers/includes/theme-switcher.js" !]
     </script>
     <script src="[@ bitty_js_path|safe @]" type="module"></script>
   </head>
-
   <body>
 
-    [! include version_dir + "/styles/main.html" !]
+    <[@ bitty_tag @]
+      data-connect="/[@ version_dir @]/modules/site-page.js" 
+      class="layout-wrapper">
+
     [!- include version_dir + "/_wrappers/includes/noscript.html" -!]
     [!- include version_dir + "/_wrappers/header.html" -!]
 
@@ -109,6 +112,8 @@
       <pre>
         [! filter highlight_html|safe !]<script src="[@ bitty_js_path|safe @]" type="module"></script>[! endfilter !]
       </pre>
+
+<[@ bitty_tag @]>
   </body>
 </html>
 [!- endblock -!]

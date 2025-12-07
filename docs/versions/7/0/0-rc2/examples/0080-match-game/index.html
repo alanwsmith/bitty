@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --light--faded-default-color: oklch(0.1951 0.23 105.642 / 0.653);
+  --light--heading-color: oklch(0.165 0.18556 225.642);
+  --light--faded-heading-color: oklch(0.165 0.18556 225.642 / 0.18);
+  --light--link-color: oklch(0.5537 0.15458 225.642);
+  --light--faded-link-color: oklch(0.5537 0.15458 225.642 / 0.604);
+  --light--accent-color: oklch(0.4986 0.10843 165.642);
+  --light--faded-accent-color: oklch(0.4986 0.10843 165.642 / 0.28);
+  --light--info-color: oklch(0.645 0.09691077318165202 345.642);
+  --light--faded-info-color: oklch(0.645 0.09691077318165202 345.642 / 0.376);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --dark--faded-default-color: oklch(0.8747 0.04454 254.092 / 0.157);
+  --dark--heading-color: oklch(0.6705 0.12874 254.092);
+  --dark--faded-heading-color: oklch(0.6705 0.12874 254.092 / 0.308);
+  --dark--link-color: oklch(0.7299 0.07889 14.091999999999985);
+  --dark--faded-link-color: oklch(0.7299 0.07889 14.091999999999985 / 0.609);
+  --dark--accent-color: oklch(0.7338 0.06558 194.09199999999998);
+  --dark--faded-accent-color: oklch(0.7338 0.06558 194.09199999999998 / 0.567);
+  --dark--info-color: oklch(0.4351 0.16022 74.09199999999998);
+  --dark--faded-info-color: oklch(0.4351 0.16022 74.09199999999998 / 0.359);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-light--faded-default-color: oklch(0.0995 0.23 259.652 / 0.242);
+  --hc-light--heading-color: oklch(0.6217704856122922 0.08831300417260277 319.652);
+  --hc-light--faded-heading-color: oklch(0.6217704856122922 0.08831300417260277 319.652 / 0.572);
+  --hc-light--link-color: oklch(0.5245 0.15006780734890438 259.652);
+  --hc-light--faded-link-color: oklch(0.5245 0.15006780734890438 259.652 / 0.437);
+  --hc-light--accent-color: oklch(0.3227 0.19753 19.651999999999987);
+  --hc-light--faded-accent-color: oklch(0.3227 0.19753 19.651999999999987 / 0.318);
+  --hc-light--info-color: oklch(0.5586547900477358 0.169058911353704 199.65200000000004);
+  --hc-light--faded-info-color: oklch(0.5586547900477358 0.169058911353704 199.65200000000004 / 0.34);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+  --hc-dark--faded-default-color: oklch(1 0.20411 82 / 0.385);
+  --hc-dark--heading-color: oklch(0.9552 0.09830629780740073 142);
+  --hc-dark--faded-heading-color: oklch(0.9552 0.09830629780740073 142 / 0.697);
+  --hc-dark--link-color: oklch(0.962 0.004698125519856717 262);
+  --hc-dark--faded-link-color: oklch(0.962 0.004698125519856717 262 / 0.628);
+  --hc-dark--accent-color: oklch(0.874 0.23 142);
+  --hc-dark--faded-accent-color: oklch(0.874 0.23 142 / 0.374);
+  --hc-dark--info-color: oklch(0.6882 0.21203825105953206 22);
+  --hc-dark--faded-info-color: oklch(0.6882 0.21203825105953206 22 / 0.418);
+}
+:root {
+  --background-color: var(--background-color--switch, var(--light--background-color));
+  --default-color: var(--default-color--switch, var(--light--default-color));
+  --faded-default-color: var(--faded-default-color--switch, var(--light--faded-default-color));
+  --heading-color: var(--heading-color--switch, var(--light--heading-color));
+  --faded-heading-color: var(--faded-heading-color--switch, var(--light--faded-heading-color));
+  --link-color: var(--link-color--switch, var(--light--link-color));
+  --faded-link-color: var(--faded-link-color--switch, var(--light--faded-link-color));
+  --accent-color: var(--accent-color--switch, var(--light--accent-color));
+  --faded-accent-color: var(--faded-accent-color--switch, var(--light--faded-accent-color));
+  --info-color: var(--info-color--switch, var(--light--info-color));
+  --faded-info-color: var(--faded-info-color--switch, var(--light--faded-info-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-color--switch, var(--dark--background-color));
+    --default-color: var(--default-color--switch, var(--dark--default-color));
+    --faded-default-color: var(--faded-default-color--switch, var(--dark--faded-default-color));
+    --heading-color: var(--heading-color--switch, var(--dark--heading-color));
+    --faded-heading-color: var(--faded-heading-color--switch, var(--dark--faded-heading-color));
+    --link-color: var(--link-color--switch, var(--dark--link-color));
+    --faded-link-color: var(--faded-link-color--switch, var(--dark--faded-link-color));
+    --accent-color: var(--accent-color--switch, var(--dark--accent-color));
+    --faded-accent-color: var(--faded-accent-color--switch, var(--dark--faded-accent-color));
+    --info-color: var(--info-color--switch, var(--dark--info-color));
+    --faded-info-color: var(--faded-info-color--switch, var(--dark--faded-info-color));
+  }
+}
+</style><script>
+const baseParams = {
+  "border-radius": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY); }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.3rem`,
+      `0.4rem`,
+      `0.5rem`,
+      `0.6rem`,
+      `0.7rem`,
+      `0.8rem`,
+      `0.9rem`,
+    ],
+  },
+  "flow": {
+    classString:
+      `.SIZE-KEY > :where(:not(:first-child)) { margin-top: var(--flow-space, var(--SIZE-KEY)); }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.2rem`,
+      `0.3rem`,
+      `0.5rem`,
+      `0.7rem`,
+      `1.0rem`,
+      `1.2rem`,
+      `1.2rem`,
+      `1.4rem`,
+      `1.6rem`,
+    ],
+  },
+  "font-size": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      "clamp(0.58rem, calc(0.57rem + 0.03vw), 0.6rem)",
+      "clamp(0.68rem, calc(0.67rem + 0.03vw), 0.7rem)",
+      "clamp(0.78rem, calc(0.77rem + 0.03vw), 0.8rem)",
+      "clamp(0.94rem, calc(0.92rem + 0.11vw), 1rem)",
+      "clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem)",
+      "clamp(1.35rem, calc(1.28rem + 0.37vw), 1.56rem)",
+      "clamp(1.32rem, calc(1.5rem + 0.58vw), 1.65rem)",
+      "clamp(1.84rem, calc(1.77rem + 0.87vw), 2.14rem)",
+      "clamp(2.8rem, calc(2rem + 1.25vw), 3.1rem)",
+    ],
+  },
+  "font-weight": {
+    classString: `.KEY-VALUE { KEY: var(--KEY-VALUE);}`,
+    varString: `--KEY-VALUE: VALUE;`,
+    values: [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+    ],
+  },
+  "gap": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.4rem`,
+      `1.9rem`,
+      `2.2rem`,
+    ],
+  },
+  "line-height": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      1.0,
+      1.1,
+      1.2,
+      1.3,
+      1.45,
+      1.5,
+      1.6,
+      1.7,
+      1.8,
+    ],
+  },
+  "margin": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.4rem`,
+      `1.9rem`,
+      `2.2rem`,
+    ],
+  },
+  "padding": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.3rem`,
+      `1.9rem`,
+      `2.5rem`,
+    ],
+  },
+  "text-align": {
+    classString: `.KEY-VALUE { KEY: VALUE; }`,
+    varString: `--KEY-VALUE: VALUE;`,
+    values: ["center", "end", "justify", "left", "right", "start"],
+  },
+  "width": {
+    classString: `.SIZE-width { width: var(--SIZE-width); }
+        .SIZE-min-width { min-width: var(--SIZE-width); }
+        .SIZE-max-width { max-width: var(--SIZE-width); }
+        .SIZE-wrapper { width: var(--SIZE-width); margin-inline: auto; }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      "min(100vw - 1.4rem, 3rem)",
+      "min(100vw - 1.4rem, 7rem)",
+      "min(100vw - 1.4rem, 16rem)",
+      "min(100vw - 1.4rem, 33rem)",
+      "min(100vw - 1.4rem, 48rem)",
+      "min(100vw - 1.4rem, 50rem)",
+      "min(100vw - 1.4rem, 54rem)",
+      "min(100vw - 1.4rem, 58rem)",
+      "min(100vw - 1.4rem, 64rem)",
+    ],
+  },
+};
+const borderRadii = [
+  `bottom-left`,
+  `bottom-right`,
+  `end-end`,
+  `end-start`,
+  `start-end`,
+  `start-start`,
+  `top-left`,
+  `top-right`,
+];
+const colors = [
+  "background",
+  "black",
+  "white",
+  "match",
+  "reverse",
+  "default",
+  "heading",
+  "link",
+  "accent",
+  "info",
+];
+const edges = [
+  `block`,
+  `block-end`,
+  `block-start`,
+  `bottom`,
+  `inline`,
+  `inline-end`,
+  `inline-start`,
+  `left`,
+  `right`,
+  `top`,
+];
+const prefixes = ["", "faded-"];
+const sizes = [
+  "xxxsmall",
+  "xxsmall",
+  "xsmall",
+  "small",
+  "default",
+  "large",
+  "xlarge",
+  "xxlarge",
+  "xxxlarge",
+];
+const fullWidth = "calc(100vw - 1.4rem)";
+function cssVars() {
+  let lines = [];
+  for (const [key, data] of Object.entries(baseParams)) {
+    data.values.forEach((value, itemIndex) => {
+      lines.push(
+        data.varString
+          .replaceAll(`KEY`, key)
+          .replaceAll(`SIZE`, sizes[itemIndex])
+          .replaceAll(`VALUE`, value),
+      );
+    });
+  }
+  for (const [key, data] of Object.entries(baseParams)) {
+    data.values.forEach((value, itemIndex) => {
+      lines.push(
+        data
+          .classString
+          .replaceAll(`SIZE`, sizes[itemIndex])
+          .replaceAll(`VALUE`, value)
+          .replaceAll(
+            `KEY`,
+            key,
+          ),
+      );
+    });
+  }
+  prefixes.forEach((prefix) => {
+    colors.forEach((color) => {
+      const key = `${prefix}${color}`;
+      lines.push(
+        `--${key}-border: 1px solid var(--${key}-color);
+        .${key}-background-color { background-color: var(--${key}-color); }
+        .${key}-color { color: var(--${key}-color); }
+        .${key}-border { border: var(--${key}-border); }`,
+      );
+      edges.forEach((edge) => {
+        lines.push(
+          `.${key}-${edge}-border { border-${edge}: var(--${key}-border); }`,
+        );
+      });
+    });
+  });
+  sizes.forEach((size) => {
+    edges.forEach((edge) => {
+      lines.push(
+        `.${size}-${edge}-padding { padding-${edge}: var(--${size}-padding); }
+        .${size}-${edge}-margin { margin-${edge}: var(--${size}-margin); }`,
+      );
+    });
+    borderRadii.forEach((item, itemIndex) => {
+      lines.push(
+        `--${size}-${item}-border-radius: ${item};`,
+      );
+      lines.push(
+        `.${size}-${item}-border-radius { border-${item}-radius: var(--${size}-border-radius);}`,
+      );
+    });
+  });
+  lines.push(
+    `--full-width: ${fullWidth};
+    .full-wrapper { width: var(--full-width); margin-inline: auto; }`,
+  );
+  return `:root { ${lines.join("\n")} }`;
+}
+
+function addSheet(content) {
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(content);
+  document.adoptedStyleSheets.push(sheet);
+}
+addSheet(cssVars());
+</script>
+
+<script>
+  function updateStyles(theme) {
+    if (theme) {
+      const styleKeys = colors.map((color) => `${color}-color`);
+      styleKeys.forEach((styleKey) => {
+        const key = `--${styleKey}--switch`;
+        if (theme === "auto") {
+          document.documentElement.style.removeProperty(key);
+        } else {
+          const value = `var(--${theme}--${styleKey})`;
+          document.documentElement.style.setProperty(
+            key, value
+          );
+        }
+      });
+      localStorage.setItem("theme", theme);
+    }
+  }
+  updateStyles(localStorage.getItem("theme"));
+</script>
+
+
+<!-- TODO: Remove this -->
+<style>
+body {
+  background-color: black;
+  color: goldenrod;
+}
+</style>
+
+<style>
+  * {
+    margin: 0;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  :root {
+    --load-hider: 0;
+  }
+  .load-hider {
+    opacity: var(--load-hider);
+  }
+  html {
+    color-scheme: light dark;
+    background-color: var(--background-color);
+  }
+  body {
+    background-color: var(--background-color);
+    color: var(--default-color);
+    font-family: "system-ui";
+    font-size-adjust: 0.5;
+    font-size: var(--default-font-size);
+    line-height: var(--default-line-height);
+  }
+</style><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty</title>
+<meta property="og:title" content="bitty" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+
+<!--
+<link rel="stylesheet" href="/versions&#x2f;7&#x2f;0&#x2f;0-rc2/styles/main.css" />
+<link rel="stylesheet" href="/versions&#x2f;7&#x2f;0&#x2f;0-rc2/styles/custom-css-to-add.css" />
+--><script>
+window.BittyClass = class {
+
+  bittyInit() {
+    this.api.trigger("runTest0330");
+  }
+
+    showDate(event, el) {
+      el.innerHTML = new Date();
+    }
+
+  runTest0330(_event, el) {
+    if(el) {
+      el.innerHTML = "PASSED";
+    }
+  } 
+
+    getNum(event, el) {
+      el.innerHTML = Math.random();
+    }
+
+
+}
+</script>
+<style>
+::marker {
+  color: var(--default-color);
+} 
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-color);
+} 
+abbr {
+  color: var(--accent-color);
+  font-style: italic;
+} 
+aside {
+  margin-left: 20vw;
+  font-style: italic;
+  border-left: 3px solid var(--faded-reverse-color);
+  padding: var(--default-padding);
+} 
+audio {
+  max-width: var(--default-width);
+} 
+b {
+  font-weight: 900;
+} 
+blockquote {
+  margin: var(--large-margin);
+  padding: var(--default-padding);
+  background-color: var(--faded-reverse);
+} 
+button {
+  /*
+  background-color: var(--faded-match);
+  border: var(--reverse-border);
+  border-radius: var(--xsmall-radius);
+  color: var(--reverse);
+  */
+  font: inherit;
+  cursor: pointer;
+} 
+canvas {
+  display: block;
+  max-width: 100%;
+} 
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: 900;
+} 
+cite {
+  font-style: italic;
+} 
+.code-block {
+  background: var(--match-faded);
+  border-radius: var(--default-radius);
+  margin: var(--default-margin);
+  padding: var(--default-padding);
+} 
+dd {
+  margin-left: var(--default-margin);
+} 
+del {
+  text-decoration: line-through;
+} 
+dfn {
+  font-style: italic;
+} 
+em {
+  font-style: italic;
+} 
+embed {
+  max-width: 100%;
+} 
+fieldset {
+  border-radius: var(--default-radius);
+} 
+figcaption {
+  background-color: var(--reverse-color);
+  color: var(--match);
+  font-size: var(--small-font);
+  padding: var(--default-padding);
+  text-align: var(--alight-center);
+} 
+figure {
+  max-width: 100%;
+} 
+footer {
+  color: var(--default-color);
+  font-size: var(--small-font);
+  margin-bottom: var(--default-margin);
+  margin-inline: auto;
+  margin-top: var(--xlarge-margin);
+  text-align: var(--align-center);
+  width: var(--default-width);
+} 
+h1 {
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xxlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+h2 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  margin-top: 7rem;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+h3 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--large-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+h4 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--default-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+h5 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+h6 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-style: var(--italic);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+} 
+header {
+  margin-bottom: var(--small-margin);
+  margin-inline: auto;
+  margin-top: var(--xsmall-margin);
+  width: var(--default-width);
+} 
+hgroup {
+  margin-top: var(--large-margin);
+  padding-bottom: var(--large-padding);
+} 
+hr {
+  border: none;
+  border-top: 3px double var(--faded-reverse-color);
+  color: var(--reverse-color);
+  overflow: visible;
+  text-align: var(--align-center);
+  height: 5px;
+}
+
+hr::after {
+  background: var(--background-color);
+  content: "§";
+  padding-inline: var(--large-padding);
+  position: relative;
+  top: -13px;
+} 
+i {
+  font-style: var(--italic);
+} 
+iframe {
+  max-width: 100%;
+  border: var(--accent-border);
+} 
+img {
+  display: block;
+  max-width: 100%;
+} 
+input {
+  font: inherit;
+} 
+ins {
+  font-style: var(--italic);
+} 
+kbd {
+  background-color: var(--faded-reverse-color);
+  border: var(--faded-reverse-color);
+  border-radius: var(--xsmall-radius);
+  font-family: monospace;
+  font-size: var(--small-font);
+  padding-inline: var(--xxsmall-padding);
+} 
+.layout-wrapper {
+/*
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 96vh;
+  min-height: 96dvh;
+*/
+
+} 
+legend {
+  font-weight: var(--weight-900);
+} 
+li > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+} 
+main {
+  margin-inline: auto;
+  width: var(--default-width);
+}
+
+main > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+} 
+map {
+  max-width: 100%;
+} 
+mark {
+  background-color: var(--faded-accent);
+} 
+meter {
+  padding-inline: var(--default-padding);
+} 
+object {
+  max-width: 100%;
+} 
+ol > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+} 
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+} 
+.page-subtitle {
+  color: var(--default-faded);
+  border-bottom: var(--accent-border);
+} 
+picture {
+  display: block;
+  max-width: 100%;
+} 
+pre {
+  /*
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  overscroll-behavior-x: auto;
+  */
+} 
+progress {
+  padding-inline: var(--small-padding);
+} 
+q {
+  font-style: var(--italic);
+} 
+samp {
+  font-weight: var(--weight-900);
+} 
+section > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+} 
+select {
+  font: inherit;
+  padding-inline: var(--small-padding);
+} 
+small {
+  font-size: var(--small-font);
+} 
+summary {
+  font-weight: var(--weight-900);
+} 
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+} 
+table {
+  margin: var(--default-margin);
+} 
+textarea {
+  font: inherit;
+  max-width: 100%;
+} 
+th {
+  font-weight: var(--weight-900);
+} 
+.theme-switcher {
+  display: flex;
+  gap: var(--default-gap);
+}
+ 
+u {
+  text-decoration: var(--accent-faded) var(--wavy) var(--underline);
+} 
+ul > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+} 
+var {
+  font-weight: var(--weight-900);
+} 
+video {
+  display: block;
+  max-width: 100%;
+} 
+</style>
+    <script>
+window.BittyCodeBlockMaker = class {
+  async example(_, el) {
+    const payload = [];
+    const lines = [null];
+    const script = el.getString("script").split("|").map((line) => line.trim())
+      .filter((line) => {
+        return line !== "";
+      });
+    let prepSpacer = script.map((line) => "\n");
+    el.innerHTML = prepSpacer.join("");
+    const url = "/versions/7/0/0-rc2/snippets/intro/combined-body.html";
+    const response = await this.api.getTXT(url);
+    if (response.value) {
+      response.value.split("\n").forEach((line) => {
+        lines.push(line);
+      });
+      script.forEach((item) => {
+        const startDetails = item.split(":");
+        const details = [
+          startDetails[0].trim(),
+          startDetails.slice(1).join(":").trim(),
+        ];
+        if (details[0] === "line") {
+          payload.push(lines[parseInt(details[1])]);
+        } else if (details[0] === "newline") {
+          payload.push("");
+        } else if (details[0] === "line-chars") {
+          // console.log(
+          //   lines[parseInt(details[1])],
+          // );
+          const assembler = [];
+          const params = details[1].split("~").map((x) => x.trim());
+          const segments = params.slice(1);
+          segments.forEach((seg) => {
+            const chars = seg.split("-").map((x) => parseInt(x.trim()));
+            assembler.push(
+              lines[parseInt(details[1])].slice(chars[0] - 1, chars[1] - 1),
+            );
+          });
+          const toAdd = assembler.join("");
+          //console.log(toAdd);
+          payload.push(assembler.join(""));
+        }
+      });
+      el.innerHTML = payload.join("\n");
+    } else {
+      console.error(response.error);
+    }
+  }
+};window.ThemeSwitcher = class {
+  constructor() {
+    this.vars = {
+      themes: [
+        ["auto", "Auto"],
+        ["light", "Light"],
+        ["hc-light", "HC Light"],
+        ["dark", "Dark"],
+        ["hc-dark", "HC Dark"],
+      ],
+      switcher: `<div class="theme-switcher"></div>`,
+      item: `<div><label>
+  <input type="radio" 
+    name="mode-LOCATION" 
+    value="KEY" 
+    data-send="changeTheme" 
+    data-receive="syncCheckedTheme" 
+    CHECKED
+/> NAME</label></div>`,
+    };
+  }
+
+  changeTheme(event, _el) {
+    if (event.type === "input") {
+      updateStyles(event.target.value);
+      this.api.trigger("syncCheckedTheme");
+    }
+  }
+
+  getCurrentTheme() {
+    let current = localStorage.getItem("theme");
+    if (current) {
+      return current;
+    } else {
+      return "auto";
+    }
+  }
+
+  themeSwitcher(_event, el) {
+    const switcher = this.api.makeElement(this.vars.switcher);
+    for (let theme of this.vars.themes) {
+      const checked = this.getCurrentTheme() === theme[0] ? "checked" : "";
+      const subs = [
+        ["KEY", theme[0]],
+        ["NAME", theme[1]],
+        ["CHECKED", checked],
+      ];
+      const option = this.api.makeElement(this.vars.item, subs);
+      switcher.appendChild(option);
+    }
+    el.replaceChildren(switcher);
+  }
+
+  syncCheckedTheme(_event, el) {
+    if (el.value === this.getCurrentTheme()) {
+      el.checked = true;
+    } else {
+      el.checked = false;
+    }
+  }
+};    </script>
+    <script src="/v/7.0.0-rc2/bitty-7.0.0-rc2.dev.js" type="module"></script>
+  </head>
+  <body>
+
+    <bitty-7-0
+      data-connect="/versions&#x2f;7&#x2f;0&#x2f;0-rc2/modules/site-page.js" 
+      class="layout-wrapper"><noscript>
+  <p>
+    NOTE: This site use JavaScript which appears to be turned off. 
+    Most content will be fine, but some things won't work.
+  </p>
+  <style>:root { --load-hider: 1; }</style>
+</noscript> <bitty-7-0 
+    data-connect="ThemeSwitcher"
+    data-location="top"
+    data-init="themeSwitcher"></bitty-7-0>
+
+    <header class="default-wrapper">
+      <a href="/">bitty</a>
+      ~
+      <a href="/versions/7/0/0-rc2/test-suite/">tests</a>
+      ~
+      <a href="/versions/7/0/0-rc2/documentation/">documentation</a>
+    </header><main class="default-wrapper default-flow xlarge-top-padding">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0-rc2/modules/github-stars.js"></bitty-7-0>
+        </div>
+        <div class="small-font accent-faded">
+         tiny tool. interesting pages.
+        </div>
+      </hgroup>
+
+<style>
+.match-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.tile-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+[data-state=try] {
+  background-color: goldenrod;
+}
+
+[data-state=match] {
+  background-color: green;
+}
+
+[data-state=miss] {
+  background-color: red;
+}
+
+.svg-head {
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  width: 40px;
+  height: auto;
+}
+
+.svg-face {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  width: 26px;
+  height: auto;
+}
+</style>
+
+<script>
+const matchGameTemplates = {
+  tile: `
+<button 
+  class="tile-button"
+  data-state="hide" 
+  data-pair="PAIR_NUM" 
+  data-index="INDEX"
+  data-use="matchGameMakePick"
+  data-receive="matchGameUpdateTile"
+>?</button>`,
+  winner:
+    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
+};
+
+const sourceHeads = [];
+const sourceFaces = [];
+
+function shuffleArray(array) {
+  let currentIndex = array.length;
+  let randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+}
+
+window.MatchGame = class {
+  #tries = [];
+  #turns = 0;
+  #matchCount = 0;
+  #tileCount = 16;
+  #heads = [];
+  #faces = [];
+
+  async bittyInit() {
+    for (let i = 0; i < 10; i += 1) {
+      const headURL =
+        `/versions///0-rc2/svgs/heads/${i}.svg`;
+      const headResponse = await this.api.getTXT(headURL);
+      if (headResponse.value) {
+        sourceHeads.push(headResponse.value);
+      }
+      const faceURL =
+        `/versions///0-rc2/svgs/faces/${i}.svg`;
+      const faceResponse = await this.api.getTXT(faceURL);
+      if (faceResponse.value) {
+        sourceFaces.push(faceResponse.value);
+      }
+    }
+  }
+
+  matchGameGrid(ev, el) {
+    this.#turns = 0;
+    this.#matchCount = 0;
+    this.#heads = [];
+    this.#faces = [];
+    const nums = [];
+    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
+      nums.push(indx);
+      nums.push(indx);
+    });
+    shuffleArray(nums);
+    el.replaceChildren();
+    [...Array(this.#tileCount)].forEach((_, index) => {
+      const num = nums.pop();
+      const subs = [
+        ["INDEX", index],
+        ["PAIR_NUM", num],
+      ];
+      el.appendChild(
+        this.api.makeHTML(matchGameTemplates.tile, subs),
+      );
+      const head = this.api.makeSVG(sourceHeads[num]);
+      head.classList.add("svg-head");
+      this.#heads.push(head);
+      const face = this.api.makeSVG(sourceFaces[num]);
+      face.classList.add("svg-face");
+      this.#faces.push(face);
+    });
+    this.api.trigger("matchGameStatus");
+  }
+
+  matchGameMakePick(_ev, el) {
+    if (
+      el.prop("state") === "hide" || el.prop("state") === "miss"
+    ) {
+      el.dataset.state = "try";
+      this.#tries.push(el.propToInt("pair"));
+    }
+    this.api.trigger(`
+      matchGameUpdateTile
+      matchGameClearTries
+      matchGameStatus
+    `);
+  }
+
+  matchGameUpdateTile(_ev, el) {
+    if (
+      this.#tries.length === 2 &&
+      this.#tries.includes(el.propToInt("pair"))
+    ) {
+      if (
+        this.#tries[0] === this.#tries[1]
+      ) {
+        el.dataset.state = "match";
+        this.#matchCount += 1;
+      } else {
+        if (el.prop("state") === "try") {
+          el.dataset.state = "miss";
+        }
+      }
+    } else {
+      if (el.prop("state") === "miss") {
+        el.dataset.state = "hide";
+      }
+    }
+    if (
+      el.prop("state") === "hide"
+    ) {
+      el.innerHTML = "?";
+    } else {
+      el.replaceChildren();
+      el.appendChild(this.#heads[el.propToInt("index")]);
+      el.appendChild(this.#faces[el.propToInt("index")]);
+    }
+  }
+
+  matchGameClearTries(_ev, _el) {
+    if (this.#tries.length === 2) {
+      this.#turns += 1;
+      this.#tries = [];
+    }
+  }
+
+  matchGameStatus(_ev, el) {
+    if (this.#turns === 0) {
+      el.innerHTML = "Ready";
+    } else {
+      if (this.#matchCount === this.#tileCount) {
+        const subs = [
+          ["TURNS", this.#turns],
+        ];
+        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
+        el.replaceChildren(winner);
+      } else {
+        el.innerHTML = `Turns: ${this.#turns}`;
+      }
+    }
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">
+Match Game    </div>
+    <div class="hp-example-content">
+
+<bitty-7-0 data-connect="MatchGame">
+<div 
+  class="match-game-grid" 
+  data-init="matchGameGrid"
+  data-receive="matchGameGrid"></div>
+<div 
+  data-init="matchGameStatus"
+  data-receive="matchGameStatus"></div>
+</bitty-7-0>    </div>
+  </div>
+</div>
+
+<h2>HTML</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>MatchGame<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">match-game-grid</span><span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameGrid<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameGrid<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameStatus<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameStatus<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<h2>JavaScript</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">matchGameTemplates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="meta object-literal key js">tile</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>&lt;button 
+<span class="line-marker"></span>  class=&quot;tile-button&quot;
+<span class="line-marker"></span>  data-state=&quot;hide&quot; 
+<span class="line-marker"></span>  data-pair=&quot;PAIR_NUM&quot; 
+<span class="line-marker"></span>  data-index=&quot;INDEX&quot;
+<span class="line-marker"></span>  data-use=&quot;matchGameMakePick&quot;
+<span class="line-marker"></span>  data-receive=&quot;matchGameUpdateTile&quot;
+<span class="line-marker"></span>&gt;?&lt;/button&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>  <span class="meta object-literal key js">winner</span><span class="punctuation separator key-value js">:</span>
+<span class="line-marker"></span>    <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;Turns: TURNS - Winner!&lt;br /&gt;&lt;button data-send=&quot;matchGameGrid&quot;&gt;Play Again&lt;/button&gt;&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="storage type js">const</span> <span class="variable other readwrite js">sourceHeads</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span><span class="storage type js">const</span> <span class="variable other readwrite js">sourceFaces</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta function declaration js"><span class="storage type function js">function</span> <span class="entity name function js">shuffleArray</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">array</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="storage type js">let</span> <span class="variable other readwrite js">currentIndex</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">array</span><span class="punctuation accessor js">.</span><span class="meta property object js">length</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="storage type js">let</span> <span class="variable other readwrite js">randomIndex</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta while js"><span class="keyword control loop js">while</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">currentIndex</span> <span class="keyword operator comparison js">!=</span> <span class="constant numeric js">0</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other readwrite js">randomIndex</span> <span class="keyword operator assignment js">=</span> <span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">floor</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">random</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator arithmetic js">*</span> <span class="variable other readwrite js">currentIndex</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other readwrite js">currentIndex</span><span class="keyword operator arithmetic js">--</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="variable other object js">array</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">currentIndex</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">array</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">randomIndex</span><span class="punctuation section brackets js">]</span></span><span class="punctuation section brackets js">]</span></span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>      <span class="variable other object js">array</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">randomIndex</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="variable other object js">array</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">currentIndex</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">MatchGame</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #tries = [];
+<span class="line-marker"></span>  #turns = 0;
+<span class="line-marker"></span>  #matchCount = 0;
+<span class="line-marker"></span>  #tileCount = 16;
+<span class="line-marker"></span>  #heads = [];
+<span class="line-marker"></span>  #faces = [];
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">bittyInit</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta for js"><span class="keyword control loop js">for</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="storage type js">let</span> <span class="variable other readwrite js">i</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">0</span><span class="punctuation terminator statement js">;</span> <span class="variable other readwrite js">i</span> <span class="keyword operator relational js">&lt;</span> <span class="constant numeric js">10</span><span class="punctuation terminator statement js">;</span> <span class="variable other readwrite js">i</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">headURL</span> <span class="keyword operator assignment js">=</span>
+<span class="line-marker"></span>        <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions///0-rc2/svgs/heads/</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">i</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">.svg<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">headResponse</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getTXT</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">headURL</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">headResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">sourceHeads</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">headResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">faceURL</span> <span class="keyword operator assignment js">=</span>
+<span class="line-marker"></span>        <span class="string template js"><span class="punctuation definition string template begin js">`</span>/versions///0-rc2/svgs/faces/</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">i</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">.svg<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">faceResponse</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getTXT</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">faceURL</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">faceResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">sourceFaces</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">faceResponse</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">matchGameGrid</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">turns</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">0</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">matchCount</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">0</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">heads</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">faces</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">nums</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="keyword operator spread js">...</span><span class="meta function-call js"><span class="variable function js">Array</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">tileCount</span> <span class="keyword operator arithmetic js">/</span> <span class="constant numeric js">2</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forEach</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">i</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">indx</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">nums</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">indx</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">nums</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">indx</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta function-call js"><span class="variable function js">shuffleArray</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">nums</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="keyword operator spread js">...</span><span class="meta function-call js"><span class="variable function js">Array</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">tileCount</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forEach</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">index</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">num</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">nums</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">pop</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>INDEX<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">index</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PAIR_NUM<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">num</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">matchGameTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">tile</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">head</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeSVG</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">sourceHeads</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">num</span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">head</span><span class="punctuation accessor js">.</span><span class="meta property object js">classList</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">add</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>svg-head<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">heads</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">head</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">face</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeSVG</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">sourceFaces</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">num</span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">face</span><span class="punctuation accessor js">.</span><span class="meta property object js">classList</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">add</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>svg-face<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">faces</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">face</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>matchGameStatus<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">matchGameMakePick</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>state<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>hide<span class="punctuation definition string end js">&quot;</span></span> <span class="keyword operator logical js">||</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>state<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>miss<span class="punctuation definition string end js">&quot;</span></span>
+<span class="line-marker"></span>    <span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">state</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>try<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>pair<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>      matchGameUpdateTile
+<span class="line-marker"></span>      matchGameClearTries
+<span class="line-marker"></span>      matchGameStatus
+<span class="line-marker"></span>    <span class="punctuation definition string template end js">`</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">matchGameUpdateTile</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="punctuation accessor js">.</span><span class="meta property object js">length</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">2</span> <span class="keyword operator logical js">&amp;&amp;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">includes</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>pair<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span>
+<span class="line-marker"></span>    <span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="constant numeric js">0</span><span class="punctuation section brackets js">]</span></span> <span class="keyword operator comparison js">===</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="constant numeric js">1</span><span class="punctuation section brackets js">]</span></span>
+<span class="line-marker"></span>      <span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">state</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>match<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">matchCount</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>state<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>try<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>          <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">state</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>miss<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>state<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>miss<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">state</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>hide<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>state<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>hide<span class="punctuation definition string end js">&quot;</span></span>
+<span class="line-marker"></span>    <span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>?<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">heads</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">faces</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">matchGameClearTries</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">tries</span><span class="punctuation accessor js">.</span><span class="meta property object js">length</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">2</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">turns</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">tries</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">matchGameStatus</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">turns</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">0</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Ready<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">matchCount</span> <span class="keyword operator comparison js">===</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">tileCount</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>          <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TURNS<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">turns</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="storage type js">const</span> <span class="variable other readwrite js">winner</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">matchGameTemplates</span><span class="punctuation accessor js">.</span><span class="meta property object js">winner</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">winner</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Turns: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">turns</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+
+<h2>Notes</h2>
+ 
+    </main>
+
+    <footer>
+      <hr />
+      <div class="footer-wrapper">
+        <div>
+          <a href="https://github.com/alanwsmith/bitty">source</a> ~
+          <a href="https://socials.alanwsmith.com/">socials</a> ~
+          <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+          <a href="https://links.alanwsmith.com/">other projects</a>
+        </div>
+
+        <div>
+          <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        </div>
+        <details><summary>This work has been dedicated to the public domain.</summary>
+          <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+        </details>
+      </div>
+    </footer>
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+      <pre>
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>/v/7.0.0-rc2/bitty-7.0.0-rc2.dev.js<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span>      </pre>
+
+<bitty-7-0>
+  </body>
+</html>

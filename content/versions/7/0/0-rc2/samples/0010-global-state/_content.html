@@ -1,0 +1,17 @@
+[!- set state_module_path = "/" + file.folder + "/modules/0010-state.js" !]
+[!- set main_module_path = "/" + file.folder + "/modules/0020-main.js" !]
+[!- set second_module_path = "/" + file.folder + "/modules/0030-second.js" !]
+
+<!-- note that this can not have `type="module"` otherwise
+it will load async which introduces race conditions -->
+<script src="[@ state_module_path|safe @]"></script>
+
+<[@ bitty_tag @] data-connect="[@ main_module_path|safe @]">
+<div data-init="mainExample"></div>
+</[@ bitty_tag @]>
+
+
+<[@ bitty_tag @] data-connect="[@ second_module_path|safe @]">
+<div data-init="secondExample"></div>
+</[@ bitty_tag @]>
+

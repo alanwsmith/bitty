@@ -30,10 +30,24 @@ function hasWon(word, guesses) {
   return letters.isSubsetOf(guesses);
 }
 
+const svgs = [];
+
 window.Hangman = class {
   #wordIndex = -1;
   #guesses = null;
   #maxGuesses = 6;
+
+  async bittyInit() {
+    for (let index = 0; index <= 6; index += 1) {
+      const url = `/[@ version_dir @]/svgs/hangman/hangman-${index}.svg`;
+      const resp = await this.api.getSVG(url);
+      if (resp.value) {
+        svgs.push(resp.value);
+      } else {
+        console.error(`Could not get SVG at: ${url}`);
+      }
+    }
+  }
 
   bittyReady() {
     this.api.trigger("hangmanStartGame");
@@ -60,11 +74,20 @@ window.Hangman = class {
       hangmanMisses`);
   }
 
-  hangmanGallows(_ev, el) {
-    el.innerHTML = misses(
+  hangmanGallows(_, el) {
+    const missCount = misses(
       words[this.#wordIndex],
       this.#guesses,
     ).size;
+
+    el.replaceChildren(svgs[missCount]);
+
+    //el.replaceChildren(svgs[this.#guesses.length - 1]);
+
+    // el.innerHTML = misses(
+    //   words[this.#wordIndex],
+    //   this.#guesses,
+    // ).size;
   }
 
   async hangmanGuess(ev, _el) {

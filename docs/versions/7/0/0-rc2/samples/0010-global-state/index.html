@@ -1318,75 +1318,21 @@ window.BittyCodeBlockMaker = class {
         </div>
       </hgroup>
 
-<style>
-[data-connect=ShowDate] > button {
-  width: 7rem;
-  height: 14rem;
-}</style>
 
-<script>
-window.ShowDate = class {
-  getDate(_, el) {
-    el.innerHTML = new Date();
-  }
-};</script>
+<!-- note that this can not have `type="module"` otherwise
+it will load async which introduces race conditions -->
+<script src="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc2&#x2f;samples&#x2f;0010-global-state&#x2f;modules&#x2f;0010-state.js"></script>
 
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">
-Show The Date    </div>
-    <div class="hp-example-content">
-<bitty-7-0 data-connect="ShowDate">
-  <button data-use="getDate">
-    Click Here to get the Current Date and Time
-  </button>
+
+<bitty-7-0 data-connect="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc2&#x2f;samples&#x2f;0010-global-state&#x2f;modules&#x2f;0020-main.js">
+<div data-init="mainExample"></div>
 </bitty-7-0>
-    </div>
-  </div>
-</div>
 
-<h2>HTML</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ShowDate<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getDate<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    Click Here to get the Current Date and Time
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 
-<h2>JavaScript</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ShowDate</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">getDate</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="meta instance constructor js"><span class="keyword operator word new js">new</span><span class="meta function-call constructor js"> <span class="support class builtin js">Date</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+<bitty-7-0 data-connect="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc2&#x2f;samples&#x2f;0010-global-state&#x2f;modules&#x2f;0030-second.js">
+<div data-init="secondExample"></div>
+</bitty-7-0>
 
-<h2>Notes</h2>
-<ul>
-<li>
-<p>The is the most basic of examples.</p>
-</li>
-<li>
-<p>The HTML starts with a
-<inline-code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></inline-code>
-tag.</p>
-</li>
-<li>
-<p>The <inline-code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></inline-code>
-has a <code>data-connect=&quot;ShowData&quot;</code> attribute that connects it to the
-<code>window.ShowDate</code> class in the JavaScript.</p>
-</li>
-<li>
-<p>The <code>&lt;button&gt;</code> has a <code>data-use=&quot;getDate&quot;</code> attribute that connect
-it to the <code>getDate</code> method in the JavaScript.</p>
-</li>
-<li>
-<p>Tapping or clicking the button sends it through the <code>getDate</code>
-method as the <code>el</code> argument.</p>
-</li>
-<li>
-<p>The <code>getDate</code> update the <code>.innerHTML</code> of the element
-with the new date which is displayed in the button.</p>
-</li>
-</ul>
  
     </main>
 

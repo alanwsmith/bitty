@@ -162,19 +162,14 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
+  /** internal */
   expandElement(ev, el) {
     if (ev !== null) {
       el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
       el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
     }
 
-    /** internal */
-    // TODO: Refactor this out so it's not exposed
-    // as part of the element. `this.api` should
-    // be used in the userside code.
     el.bittyParent = this.getBittyParent(el);
-
-    el.bittyId = el.dataset.bittyid;
 
     el.prop = (x) => {
       return findDataKey.call(null, el, x);
@@ -187,7 +182,6 @@ class BittyJs extends HTMLElement {
     el.propToFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
     };
-
 
     if (el.value) {
       el.valueToInt = parseInt(el.value, 10);
@@ -214,8 +208,8 @@ class BittyJs extends HTMLElement {
   }
 
 
+  /** internal */
   expandEvent(ev) {
-    // ev.sender = findSender(ev.target);
     ev.sender = this.findSender(ev.target);
     if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
       ev.sender.bittyId = ev.sender.dataset.bittyid;
@@ -239,32 +233,27 @@ class BittyJs extends HTMLElement {
     }
 
     if (ev.target.value !== undefined) {
-      // xTODOx: See if can change .val to .value
       ev.value = ev.target.value;
-      // xTODOx: Change .valInt to .valueInt
       ev.valueToInt = parseInt(ev.target.value, 10);
-      // xTODOx: Change .valFloat to .valueFloat
       ev.valueToFloat = parseFloat(event.target.value);
     }
 
     ev.bittyId = ev.target.dataset.bittyid;
 
-    // xTODOx: Rename .ds to .param
     ev.prop = (x) => {
       return findDataKey.call(null, ev.target, x);
     };
 
-    // xTODOx: Rename .ds to .param
     ev.propToInt = (x) => {
       return parseInt(findDataKey.call(null, ev.target, x));
     };
 
-    // xTODOx: Rename .ds to .prop
     ev.propToFloat = (x) => {
       return parseFloat(findDataKey.call(null, ev.target, x));
     };
   }
 
+  /** internal */
   findSender(evTarget) {
     if (evTarget.dataset && evTarget.dataset.send) {
       return evTarget;
@@ -282,18 +271,24 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(forwardEvent);
   }
 
+  /** internal */
   getBittyParent(el) {
     if (el.localName.toLowerCase() === tagName) {
       return el;
     } else if (el.parentNode) {
       return this.getBittyParent(el.parentNode);
     } else {
-      // TODO test returning null if no
-      // bitty parent is found. (need to
-      // load an element via a document
-      // query selector that's outside
-      // a bitty element to do the test.
-      return null;
+      // TODO: Add test to confirm this 
+      // pulls the current element if another
+      // one isn't found. 
+      // TODO: Check funcionatlity of
+      // one bitty element calling
+      // this. TBD on if it should return
+      // itself or a parent if there's one
+      // above it? Probably itself since
+      // there isn't guaranteeded to
+      // be one above it. 
+      return this;
     }
   }
 
@@ -377,6 +372,13 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async handleEvent(ev) {
+    if (
+      ev.type === "bittyforward"
+    ) {
+      const forwardedEv = ev.forwardedEvent;
+      forwardedEv.sendPayload = ev.forwardedSignal;
+      await this.prossesEventDev(forwardedEv);
+    } else {
     this.expandEvent(ev);
     if (
       ev.type === "bittylocaltrigger"
@@ -479,37 +481,6 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-    } else if (
-      ev.type === "bittyforward"
-    ) {
-
-      const forwardedEv = ev.forwardedEvent;
-      forwardedEv.sendPayload = ev.forwardedSignal;
-      // console.log(forwardedEv);
-      await this.prossesEventDev(forwardedEv);
-
-      // forwardedEv.target.dataset.send = ev.forwardedSignal;
-      // await this.prossesEventDev(forwardedEv);
-
-      // // TODO: Handle async
-      // const signals = this.trimInput(ev.forwardedSignal);
-      // ev = ev.forwardedEvent;
-      // // TODO: Make sure this gets expanded.
-      // const receivers = this.querySelectorAll("[data-receive]");
-      // for (let receiver of receivers) {
-      //   receiver.sender = ev.target;
-      //   expandElement(ev, receiver);
-      //   const receptors = this.trimInput(receiver.dataset.receive);
-      //   for (let receptor of receptors) {
-      //     if (
-      //       signals.includes(receptor) && this.conn[receptor]
-      //     ) {
-      //       this.conn[receptor](ev, receiver);
-      //     }
-      //   }
-      // }
-
-      //
     } else {
       // TODO: Remove this sender in favor of ev.sender which is
       // already added via expand Event.
@@ -588,7 +559,7 @@ class BittyJs extends HTMLElement {
                   this.conn[signal](ev, null);
                 }
               }
-            }
+            }}
           }
         }
       }

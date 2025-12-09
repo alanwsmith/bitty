@@ -1,5 +1,8 @@
 ### Documentation To Add
 
+- TODO: Make sure `el.bittyParent` is
+covered in docs. 
+
 - TODO: Create note on how the strings
 from a given `data-*` can use `async/await`
 but that doesn't work across elements. 

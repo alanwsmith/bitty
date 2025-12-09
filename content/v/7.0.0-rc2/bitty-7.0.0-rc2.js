@@ -65,12 +65,11 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async connectedCallback() {
-    this.dataset.bittyid = self.crypto.randomUUID();
+    this.setIds(this);
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
       this.handleEventBridge = this.handleEvent.bind(this);
-      this.setIds(this);
       this.addEventListeners();
       await this.runBittyInit();
       await this.runDataInits();
@@ -163,7 +162,6 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
-
   expandElement(ev, el) {
     if (ev !== null) {
       el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
@@ -176,25 +174,16 @@ class BittyJs extends HTMLElement {
     // be used in the userside code.
     el.bittyParent = this.getBittyParent(el);
 
-    /** internal */
-    // TODO: Refactor this out so it's not exposed
-    // as part of the element. `this.api` should
-    // be used in the userside code.
-    el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
-
     el.bittyId = el.dataset.bittyid;
 
-    // xTODOx: Rename to .param
     el.prop = (x) => {
       return findDataKey.call(null, el, x);
     };
 
-    // xTODOx: Rename to .paramAsInt
     el.propToInt = (x) => {
       return parseInt(findDataKey.call(null, el, x));
     };
 
-    // xTODOx: Rename to .paramAsFloat
     el.propToFloat = (x) => {
       return parseFloat(findDataKey.call(null, el, x));
     };
@@ -293,20 +282,20 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(forwardEvent);
   }
 
- getBittyParent(el) {
-  if (el.localName.toLowerCase() === tagName) {
-    return el;
-  } else if (el.parentNode) {
-    return this.getBittyParent(el.parentNode);
-  } else {
-    // TODO test returning null if no
-    // bitty parent is found. (need to
-    // load an element via a document
-    // query selector that's outside
-    // a bitty element to do the test.
-    return null;
+  getBittyParent(el) {
+    if (el.localName.toLowerCase() === tagName) {
+      return el;
+    } else if (el.parentNode) {
+      return this.getBittyParent(el.parentNode);
+    } else {
+      // TODO test returning null if no
+      // bitty parent is found. (need to
+      // load an element via a document
+      // query selector that's outside
+      // a bitty element to do the test.
+      return null;
+    }
   }
-}
 
 
   async getElement(url, subs = [], options = {}) {
@@ -886,6 +875,9 @@ class BittyJs extends HTMLElement {
     input.querySelectorAll("*").forEach((el) => {
       if (!el.dataset.bittyid) {
         el.dataset.bittyid = self.crypto.randomUUID();
+      }
+      if (!el.bittyId) {
+        el.bittyId = el.dataset.bittyid
       }
     });
   }

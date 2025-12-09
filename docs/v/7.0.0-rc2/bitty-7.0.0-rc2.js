@@ -447,47 +447,55 @@ class BittyJs extends HTMLElement {
     } else if (
       ev.type === "bittytrigger"
     ) {
-      // TODO: Handle async
-      const signals = this.trimInput(ev.signal);
-      const receivers = this.querySelectorAll("[data-receive]");
-      for (let signal of signals) {
-        let doAwait = false;
-        const iSigParts = signal.split(":");
-        if (iSigParts.length === 2 && iSigParts[0] === "await") {
-          doAwait = true;
-          signal = iSigParts[1];
-        }
-        if (this.conn[signal]) {
-          let foundReceiver = false;
-          for (let receiver of receivers) {
-            receiver.sender = ev.target;
-            const receptors = this.trimInput(receiver.dataset.receive);
-            for (let receptor of receptors) {
-              const rSigParts = receptor.split(":");
-              if (rSigParts.length === 2 && rSigParts[0] === "await") {
-                doAwait = true;
-                receptor = rSigParts[1];
-              }
-              if (receptor === signal) {
-                foundReceiver = true;
-                this.expandElement(ev, receiver);
-                if (doAwait) {
-                  await this.conn[signal](ev, receiver);
-                } else {
-                  this.conn[signal](ev, receiver);
-                }
-              }
-            }
-          }
-          if (foundReceiver === false) {
-            if (doAwait) {
-              await this.conn[signal](ev, null);
-            } else {
-              this.conn[signal](ev, null);
-            }
-          }
-        }
-      }
+      //
+
+      ev.sendPayload = ev.signal;
+      await this.processEvent(ev);
+
+      // // TODO: Handle async
+      // const signals = this.trimInput(ev.signal);
+      // const receivers = this.querySelectorAll("[data-receive]");
+      // for (let signal of signals) {
+      //   let doAwait = false;
+      //   const iSigParts = signal.split(":");
+      //   if (iSigParts.length === 2 && iSigParts[0] === "await") {
+      //     doAwait = true;
+      //     signal = iSigParts[1];
+      //   }
+      //   if (this.conn[signal]) {
+      //     let foundReceiver = false;
+      //     for (let receiver of receivers) {
+      //       receiver.sender = ev.target;
+      //       const receptors = this.trimInput(receiver.dataset.receive);
+      //       for (let receptor of receptors) {
+      //         const rSigParts = receptor.split(":");
+      //         if (rSigParts.length === 2 && rSigParts[0] === "await") {
+      //           doAwait = true;
+      //           receptor = rSigParts[1];
+      //         }
+      //         if (receptor === signal) {
+      //           foundReceiver = true;
+      //           this.expandElement(ev, receiver);
+      //           if (doAwait) {
+      //             await this.conn[signal](ev, receiver);
+      //           } else {
+      //             this.conn[signal](ev, receiver);
+      //           }
+      //         }
+      //       }
+      //     }
+      //     if (foundReceiver === false) {
+      //       if (doAwait) {
+      //         await this.conn[signal](ev, null);
+      //       } else {
+      //         this.conn[signal](ev, null);
+      //       }
+      //     }
+      //   }
+      // }
+
+
+//
     } else {
       // TODO: Remove this sender in favor of ev.sender which is
       // already added via expand Event.
@@ -685,7 +693,7 @@ class BittyJs extends HTMLElement {
           const receivers = this.querySelectorAll("[data-receive]");
           for (let receiver of receivers) {
             const receptors = this.trimInput(receiver.dataset.receive);
-            for (const receptor of receptors) {
+            for (let receptor of receptors) {
               const rSignalParts = receptor.split(":");
               if (
                 rSignalParts.length === 2 && rSignalParts[0] === "await"

@@ -2,22 +2,6 @@ const version = [7, 0, 0];
 
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-
-// function getBittyParent(el) {
-//   if (el.localName.toLowerCase() === tagName) {
-//     return el;
-//   } else if (el.parentNode) {
-//     return getBittyParent(el.parentNode);
-//   } else {
-//     // TODO test returning null if no
-//     // bitty parent is found. (need to
-//     // load an element via a document
-//     // query selector that's outside
-//     // a bitty element to do the test.
-//     return null;
-//   }
-// }
-
 class BittyError extends Error {
   constructor(payload) {
     super();

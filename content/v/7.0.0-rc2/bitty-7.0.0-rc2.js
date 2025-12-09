@@ -442,193 +442,193 @@ class BittyJs extends HTMLElement {
   }
 
 
-expandElement(ev, el) {
-  if (ev !== null) {
-    el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
-    el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
-  }
-
-  /** internal */
-  // TODO: Refactor this out so it's not exposed
-  // as part of the element. `this.api` should
-  // be used in the userside code.
-  el.bittyParent = getBittyParent(el);
-
-  /** internal */
-  // TODO: Refactor this out so it's not exposed
-  // as part of the element. `this.api` should
-  // be used in the userside code.
-  el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
-
-  el.bittyId = el.dataset.bittyid;
-
-  // xTODOx: Rename to .param
-  el.prop = (x) => {
-    return findDataKey.call(null, el, x);
-  };
-
-  // xTODOx: Rename to .paramAsInt
-  el.propToInt = (x) => {
-    return parseInt(findDataKey.call(null, el, x));
-  };
-
-  // xTODOx: Rename to .paramAsFloat
-  el.propToFloat = (x) => {
-    return parseFloat(findDataKey.call(null, el, x));
-  };
-
-  // xTODOx: DEPRECATE and move to ev.bittyId
-  // if (ev !== null) {
-  //   el.targetBittyId = ev.target.dataset.bittyid;
-  // }
-
-  // // xTODOx: DEPRECATE and use already existing ev.ds()
-  // el.targetDs = (x) => {
-  //   return findDataKey.call(null, ev.target, x);
-  // };
-
-  // // xTODOx: DEPRECATE and use already existing ev.dsInt()
-  // el.targetDsInt = (x) => {
-  //   return parseInt(findDataKey.call(null, ev.target, x));
-  // };
-
-  // // xTODOx: DEPRECATE and use already existing ev.dsFloat()
-  // el.targetDsFloat = (x) => {
-  //   return parseFloat(findDataKey.call(null, ev.target, x));
-  // };
-
-  // // xTODOx: DEPRECATE and move to ev.
-  // if (ev !== null) {
-  //   el.senderBittyId = el.sender.dataset.bittyid;
-  // }
-
-  // // xTODOx: DEPRECATE and move to ev.sender.param()
-  // el.senderDs = (x) => {
-  //   return findDataKey.call(null, el.sender, x);
-  // };
-
-  // // xTODOx: DEPRECATE and move to ev.senderDsInt()
-  // el.senderDsInt = (x) => {
-  //   return parseInt(findDataKey.call(null, el.sender, x));
-  // };
-
-  // // xTODOx: DEPRECATE and move to ev.senderDsFloat()
-  // el.senderDsFloat = (x) => {
-  //   return parseFloat(findDataKey.call(null, el.sender, x));
-  // };
-
-  if (el.value) {
-    // xTODOx: Deprecate el.val
-    // el.val = el.value;
-    // xTODOx: Change .valInt to .valueInt
-    el.valueToInt = parseInt(el.value, 10);
-    // xTODOx: Change .valFloat to .valueFloat
-    el.valueToFloat = parseFloat(el.value);
-  }
-
-  // xTODOx: DEPRECATE - Remove in favor of existing
-  // ev.value, ev.valueInt, ev.valueFloat
-  // if (ev !== null) {
-  //   if (ev.target.value) {
-  //     el.targetVal = ev.target.value;
-  //     el.targetValInt = parseInt(ev.target.value, 10);
-  //     el.targetValFloat = parseFloat(ev.target.value);
-  //   }
-  // }
-
-  // xTODOx: DEPRECATE and move to ev.senderValue, etc...
-  // if (ev !== null) {
-  //   if (el.sender.value) {
-  //     el.senderVal = el.sender.value;
-  //     el.senderValInt = parseInt(el.sender.value, 10);
-  //     el.senderValFloat = parseFloat(el.sender.value);
-  //   }
-  // }
-
-  // xTODOx: Rename to .matchTarget
-  el.matchesTarget = (x) => {
-    const evKey = findDataKey.call(null, ev.target, x);
-    const elKey = findDataKey.call(null, el, x);
-    if (evKey === undefined || elKey === undefined) {
-      return false;
+  expandElement(ev, el) {
+    if (ev !== null) {
+      el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
+      el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
     }
-    return evKey === elKey;
-  };
 
-  // xTODOx: Rename to .matchSenderOn
-  el.matchesSender = (x) => {
-    const evKey = findDataKey.call(null, el.sender, x);
-    const elKey = findDataKey.call(null, el, x);
-    if (evKey === undefined || elKey === undefined) {
-      return false;
+    /** internal */
+    // TODO: Refactor this out so it's not exposed
+    // as part of the element. `this.api` should
+    // be used in the userside code.
+    el.bittyParent = getBittyParent(el);
+
+    /** internal */
+    // TODO: Refactor this out so it's not exposed
+    // as part of the element. `this.api` should
+    // be used in the userside code.
+    el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
+
+    el.bittyId = el.dataset.bittyid;
+
+    // xTODOx: Rename to .param
+    el.prop = (x) => {
+      return findDataKey.call(null, el, x);
+    };
+
+    // xTODOx: Rename to .paramAsInt
+    el.propToInt = (x) => {
+      return parseInt(findDataKey.call(null, el, x));
+    };
+
+    // xTODOx: Rename to .paramAsFloat
+    el.propToFloat = (x) => {
+      return parseFloat(findDataKey.call(null, el, x));
+    };
+
+    // xTODOx: DEPRECATE and move to ev.bittyId
+    // if (ev !== null) {
+    //   el.targetBittyId = ev.target.dataset.bittyid;
+    // }
+
+    // // xTODOx: DEPRECATE and use already existing ev.ds()
+    // el.targetDs = (x) => {
+    //   return findDataKey.call(null, ev.target, x);
+    // };
+
+    // // xTODOx: DEPRECATE and use already existing ev.dsInt()
+    // el.targetDsInt = (x) => {
+    //   return parseInt(findDataKey.call(null, ev.target, x));
+    // };
+
+    // // xTODOx: DEPRECATE and use already existing ev.dsFloat()
+    // el.targetDsFloat = (x) => {
+    //   return parseFloat(findDataKey.call(null, ev.target, x));
+    // };
+
+    // // xTODOx: DEPRECATE and move to ev.
+    // if (ev !== null) {
+    //   el.senderBittyId = el.sender.dataset.bittyid;
+    // }
+
+    // // xTODOx: DEPRECATE and move to ev.sender.param()
+    // el.senderDs = (x) => {
+    //   return findDataKey.call(null, el.sender, x);
+    // };
+
+    // // xTODOx: DEPRECATE and move to ev.senderDsInt()
+    // el.senderDsInt = (x) => {
+    //   return parseInt(findDataKey.call(null, el.sender, x));
+    // };
+
+    // // xTODOx: DEPRECATE and move to ev.senderDsFloat()
+    // el.senderDsFloat = (x) => {
+    //   return parseFloat(findDataKey.call(null, el.sender, x));
+    // };
+
+    if (el.value) {
+      // xTODOx: Deprecate el.val
+      // el.val = el.value;
+      // xTODOx: Change .valInt to .valueInt
+      el.valueToInt = parseInt(el.value, 10);
+      // xTODOx: Change .valFloat to .valueFloat
+      el.valueToFloat = parseFloat(el.value);
     }
-    return evKey === elKey;
-  };
-}
 
+    // xTODOx: DEPRECATE - Remove in favor of existing
+    // ev.value, ev.valueInt, ev.valueFloat
+    // if (ev !== null) {
+    //   if (ev.target.value) {
+    //     el.targetVal = ev.target.value;
+    //     el.targetValInt = parseInt(ev.target.value, 10);
+    //     el.targetValFloat = parseFloat(ev.target.value);
+    //   }
+    // }
 
-expandEvent(ev) {
-  // ev.sender = findSender(ev.target);
-  ev.sender = this.findSender(ev.target);
-  if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
-    ev.sender.bittyId = ev.sender.dataset.bittyid;
-  }
+    // xTODOx: DEPRECATE and move to ev.senderValue, etc...
+    // if (ev !== null) {
+    //   if (el.sender.value) {
+    //     el.senderVal = el.sender.value;
+    //     el.senderValInt = parseInt(el.sender.value, 10);
+    //     el.senderValFloat = parseFloat(el.sender.value);
+    //   }
+    // }
 
-  if (ev.sender && ev.sender.value) {
-    ev.sender.valueToInt = parseInt(ev.sender.value, 10);
-    ev.sender.valueToFloat = parseFloat(ev.sender.value);
-  }
-
-  if (ev.sender) {
-    ev.sender.prop = (x) => {
-      return findDataKey.call(null, ev.sender, x);
+    // xTODOx: Rename to .matchTarget
+    el.matchesTarget = (x) => {
+      const evKey = findDataKey.call(null, ev.target, x);
+      const elKey = findDataKey.call(null, el, x);
+      if (evKey === undefined || elKey === undefined) {
+        return false;
+      }
+      return evKey === elKey;
     };
-    ev.sender.propToInt = (x) => {
-      return parseInt(findDataKey.call(null, ev.sender, x), 10);
+
+    // xTODOx: Rename to .matchSenderOn
+    el.matchesSender = (x) => {
+      const evKey = findDataKey.call(null, el.sender, x);
+      const elKey = findDataKey.call(null, el, x);
+      if (evKey === undefined || elKey === undefined) {
+        return false;
+      }
+      return evKey === elKey;
     };
-    ev.sender.propToFloat = (x) => {
-      return parseFloat(findDataKey.call(null, ev.sender, x));
+  }
+
+
+  expandEvent(ev) {
+    // ev.sender = findSender(ev.target);
+    ev.sender = this.findSender(ev.target);
+    if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
+      ev.sender.bittyId = ev.sender.dataset.bittyid;
+    }
+
+    if (ev.sender && ev.sender.value) {
+      ev.sender.valueToInt = parseInt(ev.sender.value, 10);
+      ev.sender.valueToFloat = parseFloat(ev.sender.value);
+    }
+
+    if (ev.sender) {
+      ev.sender.prop = (x) => {
+        return findDataKey.call(null, ev.sender, x);
+      };
+      ev.sender.propToInt = (x) => {
+        return parseInt(findDataKey.call(null, ev.sender, x), 10);
+      };
+      ev.sender.propToFloat = (x) => {
+        return parseFloat(findDataKey.call(null, ev.sender, x));
+      };
+    }
+
+    if (ev.target.value !== undefined) {
+      // xTODOx: See if can change .val to .value
+      ev.value = ev.target.value;
+      // xTODOx: Change .valInt to .valueInt
+      ev.valueToInt = parseInt(ev.target.value, 10);
+      // xTODOx: Change .valFloat to .valueFloat
+      ev.valueToFloat = parseFloat(event.target.value);
+    }
+
+    ev.bittyId = ev.target.dataset.bittyid;
+
+    // xTODOx: Rename .ds to .param
+    ev.prop = (x) => {
+      return findDataKey.call(null, ev.target, x);
+    };
+
+    // xTODOx: Rename .ds to .param
+    ev.propToInt = (x) => {
+      return parseInt(findDataKey.call(null, ev.target, x));
+    };
+
+    // xTODOx: Rename .ds to .prop
+    ev.propToFloat = (x) => {
+      return parseFloat(findDataKey.call(null, ev.target, x));
     };
   }
 
-  if (ev.target.value !== undefined) {
-    // xTODOx: See if can change .val to .value
-    ev.value = ev.target.value;
-    // xTODOx: Change .valInt to .valueInt
-    ev.valueToInt = parseInt(ev.target.value, 10);
-    // xTODOx: Change .valFloat to .valueFloat
-    ev.valueToFloat = parseFloat(event.target.value);
+  findSender(evTarget) {
+    if (evTarget.dataset && evTarget.dataset.send) {
+      return evTarget;
+    } else if (evTarget.dataset && evTarget.dataset.use) {
+      return evTarget;
+    } else if (evTarget.parentNode) {
+      return this.findSender(evTarget.parentNode);
+    } else {
+      return this;
+    }
   }
-
-  ev.bittyId = ev.target.dataset.bittyid;
-
-  // xTODOx: Rename .ds to .param
-  ev.prop = (x) => {
-    return findDataKey.call(null, ev.target, x);
-  };
-
-  // xTODOx: Rename .ds to .param
-  ev.propToInt = (x) => {
-    return parseInt(findDataKey.call(null, ev.target, x));
-  };
-
-  // xTODOx: Rename .ds to .prop
-  ev.propToFloat = (x) => {
-    return parseFloat(findDataKey.call(null, ev.target, x));
-  };
-}
-
- findSender(evTarget) {
-  if (evTarget.dataset && evTarget.dataset.send) {
-    return evTarget;
-  } else if (evTarget.dataset && evTarget.dataset.use) {
-    return evTarget;
-  } else if (evTarget.parentNode) {
-    return this.findSender(evTarget.parentNode);
-  } else {
-    return this;
-  }
-}
 
   forward(ev, signal) {
     const forwardEvent = new ForwardEvent(ev, signal);

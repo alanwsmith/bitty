@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <html lang="en">
 <head>
+  <title>debugBitty</title>
 <style>
 body {
   color: goldenrod;
@@ -16,8 +17,9 @@ body {
     </head>
 
       <body>
+
 <script>
-window.BittyClass = class {
+window.BittyClass0030 = class {
   bittyReady() {
     this.api.querySelector("button").click();
   }
@@ -34,11 +36,48 @@ window.BittyClass = class {
 }
 </script>
 
-<bitty-7-0>
+<bitty-7-0 data-connect="BittyClass0030">
   <button data-send="checkForward">Click me</button>
   <div>FAILED</div>
 </bitty-7-0>
 
+
+<script>
+window.BittyClass0040 = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+
+  runTest0230(event, element) {
+    // console.log(event);
+    element.innerHTML = "PASSED";
+    this.api.forward(
+      event,
+      "secondSignal0230 thirdSignal0230 fourthSignal0230",
+    );
+  }
+
+  secondSignal0230(_event, element) {
+    element.innerHTML = "PASSED";
+  }
+
+  thirdSignal0230(_event, element) {
+    element.innerHTML = "PASSED";
+  }
+
+  fourthSignal0230(_event, element) {
+    element.innerHTML = "PASSED";
+  }
+}           
+</script>
+
+<bitty-7-0 data-connect="BittyClass0040">
+    <button data-send="runTest0230">Test Button</button>
+    <div class="test" data-receive="runTest0230">FAILED</div>
+    <div class="test" data-receive="secondSignal0230">FAILED</div>
+    <div class="test" data-receive="thirdSignal0230">FAILED</div>
+    <div class="test" data-receive="fourthSignal0230">FAILED</div>
+</bitty-7-0>          
 
       <!--
       <script>

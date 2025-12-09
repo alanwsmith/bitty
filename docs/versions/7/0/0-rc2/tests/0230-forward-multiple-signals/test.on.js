@@ -1,6 +1,6 @@
 export default class {
   bittyReady() {
-    this.api.trigger("runTest0230");
+    this.api.querySelector("button").click();
   }
 
   runTest0230(event, element) {

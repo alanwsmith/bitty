@@ -52,6 +52,7 @@ function expandEvent(ev) {
   };
 }
 
+
 function expandElement(ev, el) {
   if (ev !== null) {
     el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
@@ -175,6 +176,135 @@ function expandElement(ev, el) {
     return evKey === elKey;
   };
 }
+
+
+function expandElementDev(ev, el) {
+  if (ev !== null) {
+    el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
+    el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
+  }
+
+  /** internal */
+  // TODO: Refactor this out so it's not exposed
+  // as part of the element. `this.api` should
+  // be used in the userside code.
+  el.bittyParent = getBittyParent(el);
+
+  /** internal */
+  // TODO: Refactor this out so it's not exposed
+  // as part of the element. `this.api` should
+  // be used in the userside code.
+  el.bittyParentBittyId = el.bittyParent.dataset.bittyid;
+
+  el.bittyId = el.dataset.bittyid;
+
+  // xTODOx: Rename to .param
+  el.prop = (x) => {
+    return findDataKey.call(null, el, x);
+  };
+
+  // xTODOx: Rename to .paramAsInt
+  el.propToInt = (x) => {
+    return parseInt(findDataKey.call(null, el, x));
+  };
+
+  // xTODOx: Rename to .paramAsFloat
+  el.propToFloat = (x) => {
+    return parseFloat(findDataKey.call(null, el, x));
+  };
+
+  // xTODOx: DEPRECATE and move to ev.bittyId
+  // if (ev !== null) {
+  //   el.targetBittyId = ev.target.dataset.bittyid;
+  // }
+
+  // // xTODOx: DEPRECATE and use already existing ev.ds()
+  // el.targetDs = (x) => {
+  //   return findDataKey.call(null, ev.target, x);
+  // };
+
+  // // xTODOx: DEPRECATE and use already existing ev.dsInt()
+  // el.targetDsInt = (x) => {
+  //   return parseInt(findDataKey.call(null, ev.target, x));
+  // };
+
+  // // xTODOx: DEPRECATE and use already existing ev.dsFloat()
+  // el.targetDsFloat = (x) => {
+  //   return parseFloat(findDataKey.call(null, ev.target, x));
+  // };
+
+  // // xTODOx: DEPRECATE and move to ev.
+  // if (ev !== null) {
+  //   el.senderBittyId = el.sender.dataset.bittyid;
+  // }
+
+  // // xTODOx: DEPRECATE and move to ev.sender.param()
+  // el.senderDs = (x) => {
+  //   return findDataKey.call(null, el.sender, x);
+  // };
+
+  // // xTODOx: DEPRECATE and move to ev.senderDsInt()
+  // el.senderDsInt = (x) => {
+  //   return parseInt(findDataKey.call(null, el.sender, x));
+  // };
+
+  // // xTODOx: DEPRECATE and move to ev.senderDsFloat()
+  // el.senderDsFloat = (x) => {
+  //   return parseFloat(findDataKey.call(null, el.sender, x));
+  // };
+
+  if (el.value) {
+    // xTODOx: Deprecate el.val
+    // el.val = el.value;
+    // xTODOx: Change .valInt to .valueInt
+    el.valueToInt = parseInt(el.value, 10);
+    // xTODOx: Change .valFloat to .valueFloat
+    el.valueToFloat = parseFloat(el.value);
+  }
+
+  // xTODOx: DEPRECATE - Remove in favor of existing
+  // ev.value, ev.valueInt, ev.valueFloat
+  // if (ev !== null) {
+  //   if (ev.target.value) {
+  //     el.targetVal = ev.target.value;
+  //     el.targetValInt = parseInt(ev.target.value, 10);
+  //     el.targetValFloat = parseFloat(ev.target.value);
+  //   }
+  // }
+
+  // xTODOx: DEPRECATE and move to ev.senderValue, etc...
+  // if (ev !== null) {
+  //   if (el.sender.value) {
+  //     el.senderVal = el.sender.value;
+  //     el.senderValInt = parseInt(el.sender.value, 10);
+  //     el.senderValFloat = parseFloat(el.sender.value);
+  //   }
+  // }
+
+  // xTODOx: Rename to .matchTarget
+  el.matchesTarget = (x) => {
+    const evKey = findDataKey.call(null, ev.target, x);
+    const elKey = findDataKey.call(null, el, x);
+    if (evKey === undefined || elKey === undefined) {
+      return false;
+    }
+    return evKey === elKey;
+  };
+
+  // xTODOx: Rename to .matchSenderOn
+  el.matchesSender = (x) => {
+    const evKey = findDataKey.call(null, el.sender, x);
+    const elKey = findDataKey.call(null, el, x);
+    if (evKey === undefined || elKey === undefined) {
+      return false;
+    }
+    return evKey === elKey;
+  };
+}
+
+
+
+
 
 function findSender(evTarget) {
   if (evTarget.dataset && evTarget.dataset.send) {
@@ -427,8 +557,7 @@ class BittyJs extends HTMLElement {
         throw new BittyError({
           type: "fetching",
           message:
-            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
-              JSON.stringify(subs)
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)
             }, ${JSON.stringify(options)})`,
           statusText: response.statusText,
           status: response.status,
@@ -472,7 +601,7 @@ class BittyJs extends HTMLElement {
             const bittyReceiverParent = getBittyParent(receiver);
             if (
               bittyTargetParent.dataset.bittyid ===
-                bittyReceiverParent.dataset.bittyid
+              bittyReceiverParent.dataset.bittyid
             ) {
               const receptors = this.trimInput(receiver.dataset.receive);
               for (let receptor of receptors) {
@@ -496,7 +625,7 @@ class BittyJs extends HTMLElement {
           if (foundReceiver === false) {
             if (
               bittyTargetParent.dataset.bittyid ===
-                this.dataset.bittyid
+              this.dataset.bittyid
             ) {
               if (doAwait) {
                 await this.conn[signal](ev, null);
@@ -555,9 +684,14 @@ class BittyJs extends HTMLElement {
       ev.type === "bittyforward"
     ) {
 
+      console.log("FORWARD");
       const forwardedEv = ev.forwardedEvent;
-      forwardedEv.target.dataset.send = ev.forwardedSignal;
+      forwardedEv.sendPayload = ev.forwardedSignal;
+      // console.log(forwardedEv);
       await this.prossesEventDev(forwardedEv);
+
+      // forwardedEv.target.dataset.send = ev.forwardedSignal;
+      // await this.prossesEventDev(forwardedEv);
 
       // // TODO: Handle async
       // const signals = this.trimInput(ev.forwardedSignal);
@@ -577,7 +711,7 @@ class BittyJs extends HTMLElement {
       //   }
       // }
 
-//
+      //
     } else {
       // TODO: Remove this sender in favor of ev.sender which is
       // already added via expand Event.
@@ -714,8 +848,7 @@ class BittyJs extends HTMLElement {
                 this.conn = new mod[connParts[1]]();
               } catch (error) {
                 console.error(
-                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${
-                    connParts[0]
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${connParts[0]
                   }" to make sure it has an "export class ${connParts[1]} {}"`,
                 );
               }
@@ -759,73 +892,128 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-      // TODO: Handle async
-      const signals = this.trimInput(ev.sender.dataset.send);
-      console.log(signals);
-      // TODO: Make sure this gets expanded.
-      const receivers = this.querySelectorAll("[data-receive]");
-      for (let receiver of receivers) {
-        // receiver.sender = ev.target;
-        expandElement(ev, receiver);
-        const receptors = this.trimInput(receiver.dataset.receive);
-        for (let receptor of receptors) {
-          if (
-            signals.includes(receptor) && this.conn[receptor]
-          ) {
-            this.conn[receptor](ev, receiver);
-          }
+    // TODO: Handle async
+    const signals = this.trimInput(ev.sender.dataset.send);
+    console.log(signals);
+    // TODO: Make sure this gets expanded.
+    const receivers = this.querySelectorAll("[data-receive]");
+    for (let receiver of receivers) {
+      // receiver.sender = ev.target;
+      expandElement(ev, receiver);
+      const receptors = this.trimInput(receiver.dataset.receive);
+      for (let receptor of receptors) {
+        if (
+          signals.includes(receptor) && this.conn[receptor]
+        ) {
+          this.conn[receptor](ev, receiver);
         }
       }
+    }
   }
 
   async prossesEventDev(ev) {
-if (ev.sender.dataset.send) {
-          // Process data-receive elements
-          const signals = this.trimInput(ev.sender.dataset.send);
+    // TODO: move everything into sendPayload so you 
+    // can forward stuff without affecting the 
+    // original element's dataset
+    if (ev.sendPayload) {
+      const signals = this.trimInput(ev.sendPayload);
+      for (let signal of signals) {
+        let doAwait = false;
+        const iSigParts = signal.split(":");
+        if (iSigParts.length === 2 && iSigParts[0] === "await") {
+          doAwait = true;
+          signal = iSigParts[1];
+        }
+        if (this.conn[signal]) {
+          let foundReceiver = false;
           const receivers = this.querySelectorAll("[data-receive]");
-          for (let signal of signals) {
-            let doAwait = false;
-            const iSigParts = signal.split(":");
-            if (iSigParts.length === 2 && iSigParts[0] === "await") {
-              doAwait = true;
-              signal = iSigParts[1];
+          for (let receiver of receivers) {
+            const receptors = this.trimInput(receiver.dataset.receive);
+            for (const receptor of receptors) {
+              const rSignalParts = receptor.split(":");
+              if (
+                rSignalParts.length === 2 && rSignalParts[0] === "await"
+              ) {
+                receptor = rSignalParts[1];
+                doAwait == true;
+              }
+              if (receptor === signal) {
+                foundReceiver = true;
+                console.log(receiver);
+                expandElementDev(ev, receiver);
+                if (doAwait) {
+                  await this.conn[signal](ev, receiver);
+                } else {
+                  this.conn[signal](ev, receiver);
+                }
+              }
             }
-            if (this.conn[signal]) {
-              let foundReceiver = false;
-              for (let receiver of receivers) {
-                // TODO: Remove this
-                receiver.sender = sender;
-                const receptors = this.trimInput(receiver.dataset.receive);
-                for (const receptor of receptors) {
-                  const rSignalParts = receptor.split(":");
-                  if (
-                    rSignalParts.length === 2 && rSignalParts[0] === "await"
-                  ) {
-                    receptor = rSignalParts[1];
-                    doAwait == true;
+          }
+          if (foundReceiver === false) {
+            if (doAwait) {
+              await this.conn[signal](ev, null);
+            } else {
+              this.conn[signal](ev, null);
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+    /*
+        console.log(ev.sender.dataset.send);
+        if (ev.sender.dataset.send) {
+              // Process data-receive elements
+              const signals = this.trimInput(ev.sender.dataset.send);
+              const receivers = this.querySelectorAll("[data-receive]");
+              for (let signal of signals) {
+                let doAwait = false;
+                const iSigParts = signal.split(":");
+                if (iSigParts.length === 2 && iSigParts[0] === "await") {
+                  doAwait = true;
+                  signal = iSigParts[1];
+                }
+                if (this.conn[signal]) {
+                  let foundReceiver = false;
+                  for (let receiver of receivers) {
+                    // TODO: Remove this
+                    receiver.sender = sender;
+                    const receptors = this.trimInput(receiver.dataset.receive);
+                    for (const receptor of receptors) {
+                      const rSignalParts = receptor.split(":");
+                      if (
+                        rSignalParts.length === 2 && rSignalParts[0] === "await"
+                      ) {
+                        receptor = rSignalParts[1];
+                        doAwait == true;
+                      }
+                      if (receptor === signal) {
+                        foundReceiver = true;
+                        expandElement(ev, receiver);
+                        if (doAwait) {
+                          await this.conn[signal](ev, receiver);
+                        } else {
+                          this.conn[signal](ev, receiver);
+                        }
+                      }
+                    }
                   }
-                  if (receptor === signal) {
-                    foundReceiver = true;
-                    expandElement(ev, receiver);
+                  if (foundReceiver === false) {
                     if (doAwait) {
-                      await this.conn[signal](ev, receiver);
+                      await this.conn[signal](ev, null);
                     } else {
-                      this.conn[signal](ev, receiver);
+                      this.conn[signal](ev, null);
                     }
                   }
                 }
               }
-              if (foundReceiver === false) {
-                if (doAwait) {
-                  await this.conn[signal](ev, null);
-                } else {
-                  this.conn[signal](ev, null);
-                }
-              }
             }
-          }
-        }
-}
+    */
+  }
 
   /** internal */
   async runBittyInit() {

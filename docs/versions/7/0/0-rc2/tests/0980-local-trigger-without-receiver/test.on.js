@@ -13,22 +13,18 @@ export class AlfaClass {
 
 export class BravoClass {
   async bittyReady() {  
-    console.log("HERE0");
     await sleep(300);
     this.api.querySelector(".clickme0980").click();
   }
 
   testTrigger0980() {
-    console.log("HERE1");
     this.api.localTrigger("runTest0980");
   }
 
   runTest0980(event, el) {
-    console.log("HERE2");
     this.api.localTrigger("runTest0980BravoBounce");
   }
   runTest0980BravoBounce(event, el) {
-    console.log("HERE3");
     el.innerHTML = "PASSED";
   }
 }

@@ -199,75 +199,12 @@ class BittyJs extends HTMLElement {
       return parseFloat(findDataKey.call(null, el, x));
     };
 
-    // xTODOx: DEPRECATE and move to ev.bittyId
-    // if (ev !== null) {
-    //   el.targetBittyId = ev.target.dataset.bittyid;
-    // }
-
-    // // xTODOx: DEPRECATE and use already existing ev.ds()
-    // el.targetDs = (x) => {
-    //   return findDataKey.call(null, ev.target, x);
-    // };
-
-    // // xTODOx: DEPRECATE and use already existing ev.dsInt()
-    // el.targetDsInt = (x) => {
-    //   return parseInt(findDataKey.call(null, ev.target, x));
-    // };
-
-    // // xTODOx: DEPRECATE and use already existing ev.dsFloat()
-    // el.targetDsFloat = (x) => {
-    //   return parseFloat(findDataKey.call(null, ev.target, x));
-    // };
-
-    // // xTODOx: DEPRECATE and move to ev.
-    // if (ev !== null) {
-    //   el.senderBittyId = el.sender.dataset.bittyid;
-    // }
-
-    // // xTODOx: DEPRECATE and move to ev.sender.param()
-    // el.senderDs = (x) => {
-    //   return findDataKey.call(null, el.sender, x);
-    // };
-
-    // // xTODOx: DEPRECATE and move to ev.senderDsInt()
-    // el.senderDsInt = (x) => {
-    //   return parseInt(findDataKey.call(null, el.sender, x));
-    // };
-
-    // // xTODOx: DEPRECATE and move to ev.senderDsFloat()
-    // el.senderDsFloat = (x) => {
-    //   return parseFloat(findDataKey.call(null, el.sender, x));
-    // };
 
     if (el.value) {
-      // xTODOx: Deprecate el.val
-      // el.val = el.value;
-      // xTODOx: Change .valInt to .valueInt
       el.valueToInt = parseInt(el.value, 10);
-      // xTODOx: Change .valFloat to .valueFloat
       el.valueToFloat = parseFloat(el.value);
     }
 
-    // xTODOx: DEPRECATE - Remove in favor of existing
-    // ev.value, ev.valueInt, ev.valueFloat
-    // if (ev !== null) {
-    //   if (ev.target.value) {
-    //     el.targetVal = ev.target.value;
-    //     el.targetValInt = parseInt(ev.target.value, 10);
-    //     el.targetValFloat = parseFloat(ev.target.value);
-    //   }
-    // }
-
-    // xTODOx: DEPRECATE and move to ev.senderValue, etc...
-    // if (ev !== null) {
-    //   if (el.sender.value) {
-    //     el.senderVal = el.sender.value;
-    //     el.senderValInt = parseInt(el.sender.value, 10);
-    //     el.senderValFloat = parseFloat(el.sender.value);
-    //   }
-    // }
-
-    // xTODOx: Rename to .matchTarget
     el.matchesTarget = (x) => {
       const evKey = findDataKey.call(null, ev.target, x);
       const elKey = findDataKey.call(null, el, x);
@@ -277,7 +214,6 @@ class BittyJs extends HTMLElement {
       return evKey === elKey;
     };
 
-    // xTODOx: Rename to .matchSenderOn
     el.matchesSender = (x) => {
       const evKey = findDataKey.call(null, el.sender, x);
       const elKey = findDataKey.call(null, el, x);

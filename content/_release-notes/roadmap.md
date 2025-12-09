@@ -1,5 +1,17 @@
 ## Roadmap 
 
+- TODO: Set up `data-init` to handle `await:SIGNAL`
+isntead of just doing an `await` if the
+function is `async` (which is what happens
+now)
+
+- Investigate adding all the `bittyId` and `.sender` stuff
+to empyt bitty elements that just make 
+a connection and populate themselves from 
+`bittyInit` or `bittyReady`
+
+
+
 - TODO: Implement: `this.api.getQuickXXX()` 
 methods. (stubs are already in place).
 

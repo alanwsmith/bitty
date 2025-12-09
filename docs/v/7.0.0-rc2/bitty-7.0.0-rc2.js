@@ -66,10 +66,12 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async connectedCallback() {
-    this.setIds(this);
+    this.dataset.bittyid = self.crypto.randomUUID();
+    this.bittyId = this.dataset.bittyid;
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
+      this.setIds(this);
       this.handleEventBridge = this.handleEvent.bind(this);
       this.addEventListeners();
       await this.runBittyInit();

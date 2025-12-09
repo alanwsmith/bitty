@@ -3,7 +3,8 @@ const version = [7, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 function expandEvent(ev) {
-  ev.sender = findSender(ev.target);
+  // ev.sender = findSender(ev.target);
+  ev.sender = this.findSender(ev.target);
   if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
     ev.sender.bittyId = ev.sender.dataset.bittyid;
   }
@@ -302,21 +303,18 @@ function expandElementDev(ev, el) {
   };
 }
 
+// function findSender(evTarget) {
+//   if (evTarget.dataset && evTarget.dataset.send) {
+//     return evTarget;
+//   } else if (evTarget.dataset && evTarget.dataset.use) {
+//     return evTarget;
+//   } else if (evTarget.parentNode) {
+//     return findSender(evTarget.parentNode);
+//   } else {
+//     return null;
+//   }
+// }
 
-
-
-
-function findSender(evTarget) {
-  if (evTarget.dataset && evTarget.dataset.send) {
-    return evTarget;
-  } else if (evTarget.dataset && evTarget.dataset.use) {
-    return evTarget;
-  } else if (evTarget.parentNode) {
-    return findSender(evTarget.parentNode);
-  } else {
-    return null;
-  }
-}
 
 function getBittyParent(el) {
   if (el.localName.toLowerCase() === tagName) {
@@ -494,6 +492,70 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
+
+expandEvent(ev) {
+  // ev.sender = findSender(ev.target);
+  ev.sender = this.findSender(ev.target);
+  if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
+    ev.sender.bittyId = ev.sender.dataset.bittyid;
+  }
+
+  if (ev.sender && ev.sender.value) {
+    ev.sender.valueToInt = parseInt(ev.sender.value, 10);
+    ev.sender.valueToFloat = parseFloat(ev.sender.value);
+  }
+
+  if (ev.sender) {
+    ev.sender.prop = (x) => {
+      return findDataKey.call(null, ev.sender, x);
+    };
+    ev.sender.propToInt = (x) => {
+      return parseInt(findDataKey.call(null, ev.sender, x), 10);
+    };
+    ev.sender.propToFloat = (x) => {
+      return parseFloat(findDataKey.call(null, ev.sender, x));
+    };
+  }
+
+  if (ev.target.value !== undefined) {
+    // xTODOx: See if can change .val to .value
+    ev.value = ev.target.value;
+    // xTODOx: Change .valInt to .valueInt
+    ev.valueToInt = parseInt(ev.target.value, 10);
+    // xTODOx: Change .valFloat to .valueFloat
+    ev.valueToFloat = parseFloat(event.target.value);
+  }
+
+  ev.bittyId = ev.target.dataset.bittyid;
+
+  // xTODOx: Rename .ds to .param
+  ev.prop = (x) => {
+    return findDataKey.call(null, ev.target, x);
+  };
+
+  // xTODOx: Rename .ds to .param
+  ev.propToInt = (x) => {
+    return parseInt(findDataKey.call(null, ev.target, x));
+  };
+
+  // xTODOx: Rename .ds to .prop
+  ev.propToFloat = (x) => {
+    return parseFloat(findDataKey.call(null, ev.target, x));
+  };
+}
+
+ findSender(evTarget) {
+  if (evTarget.dataset && evTarget.dataset.send) {
+    return evTarget;
+  } else if (evTarget.dataset && evTarget.dataset.use) {
+    return evTarget;
+  } else if (evTarget.parentNode) {
+    return this.findSender(evTarget.parentNode);
+  } else {
+    return this;
+  }
+}
+
   forward(ev, signal) {
     const forwardEvent = new ForwardEvent(ev, signal);
     this.dispatchEvent(forwardEvent);
@@ -578,7 +640,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async handleEvent(ev) {
-    expandEvent(ev);
+    this.expandEvent(ev);
     if (
       ev.type === "bittylocaltrigger"
     ) {
@@ -684,7 +746,6 @@ class BittyJs extends HTMLElement {
       ev.type === "bittyforward"
     ) {
 
-      console.log("FORWARD");
       const forwardedEv = ev.forwardedEvent;
       forwardedEv.sendPayload = ev.forwardedSignal;
       // console.log(forwardedEv);
@@ -715,7 +776,8 @@ class BittyJs extends HTMLElement {
     } else {
       // TODO: Remove this sender in favor of ev.sender which is
       // already added via expand Event.
-      const sender = findSender(ev.target);
+      // const sender = findSender(ev.target);
+      const sender = this.findSender(ev.target);
       if (sender) {
         // Process data-use element if there is one
         const receivers = this.querySelectorAll("[data-use]");
@@ -939,7 +1001,6 @@ class BittyJs extends HTMLElement {
               }
               if (receptor === signal) {
                 foundReceiver = true;
-                console.log(receiver);
                 expandElementDev(ev, receiver);
                 if (doAwait) {
                   await this.conn[signal](ev, receiver);

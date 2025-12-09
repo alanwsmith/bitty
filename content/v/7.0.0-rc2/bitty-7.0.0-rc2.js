@@ -24,9 +24,10 @@ class ForwardEvent extends Event {
 }
 
 class LocalTriggerEvent extends Event {
-  constructor(signal) {
+  constructor(signal, bittyId) {
     super("bittylocaltrigger", { bubbles: true });
     this.signal = signal;
+    this.localId = bittyId;
   }
 }
 
@@ -384,71 +385,76 @@ class BittyJs extends HTMLElement {
     ) {
       const forwardedEv = ev.forwardedEvent;
       forwardedEv.sendPayload = ev.forwardedSignal;
-      await this.processEvent(forwardedEv);
+      await this.processEvent(forwardedEv, false);
     } else {
       this.expandEvent(ev);
       if (
         ev.type === "bittylocaltrigger"
       ) {
-        // TODO: Handle async
-        const signals = this.trimInput(ev.signal);
-        const receivers = this.querySelectorAll("[data-receive]");
-        for (let signal of signals) {
-          let doAwait = false;
-          const iSigParts = signal.split(":");
-          if (iSigParts.length === 2 && iSigParts[0] === "await") {
-            doAwait = true;
-            signal = iSigParts[1];
-          }
-          if (this.conn[signal]) {
-            const bittyTargetParent = this.getBittyParent(ev.target);
-            let foundReceiver = false;
-            for (let receiver of receivers) {
-              // TODO: Remove
-              receiver.sender = ev.target;
-              const bittyReceiverParent = this.getBittyParent(receiver);
-              if (
-                bittyTargetParent.dataset.bittyid ===
-                bittyReceiverParent.dataset.bittyid
-              ) {
-                const receptors = this.trimInput(receiver.dataset.receive);
-                for (let receptor of receptors) {
-                  const rSigParts = receptor.split(":");
-                  if (rSigParts.length === 2 && rSigParts[0] === "await") {
-                    doAwait = true;
-                    receptor = rSigParts[1];
-                  }
-                  if (receptor === signal) {
-                    foundReceiver = true;
-                    this.expandElement(ev, receiver);
-                    if (doAwait) {
-                      await this.conn[signal](ev, receiver);
-                    } else {
-                      this.conn[signal](ev, receiver);
-                    }
-                  }
-                }
-              }
-            }
-            if (foundReceiver === false) {
-              if (
-                bittyTargetParent.dataset.bittyid ===
-                this.dataset.bittyid
-              ) {
-                if (doAwait) {
-                  await this.conn[signal](ev, null);
-                } else {
-                  this.conn[signal](ev, null);
-                }
-              }
-            }
-          }
-        }
+
+        ev.sendPayload = ev.signal;
+        await this.processEventDev(ev, true);
+        
+
+        // // TODO: Handle async
+        // const signals = this.trimInput(ev.signal);
+        // const receivers = this.querySelectorAll("[data-receive]");
+        // for (let signal of signals) {
+        //   let doAwait = false;
+        //   const iSigParts = signal.split(":");
+        //   if (iSigParts.length === 2 && iSigParts[0] === "await") {
+        //     doAwait = true;
+        //     signal = iSigParts[1];
+        //   }
+        //   if (this.conn[signal]) {
+        //     const bittyTargetParent = this.getBittyParent(ev.target);
+        //     let foundReceiver = false;
+        //     for (let receiver of receivers) {
+        //       const bittyReceiverParent = this.getBittyParent(receiver);
+        //       if (
+        //         bittyTargetParent.dataset.bittyid ===
+        //         bittyReceiverParent.dataset.bittyid
+        //       ) {
+        //         const receptors = this.trimInput(receiver.dataset.receive);
+        //         for (let receptor of receptors) {
+        //           const rSigParts = receptor.split(":");
+        //           if (rSigParts.length === 2 && rSigParts[0] === "await") {
+        //             doAwait = true;
+        //             receptor = rSigParts[1];
+        //           }
+        //           if (receptor === signal) {
+        //             foundReceiver = true;
+        //             this.expandElement(ev, receiver);
+        //             if (doAwait) {
+        //               await this.conn[signal](ev, receiver);
+        //             } else {
+        //               this.conn[signal](ev, receiver);
+        //             }
+        //           }
+        //         }
+        //       }
+        //     }
+        //     if (foundReceiver === false) {
+        //       if (
+        //         bittyTargetParent.dataset.bittyid ===
+        //         this.dataset.bittyid
+        //       ) {
+        //         if (doAwait) {
+        //           await this.conn[signal](ev, null);
+        //         } else {
+        //           this.conn[signal](ev, null);
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+
+
       } else if (
         ev.type === "bittytrigger"
       ) {
         ev.sendPayload = ev.signal;
-        await this.processEvent(ev);
+        await this.processEvent(ev, false);
       } else {
         // TODO: Remove this sender in favor of ev.sender which is
         // already added via expand Event.
@@ -548,7 +554,7 @@ class BittyJs extends HTMLElement {
   }
 
   localTrigger(signal) {
-    const ev = new LocalTriggerEvent(signal);
+    const ev = new LocalTriggerEvent(signal, this.bittyId);
     this.dispatchEvent(ev);
   }
 
@@ -629,7 +635,9 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  async processEvent(ev) {
+
+  /** internal */
+  async processEvent(ev, isLocal) {
     // TODO: move everything into sendPayload so you 
     // can forward stuff without affecting the 
     // original element's dataset
@@ -675,6 +683,75 @@ class BittyJs extends HTMLElement {
           }
         }
       }
+    }
+  }
+
+
+
+  /** internal */
+  async processEventDev(ev, isLocal) {
+    // TODO: move everything into sendPayload so you 
+    // can forward stuff without affecting the 
+    // original element's dataset
+
+    // skip things flagged as local that aren't
+    if (ev.localId && ev.localId !== this.bittyId) {
+      return null;
+    }
+
+
+    if (ev.sendPayload) {
+
+        const signals = this.trimInput(ev.sendPayload);
+
+        // TODO: THis is dev stuff to remove
+        if (signals[0] === "runTest0980") {
+          console.log(isLocal);
+          console.log(ev.sender.bittyId);
+          console.log(this.bittyId);
+          console.log(ev.localId);
+        }
+ 
+        for (let signal of signals) {
+          let doAwait = false;
+          const iSigParts = signal.split(":");
+          if (iSigParts.length === 2 && iSigParts[0] === "await") {
+            doAwait = true;
+            signal = iSigParts[1];
+          }
+          if (this.conn[signal]) {
+            let foundReceiver = false;
+            const receivers = this.querySelectorAll("[data-receive]");
+            for (let receiver of receivers) {
+              const receptors = this.trimInput(receiver.dataset.receive);
+              for (let receptor of receptors) {
+                const rSignalParts = receptor.split(":");
+                if (
+                  rSignalParts.length === 2 && rSignalParts[0] === "await"
+                ) {
+                  receptor = rSignalParts[1];
+                  doAwait == true;
+                }
+                if (receptor === signal) {
+                  foundReceiver = true;
+                  this.expandElement(ev, receiver);
+                  if (doAwait) {
+                    await this.conn[signal](ev, receiver);
+                  } else {
+                    this.conn[signal](ev, receiver);
+                  }
+                }
+              }
+            }
+            if (foundReceiver === false) {
+              if (doAwait) {
+                await this.conn[signal](ev, null);
+              } else {
+                this.conn[signal](ev, null);
+              }
+            }
+          }
+        }
     }
   }
 

@@ -6,13 +6,13 @@ export default class {
   }
 
   runTest1200Alfa(ev, el) {
-    if (el.sender.propToFloat("key") === 99.7) {
+    if (ev.sender.propToFloat("key") === 99.7) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1200Bravo(ev, el) {
-    if (el.sender.propToFloat("key") === 77.9) {
+    if (ev.sender.propToFloat("key") === 77.9) {
       el.innerHTML = "PASSED";
     }
   }

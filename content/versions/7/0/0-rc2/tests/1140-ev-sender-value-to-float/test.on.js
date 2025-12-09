@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1140(ev, el) {
-    if (el.sender.valueToFloat === 1.1) {
+    if (ev.sender.valueToFloat === 1.1) {
       ev.target.hidden = true;
       el.innerHTML = "PASSED";
     }

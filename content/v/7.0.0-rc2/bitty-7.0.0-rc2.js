@@ -199,7 +199,7 @@ class BittyJs extends HTMLElement {
     };
 
     el.propMatchesSender = (x) => {
-      const evKey = findDataKey.call(null, el.sender, x);
+      const evKey = findDataKey.call(null, ev.sender, x);
       const elKey = findDataKey.call(null, el, x);
       if (evKey === undefined || elKey === undefined) {
         return false;
@@ -402,8 +402,8 @@ class BittyJs extends HTMLElement {
         // TODO: Remove this sender in favor of ev.sender which is
         // already added via expand Event.
         // const sender = findSender(ev.target);
-        const sender = this.findSender(ev.target);
-        if (sender) {
+        // const sender = this.findSender(ev.target);
+        if (ev.sender) {
           // Process data-use element if there is one
           const receivers = this.querySelectorAll("[data-use]");
           if (ev.sender.dataset.use) {
@@ -419,7 +419,7 @@ class BittyJs extends HTMLElement {
                 if (this.conn[signal]) {
                   for (let receiver of receivers) {
                     // TODO Deprecate this.
-                    receiver.sender = sender;
+                    // receiver.sender = sender;
                     this.expandElement(ev, receiver);
                     if (receiver.bittyId === ev.sender.bittyId) {
                       if (doAwait) {
@@ -448,7 +448,7 @@ class BittyJs extends HTMLElement {
                 let foundReceiver = false;
                 for (let receiver of receivers) {
                   // TODO: Remove this
-                  receiver.sender = sender;
+                  // receiver.sender = sender;
                   const receptors = this.trimInput(receiver.dataset.receive);
                   for (const receptor of receptors) {
                     const rSignalParts = receptor.split(":");
@@ -577,8 +577,6 @@ class BittyJs extends HTMLElement {
   makeTXT(template, subs = []) {
     return this.doSubs(template, subs);
   }
-
-
 
 
   /** internal */

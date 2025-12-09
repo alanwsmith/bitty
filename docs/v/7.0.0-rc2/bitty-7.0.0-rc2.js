@@ -215,6 +215,13 @@ class BittyJs extends HTMLElement {
       ev.sender.bittyId = ev.sender.dataset.bittyid;
     }
 
+    // Move the dataset.send into `sendPayload`
+    // so this.api.forward() can change .sendPayload
+    // without affecting the original dataset. 
+    if (ev.sender.dataset && ev.sender.dataset.send) {
+      ev.sendPayload = ev.sender.dataset.send;
+    }
+
     if (ev.sender && ev.sender.value) {
       ev.sender.valueToInt = parseInt(ev.sender.value, 10);
       ev.sender.valueToFloat = parseFloat(ev.sender.value);
@@ -728,60 +735,6 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-
-
-
-
-
-    /*
-        console.log(ev.sender.dataset.send);
-        if (ev.sender.dataset.send) {
-              // Process data-receive elements
-              const signals = this.trimInput(ev.sender.dataset.send);
-              const receivers = this.querySelectorAll("[data-receive]");
-              for (let signal of signals) {
-                let doAwait = false;
-                const iSigParts = signal.split(":");
-                if (iSigParts.length === 2 && iSigParts[0] === "await") {
-                  doAwait = true;
-                  signal = iSigParts[1];
-                }
-                if (this.conn[signal]) {
-                  let foundReceiver = false;
-                  for (let receiver of receivers) {
-                    // TODO: Remove this
-                    receiver.sender = sender;
-                    const receptors = this.trimInput(receiver.dataset.receive);
-                    for (const receptor of receptors) {
-                      const rSignalParts = receptor.split(":");
-                      if (
-                        rSignalParts.length === 2 && rSignalParts[0] === "await"
-                      ) {
-                        receptor = rSignalParts[1];
-                        doAwait == true;
-                      }
-                      if (receptor === signal) {
-                        foundReceiver = true;
-                        this.expandElement(ev, receiver);
-                        if (doAwait) {
-                          await this.conn[signal](ev, receiver);
-                        } else {
-                          this.conn[signal](ev, receiver);
-                        }
-                      }
-                    }
-                  }
-                  if (foundReceiver === false) {
-                    if (doAwait) {
-                      await this.conn[signal](ev, null);
-                    } else {
-                      this.conn[signal](ev, null);
-                    }
-                  }
-                }
-              }
-            }
-    */
   }
 
   /** internal */

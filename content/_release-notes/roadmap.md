@@ -1,5 +1,8 @@
 ## Roadmap 
 
+- TODO: Implement: `this.api.getQuickXXX()` 
+methods. (stubs are already in place).
+
 - TODO: Add `this.api.getCSS` which is just an
 alias to `this.api.getTXT` but helps with the
 mental model that fits with the other `.getXXX`

@@ -673,7 +673,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   async getQuickJSON(url, subs = [], options = {}) {
     const response = await this.getJSON(url, subs, options);
     if (response.value) {
@@ -683,8 +682,25 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async getQuickSVG(url, subs = [], options = {}) {
+    const response = await this.getSVG(url, subs, options);
+    if (response.value) {
+        return response.value;
+    } else {
+      const tmpl = document.createElement("template");
+      tmpl.innerHTML = `<svg version="1.1"
+     width="300" height="200"
+     xmlns="http://www.w3.org/2000/svg">
+  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">error</text>
+</svg>`;
+      const wrapper = tmpl.content.cloneNode(true);
+      const svg = wrapper.querySelector("svg");
+      return svg;
+    }
+  }
 
-// JSON
+
+
 // SVG
 // TXT
 

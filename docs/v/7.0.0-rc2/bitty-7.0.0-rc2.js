@@ -2,57 +2,6 @@ const version = [7, 0, 0];
 
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-function expandEvent(ev) {
-  // ev.sender = findSender(ev.target);
-  ev.sender = this.findSender(ev.target);
-  if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
-    ev.sender.bittyId = ev.sender.dataset.bittyid;
-  }
-
-  if (ev.sender && ev.sender.value) {
-    ev.sender.valueToInt = parseInt(ev.sender.value, 10);
-    ev.sender.valueToFloat = parseFloat(ev.sender.value);
-  }
-
-  if (ev.sender) {
-    ev.sender.prop = (x) => {
-      return findDataKey.call(null, ev.sender, x);
-    };
-    ev.sender.propToInt = (x) => {
-      return parseInt(findDataKey.call(null, ev.sender, x), 10);
-    };
-    ev.sender.propToFloat = (x) => {
-      return parseFloat(findDataKey.call(null, ev.sender, x));
-    };
-  }
-
-  if (ev.target.value !== undefined) {
-    // xTODOx: See if can change .val to .value
-    ev.value = ev.target.value;
-    // xTODOx: Change .valInt to .valueInt
-    ev.valueToInt = parseInt(ev.target.value, 10);
-    // xTODOx: Change .valFloat to .valueFloat
-    ev.valueToFloat = parseFloat(event.target.value);
-  }
-
-  ev.bittyId = ev.target.dataset.bittyid;
-
-  // xTODOx: Rename .ds to .param
-  ev.prop = (x) => {
-    return findDataKey.call(null, ev.target, x);
-  };
-
-  // xTODOx: Rename .ds to .param
-  ev.propToInt = (x) => {
-    return parseInt(findDataKey.call(null, ev.target, x));
-  };
-
-  // xTODOx: Rename .ds to .prop
-  ev.propToFloat = (x) => {
-    return parseFloat(findDataKey.call(null, ev.target, x));
-  };
-}
-
 
 function expandElement(ev, el) {
   if (ev !== null) {

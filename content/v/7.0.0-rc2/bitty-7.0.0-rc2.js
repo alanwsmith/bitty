@@ -384,7 +384,7 @@ class BittyJs extends HTMLElement {
     ) {
       const forwardedEv = ev.forwardedEvent;
       forwardedEv.sendPayload = ev.forwardedSignal;
-      await this.prossesEventDev(forwardedEv);
+      await this.processEvent(forwardedEv);
     } else {
     this.expandEvent(ev);
     if (
@@ -667,28 +667,7 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  /** internal */
   async processEvent(ev) {
-    // TODO: Handle async
-    const signals = this.trimInput(ev.sender.dataset.send);
-    console.log(signals);
-    // TODO: Make sure this gets expanded.
-    const receivers = this.querySelectorAll("[data-receive]");
-    for (let receiver of receivers) {
-      // receiver.sender = ev.target;
-      this.expandElement(ev, receiver);
-      const receptors = this.trimInput(receiver.dataset.receive);
-      for (let receptor of receptors) {
-        if (
-          signals.includes(receptor) && this.conn[receptor]
-        ) {
-          this.conn[receptor](ev, receiver);
-        }
-      }
-    }
-  }
-
-  async prossesEventDev(ev) {
     // TODO: move everything into sendPayload so you 
     // can forward stuff without affecting the 
     // original element's dataset

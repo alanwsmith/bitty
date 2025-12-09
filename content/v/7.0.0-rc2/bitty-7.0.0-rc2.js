@@ -400,21 +400,6 @@ class BittyJs extends HTMLElement {
         await this.processEvent(ev);
       } else {
 
-        if (ev.sender.dataset.use) {
-          const signals = this.trimInput(ev.sender.dataset.use);
-          for (const signal of signals) {
-            if (this.conn[signal]) {
-              this.conn[signal](ev, ev.sender);
-            }
-          }
-        }
-
-        if (ev.sender.dataset.send) {
-          ev.sendPayload = ev.sender.dataset.send;
-          await this.processEvent(ev);
-        }
-
-
 
 
         // // Process data-use element if there is one
@@ -447,6 +432,31 @@ class BittyJs extends HTMLElement {
         //   }
         // }
 
+
+        if (ev.sender.dataset.use) {
+          const signals = this.trimInput(ev.sender.dataset.use);
+          for (let signal of signals) {
+            let doAwait = false;
+            const iSigParts = signal.split(":");
+            if (iSigParts.length === 2 && iSigParts[0] === "await") {
+              doAwait = true;
+              signal = iSigParts[1];
+            }
+            if (this.conn[signal]) {
+              this.expandElement(ev, ev.sender);
+              if (doAwait) {
+                await this.conn[signal](ev, ev.sender);
+              } else {
+                this.conn[signal](ev, ev.sender);
+              }
+            }
+          }
+        }
+
+        if (ev.sender.dataset.send) {
+          ev.sendPayload = ev.sender.dataset.send;
+          await this.processEvent(ev);
+        }
       }
     }
   }
@@ -547,10 +557,6 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    // TODO: move everything into sendPayload so you 
-    // can forward stuff without affecting the 
-    // original element's dataset
-
     // skip things flagged as local that aren't
     if (ev.localId && ev.localId !== this.bittyId) {
       return null;

@@ -19,65 +19,66 @@ body {
       <body>
 
 <script>
-window.BittyClass0030 = class {
+window.BittyClass0050 = class {
   bittyReady() {
-    this.api.querySelector("button").click();
+    this.api.querySelectorAll("button").forEach((button) => button.click());
   }
 
-  checkForward(ev, el) {
-    console.log("got checkForward");
-    this.api.forward(ev, "receiveForward");
+  async debug0050Alfa(_, el) {
+    const url = "/debug/tests/0050-get-quicks/payload/";
+    el.appendChild(await this.api.getQuickElement(url)); 
   }
 
-  receiveForward(ev, el) {
-    const div = this.api.querySelector("div");
-    div.innerHTML = "got forward without receiver";
-  }
-}
-</script>
-
-<bitty-7-0 data-connect="BittyClass0030">
-  <button data-send="checkForward">Click me</button>
-  <div>FAILED</div>
-</bitty-7-0>
-
-
-<script>
-window.BittyClass0040 = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
+  async debug0050Bravo(_, el) {
+    const url = "/debug/tests/0050-get-quicks/xxx";
+    el.appendChild(await this.api.getQuickElement(url)); 
   }
 
-  runTest0230(event, element) {
-    // console.log(event);
-    element.innerHTML = "PASSED";
-    this.api.forward(
-      event,
-      "secondSignal0230 thirdSignal0230 fourthSignal0230",
-    );
+  async debug0050Charlie(_, el) {
+    const url = "/debug/tests/0050-get-quicks/payload/";
+    el.appendChild(await this.api.getQuickHTML(url)); 
   }
 
-  secondSignal0230(_event, element) {
-    element.innerHTML = "PASSED";
+  async debug0050Delta(_, el) {
+    const url = "/debug/tests/0050-get-quicks/yyy/";
+    el.appendChild(await this.api.getQuickHTML(url)); 
   }
 
-  thirdSignal0230(_event, element) {
-    element.innerHTML = "PASSED";
+  async debug0050Echo(_, el) {
+    const url = "/debug/tests/0050-get-quicks/payload.json";
+    el.innerHTML = JSON.stringify(await this.api.getQuickJSON(url)); 
   }
 
-  fourthSignal0230(_event, element) {
-    element.innerHTML = "PASSED";
+  async debug0050Foxtrot(_, el) {
+    const url = "/debug/tests/0050-get-quicks/zzz";
+    el.innerHTML = JSON.stringify(await this.api.getQuickJSON(url)); 
   }
+
 }           
 </script>
 
-<bitty-7-0 data-connect="BittyClass0040">
-    <button data-send="runTest0230">Test Button</button>
-    <div class="test" data-receive="runTest0230">FAILED</div>
-    <div class="test" data-receive="secondSignal0230">FAILED</div>
-    <div class="test" data-receive="thirdSignal0230">FAILED</div>
-    <div class="test" data-receive="fourthSignal0230">FAILED</div>
+<bitty-7-0 data-connect="BittyClass0050">
+    <button data-send="debug0050Alfa">Test Button</button>
+    <div data-receive="debug0050Alfa"></div>
+
+    <button data-send="debug0050Bravo">Test Button</button>
+    <div data-receive="debug0050Bravo"></div>
+
+    <button data-send="debug0050Charlie">Test Button</button>
+    <div data-receive="debug0050Charlie"></div>
+
+    <button data-send="debug0050Delta">Test Button</button>
+    <div data-receive="debug0050Delta"></div>
+
+    <button data-send="debug0050Echo">Test Button</button>
+    <div data-receive="debug0050Echo"></div>
+
+    <button data-send="debug0050Foxtrot">Test Button</button>
+    <div data-receive="debug0050Foxtrot"></div>
+
+
 </bitty-7-0>          
+
 
       <!--
       <script>

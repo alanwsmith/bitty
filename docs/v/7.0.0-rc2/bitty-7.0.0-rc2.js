@@ -650,6 +650,45 @@ class BittyJs extends HTMLElement {
       .split(/\s+/m)
       .map((l) => l.trim());
   }
+
+
+  /* All the stuff below here is experimental. It's
+ neither fully documented or tested */
+
+  async getQuickElement(url, subs = [], options = {}) {
+    const response = await this.getElement(url, subs, options);
+    if (response.value) {
+        return response.value;
+    } else {
+        return this.makeElement(`<span class="bitty-error">Error (check console)</span>`);
+    }
+  }
+
+  async getQuickHTML(url, subs = [], options = {}) {
+    const response = await this.getElement(url, subs, options);
+    if (response.value) {
+        return response.value;
+    } else {
+        return this.makeHTML(`<span class="bitty-error">Error (check console)</span>`);
+    }
+  }
+
+
+  async getQuickJSON(url, subs = [], options = {}) {
+    const response = await this.getJSON(url, subs, options);
+    if (response.value) {
+        return response.value;
+    } else {
+        return response.error;
+    }
+  }
+
+
+// JSON
+// SVG
+// TXT
+
+
 }
 
 customElements.define(tagName, BittyJs);

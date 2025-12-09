@@ -17,7 +17,7 @@
 const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
 
-  stationOption: `<option value="URL">CITY, STATE</option>`,
+  stationOption: `<option value="URL">CODE - STATE (CITY)</option>`,
 
   report: `<div>
 <div>DESC<br />TEMPF°F (TEMPC°C)</div>
@@ -71,11 +71,12 @@ window.GetWeather = class {
 
   weatherStations(_, el) {
     const selector = this.api.makeElement(weatherTemplates.selector);
-    Object.values(this.#stations.capitals).forEach((station) => {
+    Object.entries(this.#stations.capitals).forEach(([code, station]) => {
       const subs = [
         ["CITY", station.city_name],
         ["STATE", station.state_name],
         ["URL", station.weather_station_id],
+        ["CODE", code],
       ];
       const option = this.api.makeElement(weatherTemplates.stationOption, subs);
       selector.appendChild(option);

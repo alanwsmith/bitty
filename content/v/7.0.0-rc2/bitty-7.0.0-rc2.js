@@ -46,7 +46,7 @@ function expandEvent(ev) {
     return parseInt(findDataKey.call(null, ev.target, x));
   };
 
-  // xTODOx: Rename .ds to .param
+  // xTODOx: Rename .ds to .prop
   ev.propToFloat = (x) => {
     return parseFloat(findDataKey.call(null, ev.target, x));
   };
@@ -554,22 +554,30 @@ class BittyJs extends HTMLElement {
     } else if (
       ev.type === "bittyforward"
     ) {
-      // TODO: Handle async
-      const signals = this.trimInput(ev.forwardedSignal);
-      ev = ev.forwardedEvent;
-      const receivers = this.querySelectorAll("[data-receive]");
-      for (let receiver of receivers) {
-        receiver.sender = ev.target;
-        expandElement(ev, receiver);
-        const receptors = this.trimInput(receiver.dataset.receive);
-        for (let receptor of receptors) {
-          if (
-            signals.includes(receptor) && this.conn[receptor]
-          ) {
-            this.conn[receptor](ev, receiver);
-          }
-        }
-      }
+
+      const forwardedEv = ev.forwardedEvent;
+      forwardedEv.target.dataset.send = ev.forwardedSignal;
+      await this.prossesEventDev(forwardedEv);
+
+      // // TODO: Handle async
+      // const signals = this.trimInput(ev.forwardedSignal);
+      // ev = ev.forwardedEvent;
+      // // TODO: Make sure this gets expanded.
+      // const receivers = this.querySelectorAll("[data-receive]");
+      // for (let receiver of receivers) {
+      //   receiver.sender = ev.target;
+      //   expandElement(ev, receiver);
+      //   const receptors = this.trimInput(receiver.dataset.receive);
+      //   for (let receptor of receptors) {
+      //     if (
+      //       signals.includes(receptor) && this.conn[receptor]
+      //     ) {
+      //       this.conn[receptor](ev, receiver);
+      //     }
+      //   }
+      // }
+
+//
     } else {
       // TODO: Remove this sender in favor of ev.sender which is
       // already added via expand Event.
@@ -748,6 +756,76 @@ class BittyJs extends HTMLElement {
   makeTXT(template, subs = []) {
     return this.doSubs(template, subs);
   }
+
+  /** internal */
+  async processEvent(ev) {
+      // TODO: Handle async
+      const signals = this.trimInput(ev.sender.dataset.send);
+      console.log(signals);
+      // TODO: Make sure this gets expanded.
+      const receivers = this.querySelectorAll("[data-receive]");
+      for (let receiver of receivers) {
+        // receiver.sender = ev.target;
+        expandElement(ev, receiver);
+        const receptors = this.trimInput(receiver.dataset.receive);
+        for (let receptor of receptors) {
+          if (
+            signals.includes(receptor) && this.conn[receptor]
+          ) {
+            this.conn[receptor](ev, receiver);
+          }
+        }
+      }
+  }
+
+  async prossesEventDev(ev) {
+if (ev.sender.dataset.send) {
+          // Process data-receive elements
+          const signals = this.trimInput(ev.sender.dataset.send);
+          const receivers = this.querySelectorAll("[data-receive]");
+          for (let signal of signals) {
+            let doAwait = false;
+            const iSigParts = signal.split(":");
+            if (iSigParts.length === 2 && iSigParts[0] === "await") {
+              doAwait = true;
+              signal = iSigParts[1];
+            }
+            if (this.conn[signal]) {
+              let foundReceiver = false;
+              for (let receiver of receivers) {
+                // TODO: Remove this
+                receiver.sender = sender;
+                const receptors = this.trimInput(receiver.dataset.receive);
+                for (const receptor of receptors) {
+                  const rSignalParts = receptor.split(":");
+                  if (
+                    rSignalParts.length === 2 && rSignalParts[0] === "await"
+                  ) {
+                    receptor = rSignalParts[1];
+                    doAwait == true;
+                  }
+                  if (receptor === signal) {
+                    foundReceiver = true;
+                    expandElement(ev, receiver);
+                    if (doAwait) {
+                      await this.conn[signal](ev, receiver);
+                    } else {
+                      this.conn[signal](ev, receiver);
+                    }
+                  }
+                }
+              }
+              if (foundReceiver === false) {
+                if (doAwait) {
+                  await this.conn[signal](ev, null);
+                } else {
+                  this.conn[signal](ev, null);
+                }
+              }
+            }
+          }
+        }
+}
 
   /** internal */
   async runBittyInit() {

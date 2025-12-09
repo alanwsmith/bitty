@@ -10,10 +10,14 @@ class State {
       // so you can see the bitty elements wait on the state
       await new Promise((resolve) => setTimeout(resolve, 3000));
       this.loadCheck = new Promise((resolve) => {
-        const dataString = localStorage.getItem(this.storageName);
-        if (dataString !== null) {
-          this.data = JSON.parse(dataString);
-        }
+        // TODO: Update with example showing pulling
+        // from actual place in localStroage. this is
+        // currently just a stub
+        //
+        // const dataString = localStorage.getItem(this.storageName);
+        // if (dataString !== null) {
+        //   this.data = JSON.parse(dataString);
+        // }
         resolve();
       });
     }

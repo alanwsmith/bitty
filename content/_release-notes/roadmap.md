@@ -1,5 +1,38 @@
 ## Roadmap 
 
+- TODO: Add `this.api.getCSS` which is just an
+alias to `this.api.getTXT` but helps with the
+mental model that fits with the other `.getXXX`
+methods. 
+
+- TODO: Generate sha hashes of files and check them
+before deployments to make sure they haven't changed.
+
+- TODO: Make sure that `bittyforward`, `bittertrigger`, etc...
+events have `.valueXXX`, `.propXXX`, etc.. stuff on them so 
+they can be used interchangably with other events. 
+
+- TODO: Added `this.api.getQuickTXT`, `this.api.getQuickHTML`,
+etc... which unwraps the response and either returns
+the expected value or an error message (in an element
+or fragment or SVG as expected) The idea is that
+the error message would just show up directly without
+you having to do anything else. (The regular
+`this.api.getTXT`, etc.. give you the chance
+to do something specific if an error happens)
+
+- TODO: Added a feature to the subs for `this.api.getXXX`
+where if the first value is a string it just
+alternates the subs without having to do
+a nested array. 
+
+- TODO: Investigate `.localForward` which only 
+forwards inside the current module
+
+- TODO: Set up `.trigger`, `.localTrigger`, `.forward`, 
+and `.localForward` to be able to pass data like:
+`this.api.trigger("SIGNAL_NAME", { some: "data" })`
+
 - TODO: Improve connection error messages
 
 - TODO: Make md5 hashes of files and check them

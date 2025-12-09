@@ -1,0 +1,24 @@
+<script>
+window.BittyClass = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+
+  checkForward(ev, el) {
+    console.log("got checkForward");
+    this.api.forward(ev, "receiveForward");
+  }
+
+  receiveForward(ev, el) {
+    const div = this.api.querySelector("div");
+    div.innerHTML = "got forward without receiver";
+  }
+}
+</script>
+
+<bitty-7-0>
+  <button data-send="checkForward">Click me</button>
+  <div>FAILED</div>
+</bitty-7-0>
+
+

@@ -399,87 +399,100 @@ class BittyJs extends HTMLElement {
         ev.sendPayload = ev.signal;
         await this.processEvent(ev);
       } else {
-        // TODO: Remove this sender in favor of ev.sender which is
-        // already added via expand Event.
-        // const sender = findSender(ev.target);
-        // const sender = this.findSender(ev.target);
 
-          // Process data-use element if there is one
-          const receivers = this.querySelectorAll("[data-use]");
-          if (ev.sender.dataset.use) {
-            const signals = this.trimInput(ev.sender.dataset.use);
-            if (receivers.length > 0) {
-              for (let signal of signals) {
-                let doAwait = false;
-                const iSigParts = signal.split(":");
-                if (iSigParts.length === 2 && iSigParts[0] === "await") {
-                  doAwait = true;
-                  signal = iSigParts[1];
-                }
-                if (this.conn[signal]) {
-                  for (let receiver of receivers) {
-                    // TODO Deprecate this.
-                    // receiver.sender = sender;
-                    this.expandElement(ev, receiver);
-                    if (receiver.bittyId === ev.sender.bittyId) {
-                      if (doAwait) {
-                        await this.conn[signal](ev, receiver);
-                      } else {
-                        this.conn[signal](ev, receiver);
-                      }
-                    }
-                  }
-                }
-              }
+        if (ev.sender.dataset.use) {
+          const signals = this.trimInput(ev.sender.dataset.use);
+          for (const signal of signals) {
+            if (this.conn[signal]) {
+              this.conn[signal](ev, ev.sender);
             }
           }
-          if (ev.sender.dataset.send) {
-            // Process data-receive elements
-            const signals = this.trimInput(ev.sender.dataset.send);
-            const receivers = this.querySelectorAll("[data-receive]");
-            for (let signal of signals) {
-              let doAwait = false;
-              const iSigParts = signal.split(":");
-              if (iSigParts.length === 2 && iSigParts[0] === "await") {
-                doAwait = true;
-                signal = iSigParts[1];
-              }
-              if (this.conn[signal]) {
-                let foundReceiver = false;
-                for (let receiver of receivers) {
-                  // TODO: Remove this
-                  // receiver.sender = sender;
-                  const receptors = this.trimInput(receiver.dataset.receive);
-                  for (const receptor of receptors) {
-                    const rSignalParts = receptor.split(":");
-                    if (
-                      rSignalParts.length === 2 && rSignalParts[0] === "await"
-                    ) {
-                      receptor = rSignalParts[1];
-                      doAwait == true;
-                    }
-                    if (receptor === signal) {
-                      foundReceiver = true;
-                      this.expandElement(ev, receiver);
-                      if (doAwait) {
-                        await this.conn[signal](ev, receiver);
-                      } else {
-                        this.conn[signal](ev, receiver);
-                      }
-                    }
-                  }
-                }
-                if (foundReceiver === false) {
-                  if (doAwait) {
-                    await this.conn[signal](ev, null);
-                  } else {
-                    this.conn[signal](ev, null);
-                  }
-                }
-              }
-            }
-          }
-        
+        }
+
+        if (ev.sender.dataset.send) {
+          ev.sendPayload = ev.sender.dataset.send;
+          await this.processEvent(ev);
+        }
+
+
+
+
+        // // Process data-use element if there is one
+        // const receivers = this.querySelectorAll("[data-use]");
+        // if (ev.sender.dataset.use) {
+        //   const signals = this.trimInput(ev.sender.dataset.use);
+        //   if (receivers.length > 0) {
+        //     for (let signal of signals) {
+        //       let doAwait = false;
+        //       const iSigParts = signal.split(":");
+        //       if (iSigParts.length === 2 && iSigParts[0] === "await") {
+        //         doAwait = true;
+        //         signal = iSigParts[1];
+        //       }
+        //       if (this.conn[signal]) {
+        //         for (let receiver of receivers) {
+        //           // TODO Deprecate this.
+        //           // receiver.sender = sender;
+        //           this.expandElement(ev, receiver);
+        //           if (receiver.bittyId === ev.sender.bittyId) {
+        //             if (doAwait) {
+        //               await this.conn[signal](ev, receiver);
+        //             } else {
+        //               this.conn[signal](ev, receiver);
+        //             }
+        //           }
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+        // if (ev.sender.dataset.send) {
+        //   // Process data-receive elements
+        //   const signals = this.trimInput(ev.sender.dataset.send);
+        //   const receivers = this.querySelectorAll("[data-receive]");
+        //   for (let signal of signals) {
+        //     let doAwait = false;
+        //     const iSigParts = signal.split(":");
+        //     if (iSigParts.length === 2 && iSigParts[0] === "await") {
+        //       doAwait = true;
+        //       signal = iSigParts[1];
+        //     }
+        //     if (this.conn[signal]) {
+        //       let foundReceiver = false;
+        //       for (let receiver of receivers) {
+        //         // TODO: Remove this
+        //         // receiver.sender = sender;
+        //         const receptors = this.trimInput(receiver.dataset.receive);
+        //         for (const receptor of receptors) {
+        //           const rSignalParts = receptor.split(":");
+        //           if (
+        //             rSignalParts.length === 2 && rSignalParts[0] === "await"
+        //           ) {
+        //             receptor = rSignalParts[1];
+        //             doAwait == true;
+        //           }
+        //           if (receptor === signal) {
+        //             foundReceiver = true;
+        //             this.expandElement(ev, receiver);
+        //             if (doAwait) {
+        //               await this.conn[signal](ev, receiver);
+        //             } else {
+        //               this.conn[signal](ev, receiver);
+        //             }
+        //           }
+        //         }
+        //       }
+        //       if (foundReceiver === false) {
+        //         if (doAwait) {
+        //           await this.conn[signal](ev, null);
+        //         } else {
+        //           this.conn[signal](ev, null);
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+
       }
     }
   }
@@ -577,7 +590,6 @@ class BittyJs extends HTMLElement {
   makeTXT(template, subs = []) {
     return this.doSubs(template, subs);
   }
-
 
   /** internal */
   async processEvent(ev) {

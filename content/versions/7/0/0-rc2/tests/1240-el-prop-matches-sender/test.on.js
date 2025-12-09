@@ -6,19 +6,19 @@ export default class {
   }
 
   runTest1240Alfa(ev, el) {
-    if (el.matchesSender("key")) {
+    if (el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1240Bravo(ev, el) {
-    if (!el.matchesSender("key")) {
+    if (!el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1240Charlie(ev, el) {
-    if (el.matchesSender("key")) {
+    if (el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }

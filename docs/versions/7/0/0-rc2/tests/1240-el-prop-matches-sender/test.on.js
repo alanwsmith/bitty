@@ -5,20 +5,20 @@ export default class {
     });
   }
 
-  runTest1210Alfa(ev, el) {
-    if (el.matchesTarget("key")) {
+  runTest1240Alfa(ev, el) {
+    if (el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
-  runTest1210Bravo(ev, el) {
-    if (!el.matchesTarget("key")) {
+  runTest1240Bravo(ev, el) {
+    if (!el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }
 
-  runTest1210Charlie(ev, el) {
-    if (!el.matchesTarget("key")) {
+  runTest1240Charlie(ev, el) {
+    if (el.propMatchesSender("key")) {
       el.innerHTML = "PASSED";
     }
   }

@@ -205,7 +205,7 @@ class BittyJs extends HTMLElement {
       el.valueToFloat = parseFloat(el.value);
     }
 
-    el.matchesTarget = (x) => {
+    el.propMatchesTarget = (x) => {
       const evKey = findDataKey.call(null, ev.target, x);
       const elKey = findDataKey.call(null, el, x);
       if (evKey === undefined || elKey === undefined) {
@@ -214,7 +214,7 @@ class BittyJs extends HTMLElement {
       return evKey === elKey;
     };
 
-    el.matchesSender = (x) => {
+    el.propMatchesSender = (x) => {
       const evKey = findDataKey.call(null, el.sender, x);
       const elKey = findDataKey.call(null, el, x);
       if (evKey === undefined || elKey === undefined) {

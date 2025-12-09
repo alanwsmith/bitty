@@ -104,7 +104,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   connectedMoveCallback() {
-    // this prevs connectedCallback() from firing
+    // NOTE: this prevs connectedCallback() from firing
     // if a bitty component is moved.
   }
 
@@ -208,7 +208,6 @@ class BittyJs extends HTMLElement {
     };
   }
 
-
   /** internal */
   expandEvent(ev) {
     ev.sender = this.findSender(ev.target);
@@ -216,7 +215,7 @@ class BittyJs extends HTMLElement {
       ev.sender.bittyId = ev.sender.dataset.bittyid;
     }
 
-    // Move the dataset.send into `sendPayload`
+    // NOTE: Move the dataset.send into `sendPayload`
     // so this.api.forward() can change .sendPayload
     // without affecting the original dataset. 
     if (ev.sender.dataset && ev.sender.dataset.send) {
@@ -299,7 +298,6 @@ class BittyJs extends HTMLElement {
       return this;
     }
   }
-
 
   async getElement(url, subs = [], options = {}) {
     const response = await this.getHTML(url, subs, options, "getElement");
@@ -399,40 +397,6 @@ class BittyJs extends HTMLElement {
         ev.sendPayload = ev.signal;
         await this.processEvent(ev);
       } else {
-
-
-
-        // // Process data-use element if there is one
-        // const receivers = this.querySelectorAll("[data-use]");
-        // if (ev.sender.dataset.use) {
-        //   const signals = this.trimInput(ev.sender.dataset.use);
-        //   if (receivers.length > 0) {
-        //     for (let signal of signals) {
-        //       let doAwait = false;
-        //       const iSigParts = signal.split(":");
-        //       if (iSigParts.length === 2 && iSigParts[0] === "await") {
-        //         doAwait = true;
-        //         signal = iSigParts[1];
-        //       }
-        //       if (this.conn[signal]) {
-        //         for (let receiver of receivers) {
-        //           // TODO Deprecate this.
-        //           // receiver.sender = sender;
-        //           this.expandElement(ev, receiver);
-        //           if (receiver.bittyId === ev.sender.bittyId) {
-        //             if (doAwait) {
-        //               await this.conn[signal](ev, receiver);
-        //             } else {
-        //               this.conn[signal](ev, receiver);
-        //             }
-        //           }
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-
-
         if (ev.sender.dataset.use) {
           const signals = this.trimInput(ev.sender.dataset.use);
           for (let signal of signals) {
@@ -452,7 +416,6 @@ class BittyJs extends HTMLElement {
             }
           }
         }
-
         if (ev.sender.dataset.send) {
           ev.sendPayload = ev.sender.dataset.send;
           await this.processEvent(ev);
@@ -561,7 +524,6 @@ class BittyJs extends HTMLElement {
     if (ev.localId && ev.localId !== this.bittyId) {
       return null;
     }
-
     if (ev.sendPayload) {
       const signals = this.trimInput(ev.sendPayload);
       for (let signal of signals) {

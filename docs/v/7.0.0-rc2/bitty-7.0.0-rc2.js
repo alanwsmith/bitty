@@ -403,7 +403,7 @@ class BittyJs extends HTMLElement {
         // already added via expand Event.
         // const sender = findSender(ev.target);
         // const sender = this.findSender(ev.target);
-        if (ev.sender) {
+
           // Process data-use element if there is one
           const receivers = this.querySelectorAll("[data-use]");
           if (ev.sender.dataset.use) {
@@ -479,7 +479,7 @@ class BittyJs extends HTMLElement {
               }
             }
           }
-        }
+        
       }
     }
   }

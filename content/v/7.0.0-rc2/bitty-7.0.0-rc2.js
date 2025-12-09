@@ -3,20 +3,20 @@ const version = [7, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
 
-function getBittyParent(el) {
-  if (el.localName.toLowerCase() === tagName) {
-    return el;
-  } else if (el.parentNode) {
-    return getBittyParent(el.parentNode);
-  } else {
-    // TODO test returning null if no
-    // bitty parent is found. (need to
-    // load an element via a document
-    // query selector that's outside
-    // a bitty element to do the test.
-    return null;
-  }
-}
+// function getBittyParent(el) {
+//   if (el.localName.toLowerCase() === tagName) {
+//     return el;
+//   } else if (el.parentNode) {
+//     return getBittyParent(el.parentNode);
+//   } else {
+//     // TODO test returning null if no
+//     // bitty parent is found. (need to
+//     // load an element via a document
+//     // query selector that's outside
+//     // a bitty element to do the test.
+//     return null;
+//   }
+// }
 
 class BittyError extends Error {
   constructor(payload) {
@@ -190,7 +190,7 @@ class BittyJs extends HTMLElement {
     // TODO: Refactor this out so it's not exposed
     // as part of the element. `this.api` should
     // be used in the userside code.
-    el.bittyParent = getBittyParent(el);
+    el.bittyParent = this.getBittyParent(el);
 
     /** internal */
     // TODO: Refactor this out so it's not exposed
@@ -373,6 +373,22 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(forwardEvent);
   }
 
+ getBittyParent(el) {
+  if (el.localName.toLowerCase() === tagName) {
+    return el;
+  } else if (el.parentNode) {
+    return this.getBittyParent(el.parentNode);
+  } else {
+    // TODO test returning null if no
+    // bitty parent is found. (need to
+    // load an element via a document
+    // query selector that's outside
+    // a bitty element to do the test.
+    return null;
+  }
+}
+
+
   async getElement(url, subs = [], options = {}) {
     const response = await this.getHTML(url, subs, options, "getElement");
     if (response.value) {
@@ -467,12 +483,12 @@ class BittyJs extends HTMLElement {
           signal = iSigParts[1];
         }
         if (this.conn[signal]) {
-          const bittyTargetParent = getBittyParent(ev.target);
+          const bittyTargetParent = this.getBittyParent(ev.target);
           let foundReceiver = false;
           for (let receiver of receivers) {
             // TODO: Remove
             receiver.sender = ev.target;
-            const bittyReceiverParent = getBittyParent(receiver);
+            const bittyReceiverParent = this.getBittyParent(receiver);
             if (
               bittyTargetParent.dataset.bittyid ===
               bittyReceiverParent.dataset.bittyid

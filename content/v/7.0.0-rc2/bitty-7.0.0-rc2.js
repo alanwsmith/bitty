@@ -689,9 +689,9 @@ class BittyJs extends HTMLElement {
     } else {
       const tmpl = document.createElement("template");
       tmpl.innerHTML = `<svg version="1.1"
-     width="300" height="200"
+     width="120" height="32"
      xmlns="http://www.w3.org/2000/svg">
-  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">error</text>
+      <text x="60" y="16" font-size="12" text-anchor="middle" fill="red">error (check console)</text>
 </svg>`;
       const wrapper = tmpl.content.cloneNode(true);
       const svg = wrapper.querySelector("svg");
@@ -699,12 +699,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
-
-// SVG
-// TXT
-
-
+  async getQuickTXT(url, subs = [], options = {}) {
+    const response = await this.getTXT(url, subs, options);
+    if (response.value) {
+        return response.value;
+    } else {
+        return response.error;
+    }
+  }
 }
 
 customElements.define(tagName, BittyJs);

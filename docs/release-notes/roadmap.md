@@ -1,5 +1,9 @@
 ## Roadmap 
 
+- TODO: Add `internal` comments to `ev.sendPayload` 
+so it can be filtered in the jsdoc data. 
+
+
 - TODO: Set up `data-init` to handle `await:SIGNAL`
 isntead of just doing an `await` if the
 function is `async` (which is what happens

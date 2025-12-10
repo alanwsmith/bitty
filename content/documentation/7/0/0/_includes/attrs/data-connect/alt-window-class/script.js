@@ -1,6 +1,5 @@
-    window.AltBittyClass = class {
-        altClassRandomNum(_event, el) {
-          el.innerHTML = Math.random();
-        }
-    }
-
+window.AltBittyClass = class {
+  altClassRandomNumber(_, el) {
+    el.innerHTML = Math.random();
+  }
+};

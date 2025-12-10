@@ -3,4 +3,3 @@ export class AltModuleClass {
     el.innerHTML = Math.random();
   }
 }
-

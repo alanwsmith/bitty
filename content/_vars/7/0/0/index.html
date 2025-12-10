@@ -30,11 +30,25 @@
     + patch_version 
 -!]
 
-[!- set wrapper_root = "_wrappers/" + version_dirs + "/" -!]
-[!- set styles_root = "styles/" + version_dirs + "/" -!]
-[!- set unit_tests_root = "unit-tests/" + version_dirs + "/" -!]
-[!- set documentation_root = "documentation/" + version_dirs + "/" -!]
-[!- set release_notes_root = "release-notes/" -!]
+[!- set wrapper_root -!]
+_wrappers/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set styles_root -!]
+styles/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set unit_tests_root -!]
+unit-tests/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set documentation_root -!]
+documentation/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set release_notes_root -!]
+release-notes/
+[!- endset -!]
 
 
 
@@ -63,11 +77,9 @@ need to set a switch to make this
 toggle easier. 
 -#]
 
-
-[!- set bitty_js_path = 
-"https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js"
--!]
-
+[!- set bitty_js_path -!]
+https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js
+[!- endset -!]
 
 [!- set bitty_script_tag -!]
 <script 

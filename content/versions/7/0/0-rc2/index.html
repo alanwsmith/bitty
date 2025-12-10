@@ -46,13 +46,11 @@ a link to the code that make it work.</p>
 [!- if folder.folder_parts[3] == patch_dir -!]
 [!- if folder.folder_parts[4] == "examples" !]
 
-
   [!-set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
   [!-set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
   [!-set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
   [!-set script_path = folder.parent + "/" + folder.name + "/bitty-script.js" !]
   [!-set url = "/" + folder.parent + "/" + folder.name + "/" !]
-
 
 <style>
 [!- include style_path -!]
@@ -61,7 +59,6 @@ a link to the code that make it work.</p>
 <script>
 [!- include script_path -!]
 </script>
-
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
@@ -83,25 +80,20 @@ a link to the code that make it work.</p>
 
   </div>
 
-[#
-<div class="download-div">
-  <div class="download-link-wrapper">
-    <a class="download-link" href="[@ bitty_js_path @]" download>
-      <div class="center small-font">Download</div>
-      <div class="center">
-      Version[@ " " @] 
-[@- major_version -@].[@- minor_version -@]
-      </div>
-      <div class="center small-font">[@ script_min_file_name -@]</div></a>
-  </div>
+<h2>How It Works</h2>
+
+<p>
+  <strong>bitty</strong> is a web component. 
+  You can include it on your page with this script
+  tag:
+</p>
+
+<div class="default-padding">
+    [! filter block_highlight("html") !]<script 
+  src="[@ bitty_js_path|safe @]" 
+  type="module"></script>[! endfilter !]
 </div>
 
-[!-for folder in folders !]
-  [!-if folder.parent == version_dir + "/_sections" !]
-    [!-set include_path =  folder.parent + "/" + folder.name + "/content.html" !] 
-      [!-include include_path !] 
-  [!-endif !]
-[!-endfor !]
-#]
+
 
 [!- endblock -!]

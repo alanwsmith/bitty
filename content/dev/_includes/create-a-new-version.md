@@ -7,7 +7,8 @@
 - Change the folder files name to the new version 
 number. 
 
-- Delete the `.min.js` file in the new folder. 
+- Delete the `.js` file in the new folder. 
+(the `.dev.js` is where work is done)
 
 - Update the `package.json` file to use the new
 version number. 
@@ -32,12 +33,13 @@ deploy before pushing the main on live.
 
 - Update the `version` number/string 
 in the folder/file name if necessary
-(e.g. if working on `bitty.#.#.#-rc#.full.js` and it 
+(e.g. if working on `bitty.#.#.#-rc#.dev.js` and it 
 become the actual release change it to
-just `bitty.#.#.#.full.js`. 
+just `bitty.#.#.#-rc#.js`.)
 
-- Make the `.min.js` version of the file
-and drop it in the folder. 
+- Make the minified `.js` version of the file
+(i.e. the version from `.dev.js` and drop it 
+in the folder.)
 
 - Update the `version` string in the
 `package.json` file if necessary to make
@@ -47,6 +49,12 @@ the folder/file name.
 
         npm publish --access public
 
+  NOTE: You may have to do this if you've
+  been logged out:
+
+        npm login
+
+
 - Switch site variables to point to 
 unpkg site instead of relative file copy. 
 
@@ -54,6 +62,3 @@ unpkg site instead of relative file copy.
 site works
 
 - Push the site. 
-
-
-

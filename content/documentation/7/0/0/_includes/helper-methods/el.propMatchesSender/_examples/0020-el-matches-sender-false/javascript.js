@@ -3,7 +3,7 @@ window.[@ item.name|title @][@ item.memberof|title @]False = class {
     this.api.querySelector("button").click();
   }
   elMatchesSender2(_, el) {
-    el.innerHTML = el.matchesSender("item");
+    el.innerHTML = el.propMatchesSender("item");
   }
 }
 

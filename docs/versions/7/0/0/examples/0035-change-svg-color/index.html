@@ -50,6 +50,7 @@ body {
 }
 </style>
     <link rel="stylesheet" href="/styles/7/0/0//all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
     <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js" type="module"></script>
 
 <script>
@@ -70,11 +71,30 @@ window.BittyUnhide = class {
   <style>
   :root { --load-hider: 1; }
   </style>
-</noscript><nav>
-  <a href="/">bitty</a>
+</noscript><script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="red"
+  :background-color="blue"
+></github-stars>`,
+};
 
+window.GitHubStars = class {
+  bittyInit() {
+    const url = new URL(window.location.href);
+    if (url.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav>
+  <a href="/">bitty</a>
   <a href="/unit-tests/7/0/0/">tests</a>
   <a href="/documentation/7/0/0/">documentation</a>
+  <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
 </nav><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/example-wrapper.js">
 
 <style>
@@ -223,5 +243,6 @@ Change SVG Colors    </div>
     document.documentElement.style.setProperty("--load-hider", "1");
   }, 1600);
 </script>
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
   </body>
 </html>

@@ -3,7 +3,7 @@ window.[@ item.name|title @][@ item.memberof|title @] = class {
     this.api.querySelector("button").click();
   }
   propToFloatEl(_, el) {
-    el.innerHTML = el.sender.propToFloat("item");
+    el.innerHTML = el.propToFloat("item");
   }
 }
 

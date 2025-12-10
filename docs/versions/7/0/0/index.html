@@ -122,18 +122,56 @@ a link to the code that make it work.</p>
 };</script>
 
 
-
 <div class="hp-example">
   <div class="hp-example-wrapper">
     <div class="hp-example-title">Count Clicks</div>
-    <div class="hp-example-content">
-<bitty-7-0 data-connect="ClickCounter">
+    <div class="hp-example-content"><bitty-7-0 data-connect="ClickCounter">
   <button data-use="count">Start Counting</button>
-</bitty-7-0>
-
-</div>
+</bitty-7-0></div>
     <div class="hp-example-code-link">
       <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0&#x2f;examples&#x2f;0010-counter&#x2f;">view code</a>
+    </div>
+  </div>
+</div>
+<style>[data-connect=AddSubtract] {
+  display: grid;
+  gap: 1rem;
+}
+
+[data-connect=AddSubtract] > button {
+  width: 7rem;
+  height: 2.4rem;
+}
+</style>
+
+<script>window.AddSubtract = class {
+  #counter = 0;
+
+  add(_, el) {
+    this.#counter += 1;
+    el.innerHTML = this.#counter;
+  }
+
+  subtract(_, el) {
+    this.#counter -= 1;
+    el.innerHTML = this.#counter;
+  }
+};</script>
+
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">Add/Subtract</div>
+    <div class="hp-example-content"><bitty-7-0 data-connect="AddSubtract">
+  <div>
+    Value: <span data-receive="add subtract">0</span>
+  </div>
+  <button data-send="add">Add 1</button>
+  <button data-send="subtract">Subtract 1</button>
+</bitty-7-0>
+</div>
+    <div class="hp-example-code-link">
+      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0&#x2f;examples&#x2f;0020-add-subtract&#x2f;">view code</a>
     </div>
   </div>
 </div>

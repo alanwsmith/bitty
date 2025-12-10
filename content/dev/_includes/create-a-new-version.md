@@ -29,8 +29,6 @@ to the right place.
 set to `bitty-dev` to smoke test the 
 deploy before pushing the main on live. 
 
-
-
 - Update the `version` number/string 
 in the folder/file name if necessary
 (e.g. if working on `bitty.#.#.#-rc#.dev.js` and it 

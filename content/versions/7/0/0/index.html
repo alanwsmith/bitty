@@ -1,13 +1,19 @@
 [!- extends "_wrappers/7/0/0/main-wrapper.html" -!] 
 
+[! block header !]
+<hgroup>
+  <h1>Welcome to Bitty</h1>
+  <div class="subtitle">a tool for interesting pages</div>
+</hgroup>
+[! endblock !]
 
 
 
 [!- block main -!]
 <p>
-  <strong>bitty</strong> is a tool for making things on the web. 
-  Wrapping it around other elements makes them interactive. 
-  For example, this button:
+  <strong>Bitty</strong> is a simple tool for making things on the web. 
+  It comes in the form of an HTML tag. When you wrap other
+  tags in it, Bitty makes them interactive. For example, this button:
 </p>
 
 [! set example_html_path = version_dir + "/snippets/0010-home-page/example.html" !]
@@ -20,30 +26,62 @@
 
 <p>Is made from this HTML:</p>
 
-[! filter block_highlight("html") !]
-[! include example_html_path !]
-
+[! filter block_highlight("html") -!]
+[!- include example_html_path -!] 
+[@- "\n\n" -@]
 <script src="[@ bitty_js_path|safe @]" type="module"></script>
 [! endfilter !]
 
-<p>And this JavaScript:</p>
+<p>and this JavaScript:</p>
 
 [! filter block_highlight("js") !]
 [! include example_js_path !]
 [! endfilter !]
 
-<p>Clicking the button shows the current date and time.</p>
+<p>Clicking the button changes it to show the current date and time.</p>
 
 <h2>Some Examples</h2>
 
 <p>Here's a few other example of what you can do 
-  with <strong>bitty</strong>. Each one has
+  with <strong>Bitty</strong>. Each one has
 a link to the code that make it work.</p>
 
 
 <div class="hp-examples">
-[!- for folder in folders !]
-[!- if folder.folder_parts[1] == major_version !]
+[!- for f in folders -!]
+[!- if f.parent == version_dir + "/examples" -!]
+  [!-set title_path = f.parent + "/" + f.name + "/title.txt" !]
+  [!-set content_path = f.parent + "/" + f.name + "/_content.html" !]
+  [!-set style_path = f.parent + "/" + f.name + "/styles.css" !]
+  [!-set script_path = f.parent + "/" + f.name + "/bitty-script.js" !]
+  [!-set url = "/" + f.parent + "/" + f.name + "/" !]
+
+<style>
+[!- include style_path -!]
+</style>
+
+<script>
+[!- include script_path -!]
+</script>
+
+
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">[!-include title_path !]</div>
+    <div class="hp-example-content">
+      [!- include content_path -!]
+    </div>
+    <div class="hp-example-code-link">
+      <a href="[@ url @]">view code</a>
+    </div>
+  </div>
+</div>
+
+[!- endif -!]
+[!- endfor -!]
+  [#
+
 [!- if folder.folder_parts[2] == minor_version !]
 [!- if folder.folder_parts[3] == patch_dir -!]
 [!- if folder.folder_parts[4] == "examples" !]
@@ -78,7 +116,7 @@ a link to the code that make it work.</p>
 [!-endif !]
 [!-endif !]
 [!-endif !]
-[!-endfor !]
+#]
 
   </div>
 

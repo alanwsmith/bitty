@@ -17,7 +17,7 @@ window.GetWeather = class {
   #stations = null;
 
   async bittyInit() {
-    const url = `/[@ version_dir @]/examples/weather-stations.json`;
+    const url = `/[@ version_dir @]/data/weather-stations.json`;
     const response = await this.api.getJSON(url);
     if (response.value) {
       this.#stations = response.value;

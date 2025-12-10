@@ -1,19 +1,3 @@
-/*
-[!- set page_config = namespace() !]
-
-[!- if file.folder_parts[1] !]
-[!- set page_config.version = file.folder_parts[1] !]
-[!- else !]
-[!- set page_config.version = current_version !]
-[!- endif !]
-
-[!- if file.parent_folder !]
-[!- set page_config.parent_folder = file.parent_folder !]
-[!- else !]
-[!- set page_config.parent_folder = folder.name !]
-[!- endif !]
-*/
-
 const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
 
@@ -33,13 +17,12 @@ window.GetWeather = class {
   #stations = null;
 
   async bittyInit() {
-    const url =
-      `/versions/[@ major_dir @]/[@ minor_dir @]/[@ patch_dir @]/examples/[@ page_config.parent_folder @]/stations.json`;
+    const url = `/[@ version_dir @]/examples/weather-stations.json`;
     const response = await this.api.getJSON(url);
     if (response.value) {
       this.#stations = response.value;
+      this.api.trigger("changeStation");
     }
-    this.api.trigger("changeStation");
   }
 
   async changeStation(ev, el) {
@@ -60,7 +43,7 @@ window.GetWeather = class {
       if (data.icon) {
         subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
       } else {
-        subs.push(["IMG", ""]);
+        subs.push(["IMG", "(no image available)"]);
       }
       const output = this.api.makeHTML(weatherTemplates.report, subs);
       el.replaceChildren(output);

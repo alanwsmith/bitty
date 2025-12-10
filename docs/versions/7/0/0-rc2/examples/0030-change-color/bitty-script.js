@@ -20,7 +20,10 @@ window.ChangeColor = class {
         ["PARAM", param],
         ["VALUE", value],
       ];
-      const slider = this.api.makeHTML(sliderTemplate, subs);
+      const slider = this.api.makeHTML(
+        sliderTemplate,
+        subs,
+      );
       el.appendChild(slider);
     });
   }

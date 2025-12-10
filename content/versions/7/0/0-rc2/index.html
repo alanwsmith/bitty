@@ -1,12 +1,43 @@
 [!- extends "versions/7/0/0-rc2/_wrappers/wrapper.html" -!] 
 
 [!- block main -!]
-<h1>Welcome to bitty!</h1>
-
 <p>
-  <strong>bitty</strong> is a tool for making things on the web.
-  You can do stuff like:
+  <strong>bitty</strong> is a tool for making things on the web. 
+  Wrapping it around other elements makes them interactive. 
+  For example, this button:
 </p>
+
+[! set example_html_path = version_dir + "/snippets/0010-home-page/example.html" !]
+[! set example_js_path = version_dir + "/snippets/0010-home-page/example.js" !]
+
+[! include example_html_path !]
+<script>
+[! include example_js_path !]
+</script>
+
+<p>Is made from this HTML:</p>
+
+[! filter block_highlight("html") !]
+[! include example_html_path !]
+
+
+<script src="[@ bitty_js_path|safe @]" type="module"></script>
+[! endfilter !]
+
+<p>And this JavaScript:</p>
+
+[! filter block_highlight("js") !]
+[! include example_js_path !]
+[! endfilter !]
+
+<p>Clicking the button shows the current date and time.</p>
+
+<h2>Some Examples</h2>
+
+<p>Here's a few other example of what you can do 
+  with <strong>bitty</strong>. Each one has
+a link to the code that make it work.</p>
+
 
 <div class="hp-examples">
 [!- for folder in folders !]

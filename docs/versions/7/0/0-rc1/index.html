@@ -1320,33 +1320,6 @@ window.ToDoList = class {
     </div>
   </div>
 </div>
-<style>[data-connect=ShowDate] > button {
-  width: 7rem;
-  height: 14rem;
-}</style>
-
-<script>window.ShowDate = class {
-  getDate(_, el) {
-    el.innerHTML = new Date();
-  }
-};</script>
-
-
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">Show The Date</div>
-    <div class="hp-example-content">
-<bitty-7-0 data-connect="ShowDate">
-  <button data-use="getDate">
-    Click Here to get the Current Date and Time
-  </button>
-</bitty-7-0>
-</div>
-    <div class="hp-example-code-link">
-      <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc2&#x2f;examples&#x2f;0005-show-date&#x2f;">view code</a>
-    </div>
-  </div>
-</div>
 <style>[data-connect=ClickCounter] > button {
   width: 7rem;
   height: 4rem;
@@ -1428,7 +1401,10 @@ window.ToDoList = class {
   setStartingFontSize(_, el) {
     const initialValue = 1.1;
     el.value = initialValue;
-    this.api.setProp(`--example-font-size`, `${initialValue}rem`);
+    this.api.setProp(
+      `--example-font-size`,
+      `${initialValue}rem`,
+    );
   }
 
   changeFontSize(ev, _) {
@@ -1442,7 +1418,7 @@ window.ToDoList = class {
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
-    <div class="hp-example-title">Change Font Size</div>
+    <div class="hp-example-title">Change Font Sizes</div>
     <div class="hp-example-content">
 
 <style>
@@ -1503,7 +1479,10 @@ window.ChangeColor = class {
         ["PARAM", param],
         ["VALUE", value],
       ];
-      const slider = this.api.makeHTML(sliderTemplate, subs);
+      const slider = this.api.makeHTML(
+        sliderTemplate,
+        subs,
+      );
       el.appendChild(slider);
     });
   }
@@ -1571,8 +1550,7 @@ const svgSliderTemplates = `
 
 window.ChangeSVGColor = class {
   async loadSVG(_, el) {
-    const faceURL =
-      `/versions////svgs/faces/9.svg`;
+    const faceURL = `/versions/7/0/0-rc1/svgs/faces/9.svg`;
     const faceResponse = await this.api.getSVG(faceURL);
     if (faceResponse.value) {
       const faceSVG = faceResponse.value;
@@ -1589,7 +1567,10 @@ window.ChangeSVGColor = class {
         ["PARAM", param],
         ["VALUE", value],
       ];
-      const slider = this.api.makeHTML(svgSliderTemplates, subs);
+      const slider = this.api.makeHTML(
+        svgSliderTemplates,
+        subs,
+      );
       el.appendChild(slider);
     });
   }
@@ -1622,51 +1603,57 @@ window.ChangeSVGColor = class {
 </div>
 <style></style>
 
-<script>const quotes = [
-  { text: "this quick brown fox", citation: "waerqwerwqer" },
-  { text: "jumps over the lazy dog", citation: "luklulul" },
-  { text: "more stuff here", citation: "anoter cite" },
-];
+<script>window.RandomQuote = class {
+  #quote = 0;
 
-function randInt() {
-  return Math.floor(Math.random() * quotes.length);
-}
-
-window.RandomQuote = class {
-  #quoteIndex = 0;
-
-  bittyReady() {
-    this.api.trigger("exampleQuote exampleCitation");
-  }
-
-  exampleQuote(_ev, el) {
-    for (let i = 0; i < 10; i += 1) {
-      const newIndex = randInt(0, quotes.length - 1);
-      if (newIndex !== this.#quoteIndex) {
-        this.#quoteIndex = newIndex;
-        break;
-      }
+  nextQuote(_, __) {
+    this.#quote += 1;
+    if (this.#quote === 3) {
+      this.#quote = 0;
     }
-    el.innerHTML = quotes[this.#quoteIndex].text;
+    this.api.trigger("pickQuote");
   }
 
-  exampleCitation(_ev, el) {
-    el.innerHTML = quotes[this.#quoteIndex].citation;
+  pickQuote(_, el) {
+    if (el.propToInt("id") === this.#quote) {
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
   }
 };</script>
 
 
 <div class="hp-example">
   <div class="hp-example-wrapper">
-    <div class="hp-example-title">Random Quote</div>
+    <div class="hp-example-title">Get Quotations</div>
     <div class="hp-example-content">
 
-<bitty-7-0
-  data-connect="RandomQuote"
->
-  <div data-receive="exampleQuote"></div>
-  <div data-receive="exampleCitation"></div>
-  <button data-send="exampleQuote exampleCitation">Get Quote</button>
+<bitty-7-0 data-connect="RandomQuote">
+  <div class="quotes">
+    <div data-id="0" data-receive="pickQuote">
+      <div>
+        I think it's terribly dangerous for an 
+        artist to fulfill other people's expectations.
+      </div>
+      <cite>David Bowie</cite>
+    </div>
+    <div data-id="1" data-receive="pickQuote" hidden>
+      <div>
+        Ever tried. Ever failed. No matter. 
+        Try Again. Fail again. Fail better.
+      </div>
+      <cite>Samuel Becket</cite>
+    </div>
+    <div data-id="2" data-receive="pickQuote" hidden>
+      <div>
+        I write because I don't know what 
+        I think until I read what I say.
+      </div>
+      <cite>Flannery O'Connor</cite>
+    </div>
+  </div>
+  <button data-send="nextQuote">Get Quote</button>
 </bitty-7-0></div>
     <div class="hp-example-code-link">
       <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0-rc2&#x2f;examples&#x2f;0040-random-quote&#x2f;">view code</a>
@@ -1675,16 +1662,16 @@ window.RandomQuote = class {
 </div>
 <style></style>
 
-<script>const sortColumnsTemplate = `
-  <button 
-    data-receive="selectButton"
-    data-send="sortColumn selectButton" 
-    data-index="INDEX">TEXT</button>
-`;
+<script>const templates = {
+  sortButton: `
+<button 
+  data-receive="selectButton"
+  data-send="sortColumn selectButton" 
+  data-index="INDEX">TEXT</button>`,
 
-const rowTemplate = `
-  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
-`;
+  row: `
+  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>`,
+};
 
 window.SortColumns = class {
   makeButtons(_ev, el) {
@@ -1693,7 +1680,7 @@ window.SortColumns = class {
         ["INDEX", cellIndex],
         ["TEXT", cell.innerHTML],
       ];
-      const output = this.api.makeHTML(sortColumnsTemplate, subs);
+      const output = this.api.makeHTML(templates.sortButton, subs);
       cell.replaceChildren(output);
     });
   }
@@ -1736,7 +1723,7 @@ window.SortColumns = class {
         ["COL2", row[1]],
         ["COL3", row[2]],
       ];
-      const updatedRow = this.api.makeHTML(rowTemplate, subs);
+      const updatedRow = this.api.makeHTML(templates.row, subs);
       el.appendChild(updatedRow);
     });
   }
@@ -1845,9 +1832,7 @@ window.SelectButton = class {
   height: 12rem;
 }</style>
 
-<script>/**/
-
-const weatherTemplates = {
+<script>const weatherTemplates = {
   selector: `<select data-send="changeStation"></select>`,
 
   stationOption: `<option value="URL">CODE - STATE (CITY)</option>`,
@@ -1866,13 +1851,12 @@ window.GetWeather = class {
   #stations = null;
 
   async bittyInit() {
-    const url =
-      `/versions////examples/0-rc1/stations.json`;
+    const url = `/versions/7/0/0-rc1/examples/weather-stations.json`;
     const response = await this.api.getJSON(url);
     if (response.value) {
       this.#stations = response.value;
+      this.api.trigger("changeStation");
     }
-    this.api.trigger("changeStation");
   }
 
   async changeStation(ev, el) {
@@ -1893,7 +1877,7 @@ window.GetWeather = class {
       if (data.icon) {
         subs.push(["IMG", `<img src="${data.icon}" alt="weather icon" />`]);
       } else {
-        subs.push(["IMG", ""]);
+        subs.push(["IMG", "(no image available)"]);
       }
       const output = this.api.makeHTML(weatherTemplates.report, subs);
       el.replaceChildren(output);
@@ -2316,8 +2300,8 @@ window.NameTagMaker = class {
   data-itemid="ITEM_ID" 
   data-receive="updateTodoItem deleteItem" 
   data-status="not-done">
-  <label data-send="updateTodoItem removeDelete">
-    <input type="checkbox" />ITEM_TEXT
+  <label data-send="updateTodoItem">
+    <input type="checkbox" /> ITEM_TEXT
   </label>
 </div>`,
 
@@ -2342,25 +2326,26 @@ window.ToDoList = class {
   }
 
   deleteItem(ev, el) {
-    if (el.matchesTarget("itemid")) {
+    if (el.propMatchesTarget("itemid")) {
       el.remove();
     }
   }
 
   removeDelete(ev, el) {
-    if (el && el.matchesTarget("itemid")) {
+    if (el && el.propMatchesTarget("itemid")) {
       el.remove();
     }
   }
 
   updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchesTarget("itemid")) {
+    if (ev.target.nodeName === "INPUT" && el.propMatchesTarget("itemid")) {
       if (el.prop("status") === "not-done") {
         el.dataset.status = "done";
-        const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
+        const deleteButton = this.api.makeElement(todoTemplates.deleteButton);
         el.appendChild(deleteButton);
       } else {
         el.dataset.status = "not-done";
+        this.api.forward(ev, "removeDelete");
       }
     }
   }
@@ -2381,8 +2366,8 @@ window.ToDoList = class {
       <input type="text" />
     </label>
   </div>
-  <div data-receive="addTodoItem"></div>
 </div>
+<div data-receive="addTodoItem"></div>
 </bitty-7-0>
 
 </div>

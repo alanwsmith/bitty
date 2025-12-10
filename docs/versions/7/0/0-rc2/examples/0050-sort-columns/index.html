@@ -1324,16 +1324,16 @@ window.BittyCodeBlockMaker = class {
 </style>
 
 <script>
-const sortColumnsTemplate = `
-  <button 
-    data-receive="selectButton"
-    data-send="sortColumn selectButton" 
-    data-index="INDEX">TEXT</button>
-`;
+const templates = {
+  sortButton: `
+<button 
+  data-receive="selectButton"
+  data-send="sortColumn selectButton" 
+  data-index="INDEX">TEXT</button>`,
 
-const rowTemplate = `
-  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
-`;
+  row: `
+  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>`,
+};
 
 window.SortColumns = class {
   makeButtons(_ev, el) {
@@ -1342,7 +1342,7 @@ window.SortColumns = class {
         ["INDEX", cellIndex],
         ["TEXT", cell.innerHTML],
       ];
-      const output = this.api.makeHTML(sortColumnsTemplate, subs);
+      const output = this.api.makeHTML(templates.sortButton, subs);
       cell.replaceChildren(output);
     });
   }
@@ -1385,7 +1385,7 @@ window.SortColumns = class {
         ["COL2", row[1]],
         ["COL3", row[2]],
       ];
-      const updatedRow = this.api.makeHTML(rowTemplate, subs);
+      const updatedRow = this.api.makeHTML(templates.row, subs);
       el.appendChild(updatedRow);
     });
   }
@@ -1463,16 +1463,16 @@ Sort Data    </div>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 
 <h2>JavaScript</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">sortColumnsTemplate</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
-<span class="line-marker"></span>  &lt;button 
-<span class="line-marker"></span>    data-receive=&quot;selectButton&quot;
-<span class="line-marker"></span>    data-send=&quot;sortColumn selectButton&quot; 
-<span class="line-marker"></span>    data-index=&quot;INDEX&quot;&gt;TEXT&lt;/button&gt;
-<span class="line-marker"></span><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">templates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="meta object-literal key js">sortButton</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>&lt;button 
+<span class="line-marker"></span>  data-receive=&quot;selectButton&quot;
+<span class="line-marker"></span>  data-send=&quot;sortColumn selectButton&quot; 
+<span class="line-marker"></span>  data-index=&quot;INDEX&quot;&gt;TEXT&lt;/button&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>
-<span class="line-marker"></span><span class="storage type js">const</span> <span class="variable other readwrite js">rowTemplate</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
-<span class="line-marker"></span>  &lt;tr&gt;&lt;td&gt;COL1&lt;/td&gt;&lt;td&gt;COL2&lt;/td&gt;&lt;td&gt;COL3&lt;/td&gt;&lt;/tr&gt;
-<span class="line-marker"></span><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta object-literal key js">row</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>  &lt;tr&gt;&lt;td&gt;COL1&lt;/td&gt;&lt;td&gt;COL2&lt;/td&gt;&lt;td&gt;COL3&lt;/td&gt;&lt;/tr&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">SortColumns</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">makeButtons</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
@@ -1481,7 +1481,7 @@ Sort Data    </div>
 <span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>INDEX<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">cellIndex</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TEXT<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">cell</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">output</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">sortColumnsTemplate</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">output</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">templates</span><span class="punctuation accessor js">.</span><span class="meta property object js">sortButton</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>      <span class="variable other object js">cell</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceChildren</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">output</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -1524,7 +1524,7 @@ Sort Data    </div>
 <span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>COL2<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">row</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="constant numeric js">1</span><span class="punctuation section brackets js">]</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>COL3<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other object js">row</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="constant numeric js">2</span><span class="punctuation section brackets js">]</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">updatedRow</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">rowTemplate</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">updatedRow</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">templates</span><span class="punctuation accessor js">.</span><span class="meta property object js">row</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">updatedRow</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>

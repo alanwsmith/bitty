@@ -2,7 +2,10 @@ window.ChangeFontSize = class {
   setStartingFontSize(_, el) {
     const initialValue = 1.1;
     el.value = initialValue;
-    this.api.setProp(`--example-font-size`, `${initialValue}rem`);
+    this.api.setProp(
+      `--example-font-size`,
+      `${initialValue}rem`,
+    );
   }
 
   changeFontSize(ev, _) {

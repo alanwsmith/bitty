@@ -4,8 +4,8 @@ const todoTemplates = {
   data-itemid="ITEM_ID" 
   data-receive="updateTodoItem deleteItem" 
   data-status="not-done">
-  <label data-send="updateTodoItem removeDelete">
-    <input type="checkbox" />ITEM_TEXT
+  <label data-send="updateTodoItem">
+    <input type="checkbox" /> ITEM_TEXT
   </label>
 </div>`,
 
@@ -30,25 +30,26 @@ window.ToDoList = class {
   }
 
   deleteItem(ev, el) {
-    if (el.matchesTarget("itemid")) {
+    if (el.propMatchesTarget("itemid")) {
       el.remove();
     }
   }
 
   removeDelete(ev, el) {
-    if (el && el.matchesTarget("itemid")) {
+    if (el && el.propMatchesTarget("itemid")) {
       el.remove();
     }
   }
 
   updateTodoItem(ev, el) {
-    if (ev.target.nodeName === "INPUT" && el.matchesTarget("itemid")) {
+    if (ev.target.nodeName === "INPUT" && el.propMatchesTarget("itemid")) {
       if (el.prop("status") === "not-done") {
         el.dataset.status = "done";
-        const deleteButton = this.api.makeHTML(todoTemplates.deleteButton);
+        const deleteButton = this.api.makeElement(todoTemplates.deleteButton);
         el.appendChild(deleteButton);
       } else {
         el.dataset.status = "not-done";
+        this.api.forward(ev, "removeDelete");
       }
     }
   }

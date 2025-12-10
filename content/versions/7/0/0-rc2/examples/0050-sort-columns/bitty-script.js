@@ -1,13 +1,13 @@
-const sortColumnsTemplate = `
-  <button 
-    data-receive="selectButton"
-    data-send="sortColumn selectButton" 
-    data-index="INDEX">TEXT</button>
-`;
+const templates = {
+  sortButton: `
+<button 
+  data-receive="selectButton"
+  data-send="sortColumn selectButton" 
+  data-index="INDEX">TEXT</button>`,
 
-const rowTemplate = `
-  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>
-`;
+  row: `
+  <tr><td>COL1</td><td>COL2</td><td>COL3</td></tr>`,
+};
 
 window.SortColumns = class {
   makeButtons(_ev, el) {
@@ -16,7 +16,7 @@ window.SortColumns = class {
         ["INDEX", cellIndex],
         ["TEXT", cell.innerHTML],
       ];
-      const output = this.api.makeHTML(sortColumnsTemplate, subs);
+      const output = this.api.makeHTML(templates.sortButton, subs);
       cell.replaceChildren(output);
     });
   }
@@ -59,7 +59,7 @@ window.SortColumns = class {
         ["COL2", row[1]],
         ["COL3", row[2]],
       ];
-      const updatedRow = this.api.makeHTML(rowTemplate, subs);
+      const updatedRow = this.api.makeHTML(templates.row, subs);
       el.appendChild(updatedRow);
     });
   }

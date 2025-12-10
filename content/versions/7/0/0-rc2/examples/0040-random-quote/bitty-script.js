@@ -1,32 +1,19 @@
-const quotes = [
-  { text: "this quick brown fox", citation: "waerqwerwqer" },
-  { text: "jumps over the lazy dog", citation: "luklulul" },
-  { text: "more stuff here", citation: "anoter cite" },
-];
-
-function randInt() {
-  return Math.floor(Math.random() * quotes.length);
-}
-
 window.RandomQuote = class {
-  #quoteIndex = 0;
+  #quote = 0;
 
-  bittyReady() {
-    this.api.trigger("exampleQuote exampleCitation");
-  }
-
-  exampleQuote(_ev, el) {
-    for (let i = 0; i < 10; i += 1) {
-      const newIndex = randInt(0, quotes.length - 1);
-      if (newIndex !== this.#quoteIndex) {
-        this.#quoteIndex = newIndex;
-        break;
-      }
+  nextQuote(_, __) {
+    this.#quote += 1;
+    if (this.#quote === 3) {
+      this.#quote = 0;
     }
-    el.innerHTML = quotes[this.#quoteIndex].text;
+    this.api.trigger("pickQuote");
   }
 
-  exampleCitation(_ev, el) {
-    el.innerHTML = quotes[this.#quoteIndex].citation;
+  pickQuote(_, el) {
+    if (el.propToInt("id") === this.#quote) {
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
   }
 };

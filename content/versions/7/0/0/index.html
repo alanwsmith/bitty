@@ -1,0 +1,204 @@
+[!- extends "versions/7/0/0/_wrappers/wrapper.html" -!] 
+
+[!- block main -!]
+<p>
+  <strong>bitty</strong> is a tool for making things on the web. 
+  Wrapping it around other elements makes them interactive. 
+  For example, this button:
+</p>
+
+[! set example_html_path = version_dir + "/snippets/0010-home-page/example.html" !]
+[! set example_js_path = version_dir + "/snippets/0010-home-page/example.js" !]
+
+[! include example_html_path !]
+<script>
+[! include example_js_path !]
+</script>
+
+<p>Is made from this HTML:</p>
+
+[! filter block_highlight("html") !]
+[! include example_html_path !]
+
+
+
+<script src="[@ bitty_js_path|safe @]" type="module"></script>
+[! endfilter !]
+
+<p>And this JavaScript:</p>
+
+[! filter block_highlight("js") !]
+[! include example_js_path !]
+[! endfilter !]
+
+<p>Clicking the button shows the current date and time.</p>
+
+<h2>Some Examples</h2>
+
+<p>Here's a few other example of what you can do 
+  with <strong>bitty</strong>. Each one has
+a link to the code that make it work.</p>
+
+
+<div class="hp-examples">
+[!- for folder in folders !]
+[!- if folder.folder_parts[1] == major_version !]
+[!- if folder.folder_parts[2] == minor_version !]
+[!- if folder.folder_parts[3] == patch_dir -!]
+[!- if folder.folder_parts[4] == "examples" !]
+
+  [!-set title_path = folder.parent + "/" + folder.name + "/title.txt" !]
+  [!-set content_path = folder.parent + "/" + folder.name + "/_content.html" !]
+  [!-set style_path = folder.parent + "/" + folder.name + "/styles.css" !]
+  [!-set script_path = folder.parent + "/" + folder.name + "/bitty-script.js" !]
+  [!-set url = "/" + folder.parent + "/" + folder.name + "/" !]
+
+<style>
+[!- include style_path -!]
+</style>
+
+<script>
+[!- include script_path -!]
+</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">[!-include title_path !]</div>
+    <div class="hp-example-content">
+      [!- include content_path -!]
+    </div>
+    <div class="hp-example-code-link">
+      <a href="[@ url @]">view code</a>
+    </div>
+  </div>
+</div>
+
+[!-endif !]
+[!-endif !]
+[!-endif !]
+[!-endif !]
+[!-endfor !]
+
+  </div>
+
+<h2>How It Works</h2>
+
+<p>
+  <strong>bitty</strong> is a web component. 
+  You can include it on your page with this script
+  tag:
+</p>
+
+<div class="default-padding">
+    [! filter block_highlight("html") !]<script 
+  src="[@ bitty_js_path|safe @]" 
+  type="module"></script>[! endfilter !]
+</div>
+
+
+<p>
+  Once it's on your page, there are three steps
+  to add functionality:
+</p>
+
+<ol>
+  <li>
+    <p><strong>Add one of bitty's <code>data-...</code> attribute to
+      an element</strong></p> 
+    <p>For example, the <code>data-use</code> attribute
+      on this button. </p>
+    <div>
+      [! filter block_highlight("html") !]<button data-use="randomExample">
+  Get Random Number
+</button>[! endfilter !]
+    </div>
+    <p>
+      The <code>randomExample</code> value of the <code>data-use</code> attribute is
+      the name of a signal that connects to the JavaScript
+      will write in step 3. 
+    </p>
+  </li>
+
+  <li>
+    <p><strong>Wrap the button inside a <strong>bitty</strong> tag</strong></p>
+    <div>
+      [! filter block_highlight("html") !]<[@ bitty_tag @] data-connect="Randomizer">
+  <button data-use="randomExample">
+    Get Random Number
+  </button>
+</[@bitty_tag @]>[! endfilter !]
+    </div>
+    <p>
+      Individual <strong>bitty</strong> tags connect to JavaScript
+      classes that provide the code for the functionality. In this
+      case, we're using [! filter inline_highlight("html") !]data-connect="Randomizer"[! endfilter !] 
+      to connect to class on the page named <code>Randomizer</code>
+      that we'll create in the next step.
+    </p>
+  </li>
+  <li>
+    <p><strong>Add the JavaScript</strong></p>
+    <p>
+      <strong>bitty</strong> can use JavaScript from a module or
+      from code that's directly on the page. We'll use the later
+      for this example by creating a class on the window 
+      named <code>Randomizer</code> (which is the value
+      we set in the bitty tag's <code>data-connect</code> attribute).
+    </p>
+
+      [! filter block_highlight("html") !]<script>
+  window.Randomizer = class {
+    randomExample(_, el) {
+      el.innerHTML = Math.floor(
+        Math.random() * 100
+      );
+    }
+  }
+</script>[! endfilter !]
+
+    <p>
+      The <code>randomExample</code> method name matches
+      the value from the <code>data-use</code> attribute
+      on the <code>button</code> element. That name
+      matching is how bitty connects elements
+      to methods to make them interactive. 
+    </p>
+  </li>
+</ol>
+
+<p>Putting that code on the page produces this button:
+</p>
+
+<bitty-7-0 data-connect="Randomizer">
+  <button data-use="randomExample">
+    Get Random Number
+  </button>
+</bitty-7-0>
+
+      <script>
+  window.Randomizer = class {
+    randomExample(_, el) {
+      el.innerHTML = Math.floor(
+        Math.random() * 100
+      );
+    }
+  }
+</script>
+
+<p>
+  When you click it, the text inside turns
+  into a random number between 1 and 100
+  thanks to the <code>randomExample</code>
+  method from the <code>window.Randomizer</code>
+  class.
+</p>
+
+<h3>A Few Details</h3>
+
+<p>
+  There are, of course, more features. This site
+  covers them. 
+
+
+
+[!- endblock -!]

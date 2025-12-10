@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --light--faded-default-color: oklch(0.1951 0.23 105.642 / 0.653);
+  --light--heading-color: oklch(0.165 0.18556 225.642);
+  --light--faded-heading-color: oklch(0.165 0.18556 225.642 / 0.18);
+  --light--link-color: oklch(0.5537 0.15458 225.642);
+  --light--faded-link-color: oklch(0.5537 0.15458 225.642 / 0.604);
+  --light--accent-color: oklch(0.4986 0.10843 165.642);
+  --light--faded-accent-color: oklch(0.4986 0.10843 165.642 / 0.28);
+  --light--info-color: oklch(0.645 0.09691077318165202 345.642);
+  --light--faded-info-color: oklch(0.645 0.09691077318165202 345.642 / 0.376);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --dark--faded-default-color: oklch(0.8747 0.04454 254.092 / 0.157);
+  --dark--heading-color: oklch(0.6705 0.12874 254.092);
+  --dark--faded-heading-color: oklch(0.6705 0.12874 254.092 / 0.308);
+  --dark--link-color: oklch(0.7299 0.07889 14.091999999999985);
+  --dark--faded-link-color: oklch(0.7299 0.07889 14.091999999999985 / 0.609);
+  --dark--accent-color: oklch(0.7338 0.06558 194.09199999999998);
+  --dark--faded-accent-color: oklch(0.7338 0.06558 194.09199999999998 / 0.567);
+  --dark--info-color: oklch(0.4351 0.16022 74.09199999999998);
+  --dark--faded-info-color: oklch(0.4351 0.16022 74.09199999999998 / 0.359);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-light--faded-default-color: oklch(0.0995 0.23 259.652 / 0.242);
+  --hc-light--heading-color: oklch(0.6217704856122922 0.08831300417260277 319.652);
+  --hc-light--faded-heading-color: oklch(0.6217704856122922 0.08831300417260277 319.652 / 0.572);
+  --hc-light--link-color: oklch(0.5245 0.15006780734890438 259.652);
+  --hc-light--faded-link-color: oklch(0.5245 0.15006780734890438 259.652 / 0.437);
+  --hc-light--accent-color: oklch(0.3227 0.19753 19.651999999999987);
+  --hc-light--faded-accent-color: oklch(0.3227 0.19753 19.651999999999987 / 0.318);
+  --hc-light--info-color: oklch(0.5586547900477358 0.169058911353704 199.65200000000004);
+  --hc-light--faded-info-color: oklch(0.5586547900477358 0.169058911353704 199.65200000000004 / 0.34);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+  --hc-dark--faded-default-color: oklch(1 0.20411 82 / 0.385);
+  --hc-dark--heading-color: oklch(0.9552 0.09830629780740073 142);
+  --hc-dark--faded-heading-color: oklch(0.9552 0.09830629780740073 142 / 0.697);
+  --hc-dark--link-color: oklch(0.962 0.004698125519856717 262);
+  --hc-dark--faded-link-color: oklch(0.962 0.004698125519856717 262 / 0.628);
+  --hc-dark--accent-color: oklch(0.874 0.23 142);
+  --hc-dark--faded-accent-color: oklch(0.874 0.23 142 / 0.374);
+  --hc-dark--info-color: oklch(0.6882 0.21203825105953206 22);
+  --hc-dark--faded-info-color: oklch(0.6882 0.21203825105953206 22 / 0.418);
+}
+:root {
+  --background-color: var(--background-color--switch, var(--light--background-color));
+  --default-color: var(--default-color--switch, var(--light--default-color));
+  --faded-default-color: var(--faded-default-color--switch, var(--light--faded-default-color));
+  --heading-color: var(--heading-color--switch, var(--light--heading-color));
+  --faded-heading-color: var(--faded-heading-color--switch, var(--light--faded-heading-color));
+  --link-color: var(--link-color--switch, var(--light--link-color));
+  --faded-link-color: var(--faded-link-color--switch, var(--light--faded-link-color));
+  --accent-color: var(--accent-color--switch, var(--light--accent-color));
+  --faded-accent-color: var(--faded-accent-color--switch, var(--light--faded-accent-color));
+  --info-color: var(--info-color--switch, var(--light--info-color));
+  --faded-info-color: var(--faded-info-color--switch, var(--light--faded-info-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-color--switch, var(--dark--background-color));
+    --default-color: var(--default-color--switch, var(--dark--default-color));
+    --faded-default-color: var(--faded-default-color--switch, var(--dark--faded-default-color));
+    --heading-color: var(--heading-color--switch, var(--dark--heading-color));
+    --faded-heading-color: var(--faded-heading-color--switch, var(--dark--faded-heading-color));
+    --link-color: var(--link-color--switch, var(--dark--link-color));
+    --faded-link-color: var(--faded-link-color--switch, var(--dark--faded-link-color));
+    --accent-color: var(--accent-color--switch, var(--dark--accent-color));
+    --faded-accent-color: var(--faded-accent-color--switch, var(--dark--faded-accent-color));
+    --info-color: var(--info-color--switch, var(--dark--info-color));
+    --faded-info-color: var(--faded-info-color--switch, var(--dark--faded-info-color));
+  }
+}
+</style><script>
+const baseParams = {
+  "border-radius": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY); }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.3rem`,
+      `0.4rem`,
+      `0.5rem`,
+      `0.6rem`,
+      `0.7rem`,
+      `0.8rem`,
+      `0.9rem`,
+    ],
+  },
+  "flow": {
+    classString:
+      `.SIZE-KEY > :where(:not(:first-child)) { margin-top: var(--flow-space, var(--SIZE-KEY)); }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.2rem`,
+      `0.3rem`,
+      `0.5rem`,
+      `0.7rem`,
+      `1.0rem`,
+      `1.2rem`,
+      `1.2rem`,
+      `1.4rem`,
+      `1.6rem`,
+    ],
+  },
+  "font-size": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      "clamp(0.58rem, calc(0.57rem + 0.03vw), 0.6rem)",
+      "clamp(0.68rem, calc(0.67rem + 0.03vw), 0.7rem)",
+      "clamp(0.78rem, calc(0.77rem + 0.03vw), 0.8rem)",
+      "clamp(0.94rem, calc(0.92rem + 0.11vw), 1rem)",
+      "clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem)",
+      "clamp(1.35rem, calc(1.28rem + 0.37vw), 1.56rem)",
+      "clamp(1.32rem, calc(1.5rem + 0.58vw), 1.65rem)",
+      "clamp(1.84rem, calc(1.77rem + 0.87vw), 2.14rem)",
+      "clamp(2.8rem, calc(2rem + 1.25vw), 3.1rem)",
+    ],
+  },
+  "font-weight": {
+    classString: `.KEY-VALUE { KEY: var(--KEY-VALUE);}`,
+    varString: `--KEY-VALUE: VALUE;`,
+    values: [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+    ],
+  },
+  "gap": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.4rem`,
+      `1.9rem`,
+      `2.2rem`,
+    ],
+  },
+  "line-height": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      1.0,
+      1.1,
+      1.2,
+      1.3,
+      1.45,
+      1.5,
+      1.6,
+      1.7,
+      1.8,
+    ],
+  },
+  "margin": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.4rem`,
+      `1.9rem`,
+      `2.2rem`,
+    ],
+  },
+  "padding": {
+    classString: `.SIZE-KEY { KEY: var(--SIZE-KEY);}`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      `0.1rem`,
+      `0.2rem`,
+      `0.4rem`,
+      `0.6rem`,
+      `0.8rem`,
+      `1.0rem`,
+      `1.3rem`,
+      `1.9rem`,
+      `2.5rem`,
+    ],
+  },
+  "text-align": {
+    classString: `.KEY-VALUE { KEY: VALUE; }`,
+    varString: `--KEY-VALUE: VALUE;`,
+    values: ["center", "end", "justify", "left", "right", "start"],
+  },
+  "width": {
+    classString: `.SIZE-width { width: var(--SIZE-width); }
+        .SIZE-min-width { min-width: var(--SIZE-width); }
+        .SIZE-max-width { max-width: var(--SIZE-width); }
+        .SIZE-wrapper { width: var(--SIZE-width); margin-inline: auto; }`,
+    varString: `--SIZE-KEY: VALUE;`,
+    values: [
+      "min(100vw - 1.4rem, 3rem)",
+      "min(100vw - 1.4rem, 7rem)",
+      "min(100vw - 1.4rem, 16rem)",
+      "min(100vw - 1.4rem, 33rem)",
+      "min(100vw - 1.4rem, 48rem)",
+      "min(100vw - 1.4rem, 50rem)",
+      "min(100vw - 1.4rem, 54rem)",
+      "min(100vw - 1.4rem, 58rem)",
+      "min(100vw - 1.4rem, 64rem)",
+    ],
+  },
+};
+const borderRadii = [
+  `bottom-left`,
+  `bottom-right`,
+  `end-end`,
+  `end-start`,
+  `start-end`,
+  `start-start`,
+  `top-left`,
+  `top-right`,
+];
+const colors = [
+  "background",
+  "black",
+  "white",
+  "match",
+  "reverse",
+  "default",
+  "heading",
+  "link",
+  "accent",
+  "info",
+];
+const edges = [
+  `block`,
+  `block-end`,
+  `block-start`,
+  `bottom`,
+  `inline`,
+  `inline-end`,
+  `inline-start`,
+  `left`,
+  `right`,
+  `top`,
+];
+const prefixes = ["", "faded-"];
+const sizes = [
+  "xxxsmall",
+  "xxsmall",
+  "xsmall",
+  "small",
+  "default",
+  "large",
+  "xlarge",
+  "xxlarge",
+  "xxxlarge",
+];
+const fullWidth = "calc(100vw - 1.4rem)";
+function cssVars() {
+  let lines = [];
+  for (const [key, data] of Object.entries(baseParams)) {
+    data.values.forEach((value, itemIndex) => {
+      lines.push(
+        data.varString
+          .replaceAll(`KEY`, key)
+          .replaceAll(`SIZE`, sizes[itemIndex])
+          .replaceAll(`VALUE`, value),
+      );
+    });
+  }
+  for (const [key, data] of Object.entries(baseParams)) {
+    data.values.forEach((value, itemIndex) => {
+      lines.push(
+        data
+          .classString
+          .replaceAll(`SIZE`, sizes[itemIndex])
+          .replaceAll(`VALUE`, value)
+          .replaceAll(
+            `KEY`,
+            key,
+          ),
+      );
+    });
+  }
+  prefixes.forEach((prefix) => {
+    colors.forEach((color) => {
+      const key = `${prefix}${color}`;
+      lines.push(
+        `--${key}-border: 1px solid var(--${key}-color);
+        .${key}-background-color { background-color: var(--${key}-color); }
+        .${key}-color { color: var(--${key}-color); }
+        .${key}-border { border: var(--${key}-border); }`,
+      );
+      edges.forEach((edge) => {
+        lines.push(
+          `.${key}-${edge}-border { border-${edge}: var(--${key}-border); }`,
+        );
+      });
+    });
+  });
+  sizes.forEach((size) => {
+    edges.forEach((edge) => {
+      lines.push(
+        `.${size}-${edge}-padding { padding-${edge}: var(--${size}-padding); }
+        .${size}-${edge}-margin { margin-${edge}: var(--${size}-margin); }`,
+      );
+    });
+    borderRadii.forEach((item, itemIndex) => {
+      lines.push(
+        `--${size}-${item}-border-radius: ${item};`,
+      );
+      lines.push(
+        `.${size}-${item}-border-radius { border-${item}-radius: var(--${size}-border-radius);}`,
+      );
+    });
+  });
+  lines.push(
+    `--full-width: ${fullWidth};
+    .full-wrapper { width: var(--full-width); margin-inline: auto; }`,
+  );
+  return `:root { ${lines.join("\n")} }`;
+}
+
+function addSheet(content) {
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(content);
+  document.adoptedStyleSheets.push(sheet);
+}
+addSheet(cssVars());
+</script>
+
+<script>
+  function updateStyles(theme) {
+    if (theme) {
+      const styleKeys = colors.map((color) => `${color}-color`);
+      styleKeys.forEach((styleKey) => {
+        const key = `--${styleKey}--switch`;
+        if (theme === "auto") {
+          document.documentElement.style.removeProperty(key);
+        } else {
+          const value = `var(--${theme}--${styleKey})`;
+          document.documentElement.style.setProperty(
+            key, value
+          );
+        }
+      });
+      localStorage.setItem("theme", theme);
+    }
+  }
+  updateStyles(localStorage.getItem("theme"));
+</script>
+
+
+<!-- TODO: Remove this -->
+<style>
+body {
+  background-color: black;
+  color: goldenrod;
+}
+</style>
+
+<style>
+  * {
+    margin: 0;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  :root {
+    --load-hider: 0;
+  }
+  .load-hider {
+    opacity: var(--load-hider);
+  }
+  html {
+    color-scheme: light dark;
+    background-color: var(--background-color);
+  }
+  body {
+    background-color: var(--background-color);
+    color: var(--default-color);
+    font-family: "system-ui";
+    font-size-adjust: 0.5;
+    font-size: var(--default-font-size);
+    line-height: var(--default-line-height);
+  }
+</style><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty</title>
+<meta property="og:title" content="bitty" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+
+<!--
+<link rel="stylesheet" href="/versions&#x2f;7&#x2f;0&#x2f;0/styles/main.css" />
+<link rel="stylesheet" href="/versions&#x2f;7&#x2f;0&#x2f;0/styles/custom-css-to-add.css" />
+--><script>
+window.BittyClass = class {
+
+  bittyInit() {
+    this.api.trigger("runTest0330");
+  }
+
+    showDate(event, el) {
+      el.innerHTML = new Date();
+    }
+
+  runTest0330(_event, el) {
+    if(el) {
+      el.innerHTML = "PASSED";
+    }
+  } 
+
+    getNum(event, el) {
+      el.innerHTML = Math.random();
+    }
+
+
+}
+</script>
+
+    <style>
+@font-face { 
+  font-family: "Hack";
+  src: url("/fonts/HackNerdFontMono-Regular.ttf");
+  font-display: block;
+}::marker {
+  color: var(--default-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-color);
+}
+
+abbr {
+  color: var(--accent-color);
+  font-style: italic;
+}
+
+aside {
+  margin-left: 20vw;
+  font-style: italic;
+  border-left: 3px solid var(--faded-reverse-color);
+  padding: var(--default-padding);
+}
+
+audio {
+  max-width: var(--default-width);
+}
+
+b {
+  font-weight: var(font-weight-900);
+}
+
+
+bitty-7-0 {
+  display: block;
+}
+
+
+blockquote {
+  margin: var(--large-margin);
+  padding: var(--default-padding);
+  background-color: var(--faded-reverse);
+}
+
+button {
+  /*
+  background-color: var(--faded-match);
+  border: var(--reverse-border);
+  border-radius: var(--xsmall-radius);
+  color: var(--reverse);
+  */
+  font: inherit;
+  cursor: pointer;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: 900;
+}
+
+cite {
+  font-style: italic;
+}
+
+code {
+  font-family: Hack, monospace;
+}
+
+dd {
+  margin-left: var(--default-margin);
+}
+
+del {
+  text-decoration: line-through;
+}
+
+dfn {
+  font-style: italic;
+}
+
+em {
+  font-style: italic;
+}
+
+embed {
+  max-width: 100%;
+}
+
+fieldset {
+  border-radius: var(--default-radius);
+}
+
+figcaption {
+  background-color: var(--reverse-color);
+  color: var(--match);
+  font-size: var(--small-font);
+  padding: var(--default-padding);
+  text-align: var(--alight-center);
+}
+
+figure {
+  max-width: 100%;
+}
+
+footer {
+  color: var(--default-color);
+  font-size: var(--small-font);
+  margin-bottom: var(--default-margin);
+  margin-inline: auto;
+  margin-top: var(--xlarge-margin);
+  text-align: var(--align-center);
+  width: var(--default-width);
+}
+
+h1 {
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xxlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h2 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  margin-top: 7rem;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h3 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--large-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h4 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--default-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h5 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h6 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-style: var(--italic);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+header {
+  margin-bottom: var(--small-margin);
+  margin-inline: auto;
+  margin-top: var(--xsmall-margin);
+  width: var(--default-width);
+}
+
+hgroup {
+  margin-top: var(--large-margin);
+  padding-bottom: var(--large-padding);
+}
+
+hr {
+  border: none;
+  border-top: 3px double var(--faded-reverse-color);
+  color: var(--reverse-color);
+  overflow: visible;
+  text-align: var(--align-center);
+  height: 5px;
+}
+
+hr::after {
+  background: var(--background-color);
+  content: "§";
+  padding-inline: var(--large-padding);
+  position: relative;
+  top: -13px;
+}
+
+i {
+  font-style: var(--italic);
+}
+
+iframe {
+  max-width: 100%;
+  border: var(--accent-border);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input {
+  font: inherit;
+}
+
+ins {
+  font-style: var(--italic);
+}
+
+kbd {
+  background-color: var(--faded-reverse-color);
+  border: var(--faded-reverse-color);
+  border-radius: var(--xsmall-radius);
+  font-family: monospace;
+  font-size: var(--small-font);
+  padding-inline: var(--xxsmall-padding);
+}
+
+legend {
+  font-weight: var(--weight-900);
+}
+
+li > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+map {
+  max-width: 100%;
+}
+
+mark {
+  background-color: var(--faded-accent);
+}
+
+meter {
+  padding-inline: var(--default-padding);
+}
+
+object {
+  max-width: 100%;
+}
+
+ol > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+pre {
+  /*
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  overscroll-behavior-x: auto;
+  */
+}
+
+progress {
+  padding-inline: var(--small-padding);
+}
+
+q {
+  font-style: var(--italic);
+}
+
+samp {
+  font-weight: var(--weight-900);
+}
+
+select {
+  font: inherit;
+  padding-inline: var(--small-padding);
+}
+
+small {
+  font-size: var(--small-font);
+}
+
+summary {
+  font-weight: var(--weight-900);
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+textarea {
+  font: inherit;
+  max-width: 100%;
+}
+
+th {
+  font-weight: var(--weight-900);
+}
+
+u {
+  text-decoration: var(--accent-faded) var(--wavy) var(--underline);
+}
+
+ul > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+var {
+  font-weight: var(--weight-900);
+}
+
+video {
+  display: block;
+  max-width: 100%;
+}
+
+
+[data-receive="hangmanGallows"] path {
+  stroke: var(--accent-color);
+}
+
+[data-receive="hangmanGallows"] svg {
+  height: 200px;
+  width: auto;
+}
+
+.active-button {
+  background-color: red;
+}
+
+.bitty-example > * {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+.code-block {
+  background: var(--match-faded);
+  border-radius: var(--default-radius);
+  margin: var(--default-margin);
+  padding: var(--default-padding);
+}
+
+.docs-examples-wrapper {
+  margin-left: var(--xlarge-padding);
+}
+
+.docs-sub-details {
+  padding: var(--small-padding);
+  border-radius: 0.4rem;
+}
+
+.docs-sub-details > :where(:not(:first-child)) {
+  padding-left: var(--default-padding);
+}
+
+.docs-sub-details:open > summary {
+  padding-bottom: var(--xsmall-padding);
+}
+
+.docs-sub-details:open  {
+  background-color: rgb(200 200 200 / 0.2);
+  padding-bottom: var(--default-padding);
+}
+
+.hp-example {
+  display: inline-block;
+  border: 1px solid blue;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  border-radius: var(--default-radius);
+}
+
+.hp-example-code-link {
+  margin-top: 0.4px;
+  border-top: 1px solid blue;
+  padding-top: 0.4px;
+}
+
+.hp-example-content {
+  padding-bottom: 0.7rem;
+}
+
+.hp-example-wrapper {
+  display: grid;
+  grid-template-rows: 2.4rem auto 2.4rem;
+  height: 100%;
+}
+
+.hp-examples {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.inline-code {
+  border: 1px solid rgb(200 200 200 / 0.4);
+  border-radius: 0.4rem;
+  font-family: monospace;
+  padding-inline: 0.2rem;
+}
+
+.page-subtitle {
+  color: var(--default-faded);
+  border-bottom: var(--accent-border);
+}
+
+.theme-switcher {
+  display: flex;
+  gap: var(--default-gap);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.blue {
+  color: blue;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.docs-summary {
+  color: var(--heading);
+  font-size: var(--large-font);
+  font-weight: 500;
+}
+
+.download-div {
+  display: flex;
+  justify-content: center;
+}
+
+.download-link-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: var(--default-faded2);
+  border: 1px solid var(--default-faded);
+  border-radius: 0.4rem;
+  padding-block: var(--large-padding);
+  padding-inline: var(--xlarge-padding);
+  font-size: 1.7rem;
+}
+
+.download-link-wrapper-small {
+  display: inline-block;
+  background-color: var(--default-faded2);
+  border: 1px solid var(--default-faded);
+  border-radius: 0.4rem;
+  padding-block: var(--large-padding);
+  padding-inline: var(--xlarge-padding);
+  font-size: var(--small-font);
+}
+
+.example-output-wrapper {
+  font-size: var(--small-font);
+  background-color: var(--match);
+  border: var(--reverse-border-faded);
+  border-radius: var(--default-radius);
+  padding-inline: var(--default-padding);
+  padding-block: var(--small-padding);
+}
+
+.example-output-title {
+  font-size: var(--small-font);
+  border-bottom: var(--default-border);
+  margin-bottom: var(--large-margin);
+}
+
+.example-output {
+  margin-block: var(--xlarge-margin);
+}
+
+.example-wrapper {
+  border: var(--accent-border);
+  border-radius: var(--default-radius);
+  margin-inline: var(--xlarge-margin);
+  padding: var(--large-padding);
+}
+
+
+/*
+.example-output > bitty-COMPONENT_VERSION > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+.example-output > bitty-COMPONENT_VERSION > div {
+  font-size: var(--small-font);
+}
+*/
+
+.green {
+  color: darkgreen;
+}
+
+.header-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.header-flex-2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1em;
+}
+
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.code-block {
+  background-color: var(--match);
+  border: var(--reverse-border-faded);
+  border-radius: var(--default-radius);
+  font-size: var(--default);
+  padding-inline: var(--default-padding);
+  padding-block: var(--small-padding);
+  line-height: var(--xsmall-line-height);
+}
+
+.code-block-wrapper {
+  background-color: var(--match);
+  border: var(--reverse-border-faded);
+  border-radius: var(--default-radius);
+  font-size: var(--default);
+  padding-inline: var(--default-padding);
+  padding-block: var(--small-padding);
+  line-height: var(--xsmall-line-height);
+}
+
+.code-block-title {
+  font-size: var(--small-font);
+  border-bottom: var(--default-border);
+  margin-bottom: var(--large-margin);
+}
+
+.progressive-enhancement-wrapper {
+  background-color: var(--default-faded2);
+  border: var(--heading-border-faded);
+  border-radius: var(--default-radius);
+  color: var(--link);
+  padding: var(--default-padding);
+  width: 100%;
+}
+
+.red{
+  color: darkred;
+}
+
+.section-code {
+  margin-left: var(--large-margin);
+  margin-block: var(--default-margin);
+}
+
+.section-code-block {
+  background-color: var(--default-faded2);
+  border: var(--reverse-border);
+  border-radius: var(--default-radius);
+  margin-bottom: var(--xlarge-margin);
+  margin-inline: var(--large-margin);
+}
+
+.section-details {
+
+  /*
+  border: var(--accent-border-faded);
+  border-radius: var(--default-radius);
+  padding: var(--default-padding);
+*/
+
+}
+
+.section-details > summary {
+  list-style-position: outside;
+  margin-left: 20px;
+  color: var(--heading);
+  font-size: var(--xlarge-font);
+  font-weight: var(--weight-900);
+  line-height: var(--xsmall-line-height);
+  text-wrap: balance;
+  padding-left: 0.2rem;
+}
+
+.section-details summary::marker {
+  color: var(--heading);
+}
+
+.section-details bitty-COMPONENT_VERSION {
+  background-color: var(--default-faded2);
+  border: var(--heading-border-faded);
+  border-radius: var(--default-radius);
+  padding: var(--default-padding);
+  width: 100%;
+}
+
+:root {
+  --test-passed-color: #43eb1c;
+  --test-failed-color: #eb251c;
+}
+
+.test-title {
+  border-top: var(--accent-border-faded);
+}
+
+.test-failed {
+  color: var(--test-failed-color);
+}
+
+.test-passed {
+  color: var(--test-passed-color);
+}
+
+.test-output button {
+  opacity: 0;
+}
+
+.test-output-wrapper {
+  border-top: 1px solid blue;
+  display: grid;
+  grid-template-columns: 1fr 5rem;
+  gap: 1rem;
+}
+
+.member-example-summary summary {
+  color: var(--accent);
+}
+
+.section-details > *:not(summary) {
+  margin-left: 1.4rem;
+}
+
+.sub-section-details > *:not(summary) {
+  margin-left: 1rem;
+}
+
+main {
+  margin-bottom: 2rem;
+}
+
+.footer-wrapper {
+  margin-block: 2rem;
+}
+
+p {
+  max-width: var(--small-width);
+}
+
+.main-section[open] {
+  padding-bottom: var(--xxxlarge-padding);
+  border-bottom: var(--accent-border);
+}
+
+.green-background-with-padding {
+  padding: 2rem;
+  background-color: green;
+  border-radius: 0.6rem;
+}
+
+.black-background {
+  background-color: black;
+  padding: 0.3rem;
+}
+
+.color-names-wrapper {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+}
+    </style>
+
+    <script>
+window.BittyCodeBlockMaker = class {
+  async example(_, el) {
+    const payload = [];
+    const lines = [null];
+    const script = el.getString("script").split("|").map((line) => line.trim())
+      .filter((line) => {
+        return line !== "";
+      });
+    let prepSpacer = script.map((line) => "\n");
+    el.innerHTML = prepSpacer.join("");
+    const url = "/versions/7/0/0/snippets/intro/combined-body.html";
+    const response = await this.api.getTXT(url);
+    if (response.value) {
+      response.value.split("\n").forEach((line) => {
+        lines.push(line);
+      });
+      script.forEach((item) => {
+        const startDetails = item.split(":");
+        const details = [
+          startDetails[0].trim(),
+          startDetails.slice(1).join(":").trim(),
+        ];
+        if (details[0] === "line") {
+          payload.push(lines[parseInt(details[1])]);
+        } else if (details[0] === "newline") {
+          payload.push("");
+        } else if (details[0] === "line-chars") {
+          // console.log(
+          //   lines[parseInt(details[1])],
+          // );
+          const assembler = [];
+          const params = details[1].split("~").map((x) => x.trim());
+          const segments = params.slice(1);
+          segments.forEach((seg) => {
+            const chars = seg.split("-").map((x) => parseInt(x.trim()));
+            assembler.push(
+              lines[parseInt(details[1])].slice(chars[0] - 1, chars[1] - 1),
+            );
+          });
+          const toAdd = assembler.join("");
+          //console.log(toAdd);
+          payload.push(assembler.join(""));
+        }
+      });
+      el.innerHTML = payload.join("\n");
+    } else {
+      console.error(response.error);
+    }
+  }
+};window.ThemeSwitcher = class {
+  constructor() {
+    this.vars = {
+      themes: [
+        ["auto", "Auto"],
+        ["light", "Light"],
+        ["hc-light", "HC Light"],
+        ["dark", "Dark"],
+        ["hc-dark", "HC Dark"],
+      ],
+      switcher: `<div class="theme-switcher"></div>`,
+      item: `<div><label>
+  <input type="radio" 
+    name="mode-LOCATION" 
+    value="KEY" 
+    data-send="changeTheme" 
+    data-receive="syncCheckedTheme" 
+    CHECKED
+/> NAME</label></div>`,
+    };
+  }
+
+  changeTheme(event, _el) {
+    if (event.type === "input") {
+      updateStyles(event.target.value);
+      this.api.trigger("syncCheckedTheme");
+    }
+  }
+
+  getCurrentTheme() {
+    let current = localStorage.getItem("theme");
+    if (current) {
+      return current;
+    } else {
+      return "auto";
+    }
+  }
+
+  themeSwitcher(_event, el) {
+    const switcher = this.api.makeElement(this.vars.switcher);
+    for (let theme of this.vars.themes) {
+      const checked = this.getCurrentTheme() === theme[0] ? "checked" : "";
+      const subs = [
+        ["KEY", theme[0]],
+        ["NAME", theme[1]],
+        ["CHECKED", checked],
+      ];
+      const option = this.api.makeElement(this.vars.item, subs);
+      switcher.appendChild(option);
+    }
+    el.replaceChildren(switcher);
+  }
+
+  syncCheckedTheme(_event, el) {
+    if (el.value === this.getCurrentTheme()) {
+      el.checked = true;
+    } else {
+      el.checked = false;
+    }
+  }
+};    </script>
+    <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0-rc2/bitty-7.0.0-rc2.js" type="module"></script>
+  </head>
+  <body>
+
+    <bitty-7-0
+      data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/site-page.js" 
+      class="layout-wrapper"><noscript>
+  <p>
+    NOTE: This site use JavaScript which appears to be turned off. 
+    Most content will be fine, but some things won't work.
+  </p>
+  <style>:root { --load-hider: 1; }</style>
+</noscript> <bitty-7-0 
+    data-connect="ThemeSwitcher"
+    data-location="top"
+    data-init="themeSwitcher"></bitty-7-0>
+
+    <header class="default-wrapper">
+      <a href="/">bitty</a>
+      ~
+      <a href="/versions/7/0/0/test-suite/">tests</a>
+      ~
+      <a href="/versions/7/0/0/documentation/">documentation</a>
+    </header><main class="default-wrapper default-flow xlarge-top-padding">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/github-stars.js"></bitty-7-0>
+        </div>
+        <div class="small-font accent-faded">
+         tiny tool. interesting pages.
+        </div>
+      </hgroup>
+
+<style>
+[data-connect=ClickCounter] > button {
+  width: 7rem;
+  height: 4rem;
+}</style>
+
+<script>
+window.ClickCounter = class {
+  #counter = 0;
+
+  count(_, el) {
+    this.#counter += 1;
+    el.innerHTML = `Clicks: ${this.#counter}`;
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">
+Count Clicks    </div>
+    <div class="hp-example-content">
+<bitty-7-0 data-connect="ClickCounter">
+  <button data-use="count">Start Counting</button>
+</bitty-7-0>
+    </div>
+  </div>
+</div>
+
+<h2>HTML</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ClickCounter<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>count<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Start Counting<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<h2>JavaScript</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ClickCounter</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #counter = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">count</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Clicks: </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+
+<h2>Notes</h2>
+<ul>
+<li>
+<p>This example shows how to keep track of
+values (aka maintaining state).</p>
+</li>
+<li>
+<p>The <code>window.ClickCounter</code> class defines
+a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_elements#private_fields">private field variable</a>
+named <code>#counter</code> to keep track of the
+number of clicks.</p>
+</li>
+<li>
+<p>Each time the button is used the
+<span class="line-marker"></span><span class="source js"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">counter</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span></span>
+lines adds one to the <span class="line-marker"></span><span class="source js">#<span class="variable other readwrite js">coutner</span></span>.</p>
+</li>
+<li>
+<p>Then, the <inline-code><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="punctuation accessor js">.</span><span class="punctuation accessor js">.</span><span class="punctuation accessor js">.</span></span></inline-code> line displays update
+the button with the new value.</p>
+</li>
+</ul>
+ 
+    </main>
+
+    <footer>
+      <hr />
+      <div class="footer-wrapper">
+        <div>
+          <a href="https://github.com/alanwsmith/bitty">source</a> ~
+          <a href="https://socials.alanwsmith.com/">socials</a> ~
+          <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+          <a href="https://links.alanwsmith.com/">other projects</a>
+        </div>
+
+        <div>
+          <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        </div>
+        <details><summary>This work has been dedicated to the public domain.</summary>
+          <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+        </details>
+      </div>
+    </footer>
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+      <pre>
+<span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>https://unpkg.com/@alanwsmith/bitty@7.0.0-rc2/bitty-7.0.0-rc2.js<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span>      </pre>
+
+<bitty-7-0>
+  </body>
+</html>

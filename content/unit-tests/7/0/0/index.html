@@ -26,13 +26,20 @@ window.BittyUnhide = class {
 <[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
 
 [! for folder in folders !] [! if folder.parent == unit_tests_root + "tests" !]
+[! set html_path = folder.parent + "/" + folder.name + "/index.html" !]
+[! set js_path = folder.parent + "/" + folder.name + "/test.on.js" !]
 <div class="unit-test-wrapper">
   <div class="unit-test-columns">
     <details>
       <summary>TEST: [@ folder.name @]</summary>
+[! filter block_highlight("html") !]
+[! include html_path !]
+[! endfilter !]
+
+[! filter block_highlight("js") !]
+[! include js_path !]
+[! endfilter !]
     </details>
-    [! set html_path = folder.parent + "/" + folder.name + "/index.html" !]
-    [! set js_path = folder.parent + "/" + folder.name + "/test.on.js" !]
     [! include html_path !]
   </div>
 </div>
@@ -45,6 +52,7 @@ window.BittyUnhide = class {
           <details class="test-code">
             <summary>TEST: [@ folder.name @]</summary>
             <pre class="code-block-wrapper">
+
         [! filter highlight_html|safe !]
           [! include version_dir + "/tests/" + folder.name + "/index.html" !]
         [! endfilter !]

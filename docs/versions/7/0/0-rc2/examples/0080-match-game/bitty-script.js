@@ -37,15 +37,13 @@ window.MatchGame = class {
   #faces = [];
 
   async bittyInit() {
-    for (let i = 0; i < 10; i += 1) {
-      const headURL =
-        `/versions/[@ major_dir @]/[@ minor_dir @]/[@ patch_dir @]/svgs/heads/${i}.svg`;
+    for (let i = 0; i < this.#tileCount / 2; i += 1) {
+      const headURL = `/[@ version_dir @]/svgs/heads/${i}.svg`;
       const headResponse = await this.api.getTXT(headURL);
       if (headResponse.value) {
         sourceHeads.push(headResponse.value);
       }
-      const faceURL =
-        `/versions/[@ major_dir @]/[@ minor_dir @]/[@ patch_dir @]/svgs/faces/${i}.svg`;
+      const faceURL = `/[@ version_dir @]/svgs/faces/${i}.svg`;
       const faceResponse = await this.api.getTXT(faceURL);
       if (faceResponse.value) {
         sourceFaces.push(faceResponse.value);

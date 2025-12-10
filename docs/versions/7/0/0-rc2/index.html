@@ -2425,8 +2425,9 @@ window.ToDoList = class {
 
 <ol>
   <li>
-    <p>Add one of bitty's <code>data-...</code> attribute to
-    an element. For example, the <code>data-use</code> attribute
+    <p><strong>Add one of bitty's <code>data-...</code> attribute to
+      an element</strong></p> 
+    <p>For example, the <code>data-use</code> attribute
       on this button. </p>
     <div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>randomExample<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -2439,9 +2440,83 @@ window.ToDoList = class {
     </p>
   </li>
 
+  <li>
+    <p><strong>Wrap the button inside a <strong>bitty</strong> tag</strong></p>
+    <div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Randomizer<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>randomExample<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Get Random Number
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>    </div>
+    <p>
+      Individual <strong>bitty</strong> tags connect to JavaScript
+      classes that provide the code for the functionality. In this
+      case, we're using <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-connect=&quot;Randomizer&quot;</span></code> 
+      to connect to class on the page named <code>Randomizer</code>
+      that we'll create in the next step.
+    </p>
+  </li>
+  <li>
+    <p><strong>Add the JavaScript</strong></p>
+    <p>
+      <strong>bitty</strong> can use JavaScript from a module or
+      from code that's directly on the page. We'll use the later
+      for this example by creating a class on the window 
+      named <code>Randomizer</code> (which is the value
+      we set in the bitty tag's <code>data-connect</code> attribute).
+    </p>
 
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="source js embedded html"><span class="source js">  <span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">Randomizer</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">randomExample</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">floor</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>        <span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">random</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator arithmetic js">*</span> <span class="constant numeric js">100</span>
+<span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+    <p>
+      The <code>randomExample</code> method name matches
+      the value from the <code>data-use</code> attribute
+      on the <code>button</code> element. That name
+      matching is how bitty connects elements
+      to methods to make them interactive. 
+    </p>
+  </li>
+</ol>
 
-</ol> 
+<p>Putting that code on the page produces this button:
+</p>
+
+<bitty-7-0 data-connect="Randomizer">
+  <button data-use="randomExample">
+    Get Random Number
+  </button>
+</bitty-7-0>
+
+      <script>
+  window.Randomizer = class {
+    randomExample(_, el) {
+      el.innerHTML = Math.floor(
+        Math.random() * 100
+      );
+    }
+  }
+</script>
+
+<p>
+  When you click it, the text inside turns
+  into a random number between 1 and 100
+  thanks to the <code>randomExample</code>
+  method from the <code>window.Randomizer</code>
+  class.
+</p>
+
+<h3>A Few Details</h3>
+
+<p>
+  There are, of course, more features. This site
+  covers them. 
     </main>
 
     <footer>

@@ -17,8 +17,8 @@ ev.propToInt
 ev.sender.prop
 ev.sender.propToFloat
 ev.sender.propToInt
-el.matchesSender
-el.matchesTarget
+el.propMatchesSender
+el.propMatchesTarget
 el.prop
 el.propToFloat
 el.propToInt"""

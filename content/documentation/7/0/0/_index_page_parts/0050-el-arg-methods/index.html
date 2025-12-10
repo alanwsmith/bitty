@@ -1,6 +1,7 @@
 <h2>Element Argument Helpers</h2>
-
 <h3>Methods</h3>
+[#
+
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
 [! if item.name == "expandElement" !]
 [! for var in item.meta.vars !]
@@ -25,11 +26,8 @@
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
     [! if item.longname == var and item.kind == "member" !]
 
-        [# TEMP HARD CODE REMOVE el.bittyParent and el.bittyParentBittyId since
-        they should not be in the public API #]
         [! if item.longname != "el.bittyParent" and item.longname != "el.bittyParentBittyId" !]
 
-            [# HARD CODE OUTPUT el.value before el.valueToFloat since it comes from the native element #]
             [! if item.longname == "el.valueToFloat" !]
                 [!- set inc_path = file.folder + "/_includes/helper-properties/el.value/index.html" -!]
                 [! include inc_path !]
@@ -45,3 +43,4 @@
 [! endfor !]
 [! endif !]
 [! endfor !]
+#]

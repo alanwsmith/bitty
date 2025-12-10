@@ -1,14 +1,33 @@
 [!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
 
-[!- block main -!]
+[! block header !]
+<hgroup>
+  <h1>Documentation</h1>
+</hgroup>
+[! endblock !]
 
-<h1>Documentation</h1>
+[!- block main -!]
 
 <p>
     Check out the <a href="/[@ release_notes_root @]">release notes</a> for the
     latest changes.
 </p>
 
+[! for f in files !]
+[! if 
+    f.path_parts[0] == "documentation" 
+    and
+    f.path_parts[1] == major_version
+    and
+    f.path_parts[2] == minor_version
+    and
+    f.path_parts[3] == patch_version
+    and 
+    f.path_parts[4] == "_index_page_parts"
+!]
+[! include f.input_path !]
+[! endif !]
+[! endfor !]
 
 [! for fldr in folders !]
     [! if 

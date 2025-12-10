@@ -2,6 +2,8 @@
 <h2>Event Argument Helpers (.sender)</h2>
 <h3>Methods</h3>
 
+[#
+
 [! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
 [! if item.name == "expandEvent" !]
 [! for var in item.meta.vars !]
@@ -31,7 +33,6 @@
     [! else !]
     [! if item.longname == var and item.kind == "member" and item.memberof == "ev.sender" !]
 
-            [# HARD CODE OUTPUT ev.sender.value before ev.sender.valueToFloat since it comes from the native element #]
             [! if item.longname == "ev.sender.valueToFloat" !]
                 [!- set inc_path = file.folder + "/_includes/helper-properties/ev.sender.value/index.html" -!]
                 [! include inc_path !]
@@ -47,3 +48,4 @@
 [! endfor !]
 [! endif !]
 [! endfor !]
+#]

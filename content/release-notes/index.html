@@ -1,0 +1,38 @@
+[!- extends 
+  "_wrappers/" 
+  + json.config.versions.current.major|string
+  + "/"
+  + json.config.versions.current.minor|string 
+  + "/"
+  + json.config.versions.current.patch|string 
+  + "/main-wrapper.html" 
+-!] 
+
+[! block header !]
+<hgroup>
+  <h1>Release Notes</h1>
+  <div class="subtitle">a tool for interesting pages</div>
+</hgroup>
+[! endblock !]
+
+
+[! block main !]
+[! for f in files|reverse !]
+[! if f.path_parts[1] == "entries" !]
+
+[! filter markdown|safe !]
+  [! include f.input_path !]
+[! endfilter !]
+[! endif !]
+[! endfor !]
+[! endblock !]
+
+
+[!- block bittyOpenTag -!]
+<[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/default-page.js">
+[!- endblock -!]
+
+[!- block bittyCloseTag -!]
+</[@ bitty_tag @]>
+[!- endblock -!]
+

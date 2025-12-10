@@ -10,5 +10,5 @@
 A MiniJinja error occurred
 
 Could not render template:
-undefined value (in unit-tests/7/0/0/intentional-errors/0415-get-html-fetching-error/index.html:2)</p>
+template not found: tried to include non-existing template "versions/6.0.0-rc3/vars.html" (in unit-test-for-errors/7/0/0/0495-get-txt-fetching-error/test.on.js:1)</p>
 </pre></body></html>

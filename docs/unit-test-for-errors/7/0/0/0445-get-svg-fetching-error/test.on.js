@@ -10,5 +10,5 @@
 A MiniJinja error occurred
 
 Could not render template:
-template not found: tried to include non-existing template "versions/6.0.0-rc3/vars.html" (in unit-tests/7/0/0/intentional-errors/0445-get-svg-fetching-error/test.on.js:1)</p>
+template not found: tried to include non-existing template "versions/6.0.0-rc3/vars.html" (in unit-test-for-errors/7/0/0/0445-get-svg-fetching-error/test.on.js:1)</p>
 </pre></body></html>

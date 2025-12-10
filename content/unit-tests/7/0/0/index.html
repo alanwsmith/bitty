@@ -1,19 +1,45 @@
-[!- extends "versions/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/test-suite/_wrapper-for-test-suite.html" -!] 
+[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
 
 [# 
-  WARNING:
-  REMINDER:
+  WARNING: REMINDER:
   Don't wrap the page in a bitty tag. Some
   tests requrie that the tag under test
   not be included in another tag
 #]
 
 
+[! block header !]
+<hgroup>
+  <h1>Bitty Unit Tests</h1>
+</hgroup>
+[! endblock !]
+
 [!- block main -!]
 
-<h1>Test Suite</h1>
+<script>
+window.BittyUnhide = class {
+  bittyReady() {
+    this.api.setProp("--load-hider", 1);
+  }
+}
+</script>
 
-  [! for folder in folders !] [! if folder.parent == version_dir + "/tests" !]
+<[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
+
+[! for folder in folders !] [! if folder.parent == unit_tests_root + "tests" !]
+<div class="unit-test-wrapper">
+  <div class="unit-test-columns">
+    <details>
+      <summary>TEST: [@ folder.name @]</summary>
+    </details>
+    [! set html_path = folder.parent + "/" + folder.name + "/index.html" !]
+    [! set js_path = folder.parent + "/" + folder.name + "/test.on.js" !]
+    [! include html_path !]
+  </div>
+</div>
+[! endif !] [! endfor !]
+
+[#
     <div>
       <div class="test-output-wrapper">
         <div class="test-details">
@@ -37,24 +63,20 @@
         </div>
       </div>
     </div>
-  [! endif !] [! endfor !]
+#]
 
-  <hr />
 
-  <[@ bitty_tag @]
-    data-connect="/[@ version_dir @]/modules/test-results.js"
-    class="default-flow">
-  <div>Currently tested file<br /> [@ bitty_js_path @]</div>
+  <[@ bitty_tag @] data-connect="/[@ unit_tests_root @]/support/test-results.js">
+    <div>Testing file: [@ bitty_js_path @]</div>
     <div data-receive="showResults">
       <div>Gather results...</div>
       <div>&nbsp;</div>
-      <noscript>
-        JavaScript must be enabled and working to calculate test results 
-      </noscript>
     </div>
   </[@ bitty_tag @]>
 
-  <p>TODO: <a href="/[@ version_dir @]/test-errors/">rewire tests with intentional errors</a></p>
+[#
+  <p>TODO: link to tests with intentional errors.</p>
+#]
 
 [!- endblock -!]
 

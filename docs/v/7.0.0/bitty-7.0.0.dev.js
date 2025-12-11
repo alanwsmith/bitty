@@ -727,4 +727,3 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define(tagName, BittyJs);
-

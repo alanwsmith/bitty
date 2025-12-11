@@ -1,44 +1,18 @@
 ## Roadmap 
 
-- TODO: Figure out how to make a better error message if there's
-a major problem in a module file that prevents it from loading
-all together. For example, an open `const problemVar =` with
-nothing after the `=` sign. Right now, it just says there's
-an error from inside bitty's component with no useful 
-info about where the error actually occurred. 
-
-- TODO: Consider: `.appendDataSend(someEl, SIGNALS)` and `.appendDataReceive` 
-which would let you update an existing elements
-`data-send` and `data-recieve` with new signals
-(creating the attributes if they don't already exist)
-Example: `this.api.addDataReceive("signal", codeBlock);`
-
-- TODO: Example test 1060 to see about the bitty 
-element picking up event when other bitty element
-that are siblings get clicked. 
-
-- TODO: Add `internal` comments to `ev.sendPayload` 
-so it can be filtered in the jsdoc data. 
+- TODO: Make stress test pages with
+nesting, large numbers of elements, updates, etc...
 
 - TODO: Set up `data-init` to handle `await:SIGNAL`
-isntead of just doing an `await` if the
+instead of just doing an `await` if the
 function is `async` (which is what happens
 now)
 
 - Investigate adding all the `bittyId` and `.sender` stuff
-to empyt bitty elements that just make 
+to empty bitty elements that just make 
 a connection and populate themselves from 
 `bittyInit` or `bittyReady`
 
-
-
-- TODO: Implement: `this.api.getQuickXXX()` 
-methods. (stubs are already in place).
-
-- TODO: Add `this.api.getCSS` which is just an
-alias to `this.api.getTXT` but helps with the
-mental model that fits with the other `.getXXX`
-methods. 
 
 - TODO: Generate sha hashes of files and check them
 before deployments to make sure they haven't changed.
@@ -47,31 +21,11 @@ before deployments to make sure they haven't changed.
 events have `.valueXXX`, `.propXXX`, etc.. stuff on them so 
 they can be used interchangably with other events. 
 
-- TODO: Added `this.api.getQuickTXT`, `this.api.getQuickHTML`,
-etc... which unwraps the response and either returns
-the expected value or an error message (in an element
-or fragment or SVG as expected) The idea is that
-the error message would just show up directly without
-you having to do anything else. (The regular
-`this.api.getTXT`, etc.. give you the chance
-to do something specific if an error happens)
-
-- TODO: Added a feature to the subs for `this.api.getXXX`
-where if the first value is a string it just
-alternates the subs without having to do
-a nested array. 
-
-- TODO: Investigate `.localForward` which only 
-forwards inside the current module
-
 - TODO: Set up `.trigger`, `.localTrigger`, `.forward`, 
 and `.localForward` to be able to pass data like:
 `this.api.trigger("SIGNAL_NAME", { some: "data" })`
 
 - TODO: Improve connection error messages
-
-- TODO: Make md5 hashes of files and check them
-before deployment. 
 
 - TODO: make sure to clean up event listeners
 when bitty elements are removed from the page. 
@@ -103,11 +57,6 @@ be on the DOM:
 <div id='test'>Waiting</div>
 ```
 
-
-
-- TODO: Consider adding a setter/updater
-for dataset (e.g. `el.setDs("KEY", "VALUE"))
-
 - TODO: set up async/await so that anything
 that happens with .forward, .trigger, or
 .localTrigger inside a specific bitty
@@ -130,15 +79,16 @@ relative file paths (e.g. `./here.js`)
 instead of being limited to `http` and `/`
 urls. 
 
-- TODO: Add console log message if a signal is
-sent that doesn't have a corresponding function
-to handle it. 
+- TODO: CONSIDER: Add console log message if a signal 
+is sent that doesn't have a corresponding function
+to handle it. (This probably doesn't make sense
+as signals can travel between bitty elements
+so the source element might not have a
+function that corresponds to a signal it sends).
 
 - TODO: Add disconnectedCallback() to do cleanup
 if a bitty element is removed. 
 
-- TODO: Make stress test pages with
-nesting, large numbers of elements, updates, etc...
 
 - TODO: Consider: Adding `this.api.makeSVG()`
 like `this.api.getSVG()` with all the
@@ -166,12 +116,6 @@ having to rely on a child element calling
 - TODO: Make sure to cover the removal of
 elements and make sure listeners don't
 explode. 
-
-- TODO: Document behavior of `el.bittyId`
-if the element was added outside the
-`this.api...` methods and doesn't have an
-id. 
-
 
 - TODO: Consider a list capture method. 
 e.g. you can grab all the elements

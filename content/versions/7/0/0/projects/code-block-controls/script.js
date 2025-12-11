@@ -11,7 +11,7 @@ const t = {
 </div>`,
 };
 
-export default class {
+export class CodeBlockControls {
   #timeouts = {};
   #fontSizes =
     `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`.split(

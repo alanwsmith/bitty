@@ -1,0 +1,56 @@
+[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
+
+[!- block bittyOpenTag -!]
+[!- include wrapper_root + "includes/bitty-open-tags.html" -!]
+[!- endblock -!]
+
+[!- block bittyCloseTag -!]
+[!- include wrapper_root + "includes/bitty-close-tags.html" -!]
+[!- endblock -!]
+
+[!- block header -!]
+<header class="default-wrapper">
+<hgroup>
+  <h1>Projects</h1>
+</hgroup>
+</header>
+[!- endblock -!]
+
+[!- block main -!]
+<main class="default-wrapper default-flow">
+  <h2>Work in Public/Progress</h2>
+  <p>
+    This is my personal collection of
+    bitty projects and ideas. Several
+    of them are used on this site. 
+    The projects are 
+    in various states of development
+    and will change over time. 
+    You're welcome to copy/paste them
+    to use directly or as starting
+    points for you own code. 
+  </p>
+
+  <h3>Finished</h3>
+  <ul>
+[!- for folder in folders -!]
+    [!- if 
+      folder.folder_parts[1] == major_version 
+      and 
+      folder.folder_parts[2] == minor_version 
+      and 
+      folder.folder_parts[3] == patch_version 
+      and 
+      folder.folder_parts[4] == "projects" 
+    -!]
+    [!- set data = json.versions[major_version][minor_version][patch_version].projects[folder.name].config -!]
+    [!- if data.status == "done" -!]
+    <li>[@ folder.name @]</li>
+    [!- endif -!]
+    [!- endif -!]
+[!- endfor -!]
+  </ul>
+
+</main>
+
+[!- endblock -!]

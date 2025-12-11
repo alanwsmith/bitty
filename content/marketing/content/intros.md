@@ -1,5 +1,7 @@
 ## Intro Workshop
 
+### Full Intros
+
 bitty adds interactivity to static pages. 
 It streamlines the process, handling event listeners and query 
 selectors. You spend time on
@@ -25,16 +27,6 @@ instead of plumbing.
 
 ---
 
-bitty connects HTML and JavaScript
-to make your static pages dynamic. 
-
----
-
-bitty makes your static pages
-dynamic. 
-
----
-
 bitty makes static pages dynamic. 
 HTML and JavaScript connect 
 automatically. You get to 
@@ -42,12 +34,32 @@ less time plumbing and more
 time developing features. 
 
 
+---
 
+
+bitty adds interactive features to your static pages. 
+It handles event listeners and query selectors
+so you don't have to. 
+
+--- 
+
+bitty adds dynamic features to your static pages. 
+It handle the wiring. Taking care of listeners
+and selectors to let you focus on features. 
+
+### Snippets
+
+
+bitty connects HTML and JavaScript
+to make your static pages dynamic. 
 
 ---
 
-bitty turns static pages into
-dynamic features. 
+bitty lets you focus on features, not plumbing. 
+
+--- 
+
+bitty adds dynamic features to your static pages. 
 
 --- 
 
@@ -62,32 +74,23 @@ bitty enhances static pages.
 
 bitty turns static pages dynamic. 
 
----
-
-bitty adds dynamic features to your static pages. 
-
----
-
-bitty adds interactive features to your static pages. 
-It handles event listeners and query selectors
-so you don't have to. 
-
 --- 
 
-bitty lets you focus on features, not plumbing. 
+bitty turns static pages into
+dynamic features. 
 
---- 
+---
 
-bitty adds dynamic features to your static pages. 
-It handle the wiring. Taking care of listeners
-and selectors to let you focus on features. 
+bitty makes your static pages
+dynamic. 
 
+---
 
+bitty brings your static pages to 
+life.
 
+---
 
-
-
-
-
+bitty, the better page maker
 
 

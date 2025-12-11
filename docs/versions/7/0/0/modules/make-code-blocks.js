@@ -3,6 +3,9 @@ const t = {
 <div data-index="INDEX" class="default-border-radius accent-border default-padding">
   <div data-receive="copyText">BLOCK</div>
   <div class="text-align-right small-top-padding">
+    <button data-send="reduceCodeFont">Reduce Font</button>
+    <button data-send="enlargeCodeFont">Enlarge Font</button>
+    <button data-send="toggleWrap">ToggleWrap</button>
     <button data-send="copyText">Copy</button>
   </div>
 </div>`,
@@ -10,9 +13,15 @@ const t = {
 
 export default class {
   #timeouts = {};
+  #fontSizes =
+    `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`.split(
+      "|",
+    );
 
   bittyReady() {
     this.api.querySelectorAll(".code-block").forEach((codeBlock, index) => {
+      codeBlock.dataset.receive = "toggleWrap reduceCodeFont enlargeCodeFont";
+      codeBlock.dataset.fontsize = 3;
       const signals = codeBlock.dataset.receive
         ? [codeBlock.dataset.receive]
         : [];
@@ -41,7 +50,32 @@ export default class {
       } catch (err) {
         console.error("Could not copy to clipboard");
       }
-      console.log(el);
+    }
+  }
+
+  enlargeCodeFont(_, el) {
+    if (el.propMatchesSender("index")) {
+      const size = el.propToInt("fontsize");
+      if (size < this.#fontSizes.length - 1) {
+        el.dataset.fontsize = size + 1;
+        el.style.fontSize = `var(--${this.#fontSizes[size + 1]}-font-size)`;
+      }
+    }
+  }
+
+  reduceCodeFont(_, el) {
+    if (el.propMatchesSender("index")) {
+      const size = el.propToInt("fontsize");
+      if (size > 0) {
+        el.dataset.fontsize = size - 1;
+        el.style.fontSize = `var(--${this.#fontSizes[size - 1]}-font-size)`;
+      }
+    }
+  }
+
+  toggleWrap(_, el) {
+    if (el.propMatchesSender("index")) {
+      el.classList.toggle("nowrap");
     }
   }
 }

@@ -1,5 +1,12 @@
 ## Roadmap 
 
+- TODO: Figure out how to make a better error message if there's
+a major problem in a module file that prevents it from loading
+all together. For example, an open `const problemVar =` with
+nothing after the `=` sign. Right now, it just says there's
+an error from inside bitty's component with no useful 
+info about where the error actually occurred. 
+
 - TODO: Consider: `.appendDataSend(someEl, SIGNALS)` and `.appendDataReceive` 
 which would let you update an existing elements
 `data-send` and `data-recieve` with new signals

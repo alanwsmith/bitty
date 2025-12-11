@@ -2,8 +2,8 @@
 const t = {
   stars: `<github-stars
   :repo="alanwsmith/bitty"
-  :text-color="red"
-  :background-color="blue"
+  :text-color="var(--accent-color)"
+  :background-color="var(--faded-match-color)"
 ></github-stars>`,
 };
 
@@ -23,7 +23,18 @@ window.GitHubStars = class {
   [! else !]
   <a href="/">bitty</a>
   [! endif !]
+
+  [! if file.folder_parts[0] == "unit-tests" !]
+  tests
+  [! else !]
   <a href="/[@ unit_tests_root @]">tests</a>
+  [! endif !]
+
+  [! if file.folder_parts[0] == "documentation" !]
+  documentation
+  [! else !]
   <a href="/[@ documentation_root @]">documentation</a>
+  [! endif !]
+
   <[@ bitty_tag @] data-connect="GitHubStars"></[@ bitty_tag @]>
 </nav>

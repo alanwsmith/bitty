@@ -9,8 +9,9 @@ const t = {
 
 window.GitHubStars = class {
   bittyInit() {
-    const url = new URL(window.location.href);
+    if(window.location.hostname !== "localhost") {
       this.api.appendChild(this.api.makeElement(t.stars));
+    }
   }
 }
 </script>
@@ -34,13 +35,11 @@ window.GitHubStars = class {
   <a href="/[@ unit_tests_root @]">tests</a>
   [! endif !]
 
-  [#
   [! if file.folder_parts[4] == "projects" !]
   projects 
   [! else !]
   <a href="/[@ projects_root @]">projects</a>
   [! endif !]
-  #]
 
   <[@ bitty_tag @] data-connect="GitHubStars"></[@ bitty_tag @]>
 </nav>

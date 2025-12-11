@@ -3,79 +3,56 @@
 [# 
   WARNING: REMINDER:
   Don't wrap the page in a bitty tag. Some
-  tests requrie that the tag under test
+  tests require that the tag under test
   not be included in another tag
 #]
 
 [! block header !]
-<hgroup>
+<hgroup class="default-wrapper">
   <h1>Bitty Unit Tests</h1>
 </hgroup>
+<[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
 [! endblock !]
 
 [!- block main -!]
+<main class="default-wrapper default-flow">
 
-<[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
-
-[! for folder in folders !] [! if folder.parent == unit_tests_root + "tests" !]
+[! for folder in folders !] 
+[! if folder.parent == unit_tests_root + "tests" !]
 [! set html_path = folder.parent + "/" + folder.name + "/index.html" !]
-[! set js_path = folder.parent + "/" + folder.name + "/test.on.js" !]
-<div class="unit-test-wrapper">
+[! set js_path -!]
+[@ folder.parent|safe @]/[@ folder.name|safe @]/test.on.js
+[!- endset -!]
   <div class="unit-test-columns">
     <details>
       <summary>TEST: [@ folder.name @]</summary>
 [! filter block_highlight("html") !]
 [! include html_path !]
 [! endfilter !]
-
 [! filter block_highlight("js") !]
 [! include js_path !]
 [! endfilter !]
     </details>
+    <div class="test-status">
     [! include html_path !]
-  </div>
+    </div>
 </div>
 [! endif !] [! endfor !]
 
-[#
-    <div>
-      <div class="test-output-wrapper">
-        <div class="test-details">
-          <details class="test-code">
-            <summary>TEST: [@ folder.name @]</summary>
-            <pre class="code-block-wrapper">
 
-        [! filter highlight_html|safe !]
-          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
-        [! endfilter !]
-            </pre>
-            <pre class="code-block-wrapper">
-            [! filter highlight_javascript|safe !]
-              [! include version_dir + "/tests/" + folder.name + "/test.on.js" !]
-            [! endfilter !]
-            </pre>
-          </details>
-        </div>
-
-        <div class="test-output">
-          [! include version_dir + "/tests/" + folder.name + "/index.html" !]
-        </div>
-      </div>
-    </div>
-#]
-
-
-  <[@ bitty_tag @] data-connect="/[@ unit_tests_root @]/support/test-results.js">
-    <div>Testing file: [@ bitty_js_path @]</div>
-    <div data-receive="showResults">
-      <div>Gather results...</div>
-      <div>&nbsp;</div>
-    </div>
-  </[@ bitty_tag @]>
+<[@ bitty_tag @] data-connect="/[@ unit_tests_root @]/support/test-results.js">
+  <div>Testing file: [@ bitty_js_path @]</div>
+  <div data-receive="showResults">
+    <div>Gather results...</div>
+    <div>&nbsp;</div>
+  </div>
+</[@ bitty_tag @]>
 
 [#
   <p>TODO: link to tests with intentional errors.</p>
 #]
 
+</main>
 [!- endblock -!]
+
 

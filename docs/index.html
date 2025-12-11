@@ -126,7 +126,8 @@ window.GitHubStars = class {
 
 <style>.match-game-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 50px 50px 50px 50px;
+  gap: 4px;
 }
 
 .tile-button {
@@ -317,6 +318,13 @@ window.MatchGame = class {
   }
 };</script>
 
+<script>
+window.BittyClass = class {
+  getDate(_, el) {
+    el.innerHTML = new Date();
+  }
+};</script>
+
 <div class="xsmall-width accent-border default-padding default-border-radius">
   <div class="home-page-example-title faded-accent-bottom-border default-bottom-margin">Match Game</div>
   <div class="home-page-example-content"><bitty-7-0 data-connect="MatchGame">
@@ -328,31 +336,16 @@ window.MatchGame = class {
   data-init="matchGameStatus"
   data-receive="matchGameStatus"></div>
 </bitty-7-0></div>
-  <div class="home-page-example-code-link xlarge-top-margin text-align-right"><a href="versions&#x2f;7&#x2f;0&#x2f;0&#x2f;projects&#x2f;0080-match-game&#x2f;index.html">view code</a>
+  <div class="home-page-example-code-link xlarge-top-margin text-align-right"><a href="versions&#x2f;7&#x2f;0&#x2f;0&#x2f;projects&#x2f;match-game&#x2f;index.html">view code</a>
   </div>
 </div>
 
-
   <h2>The Basics</h2>
   <p>
-  Bitty comes in the form of an HTML tag. When you wrap other
-  tags in it, Bitty makes them interactive. For example, this button:
-</p>
-
-<script>
-window.BittyClass = class {
-  getDate(_, el) {
-    el.innerHTML = new Date();
-  }
-};</script>
-
-<div class="example-block">
-<bitty-7-0>
-  <button data-use="getDate">Get Date</button>
-</bitty-7-0></div>
-
-
-<p>Is made from this HTML:</p>
+  Bitty comes in the form of an HTML tag. Wrapping
+    it around other tags makes them interactive. 
+    For example, this HTML:
+  </p>
 
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getDate<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Get Date<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -362,19 +355,26 @@ window.BittyClass = class {
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js<span class="punctuation definition string end html">&quot;</span></span></span> 
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <p>and this JavaScript:</p>
-
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">BittyClass</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">getDate</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="meta instance constructor js"><span class="keyword operator word new js">new</span><span class="meta function-call constructor js"> <span class="support class builtin js">Date</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
-<p>Clicking the button changes it to show the current date and time.</p>
+  <p>Make this button:</p>
 
-<h2>Some More Examples</h2>
+<div class="example-block">
+<bitty-7-0>
+  <button data-use="getDate">Get Date</button>
+</bitty-7-0></div>
+
+  <p>Tap or click it to show the current date and time.</p>
+
+
+<h2>More Examples</h2>
 
 <p>Here's some other things 
   you can do with Bitty. Each one has
-a link to the code that make it work.</p>
+a link to the code that makes it work.</p>
 
 
 <div class="home-page-examples"><style>[data-connect=ClickCounter] > button {
@@ -1168,8 +1168,7 @@ window.ToDoList = class {
   <li>
     <p><strong>Add one of bitty's <code>data-...</code> attribute to
       an element</strong></p> 
-    <p>For example, the <code>data-use</code> attribute
-      on this button. </p>
+    <p>For example, this button uses the <code>data-use</code> attribute</p>
     <div>
 
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-use</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>randomExample<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -1254,6 +1253,113 @@ window.ToDoList = class {
 </p>
 
 
+<h2>A Few Technical Details</h2>
+
+<ul>
+<li>
+<p>Bitty is a Light DOM web component written
+in vanilla JavaScript. It's a single file.
+Compressed, it's a little under 4KB.</p>
+</li>
+<li>
+<p>Bitty requires no build steps or
+installation of npm packages.
+You simply included it on your page
+with a script tag like:</p>
+</li>
+</ul>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">src</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>module<span class="punctuation definition string end html">&quot;</span></span></span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span><span class="source js embedded html"></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<ul>
+<li>
+<p>Once you have the script tag on your page,
+you're ready to start adding
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>  tags to enhance your pages.</p>
+</li>
+<li>
+<p>Bitty's design goal is to make is as simple as
+possible to work with. It uses native HTML
+Attributes, Elements, and Events connected
+to single JavaScript method with a signaling
+approach.</p>
+</li>
+<li>
+<p>The entire HTML portion of Bitty's API consistes
+of six <code>data-*</code> attributes:</p>
+<ul>
+<li>data-connect</li>
+<li>data-init</li>
+<li>data-listeners</li>
+<li>data-receive</li>
+<li>data-send</li>
+<li>data-use</li>
+</ul>
+<p>You can learn more about them in
+<a href="/documentation/7/0/0/">the documentation</a>.</p>
+</li>
+<li>
+<p>The JavaScript methods are custom code that
+you write. Each one has the same
+incoming signature with two arguments:
+an event and an element. They look like this:</p>
+</li>
+</ul>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">someFeature</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">element</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> do something with the 
+<span class="line-marker"></span></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> event and element here. 
+<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta function-call js"><span class="variable function js">anotherFeature</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">event</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">element</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> do something with the 
+<span class="line-marker"></span></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> event and element here. 
+<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span></span></code></pre>
+<ul>
+<li>
+<p>Bitty is designed explicitly to work with
+a Progressive Enhancement approach as well
+as general JavaScript loading.</p>
+</li>
+<li>
+<p>Bitty provides for loading external HTML,
+JSON, TXT, and SVG files with find
+and replace feature that make it easy
+to assemble new elements and document
+fragments.</p>
+</li>
+</ul>
+
+  <h2>Next Steps</h2>
+
+  <p>
+    The Getting Started guide is almost
+    ready. In the mean time, you can:
+  </p>
+
+
+  <ul>
+    <li>Check out <a href="documentation/7/0/0/">the documentation</a>.</li>
+    <li>
+      View the code for each of the examples above. They're
+      ordered with the simplest ones first and 
+      get progressively more complicated to demonstrate
+      the basic concepts
+    </li>
+    <li>
+      View <a href="">the test suite</a> where
+      each tests has the source HTML and JavaScript
+      used in the test.
+    </li>
+  </ul>
+      
+
+  
+
+
+
+
+
+
 </main></bitty-7-0>
 </bitty-7-0><script>
   setTimeout(() => { 
@@ -1261,7 +1367,7 @@ window.ToDoList = class {
   }, 1600);
 </script>
 
-<footer class="default-wrapper xsmall-flow xlarge-block-margin">
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
   <div class="text-align-center">
     <a href="https://github.com/alanwsmith/bitty">source</a> ~
     <a href="https://socials.alanwsmith.com/">socials</a> ~

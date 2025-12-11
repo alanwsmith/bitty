@@ -85,7 +85,8 @@ window.BittyUnhide = class {
   <style>
   :root { --load-hider: 1; }
   </style>
-</noscript><script>
+</noscript><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/default-page.js">
+<bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/make-code-blocks.js"><script>
 const t = {
   stars: `<github-stars
   :repo="alanwsmith/bitty"
@@ -112,48 +113,11 @@ window.GitHubStars = class {
   <a href="/documentation/7/0/0/">documentation</a>
 
   <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
-</nav><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/example-wrapper.js">
-
-<style>
-.match-game-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr ;
-}
-
-.tile-button {
-  position: relative;
-  width: 50px;
-  height: 50px;
-}
-
-[data-state=try] {
-  background-color: goldenrod;
-}
-
-[data-state=match] {
-  background-color: green;
-}
-
-[data-state=miss] {
-  background-color: red;
-}
-
-.svg-head {
-  position: absolute;
-  top: 0px;
-  left: 4px;
-  width: 40px;
-  height: auto;
-}
-
-.svg-face {
-  position: absolute;
-  top: 13px;
-  left: 15px;
-  width: 26px;
-  height: auto;
-}
-</style>
+</nav><header class="default-wrapper">
+<hgroup>
+  <h1>Projects</h1>
+</hgroup>
+</header>
 
 <script>
 const matchGameTemplates = {
@@ -308,12 +272,49 @@ window.MatchGame = class {
     }
   }
 };</script>
+<style>
+.match-game-grid {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  gap: 4px;
+}
 
-<div class="hp-example">
-  <div class="hp-example-wrapper">
-    <div class="hp-example-title">
-Match Game    </div>
-    <div class="hp-example-content"><bitty-7-0 data-connect="MatchGame">
+.tile-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+[data-state=try] {
+  background-color: goldenrod;
+}
+
+[data-state=match] {
+  background-color: green;
+}
+
+[data-state=miss] {
+  background-color: red;
+}
+
+.svg-head {
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  width: 40px;
+  height: auto;
+}
+
+.svg-face {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  width: 26px;
+  height: auto;
+}
+</style>
+<main class="default-wrapper default-flow">
+  <h2>Match Game</h2><bitty-7-0 data-connect="MatchGame">
 <div 
   class="match-game-grid" 
   data-init="matchGameGrid"
@@ -321,12 +322,85 @@ Match Game    </div>
 <div 
   data-init="matchGameStatus"
   data-receive="matchGameStatus"></div>
-</bitty-7-0>    </div>
-  </div>
-</div>
+</bitty-7-0>
+  <h2>Notes</h2>
+<h4>Overview</h4>
+<ul>
+<li>
+<p>This is a basic match game. Clicking or tapping on
+a tile turns it over. You choose tiles in pairs.
+Tile sets are completed when you turn over
+two times with the same face on a turn.
+If the second tile doesn't match the
+first, they both turn over and are hidden
+again.</p>
+</li>
+<li>
+<p>You win the game when all the pairs are matched.</p>
+</li>
+</ul>
+<h4>Bitty Details</h4>
+<p>The JavaScript for the game (shown below)
+is mostly about implementing the logic for the game itself.
+It includes tracking which tiles are turned
+over, how many matches there are, how
+many turns have been taken, etc...</p>
+<p>The logic is independent of Bitty. It
+could be used anywhere. The thing
+that Bitty provides is an easy way to
+connect the interactions with the
+individual tiles to the logic. Some
+Bitty specific things to note:</p>
+<ul>
+<li>
+<p>Each tile is made up from a <code>button</code>
+that includes details in custom <code>data-*</code>
+attributes. Each button is created
+using the <code>this.api.makeHTML()</code>
+method.</p>
+<p>Some of the <code>data-*</code> attributes
+are the same for every tile (e.g.
+<code>data-use=&quot;matchGameMakePick&quot;</code>).
+Others, like <code>data-pair=&quot;PAIR_NUM&quot;</code>
+are updated via find/replace
+substitutions with actual
+data when they are created.</p>
+</li>
+<li>
+<p>The <code>data-state</code> attribute on each
+tile holds it's state. The game
+uses that value to determine what
+content populates the tile.</p>
+</li>
+<li>
+<p>The faces are made by combining
+two SVG images: a face and a head.
+The source collections of faces
+and heads are initially loaded
+from remote files with
+<code>this.api.getTXT()</code>.
+When the tiles are created the
+text is turned into an SVG
+with <code>this.api.makeSVG()</code>.</p>
+<p>That approach means the external
+files only need to be downloaded
+once. They can be reused any
+number of times to make new
+SVG elements.</p>
+<p>(Side note, there's no
+technical need for
+the faces and the heads to be
+separate files. That's just
+how the source images I'm
+working with came in.)</p>
+</li>
+</ul>
 
-<h2>HTML</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>MatchGame<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+  <h2>The Code</h2>
+  <p>Here's the source code for the game</p>
+
+  <h3>HTML</h3>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>MatchGame<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
 <span class="line-marker"></span>  <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">match-game-grid</span><span class="punctuation definition string end html">&quot;</span></span></span> 
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameGrid<span class="punctuation definition string end html">&quot;</span></span></span>
@@ -335,9 +409,8 @@ Match Game    </div>
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameStatus<span class="punctuation definition string end html">&quot;</span></span></span>
 <span class="line-marker"></span>  <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>matchGameStatus<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-
-<h2>JavaScript</h2>
-<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">matchGameTemplates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+  <h3>JavaScript</h3>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">matchGameTemplates</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="meta object-literal key js">tile</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
 <span class="line-marker"></span>&lt;button 
 <span class="line-marker"></span>  class=&quot;tile-button&quot;
@@ -490,15 +563,16 @@ Match Game    </div>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
 
-<h2>Notes</h2>
 
+</main>
+</bitty-7-0>
 </bitty-7-0><script>
   setTimeout(() => { 
     document.documentElement.style.setProperty("--load-hider", "1");
   }, 1600);
 </script>
 
-<footer class="default-wrapper xsmall-flow xlarge-block-margin">
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
   <div class="text-align-center">
     <a href="https://github.com/alanwsmith/bitty">source</a> ~
     <a href="https://socials.alanwsmith.com/">socials</a> ~

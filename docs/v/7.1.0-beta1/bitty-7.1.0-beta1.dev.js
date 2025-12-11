@@ -1,4 +1,4 @@
-const version = [7, 0, 0];
+const version = [7, 1, 0];
 
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
@@ -172,9 +172,20 @@ class BittyJs extends HTMLElement {
       el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
     }
 
-    // TODO: Look at removing this in v8 and
-    // just using `this.api` which is
-    // the bitty parent.
+    // TODO: Verify the behavior of this when
+    // the incoming element is a bitty tag.
+    // If the tag is nested, it should return
+    // the parent bitty tag. If the tag isn't
+    // nested it should return undefined.
+    // This can then be used to do things
+    // like checking for `bittyready` signals
+    // to determine when everything is loaded
+    // by having parent bitty elements collect
+    // the `bittyready` signals from only
+    // their children and then create thier
+    // own events which go up to the root
+    // for a single element to collect and
+    // count.
     el.bittyParent = this.getBittyParent(el);
 
     el.prop = (x) => {
@@ -224,6 +235,7 @@ class BittyJs extends HTMLElement {
     // so this.api.forward() can change .sendPayload
     // without affecting the original dataset.
     if (ev.sender.dataset && ev.sender.dataset.send) {
+      //** internal */
       ev.sendPayload = ev.sender.dataset.send;
     }
 
@@ -395,11 +407,13 @@ class BittyJs extends HTMLElement {
       if (
         ev.type === "bittylocaltrigger"
       ) {
+        //** internal */
         ev.sendPayload = ev.signal;
         await this.processEvent(ev);
       } else if (
         ev.type === "bittytrigger"
       ) {
+        //** internal */
         ev.sendPayload = ev.signal;
         await this.processEvent(ev);
       } else {
@@ -423,6 +437,7 @@ class BittyJs extends HTMLElement {
           }
         }
         if (ev.sender.dataset.send) {
+          //** internal */
           ev.sendPayload = ev.sender.dataset.send;
           await this.processEvent(ev);
         }

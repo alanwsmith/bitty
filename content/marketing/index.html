@@ -1,0 +1,69 @@
+[!- extends "_wrappers/7/0/0/main-wrapper.html" -!] 
+
+[!- block bittyOpenTag -!]
+[!- include wrapper_root + "includes/bitty-open-tags.html" -!]
+[!- endblock -!]
+
+[!- block bittyCloseTag -!]
+[!- include wrapper_root + "includes/bitty-close-tags.html" -!]
+[!- endblock -!]
+
+[! block header !]
+<header class="default-wrapper">
+<hgroup class="default-wrapper">
+  <h1>Marketing Sandbox</h1>
+</hgroup>
+</header>
+[! endblock !]
+
+[!- block main -!]
+<main class="default-wrapper default-flow">
+
+  <p>Work in progress for marketing content.</p>
+
+
+  [! for f in files !]
+  [! if 
+    f.folder_parts[0] == "marketing" 
+    and
+    f.folder_parts[1] == "content" 
+  !]
+  <details><summary>[@ f.stem @]</summary>
+  [! filter markdown|safe !]
+    [! include "marketing/content/" + f.name !]
+  [! endfilter !]
+  </details>
+  [! endif !]
+  [! endfor !]
+
+[#
+  <details><summary>Target Audience</summary>
+  <div class="small-width default-flow">
+  [! filter markdown|safe !]
+[! include "marketing/content/target-audience.md" !]
+  [! endfilter !]
+  </div>
+  </details>
+
+  <details><summary>Intros</summary>
+  <div class="small-width default-flow">
+  [! filter markdown|safe !]
+[! include "marketing/content/intros.md" !]
+  [! endfilter !]
+  </div>
+  </details>
+
+  <details><summary>Why</summary>
+  <div class="small-width default-flow">
+  [! filter markdown|safe !]
+[! include "marketing/content/intros.md" !]
+  [! endfilter !]
+  </div>
+  </details>
+#]
+
+
+
+</main>
+[!- endblock !]
+

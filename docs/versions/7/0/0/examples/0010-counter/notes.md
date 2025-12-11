@@ -1,3 +1,5 @@
+## Notes
+
 - This example shows how to keep track of 
 values (aka maintaining state). 
 

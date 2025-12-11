@@ -60,7 +60,20 @@ window.BittyUnhide = class {
     this.api.setProp("--load-hider", 1);
   }
 }
-</script>  </head>
+</script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty - a web tool for interesting pages</title>
+<meta property="og:title" content="bitty - a web tool for interesting pages" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image-4.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />  </head>
   <body>
 <noscript>
   <p>
@@ -107,8 +120,222 @@ window.GitHubStars = class {
 </header>
 <main class="default-wrapper default-flow">
 <p>
-  <strong>Bitty</strong> is a simple tool for making things on the web. 
-  It comes in the form of an HTML tag. When you wrap other
+  <strong>Bitty</strong> is a tool for making things on the web. For example, 
+    this match game:
+</p>
+
+<style>.match-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.tile-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+[data-state=try] {
+  background-color: goldenrod;
+}
+
+[data-state=match] {
+  background-color: green;
+}
+
+[data-state=miss] {
+  background-color: red;
+}
+
+.svg-head {
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  width: 40px;
+  height: auto;
+}
+
+.svg-face {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  width: 26px;
+  height: auto;
+}
+</style>
+
+<script>const matchGameTemplates = {
+  tile: `
+<button 
+  class="tile-button"
+  data-state="hide" 
+  data-pair="PAIR_NUM" 
+  data-index="INDEX"
+  data-use="matchGameMakePick"
+  data-receive="matchGameUpdateTile"
+>?</button>`,
+  winner:
+    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
+};
+
+const sourceHeads = [];
+const sourceFaces = [];
+
+function shuffleArray(array) {
+  let currentIndex = array.length;
+  let randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+}
+
+window.MatchGame = class {
+  #tries = [];
+  #turns = 0;
+  #matchCount = 0;
+  #tileCount = 16;
+  #heads = [];
+  #faces = [];
+
+  async bittyInit() {
+    for (let i = 0; i < this.#tileCount / 2; i += 1) {
+      const headURL = `/versions/7/0/0/svgs/heads/${i}.svg`;
+      const headResponse = await this.api.getTXT(headURL);
+      if (headResponse.value) {
+        sourceHeads.push(headResponse.value);
+      }
+      const faceURL = `/versions/7/0/0/svgs/faces/${i}.svg`;
+      const faceResponse = await this.api.getTXT(faceURL);
+      if (faceResponse.value) {
+        sourceFaces.push(faceResponse.value);
+      }
+    }
+  }
+
+  matchGameGrid(ev, el) {
+    this.#turns = 0;
+    this.#matchCount = 0;
+    this.#heads = [];
+    this.#faces = [];
+    const nums = [];
+    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
+      nums.push(indx);
+      nums.push(indx);
+    });
+    shuffleArray(nums);
+    el.replaceChildren();
+    [...Array(this.#tileCount)].forEach((_, index) => {
+      const num = nums.pop();
+      const subs = [
+        ["INDEX", index],
+        ["PAIR_NUM", num],
+      ];
+      el.appendChild(
+        this.api.makeHTML(matchGameTemplates.tile, subs),
+      );
+      const head = this.api.makeSVG(sourceHeads[num]);
+      head.classList.add("svg-head");
+      this.#heads.push(head);
+      const face = this.api.makeSVG(sourceFaces[num]);
+      face.classList.add("svg-face");
+      this.#faces.push(face);
+    });
+    this.api.trigger("matchGameStatus");
+  }
+
+  matchGameMakePick(_ev, el) {
+    if (
+      el.prop("state") === "hide" || el.prop("state") === "miss"
+    ) {
+      el.dataset.state = "try";
+      this.#tries.push(el.propToInt("pair"));
+    }
+    this.api.trigger(`
+      matchGameUpdateTile
+      matchGameClearTries
+      matchGameStatus
+    `);
+  }
+
+  matchGameUpdateTile(_ev, el) {
+    if (
+      this.#tries.length === 2 &&
+      this.#tries.includes(el.propToInt("pair"))
+    ) {
+      if (
+        this.#tries[0] === this.#tries[1]
+      ) {
+        el.dataset.state = "match";
+        this.#matchCount += 1;
+      } else {
+        if (el.prop("state") === "try") {
+          el.dataset.state = "miss";
+        }
+      }
+    } else {
+      if (el.prop("state") === "miss") {
+        el.dataset.state = "hide";
+      }
+    }
+    if (
+      el.prop("state") === "hide"
+    ) {
+      el.innerHTML = "?";
+    } else {
+      el.replaceChildren();
+      el.appendChild(this.#heads[el.propToInt("index")]);
+      el.appendChild(this.#faces[el.propToInt("index")]);
+    }
+  }
+
+  matchGameClearTries(_ev, _el) {
+    if (this.#tries.length === 2) {
+      this.#turns += 1;
+      this.#tries = [];
+    }
+  }
+
+  matchGameStatus(_ev, el) {
+    if (this.#turns === 0) {
+      el.innerHTML = "Ready";
+    } else {
+      if (this.#matchCount === this.#tileCount) {
+        const subs = [
+          ["TURNS", this.#turns],
+        ];
+        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
+        el.replaceChildren(winner);
+      } else {
+        el.innerHTML = `Turns: ${this.#turns}`;
+      }
+    }
+  }
+};</script>
+
+<div class="xsmall-width accent-border default-padding default-border-radius">
+  <div class="home-page-example-title faded-accent-bottom-border default-bottom-margin">Match Game</div>
+  <div class="home-page-example-content"><bitty-7-0 data-connect="MatchGame">
+<div 
+  class="match-game-grid" 
+  data-init="matchGameGrid"
+  data-receive="matchGameGrid"></div>
+<div 
+  data-init="matchGameStatus"
+  data-receive="matchGameStatus"></div>
+</bitty-7-0></div>
+  <div class="home-page-example-code-link xlarge-top-margin text-align-right"><a href="versions&#x2f;7&#x2f;0&#x2f;0&#x2f;projects&#x2f;0080-match-game&#x2f;index.html">view code</a>
+  </div>
+</div>
+
+
+
+  <p>
+  Bitty comes in the form of an HTML tag. When you wrap other
   tags in it, Bitty makes them interactive. For example, this button:
 </p>
 
@@ -143,10 +370,10 @@ window.BittyClass = class {
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
 <p>Clicking the button changes it to show the current date and time.</p>
 
-<h2>Some Examples</h2>
+<h2>Some More Examples</h2>
 
-<p>Here's a few other example of what you can do 
-  with <strong>Bitty</strong>. Each one has
+<p>Here's some other things 
+  you can do with Bitty. Each one has
 a link to the code that make it work.</p>
 
 
@@ -691,213 +918,6 @@ window.GetWeather = class {
   <div class="home-page-example-code-link xlarge-top-margin text-align-right">
     <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0&#x2f;examples&#x2f;0065-get-weather&#x2f;">view code</a>
   </div>
-</div><style>.match-game-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr ;
-}
-
-.tile-button {
-  position: relative;
-  width: 50px;
-  height: 50px;
-}
-
-[data-state=try] {
-  background-color: goldenrod;
-}
-
-[data-state=match] {
-  background-color: green;
-}
-
-[data-state=miss] {
-  background-color: red;
-}
-
-.svg-head {
-  position: absolute;
-  top: 0px;
-  left: 4px;
-  width: 40px;
-  height: auto;
-}
-
-.svg-face {
-  position: absolute;
-  top: 13px;
-  left: 15px;
-  width: 26px;
-  height: auto;
-}
-</style>
-
-<script>const matchGameTemplates = {
-  tile: `
-<button 
-  class="tile-button"
-  data-state="hide" 
-  data-pair="PAIR_NUM" 
-  data-index="INDEX"
-  data-use="matchGameMakePick"
-  data-receive="matchGameUpdateTile"
->?</button>`,
-  winner:
-    `<div>Turns: TURNS - Winner!<br /><button data-send="matchGameGrid">Play Again</button></div>`,
-};
-
-const sourceHeads = [];
-const sourceFaces = [];
-
-function shuffleArray(array) {
-  let currentIndex = array.length;
-  let randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-}
-
-window.MatchGame = class {
-  #tries = [];
-  #turns = 0;
-  #matchCount = 0;
-  #tileCount = 16;
-  #heads = [];
-  #faces = [];
-
-  async bittyInit() {
-    for (let i = 0; i < this.#tileCount / 2; i += 1) {
-      const headURL = `/versions/7/0/0/svgs/heads/${i}.svg`;
-      const headResponse = await this.api.getTXT(headURL);
-      if (headResponse.value) {
-        sourceHeads.push(headResponse.value);
-      }
-      const faceURL = `/versions/7/0/0/svgs/faces/${i}.svg`;
-      const faceResponse = await this.api.getTXT(faceURL);
-      if (faceResponse.value) {
-        sourceFaces.push(faceResponse.value);
-      }
-    }
-  }
-
-  matchGameGrid(ev, el) {
-    this.#turns = 0;
-    this.#matchCount = 0;
-    this.#heads = [];
-    this.#faces = [];
-    const nums = [];
-    [...Array(this.#tileCount / 2)].forEach((i, indx) => {
-      nums.push(indx);
-      nums.push(indx);
-    });
-    shuffleArray(nums);
-    el.replaceChildren();
-    [...Array(this.#tileCount)].forEach((_, index) => {
-      const num = nums.pop();
-      const subs = [
-        ["INDEX", index],
-        ["PAIR_NUM", num],
-      ];
-      el.appendChild(
-        this.api.makeHTML(matchGameTemplates.tile, subs),
-      );
-      const head = this.api.makeSVG(sourceHeads[num]);
-      head.classList.add("svg-head");
-      this.#heads.push(head);
-      const face = this.api.makeSVG(sourceFaces[num]);
-      face.classList.add("svg-face");
-      this.#faces.push(face);
-    });
-    this.api.trigger("matchGameStatus");
-  }
-
-  matchGameMakePick(_ev, el) {
-    if (
-      el.prop("state") === "hide" || el.prop("state") === "miss"
-    ) {
-      el.dataset.state = "try";
-      this.#tries.push(el.propToInt("pair"));
-    }
-    this.api.trigger(`
-      matchGameUpdateTile
-      matchGameClearTries
-      matchGameStatus
-    `);
-  }
-
-  matchGameUpdateTile(_ev, el) {
-    if (
-      this.#tries.length === 2 &&
-      this.#tries.includes(el.propToInt("pair"))
-    ) {
-      if (
-        this.#tries[0] === this.#tries[1]
-      ) {
-        el.dataset.state = "match";
-        this.#matchCount += 1;
-      } else {
-        if (el.prop("state") === "try") {
-          el.dataset.state = "miss";
-        }
-      }
-    } else {
-      if (el.prop("state") === "miss") {
-        el.dataset.state = "hide";
-      }
-    }
-    if (
-      el.prop("state") === "hide"
-    ) {
-      el.innerHTML = "?";
-    } else {
-      el.replaceChildren();
-      el.appendChild(this.#heads[el.propToInt("index")]);
-      el.appendChild(this.#faces[el.propToInt("index")]);
-    }
-  }
-
-  matchGameClearTries(_ev, _el) {
-    if (this.#tries.length === 2) {
-      this.#turns += 1;
-      this.#tries = [];
-    }
-  }
-
-  matchGameStatus(_ev, el) {
-    if (this.#turns === 0) {
-      el.innerHTML = "Ready";
-    } else {
-      if (this.#matchCount === this.#tileCount) {
-        const subs = [
-          ["TURNS", this.#turns],
-        ];
-        const winner = this.api.makeHTML(matchGameTemplates.winner, subs);
-        el.replaceChildren(winner);
-      } else {
-        el.innerHTML = `Turns: ${this.#turns}`;
-      }
-    }
-  }
-};</script>
-
-<div class="home-page-example">
-  <div class="home-page-example-title faded-accent-bottom-border default-bottom-margin">Match Game</div>
-  <div class="home-page-example-content"><bitty-7-0 data-connect="MatchGame">
-<div 
-  class="match-game-grid" 
-  data-init="matchGameGrid"
-  data-receive="matchGameGrid"></div>
-<div 
-  data-init="matchGameStatus"
-  data-receive="matchGameStatus"></div>
-</bitty-7-0></div>
-  <div class="home-page-example-code-link xlarge-top-margin text-align-right">
-    <a href="&#x2f;versions&#x2f;7&#x2f;0&#x2f;0&#x2f;examples&#x2f;0080-match-game&#x2f;">view code</a>
-  </div>
 </div><style>[data-connect=NameTagMaker] > :where(:not(:first-child)) {
   margin-top: var(--flow-space, var(--default-flow));
 }
@@ -1233,12 +1253,6 @@ window.ToDoList = class {
   class.
 </p>
 
-<h3>A Few Details</h3>
-
-<p>
-  There are, of course, more features. This site
-  covers them. 
-</p>
 
 </main></bitty-7-0><script>
   setTimeout(() => { 

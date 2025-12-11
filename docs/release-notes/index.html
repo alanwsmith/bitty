@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --load-hider: 0;
+}
+
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+}
+
+:root {
+  --background-color: var(--switch--background-color, var(--light--background-color));
+  --default-color: var(--switch--default-color, var(--light--default-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--switch--background-color, var(--dark--background-color));
+    --default-color: var(--switch--default-color, var(--dark--default-color));
+  }
+}</style>
+
+<script>
+function loadThemeProps() {
+  const data = localStorage.getItem("themeProps");
+  if (data) {
+    data.props.forEach((prop) => {
+    });
+  }
+}
+loadThemeProps();</script><style>
+html {
+  background-color: var(--background-color);
+  color: var(--default-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--default-color);
+  opacity: var(--load-hider);
+}
+</style>
+    <link rel="stylesheet" href="/styles/7/0/0//all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/7/0/0//custom.css" />
+
+<script>
+window.BittyUnhide = class {
+  bittyReady() {
+    this.api.setProp("--load-hider", 1);
+  }
+}
+</script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty - a web tool for interesting pages</title>
+<meta property="og:title" content="bitty - a web tool for interesting pages" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image-5.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />  </head>
+  <body>
+<noscript>
+  <p>
+    Bitty is a web component that requires JavaScript
+    which is not available on this page. You'll need
+    to switch to a browser that has it enabled
+    to check things out. 
+  </p>
+  <style>
+  :root { --load-hider: 1; }
+  </style>
+</noscript><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/default-page.js"><script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--accent-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    const url = new URL(window.location.href);
+    if (url.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  <a href="/">bitty</a>
+
+  <a href="/unit-tests/7/0/0/">tests</a>
+
+  <a href="/documentation/7/0/0/">documentation</a>
+
+  <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
+</nav><hgroup>
+  <h1>Release Notes</h1>
+  <div class="subtitle">a tool for interesting pages</div>
+</hgroup>
+
+<h3>Version: 7.0.0</h3>
+<p>Dec. 10, 2025</p>
+<ul>
+<li>No changes since <code>7.0.0-rc2</code></li>
+</ul>
+
+<h3>Version: 7.0.0-rc2</h3>
+<p>Dec. 7, 2025</p>
+<p>This change primarily moves <code>.target</code> and
+<code>.sender</code> items from <code>el</code> to <code>ev</code>.
+And moves the sending element into
+<code>ev.sender</code> with extra the features added.</p>
+<ul>
+<li>
+<p>Renamed <code>ev.val</code> to <code>ev.value</code></p>
+</li>
+<li>
+<p>Renamed <code>ev.valInt</code> to <code>ev.intValue</code></p>
+</li>
+<li>
+<p>Renamed <code>ev.valFloat</code> to <code>ev.floatValue</code></p>
+</li>
+<li>
+<p>Renamed <code>ev.ds</code> to <code>ev.prop</code></p>
+</li>
+<li>
+<p>Renamed <code>ev.dsInt</code> to <code>ev.propToInt</code></p>
+</li>
+<li>
+<p>Renamed <code>ev.dsFloat</code> to <code>ev.propToFloat</code></p>
+</li>
+<li>
+<p>Added <code>ev.sender.value</code></p>
+</li>
+<li>
+<p>Added <code>ev.sender.valueToInt</code></p>
+</li>
+<li>
+<p>Added <code>ev.sender.valueToFloat</code></p>
+</li>
+<li>
+<p>Moved <code>el.targetBittyId</code> to <code>ev.bittyId</code></p>
+</li>
+<li>
+<p>Renamed <code>el.ds</code> to <code>el.prop</code></p>
+</li>
+<li>
+<p>Renamed <code>el.dsInt</code> to <code>el.propToInt</code></p>
+</li>
+<li>
+<p>Renamed <code>el.dsFloat</code> to <code>el.propToFloat</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetDs()</code> in favor of existing
+<code>ev.prop()</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetDsInt()</code> in favor of existing
+<code>ev.propToInt()</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetDsFloat()</code> in favor of existing
+<code>ev.propToFloat()</code></p>
+</li>
+<li>
+<p>Moved <code>el.senderBittyId</code> to <code>ev.sender.bittyId</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderDs()</code> in favor of existing
+<code>ev.sender.prop()</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderDsInt()</code> in favor of existing
+<code>ev.sender.propToInt()</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderDsFloat()</code> in favor of existing
+<code>ev.sender.propToFloat()</code></p>
+</li>
+<li>
+<p>Removed <code>el.val</code> in favor of the standard
+<code>el.value</code></p>
+</li>
+<li>
+<p>Renamed <code>el.valInt</code> to <code>el.valueToInt</code></p>
+</li>
+<li>
+<p>Renamed <code>el.valFloat</code> to <code>el.valueToFloat</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetVal</code> in favor of
+<code>ev.value</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetValInt</code> in favor of
+<code>ev.valueToInt</code></p>
+</li>
+<li>
+<p>Removed <code>el.targetValFloat</code> in favor of
+<code>ev.valueToFloat</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderVal</code> in favor of
+<code>ev.sender.value</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderValInt</code> in favor of
+<code>ev.sender.valueToInt</code></p>
+</li>
+<li>
+<p>Removed <code>el.senderValueFloat</code> in favor of
+<code>ev.sender.valueToFloat</code></p>
+</li>
+<li>
+<p>Renamed <code>el.matchTargetDs</code> to <code>el.propMatchesTarget</code></p>
+</li>
+<li>
+<p>Renamed <code>el.matchSenderDs</code> to <code>el.propMatchesSender</code></p>
+</li>
+<li>
+<p>Remove <code>el.bittyParentBittyId</code> in favor of using <code>this.api.dataset.bittyid</code>
+directly.</p>
+</li>
+<li>
+<p>Fixed bug where <code>el.isSender</code> was checking against <code>el.sender</code>
+instead of <code>ev.sender</code>.</p>
+</li>
+<li>
+<p>Removed deprecated <code>el.sender</code> code.</p>
+</li>
+<li>
+<p>Fixed bug where forwared signals required a receiver.
+They now fire once if there isn't a receiver the same
+way <code>data-send</code> works.</p>
+</li>
+<li>
+<p>The <code>bitty</code> element is used as the
+<code>ev.sender</code> on a <code>this.api.tigger(SIGNAL)</code> call
+(previously, a <code>null</code> value was sent)</p>
+</li>
+<li>
+<p>Removed <code>el.bittyParentBittyId</code>.
+Use <code>this.api.bittyId</code> instead.
+(You can also use<code>el.bittyParent.bittyId</code>
+in version 7, but the <code>el.bittyParent</code>
+property will likely be removed in
+v8 in favor of using <code>this.api</code> directly.</p>
+</li>
+<li>
+<p>NOTE <code>el.bittyParent</code> is in v7, but will likely
+be removed in v8 in favor of using <code>this.api</code>
+(which is the bitty element) directly. I
+recommend using <code>this.api</code> starting now.</p>
+</li>
+<li>
+<p>Refactored to use centralized
+processEvent method.</p>
+</li>
+</ul>
+
+<h3>Version: 7.0.0-rc1</h3>
+<p>This update is a largely a set of API refinements to
+make things more obvious and consistent.</p>
+<p>It also adds <code>data-use</code> which allows an element
+to send a signal that only it uses.</p>
+<ul>
+<li>
+<p>Improved error messages with more details
+when connections can't be made.</p>
+</li>
+<li>
+<p>Renamed the <code>bitty-#.#.#.min.js</code> file to
+<code>bitty-#.#.#.js</code> to highlight that it's the
+one that should be used in production.</p>
+</li>
+<li>
+<p>Renamed the <code>bitty-#.#.#.full.js</code> file
+to <code>bitty-#.#.#.dev.js</code> for clarity that it's
+the source code and not what should be used
+in production.</p>
+</li>
+<li>
+<p>TODO: Added <code>this.api.makeSVG</code> which takes a
+text string and turns it into an SVG.</p>
+</li>
+<li>
+<p>Moved <code>bittyInit</code> back to inline instead
+of running as an event to allow proper
+<code>async/await</code> functionality.</p>
+</li>
+<li>
+<p>Moved <code>bittyReady</code> back to inline instead
+of running as an event to allow proper
+<code>async/await</code> functionality.</p>
+</li>
+<li>
+<p>Added <code>data-use</code> which sends a signal
+from an element which is only processed by
+the element itself (e.g. if there are several
+elements with the same <code>data-use</code> or <code>data-send</code>
+values the other aren't processed). This
+means you don't have to check <code>.isSender</code> or
+<code>isTarget</code> if you don't need to update other
+elements from a signal. (You'd still need
+them for doing different things when
+every element needs to be updated differently
+depending on if it's the sender/target or not.)</p>
+<p>The <code>data-use</code> attribute picks up events
+from child element the same way <code>data-send</code>
+does.</p>
+</li>
+<li>
+<p>Moved <code>ev.sender</code> to <code>el.sender</code> The sender
+element is no longer appended
+to the event. It's added to the element instead
+so that all general usage can be done through
+the element (e.g. <code>el</code>) argument.</p>
+</li>
+<li>
+<p>Renamed <code>el.getString(KEY)</code> to <code>el.ds(KEY)</code></p>
+</li>
+<li>
+<p>Renamed <code>el.getInt(KEY)</code> to <code>el.dsInt(KEY)</code></p>
+</li>
+<li>
+<p>Renamed <code>el.getFloat(KEY)</code> to <code>el.dsFloat(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.getString(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetDs(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.getInt(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetDsInt(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.getFloat(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetDsFloat(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.stringValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetVal(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.intValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetValInt(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.target.floatValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.targetValFloat(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.getString(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderDs(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.getInt(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderDsInt(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.getFloat(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderDsFloat(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.stringValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderVal(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.intValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderValInt(KEY)</code></p>
+</li>
+<li>
+<p>Removed <code>ev.sender.floatValue(KEY)</code></p>
+</li>
+<li>
+<p>Added: <code>el.senderValFloat(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>el.val</code></p>
+</li>
+<li>
+<p>Added <code>el.valInt</code></p>
+</li>
+<li>
+<p>Added <code>el.valFloat</code></p>
+</li>
+<li>
+<p>Added <code>el.targetBittyId</code></p>
+</li>
+<li>
+<p>Added <code>el.senderBittyId</code></p>
+</li>
+<li>
+<p>Renamed <code>el.bittyParentId</code> to <code>el.bittyParentBittyId</code> to be
+consistent with other <code>...BittyId</code> properties.</p>
+</li>
+<li>
+<p>Renamed <code>el.matchTarget(KEY)</code> to <code>el.matchTargetDs(KEY)</code></p>
+</li>
+<li>
+<p>Renamed <code>el.matchSender(KEY)</code> to <code>el.matchSenderDs(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>ev.val</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>ev.valInt</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>ev.valFloat</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>ev.ds(KEY)</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>ev.dsInt(KEY)</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>ev.dsFloat(KEY)</code>
+these are for when a method is run without a receiver and
+the target is an input.</p>
+</li>
+<li>
+<p>Added <code>el.ds(KEY)</code> which is an alias to <code>el.dataset.key</code>
+which gets returns as a string.</p>
+</li>
+<li>
+<p>Added <code>el.senderDs(KEY)</code> which is an alias to <code>el.sender.dataset.key</code>
+which gets returns as a string.</p>
+</li>
+<li>
+<p>Added <code>el.targetDs(KEY)</code> which is an alias to <code>ev.sender.dataset.key</code>
+which gets returns as a string.</p>
+</li>
+<li>
+<p>Improved error message when <code>data-connect</code> doesn't
+make a connection.</p>
+</li>
+</ul>
+
+<h3>Version: 6.0.0-rc3</h3>
+<p>DATE TBD</p>
+<ul>
+<li>
+<p>Added <code>event.target.stringValue</code> the
+returns the <code>event.target.value</code> as a string.
+(this is effectively an alias that's only here
+to keep the mental model with <code>.intValue</code> and
+<code>.floatValue</code> consistent)</p>
+</li>
+<li>
+<p>Added <code>event.target.intValue</code> the
+returns the <code>event.target.value</code> as an
+integer.</p>
+</li>
+<li>
+<p>Added <code>event.target.floatValue</code> the
+returns the <code>event.target.value</code> as an
+float.</p>
+</li>
+<li>
+<p>Added <code>event.sender.stringValue</code> the
+returns the <code>event.sender.value</code> as a string.
+(this is effectively an alias that's only here
+to keep the mental model with <code>.intValue</code> and
+<code>.floatValue</code> consistent)</p>
+</li>
+<li>
+<p>Added <code>event.sender.intValue</code> the
+returns the <code>event.sender.value</code> as an
+integer.</p>
+</li>
+<li>
+<p>Added <code>event.sender.floatValue</code> the
+returns the <code>event.sender.value</code> as an
+float.</p>
+</li>
+<li>
+<p>Added <code>event.target.getString(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>event.target.getInt(KEy)</code></p>
+</li>
+<li>
+<p>Added <code>event.target.getFloat(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>event.sender.getString(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>event.sender.getInt(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>event.sender.getFloat(KEY)</code></p>
+</li>
+<li>
+<p>Added <code>el.matchTarget(KEY)</code>
+Note that there is no string/int/float because
+the values are always stored as strings
+so the comparison doesn't have to convert
+them since it would just be the same
+thing anyway</p>
+</li>
+<li>
+<p>Added <code>el.matchSender(KEY)</code>
+Note that there is no string/int/float because
+the values are always stored as strings
+so the comparison doesn't have to convert
+them since it would just be the same
+thing anyway</p>
+</li>
+<li>
+<p>Remove setting <code>style=&quot;display: block;&quot;</code>.
+Leaving this as a decision at implementation time.</p>
+</li>
+</ul>
+
+<h3>Version: 6.0.0-rc2</h3>
+<p>Nov. 25, 2025</p>
+<ul>
+<li>
+<p>Updated the <code>data-connect</code> process
+so that URLs that start with a <code>/</code>
+get updated with the origin of the
+<code>window.location.href</code> to avoid issues
+when using CDNs for the <code>bitty-#.#.#...</code>
+file.</p>
+<p>At this time, relative URLs that start
+with a <code>.</code> are not yet supported.</p>
+</li>
+</ul>
+
+<h3>Version 6.0.0-rc1</h3>
+<p>Nov. 24, 2025</p>
+<ul>
+<li>
+<p>Updated license to CC0 for the public
+domain.</p>
+</li>
+<li>
+<p>Added <code>this.api.getBittyParent(el)</code> that
+returns the bitty element that contains
+the <code>el</code> element. If the <code>el</code> element
+is a bitty tag it returns itself.</p>
+</li>
+<li>
+<p>Added <code>data-bittyid</code> attrs to
+everything so they can be used for
+comparisons.</p>
+</li>
+<li>
+<p>Events are captured from every
+element (not just those with <code>data-send</code> and
+<code>data-receive</code>). Events bubble up
+the document where bitty looks for
+them on the window object.</p>
+</li>
+<li>
+<p>For the bitty events, the
+target that the event happened on and then
+the <code>sender</code> that is the element that
+had the <code>data-send</code> on it are both
+included. (e.g. <code>event.target</code> is where
+the event happened at <code>event.sender</code> i
+the element with <code>data-send</code> that sent
+the signal. The <code>event.target</code> and
+<code>event.sender</code> will be the same element
+if the <code>event.target</code> is what had
+the <code>data-send</code> attribute. Otherwise,
+they are different.</p>
+</li>
+<li>
+<p>Added <code>el.bittyParent</code> that
+contains a reference to the bitty parent
+element</p>
+</li>
+<li>
+<p>Added <code>el.bittyParentId</code> that
+contains a reference to the bitty parent
+element's data-bittyid</p>
+</li>
+<li>
+<p>Removed <code>this.api.match()</code> in
+favor of <code>el.isTarget</code> and <code>el.isSender</code>.
+(<code>this.api.matchTarget()</code> and <code>this.api.matchSender()</code>
+existed briefly but were also removed
+as part of the transition to <code>el.isTarget</code>
+and <code>el.isSender</code>.</p>
+</li>
+<li>
+<p>Added <code>el.isTarget()</code> which is boolean
+that indicates if the element is
+the one that generated the event.</p>
+</li>
+<li>
+<p>Added <code>el.isSender()</code> which is boolean
+that indicates if the element is
+the one with <code>data-send</code> that sent
+the event (which may or may not
+be the same as the target identified
+by <code>el.isTarget()</code></p>
+</li>
+<li>
+<p>Events bubble up until they hit
+an element with a <code>data-send</code> attribute.
+(e.g. you can click an element
+that doesn't have a <code>data-send</code> attribute
+that's inside a div that does and the
+one from the div will fire)</p>
+</li>
+<li>
+<p>Renamed <code>data-send</code> to <code>data-init</code> on the
+<code>&lt;bitty-#-#&gt;</code> tags to match <code>data-init</code>
+behavior on child elements (i.e. only fires
+once when the element is initialized)</p>
+</li>
+<li>
+<p><code>data-send</code> attributes
+on <code>&lt;bitty-#-#&gt;</code> elements now send
+events (e.g. from clicks) the same
+way they do for child elements.</p>
+</li>
+<li>
+<p>Converted <code>bitty...</code> pseudo-events to
+classes extended from <code>Event</code>. All events
+are set to bubble up the document.</p>
+</li>
+<li>
+<p>Created <code>this.api.localTrigger(SIGNAL_STRING)</code>
+that only sends the signal to the local element
+without bubbling and without descending into
+child bitty elements.</p>
+</li>
+<li>
+<p>Added <code>el.getString(KEY)</code> which
+goes up the DOM looking for a matching
+<code>dataset.KEY</code> that's a String.</p>
+</li>
+<li>
+<p>Added <code>el.getInt(KEY)</code> which
+goes up the DOM looking for a matching
+<code>dataset.KEY</code> that's an Int.</p>
+</li>
+<li>
+<p>Added <code>el.getFloat(KEY)</code> which
+goes up the DOM looking for a matching
+<code>dataset.KEY</code> that's a Float.</p>
+</li>
+<li>
+<p>Removed <code>bittyCatch()</code> functionality.
+It's not necessary now that all events
+are examined by this listener without
+extra filtering.</p>
+</li>
+<li>
+<p>Removed adopted stylesheet to set
+`` to block. This saves
+loading duplicate stylesheets for each
+instance.</p>
+<p>Using <code>thie.style.display</code> to set
+element to block. That way it can be changed
+easier by editing the style directly (e.g.
+by updated the style in the <code>bittyInit</code>
+function)</p>
+</li>
+<li>
+<p>Cleaned up tests</p>
+</li>
+</ul>
+
+<h3>Version: 5.1.0-rc6</h3>
+<p>Nov. 22, 2025</p>
+<ul>
+<li>Fixed bug where Text Nodes didn't
+work properly with replaceAll in
+<code>this.api.makeHTML()</code>, etc...</li>
+</ul>
+
+<h3>Version 5.1.0-rc5</h3>
+<p>Nov. 22, 2025</p>
+<ul>
+<li>
+<p>Set up <code>this.api.trigger(SIGNAL)</code> to send event
+that bubbles up to the document root</p>
+</li>
+<li>
+<p>Set up <code>this.api.forward(EVENT, SIGNAL)</code> to send event
+that bubbles up to the document root</p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added on
+connectedCallback instead of at each event
+call.</p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.makeElement()</code></p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.getElement()</code></p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.makeHTML()</code></p>
+</li>
+<li>
+<p>Set up so <code>data-bittyid</code> attrs are added
+on <code>this.api.getHTML()</code></p>
+</li>
+<li>
+<p>The net result is the <code>data-bittyid</code>
+updates is that anything added with the <code>this.api.WHATEVER</code>
+that has a <code>data-send</code>, <code>data-receive</code>,
+or <code>data-init</code>, will have a <code>data-bittyid</code>
+added. Anything
+that's added outside the API won't, event
+if it has one of the bitty <code>data-*</code>
+attributes.</p>
+<p>(The prior behavior was to look query
+for elements with <code>data-*</code> attrs
+on every event. This was the first
+approach to deal with mutation
+observer having a race condition
+when trying to add them. Doing
+everything explicitly through the
+API prevents thrashing for things like
+moving input range sliders)</p>
+</li>
+</ul>
+
+<h3>Version: 5.1.0-rc4</h3>
+<p>Nov. 21, 2025</p>
+<ul>
+<li>Refactor to process elements with
+<code>data-receive</code> directly instead of
+adding them to a list that gets processed
+as a batch.</li>
+</ul>
+<h3>Version: 5.1.0-rc3</h3>
+<p>Nov. 20, 2025</p>
+<ul>
+<li>
+<p>Added the ability to convert
+single HTML Elements to text for
+find and replace in <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of HTML Elements to text for
+find and replace in <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single Document Fragments to text for
+find and replace in <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of Document Fragments to text for
+find and replace in <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of String to text for
+find and replace in <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single HTML Elements to text for
+find and replace in <code>makeHTML()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of HTML Elements to text for
+find and replace in <code>makeHTML()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single Document Fragments to text for
+find and replace in <code>makeHTML()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of Document Fragments to text for
+find and replace in <code>makeHTML()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of String to text for
+find and replace in <code>makeHTML()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single HTML Elements to text for
+find and replace in <code>makeElement()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of HTML Elements to text for
+find and replace in <code>makeElement()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single Document Fragments to text for
+find and replace in <code>makeElement()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of Document Fragments to text for
+find and replace in <code>makeElement()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+arrays of String to text for
+find and replace in <code>makeElement()</code></p>
+</li>
+<li>
+<p>Added the ability to convert
+single HTML Elements to text for <code>getTXT()</code></p>
+</li>
+<li>
+<p>Added the ability to send
+HTML elements as substitutions for
+<code>getElement()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+HTML elements as substitutions for
+<code>getHTML()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Document Fragments as substitutions for
+<code>getElement()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Document Fragments as substitutions for
+<code>getHTML()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Arrays of HTML elements as substitutions for
+<code>getElement()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Arrays of HTML elements as substitutions for
+<code>getHTML()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Arrays of Document Fragments as substitutions for
+<code>getElement()</code>.</p>
+</li>
+<li>
+<p>Added the ability to send
+Arrays of Document Fragments as substitutions for
+<code>getHTML()</code>.</p>
+</li>
+<li>
+<p>Added <code>data-init</code> for elements that
+fires a signal that they receive
+when bitty first initializes.</p>
+</li>
+<li>
+<p>Only add <code>data-bittyid</code> to elements
+that have a <code>data-send</code>, <code>data-receive</code>,
+<code>data-init</code> attributes.</p>
+</li>
+<li>
+<p>Stopped adding <code>bittyid</code> with UUID from
+events.</p>
+</li>
+<li>
+<p>Removed <code>data-r</code> alias for <code>data-receive</code>.
+Better to have things be explicit and
+only have a single way to do it. (<code>data-s</code>
+was removed in <code>-rc2</code>)</p>
+</li>
+</ul>
+
+<h3>Version: 5.1.0-rc2</h3>
+<p>Nov. 17, 2025</p>
+<ul>
+<li>
+<p>Removed mutation observer
+and querying data-receive directly
+to prevent race condition on events.</p>
+</li>
+<li>
+<p>Removed <code>data-s</code> alias for <code>data-send</code>.
+Better to have things be explicit and
+only have a single way to do it.</p>
+</li>
+</ul>
+<h3>Version: 5.1.0-rc1</h3>
+<p>Nov. 13, 2025</p>
+<ul>
+<li>
+<p>Added <code>bittyReady()</code> call that
+works like <code>bittyInit()</code> but happens
+after <code>this.runSendFromComponent();</code></p>
+</li>
+<li>
+<p>If <code>bittyReady()</code> is defined
+as async (i.e. <code>async bittyReady()</code>) it's
+called with <code>await</code></p>
+</li>
+<li>
+<p>Added <code>this.api.trigger(signal)</code> which
+works like <code>this.api.forward(null, signal)</code>.
+The event type is <code>bittytrigger</code></p>
+</li>
+<li>
+<p>With <code>this.api.trigger(signal)</code> using
+<code>this.api.forward(event, signal)</code> with
+<code>event</code> set to <code>null</code> is now an error.
+It's explicitly for forwarding an
+existing event.</p>
+</li>
+<li>
+<p>Added <code>await:signal</code> to <code>data-send</code>
+and <code>this.api.forward(event, &quot;await:signal&quot;)</code>,
+and <code>this.api.trigger(&quot;await:signal&quot;)</code>
+to await async methods.</p>
+</li>
+<li>
+<p>Added <code>makeTXT()</code> which returns a
+text value from a template after running
+substitutions over it.</p>
+</li>
+<li>
+<p>Refactored <code>makeHTML()</code> and <code>makeElement()</code>
+to use <code>makeTXT()</code></p>
+</li>
+<li>
+<p>Added <code>data-s</code> alias for <code>data-send</code>
+and <code>data-r</code> alias for <code>data-receive</code></p>
+</li>
+</ul>
+
+<h3>Version 5.0.0</h3>
+<p>Nov. 7, 2025</p>
+<p>This is a collection of renames for clarity
+and to help avoid collisions with
+other code that might add <code>data-</code> attributes.
+No actual functionality is changed, but
+the renames require a version number
+bump.</p>
+<ul>
+<li>
+<p>Renamed <code>getElements</code> to <code>getHTML</code> for
+clarity. (<code>getElement</code> remains the same
+and pulls individual HTML elements
+vs <code>getHTML</code> which pulls document fragments.)</p>
+</li>
+<li>
+<p>Renamed <code>makeElements</code> to <code>makeHTML</code> for
+clarity. (<code>makeElement</code> remains the same
+and makes individual HTML elements
+vs <code>makeHTML</code> which makes document fragments.)</p>
+</li>
+<li>
+<p>Renamed <code>response.ok</code> to <code>response.value</code>
+for clarity and to avoid confusion with
+things like <code>response.ok === false</code>.
+(i.e. <code>response.value === false</code> takes less
+mental overhead)</p>
+</li>
+<li>
+<p>Renamed <code>data-uuid</code> to <code>data-bittyid</code>
+to namespace and prevent collisions with
+anything else the wants to use <code>data-uuid</code></p>
+</li>
+</ul>
+<h3>Version: 4.0.0</h3>
+<p>Nov. 6, 2025</p>
+<ul>
+<li>Bumping the version number.
+No changes since v4.0.0-rc1.</li>
+</ul>
+<h3>Version: 4.0.0-rc1</h3>
+<p>Oct. 30, 2025</p>
+<ul>
+<li>
+<p>Renamed <code>this.api.getFragment</code> to
+<code>this.api.getElements</code> (this is a breaking
+change so it's a major version bump)</p>
+</li>
+<li>
+<p>Renamed <code>this.api.makeFragment</code> to
+<code>this.api.makeElements</code> (with the
+<code>this.api.getFragment</code> change)</p>
+</li>
+<li>
+<p>Added <code>bittyCatch(event)</code> that
+catches any events that don't have a
+<code>.target.dataset.send</code> value. This provides
+a way to catch message like from <code>.postMessage()</code>
+and decided what to do with them.</p>
+</li>
+<li>
+<p>Removed the <code>this.api.fn</code> set up.
+It's not worth the overhead compared to
+just using functions directly.</p>
+</li>
+<li>
+<p>Using a space instead of a <code>|</code> to
+separate signals and class names.
+This mimics <code>class=&quot;some things&quot;</code> from
+CSS and is easier to type. Each keys
+must be a set of characters without
+spaces so there's no need for
+an explicit <code>|</code>.</p>
+</li>
+<li>
+<p>Changed listeners to be on the
+window to catch things like <code>.postMessage()</code>.
+TODO: Make sure that's cool to listen
+on the window instead of the document.</p>
+</li>
+<li>
+<p>Changed internal use of
+<code>event.target.dataset.forward</code> key for
+<code>this.api.forward</code> to <code>event.bitty.forward</code>
+to avoid collisions on the <code>event.target.dataset</code></p>
+</li>
+<li>
+<p>Fixed bug in <code>this.api.forward</code> where
+an event that doesn't have a <code>.target</code> or
+<code>.target.dataset</code> gets overridden.</p>
+</li>
+<li>
+<p>UUID are added to events that are being
+forwarded if they don't already exist.</p>
+</li>
+<li>
+<p>Migrated docs site to use variables
+to make it easier to upgrade versions
+moving forward.</p>
+</li>
+</ul>
+
+<h3>Version: 3.0.0</h3>
+<p>Oct. 26, 2025</p>
+<p>This isn't a huge jump from Version 2.x,
+but there are breaking changes so it
+gets a new number. These are quality
+of life improvements that make it
+easier to get external content while
+providing better errors if something
+goes wrong.</p>
+<p>The details:</p>
+<ul>
+<li>
+<p>Did the following renames and
+additions for consistent API names
+for getting and adding documet
+fragments and elements:</p>
+<ul>
+<li>
+<p>Renamed <code>this.api.getHTML()</code> to
+<code>this.api.getFragment()</code> which
+pulls in an external file
+and returns it as a document
+fragment.</p>
+</li>
+<li>
+<p>Added <code>this.api.getElement()</code>
+which pulls in an external file
+and retuns it as a single HTML
+Element (if there's more than
+one node at the top of the file
+only the first one gets returned).</p>
+</li>
+<li>
+<p>Renamed <code>this.api.useTemplate()</code>
+to <code>this.api.makeFragment()</code> which
+takes a string to use as a template
+and returns a document fragment.</p>
+</li>
+<li>
+<p>Added <code>this.api.makeElement()</code> which
+takes a string to use as a template
+and returns a single HTML Element.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>TODO: Added <code>getCSS()</code> which pulls an
+external CSS file and loads it into
+the document as an adopted stylesheet.</p>
+</li>
+<li>
+<p>Added custom BittyError class
+for better error handling with <code>this.api.getTHING</code>
+calls that use <code>.fetch</code> and
+for JSON parsing errors.</p>
+</li>
+<li>
+<p>When returning values from fetches
+return an object with either <code>{ ok: PAYLOAD }</code>,
+or <code>{ error: { /* details */ } }</code> with
+extra data coming down in the error object
+like status codes for HTML errors.</p>
+</li>
+<li>
+<p>Added <code>connectedMoveCallback()</code> to
+prevent <code>connectedCallback()</code> from firing
+if a component is moved.</p>
+</li>
+<li>
+<p>Moved everything in the init
+into the conditional check to see if
+the component makes a connection to a class.
+Previous a few things happend prior to
+the connection attempt. Moving them in
+prevents UUIDs from being added until
+a conneciton has been made. Shouldn't
+make any real difference. It just
+feels more natural.</p>
+</li>
+<li>
+<p>Added and refined the test suite
+for increased coverage.</p>
+</li>
+</ul>
+<h3>Version: 2.0.0-rc2</h3>
+<p>Oct. 21, 2025</p>
+<ul>
+<li>
+<p>Properly returned <code>undefined</code> if there's a
+problem pulling an external HTML from
+getHTML().</p>
+</li>
+<li>
+<p>Properly returned <code>undefined</code> if there's a
+problem pulling an external JSON from
+getJSON().</p>
+</li>
+<li>
+<p>Properly returned <code>undefined</code> if there's a
+problem pulling an external SVG from
+getSVG().</p>
+</li>
+<li>
+<p>Properly returned <code>undefined</code> if there's a
+problem pulling an external TXT from
+getTXT().</p>
+</li>
+</ul>
+
+<h3>Version: 2.0.0-rc1</h3>
+<p>Oct. 19.2025</p>
+<ul>
+<li>
+<p>Renamed <code>this.api.fetchJSON()</code> to
+<code>this.api.getJSON()</code> to match case used
+with <code>JSON.stringify()</code>, and switch
+from <code>fetch</code> to <code>get</code> prelude.</p>
+</li>
+<li>
+<p>Added substitutions param to
+<code>this.api.getJSON(url, subs=[])</code> so
+all <code>.getTHING(url, subs=[])</code> methods
+have the same behavior.</p>
+</li>
+<li>
+<p>Added <code>options={}</code> to
+<code>this.api.getJSON()</code> to pass options to
+the fetch call. The signature is
+<code>this.api.getJSON(url, subs=[], options={})</code>.</p>
+</li>
+<li>
+<p>Added <code>this.api.getHTML(url, subs=[], options={})</code>
+that loads an HTML file and does find
+replace with <code>subs</code> on the initial string
+where <code>subs</code> is an array
+of arrays with the patterns to match and
+replace. The patterns can be strings or regex.</p>
+</li>
+<li>
+<p>Added <code>this.api.getSVG(url, subs=[], options={})</code>
+that loads an SVG file and does find
+replace with <code>subs</code> which is an array
+of arrays with the patterns to match and
+replace. The patterns can be strings or regex.</p>
+</li>
+<li>
+<p>Added <code>this.api.getTXT(url, subs=[], options={})</code>
+that returns the text content of an external file.</p>
+</li>
+<li>
+<p>Switched to array or arrays for find
+replace strings for <code>this.api.useTemplate(templateString, subs=[])</code>
+and defaulting to an empty array so the
+argument doesn't have be sent which
+is consistent with the <code>.getTHING(url, subs=[])</code></p>
+</li>
+<li>
+<p>Added an adoptedStylesheet that sets
+the <code>&lt;bitty-x-x&gt;</code> tag to <code>display: block</code>.</p>
+</li>
+<li>
+<p>Added <code>this.api.match(event, el, key=&quot;&quot;)</code>.
+If a key exists, it's used to check the
+<code>dataset</code> of the <code>event</code> and the <code>el</code>
+and returns true if they match. If no
+<code>key</code> is provided the <code>uuid</code> of the <code>event</code>
+and <code>el</code> are compared instead.</p>
+</li>
+<li>
+<p>Allowing whitespace around <code>data-send</code>
+attributes.</p>
+</li>
+<li>
+<p>Allowing whitespace around <code>data-receive</code>
+attributes.</p>
+</li>
+<li>
+<p>Added <code>.useHTML(content, subs = [])</code> that
+converts a string from <code>content</code> into an
+HTML template (doing the substitutions)
+then returns the first element from it
+as an HTML element instead of a document
+fragment.</p>
+</li>
+<li>
+<p>Ingesting <code>window.bittyFunctions</code> from
+the page and <code>const functions</code> inside the module
+and providing access the them via <code>this.api.fn.FUNCTION()</code></p>
+</li>
+<li>
+<p>Ingest local <code>const functions</code> functions
+from the bitty component file that get
+added as <code>this.api.fn.FUNCTION()</code></p>
+</li>
+<li>
+<p>Ingested functions are bound with <code>.bind()</code> so
+that their <code>this.</code> is the bitty component's
+element itself.</p>
+</li>
+<li>
+<p>Combined <code>this.config</code> and <code>this.metadata</code> in the
+<code>constructor()</code>.</p>
+</li>
+</ul>
+
+<h3>Version: 1.3.0</h3>
+<p>Oct. 13, 2025</p>
+<ul>
+<li>Releasing v1.3.0. No changes
+from v1.3.0-rc1.</li>
+</ul>
+
+<h3>Version: 1.3.0-rc1</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>
+<p>Added <code>fetchJson(url)</code> method which
+can be called with <code>this.api.fetchJson(url)</code>.
+Returns the data object if everything works.
+Otherwise, throws an error and returns
+<code>undefined</code>.</p>
+</li>
+<li>
+<p>Added <code>useTemplate()</code> to assemble
+a example while doing a find and
+replace of text</p>
+</li>
+</ul>
+<h3>Version: 1.2.0-rc1</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>
+<p>When using <code>data-connect</code> if the value
+matches a class on the window object it's
+used. For example: <code>data-connect=&quot;ExampleClass&quot;</code>
+connects to <code>window.ExampleClass</code>.</p>
+<p>Previously, the class had to be in a
+<code>window.bittyClasses</code> object (e.g.
+<code>window.bittyClasses = { ExampleClass: class {} };</code></p>
+</li>
+</ul>
+
+<h3>Version: 1.1.0-rc2</h3>
+<p>Oct. 6, 2025</p>
+<ul>
+<li>Updated console error message if no
+class to connect to can be found.</li>
+</ul>
+
+<h3>Version: 1.1.0-rc1</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p><code>&lt;bitty-COMPONENT_VERSION&gt;</code> can be called
+without a <code>data-connect</code> attribute. When it is,
+it looks for a <code>window.BittyClass</code> on the
+page and uses it if it's available.</p>
+</li>
+<li>
+<p>Removed .error() method in favor of
+calling <code>console.error()</code> directly in order
+to get useful line numbers.</p>
+</li>
+</ul>
+<h3>Version: 1.0.0</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p>Moved <code>v1.0.0-rc5</code> to <code>v1.0.0</code></p>
+</li>
+<li>
+<p>Tag name is <code>&lt;bitty-1-0&gt;</code></p>
+</li>
+</ul>
+
+<h3>Version: 1.0.0-rc5</h3>
+<p>Oct. 4, 2025</p>
+<ul>
+<li>
+<p>Fixed bug with events not being passed
+to signal processing.</p>
+</li>
+</ul>
+
+<h3>Version: 1.0.0-rc4</h3>
+<p>Oct. 1, 2025</p>
+<ul>
+<li>
+<p>Renamed <code>&lt;bitty-js&gt;</code> component tag to
+<code>&lt;bitty-MAJOR_VERSION&gt;</code> for semantic versioning.</p>
+</li>
+<li>
+<p>Call <code>bittyInit()</code> with <code>await</code>
+if it's an <code>async</code> function.</p>
+</li>
+<li>
+<p>Moved <code>bittyInit()</code> before the <code>data-send</code>
+calls from the component so the module
+can set things up before the signals
+start being sent.</p>
+</li>
+<li>
+<p>Allowing <code>this.api.forward()</code> to be called
+with a <code>null</code> event (e.g.
+<code>this.api.forward(null, &quot;anotherFunction&quot;);</code>).
+This is done to allow things like forwarding
+a signal from <code>bittyInit()</code> or any other
+function where there isn't an event to pass
+along.</p>
+</li>
+<li>
+<p>Fixed bug where new receivers weren't
+being added properly when they were child
+nodes of new nodes being added (and
+the top layer didn't have a <code>data-</code> attr
+in it)</p>
+</li>
+<li>
+<p>Added tests for <code>this.api.querySelector()</code>
+and <code>document.querySelector()</code></p>
+</li>
+<li>
+<p>Update site to use variables for version
+numbers to make them easier to maintain
+instead of having them in multiple places
+for different displays.</p>
+</li>
+<li>
+<p>Made <code>this.metadata</code> an object and
+moved <code>version</code> into it (along with
+<code>copyright</code> and <code>license</code>)</p>
+</li>
+</ul>
+
+<h3>Version: 1.0.0-rc3</h3>
+<p>Sept. 23, 2025</p>
+<ul>
+<li>
+<p>Fixed bug where <code>this.api.send()</code> would update the
+<code>data-send</code> attribute on the original element so
+it no longer send the same signal. The method
+is now called <code>this.api.forward()</code>.</p>
+</li>
+<li>
+<p>Removed <code>data-watch</code>. Any element
+can receive a signal from anywhere else on the
+page without extra overhead. The biggest
+negative to this approach is that you have
+to be a little more careful to avoid naming
+collisions. But, the ease of use is well
+worth that minor trade off.</p>
+</li>
+<li>
+<p>Added Test Suite Results Report to site
+for easier viewing.</p>
+</li>
+<li>
+<p>Applying passed and failed colors to
+individual tests for quicker scanning.</p>
+</li>
+<li>
+<p>Updated tests to use unique signal
+names to avoid collisions.</p>
+</li>
+</ul>
+<h3>Version: 1.0.0-rc2</h3>
+<p>Sept. 19, 2025</p>
+<ul>
+<li>
+<p><code>data-watch</code> is applied to <code>bitty-js</code> elements
+directly instead of individual elements.
+The signals are send back down the tree
+when one is received via <code>data-watch</code></p>
+</li>
+<li>
+<p>Refactored multiple UUID() calls to single
+function to save a few characters.</p>
+</li>
+</ul>
+
+<h3>Version: 1.0.0-rc1</h3>
+<p>Sept. 18, 2025</p>
+<p>Initial release candidate for version 1.0.0.</p>
+<p>No changes since v0.4.0.</p>
+
+<h3>Version: 0.4.0</h3>
+<p>Sept. 17, 2025</p>
+<ul>
+<li>
+<p>Flipped module arguments from <code>example(el, event)</code>
+to <code>example(event, el)</code> since that lines up better
+with the order of send/receive. (i.e. the <code>event</code>
+is what gets sent from <code>data-send</code> and the <code>el</code>
+is the element from <code>data-receive</code></p>
+</li>
+<li>
+<p>Remove HTML output of error message. They're
+nice during debug but wouldn't want them
+showing up in prod. Could use a <code>debug</code> flag
+but that's more overhead than I want to add.
+So, message just go to the console.</p>
+</li>
+</ul>
+
+<h3>Version: 0.3.0</h3>
+<p>Sept. 17, 2025</p>
+<p>Big refactor based on experience using 0.2.0.</p>
+<ul>
+<li>
+<p>Added more generic error handing where you just send
+a message and it outputs to the page along with the
+UUID of the element that had the problem. The
+elements have <code>bitty-js-error</code> style classes on them
+so their display can be controlled via CSS.</p>
+</li>
+<li>
+<p>Updated to use the name <code>data-connect</code> instead of <code>data-module</code></p>
+</li>
+<li>
+<p>The <code>data-connect</code> can point to either a module or
+to a class in a global <code>bittyClasses</code> window object.</p>
+</li>
+<li>
+<p>Alternate module classes are selected by passing a <code>|</code> followed
+by the desired class name instead of using <code>data-use</code>.
+(e.g. <code>data-connect=&quot;./module.js|AltClass</code>)</p>
+</li>
+<li>
+<p>If there's an <code>bittyInit()</code> function in a module it's the
+first thing that gets called once bitty is loaded.</p>
+</li>
+<li>
+<p>Removed <code>data-call</code>. The <code>data-send</code> attribute is used
+for everything. Nothing would fire from it in prior versions
+if there wasn't at least one element with a <code>data-receive</code>
+with the same name. Now it calls the function once
+with no element if there's no associated <code>data-receive</code></p>
+</li>
+<li>
+<p>Added test suite.</p>
+</li>
+<li>
+<p>The biggest update is changing <code>data-b</code>, <code>data-c</code>,
+<code>data-r</code>, and <code>data-s</code> to <code>data-batch</code>,
+<code>data-call</code>, <code>data-receive</code>, and <code>data-send</code>,
+respectively. I originally use the shorter names to reduce the text
+length. The increased clarity of the longer names is worth the
+few extra characters.</p>
+</li>
+<li>
+<p>Remove expanded error messages. They were nice, but added a bunch of size
+without a significant improvement.</p>
+</li>
+<li>
+<p>The other big change is removing the leading <code>_</code> and
+<code>$</code> characters from function names. They were originally
+put in place to create a naming convention that differentiated
+between functions that were hit with <code>data-call</code>
+and <code>data-send</code>. In practice, that wasn't necessary.</p>
+</li>
+<li>
+<p>Removed the <code>data-batch</code> attribute. While there are some use
+cases where it might be nice, the extra complexity, mental overhead, and maintance
+aren't worth it.</p>
+</li>
+<li>
+<p>Added Mutation Observer so data-* functionality works
+on elements that are added after initialization.</p>
+</li>
+<li>
+<p>Added Mutation Observer to watch for
+removed elements to pull them out of the mix when
+they get gone.</p>
+</li>
+<li>
+<p>Split the web site page up into individual template for sections. Much
+nicer to work with.</p>
+</li>
+<li>
+<p>Updated example functions to always use <code>(el, _event)</code> instead
+of <code>(el, _)</code> for clarity.</p>
+</li>
+<li>
+<p>Removed inert/include/ignore from the top level
+components then remove them. This was originally a way to tell
+parent components to ignore specific calls and signals from children.
+After using it a bit, I don't think the complexity is worth it.
+Better to just name functions an signals so they don't collide.</p>
+</li>
+<li>
+<p>Isolated default signal travel to only go down the DOM.
+That is, if there are nested bitty-js tags, signals from
+the child tags don't propagate to the parent by default.
+(see <code>data-watch</code> for how to send signals up and to
+siblings)</p>
+</li>
+<li>
+<p>Added <code>data-watch</code> so parents and siblings
+can receive signals from their children and other
+siblings. With this, signals can be sent up, down, and
+to siblings.</p>
+</li>
+<li>
+<p>Ignore events directly from <code>bitty-js</code>
+elements (i.e. only process events from child elements).
+This is done to prevent <code>data-send</code> attributes on
+<code>bitty-js</code> elements from firing repeatedly
+when things inside the element send events (e.g. clicks).</p>
+</li>
+<li>
+<p>Renamed <code>scripts</code> directory to <code>modules</code>.</p>
+</li>
+<li>
+<p>Moved bitty source script file under <code>bitty-versions/bitty-v0.3.0.js</code>
+and copying to prod at the root of the site (i.e. <code>/bitty-v0.3.0.js</code>)
+so examples look cleaner.</p>
+</li>
+<li>
+<p>Renamed <code>data-bridge</code> to <code>data-connect</code> for clarity.</p>
+</li>
+<li>
+<p>Renamed <code>this.widget.bridge</code> to <code>this.module.api</code> in <code>bitty-js</code></p>
+</li>
+<li>
+<p>Added <code>this.api.send(key, event)</code> to send/forward
+events from inside modules.</p>
+</li>
+<li>
+<p>Added Progressive Enhancement and JavaScript Data comparison examples.</p>
+</li>
+<li>
+<p>Added/polished a bunch of other examples.</p>
+</li>
+</ul>
+
+  <h3>Version: 0.2.3</h3>
+  <p>June 5, 2025</p>
+  <p>Lots of error handling work in this one.</p>
+  <ul>
+    <li>
+      Moved UUID generation for the <code>bitty-js</code> and all
+      <code>data-*</code> reactive elements to the first thing in
+      <code>connectedCallback()</code> to aid in error messaging.
+    </li>
+    <li>
+      Made <code>connectedCallback()</code> and <code>async</code> function to
+      throw loading the widget module into its own funcitoun
+    </li>
+    <li>
+      Created an <code>#errors</code> private var to store error messages and
+      help by ID.
+    </li>
+    <li>Added the first few error messages</li>
+    <li>
+      <p>
+        Added <code>this.error()</code> for outputting errors. It takes two
+        optional arguments: an ID and an Element. The ID maps to the IDs in
+        <code>#errors</code>. They're used to add detail and help message to the
+        error output.
+      </p>
+      <p>
+        The ID defaults to <code>0</code> which is an unclassified error type.
+        The message for that ID includes a note to the developer to use an ID to
+        classify the error. I consider it a bug if an appropriate ID doesn't
+        exist and request an issue be open to fix it.
+      </p>
+      <p>
+        The <code>this.error()</code> method dumps the
+        <code>bitty-js</code> elemnet after the message.
+      </p>
+      <p>
+        If an element was passed to <code>this.error()</code> it's dumped out as
+        well.
+      </p>
+      <p>
+        The error message end up being pretty long. The end up adding a bunch of
+        lines to the source file. That's an explicit decision aimed at making
+        bitty easier to work with.
+      </p>
+    </li>
+    <li>
+      <p>
+        Added top level <code>debug</code> function that uses a
+        <code>debug</code> search query param from the
+        <code>window.location</code> to see if it should output.
+      </p>
+      <p>
+        Only thing I don't like about it is that it shows the function's line
+        number instead of the line number from where it was called. Something to
+        look into.
+      </p>
+    </li>
+    <li>
+      The <code>debug</code> function takes an optional element. It dumps it to
+      the console if one comes in.
+    </li>
+    <li>
+      Renamed <code>data-wires</code> to <code>data-bridge</code>. Fits better
+      and maps nicer to the <code>.bridge</code> coming back in from the support
+      class.
+    </li>
+    <li>
+      Set up to load the default class exported from a widget module if no other
+      class is defined (which happens with 'data-widget')
+    </li>
+    <li>
+      Moved all examples to use a default class export instead of a named class
+    </li>
+    <li>
+      Added a <code>data-widget</code> attribute to the
+      <code>bitty-js</code> elements to allow using multiple classes from inside
+      a single supporting .js module file.
+    </li>
+    <li>
+      <code>bitty-component-error</code> and
+      <code>bitty-element-error</code> classes are added to the class list of
+      elements where errors occur.
+    </li>
+  </ul>
+  <h3>Version: 0.2.2</h3>
+  <p>June 4, 2025</p>
+  <p>
+    Added UUIDs for pending error handling. Shuffeld a bunch of stuff around to
+    make the examples look nicer.
+  </p>
+  <ul>
+    <li>
+      <p>
+        Added uuids as <code>data-uuid</code> attrs to all elements with related
+        <code>data-*</code> attributes. Added them to the
+        <code>bitty-js</code> elements too. I was originally thinking I'd add
+        the UUIDs on the elements internally (i.e. <code>el.uuid</code> instead
+        of <code>el.dataset.uuid</code>).
+      </p>
+      <p>
+        I decided on the attribute approach because it offers two benefits: 1.
+        You can see the IDs in the Element tree view of developer consoles, and
+        2. You can address them with CSS to update styles based on the UUID.
+        Both of those thing will go to supporting better error messages and bug
+        hunting.
+      </p>
+    </li>
+    <li>
+      Mostly content updates largely focused on detailing the opening counter
+      example.
+    </li>
+    <li>Added CONTRIBUTING file.</li>
+    <li>Added watcher script to build site when files change.</li>
+    <li>
+      Refined the initial counter example to remove the text and change the
+      private variable to <code>this.num</code> to make the examples look nicer.
+    </li>
+    <li>
+      Moved the Examples section directly below the initial basic functionality
+      overview section.
+    </li>
+    <li>
+      Added reminders all over the place to edit the template and instead of the
+      output for HTML page (which would be overwritten. ask me how I know).
+    </li>
+    <li>
+      Started adding <code>prettier-ignore</code> comments to code snippets to
+      prevent the display output from being mangled.
+    </li>
+    <li>
+      Started stripping <code>prettier-ignore</code> comments from the HTML
+      output so it doesn't show in the example
+    </li>
+    <li>Same goes for <code>// deno-fmt-ignore-file</code> in .js files</li>
+    <li>
+      Added script to maintain the open open/closed states of the section
+      details elements across page loads. (Having them close every time I made a
+      change was maddening)
+    </li>
+    <li>
+      Moved all the example <code>.js</code> files into the site root. Not a fan
+      of that in general, but it makes the examples look better since the path
+      is shorter.
+    </li>
+  </ul>
+  <h3>Version: 0.2.1</h3>
+  <p>June 3, 2025</p>
+  <p>Some more wiring and some support tools for making the demo/docs site.</p>
+  <ul>
+    <li>
+      Made a Hello, World example that shows basic features. (Compared to the
+      single button press from the prior first example.)
+    </li>
+    <li>Showing Hello, World code as part of the example.</li>
+    <li>Load templates automatically.</li>
+    <li>Throttling via <code>.requestAnimationFrame()</code>.</li>
+    <li>
+      Renamed <code>data-f</code> to <code>data-c</code> (i.e. &quot;call&quot;)
+      for clarity.
+    </li>
+    <li>
+      Renamed <code>data-prep</code> attribute on <code>bitty-js</code> tag to
+      <code>data-call</code> (i.e. &quot;call&quot;) for clarity.
+    </li>
+    <li>
+      Renamed <code>data-init</code> attribute on <code>bitty-js</code> tag to
+      <code>data-send</code> so it matches <code>data-s</code> more closely.
+    </li>
+    <li>Made basic site builder for landing page.</li>
+    <li>
+      Moved everything into <code>details</code> elements for the landing page.
+    </li>
+  </ul>
+  <h3>Version: 0.2.0</h3>
+  <p>June 3, 2025</p>
+  <p>Setting up a bunch of the basic wiring.</p>
+  <ul>
+    <li>
+      Rewrite to provide direct access to receiving elements. They are fully
+      accessible in the send/receive functions. (As compared to the 0.1.0
+      approach which required explicitly defining what would happen via an
+      update (e.g. update <code>.innerHTML</code> or <code>.value</code>).
+    </li>
+    <li>
+      Renamed <code>data-wrapper</code> and the target
+      <code>Wrapper</code> class to <code>data-wires</code> and
+      <code>Wires</code>. (<code>bitty.js</code> is the wrapper. The
+      <code>Wires</code> class is how things are hooked up.).
+    </li>
+    <li>
+      Added <code>data-call</code> attribute parsing to
+      <code>bitty-js</code> tag. It runs functions like <code>data-c</code> but
+      does so prior to adding the event listeners to the element.
+    </li>
+    <li>
+      Added <code>data-batch</code> attribute processing to
+      <code>bitty-js</code> tags. It operates like <code>data-b</code> but fires
+      before event listeners are added.
+    </li>
+    <li>
+      Added <code>data-ignore</code> attribute to allow components to avoid
+      calls to the named functions. (Send signals bubble up to parents of nested
+      components by default. This provides a way to ignore them).
+    </li>
+    <li>
+      The <code>bitty-js</code> element looks for an <code>.init()</code> method
+      in the <code>Wires</code> class. If it finds one it calls it during the
+      initialization process.
+    </li>
+    <li>
+      Passing both the element and the triggering event to the send/receive
+      functions.
+    </li>
+    <li>
+      Moved to using <code>data-b</code> explicitly to separate block calls from
+      individual function calls.
+    </li>
+    <li>
+      Order of operations is: function calls, batch calls, single send calls.
+    </li>
+    <li>
+      Temporarily removed preflight check until global functionality is defined.
+    </li>
+    <li>
+      Created example of loading a template via the
+      <code>.init()</code> call back to the <code>Wires</code> class.
+    </li>
+    <li>Created example with nested components.</li>
+    <li>
+      Created example with parent of child components pulling data from the
+      children to do a calculation.
+    </li>
+    <li>Created example showing parent ignoring send signals from children.</li>
+    <li>
+      Created example showing on components loading a child component via a template that becomes fully reactive.
+    </li>
+  </ul>
+<h3>Version: 0.1.0</h3>
+<p>June 2, 2025</p>
+<p>Getting the project started.</p>
+<ul>
+<li>
+<p>Initial prototype.</p>
+</li>
+<li>
+<p><code>&lt;bitty-js&gt;;</code> wraps elements to provide them with reactive
+capabilities.</p>
+</li>
+<li>
+<p>Basic <code>data-c</code>, <code>data-s</code>, and <code>data-r</code>
+in place to call functions, send, and receive updates, respectively.</p>
+</li>
+<li>
+<p>Functionality is loaded using <code>data-wrapper</code> to point to a
+module to load. The module must export a <code>Wrapper</code> class that
+gets loaded and used to provide functions and send/receive callbacks.</p>
+</li>
+<li>
+<p>Uses string prefixes to make determinations about how to handle data
+through the send/receive channels (e.g.
+<code>htmlSOMETHING</code>
+updates <code>.innerHTML</code> of an element while
+<code>valueSOMETHING</code> updates the <code>.value</code>).</p>
+</li>
+<li>
+<p>Defined convention for functions. <code>data-c</code> maps to functions in
+the <code>Wrapper</code> class that start with a
+<code>_</code> (underscore). The <code>data-s</code> and
+<code>data-r</code> attributes map to functions in the
+<code>Wrapper</code> class that start with a <code>$</code> (dollar sign).</p>
+</li>
+<li>
+<p>Decided against using <code>data-c data-s and data-r</code> on the
+<code>bitty.js</code> tags. That would involved a lot of extra overhead in
+parsing to differentiate between the top level element and the content it
+wraps. Using <code>data-send</code> instead as a replacement for
+<code>data-c</code>. Others, TBD.</p>
+</li>
+<li>
+<p>Set up <code>data-c=&quot;batchSOMETHIGN&quot;</code> functionality to send a single
+single that gets turned into multiple signals in the <code>Wrapper</code>.</p>
+</li>
+<li>
+<p>Defined convention of using <code>.batches</code> to look for batches. It
+must be a hash where the keys match the incoming request and the value is
+an array of functions to run.</p>
+</li>
+<li>
+<p>Defined <code>.bridge</code> to allow <code>Wrapper</code> functions to
+access the parent <code>bitty-js</code> element.</p>
+</li>
+<li>
+<p>Scoped event listeners to the <code>bitty-js</code> elements.</p>
+</li>
+<li>
+<p>Set up <code>data-listeners</code> attribute on <code>bitty-js</code> tags
+to override the default listeners (which are <code>input</code> and
+<code>click</code>).</p>
+</li>
+<li>
+<p>Created example that stores its own state.</p>
+</li>
+<li>
+<p>Created example that updates an element with the same content it sent
+(i.e. verified feedback can be avoided).</p>
+</li>
+<li>
+<p>Created example using <code>data-send</code> to load initial values.</p>
+</li>
+<li>
+<p>Created example that sends multiple signals.</p>
+</li>
+<li>
+<p>Created example with multiple elements receiving the same signal.</p>
+</li>
+<li>
+<p>Created example showing how to update global CSS variables/properties.</p>
+</li>
+<li>
+<p>Created example showing custom event listeners.</p>
+</li>
+<li>
+<p>Created example showing how to update CSS variables/properties scoped to
+the content of individual <code>bitty-js</code> tags.</p>
+</li>
+<li>
+<p>Examples use parent page's CSS for styling. It confirms I'm happy with the
+choice to use the light DOM instead of the shadow DOM.</p>
+</li>
+<li>
+<p>Set up initial preflight check to ensure functions are in place.</p>
+</li>
+</ul></bitty-7-0><script>
+  setTimeout(() => { 
+    document.documentElement.style.setProperty("--load-hider", "1");
+  }, 1600);
+</script>
+
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
+  <div class="text-align-center">
+    <a href="https://github.com/alanwsmith/bitty">source</a> ~
+    <a href="https://socials.alanwsmith.com/">socials</a> ~
+    <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+    <a href="https://links.alanwsmith.com/">other projects</a>
+  </div>
+  <div class="text-align-center">
+    <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+  </div>
+  <details class="text-align-center"><summary>This work has been dedicated to the public domain.</summary>
+    <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+  </details>
+</footer>
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+
+  </body>
+</html>

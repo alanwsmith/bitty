@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --load-hider: 0;
+}
+
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+}
+
+:root {
+  --background-color: var(--switch--background-color, var(--light--background-color));
+  --default-color: var(--switch--default-color, var(--light--default-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--switch--background-color, var(--dark--background-color));
+    --default-color: var(--switch--default-color, var(--dark--default-color));
+  }
+}</style>
+
+<script>
+function loadThemeProps() {
+  const data = localStorage.getItem("themeProps");
+  if (data) {
+    data.props.forEach((prop) => {
+    });
+  }
+}
+loadThemeProps();</script><style>
+html {
+  background-color: var(--background-color);
+  color: var(--default-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--default-color);
+  opacity: var(--load-hider);
+}
+</style>
+    <link rel="stylesheet" href="/styles/7/0/0//all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/7/0/0//custom.css" />
+
+<script>
+window.BittyUnhide = class {
+  bittyReady() {
+    this.api.setProp("--load-hider", 1);
+  }
+}
+</script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty - a web tool for interesting pages</title>
+<meta property="og:title" content="bitty - a web tool for interesting pages" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image-5.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />  </head>
+  <body>
+<noscript>
+  <p>
+    Bitty is a web component that requires JavaScript
+    which is not available on this page. You'll need
+    to switch to a browser that has it enabled
+    to check things out. 
+  </p>
+  <style>
+  :root { --load-hider: 1; }
+  </style>
+</noscript><script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--accent-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    const url = new URL(window.location.href);
+    if (url.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  <a href="/">bitty</a>
+
+  <a href="/unit-tests/7/0/0/">tests</a>
+
+  <a href="/documentation/7/0/0/">documentation</a>
+
+  <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
+</nav><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/example-wrapper.js">
+
+<style>
+</style>
+
+<script>
+window.RandomQuote = class {
+  #quote = 0;
+
+  nextQuote(_, __) {
+    this.#quote += 1;
+    if (this.#quote === 3) {
+      this.#quote = 0;
+    }
+    this.api.trigger("pickQuote");
+  }
+
+  pickQuote(_, el) {
+    if (el.propToInt("id") === this.#quote) {
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">
+Get Quotations    </div>
+    <div class="hp-example-content"><bitty-7-0 data-connect="RandomQuote">
+  <div class="quotes">
+    <div data-id="0" data-receive="pickQuote">
+      <div>
+        I think it's terribly dangerous for an 
+        artist to fulfill other people's expectations.
+      </div>
+      <cite>David Bowie</cite>
+    </div>
+    <div data-id="1" data-receive="pickQuote" hidden>
+      <div>
+        Ever tried. Ever failed. No matter. 
+        Try Again. Fail again. Fail better.
+      </div>
+      <cite>Samuel Becket</cite>
+    </div>
+    <div data-id="2" data-receive="pickQuote" hidden>
+      <div>
+        I write because I don't know what 
+        I think until I read what I say.
+      </div>
+      <cite>Flannery O'Connor</cite>
+    </div>
+  </div>
+  <button data-send="nextQuote">Get Quote</button>
+</bitty-7-0>    </div>
+  </div>
+</div>
+
+<h2>HTML</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>RandomQuote<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">quotes</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-id</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>0<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>pickQuote<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>        I think it&#39;s terribly dangerous for an 
+<span class="line-marker"></span>        artist to fulfill other people&#39;s expectations.
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>David Bowie<span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-id</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>1<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>pickQuote<span class="punctuation definition string end html">&quot;</span></span></span> <span class="entity other attribute-name html">hidden</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>        Ever tried. Ever failed. No matter. 
+<span class="line-marker"></span>        Try Again. Fail again. Fail better.
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>Samuel Becket<span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-id</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>2<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>pickQuote<span class="punctuation definition string end html">&quot;</span></span></span> <span class="entity other attribute-name html">hidden</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>        I write because I don&#39;t know what 
+<span class="line-marker"></span>        I think until I read what I say.
+<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      <span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>Flannery O&#39;Connor<span class="meta tag inline any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline any html">cite</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>nextQuote<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Get Quote<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<h2>JavaScript</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">RandomQuote</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #quote = 0;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">nextQuote</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">quote</span> <span class="keyword operator assignment augmented js">+=</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">quote</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">3</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">quote</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">0</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>pickQuote<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">pickQuote</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>id<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">quote</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">hidden</span> <span class="keyword operator assignment js">=</span> <span class="constant language boolean false js">false</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">hidden</span> <span class="keyword operator assignment js">=</span> <span class="constant language boolean true js">true</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+
+<h2>Notes</h2>
+
+</bitty-7-0><script>
+  setTimeout(() => { 
+    document.documentElement.style.setProperty("--load-hider", "1");
+  }, 1600);
+</script>
+
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
+  <div class="text-align-center">
+    <a href="https://github.com/alanwsmith/bitty">source</a> ~
+    <a href="https://socials.alanwsmith.com/">socials</a> ~
+    <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+    <a href="https://links.alanwsmith.com/">other projects</a>
+  </div>
+  <div class="text-align-center">
+    <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+  </div>
+  <details class="text-align-center"><summary>This work has been dedicated to the public domain.</summary>
+    <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+  </details>
+</footer>
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+
+  </body>
+</html>

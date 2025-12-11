@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <html lang="en">
 <head>
+  <title>debugBitty</title>
 <style>
 body {
   color: goldenrod;
@@ -8,9 +9,142 @@ body {
 }
 </style>
 
+      <script>
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+      </script>
     </head>
+
       <body>
 
+[! include "debug/tests/0050-get-quicks/index.html" !]
+
+[#
+  [! include "debug/tests/0030-forward-no-receiver/index.html" !]
+  [! include "debug/tests/0040-multi-forward-no-receiver/index.html" !]
+#]
+
+
+      <!--
+      <script>
+      window.BittyClass = class {
+        example(ev, el) {
+          el.innerHTML = "UPDATED";
+        }
+      }
+      </script>
+
+      <bitty-7-0>
+        <div data-receive="example">waiting</div>
+      </bitty-7-0>
+        <div data-receive="example">waiting2</div>
+        <button data-send="example">click me</button>
+
+-->
+
+
+      <!--
+      <script>
+      const template = `<div data-init="example">TIMESTAMP</div>`;
+      window.BittyClass = class {
+        example(ev, el) {
+          el.ds("t
+        }
+      }
+      </script>
+
+      <bitty-7-0>
+        <button data-use="example">asdf</button>
+      </bitty-7-0>
+
+-->
+
+
+
+      <!--
+      <script>
+      window.BittyClass = class {
+        bittyReady() {
+          this.api.querySelector("[data-send]").click();
+        }
+
+        async runTestForward(ev, el) {
+          console.log("HERE1");
+          await sleep(1000);
+          await this.api.forward(ev, "fromForward");
+          await sleep(1000);
+          console.log("HERE5");
+          await sleep(2000);
+          console.log("HERE6");
+        }
+
+        async fromForward(ev, el) {
+          console.log("HERE2");
+          await sleep(1300);
+          console.log("HERE3");
+          await sleep(2500);
+          console.log("HERE4");
+        }
+
+        runTest2(ev, el) {
+          console.log("HERE7");
+        }
+      }
+      </script>
+
+      <bitty-7-0>
+          <button data-send="await:runTestForward runTest2">Click Me</button>
+          <div data-receive="fromForward">here</div>
+      </bitty-7-0>
+
+      -->
+
+
+      <!--
+      <script>
+      window.BittyClass = class {
+        bittyReady() {
+          this.api.querySelector("[data-send]").click();
+        }
+        runTest0950(ev, el) {
+          el.innerHTML ="PASSED";
+        }
+      }
+      </script>
+      <bitty-7-0>
+          <button class="test" data-send="runTest0950">FAILED</button>
+            <div data-receive="runTest0950">
+          </div>
+      </bitty-7-0>
+-->
+
+
+
+      <!--
+      <script>
+      window.BittyClass = class {
+        bittyReady() {
+          this.api.querySelectorAll("button").forEach((button) => {
+            button.click();
+          });
+        }
+        buttonTest2413(ev, el) {
+          console.log("here");
+          el.innerHTML = "PASSED";
+        }
+      }
+      </script>
+      <bitty-7-0>
+        <button data-send="buttonTest2413">Click me</button>
+        <div data-receive="buttonTest2413">FAILED</div>
+      </bitty-7-0>
+
+
+-->
+
+
+<!--
 
 <script>
   window.BittyClass = class {
@@ -26,6 +160,7 @@ body {
 <bitty-6-0>
 </bitty-6-0>
 
+-->
 
 
       <!--
@@ -121,10 +256,8 @@ body {
         }
         </script>
         <bitty-6-0 data-connect="Test4"></bitty-6-0>
-
-
         -->
 
-<script src="/release/bitty-6.0.0-rc1.full.js" type="module"></script>
+<script src="/v/7.0.0-rc2/bitty-7.0.0-rc2.js" type="module"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
+
+[# 
+  WARNING: REMINDER:
+  Don't wrap the page in a bitty tag. Some
+  tests require that the tag under test
+  not be included in another tag
+#]
+
+[! block header !]
+<hgroup class="default-wrapper">
+  <h1>Bitty Unit Tests</h1>
+</hgroup>
+<[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
+[! endblock !]
+
+[!- block main -!]
+<main class="default-wrapper default-flow">
+
+[! for folder in folders !] 
+[! if folder.parent == unit_tests_root + "tests" !]
+[! set html_path = folder.parent + "/" + folder.name + "/index.html" !]
+[! set js_path -!]
+[@ folder.parent|safe @]/[@ folder.name|safe @]/test.on.js
+[!- endset -!]
+  <div class="unit-test-columns">
+    <details>
+      <summary>TEST: [@ folder.name @]</summary>
+[! filter block_highlight("html") !]
+[! include html_path !]
+[! endfilter !]
+[! filter block_highlight("js") !]
+[! include js_path !]
+[! endfilter !]
+    </details>
+    <div class="test-status">
+    [! include html_path !]
+    </div>
+</div>
+[! endif !] [! endfor !]
+
+
+<[@ bitty_tag @] data-connect="/[@ unit_tests_root @]/support/test-results.js">
+  <div>Testing file: [@ bitty_js_path @]</div>
+  <div data-receive="showResults">
+    <div>Gather results...</div>
+    <div>&nbsp;</div>
+  </div>
+</[@ bitty_tag @]>
+
+[#
+  <p>TODO: link to tests with intentional errors.</p>
+#]
+
+</main>
+[!- endblock -!]
+
+

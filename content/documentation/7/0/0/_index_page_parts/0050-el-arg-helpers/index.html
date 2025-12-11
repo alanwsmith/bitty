@@ -1,0 +1,72 @@
+<h2>Element Argument Helpers</h2>
+<h3>Methods</h3>
+
+[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc !]
+[! if item.memberof == "el" !]
+[! if item.kind == "function" !]
+[!- set inc_path = file.folder + "/_includes/helper-methods/" + item.longname + "/index.html" -!]
+[! include inc_path !]
+[! endif !]
+[! endif !]
+[! endfor !]
+
+
+<h3>Properties</h3>
+
+[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc !]
+[! if item.memberof == "el" !]
+[! if item.kind == "member" !]
+[!- set inc_path = file.folder + "/_includes/helper-properties/" + item.longname + "/index.html" -!]
+[! include inc_path !]
+[! endif !]
+[! endif !]
+[! endfor !]
+
+
+
+
+
+[#
+
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.name == "expandElement" !]
+[! for var in item.meta.vars !]
+[! if var != "" !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+    [! if item.longname == var and item.kind == "function" !]
+     [!- set inc_path = file.folder + "/_includes/helper-methods/" + var + "/index.html" -!]
+    [! include inc_path !]
+    [! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+
+<h3>Properties</h3>
+
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+[! if item.name == "expandElement" !]
+[! for var in item.meta.vars !]
+[! if var != "" !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc_output !]
+    [! if item.longname == var and item.kind == "member" !]
+
+        [! if item.longname != "el.bittyParent" and item.longname != "el.bittyParentBittyId" !]
+
+            [! if item.longname == "el.valueToFloat" !]
+                [!- set inc_path = file.folder + "/_includes/helper-properties/el.value/index.html" -!]
+                [! include inc_path !]
+            [! endif !]
+
+            [!- set inc_path = file.folder + "/_includes/helper-properties/" + var + "/index.html" -!]
+            [! include inc_path !]
+        [! endif !]
+
+    [! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+[! endif !]
+[! endfor !]
+#]

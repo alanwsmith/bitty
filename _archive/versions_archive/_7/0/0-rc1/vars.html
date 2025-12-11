@@ -1,0 +1,62 @@
+[#- primary var -#]
+[!- set major_version = "7" -!]
+[!- set minor_version = "0" -!]
+[!- set patch_version = "0" -!]
+[!- set rc_string = "-rc1" -!]
+[!- set min_switch = "dev" -!]
+
+[#- assembled vars -#]
+[!- 
+  set bitty_tag = 
+  "bitty-" + major_version + "-" + minor_version 
+-!]
+
+[!- 
+  set version_key =  major_version 
+  + "." + minor_version + "." + patch_version + rc_string 
+-!]
+
+[!- 
+  set version_dir = "versions/" 
+    + major_version + "/" 
+    + minor_version + "/"
+    + patch_version + rc_string 
+-!]
+
+[!- 
+  set v_dir = "v/" + major_version 
+  + "." + minor_version + "." + patch_version + rc_string 
+-!]
+
+[!- set script_min_file_name -!]
+bitty-[@ major_version @].[@ minor_version @].[@ patch_version -@]
+[@- rc_string -@]
+.[@- min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ major_version @].[@ minor_version @].[@ patch_version -@]
+[@- rc_string -@]
+.full.js
+[!- endset -!]
+
+[!- set bitty_js_path = "/" + v_dir + "/" + script_min_file_name  -!]
+
+[#-
+this is for the unpkg delivery. 
+need to set a switch to make this 
+toggle easier. 
+-#]
+
+[#
+[!- set bitty_js_path = 
+"https://unpkg.com/@alanwsmith/bitty-dev@7.0.0-rc1/bitty-7.0.0-rc1.min.js"
+-!]
+#]
+
+[!- set bitty_script_tag -!]
+<script src="[@ bitty_js_path|safe @]" type="module"></script>
+[!- endset -!]
+
+[#- content -#]
+[!- block payload -!][!- endblock -!]

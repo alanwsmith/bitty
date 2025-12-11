@@ -1,0 +1,151 @@
+[!- extends "_vars/7/0/0/index.html" -!]
+[!- block payload -!]
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    [! include styles_root + "critical-colors.html" !]
+    [! include styles_root + "load-colors.html" !]
+    [! include styles_root + "critical-styles.html" !]
+    <link rel="stylesheet" href="/[@ styles_root @]/all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="[@ bitty_js_path|safe @]" type="module"></script>
+    <link rel="stylesheet" href="/[@ styles_root @]/custom.css" />
+    [! include wrapper_root + "includes/bitty-unhide-function.html" !]
+    [! include wrapper_root + "includes/head-tag-content.html" !]
+  </head>
+  <body>
+    [! include wrapper_root + "includes/no-script.html" !]
+    [! block bittyOpenTag !][! endblock !]
+    [! include wrapper_root + "includes/nav.html" !]
+    [! block header !][! endblock !]
+    [! block main !][! endblock !]
+    [! block bittyCloseTag !][! endblock !]
+    [! include wrapper_root + "includes/load-hider-backup.html" !]
+
+    [! include wrapper_root + "includes/footer.html" !]
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+
+  </body>
+</html>
+
+  [#
+    [! include version_dir + "/_wrappers/head.html" !]
+    [! include version_dir + "/_wrappers/bitty-page-class.html" !]
+
+    <style>
+      [! include version_dir + "/styles/fonts.css" !]
+      [! include version_dir + "/styles/tags.css" !]
+      [! include version_dir + "/styles/highlights.css" !]
+      [! include version_dir + "/styles/classes.css" !]
+    </style>
+
+    <script>
+    [! include version_dir + "/snippets/code-block-maker/code-block-maker.on.js" !]
+    [! include version_dir + "/_wrappers/includes/theme-switcher.js" !]
+    </script>
+    <script src="[@ bitty_js_path|safe @]" type="module"></script>
+  </head>
+  <body>
+
+    <[@ bitty_tag @]
+      data-connect="/[@ version_dir @]/modules/site-page.js" 
+      class="layout-wrapper">
+
+    [!- include version_dir + "/_wrappers/includes/noscript.html" -!]
+    [!- include version_dir + "/_wrappers/header.html" -!]
+
+    <main class="default-wrapper default-flow xlarge-top-padding">
+      <hgroup>
+        <div class="justify-space-between accent-bottom-border">
+          <h1>bitty</h1>
+          <[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/github-stars.js"></[@ bitty_tag @]>
+        </div>
+        <div class="small-font accent-faded">
+         [@ json.config.metadata.subtitle @]
+        </div>
+      </hgroup>
+
+[! block main !][! endblock !] 
+    </main>
+
+    <footer>
+      <hr />
+      <div class="footer-wrapper">
+        <div>
+          <a href="https://github.com/alanwsmith/bitty">source</a> ~
+          <a href="https://socials.alanwsmith.com/">socials</a> ~
+          <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+          <a href="https://links.alanwsmith.com/">other projects</a>
+        </div>
+        <div>
+          <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+        </div>
+        <details><summary>This work has been dedicated to the public domain.</summary>
+          <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+        </details>
+      </div>
+    </footer>
+
+<script type="module">
+  class DetailsWatcher {
+    #storageName = 'openDetailsData'
+    #data
+
+    initTags() {
+      this.details().forEach((tag, tagIndex) => {
+        if (this.#data.has(tagIndex)) {
+          tag.open = true
+        }
+        tag.addEventListener('toggle', (event) => {
+          if (event.newState === 'open') {
+            this.#data.add(tagIndex)
+          } else {
+            this.#data.delete(tagIndex)
+          }
+          this.saveState()
+        })
+      })
+    }
+
+    details() {
+      return document.querySelectorAll('details')
+    }
+
+    loadState() {
+      const storage = localStorage.getItem(this.#storageName)
+      if (storage === null) {
+        this.#data = new Set()
+      } else {
+        this.#data = new Set(JSON.parse(storage).data)
+      }
+    }
+
+    run() {
+      this.loadState()
+      this.initTags()
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.#storageName,
+        JSON.stringify({ data: [...this.#data] })
+      )
+    }
+  }
+  const dw = new DetailsWatcher()
+  dw.run()
+</script>
+
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+      <pre>
+        [! filter highlight_html|safe !]<script src="[@ bitty_js_path|safe @]" type="module"></script>[! endfilter !]
+      </pre>
+
+<[@ bitty_tag @]>
+
+#]
+[!- endblock -!]
+

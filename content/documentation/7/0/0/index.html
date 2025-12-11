@@ -1,0 +1,52 @@
+[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
+
+[! block header !]
+<hgroup class="default-wrapper">
+  <h1>Documentation</h1>
+</hgroup>
+[! endblock !]
+
+[!- block main -!]
+<main class="default-wrapper default-flow">
+<p>
+    Check out the <a href="/[@ release_notes_root @]">release notes</a> for the
+    latest changes.
+</p>
+
+[! for f in files !]
+[! if 
+    f.path_parts[0] == "documentation" 
+    and
+    f.path_parts[1] == major_version
+    and
+    f.path_parts[2] == minor_version
+    and
+    f.path_parts[3] == patch_version
+    and 
+    f.path_parts[4] == "_index_page_parts"
+!]
+[! include f.input_path !]
+[! endif !]
+[! endfor !]
+
+[! for fldr in folders !]
+    [! if 
+        fldr.folder_parts[1] == file.path_parts[1]
+        and
+        fldr.folder_parts[2] == file.path_parts[2]
+        and
+        fldr.folder_parts[3] == file.path_parts[3]
+        and
+        fldr.folder_parts[4] == file.path_parts[4]
+        and
+        fldr.folder_parts[5] == "_index_page_parts"
+    !]
+    [! set page_part_path = fldr.parent + "/" + fldr.name + "/index.html" !]
+    [! include page_part_path !]
+    [! endif !]
+[! endfor !]
+
+<[@ bitty_tag @] data-connect="BittyUnhide"></[@ bitty_tag @]>
+
+</main>
+[!- endblock !]

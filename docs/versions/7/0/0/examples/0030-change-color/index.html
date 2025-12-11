@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --load-hider: 0;
+}
+
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+}
+
+:root {
+  --background-color: var(--switch--background-color, var(--light--background-color));
+  --default-color: var(--switch--default-color, var(--light--default-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--switch--background-color, var(--dark--background-color));
+    --default-color: var(--switch--default-color, var(--dark--default-color));
+  }
+}</style>
+
+<script>
+function loadThemeProps() {
+  const data = localStorage.getItem("themeProps");
+  if (data) {
+    data.props.forEach((prop) => {
+    });
+  }
+}
+loadThemeProps();</script><style>
+html {
+  background-color: var(--background-color);
+  color: var(--default-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--default-color);
+  opacity: var(--load-hider);
+}
+</style>
+    <link rel="stylesheet" href="/styles/7/0/0//all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/7/0/0//custom.css" />
+
+<script>
+window.BittyUnhide = class {
+  bittyReady() {
+    this.api.setProp("--load-hider", 1);
+  }
+}
+</script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty - a web tool for interesting pages</title>
+<meta property="og:title" content="bitty - a web tool for interesting pages" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image-5.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />  </head>
+  <body>
+<noscript>
+  <p>
+    Bitty is a web component that requires JavaScript
+    which is not available on this page. You'll need
+    to switch to a browser that has it enabled
+    to check things out. 
+  </p>
+  <style>
+  :root { --load-hider: 1; }
+  </style>
+</noscript><script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--accent-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    const url = new URL(window.location.href);
+    if (url.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  <a href="/">bitty</a>
+
+  <a href="/unit-tests/7/0/0/">tests</a>
+
+  <a href="/documentation/7/0/0/">documentation</a>
+
+  <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
+</nav><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/example-wrapper.js">
+
+<style>
+[data-connect=ChangeColor] {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.change-color-display {
+  border-radius: 0.4rem;
+  background-color: rgb(var(--red) var(--green) var(--blue));
+  width: 100px;
+  height: 100px;
+}</style>
+
+<script>
+const params = ["red", "green", "blue"];
+
+const sliderTemplate = `
+<label>PARAM
+<input 
+  data-send="updateColor" 
+  value="VALUE"
+  data-param="PARAM"
+  type="range" 
+  min="0"
+  max="255" />
+</label>`;
+
+window.ChangeColor = class {
+  makeSliders(_, el) {
+    params.forEach((param) => {
+      const value = Math.floor(Math.random() * 250);
+      this.api.setProp(`--${param}`, value);
+      const subs = [
+        ["PARAM", param],
+        ["VALUE", value],
+      ];
+      const slider = this.api.makeHTML(
+        sliderTemplate,
+        subs,
+      );
+      el.appendChild(slider);
+    });
+  }
+
+  updateColor(ev, _) {
+    window.requestAnimationFrame(() => {
+      this.api.setProp(
+        `--${ev.prop("param")}`,
+        ev.valueToFloat,
+      );
+    });
+  }
+};</script>
+
+<div class="hp-example">
+  <div class="hp-example-wrapper">
+    <div class="hp-example-title">
+Color Picker    </div>
+    <div class="hp-example-content"><bitty-7-0 data-connect="ChangeColor">
+  <div class="change-color-display"></div>
+  <div data-init="makeSliders"></div>
+</bitty-7-0>    </div>
+  </div>
+</div>
+
+<h2>HTML</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ChangeColor<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">change-color-display</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>makeSliders<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<h2>JavaScript</h2>
+<pre class="code-block-wrapper"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">params</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>red<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>green<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>blue<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="storage type js">const</span> <span class="variable other readwrite js">sliderTemplate</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>&lt;label&gt;PARAM
+<span class="line-marker"></span>&lt;input 
+<span class="line-marker"></span>  data-send=&quot;updateColor&quot; 
+<span class="line-marker"></span>  value=&quot;VALUE&quot;
+<span class="line-marker"></span>  data-param=&quot;PARAM&quot;
+<span class="line-marker"></span>  type=&quot;range&quot; 
+<span class="line-marker"></span>  min=&quot;0&quot;
+<span class="line-marker"></span>  max=&quot;255&quot; /&gt;
+<span class="line-marker"></span>&lt;/label&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ChangeColor</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">makeSliders</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">params</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forEach</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">param</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">value</span> <span class="keyword operator assignment js">=</span> <span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">floor</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="support class builtin js">Math</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">random</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator arithmetic js">*</span> <span class="constant numeric js">250</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setProp</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other readwrite js">param</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">value</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>PARAM<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">param</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>VALUE<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">value</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">slider</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeHTML</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>        <span class="variable other readwrite js">sliderTemplate</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="variable other readwrite js">subs</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">appendChild</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">slider</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">updateColor</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">_</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">requestAnimationFrame</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setProp</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>        <span class="string template js"><span class="punctuation definition string template begin js">`</span>--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>param<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">valueToFloat</span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+
+<h2>Notes</h2>
+
+</bitty-7-0><script>
+  setTimeout(() => { 
+    document.documentElement.style.setProperty("--load-hider", "1");
+  }, 1600);
+</script>
+
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
+  <div class="text-align-center">
+    <a href="https://github.com/alanwsmith/bitty">source</a> ~
+    <a href="https://socials.alanwsmith.com/">socials</a> ~
+    <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+    <a href="https://links.alanwsmith.com/">other projects</a>
+  </div>
+  <div class="text-align-center">
+    <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+  </div>
+  <details class="text-align-center"><summary>This work has been dedicated to the public domain.</summary>
+    <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+  </details>
+</footer>
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+
+  </body>
+</html>

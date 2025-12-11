@@ -1,0 +1,40 @@
+<script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--accent-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    const url = new URL(window.location.href);
+    if (url.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  [! if file.parent_folder == none !]
+  bitty
+  [! else !]
+  <a href="/">bitty</a>
+  [! endif !]
+
+  [! if file.folder_parts[0] == "unit-tests" !]
+  tests
+  [! else !]
+  <a href="/[@ unit_tests_root @]">tests</a>
+  [! endif !]
+
+  [! if file.folder_parts[0] == "documentation" !]
+  documentation
+  [! else !]
+  <a href="/[@ documentation_root @]">documentation</a>
+  [! endif !]
+
+  <[@ bitty_tag @] data-connect="GitHubStars"></[@ bitty_tag @]>
+</nav>

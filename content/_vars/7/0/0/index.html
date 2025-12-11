@@ -1,0 +1,94 @@
+[#- primary var -#]
+[!- set major_version = "7" -!]
+[!- set minor_version = "0" -!]
+[!- set patch_version = "0" -!]
+[!- set rc_string = "" -!]
+[!- set min_switch = "" -!]
+
+[#- assembled vars -#]
+[!- 
+  set bitty_tag = 
+  "bitty-" + major_version + "-" + minor_version 
+-!]
+
+[!- 
+  set version_key =  major_version 
+  + "." + minor_version + "." + patch_version + rc_string 
+-!]
+
+[!- 
+  set version_dir = "versions/" 
+    + major_version + "/" 
+    + minor_version + "/"
+    + patch_version 
+-!]
+
+[!-
+  set version_dirs = 
+    major_version + "/" 
+    + minor_version + "/"
+    + patch_version 
+-!]
+
+[!- set wrapper_root -!]
+_wrappers/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set styles_root -!]
+styles/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set unit_tests_root -!]
+unit-tests/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set documentation_root -!]
+documentation/[@ version_dirs|safe @]/
+[!- endset -!]
+
+[!- set release_notes_root -!]
+release-notes/
+[!- endset -!]
+
+
+
+[!- 
+  set v_dir = "v/" + major_version 
+  + "." + minor_version + "." + patch_version 
+-!]
+
+[!- set script_min_file_name -!]
+bitty-[@ major_version @].[@ minor_version @].[@ patch_version -@]
+[@- rc_string -@]
+[@- min_switch -@].js
+[!- endset -!]
+
+[!- set script_full_file_name -!]
+bitty-[@ major_version @].[@ minor_version @].[@ patch_version -@]
+[@- rc_string -@]
+.full.js
+[!- endset -!]
+
+[!- set bitty_js_path = "/" + v_dir + "/" + script_min_file_name  -!]
+
+[#-
+this is for the unpkg delivery. 
+need to set a switch to make this 
+toggle easier. 
+-#]
+
+[!- set bitty_js_path -!]
+https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js
+[!- endset -!]
+
+[!- set bitty_script_tag -!]
+<script 
+  src="[@ bitty_js_path|safe @]" 
+  type="module"></script>
+[!- endset -!]
+
+
+[#- content -#]
+[!- block payload -!][!- endblock -!]
+
+

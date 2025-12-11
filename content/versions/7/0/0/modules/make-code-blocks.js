@@ -1,8 +1,8 @@
 const t = {
   blockWrapper: `
-<div data-index="INDEX" class="accent-border default-padding">
+<div data-index="INDEX" class="default-border-radius accent-border default-padding">
   <div data-receive="copyText">BLOCK</div>
-  <div class="text-align-right">
+  <div class="text-align-right small-top-padding">
     <button data-send="copyText">Copy</button>
   </div>
 </div>`,
@@ -25,8 +25,20 @@ export default class {
     });
   }
 
-  copyText(_, el) {
+  async copyText(ev, el) {
     if (el.propMatchesSender("index")) {
+      try {
+        await navigator.clipboard.writeText(el.innerText);
+        ev.sender.innerHTML = "Copied";
+        // TODO: figure out where to put this so
+        // if you press the button multiple times
+        // things don't go weird.
+        setTimeout(() => {
+          ev.sender.innerHTML = "Copy";
+        }, 1400);
+      } catch (err) {
+        console.error("Could not copy to clipboard");
+      }
       console.log(el);
     }
   }

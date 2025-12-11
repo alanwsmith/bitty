@@ -172,6 +172,9 @@ class BittyJs extends HTMLElement {
       el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
     }
 
+    // TODO: Look at removing this in v8 and
+    // just using `this.api` which is
+    // the bitty parent.
     el.bittyParent = this.getBittyParent(el);
 
     el.prop = (x) => {
@@ -219,7 +222,7 @@ class BittyJs extends HTMLElement {
 
     // NOTE: Move the dataset.send into `sendPayload`
     // so this.api.forward() can change .sendPayload
-    // without affecting the original dataset. 
+    // without affecting the original dataset.
     if (ev.sender.dataset && ev.sender.dataset.send) {
       ev.sendPayload = ev.sender.dataset.send;
     }
@@ -287,16 +290,16 @@ class BittyJs extends HTMLElement {
     } else if (el.parentNode) {
       return this.getBittyParent(el.parentNode);
     } else {
-      // TODO: Add test to confirm this 
+      // TODO: Add test to confirm this
       // pulls the current element if another
-      // one isn't found. 
+      // one isn't found.
       // TODO: Check funcionatlity of
       // one bitty element calling
       // this. TBD on if it should return
       // itself or a parent if there's one
       // above it? Probably itself since
       // there isn't guaranteeded to
-      // be one above it. 
+      // be one above it.
       return this;
     }
   }
@@ -359,7 +362,8 @@ class BittyJs extends HTMLElement {
         throw new BittyError({
           type: "fetching",
           message:
-            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${JSON.stringify(subs)
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
+              JSON.stringify(subs)
             }, ${JSON.stringify(options)})`,
           statusText: response.statusText,
           status: response.status,
@@ -478,7 +482,8 @@ class BittyJs extends HTMLElement {
                 this.conn = new mod[connParts[1]]();
               } catch (error) {
                 console.error(
-                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${connParts[0]
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${
+                    connParts[0]
                   }" to make sure it has an "export class ${connParts[1]} {}"`,
                 );
               }
@@ -635,7 +640,7 @@ class BittyJs extends HTMLElement {
         el.dataset.bittyid = self.crypto.randomUUID();
       }
       if (!el.bittyId) {
-        el.bittyId = el.dataset.bittyid
+        el.bittyId = el.dataset.bittyid;
       }
     });
   }
@@ -656,64 +661,70 @@ class BittyJs extends HTMLElement {
   /* All the stuff below here is experimental. It's
  neither fully documented or tested */
 
-  // Experimental 
+  // Experimental
   /** internal */
   async getQuickElement(url, subs = [], options = {}) {
     const response = await this.getElement(url, subs, options);
     if (response.value) {
-        return response.value;
+      return response.value;
     } else {
-        return this.makeElement(`<span class="bitty-error">Error (check console)</span>`);
+      return this.makeElement(
+        `<span class="bitty-error">Error (check console)</span>`,
+      );
     }
   }
 
-  // Experimental 
+  // Experimental
   /** internal */
   async getQuickHTML(url, subs = [], options = {}) {
     const response = await this.getElement(url, subs, options);
     if (response.value) {
-        return response.value;
+      return response.value;
     } else {
-        return this.makeHTML(`<span class="bitty-error">Error (check console)</span>`);
+      return this.makeHTML(
+        `<span class="bitty-error">Error (check console)</span>`,
+      );
     }
   }
 
-  // Experimental 
+  // Experimental
   /** internal */
   async getQuickJSON(url, subs = [], options = {}) {
     const response = await this.getJSON(url, subs, options);
     if (response.value) {
-        return response.value;
+      return response.value;
     } else {
-        return response.error;
+      return response.error;
     }
   }
 
-  // Experimental 
+  // Experimental
   /** internal */
   async getQuickSVG(url, subs = [], options = {}) {
     const response = await this.getSVG(url, subs, options);
     if (response.value) {
-        return response.value;
+      return response.value;
     } else {
       const tmpl = document.createElement("template");
-      tmpl.innerHTML = `<svg version="1.1" width="120" height="32" xmlns="http://www.w3.org/2000/svg"><text x="60" y="16" font-size="12" text-anchor="middle" fill="red">error (check console)</text></svg>`;
+      tmpl.innerHTML =
+        `<svg version="1.1" width="120" height="32" xmlns="http://www.w3.org/2000/svg"><text x="60" y="16" font-size="12" text-anchor="middle" fill="red">error (check console)</text></svg>`;
       const wrapper = tmpl.content.cloneNode(true);
       const svg = wrapper.querySelector("svg");
       return svg;
     }
   }
 
-  // Experimental 
+  // Experimental
   /** internal */
   async getQuickTXT(url, subs = [], options = {}) {
     const response = await this.getTXT(url, subs, options);
     if (response.value) {
-        return response.value;
+      return response.value;
     } else {
-        return response.error;
+      return response.error;
     }
   }
 }
 
 customElements.define(tagName, BittyJs);
+

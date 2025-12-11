@@ -27,7 +27,8 @@ body {
 }
 
 .code-block {
-  padding: var(--default-padding);
+  padding-left: 2.3rem;
+  padding-block: var(--default-padding);
   background-color: var(--faded-match-color);
   border-radius: var(--default-border-radius);
   border: var(--faded-accent-border);
@@ -73,6 +74,22 @@ li > :where(:not(:first-child)) {
   margin-top: var(--flow-space, var(--large-margin)); 
 }
 
+.line-marker {
+  counter-increment: codeBlockLineNumberX;
+}
+
+.line-marker:before {
+    content: counter(codeBlockLineNumberX);
+    display: inline-block;
+    margin-left: -7.8ch;
+    padding-right: 1ch;
+    position: absolute;
+    text-align: end;
+    width: 7ch;
+    color: var(--default-color);
+}
+
+
 main {
   margin-top: var(--xxlarge-margin);
 }
@@ -117,3 +134,6 @@ ul > :where(:not(:first-child)) {
 .unit-test-columns button {
   visibility: hidden;
 }
+
+
+

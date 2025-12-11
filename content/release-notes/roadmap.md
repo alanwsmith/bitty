@@ -1,5 +1,11 @@
 ## Roadmap 
 
+- TODO: Consider: `.appendDataSend(someEl, SIGNALS)` and `.appendDataReceive` 
+which would let you update an existing elements
+`data-send` and `data-recieve` with new signals
+(creating the attributes if they don't already exist)
+Example: `this.api.addDataReceive("signal", codeBlock);`
+
 - TODO: Example test 1060 to see about the bitty 
 element picking up event when other bitty element
 that are siblings get clicked. 

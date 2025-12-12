@@ -85,7 +85,10 @@ window.BittyUnhide = class {
   <style>
   :root { --load-hider: 1; }
   </style>
-</noscript><bitty-7-0 data-connect="/versions&#x2f;7&#x2f;0&#x2f;0/modules/default-page.js"><script>
+</noscript><bitty-7-0 data-connect="/versions/7/0/0/projects/code-block-controls/script.js CodeBlockControls">
+<bitty-7-0 data-connect="/versions/7/0/0/projects/details-opener/script.js DetailsOpener">
+<bitty-7-0 data-connect="/versions/7/0/0/projects/unhider/script.js Unhider">
+<script>
 const t = {
   stars: `<github-stars
   :repo="alanwsmith/bitty"
@@ -113,129 +116,28 @@ window.GitHubStars = class {
   <a href="/versions/7/0/0/projects/">projects</a>
 
   <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
-</nav><hgroup>
+</nav><header class="default-wrapper">
+<hgroup>
   <h1>Release Notes</h1>
-  <div class="subtitle">a tool for interesting pages</div>
 </hgroup>
+</header>
+<main class="default-wrapper default-flow">
 
 <h3>Version 7.1.0-beta1</h3>
+<p>DATE TBD</p>
 <p>NOTE: These are work in progress notes
 for the next version of bitty.
 Check the <code>Version 7.0.0</code> notes below
 for the current version.</p>
-<p>DATE TBD</p>
-<ul>
-<li>
-<p>TODO: Examine test 1060 to see about the bitty
-element picking up event when other bitty element
-that are siblings get clicked.</p>
-</li>
-<li>
-<p>TODO: Figure out how to make a better error message if there's
-a major problem in a module file that prevents it from loading
-all together. For example, an open <code>const problemVar =</code> with
-nothing after the <code>=</code> sign. Right now, it just says there's
-an error from inside bitty's component with no useful
-info about where the error actually occurred.</p>
-</li>
-<li>
-<p>TODO: Added a <code>bittyready</code> signal that fires
-at the end of a bitty element's initialization
-chain.</p>
-</li>
-<li>
-<p>TODO: CONSIDER: <code>.addDataSend(someEl, SIGNALS)</code>
-and <code>.addDataReceive(someEl, SIGNALS)</code>
-which would let you update an existing elements
-<code>data-send</code> and <code>data-recieve</code> with new signals
-(creating the attributes if they don't already exist)
-Example: <code>this.api.addDataReceive(&quot;signal&quot;, codeBlock);</code></p>
-<p>Existing signals would remain on the elements.</p>
-</li>
-<li>
-<p>TODO: CONSIDER: <code>.removeDataSend(someEl, SIGNALS)</code>
-and <code>.removeDataReceive(someEl, SIGNALS)</code> which take
-signals off the respective <code>data-*</code> attributes.</p>
-<p>Multiple signals can be removed.</p>
-<p>It's not necessary to add <code>await:</code> on the
-removal for a signal. Only the name
-is required. If the source signal has
-an await it gets removed regardless.</p>
-</li>
-<li>
-<p>TODO: CONFIRM UPDATE: Added <code>internal</code> comments
-to <code>ev.sendPayload</code> to filter it out of the
-<code>jsdoc</code> output for auto generating docs.</p>
-</li>
-<li>
-<p>TODO: Added <code>this.api.getQuickXXX()</code>
-methods that correspond to <code>this.api.getXXX()</code>
-methods. The difference is that they
-return a payload regardless of if the
-fetch fails or not. If the fetch
-succeeds, it's returned directly. If
-it fails, an alternate error payload
-is returned along with an error message
-that goes to the console.</p>
-</li>
-<li>
-<p>TODO: Added <code>this.api.getCSS()</code> which is just an
-alias to <code>this.api.getTXT()</code> but helps with the
-mental model that fits with the other <code>this.api.getXXX()</code>
-methods.</p>
-</li>
-<li>
-<p>TODO: Added a feature to the subs for <code>this.api.getXXX</code>
-where if the first value is a string it just
-alternates the subs without having to do
-a nested array.</p>
-</li>
-<li>
-<p>TODO: Added <code>this.api.localForward(EVENT, SIGNAL)</code> which only
-forwards inside the current module in the
-same way <code>this.api.localTrigger(SIGNAL)</code>
-works.</p>
-</li>
-<li>
-<p>TODO: Added <code>el.setProp(KEY, VALUE)</code> which
-is shorthand for adding a corresponding
-<code>data-KEY</code> attribute to the <code>VALUE</code>
-to the element.</p>
-</li>
-<li>
-<p>TODO: CONSIDER: Added <code>ev.setProp(KEY, VALUE)</code> which
-is shorthand for adding a corresponding
-<code>data-KEY</code> attribute to the <code>VALUE</code>
-to the <code>event.target</code>. (This would
-keep the APIs consistent, but need
-to thing through the implication of
-adjusting the <code>.target</code>)</p>
-</li>
-<li>
-<p>TODO: CONSIDER: Added <code>ev.sender.setProp(KEY, VALUE)</code> which
-is shorthand for adding a corresponding
-<code>data-KEY</code> attribute to the <code>VALUE</code>
-to the <code>event.sender</code>. (This would
-keep the APIs consistent, but need
-to thing through the implication of
-adjusting the <code>.sender</code>)</p>
-</li>
-<li>
-<p>TODO: CONFIRM: Documented behavior of <code>el.bittyId</code>
-if the element was added outside the
-<code>this.api...</code> methods (i.e. that
-<code>.bittyId</code> properties are only added when
-elements and fragments are created
-via <code>this.api...</code> methods. Anything
-created with <code>document.createElement()</code>
-won't get them automatically)</p>
-</li>
-</ul>
-
 <h3>Version: 7.0.0</h3>
 <p>Dec. 10, 2025</p>
 <ul>
-<li>No changes since <code>7.0.0-rc2</code></li>
+<li>
+<p>Version 7.0.0 release.</p>
+</li>
+<li>
+<p>No changes since <code>7.0.0-rc2</code>.</p>
+</li>
 </ul>
 
 <h3>Version: 7.0.0-rc2</h3>
@@ -2076,7 +1978,12 @@ choice to use the light DOM instead of the shadow DOM.</p>
 <li>
 <p>Set up initial preflight check to ensure functions are in place.</p>
 </li>
-</ul></bitty-7-0><script>
+</ul>
+</main>
+
+</bitty-7-0>
+</bitty-7-0>
+</bitty-7-0><script>
   setTimeout(() => { 
     document.documentElement.style.setProperty("--load-hider", "1");
   }, 1600);

@@ -8,15 +8,26 @@
   + "/main-wrapper.html" 
 -!] 
 
+[!- block bittyOpenTag -!]
+[!- include wrapper_root + "includes/bitty-open-tags.html" -!]
+[!- endblock -!]
+
+[!- block bittyCloseTag -!]
+[!- include wrapper_root + "includes/bitty-close-tags.html" -!]
+[!- endblock -!]
+
+
 [! block header !]
+<header class="default-wrapper">
 <hgroup>
   <h1>Release Notes</h1>
-  <div class="subtitle">a tool for interesting pages</div>
 </hgroup>
+</header>
 [! endblock !]
 
 
 [! block main !]
+<main class="default-wrapper default-flow">
 [! for f in files|reverse !]
 [! if f.path_parts[1] == "entries" !]
 
@@ -25,14 +36,9 @@
 [! endfilter !]
 [! endif !]
 [! endfor !]
+
+</main>
+
 [! endblock !]
 
-
-[!- block bittyOpenTag -!]
-<[@ bitty_tag @] data-connect="/[@ version_dir @]/modules/default-page.js">
-[!- endblock -!]
-
-[!- block bittyCloseTag -!]
-</[@ bitty_tag @]>
-[!- endblock -!]
 

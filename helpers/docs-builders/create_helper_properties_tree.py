@@ -45,12 +45,10 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/helper-properties/$VALUE/_preface.html" -!]
-[!- set examples_dir = file.folder + "/_includes/helper-properties/$VALUE/_examples" -!]
+[!- set preface_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_preface.html" -!]
+[!- set examples_dir = file.folder + "/_includes/$PARENT.properties/$VALUE/_examples" -!]
 
 <details class="docs-sub-details">
-
-[#
 
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]
@@ -67,6 +65,8 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 	<summary>$VALUE</summary>
 
+
+
 <div class="docs-preface-wrapper">
 	[!- include preface_path -!]
 </div>
@@ -80,7 +80,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
-	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+	[! set example_display_path = file.folder + "/_includes/properties-display.html" !]
 
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
@@ -97,6 +97,8 @@ helpers/docs-builders/create_helper_properties_tree.py
 	</details>
 	[! endif !]
 	[! endfor !]
+
+[#
 #]
 
 </details>

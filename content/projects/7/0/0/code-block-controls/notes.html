@@ -12,7 +12,8 @@ the code more generic by passing
 in the class to match on in a
 `data-*` attribute if needed.)
 
-- It's designed so that it can 
+- The <strong>bit</strong> is 
+written so that it can 
 be used to wrap an entire page
 without having to create a new
 instance for each individual code
@@ -20,14 +21,26 @@ block.
 
 - The process finds any elements
 with a `.code-block` class. 
-It works on [! filter inline_highlight("html") !]
-<pre>[! endfilter !] tags, 
-or [! filter inline_highlight("html") !]<div>[! endfilter !]
+It works on [! filter inline_highlight("html") -!]
+<pre>[!- endfilter !] tags, 
+or [! filter inline_highlight("html") !]<div>[! endfilter !] 
 tags or whatever. 
+
+- The original element with the [! filter inline_highlight("html") -!]
+class="code-block"[!- endfilter !] attribute is
+udpated to add the [! filter inline_highlight("js") !]
+toggleWrap reduceCodeFont enlargeCodeFont
+[! endfilter !] receivers on the line: 
+[! filter block_highlight("js", "no-buttons no-numbers") !]
+codeBlock.dataset.receive = "toggleWrap reduceCodeFont enlargeCodeFont";
+[! endfilter !]
+
+
+
 
 - Every element it finds has a new element
 (made from the 
-[! filter inline_highlight("html") !]t.blockWrapper[! endfilter !] 
+[! filter inline_highlight("html") !]codeBlockTemplates.blockWrapper[! endfilter !] 
 template)
 wrapped around it. The original 
 element becomes a child of the new

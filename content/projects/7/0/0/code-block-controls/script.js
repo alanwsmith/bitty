@@ -1,4 +1,4 @@
-const t = {
+const codeBlockTemplates = {
   blockWrapper: `
 <div data-index="INDEX" class="default-border-radius accent-border default-padding">
   <div data-receive="copyText">BLOCK</div>
@@ -13,6 +13,8 @@ const t = {
 
 export class CodeBlockControls {
   #timeouts = {};
+  // NOTE: These font sizes aren't magic. They're
+  // from the CSS variables for the site. 
   #fontSizes =
     `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`
       .split("|");
@@ -30,7 +32,9 @@ export class CodeBlockControls {
         ["INDEX", index],
         ["BLOCK", codeBlock],
       ];
-      const newWrapper = this.api.makeElement(t.blockWrapper, subs);
+      const newWrapper = this.api.makeElement(
+        codeBlockTemplates.blockWrapper, subs
+      );
       codeBlock.replaceWith(newWrapper);
     });
   }

@@ -50,6 +50,8 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 <details class="docs-sub-details">
 
+[#
+
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]
 [!- set counters.count = 0 !]
@@ -95,6 +97,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 	</details>
 	[! endif !]
 	[! endfor !]
+#]
 
 </details>
 

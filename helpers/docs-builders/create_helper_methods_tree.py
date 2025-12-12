@@ -46,8 +46,11 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- set args_path = file.folder + "/_includes/helper-methods/$VALUE/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/helper-methods/$VALUE/_examples" -!]
 [!- set notes_path = file.folder + "/_includes/helper-methods/$VALUE/_notes.html" -!]
+[!- set added_path = file.folder + "/_includes/helper-methods/$VALUE/_method_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/helper-methods/$VALUE/_method_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/helper-methods/$VALUE/_method_removed.txt" -!]
 
-<details class="docs-sub-details">
+<details class="docs-method-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]
@@ -71,7 +74,33 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- if counters.count != counters.initial !],[@ " " @][! endif !]
 [!- endif !]
 [!- endfor -!]
-	)</summary>
+	) - 
+	
+	<span class="docs-method-version docs-method-added">
+	[added: [! include added_path !]]
+	</span>
+	
+	<span class="docs-method-version docs-method-changed">
+	[!- set changed_string|trim -!]
+[!- include changed_path -!]
+	[!- endset -!]
+	[!- if changed_string != "" -!]
+[changed: [@ changed_string @]]
+	[!- endif -!]
+	</span>
+
+
+
+<span class="docs-method-version docs-method-removed">
+	[!- set removed_string|trim -!]
+[!- include removed_path -!]
+	[!- endset -!]
+	[!- if removed_string != "" -!]
+[removed: [@ removed_string @]]
+	[!- endif -!]
+	</span>
+
+	</summary>
 
 
 <div class="doc-sub-header">Arguments</div>
@@ -178,6 +207,31 @@ def make_method_details_files():
 			with open(output_path, "w") as _out:
 				_out.write("<p>TODO</p>")
 				
+def make_added_files():
+	for key in lines:
+		output_path = f"{parent_dir}/{key}/_method_added.txt"
+		if not os.path.isfile(output_path):
+			print(f"Generating: {output_path}")
+			with open(output_path, "w") as _out:
+				_out.write("7.0.0")
+				
+def make_changed_files():
+	for key in lines:
+		output_path = f"{parent_dir}/{key}/_method_changed.txt"
+		if not os.path.isfile(output_path):
+			print(f"Generating: {output_path}")
+			with open(output_path, "w") as _out:
+				_out.write("")
+				
+def make_removed_files():
+	for key in lines:
+		output_path = f"{parent_dir}/{key}/_method_removed.txt"
+		if not os.path.isfile(output_path):
+			print(f"Generating: {output_path}")
+			with open(output_path, "w") as _out:
+				_out.write("")
+				
+				
 				
 def make_notes_files():
 	for key in lines:
@@ -195,6 +249,10 @@ if __name__ == "__main__":
 	make_directories()
 	make_method_details_files()
 	make_notes_files()
+	make_added_files()
+	make_changed_files()
+	make_removed_files()
 	make_index_files()
+
 
 	

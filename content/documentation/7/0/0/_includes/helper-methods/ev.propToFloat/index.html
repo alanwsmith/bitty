@@ -12,8 +12,11 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- set args_path = file.folder + "/_includes/helper-methods/ev.propToFloat/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/helper-methods/ev.propToFloat/_examples" -!]
 [!- set notes_path = file.folder + "/_includes/helper-methods/ev.propToFloat/_notes.html" -!]
+[!- set added_path = file.folder + "/_includes/helper-methods/ev.propToFloat/_method_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/helper-methods/ev.propToFloat/_method_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/helper-methods/ev.propToFloat/_method_removed.txt" -!]
 
-<details class="docs-sub-details">
+<details class="docs-method-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]
@@ -37,7 +40,33 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- if counters.count != counters.initial !],[@ " " @][! endif !]
 [!- endif !]
 [!- endfor -!]
-	)</summary>
+	) - 
+	
+	<span class="docs-method-version docs-method-added">
+	[added: [! include added_path !]]
+	</span>
+	
+	<span class="docs-method-version docs-method-changed">
+	[!- set changed_string|trim -!]
+[!- include changed_path -!]
+	[!- endset -!]
+	[!- if changed_string != "" -!]
+[changed: [@ changed_string @]]
+	[!- endif -!]
+	</span>
+
+
+
+<span class="docs-method-version docs-method-removed">
+	[!- set removed_string|trim -!]
+[!- include removed_path -!]
+	[!- endset -!]
+	[!- if removed_string != "" -!]
+[removed: [@ removed_string @]]
+	[!- endif -!]
+	</span>
+
+	</summary>
 
 
 <div class="doc-sub-header">Arguments</div>

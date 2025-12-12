@@ -42,9 +42,10 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/helper-methods/$VALUE/_preface.html" -!]
+[!- set method_details_path = file.folder + "/_includes/helper-methods/$VALUE/_method_details.html" -!]
 [!- set args_path = file.folder + "/_includes/helper-methods/$VALUE/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/helper-methods/$VALUE/_examples" -!]
+[!- set notes_path = file.folder + "/_includes/helper-methods/$VALUE/_notes.html" -!]
 
 <details class="docs-sub-details">
 
@@ -72,9 +73,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endfor -!]
 	)</summary>
 
-<div class="docs-preface-wrapper">
-	[!- include preface_path -!]
-</div>
 
 <div class="doc-sub-header">Arguments</div>
 
@@ -84,13 +82,21 @@ helpers/docs-builders/create_helper_methods_tree.py
 [! if f.parent == args_path !]
 [! set name_path = args_path + "/" + f.name + "/name.txt" !]
 [! set content_path = args_path + "/" + f.name + "/index.html" !]
-<li>[! include name_path !] [! include content_path !]</li>
+<li>
+<div class="font-weight-900">[! include name_path !]</div> 
+<div>[! include content_path !]</div>
+</li>
 [! endif !]
 [! endfor !]
 </ul>
 </div>
 
 
+<div class="doc-sub-header">Details</div>
+
+<div class="docs-preface-wrapper">
+	[!- include method_details_path -!]
+</div>
 
 [!- for f in folders !]
 [!- if f.parent == examples_dir !]
@@ -102,30 +108,35 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
 
-<div class="docs-examples-wrapper">
+	<div class="docs-examples-wrapper">
+	<ul>
+		[! for f in folders !]
+		[! if f.parent == examples_dir !]
+		[! set example_dir = examples_dir + "/" + f.name !]
+		[! set name_path = example_dir + "/name.txt" !]
+		[! set html_path = example_dir + "/html.html" !]
+		[! set javascript_path = example_dir + "/javascript.js" !]
+		[! set description_path = example_dir + "/description.html" !]
+		[! set postscript_path = example_dir + "/postscript.html" !]
+	
+	<li>
+		<details class="example-details">
+		<summary>[! include name_path !]</summary>
+		[! include example_display_path !]
+		</details>
+	</li>
+	
+		[! endif !]
+		[! endfor !]
+	
+	</ul>
+	</div>
 
-	[! for f in folders !]
-	[! if f.parent == examples_dir !]
-	[! set example_dir = examples_dir + "/" + f.name !]
-	[! set name_path = example_dir + "/name.txt" !]
-	[! set html_path = example_dir + "/html.html" !]
-	[! set javascript_path = example_dir + "/javascript.js" !]
-	[! set description_path = example_dir + "/description.html" !]
-	[! set postscript_path = example_dir + "/postscript.html" !]
-
-	<details class="example-details">
-	<summary>[! include name_path !]</summary>
-	[! include example_display_path !]
-	</details>
-	[! endif !]
-	[! endfor !]
-
+<div class="docs-optional-wrapper">
+[! include notes_path !]
 </div>
 
-
 </details>
-
-
 
 """
 
@@ -151,26 +162,39 @@ def make_directories():
 
 def make_index_files():
 	for key in lines:
-		index_path = f"{parent_dir}/{key}/index.html"
-		print(f"Generating: {index_path}")
+		output_path = f"{parent_dir}/{key}/index.html"
+		print(f"Generating: {output_path}")
 		data = { "VALUE": key }
 		template = Template(index_skeleton)
 		output = template.substitute(data)
-		with open(index_path, "w") as _out:
+		with open(output_path, "w") as _out:
 			_out.write(output)
 	
-def make_preface_files():
+def make_method_details_files():
 	for key in lines:
-		preface_path = f"{parent_dir}/{key}/_preface.html"
-		if not os.path.isfile(preface_path):
-			print(f"Generating: {preface_path}")
-			with open(preface_path, "w") as _out:
+		output_path = f"{parent_dir}/{key}/_method_details.html"
+		if not os.path.isfile(output_path):
+			print(f"Generating: {output_path}")
+			with open(output_path, "w") as _out:
 				_out.write("<p>TODO</p>")
 				
+				
+def make_notes_files():
+	for key in lines:
+		output_path = f"{parent_dir}/{key}/_notes.html"
+		if not os.path.isfile(output_path):
+			print(f"Generating: {output_path}")
+			with open(output_path, "w") as _out:
+				_out.write("""[! filter markdown|safe !]
+
+[! endfilter !]""")
+								
+								
 
 if __name__ == "__main__":
 	make_directories()
-	make_preface_files()
+	make_method_details_files()
+	make_notes_files()
 	make_index_files()
 
 	

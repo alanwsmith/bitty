@@ -8,9 +8,10 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/helper-methods/el.propToFloat/_preface.html" -!]
+[!- set method_details_path = file.folder + "/_includes/helper-methods/el.propToFloat/_method_details.html" -!]
 [!- set args_path = file.folder + "/_includes/helper-methods/el.propToFloat/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/helper-methods/el.propToFloat/_examples" -!]
+[!- set notes_path = file.folder + "/_includes/helper-methods/el.propToFloat/_notes.html" -!]
 
 <details class="docs-sub-details">
 
@@ -38,9 +39,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endfor -!]
 	)</summary>
 
-<div class="docs-preface-wrapper">
-	[!- include preface_path -!]
-</div>
 
 <div class="doc-sub-header">Arguments</div>
 
@@ -50,13 +48,21 @@ helpers/docs-builders/create_helper_methods_tree.py
 [! if f.parent == args_path !]
 [! set name_path = args_path + "/" + f.name + "/name.txt" !]
 [! set content_path = args_path + "/" + f.name + "/index.html" !]
-<li>[! include name_path !] [! include content_path !]</li>
+<li>
+<div class="font-weight-900">[! include name_path !]</div> 
+<div>[! include content_path !]</div>
+</li>
 [! endif !]
 [! endfor !]
 </ul>
 </div>
 
 
+<div class="doc-sub-header">Details</div>
+
+<div class="docs-preface-wrapper">
+	[!- include method_details_path -!]
+</div>
 
 [!- for f in folders !]
 [!- if f.parent == examples_dir !]
@@ -68,28 +74,33 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
 
-<div class="docs-examples-wrapper">
+	<div class="docs-examples-wrapper">
+	<ul>
+		[! for f in folders !]
+		[! if f.parent == examples_dir !]
+		[! set example_dir = examples_dir + "/" + f.name !]
+		[! set name_path = example_dir + "/name.txt" !]
+		[! set html_path = example_dir + "/html.html" !]
+		[! set javascript_path = example_dir + "/javascript.js" !]
+		[! set description_path = example_dir + "/description.html" !]
+		[! set postscript_path = example_dir + "/postscript.html" !]
+	
+	<li>
+		<details class="example-details">
+		<summary>[! include name_path !]</summary>
+		[! include example_display_path !]
+		</details>
+	</li>
+	
+		[! endif !]
+		[! endfor !]
+	
+	</ul>
+	</div>
 
-	[! for f in folders !]
-	[! if f.parent == examples_dir !]
-	[! set example_dir = examples_dir + "/" + f.name !]
-	[! set name_path = example_dir + "/name.txt" !]
-	[! set html_path = example_dir + "/html.html" !]
-	[! set javascript_path = example_dir + "/javascript.js" !]
-	[! set description_path = example_dir + "/description.html" !]
-	[! set postscript_path = example_dir + "/postscript.html" !]
-
-	<details class="example-details">
-	<summary>[! include name_path !]</summary>
-	[! include example_display_path !]
-	</details>
-	[! endif !]
-	[! endfor !]
-
+<div class="docs-optional-wrapper">
+[! include notes_path !]
 </div>
 
-
 </details>
-
-
 

@@ -1,5 +1,11 @@
 ## Under Consideration
 
+- TODO: CONFIRM: If `el.bittyPreant` is
+called on a bitty element it searches for
+a parent bitty element that it's nested in. 
+If it finds one, it's returne. Otherwise
+the result is undefined. 
+
 - TODO: CONFIRM: `el.isTarget` and `el.isSender`
 work properly with `data-use` in addition
 to `data-send` and `data-receive`. 

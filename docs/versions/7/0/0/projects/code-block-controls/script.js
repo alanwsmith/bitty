@@ -14,9 +14,8 @@ const t = {
 export class CodeBlockControls {
   #timeouts = {};
   #fontSizes =
-    `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`.split(
-      "|",
-    );
+    `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`
+      .split("|");
 
   bittyReady() {
     this.api.querySelectorAll(".code-block").forEach((codeBlock, index) => {
@@ -58,7 +57,8 @@ export class CodeBlockControls {
       const size = el.propToInt("fontsize");
       if (size < this.#fontSizes.length - 1) {
         el.dataset.fontsize = size + 1;
-        el.style.fontSize = `var(--${this.#fontSizes[size + 1]}-font-size)`;
+        el.style.fontSize = 
+          `var(--${this.#fontSizes[size + 1]}-font-size)`;
       }
     }
   }
@@ -68,7 +68,8 @@ export class CodeBlockControls {
       const size = el.propToInt("fontsize");
       if (size > 0) {
         el.dataset.fontsize = size - 1;
-        el.style.fontSize = `var(--${this.#fontSizes[size - 1]}-font-size)`;
+        el.style.fontSize = 
+          `var(--${this.#fontSizes[size - 1]}-font-size)`;
       }
     }
   }

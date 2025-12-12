@@ -13,6 +13,8 @@ inherent in the other options.)
 
 ### Scratchpad/Drafts
 
+
+
 ---
 
 bitty is for folks who use static
@@ -59,3 +61,7 @@ to build on the web with less
 friction.
 
 ---
+
+bitty is for folks who want
+a separation of concerns
+between the HTML and the JavaScript

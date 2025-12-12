@@ -38,9 +38,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endfor -!]
 	)</summary>
 
-<div class="docs-preface-wrapper">
-	[!- include preface_path -!]
-</div>
 
 <div class="doc-sub-header">Arguments</div>
 
@@ -50,10 +47,20 @@ helpers/docs-builders/create_helper_methods_tree.py
 [! if f.parent == args_path !]
 [! set name_path = args_path + "/" + f.name + "/name.txt" !]
 [! set content_path = args_path + "/" + f.name + "/index.html" !]
-<li>[! include name_path !] [! include content_path !]</li>
+<li>
+<div class="font-weight-900">[! include name_path !]</div> 
+<div>[! include content_path !]</div>
+</li>
 [! endif !]
 [! endfor !]
 </ul>
+</div>
+
+
+<div class="doc-sub-header">Details</div>
+
+<div class="docs-preface-wrapper">
+	[!- include preface_path -!]
 </div>
 
 
@@ -69,7 +76,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
 
 <div class="docs-examples-wrapper">
-
+<ul>
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
 	[! set example_dir = examples_dir + "/" + f.name !]
@@ -79,13 +86,17 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[! set description_path = example_dir + "/description.html" !]
 	[! set postscript_path = example_dir + "/postscript.html" !]
 
+<li>
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
 	[! include example_display_path !]
 	</details>
+</li>
+
 	[! endif !]
 	[! endfor !]
 
+</ul>
 </div>
 
 

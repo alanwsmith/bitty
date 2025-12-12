@@ -1,5 +1,16 @@
 ## Under Consideration
 
+- TODO: Do a network test where you have
+100 classes in a single file that's used
+by multiple elments to see what the
+network traffic and caching does. 
+
+- TODO: Do a network test where you have
+100 of the same element making the same
+data-connect call to a remote file
+to see what the network traffic 
+and caching does. 
+
 - TODO: CONFIRM: If `el.bittyPreant` is
 called on a bitty element it searches for
 a parent bitty element that it's nested in. 

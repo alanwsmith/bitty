@@ -1,0 +1,78 @@
+<h2>Notes</h2>
+
+[! filter markdown|safe !]
+- This is the **bit** I use on this
+site. The spefific styles match
+my CSS. You'll need to update
+them to match your CSS for
+everything to work. 
+
+  (It's entirely possible to make 
+the code more generic by passing
+in the class to match on in a
+`data-*` attribute if needed.)
+
+- It's designed so that it can 
+be used to wrap an entire page
+without having to create a new
+instance for each individual code
+block. 
+
+- The process finds any elements
+with a `.code-block` class. 
+It works on [! filter inline_highlight("html") !]
+<pre>[! endfilter !] tags, 
+or [! filter inline_highlight("html") !]<div>[! endfilter !]
+tags or whatever. 
+
+- Every element it finds has a new element
+(made from the 
+[! filter inline_highlight("html") !]t.blockWrapper[! endfilter !] 
+template)
+wrapped around it. The original 
+element becomes a child of the new
+wrapper along with the newly
+created buttons. 
+
+- This code is a good example of how 
+multiple elements can be used as
+wrappers for elements with the `data-send` 
+and `data-receive` attributes
+used for signaling. 
+
+  The trick is to put a unique 
+identifier on the wrapper. In this
+case it's `data-index` which
+gets its value when it's created. When
+a button is clicked the 
+[! filter inline_highlight("js") -!]
+el.propMatchesSender("index")
+[!- endfilter !] method checks to 
+see if the receiving element has
+the same parent as the element
+that sent the event. 
+
+  This works because the various
+`.prop...(KEY)` methods start by looking
+for `.dataset.KEY` properties on themselves
+but walk up that ancestor tree if they
+don't have it. Since neither the 
+[! filter inline_highlight("html") !]<div data-receive="copyText">[! endfilter !]
+or the [! filter inline_highlight("html") !]<button data-send="copyText">[! endfilter !]
+element have a [! filter inline_highlight("html") !]data-index="#"[! endfilter !]
+attribute the one that's on the 
+parent [! filter inline_highlight("html") !]<div>[! endfilter !]
+gets used. 
+
+- The `copyText` method is run async in order
+to `await` the `navigator.clipboard.writeText`
+call. 
+
+- It also sets a timeout that's stored
+on the class to change the text back from
+"Copied" to "Copy". If the button's clicked
+again before the timeout triggers
+it gets cleared and a new one is set.
+
+
+[! endfilter !]

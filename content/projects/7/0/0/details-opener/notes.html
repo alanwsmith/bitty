@@ -1,0 +1,53 @@
+[! filter markdown|safe !]
+## Notes
+
+- This script isn't really bitty specific. 
+All the methods are generic with no requirement
+for adding `data-*` attributes to any elements. 
+bitty is merely used to wrap the class and load
+it. 
+
+- Adding `open` attributes to 
+[! filter inline_highlight("html") !]<details>[! endfilter !]
+  elements directly in the HTML opens
+  them by default. If an element with an 
+  open attribute is closed it stays closed
+  on the next refresh regardless of
+  if the `open` attribute exists or not. 
+  
+  That provides a way for doing things
+  like opening an introduction section on
+  a page by default and then preventing
+  it from re-opening if the user decides
+  to close it. 
+
+- Nested 
+[! filter inline_highlight("html") !]<details>[! endfilter !]
+tags maintain their state regardless of their
+parent. For example, if you do the following:
+
+  - open a parent tag
+  - open a child tag
+  - close the parent tag
+  - re-open the parent tag
+
+  The child tag will be open when the
+  parent is re-opened. 
+  
+- If the number of details elements
+on the page changes when it's 
+refreshed/reloaded everything goes
+back to its default state (i.e.
+any tags with `open` attributes are
+opened and all the other ones are
+closed).
+
+- Data is stored with a key that 
+uses the [! filter inline_highlight("js") !]window.location.pathname[! endfilter !].
+If a single URL is used to host multiple
+content pages (e.g. in a single page app)
+things will get weird. The code would
+need to be updated to accommodate that. 
+
+
+[! endfilter !]

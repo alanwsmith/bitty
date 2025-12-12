@@ -5,11 +5,27 @@
 [!- set rc_string = "" -!]
 [!- set min_switch = "" -!]
 
+
 [#- assembled vars -#]
 [!- 
   set bitty_tag = 
   "bitty-" + major_version + "-" + minor_version 
 -!]
+
+[!- set bitty_highlight_open_tag -!]
+[!- filter inline_highlight("html") -!]
+<bitty-[@ major_version @]-[@ minor_version @]>
+[!- endfilter -!]
+[!- endset !]
+
+
+[!- set bitty_highlight_close_tag -!]
+[!- filter inline_highlight("html") -!]
+</bitty-[@ major_version @]-[@ minor_version @]>
+[!- endfilter -!]
+[!- endset !]
+
+
 
 [!- 
   set version_key =  major_version 
@@ -39,7 +55,7 @@ documentation/[@ version_dirs|safe @]/
 [!- endset -!]
 
 [!- set projects_root -!]
-versions/[@ version_dirs|safe @]/projects/
+projects/[@ version_dirs|safe @]/
 [!- endset -!]
 
 [!- set release_notes_root -!]
@@ -53,6 +69,14 @@ styles/[@ version_dirs|safe @]/
 [!- set unit_tests_root -!]
 unit-tests/[@ version_dirs|safe @]/
 [!- endset -!]
+
+
+[# DOCUMENTATION HELPERS #]
+[!- set property_value_documentation_note -!]
+[@ documentation_root @]/_includes/helper-properties/_value-method-note.html
+[!- endset -!]
+
+
 
 
 [!- 

@@ -35,13 +35,14 @@ window.GitHubStars = class {
   <a href="/[@ unit_tests_root @]">tests</a>
   [! endif !]
 
-  [#
-  [! if file.folder_parts[4] == "projects" !]
+  [! if 
+    file.folder_parts[0] == "projects" 
+    and not file.folder_parts[1]
+  !]
   projects 
   [! else !]
-  <a href="/[@ projects_root @]">projects</a>
+  <a href="/projects">projects</a>
   [! endif !]
-  #]
 
   <[@ bitty_tag @] data-connect="GitHubStars"></[@ bitty_tag @]>
 </nav>

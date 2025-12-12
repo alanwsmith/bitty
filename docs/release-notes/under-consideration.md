@@ -1,4 +1,120 @@
-## Roadmap 
+## Under Consideration
+
+- TODO: Do a network test where you have
+100 classes in a single file that's used
+by multiple elments to see what the
+network traffic and caching does. 
+
+- TODO: Do a network test where you have
+100 of the same element making the same
+data-connect call to a remote file
+to see what the network traffic 
+and caching does. 
+
+- TODO: CONFIRM: If `el.bittyPreant` is
+called on a bitty element it searches for
+a parent bitty element that it's nested in. 
+If it finds one, it's returne. Otherwise
+the result is undefined. 
+
+- TODO: CONFIRM: `el.isTarget` and `el.isSender`
+work properly with `data-use` in addition
+to `data-send` and `data-receive`. 
+
+- TODO: Examine test 1060 to see about the bitty 
+element picking up event when other bitty element
+that are siblings get clicked. 
+
+- TODO: Figure out how to make a better error message if there's
+a major problem in a module file that prevents it from loading
+all together. For example, an open `const problemVar =` with
+nothing after the `=` sign. Right now, it just says there's
+an error from inside bitty's component with no useful 
+info about where the error actually occurred. 
+
+- TODO: Added a `bittyready` signal that fires
+at the end of a bitty element's initialization
+chain. 
+
+- TODO: CONSIDER: `.addDataSend(someEl, SIGNALS)` 
+and `.addDataReceive(someEl, SIGNALS)` 
+which would let you update an existing elements
+`data-send` and `data-recieve` with new signals
+(creating the attributes if they don't already exist)
+Example: `this.api.addDataReceive("signal", codeBlock);`
+
+    Existing signals would remain on the elements. 
+
+- TODO: CONSIDER: `.removeDataSend(someEl, SIGNALS)`
+and `.removeDataReceive(someEl, SIGNALS)` which take
+signals off the respective `data-*` attributes. 
+    
+    Multiple signals can be removed. 
+
+    It's not necessary to add `await:` on the
+    removal for a signal. Only the name
+    is required. If the source signal has
+    an await it gets removed regardless. 
+
+- TODO: CONFIRM UPDATE: Added `internal` comments 
+to `ev.sendPayload` to filter it out of the 
+`jsdoc` output for auto generating docs. 
+
+- TODO: Added `this.api.getQuickXXX()` 
+methods that correspond to `this.api.getXXX()`
+methods. The difference is that they
+return a payload regardless of if the
+fetch fails or not. If the fetch 
+succeeds, it's returned directly. If
+it fails, an alternate error payload
+is returned along with an error message
+that goes to the console. 
+
+- TODO: Added `this.api.getCSS()` which is just an
+alias to `this.api.getTXT()` but helps with the
+mental model that fits with the other `this.api.getXXX()`
+methods. 
+
+- TODO: Added a feature to the subs for `this.api.getXXX`
+where if the first value is a string it just
+alternates the subs without having to do
+a nested array. 
+
+- TODO: Added `this.api.localForward(EVENT, SIGNAL)` which only 
+forwards inside the current module in the
+same way `this.api.localTrigger(SIGNAL)`
+works. 
+
+- TODO: Added `el.setProp(KEY, VALUE)` which 
+is shorthand for adding a corresponding 
+`data-KEY` attribute to the `VALUE`
+to the element. 
+
+- TODO: CONSIDER: Added `ev.setProp(KEY, VALUE)` which 
+is shorthand for adding a corresponding 
+`data-KEY` attribute to the `VALUE`
+to the `event.target`. (This would 
+keep the APIs consistent, but need
+to thing through the implication of
+adjusting the `.target`)
+
+- TODO: CONSIDER: Added `ev.sender.setProp(KEY, VALUE)` which 
+is shorthand for adding a corresponding 
+`data-KEY` attribute to the `VALUE`
+to the `event.sender`. (This would 
+keep the APIs consistent, but need
+to thing through the implication of
+adjusting the `.sender`)
+
+- TODO: CONFIRM: Documented behavior of `el.bittyId`
+if the element was added outside the
+`this.api...` methods (i.e. that
+`.bittyId` properties are only added when
+elements and fragments are created 
+via `this.api...` methods. Anything
+created with `document.createElement()`
+won't get them automatically)
+
 
 - TODO: Make stress test pages with
 nesting, large numbers of elements, updates, etc...

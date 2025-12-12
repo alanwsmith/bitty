@@ -292,3 +292,14 @@ Does your static site lack interactivity?
 Missing out on interactivity with your 
 static site?
 
+--- 
+
+bitty puts your HTML with your HTML and 
+your JavaScript with your JavaScript. 
+Separation of concerns if you're
+into that kinda thing. 
+
+
+
+
+

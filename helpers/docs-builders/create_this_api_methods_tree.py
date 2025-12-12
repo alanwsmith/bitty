@@ -28,9 +28,9 @@ keys = data.split("\n")
 
 major_version = "7"
 minor_version = "0"
-patch_version = "0-rc2"
+patch_version = "0"
 
-parent_dir = f"/Users/alan/workshop/bitty/content/versions/{major_version}/{minor_version}/{patch_version}/documentation/_includes/this-api-methods"
+parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes/this-api-methods"
 
 
 index_file_skeleton = """

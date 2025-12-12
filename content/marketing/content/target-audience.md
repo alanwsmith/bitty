@@ -13,6 +13,8 @@ inherent in the other options.)
 
 ### Scratchpad/Drafts
 
+
+
 ---
 
 bitty is for folks who use static
@@ -60,4 +62,28 @@ friction.
 
 ---
 
+bitty is for folks who want
+a separation of concerns
+between the HTML and the JavaScript
+
+
+--- 
+
+bitty is for people who want
+to make stuff on the web without
+all the hassle. 
+
+---
+
+bitty is for folks who don't
+want a build process
+to be required to 
+make something
+
+---
+
+bitty is for folks who want 
+to us d3, p5, and other libraries
+without having to fight with
+react
 

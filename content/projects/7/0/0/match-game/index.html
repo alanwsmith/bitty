@@ -1,0 +1,55 @@
+[!- extends "_wrappers/" + file.folder_parts[1] + "/" + file.folder_parts[2] + "/" + file.folder_parts[3] + "/main-wrapper.html" !]
+
+[!- block bittyOpenTag -!]
+[!- include wrapper_root + "includes/bitty-open-tags.html" -!]
+[!- endblock -!]
+
+[!- block bittyCloseTag -!]
+[!- include wrapper_root + "includes/bitty-close-tags.html" -!]
+[!- endblock -!]
+
+[!- block header !]
+<header class="default-wrapper">
+<hgroup>
+  <h1>Projects: Match Game</h1>
+</hgroup>
+</header>
+
+<script>
+[! set script = projects_root + "/match-game/script.js" !]
+[! include script !]
+</script>
+<style>
+[! set styles = projects_root + "/match-game/styles.css" !]
+[! include styles !]
+</style>
+[! endblock !]
+
+
+[!- block main !]
+<main class="default-wrapper default-flow">
+  <h2>Match Game</h2>
+[!- include projects_root + "/match-game/_content.html" !]
+
+  <h2>Notes</h2>
+  [! filter markdown|safe !]
+[!- include projects_root + "/match-game/notes.md" !]
+  [! endfilter !]
+
+  <h2>The Code</h2>
+  <p>Here's the source code for the game</p>
+
+  <h3>HTML</h3>
+  [! filter block_highlight("html") !]
+[!- include projects_root + "/match-game/_content.html" !]
+  [!- endfilter !]
+
+  <h3>JavaScript</h3>
+  [! filter block_highlight("js") !]
+[!- include projects_root + "/match-game/script.js" !]
+  [!- endfilter !]
+
+</main>
+[! endblock !]
+
+

@@ -40,13 +40,13 @@
       [!- if 
         folder.folder_parts[0] == "projects" 
         and
-        folder.folder_parts[1] == active_major_version 
+        folder.folder_parts[1] == local_major_version 
         and 
-        folder.folder_parts[2] == active_minor_version 
+        folder.folder_parts[2] == local_minor_version 
         and 
-        folder.folder_parts[3] == active_patch_version 
+        folder.folder_parts[3] == local_patch_version 
       -!]
-      [!- set data = json.projects[active_major_version][active_minor_version][active_patch_version][folder.name].config -!]
+      [!- set data = json.projects[local_major_version][local_minor_version][local_patch_version][folder.name].config -!]
       [!- if data.status == kind[0] -!]
     <li><a href="/[@ projects_root @][@ folder.name @]">[@ folder.name @]</a></li>
       [!- endif -!]

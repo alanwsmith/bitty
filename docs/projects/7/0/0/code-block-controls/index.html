@@ -1,14 +1,375 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
-    }
-    </style></head><body><pre>
-A MiniJinja error occurred
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<style>
+:root {
+  --load-hider: 0;
+}
 
-Could not render template:
-undefined value (in projects/7/0/0/code-block-controls/index.html:12)</p>
-</pre></body></html>
+:root {
+  --light--background-color: oklch(0.9634 0.02097 105.642);
+  --light--default-color: oklch(0.1951 0.23 105.642);
+  --dark--background-color: oklch(0.2124 0.0298 254.092);
+  --dark--default-color: oklch(0.8747 0.04454 254.092);
+  --hc-light--background-color: oklch(1 0.06752 259.652);
+  --hc-light--default-color: oklch(0.0995 0.23 259.652);
+  --hc-dark--background-color: oklch(0 0.20706934229967444 142);
+  --hc-dark--default-color: oklch(1 0.20411 82);
+}
+
+:root {
+  --background-color: var(--switch--background-color, var(--light--background-color));
+  --default-color: var(--switch--default-color, var(--light--default-color));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--switch--background-color, var(--dark--background-color));
+    --default-color: var(--switch--default-color, var(--dark--default-color));
+  }
+}</style>
+
+<script>
+function loadThemeProps() {
+  const data = localStorage.getItem("themeProps");
+  if (data) {
+    data.props.forEach((prop) => {
+    });
+  }
+}
+loadThemeProps();</script><style>
+html {
+  background-color: var(--background-color);
+  color: var(--default-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--default-color);
+  opacity: var(--load-hider);
+}
+</style>
+    <link rel="stylesheet" href="/styles/7/0/0//all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/7/0/0//custom.css" />
+
+<script>
+window.BittyUnhide = class {
+  bittyReady() {
+    this.api.setProp("--load-hider", 1);
+  }
+}
+</script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>bitty - a web tool for interesting pages</title>
+<meta property="og:title" content="bitty - a web tool for interesting pages" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:description" content="bitty is a web component that wraps other HTML elements to make them interactive." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bitty.alanwsmith.com/" />
+<meta property="og:image" content="https:&#x2f;&#x2f;bitty.alanwsmith.com&#x2f;images&#x2f;og-image-5.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/images/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />  </head>
+  <body>
+<noscript>
+  <p>
+    Bitty is a web component that requires JavaScript
+    which is not available on this page. You'll need
+    to switch to a browser that has it enabled
+    to check things out. 
+  </p>
+  <style>
+  :root { --load-hider: 1; }
+  </style>
+</noscript><bitty-7-0 data-connect="/projects/7/0/0/code-block-controls/script.js CodeBlockControls">
+<bitty-7-0 data-connect="/projects/7/0/0/details-opener/script.js DetailsOpener">
+<bitty-7-0 data-connect="/projects/7/0/0/unhider/script.js Unhider">
+<script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--heading-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    if(window.location.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  <a href="/">bitty</a>
+
+  <a href="/documentation/7/0/0/">documentation</a>
+
+  <a href="/unit-tests/7/0/0/">tests</a>
+
+  <a href="/projects">projects</a>
+
+  <bitty-7-0 data-connect="GitHubStars"></bitty-7-0>
+</nav><header class="default-wrapper">
+<hgroup>
+  <h1>Project: Code Block Controls</h1>
+</hgroup>
+</header><main class="default-wrapper default-flow">
+
+<h2>Overview</h2>
+<ul>
+<li>
+<p>This <strong>bit</strong> updates code blocks on the page
+to give them buttons to copy the code, change
+the font size, and toggle wrapping.</p>
+</li>
+<li>
+<p>The updates are done via progressive
+enhancement. If the script fails for
+some reason the code blocks remain
+as they are.</p>
+</li>
+</ul>
+
+<h2>Example</h2>
+
+
+
+<p>This is a baisc 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">pre</span><span class="punctuation definition tag end html">&gt;</span></span></span></code> 
+tag with a 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">class=&quot;code-block&quot;</span></code>attribute. </p>
+
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">an-example</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>the quick brown fox<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">p</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<h2>Source Code</h2>
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="storage type js">const</span> <span class="variable other readwrite js">t</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="meta object-literal key js">blockWrapper</span><span class="punctuation separator key-value js">:</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>
+<span class="line-marker"></span>&lt;div data-index=&quot;INDEX&quot; class=&quot;default-border-radius accent-border default-padding&quot;&gt;
+<span class="line-marker"></span>  &lt;div data-receive=&quot;copyText&quot;&gt;BLOCK&lt;/div&gt;
+<span class="line-marker"></span>  &lt;div class=&quot;text-align-right small-top-padding&quot;&gt;
+<span class="line-marker"></span>    &lt;button data-send=&quot;reduceCodeFont&quot;&gt;Reduce Font&lt;/button&gt;
+<span class="line-marker"></span>    &lt;button data-send=&quot;enlargeCodeFont&quot;&gt;Enlarge Font&lt;/button&gt;
+<span class="line-marker"></span>    &lt;button data-send=&quot;toggleWrap&quot;&gt;ToggleWrap&lt;/button&gt;
+<span class="line-marker"></span>    &lt;button data-send=&quot;copyText&quot;&gt;Copy&lt;/button&gt;
+<span class="line-marker"></span>  &lt;/div&gt;
+<span class="line-marker"></span>&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="variable other readwrite js">class</span> </span><span class="variable other readwrite js">CodeBlockControls</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  #<span class="variable other readwrite js">timeouts</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  #<span class="variable other readwrite js">fontSizes</span> <span class="keyword operator assignment js">=</span>
+<span class="line-marker"></span>    <span class="string template js"><span class="punctuation definition string template begin js">`</span>xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge<span class="punctuation definition string template end js">`</span></span>
+<span class="line-marker"></span>      <span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">split</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>|<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function-call js"><span class="variable function js">bittyReady</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelectorAll</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>.code-block<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">forEach</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">codeBlock</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">index</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>toggleWrap reduceCodeFont enlargeCodeFont<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">fontsize</span> <span class="keyword operator assignment js">=</span> <span class="constant numeric js">3</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">signals</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span>
+<span class="line-marker"></span>        <span class="keyword operator ternary js">?</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span><span class="punctuation section brackets js">]</span></span>
+<span class="line-marker"></span>        <span class="keyword operator ternary js">:</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">signals</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function mutator js">push</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>codeBlock<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">signals</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">join</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span> <span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>INDEX<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">index</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>BLOCK<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">codeBlock</span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">newWrapper</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">t</span><span class="punctuation accessor js">.</span><span class="meta property object js">blockWrapper</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceWith</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">newWrapper</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="variable other readwrite js">async</span> <span class="meta function-call js"><span class="variable function js">copyText</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">ev</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta try js"><span class="keyword control trycatch js">try</span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="keyword control flow js">await</span> <span class="support type object dom js">navigator</span><span class="punctuation accessor js">.</span><span class="meta property object js">clipboard</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">writeText</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerText</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Copied<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">timeouts</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyId</span><span class="punctuation section brackets js">]</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>          <span class="meta function-call js"><span class="support function js">clearTimeout</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">timeouts</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyId</span><span class="punctuation section brackets js">]</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">timeouts</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyId</span><span class="punctuation section brackets js">]</span></span> <span class="keyword operator assignment js">=</span> <span class="meta function-call js"><span class="support function js">setTimeout</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>          <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Copy<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="punctuation section block js">}</span></span><span class="punctuation separator comma js">,</span> <span class="constant numeric js">1400</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta catch js"><span class="keyword control trycatch js">catch</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">err</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="meta function-call method js"><span class="support type object console js">console</span><span class="punctuation accessor js">.</span><span class="support function console js">error</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>Could not copy to clipboard<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function-call js"><span class="variable function js">enlargeCodeFont</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">size</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>fontsize<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">size</span> <span class="keyword operator relational js">&lt;</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">fontSizes</span><span class="punctuation accessor js">.</span><span class="meta property object js">length</span> <span class="keyword operator arithmetic js">-</span> <span class="constant numeric js">1</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">fontsize</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">size</span> <span class="keyword operator arithmetic js">+</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">style</span><span class="punctuation accessor js">.</span><span class="meta property object js">fontSize</span> <span class="keyword operator assignment js">=</span> 
+<span class="line-marker"></span>          <span class="string template js"><span class="punctuation definition string template begin js">`</span>var(--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">fontSizes</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">size</span> <span class="keyword operator arithmetic js">+</span> <span class="constant numeric js">1</span><span class="punctuation section brackets js">]</span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">-font-size)<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function-call js"><span class="variable function js">reduceCodeFont</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="storage type js">const</span> <span class="variable other readwrite js">size</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>fontsize<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">size</span> <span class="keyword operator relational js">&gt;</span> <span class="constant numeric js">0</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">fontsize</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">size</span> <span class="keyword operator arithmetic js">-</span> <span class="constant numeric js">1</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>        <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">style</span><span class="punctuation accessor js">.</span><span class="meta property object js">fontSize</span> <span class="keyword operator assignment js">=</span> 
+<span class="line-marker"></span>          <span class="string template js"><span class="punctuation definition string template begin js">`</span>var(--</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other object js">fontSizes</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable other readwrite js">size</span> <span class="keyword operator arithmetic js">-</span> <span class="constant numeric js">1</span><span class="punctuation section brackets js">]</span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">-font-size)<span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>      </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function-call js"><span class="variable function js">toggleWrap</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">classList</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">toggle</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>nowrap<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
+<h2>Notes</h2>
+
+<ul>
+<li>
+<p>This is the <strong>bit</strong> I use on this
+site. The spefific styles match
+my CSS. You'll need to update
+them to match your CSS for
+everything to work.</p>
+<p>(It's entirely possible to make
+the code more generic by passing
+in the class to match on in a
+<code>data-*</code> attribute if needed.)</p>
+</li>
+<li>
+<p>It's designed so that it can
+be used to wrap an entire page
+without having to create a new
+instance for each individual code
+block.</p>
+</li>
+<li>
+<p>The process finds any elements
+with a <code>.code-block</code> class.
+It works on <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">pre</span><span class="punctuation definition tag end html">&gt;</span></span></span></code> tags,
+or <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>tags or whatever.</p>
+</li>
+<li>
+<p>Every element it finds has a new element
+(made from the
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">t.blockWrapper</span></code>
+template)
+wrapped around it. The original
+element becomes a child of the new
+wrapper along with the newly
+created buttons.</p>
+</li>
+<li>
+<p>This code is a good example of how
+multiple elements can be used as
+wrappers for elements with the <code>data-send</code>
+and <code>data-receive</code> attributes
+used for signaling.</p>
+<p>The trick is to put a unique
+identifier on the wrapper. In this
+case it's <code>data-index</code> which
+gets its value when it's created. When
+a button is clicked the
+<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span></code> method checks to
+see if the receiving element has
+the same parent as the element
+that sent the event.</p>
+<p>This works because the various
+<code>.prop...(KEY)</code> methods start by looking
+for <code>.dataset.KEY</code> properties on themselves
+but walk up that ancestor tree if they
+don't have it. Since neither the
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>copyText<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span></code>or the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>copyText<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span></code>element have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-index=&quot;#&quot;</span></code>attribute the one that's on the
+parent <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>gets used.</p>
+</li>
+<li>
+<p>The <code>copyText</code> method is run async in order
+to <code>await</code> the <code>navigator.clipboard.writeText</code>
+call.</p>
+</li>
+<li>
+<p>It also sets a timeout that's stored
+on the class to change the text back from
+&quot;Copied&quot; to &quot;Copy&quot;. If the button's clicked
+again before the timeout triggers
+it gets cleared and a new one is set.</p>
+</li>
+</ul>
+
+<h2>TODO</h2>
+<ul>
+<li>
+<p>Add the ability to turn off
+the feature by adding a
+<code>data-*</code> attribute (TBD
+on the name)</p>
+</li>
+<li>
+<p>Set up the sizes so they
+keep going. (right now
+they are based off the
+classes that are specific
+to my CSS)</p>
+</li>
+<li>
+<p>Maybe refactor to use
+a <code>data-selector</code> attribute to
+define the CSS selector
+that's used to look
+for elements.</p>
+</li>
+<li>
+<p>Pass in <code>data-*</code> attributes
+for things like the title
+and file paths for the sample?
+Or, look for a structute
+surrounding a pre tag
+that has that info in
+it and include it
+inside the control wrapper?</p>
+</li>
+</ul>
+
+
+<h2>Usage</h2>
+
+Details pending.
+</main></bitty-7-0>
+</bitty-7-0>
+</bitty-7-0><script>
+  setTimeout(() => { 
+    document.documentElement.style.setProperty("--load-hider", "1");
+  }, 1600);
+</script>
+
+<footer class="small-wrapper xsmall-flow xxxlarge-top-margin faded-accent-top-border small-font-size large-bottom-margin large-block-padding">
+  <div class="text-align-center">
+    <a href="https://github.com/alanwsmith/bitty">source</a> ~
+    <a href="https://socials.alanwsmith.com/">socials</a> ~
+    <a href="https://www.alanwsmith.com/feeds/posts.xml">rss</a> ~
+    <a href="https://links.alanwsmith.com/">other projects</a>
+  </div>
+  <details class="text-align-center"><summary>This work is dedicated to the public domain.</summary>
+    <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
+  </details>
+  <div class="text-align-center">
+    <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+  </div>
+</footer>
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+
+  </body>
+</html>

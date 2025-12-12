@@ -11,30 +11,28 @@ from pathlib import Path
 from string import Template
 
 
-data = """ev.bittyId
-ev.value
-ev.valueToFloat
-ev.valueToInt
-ev.sender
-ev.sender.bittyId
-ev.sender.value
-ev.sender.valueToFloat
-ev.sender.valueToInt
-el.bittyId
-el.bittyParent
-el.isSender
-el.isTarget
-el.value
-el.valueToFloat
-el.valueToInt"""
+items = {
+	"el": [
+		"el.bittyId",
+		"el.bittyParent",
+		"el.isSender",
+		"el.isTarget",
+		"el.value",
+		"el.valueToFloat",
+		"el.valueToInt"
+	],
+	"ev": ["ev.bittyId", "ev.value", "ev.valueToFloat", "ev.valueToInt", ],
+	"ev.sender": [
+		"ev.sender", "ev.sender.bittyId", "ev.sender.value", "ev.sender.valueToFloat", "ev.sender.valueToInt"
+	]
+}
 
-lines = data.split("\n")
 
 major_version = "7"
 minor_version = "0"
 patch_version = "0"
 
-parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes/helper-properties"
+parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
 
 
 index_skeleton = """
@@ -98,13 +96,23 @@ helpers/docs-builders/create_helper_properties_tree.py
 	[! endif !]
 	[! endfor !]
 
-
 </details>
-
-
 
 """
 
+def overwrite_wrapper_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			
+			index_path = f"{parent_dir}/{parent}.properties/{key}/_wrapper.html"
+			print(f"Overwriting: {index_path}")
+			data = { "PARENT": parent, "VALUE": key }
+			template = Template(index_skeleton)
+			output = template.substitute(data)
+			with open(index_path, "w") as _out:
+				_out.write(output)
+			
+			
 
 
 def make_directories():
@@ -120,15 +128,7 @@ def make_directories():
 			Path(examples_dir).mkdir(exist_ok=True)
 			
 
-def make_index_files():
-	for key in lines:
-		index_path = f"{parent_dir}/{key}/index.html"
-		print(f"Generating: {index_path}")
-		data = { "VALUE": key }
-		template = Template(index_skeleton)
-		output = template.substitute(data)
-		with open(index_path, "w") as _out:
-			_out.write(output)
+
 	
 def make_preface_files():
 	for key in lines:
@@ -140,7 +140,10 @@ def make_preface_files():
 				
 
 if __name__ == "__main__":
-	make_directories()
-	make_preface_files()
-	make_index_files()
+	pass
+	
+#	make_directories()
+#	make_preface_files()
+	overwrite_wrapper_files()
 
+	

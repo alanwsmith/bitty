@@ -1,19 +1,23 @@
 <ul class="default-flow">
-<li>Looks for a [! filter inline_highlight("html") !]data-KEY[! endfilter !] attribute 
-from the [! filter inline_highlight("js") !]ev.target[! endfilter !] element
-in its [! filter inline_highlight("js") !]ev.target.dataset[! endfilter !]
-property that matches [@ inline_highlight("txt", "KEY") @] and returns the value 
-as a string.
+<li>
+  Looks for a [! filter inline_highlight("html") !]data-KEY[! endfilter !] attribute 
+  in the [! filter inline_highlight("js") !]el.dataset[! endfilter !] and 
+  returns the value as a integer (Int) by running it through 
+  [! filter inline_highlight("js") !]parseInt(VALUE, 10)[! endfilter !].
 </li>
 
-<li>If the [! filter inline_highlight("js") !]ev.target[! endfilter !] element does not
-have a [! filter inline_highlight("html") !]data-KEY[! endfilter !] the process
-looks for ancestors with a [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
-attribute. The first one that's found gets used.
+<li>
+  If the [! filter inline_highlight("js") !]el.dataset[! endfilter !] does not
+  contain a [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+  property the method walks up the DOM looking for ancestors
+  with the a [! filter inline_highlight("html") !]data-KEY[! endfilter !].
+  The nearest one returned as an integer (Int) if any are found.
 </li>
 
-<li>If neither the [! filter inline_highlight("js") !]ev.target[! endfilter !] element
-or any of its ancestors have the [! filter inline_highlight("html") !]data-KEY[! endfilter !]
-attribute the returned value is [! filter inline_highlight("js") !]undefined[! endfilter !].
+<li>
+  If neither the [! filter inline_highlight("js") !]el[! endfilter !]
+  or any of its ancestors have a [! filter inline_highlight("html") !]data-KEY[! endfilter !]
+  attribute, then [! filter inline_highlight("js") !]undefined[! endfilter !]
+  is returned.
 </li>
 </ul>

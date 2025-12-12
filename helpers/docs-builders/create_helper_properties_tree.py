@@ -21,6 +21,7 @@ ev.sender.value
 ev.sender.valueToFloat
 ev.sender.valueToInt
 el.bittyId
+el.bittyParent
 el.isSender
 el.isTarget
 el.value

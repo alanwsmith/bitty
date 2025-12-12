@@ -1,5 +1,8 @@
 ## Under Consideration
 
+- TODO: CONFIRM: `el.isTarget` and `el.isSender`
+work properly with `data-use` in addition
+to `data-send` and `data-receive`. 
 
 - TODO: Examine test 1060 to see about the bitty 
 element picking up event when other bitty element

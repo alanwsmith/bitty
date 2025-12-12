@@ -157,6 +157,22 @@ Updates in progress
 
 Updates in progress
 
+<p>
+bitty sends to arguemnts to the methods
+that process signals. The first is the event
+that triggered the signal. The second is the
+element that's currently being processed. The
+signture looks like this:</p>
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">someMethod</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">ev</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> functionality goes here
+<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></code></pre>
+<p>
+This documentaiton uses `ev` to identify
+the events and `el` to identify the
+elements. 
+</p>
+
 
 
 <h3>Properties</h3>
@@ -174,6 +190,7 @@ Updates in progress
 	<details class="example-details">
 	<summary>Basic Usage</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>BittyidEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elBittyId<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -193,13 +210,18 @@ Updates in progress
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="BittyidEl">
+<div class="example-block "><bitty-7-0 data-connect="BittyidEl">
   <div data-init="elBittyId">
     waiting
   </div>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+</div>	</details>
 
 
 </details>
@@ -207,9 +229,7 @@ Updates in progress
 
 <details><summary>el.bittyParent</summary>
 <p>
-el.bittyParent is an alias to `this.api`.
-It is deprecated and will be removed in v8
-in favor using using `this.api` directly
+Returns the UUID of the parent bitty element.
 </p>
 </details>
 
@@ -218,7 +238,7 @@ in favor using using `this.api` directly
 
 <div class="docs-preface-wrapper"><p>Boolean that 
 	returns <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language boolean true js">true</span></span></code> if 
-	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="support class js">EVENT</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code>
+	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code>
 	element that sent the signal is also
 	the receiving element.
 </p></div><div class="doc-sub-header">Examples</div>
@@ -228,6 +248,7 @@ in favor using using `this.api` directly
 	<details class="example-details">
 	<summary>Element <strong>IS</strong> the sender</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IssenderEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
@@ -256,7 +277,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="IssenderEl">
+<div class="example-block "><bitty-7-0 data-connect="IssenderEl">
   <button 
     data-send="elIsSender" 
     data-receive="elIsSender"
@@ -265,11 +286,17 @@ in favor using using `this.api` directly
   </button>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+</div>	</details>
 
 	<details class="example-details">
 	<summary>Element <strong>IS NOT</strong> the sender</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IssenderElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotSender<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -297,7 +324,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="IssenderElFalse">
+<div class="example-block "><bitty-7-0 data-connect="IssenderElFalse">
   <div data-send="elIsNotSender">
     <button data-receive="elIsNotSender">
       Example Button
@@ -305,7 +332,12 @@ in favor using using `this.api` directly
   </div>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+</div>	</details>
 
 
 </details>
@@ -315,7 +347,7 @@ in favor using using `this.api` directly
 
 <div class="docs-preface-wrapper"><p>Boolean that 
 	returns <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language boolean true js">true</span></span></code> if 
-	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="support class js">EVENT</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code>
+	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code>
 	element that initiated the signal is also
 	the receiving element.
 </p></div><div class="doc-sub-header">Examples</div>
@@ -325,6 +357,7 @@ in favor using using `this.api` directly
 	<details class="example-details">
 	<summary>Element <strong>IS</strong> the target</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IstargetEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
@@ -353,7 +386,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="IstargetEl">
+<div class="example-block "><bitty-7-0 data-connect="IstargetEl">
   <button 
     data-send="elIsTarget" 
     data-receive="elIsTarget"
@@ -362,11 +395,17 @@ in favor using using `this.api` directly
   </button>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+</div>	</details>
 
 	<details class="example-details">
 	<summary>Element <strong>IS NOT</strong> the target</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IstargetElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotTarget<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -395,7 +434,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="IstargetElFalse">
+<div class="example-block "><bitty-7-0 data-connect="IstargetElFalse">
   <button data-send="elIsNotTarget">
     Example Button
   </button>
@@ -404,7 +443,89 @@ in favor using using `this.api` directly
   </div>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+</div>	</details>
+
+
+</details>
+
+
+<details class="docs-sub-details"><summary>el.value</summary>
+
+<div class="docs-preface-wrapper"><p>The standard <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span></span></code> from HTML Elements.</p></div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Basic Usage</summary>
+
+<div class="default-flow">
+<h5>HTML</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValueEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>hidden<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueEl<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">value</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>the quick brown fox<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span> <span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueElOutput<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    waiting
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<h5>JavaScript</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ValueEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #incomingValue = null;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>valueElOutput<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueElOutput</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.ValueEl = class {
+  #incomingValue = null;
+
+  valueEl(_, el) {
+    this.#incomingValue = el.value;
+    this.api.localTrigger("valueElOutput");
+  }
+
+  valueElOutput(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }
+}</script>
+
+<h5>Output<h5>
+<div class="example-block "><bitty-7-0 data-connect="ValueEl">
+  <input 
+    type="hidden" 
+    data-init="valueEl" 
+    value="the quick brown fox"
+  />
+  <div data-receive="valueElOutput">
+    waiting
+  </div>
+</bitty-7-0></div>
+
+
+</div>
+
+
+<div>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
 
 
 </details>
@@ -420,6 +541,7 @@ in favor using using `this.api` directly
 	<details class="example-details">
 	<summary>Basic Usage</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValuetofloatEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
@@ -458,7 +580,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="ValuetofloatEl">
+<div class="example-block "><bitty-7-0 data-connect="ValuetofloatEl">
   <input 
     type="hidden" 
     data-init="valueToFloatEl" 
@@ -469,7 +591,19 @@ in favor using using `this.api` directly
   </div>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
 
 
 </details>
@@ -484,6 +618,7 @@ in favor using using `this.api` directly
 	<details class="example-details">
 	<summary>Basic Usage</summary>
 
+<div class="default-flow">
 <h5>HTML</h5>
 <pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValuetointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
@@ -522,7 +657,7 @@ in favor using using `this.api` directly
 }</script>
 
 <h5>Output<h5>
-<div class="example-block"><bitty-7-0 data-connect="ValuetointEl">
+<div class="example-block "><bitty-7-0 data-connect="ValuetointEl">
   <input 
     type="hidden" 
     data-init="valueToIntEl" 
@@ -533,7 +668,19 @@ in favor using using `this.api` directly
   </div>
 </bitty-7-0></div>
 
-	</details>
+
+</div>
+
+
+<div>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
 
 
 </details>

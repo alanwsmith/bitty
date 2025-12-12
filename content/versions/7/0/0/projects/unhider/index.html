@@ -1,4 +1,4 @@
-[!- extends "_wrappers/" + file.folder_parts[1] + "/" + file.folder_parts[2] + "/" + file.folder_parts[3] + "/main-wrapper.html" !]
+[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
 
 [!- block bittyOpenTag -!]
 [!- include wrapper_root + "includes/bitty-open-tags.html" -!]
@@ -8,29 +8,34 @@
 [!- include wrapper_root + "includes/bitty-close-tags.html" -!]
 [!- endblock -!]
 
-[!- block header !]
+[!- block header -!]
+[!- set details = json.versions[major_version][minor_version][patch_version].projects[file.parent_folder].config -!]
 <header class="default-wrapper">
 <hgroup>
-  <h1>Projects: Unhider</h1>
+  <h1>Project: [@ details.title @]</h1>
 </hgroup>
 </header>
-[! endblock !]
+[!- endblock -!]
 
-[!- block main !]
-<main class="default-wrapper default-flow">   
+[!- block main -!]
+
+<main class="default-wrapper default-flow">
 
 
+  [! include file.folder + "/overview.html" !]
 
+  [! include file.folder + "/example.html" !]
 
-- Set the `--load-hider` property value
-to `1` when it's loaded. 
+  [! include file.folder + "/source.html" !]
 
-- Longer term goal is to use the
-`bittyready` events coming up in
-version 7.1 to wait until everything
-is explicitly ready before showing
-the content. 
+  [! include file.folder + "/notes.html" !]
+
+  [! include file.folder + "/todo.html" !]
 
 </main>
-[! endblock !]
+
+[!- endblock -!]
+
+
+
 

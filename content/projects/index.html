@@ -8,20 +8,53 @@
 [!- include wrapper_root + "includes/bitty-close-tags.html" -!]
 [!- endblock -!]
 
-[! block header !]
+[!- block header -!]
 <header class="default-wrapper">
-<hgroup class="default-wrapper">
+<hgroup>
   <h1>Projects</h1>
 </hgroup>
 </header>
-[! endblock !]
+[!- endblock -!]
 
 [!- block main -!]
-
 <main class="default-wrapper default-flow">
+  <h2>Work in Public/Progress</h2>
+  <p>
+    This is my personal collection of
+    bitty projects and ideas. Some  
+    are used on this site. 
+    The projects are 
+    in various states of development
+    and will change over time. 
+    You're welcome to copy/paste them
+    to use directly or as starting
+    points for you own code. 
+  </p>
 
-todo
+  [!- set kinds = [["finished", "Finished"], ["wip", "Work in Progress"], ["idea", "Ideas"]] -!]
+
+  [!- for kind in kinds -!]
+    <h3>[@ kind[1] @]</h3>
+    <ul>
+  [!- for folder in folders -!]
+      [!- if 
+        folder.folder_parts[0] == "projects" 
+        and
+        folder.folder_parts[1] == major_version 
+        and 
+        folder.folder_parts[2] == minor_version 
+        and 
+        folder.folder_parts[3] == patch_version 
+      -!]
+      [!- set data = json.projects[major_version][minor_version][patch_version][folder.name].config -!]
+      [!- if data.status == kind[0] -!]
+    <li><a href="/[@ projects_root @][@ folder.name @]">[@ folder.name @]</a></li>
+      [!- endif -!]
+      [!- endif -!]
+  [!- endfor -!]
+    </ul>
+  [!- endfor -!]
 
 </main>
-[!- endblock !]
 
+[!- endblock -!]

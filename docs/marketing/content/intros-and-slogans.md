@@ -299,5 +299,7 @@ your JavaScript with your JavaScript.
 Separation of concerns if you're
 into that kinda thing. 
 
+---
 
+dynamic features for your static pages
 

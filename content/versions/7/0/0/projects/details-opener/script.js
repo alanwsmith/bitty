@@ -30,8 +30,6 @@ export class DetailsOpener {
       numberOfTags: this.numberOfTags(),
       openTags: new Set(),
     };
-    // capture the initial state in case the number
-    // of elements has changed.
     document.querySelectorAll("details").forEach((tag, tagIndex) => {
       if (tag.open === true) {
         this.#state.openTags.add(tagIndex);

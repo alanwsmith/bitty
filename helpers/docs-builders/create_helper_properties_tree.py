@@ -45,7 +45,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_preface.html" -!]
+[!- set property_description_path = file.folder + "/_includes/$PARENT.properties/$VALUE/property-description.html" -!]
 [!- set examples_dir = file.folder + "/_includes/$PARENT.properties/$VALUE/_examples" -!]
 
 <details class="docs-sub-details">
@@ -66,9 +66,11 @@ helpers/docs-builders/create_helper_properties_tree.py
 	<summary>$VALUE</summary>
 
 
-
-<div class="docs-preface-wrapper">
-	[!- include preface_path -!]
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div>
+	[!- include property_description_path -!]
+	</div>
 </div>
 
 
@@ -108,7 +110,6 @@ helpers/docs-builders/create_helper_properties_tree.py
 def overwrite_wrapper_files():
 	for parent in items.keys():
 		for key in items[parent]:
-			
 			index_path = f"{parent_dir}/{parent}.properties/{key}/_wrapper.html"
 			print(f"Overwriting: {index_path}")
 			data = { "PARENT": parent, "VALUE": key }
@@ -118,37 +119,59 @@ def overwrite_wrapper_files():
 				_out.write(output)
 			
 			
-
-
-def make_directories():
-	for key in lines:
-		base_dir = f"{parent_dir}/{key}"
-		if not os.path.isdir(base_dir):
-			print(f"mkdir: {base_dir}")
-			Path(base_dir).mkdir(exist_ok=True)
 			
-		examples_dir = f"{base_dir}/_examples"
-		if not os.path.isdir(examples_dir):
-			print(f"mkdir: {examples_dir}")
-			Path(examples_dir).mkdir(exist_ok=True)
+			
+def create_method_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			for name in ["added", "changed", "removed"]:
+				output_path = f"{parent_dir}/{parent}.properties/{key}/_method_{name}.txt"
+				
+				
+#		
+#			for key in items[parent]:
+#				index_path = f"{parent_dir}/{parent}.properties/{key}/_wrapper.html"
+#				print(f"Overwriting: {index_path}")
+#				data = { "PARENT": parent, "VALUE": key }
+#				template = Template(index_skeleton)
+#				output = template.substitute(data)
+#				with open(index_path, "w") as _out:
+#					_out.write(output)
+							
+			
+			
+
+# NOTE: This needs to be updated for the 
+# dir structure that splits el, ev, and ev.sender
+# if you need to use it again. 
+#def make_directories():
+#	for key in lines:
+#		base_dir = f"{parent_dir}/{key}"
+#		if not os.path.isdir(base_dir):
+#			print(f"mkdir: {base_dir}")
+#			Path(base_dir).mkdir(exist_ok=True)
+#		examples_dir = f"{base_dir}/_examples"
+#		if not os.path.isdir(examples_dir):
+#			print(f"mkdir: {examples_dir}")
+#			Path(examples_dir).mkdir(exist_ok=True)
 			
 
 
 	
-def make_preface_files():
-	for key in lines:
-		preface_path = f"{parent_dir}/{key}/_preface.html"
-		if not os.path.isfile(preface_path):
-			print(f"Generating: {preface_path}")
-			with open(preface_path, "w") as _out:
-				_out.write("<p>TODO</p>")
+# NOTE: This needs to be updated for the 
+# dir structure that splits el, ev, and ev.sender
+# if you need to use it again. 
+#def make_preface_files():
+#	for key in lines:
+#		property_description_path = f"{parent_dir}/{key}/_preface.html"
+#		if not os.path.isfile(property_description_path):
+#			print(f"Generating: {property_description_path}")
+#			with open(property_description_path, "w") as _out:
+#				_out.write("<p>TODO</p>")
 				
 
 if __name__ == "__main__":
-	pass
-	
-#	make_directories()
-#	make_preface_files()
-	overwrite_wrapper_files()
+#	overwrite_wrapper_files()
+	create_method_files()
 
 	

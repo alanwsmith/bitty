@@ -1,7 +1,7 @@
-window.[@ item.name|title @][@ item.memberof|title @] = class {
-  propToIntEl(_, el) {
-    const value = el.propToInt("alfa");
-    if (value === 2000) {
+window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
+  [@ method_name @](_, el) {
+    const value = el.propToInt("bravo");
+    if (value === [@ target_value @]) {
       el.innerHTML = "received integer";
     }
   }

@@ -19,18 +19,6 @@ export class BittyDocTestRunner {
         parentSummary.dataset.status = "failed";
       }
     });
-
-    // document.querySelectorAll("[data-status=passed]").forEach((el) => {
-    //   const summary = el.closest("details").parentNode.closest("details")
-    //     .querySelector("summary");
-    //   const subs = [
-    //     ["STATUS", "passed"],
-    //   ];
-    //   summary.appendChild(this.api.makeHTML(
-    //     this.getTemplate("result"),
-    //   ));
-    // });
-
     const subs = [
       ["TOTAL", testCount],
       ["PASSED", testCount - failed],
@@ -52,9 +40,6 @@ export class BittyDocTestRunner {
 <div>Total Test: TOTAL ~ 
 <span class="PASSED_CLASS">Passed: PASSED</span> ~
 <span class="FAILED_CLASS">Failed: FAILED</span></div>`;
-        break;
-      case ("result"):
-        return `<span class="CLASS"> STATUS</span>`;
         break;
     }
   }

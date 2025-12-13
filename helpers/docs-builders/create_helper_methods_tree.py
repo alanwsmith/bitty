@@ -169,8 +169,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[!- include example_dir + "/_target_value.txt" !]
 	[!- endset -!]
 	
-	
-	
 	<li>
 		<details class="example-details">
 		<summary>[! include name_path !]</summary>

@@ -8,6 +8,11 @@ Signals can be prefixed with a string
 followed by a ``.`` where the string
 becomes a namespace identifier. 
 
+- TODO: Figure out how to do namespacing
+for the methods inside the classes as well
+(e.f. `data-send="ns.example"` only goes to
+this pseudo code style thing:
+`ns(ev, el) { example(ev, el) {} }`.
 
 - TODO: Do a network test where you have
 100 classes in a single file that's used

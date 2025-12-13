@@ -1,13 +1,11 @@
 export class BittyDocTestRunner {
-  async bittyReady() {
-    await this.sleep(3000);
-    this.api.localTrigger("testResults");
-  }
+  async testResults(_, el) {
+    await this.sleep(1000);
 
-  testResults(_, el) {
     let testCount = 0;
     let failed = 0;
     document.querySelectorAll("[data-expected]").forEach((el) => {
+      console.log(el.bittyId);
       const summary = el.closest("details").querySelector("summary");
       testCount += 1;
       if (el.dataset.expected === el.innerHTML.trim()) {

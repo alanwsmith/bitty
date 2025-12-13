@@ -48,6 +48,11 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- set property_description_path = file.folder + "/_includes/$PARENT.properties/$VALUE/property-description.html" -!]
 [!- set examples_dir = file.folder + "/_includes/$PARENT.properties/$VALUE/_examples" -!]
 
+[!- set added_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_removed.txt" -!]
+
+
 <details class="docs-sub-details">
 
 [!- set counters = namespace() !]
@@ -63,7 +68,37 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<summary>$VALUE</summary>
+	<summary>$VALUE
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: [! include added_path !]]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed">
+		[!- set changed_string|trim -!]
+	[!- include changed_path -!]
+		[!- endset -!]
+		[!- if changed_string != "" -!]
+	[changed: [@ changed_string @]]
+		[!- endif -!]
+		</span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed">
+		[!- set removed_string|trim -!]
+	[!- include removed_path -!]
+		[!- endset -!]
+		[!- if removed_string != "" -!]
+	[removed: [@ removed_string @]]
+		[!- endif -!]
+		</span>
+
+	
+	</summary>
 
 
 <div class="docs-property-description-wrapper default-flow">
@@ -118,15 +153,22 @@ def overwrite_wrapper_files():
 			with open(index_path, "w") as _out:
 				_out.write(output)
 			
-			
-			
-			
+def make_file_if_it_does_not_exist(output_path, content):
+	if not os.path.isfile(output_path):
+		with open(output_path, "w") as _out:
+			_out.write(content)
+	
+		
 def create_method_files():
 	for parent in items.keys():
 		for key in items[parent]:
-			for name in ["added", "changed", "removed"]:
-				output_path = f"{parent_dir}/{parent}.properties/{key}/_method_{name}.txt"
-				
+			for name in [
+				["added", "7.0.0"], 
+				["changed", ""],
+				["removed", ""]
+			]:
+				output_path = f"{parent_dir}/{parent}.properties/{key}/_property_{name[0]}.txt"
+				make_file_if_it_does_not_exist(output_path, name[1])
 				
 #		
 #			for key in items[parent]:
@@ -171,7 +213,7 @@ def create_method_files():
 				
 
 if __name__ == "__main__":
-#	overwrite_wrapper_files()
+	overwrite_wrapper_files()
 	create_method_files()
 
 	

@@ -11,6 +11,11 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- set property_description_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToInt/property-description.html" -!]
 [!- set examples_dir = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToInt/_examples" -!]
 
+[!- set added_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToInt/_property_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToInt/_property_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToInt/_property_removed.txt" -!]
+
+
 <details class="docs-sub-details">
 
 [!- set counters = namespace() !]
@@ -26,7 +31,37 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<summary>ev.sender.valueToInt</summary>
+	<summary>ev.sender.valueToInt
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: [! include added_path !]]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed">
+		[!- set changed_string|trim -!]
+	[!- include changed_path -!]
+		[!- endset -!]
+		[!- if changed_string != "" -!]
+	[changed: [@ changed_string @]]
+		[!- endif -!]
+		</span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed">
+		[!- set removed_string|trim -!]
+	[!- include removed_path -!]
+		[!- endset -!]
+		[!- if removed_string != "" -!]
+	[removed: [@ removed_string @]]
+		[!- endif -!]
+		</span>
+
+	
+	</summary>
 
 
 <div class="docs-property-description-wrapper default-flow">

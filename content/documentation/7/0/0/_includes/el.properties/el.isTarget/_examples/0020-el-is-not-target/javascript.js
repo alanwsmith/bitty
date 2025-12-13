@@ -1,8 +1,9 @@
-window.[@ item.name|title @][@ item.memberof|title @]False = class {
+window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
   bittyReady() {
-    this.api.querySelector("button").click();
+    this.api.querySelector(".clickme").click();
   }
-  elIsNotTarget(_, el) {
+
+  [@ method_name @](_, el) {
     el.innerHTML = el.isTarget;
   }
 }

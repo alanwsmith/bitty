@@ -1,8 +1,8 @@
 <h2>Example</h2>
 
-<p>Here's the input</p><pre class="code-block"><code><span class="line-marker"></span><span class="text html basic">&lt; data-connect=&quot;BittyDocTestRunner &quot;&gt;
+<p>Here's the input</p><pre class="code-block"><code><span class="line-marker"></span><span class="text html basic">&lt; data-connect=&quot;/projects<span class="constant character entity html"><span class="punctuation definition entity html">&amp;</span>#x2f<span class="punctuation definition entity html">;</span></span>7<span class="constant character entity html"><span class="punctuation definition entity html">&amp;</span>#x2f<span class="punctuation definition entity html">;</span></span>0<span class="constant character entity html"><span class="punctuation definition entity html">&amp;</span>#x2f<span class="punctuation definition entity html">;</span></span>0<span class="constant character entity html"><span class="punctuation definition entity html">&amp;</span>#x2f<span class="punctuation definition entity html">;</span></span>docs-test-runner<span class="constant character entity html"><span class="punctuation definition entity html">&amp;</span>#x2f<span class="punctuation definition entity html">;</span></span>script.js BittyDocTestRunner&quot;&gt;
 <span class="line-marker"></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>testResults<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>testResults<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Running tests...<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta tag other html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag other html">details</span> <span class="entity other attribute-name html">open</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>  <span class="meta tag other html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag other html">summary</span><span class="punctuation definition tag end html">&gt;</span></span>Test Alfa<span class="meta tag other html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag other html">summary</span><span class="punctuation definition tag end html">&gt;</span></span>
@@ -16,51 +16,9 @@
 <span class="line-marker"></span>
 <span class="line-marker"></span>&lt;/&gt;</span></code></pre><p>And here's output</p>
 
-<script>const bittyDocTestTemplates = {
-  results: `
-<div>Test Results</div>
-<div>Total Test: TOTAL</div>
-<div>Passed: PASSED</div>
-<div>Failed: FAILED</div>
-`,
-};
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+<div class="example-block">< data-connect="/projects&#x2f;7&#x2f;0&#x2f;0&#x2f;docs-test-runner&#x2f;script.js BittyDocTestRunner">
 
-window.BittyDocTestRunner = class {
-  async bittyReady() {
-    await sleep(300);
-    this.api.localTrigger("testResults");
-  }
-
-  testResults(_, el) {
-    let testCount = 0;
-    let failed = 0;
-    document.querySelectorAll("[data-expected]").forEach((el) => {
-      testCount += 1;
-      if (el.dataset.expected === el.innerHTML.trim()) {
-        el.classList.add("doc-test-passed");
-      } else {
-        failed += 1;
-        el.classList.add("doc-test-failed");
-      }
-    });
-    const subs = [
-      ["TOTAL", testCount],
-      ["PASSED", testCount - failed],
-      ["FAILED", failed],
-    ];
-    el.replaceChildren(
-      this.api.makeHTML(bittyDocTestTemplates.results, subs),
-    );
-  }
-};</script>
-
-
-<div class="example-block">< data-connect="BittyDocTestRunner ">
-
-<div data-receive="testResults"></div>
+<div data-receive="testResults">Running tests...</div>
 
 <details open>
   <summary>Test Alfa</summary>

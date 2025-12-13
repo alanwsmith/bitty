@@ -1,3 +1,4 @@
+// TODO: Move this template into the class.
 const codeBlockTemplates = {
   blockWrapper: `
 <div data-index="INDEX" class="default-border-radius accent-border default-padding">
@@ -14,7 +15,7 @@ const codeBlockTemplates = {
 export class CodeBlockControls {
   #timeouts = {};
   // NOTE: These font sizes aren't magic. They're
-  // from the CSS variables for the site. 
+  // from the CSS variables for the site.
   #fontSizes =
     `xxxsmall|xxsmall|xsmall|small|default|large|xlarge|xxlarge|xxxlarge`
       .split("|");
@@ -33,7 +34,8 @@ export class CodeBlockControls {
         ["BLOCK", codeBlock],
       ];
       const newWrapper = this.api.makeElement(
-        codeBlockTemplates.blockWrapper, subs
+        codeBlockTemplates.blockWrapper,
+        subs,
       );
       codeBlock.replaceWith(newWrapper);
     });
@@ -61,8 +63,7 @@ export class CodeBlockControls {
       const size = el.propToInt("fontsize");
       if (size < this.#fontSizes.length - 1) {
         el.dataset.fontsize = size + 1;
-        el.style.fontSize = 
-          `var(--${this.#fontSizes[size + 1]}-font-size)`;
+        el.style.fontSize = `var(--${this.#fontSizes[size + 1]}-font-size)`;
       }
     }
   }
@@ -72,8 +73,7 @@ export class CodeBlockControls {
       const size = el.propToInt("fontsize");
       if (size > 0) {
         el.dataset.fontsize = size - 1;
-        el.style.fontSize = 
-          `var(--${this.#fontSizes[size - 1]}-font-size)`;
+        el.style.fontSize = `var(--${this.#fontSizes[size - 1]}-font-size)`;
       }
     }
   }

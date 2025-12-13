@@ -1,35 +1,41 @@
 #!/usr/bin/env python3
 
-# NOTE: You should be able to re-run this file
-# to make updates to the structre as longs
-# as you only put content inside the 
-# `_args` and `_exampels` folders
+###################################################
+# This file should be idempotent.
+# Make a commit before running it though,
+# just in case. 
+###################################################
 
 import os
 
 from pathlib import Path 
 from string import Template
 
-
-data = """ev.prop
-ev.propToFloat
-ev.propToInt
-ev.sender.prop
-ev.sender.propToFloat
-ev.sender.propToInt
-el.propMatchesSender
-el.propMatchesTarget
-el.prop
-el.propToFloat
-el.propToInt"""
-
-lines = data.split("\n")
+items = {
+	"el": [
+		"el.propMatchesSender",
+		"el.propMatchesTarget",
+		"el.prop",
+		"el.propToFloat",
+		"el.propToInt",
+	],
+	"ev": [
+		"ev.prop",
+		"ev.propToFloat",
+		"ev.propToInt",
+	],
+	"ev.sender": [
+		"ev.sender.prop",
+		"ev.sender.propToFloat",
+		"ev.sender.propToInt",
+	],
+}
 
 major_version = "7"
 minor_version = "0"
 patch_version = "0"
 
-parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes/helper-methods"
+parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
 
 
 index_skeleton = """
@@ -42,13 +48,16 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set method_details_path = file.folder + "/_includes/helper-methods/$VALUE/_method_details.html" -!]
-[!- set args_path = file.folder + "/_includes/helper-methods/$VALUE/_args" -!]
-[!- set examples_dir = file.folder + "/_includes/helper-methods/$VALUE/_examples" -!]
-[!- set notes_path = file.folder + "/_includes/helper-methods/$VALUE/_notes.html" -!]
-[!- set added_path = file.folder + "/_includes/helper-methods/$VALUE/_method_added.txt" -!]
-[!- set changed_path = file.folder + "/_includes/helper-methods/$VALUE/_method_changed.txt" -!]
-[!- set removed_path = file.folder + "/_includes/helper-methods/$VALUE/_method_removed.txt" -!]
+[!- set method_details_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_details.html" -!]
+[!- set args_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_args" -!]
+[!- set examples_dir = file.folder + "/_includes/$PARENT.methods/$VALUE/_examples" -!]
+[!- set notes_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_notes.html" -!]
+[!- set added_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_removed.txt" -!]
+
+[#
+
 
 <details class="docs-method-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
@@ -167,92 +176,113 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 </details>
 
+#]
 """
 
 
 
-def make_directories():
-	for key in lines:
-		base_dir = f"{parent_dir}/{key}"
-		if not os.path.isdir(base_dir):
-			print(f"mkdir: {base_dir}")
-			Path(base_dir).mkdir(exist_ok=True)
+
+def overwrite_index_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			index_path = f"{parent_dir}/{parent}.methods/{key}/_wrapper.html"
+			print(f"Overwriting: {index_path}")
+			data = { "PARENT": parent, "VALUE": key }
+			template = Template(index_skeleton)
+			output = template.substitute(data)
+			with open(index_path, "w") as _out:
+				_out.write(output)
 		
-		args_dir = f"{base_dir}/_args"
-		if not os.path.isdir(args_dir):
-			print(f"mkdir: {args_dir}")
-			Path(args_dir).mkdir(exist_ok=True)		
-			
-		examples_dir = f"{base_dir}/_examples"
-		if not os.path.isdir(examples_dir):
-			print(f"mkdir: {examples_dir}")
-			Path(examples_dir).mkdir(exist_ok=True)
+
+
+
+
+## Needs to be redone for new dir structure if you need it again	
+#def make_directories():
+#	for key in lines:
+#		base_dir = f"{parent_dir}/{key}"
+#		if not os.path.isdir(base_dir):
+#			print(f"mkdir: {base_dir}")
+#			Path(base_dir).mkdir(exist_ok=True)
+#		
+#		args_dir = f"{base_dir}/_args"
+#		if not os.path.isdir(args_dir):
+#			print(f"mkdir: {args_dir}")
+#			Path(args_dir).mkdir(exist_ok=True)		
+#			
+#		examples_dir = f"{base_dir}/_examples"
+#		if not os.path.isdir(examples_dir):
+#			print(f"mkdir: {examples_dir}")
+#			Path(examples_dir).mkdir(exist_ok=True)
 			
 
-def make_index_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/index.html"
-		print(f"Generating: {output_path}")
-		data = { "VALUE": key }
-		template = Template(index_skeleton)
-		output = template.substitute(data)
-		with open(output_path, "w") as _out:
-			_out.write(output)
+
 	
-def make_method_details_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/_method_details.html"
-		if not os.path.isfile(output_path):
-			print(f"Generating: {output_path}")
-			with open(output_path, "w") as _out:
-				_out.write("<p>TODO</p>")
-				
-def make_added_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/_method_added.txt"
-		if not os.path.isfile(output_path):
-			print(f"Generating: {output_path}")
-			with open(output_path, "w") as _out:
-				_out.write("7.0.0")
-				
-def make_changed_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/_method_changed.txt"
-		if not os.path.isfile(output_path):
-			print(f"Generating: {output_path}")
-			with open(output_path, "w") as _out:
-				_out.write("")
-				
-def make_removed_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/_method_removed.txt"
-		if not os.path.isfile(output_path):
-			print(f"Generating: {output_path}")
-			with open(output_path, "w") as _out:
-				_out.write("")
-				
-				
-				
-def make_notes_files():
-	for key in lines:
-		output_path = f"{parent_dir}/{key}/_notes.html"
-		if not os.path.isfile(output_path):
-			print(f"Generating: {output_path}")
-			with open(output_path, "w") as _out:
-				_out.write("""[! filter markdown|safe !]
 
-[! endfilter !]""")
+			
+## Needs to be redone for new dir structure if you need it again	
+#def make_method_details_files():
+#	for key in lines:
+#		output_path = f"{parent_dir}/{key}/_method_details.html"
+#		if not os.path.isfile(output_path):
+#			print(f"Generating: {output_path}")
+#			with open(output_path, "w") as _out:
+#				_out.write("<p>TODO</p>")
+				
+				
+				
+				
+## Needs to be redone for new dir structure if you need it again	
+#def make_added_files():
+#	for key in lines:
+#		output_path = f"{parent_dir}/{key}/_method_added.txt"
+#		if not os.path.isfile(output_path):
+#			print(f"Generating: {output_path}")
+#			with open(output_path, "w") as _out:
+#				_out.write("7.0.0")
+		
+		
+				
+## Needs to be redone for new dir structure if you need it again	
+#def make_changed_files():
+#	for key in lines:
+#		output_path = f"{parent_dir}/{key}/_method_changed.txt"
+#		if not os.path.isfile(output_path):
+#			print(f"Generating: {output_path}")
+#			with open(output_path, "w") as _out:
+#				_out.write("")
+				
+				
+## Needs to be redone for new dir structure if you need it again	
+#def make_removed_files():
+#	for key in lines:
+#		output_path = f"{parent_dir}/{key}/_method_removed.txt"
+#		if not os.path.isfile(output_path):
+#			print(f"Generating: {output_path}")
+#			with open(output_path, "w") as _out:
+#				_out.write("")
+				
+				
+
+## Needs to be redone for new dir structure if you need it again	
+#def make_notes_files():
+#	for key in lines:
+#		output_path = f"{parent_dir}/{key}/_notes.html"
+#		if not os.path.isfile(output_path):
+#			print(f"Generating: {output_path}")
+#			with open(output_path, "w") as _out:
+#				_out.write("""[! filter markdown|safe !]
+#[! endfilter !]""")
 								
 								
 
 if __name__ == "__main__":
-	make_directories()
-	make_method_details_files()
-	make_notes_files()
-	make_added_files()
-	make_changed_files()
-	make_removed_files()
-	make_index_files()
-
-
+	pass
+#	make_directories()
+#	make_method_details_files()
+#	make_notes_files()
+#	make_added_files()
+#	make_changed_files()
+#	make_removed_files()
+	overwrite_index_files()
 	

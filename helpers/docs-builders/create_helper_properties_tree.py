@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-# NOTE: You should be able to re-run this file
-# to make updates to the structre as longs
-# as you only put content inside the 
-# `_args` and `_exampels` folders
+###################################################
+# This file should be idempotent.
+# Make a commit before running it though,
+# just in case. 
+###################################################
 
 import os
 

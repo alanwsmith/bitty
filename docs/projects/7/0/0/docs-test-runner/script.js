@@ -1,38 +1,36 @@
 export class BittyDocTestRunner {
   async testResults(_, el) {
     await this.sleep(1000);
-
     let testCount = 0;
     let failed = 0;
     document.querySelectorAll("[data-expected]").forEach((el) => {
-      console.log(el.bittyId);
       const summary = el.closest("details").querySelector("summary");
+      const parentSummary = summary.parentNode.parentNode.closest("details")
+        .querySelector("summary");
       testCount += 1;
       if (el.dataset.expected === el.innerHTML.trim()) {
-        const subs = [
-          ["CLASS", "doc-test-passed"],
-          ["STATUS", "passed"],
-        ];
-        summary.appendChild(
-          this.api.makeElement(
-            this.getTemplate("result"),
-            subs,
-          ),
-        );
+        summary.dataset.status = "passed";
+        if (parentSummary.dataset.status !== "failed") {
+          parentSummary.dataset.status = "passed";
+        }
       } else {
         failed += 1;
-        const subs = [
-          ["CLASS", "doc-test-failed"],
-          ["STATUS", "failed"],
-        ];
-        summary.appendChild(
-          this.api.makeElement(
-            this.getTemplate("result"),
-            subs,
-          ),
-        );
+        summary.dataset.status = "failed";
+        parentSummary.dataset.status = "failed";
       }
     });
+
+    // document.querySelectorAll("[data-status=passed]").forEach((el) => {
+    //   const summary = el.closest("details").parentNode.closest("details")
+    //     .querySelector("summary");
+    //   const subs = [
+    //     ["STATUS", "passed"],
+    //   ];
+    //   summary.appendChild(this.api.makeHTML(
+    //     this.getTemplate("result"),
+    //   ));
+    // });
+
     const subs = [
       ["TOTAL", testCount],
       ["PASSED", testCount - failed],

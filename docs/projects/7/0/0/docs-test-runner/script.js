@@ -1,3 +1,11 @@
+const bittyDocTestTemplates = {
+  results: `
+<div>Test Results</div>
+<div>Total Test: TOTAL</div>
+<div>Passed: PASSED</div>
+<div>Failed: FAILED</div>
+`,
+};
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -9,10 +17,10 @@ window.BittyDocTestRunner = class {
   }
 
   testResults(_, el) {
-    let totalTest = 0;
+    let testCount = 0;
     let failed = 0;
     document.querySelectorAll("[data-expected]").forEach((el) => {
-      totalTest += 1;
+      testCount += 1;
       if (el.dataset.expected === el.innerHTML.trim()) {
         el.classList.add("doc-test-passed");
       } else {
@@ -20,6 +28,13 @@ window.BittyDocTestRunner = class {
         el.classList.add("doc-test-failed");
       }
     });
-    el.innerHTML = "test results";
+    const subs = [
+      ["TOTAL", testCount],
+      ["PASSED", testCount - failed],
+      ["FAILED", failed],
+    ];
+    el.replaceChildren(
+      this.api.makeHTML(bittyDocTestTemplates.results, subs),
+    );
   }
 };

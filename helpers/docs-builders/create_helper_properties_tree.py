@@ -22,9 +22,9 @@ items = {
 		"el.valueToFloat",
 		"el.valueToInt"
 	],
-	"ev": ["ev.bittyId", "ev.value", "ev.valueToFloat", "ev.valueToInt", ],
+	"ev": ["ev.bittyId", "ev.value", "ev.valueToFloat", "ev.valueToInt", "ev.sender", ],
 	"ev.sender": [
-		"ev.sender", "ev.sender.bittyId", "ev.sender.value", "ev.sender.valueToFloat", "ev.sender.valueToInt"
+		"ev.sender.bittyId", "ev.sender.value", "ev.sender.valueToFloat", "ev.sender.valueToInt"
 	]
 }
 

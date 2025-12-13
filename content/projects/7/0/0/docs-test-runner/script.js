@@ -20,12 +20,13 @@ export class BittyDocTestRunner {
       );
     });
 
-    document.querySelectorAll("[data-expected]").forEach((el) => {
+
+    document.querySelectorAll("[data-expects]").forEach((el) => {
       const summary = el.closest("details").querySelector("summary");
       const parentSummary = summary.parentNode.parentNode.closest("details")
         .querySelector("summary");
       testCount += 1;
-      if (el.dataset.expected === el.innerHTML.trim()) {
+      if (el.dataset.expects === el.innerHTML.trim()) {
         summary.dataset.status = "passed";
         if (
           parentSummary.dataset.status !== "failed"

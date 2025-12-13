@@ -129,6 +129,13 @@ window.GitHubStars = class {
 release.</p>
 <ul>
 <li>
+<p>TODO: CONFIRM: If <code>el.bittyParent</code> is
+called on a bitty element it searches for
+a parent bitty element that it's nested in.
+If it finds one, it's return. Otherwise
+the result is undefined.</p>
+</li>
+<li>
 <p>TODO: Added namespacing capabilities.
 Signals can be prefixed with a string
 followed by a <code>.</code> where the string
@@ -238,17 +245,12 @@ won't get them automatically)</p>
 </li>
 </ul>
 <h2>Under Consideration</h2>
+<p>Things that might make it into a future
+release.</p>
 <ul>
 <li>
 <p>TODO: Add a <code>this.api.sleep</code> which does
 an async sleep for you.</p>
-</li>
-<li>
-<p>TODO: CONFIRM: If <code>el.bittyPreant</code> is
-called on a bitty element it searches for
-a parent bitty element that it's nested in.
-If it finds one, it's return. Otherwise
-the result is undefined.</p>
 </li>
 <li>
 <p>TODO: CONFIRM: <code>el.isTarget</code> and <code>el.isSender</code>
@@ -417,7 +419,50 @@ show up in the order
 they appear in the DOM.</p>
 </li>
 </ul>
-
+<h2>Out of Scope</h2>
+<p>These items are out of scope for bitty:</p>
+<ul>
+<li>
+<p>Adding a custom template library is
+out of scope.</p>
+</li>
+<li>
+<p>Including any given template library
+directly in bitty is out of scope.
+(TODO: Confirm you can just call
+one and use it from your class)</p>
+</li>
+<li>
+<p>Including the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/History">History API</a>
+in bitty's <code>this.api</code>.</p>
+</li>
+<li>
+<p>Including a <code>s = new State()</code> type object
+to maintain state. That
+could be set up if folks want to do
+it in their classes. It won't be included
+in bitty directly. The <code>data-send</code> and
+<code>data-receive</code> attributes can send
+signals between components already.</p>
+</li>
+<li>
+<p>I don't have a good way to do
+alert messages if a signal is set
+that doesn't have a corresponding
+method in the element because
+signals can be sent between bitty elements
+with different classes that
+don't know about each other.
+The result would just be a lot of
+potential false errors.</p>
+</li>
+<li>
+<p>Elements could look at each other
+for every event, but that
+feels like too much.</p>
+</li>
+</ul>
 </main>
 
 </bitty-7-0>

@@ -1,5 +1,12 @@
 window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
+  // put a test value that can be check for
+  bittyInit() {
+    this.api.dataset.checker = "ping";
+  }
+
   [@ method_name @](_, el) {
-    el.innerHTML = "TODO";
+    if (el.bittyParent.dataset.checker === "ping") {
+      el.innerHTML = "found parent";
+    }
   }
 }

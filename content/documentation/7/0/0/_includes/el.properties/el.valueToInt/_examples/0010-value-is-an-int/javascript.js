@@ -1,7 +1,7 @@
-window.[@ item.name|title @][@ item.memberof|title @] = class {
+window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
   #incomingValue = null;
 
-  valueToIntEl(_, el) {
+  [@ method_name @](_, el) {
     this.#incomingValue = el.valueToInt;
     this.api.localTrigger("valueToIntElOutput");
   }

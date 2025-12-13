@@ -116,6 +116,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- endif !]
 [!- endfor -!]
 
+
 	<div class="doc-sub-header">Examples</div>
 
 	[! set example_display_path = file.folder + "/_includes/properties-display.html" !]
@@ -129,6 +130,28 @@ helpers/docs-builders/create_helper_properties_tree.py
 	[! set description_path = example_dir + "/description.html" !]
 	[! set postscript_path = example_dir + "/postscript.html" !]
 
+
+
+
+	[! set supplemental_string -!]
+	[!- include example_dir + "/_supplemental_string.txt" !]
+	[!- endset -!]
+
+
+	[! set method_name -!]
+	[!- include example_dir + "/_method_name.txt" !]
+	[!- endset -!]
+
+	[! set target_value -!]
+	[!- include example_dir + "/_target_value.txt" !]
+	[!- endset -!]
+
+
+
+		
+
+
+
 	<details class="example-details">
 	<summary>[! include name_path !]</summary>
 	[! include example_display_path !]
@@ -136,8 +159,8 @@ helpers/docs-builders/create_helper_properties_tree.py
 	[! endif !]
 	[! endfor !]
 
-[#
-#]
+
+
 
 </details>
 
@@ -170,6 +193,20 @@ def create_method_files():
 			]:
 				output_path = f"{parent_dir}/{parent}.properties/{key}/_property_{name[0]}.txt"
 				make_file_if_it_does_not_exist(output_path, name[1])
+				
+				
+def create_variable_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			for name in [
+				["added", "7.0.0"], 
+				["changed", ""],
+				["removed", ""]
+			]:
+				output_path = f"{parent_dir}/{parent}.properties/{key}/_property_{name[0]}.txt"
+				make_file_if_it_does_not_exist(output_path, name[1])
+			
+			
 				
 #		
 #			for key in items[parent]:

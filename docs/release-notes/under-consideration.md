@@ -1,13 +1,12 @@
 ## Under Consideration
 
-
-
-
+- TODO: Add a `this.api.sleep` which does
+an async sleep for you. 
 
 - TODO: CONFIRM: If `el.bittyPreant` is
 called on a bitty element it searches for
 a parent bitty element that it's nested in. 
-If it finds one, it's returne. Otherwise
+If it finds one, it's return. Otherwise
 the result is undefined. 
 
 - TODO: CONFIRM: `el.isTarget` and `el.isSender`

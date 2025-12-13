@@ -5,22 +5,6 @@ export class BittyDocTestRunner {
     let failed = 0;
     let bugs = 0;
 
-    document.querySelectorAll("[data-bug]").forEach((el) => {
-      testCount += 1;
-      bugs += 1;
-      const summary = el.closest("details").querySelector("summary");
-      const parentSummary = summary.parentNode.parentNode.closest("details")
-        .querySelector("summary");
-      summary.dataset.status = "bug";
-      parentSummary.dataset.status = "bug";
-      el.appendChild(
-        this.api.makeElement(this.template("bug"), [[
-          "BUG", el.dataset.bug
-        ]])
-      );
-    });
-
-
     document.querySelectorAll("[data-expects]").forEach((el) => {
       const summary = el.closest("details").querySelector("summary");
       const parentSummary = summary.parentNode.parentNode.closest("details")
@@ -29,8 +13,7 @@ export class BittyDocTestRunner {
       if (el.dataset.expects === el.innerHTML.trim()) {
         summary.dataset.status = "passed";
         if (
-          parentSummary.dataset.status !== "failed"
-          &&
+          parentSummary.dataset.status !== "failed" &&
           parentSummary.dataset.status !== "bug"
         ) {
           parentSummary.dataset.status = "passed";
@@ -46,7 +29,6 @@ export class BittyDocTestRunner {
       ["PASSED", testCount - failed],
       ["FAILED", failed],
       ["BUGS", bugs],
-
     ];
     el.replaceChildren(
       this.api.makeHTML(this.template("results"), subs),
@@ -63,11 +45,8 @@ export class BittyDocTestRunner {
         return `<h4>Test Results</h4>
 <div>Total Test: TOTAL ~ 
 <span>Passed: PASSED</span> ~
-<span>Failed: FAILED</span> ~
-<span>Bugs: BUGS</span></div>`;
+<span>Failed: FAILED</span>`;
         break;
-      case("bug"):
-        return ` <span class="docs-bug"> BUG</span>`;
     }
   }
 }

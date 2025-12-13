@@ -1,15 +1,26 @@
 [! filter markdown|safe !]
 ## Overview
 
-- TODO: This is the test runner that
+- This <strong>bit</strong> is the test runner that
 checks the documentation for the site.
 
-- TODO: The output for each 
-example in the docs has a 
-[! filter inline_highlight("html") !]data-expect="VALUE"[! endfilter !]
-attribute on it. This test
-running compares that value to the
+- It scans the page looking for elements with a 
+[! filter inline_highlight("html") !]data-expects[! endfilter !]
+attribute. The values of those attributes
+are compared with the 
 [! filter inline_highlight("js") !].innerHTML[! endfilter !]
-value of the element and reports on
-it. 
+. If the values match, the tests passes. Otherwise,
+it fails.
+
+- A pass/fail status element is added to the
+individual test and it's parent method/property
+with the result. 
+
+- This doesn't use a lot of bitty's functionality
+beyond the initial trigger. Everything else
+is query selector stuff. That's done to
+prevent conflicts with the `data-*`
+attributes that the test inputs need
+to send and receive. 
+
 [! endfilter !]

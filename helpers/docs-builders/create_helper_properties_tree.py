@@ -54,7 +54,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- set removed_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_removed.txt" -!]
 
 
-<details class="docs-sub-details">
+<details class="docs-sub-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]

@@ -1,0 +1,105 @@
+
+[#- ####################################################
+
+DO NOTE EDIT THIS FILE MANUALLY
+This file is created by:
+
+helpers/docs-builders/create_helper_properties_tree.py
+
+######################################################## -#]
+
+[!- set property_description_path = file.folder + "/_includes/ev.sender.properties/ev.sender.bittyId/property-description.html" -!]
+[!- set examples_dir = file.folder + "/_includes/ev.sender.properties/ev.sender.bittyId/_examples" -!]
+
+[!- set added_path = file.folder + "/_includes/ev.sender.properties/ev.sender.bittyId/_property_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/ev.sender.properties/ev.sender.bittyId/_property_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/ev.sender.properties/ev.sender.bittyId/_property_removed.txt" -!]
+
+
+<details class="docs-sub-details">
+
+[!- set counters = namespace() !]
+[!- set counters.initial = 0 !]
+[!- set counters.count = 0 !]
+
+[!- set counters.initial_examples = 0 !]
+[!- set counters.count_examples = 0 !]
+
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set counters.initial = counters.initial + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+	<summary>ev.sender.bittyId
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: [! include added_path !]]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed">
+		[!- set changed_string|trim -!]
+	[!- include changed_path -!]
+		[!- endset -!]
+		[!- if changed_string != "" -!]
+	[changed: [@ changed_string @]]
+		[!- endif -!]
+		</span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed">
+		[!- set removed_string|trim -!]
+	[!- include removed_path -!]
+		[!- endset -!]
+		[!- if removed_string != "" -!]
+	[removed: [@ removed_string @]]
+		[!- endif -!]
+		</span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div>
+	[!- include property_description_path -!]
+	</div>
+</div>
+
+
+[!- for f in folders !]
+[!- if f.parent == examples_dir !]
+[!- set counters.initial_examples = counters.initial_examples + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+	<div class="doc-sub-header">Examples</div>
+
+	[! set example_display_path = file.folder + "/_includes/properties-display.html" !]
+
+	[! for f in folders !]
+	[! if f.parent == examples_dir !]
+	[! set example_dir = examples_dir + "/" + f.name !]
+	[! set name_path = example_dir + "/name.txt" !]
+	[! set html_path = example_dir + "/html.html" !]
+	[! set javascript_path = example_dir + "/javascript.js" !]
+	[! set description_path = example_dir + "/description.html" !]
+	[! set postscript_path = example_dir + "/postscript.html" !]
+
+	<details class="example-details">
+	<summary>[! include name_path !]</summary>
+	[! include example_display_path !]
+	</details>
+	[! endif !]
+	[! endfor !]
+
+[#
+#]
+
+</details>
+

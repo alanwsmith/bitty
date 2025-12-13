@@ -129,9 +129,6 @@ this weekend.
     </div>
 
 
-
-
-
     <h2>Overview</h2>
 
     <p>This page contains the documentation for
@@ -178,441 +175,83 @@ signture looks like this:</p>
 This documentaiton uses `ev` to identify
 the events and `el` to identify the
 elements. 
-</p><h2>data-* HTML attribute API</h2>
+</p><h2>HTML data-*attribute API</h2>
 
-
-Updates in progress
+<h3 class="info-color">Updates in progress</h3>
 
 <h2>this.api Methods</h2>
 
-Updates in progress
+<h3 class="info-color">Updates in progress</h3>
 
-<h2>Event Argument Helpers</h2>
+<h2>Event Helpers API</h2>
 
-
-Updates in progress
+<h3 class="info-color">Updates in progress</h3>
 
 <h2>Event Argument Helpers (.sender)</h2>
 
 
-Updates in progress
+<h3>Updates in progress</h3>
 
 <h2>Element Argument Helpers</h2>
 
-Updates in progress
-
-<h3>Methods</h3>
-
-<details class="docs-sub-details"><summary>el.prop(KEY)</summary>
+<h3 class="info-color">Updates in progress</h3>
 
 
-<div class="doc-sub-header">Arguments</div>
-
-<div class="docs-preface-wrapper">
-<ul class="default-flow">
-<li>
-<div class="font-weight-900">KEY</div> 
-<div>Returns the value from a `data-*` where 
-`*` is the `KEY` (e.g. `data-KEY="value"`)</div>
-</li>
-</ul>
-</div>
+<h3>Properties</h3>
+<details class="docs-sub-details"><summary>el.bittyId
+	- 
 
 
-<div class="doc-sub-header">Details</div>
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
 
-<div class="docs-preface-wrapper"><ul class="default-flow">
-<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
-from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
-in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
-as a string.
-</li>
-
-<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element does not
-have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
-looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
-attribute. The first one that's found gets used.
-</li>
-
-<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
-or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
-</li>
-</ul></div><div class="doc-sub-header">Examples</div>
-
-
-	<div class="docs-examples-wrapper">
-	<ul>
+		<span class="docs-method-version docs-method-changed"></span>
 	
-	<li>
-		<details class="example-details">
-		<summary>Basic usage</summary>
+	
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>Every element inside a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>	tag gets a `bittyid` property assigned to it's `dataset` with a UUID value 
+(i.e. <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span></span></code>). 
+<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyId</span></span></code> is an alias to
+that value.</p></div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Basic Usage</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>PropEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>propEl<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>the quick brown fox<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>Example Button<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>propEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>BittyidEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elBittyId<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    waiting
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">PropEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">propEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">BittyidEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elBittyId</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyId</span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.PropEl = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  propEl(_, el) {
-    el.innerHTML = el.prop("item");
-  }
-}
-</script>
-
-<h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="PropEl">
-  <div 
-    data-send="propEl"
-    data-item="the quick brown fox"
-  >
-    <button>Example Button</button>
-  </div>
-  <div data-receive="propEl">
-    waiting
-  </div>
-</bitty-7-0></div>
-
-
-</div>
-
-
-<div>
-</div>		</details>
-	</li>
-	
-	
-	</ul>
-	</div>
-
-<div class="docs-optional-wrapper">
-</div>
-
-</details>
-<details class="docs-sub-details"><summary>el.propMatchesSender(KEY)</summary>
-
-
-<div class="doc-sub-header">Arguments</div>
-
-<div class="docs-preface-wrapper">
-<ul class="default-flow">
-<li>
-<div class="font-weight-900">KEY</div> 
-<div>Returns the value from a `data-*` where 
-`*` is the `KEY` (e.g. `data-KEY="value"`)</div>
-</li>
-</ul>
-</div>
-
-
-<div class="doc-sub-header">Details</div>
-
-<div class="docs-preface-wrapper"><p>TODO</p></div><div class="doc-sub-header">Examples</div>
-
-
-	<div class="docs-examples-wrapper">
-	<ul>
-	
-	<li>
-		<details class="example-details">
-		<summary>el prop <strong>DOES</strong> match sender</summary>
-
-<div class="default-flow">
-<h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>PropmatchessenderEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesSender<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      Example Button
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesSender<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    waiting
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">PropmatchessenderEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elMatchesSender</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.PropmatchessenderEl = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  elMatchesSender(_, el) {
-    el.innerHTML = el.propMatchesSender("item");
-  }
-}
-</script>
-
-<h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="PropmatchessenderEl">
-  <div 
-    data-send="elMatchesSender"
-    data-item="alfa"
-  >
-    <button>
-      Example Button
-    </button>
-  </div>
-  <div 
-    data-receive="elMatchesSender"
-    data-item="alfa"
-  >
-    waiting
-  </div>
-</bitty-7-0></div>
-
-
-</div>
-
-
-<div>
-</div>		</details>
-	</li>
-	
-	
-	<li>
-		<details class="example-details">
-		<summary>el prop <strong>DOES NOT</strong> match sender</summary>
-
-<div class="default-flow">
-<h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>PropmatchessenderElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesSender2<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      Example Button
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesSender2<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bravo<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    waiting
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">PropmatchessenderElFalse</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elMatchesSender2</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.PropmatchessenderElFalse = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  elMatchesSender2(_, el) {
-    el.innerHTML = el.propMatchesSender("item");
-  }
-}
-</script>
-
-<h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="PropmatchessenderElFalse">
-  <div 
-    data-send="elMatchesSender2"
-    data-item="alfa"
-  >
-    <button>
-      Example Button
-    </button>
-  </div>
-  <div 
-    data-receive="elMatchesSender2"
-    data-item="bravo"
-  >
-    waiting
-  </div>
-</bitty-7-0></div>
-
-
-</div>
-
-
-<div>
-</div>		</details>
-	</li>
-	
-	
-	</ul>
-	</div>
-
-<div class="docs-optional-wrapper">
-</div>
-
-</details>
-<details class="docs-sub-details"><summary>el.propMatchesTarget(KEY)</summary>
-
-
-<div class="doc-sub-header">Arguments</div>
-
-<div class="docs-preface-wrapper">
-<ul class="default-flow">
-<li>
-<div class="font-weight-900">KEY</div> 
-<div>Returns the value from a `data-*` where 
-`*` is the `KEY` (e.g. `data-KEY="value"`)</div>
-</li>
-</ul>
-</div>
-
-
-<div class="doc-sub-header">Details</div>
-
-<div class="docs-preface-wrapper"><p>TODO</p></div><div class="doc-sub-header">Examples</div>
-
-
-	<div class="docs-examples-wrapper">
-	<ul>
-	
-	<li>
-		<details class="example-details">
-		<summary>el prop <strong>DOES</strong> match target</summary>
-
-<div class="default-flow">
-<h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>PropmatchestargetEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesTarget<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    Example Button
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesTarget<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    waiting
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">PropmatchestargetEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elMatchesTarget</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesTarget</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.PropmatchestargetEl = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  elMatchesTarget(_, el) {
-    el.innerHTML = el.propMatchesTarget("item");
-  }
-}
-</script>
-
-<h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="PropmatchestargetEl">
-  <button 
-    data-send="elMatchesTarget"
-    data-item="alfa"
-  >
-    Example Button
-  </button>
-  <div 
-    data-receive="elMatchesTarget"
-    data-item="alfa"
-  >
-    waiting
-  </div>
-</bitty-7-0></div>
-
-
-</div>
-
-
-<div>
-</div>		</details>
-	</li>
-	
-	
-	<li>
-		<details class="example-details">
-		<summary>el prop <strong>DOES NOT</strong> match target</summary>
-
-<div class="default-flow">
-<h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>PropmatchestargetElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesTarget2<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>alfa<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    Example Button
-<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elMatchesTarget2<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>bravo<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    waiting
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">PropmatchestargetElFalse</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elMatchesTarget2</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesTarget</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.PropmatchestargetElFalse = class {
-  bittyReady() {
-    this.api.querySelector("button").click();
-  }
-  elMatchesTarget2(_, el) {
-    el.innerHTML = el.propMatchesTarget("item");
+<script>window.BittyidEl = class {
+  elBittyId(_, el) {
+    el.innerHTML = el.bittyId;
   }
 }</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="PropmatchestargetElFalse">
-  <button 
-    data-send="elMatchesTarget2"
-    data-item="alfa"
-  >
-    Example Button
-  </button>
-  <div 
-    data-receive="elMatchesTarget2"
-    data-item="bravo"
-  >
+<div class="example-block "><bitty-7-0 data-connect="BittyidEl">
+  <div data-init="elBittyId">
     waiting
   </div>
 </bitty-7-0></div>
@@ -620,480 +259,610 @@ or any of its ancestors have the <code class="code-span lang-html"><span class="
 
 </div>
 
-
 <div>
-</div>		</details>
-	</li>
-	
-	
-	</ul>
-	</div>
+</div>	</details>
 
-<div class="docs-optional-wrapper">
-</div>
 
 </details>
-<details class="docs-sub-details"><summary>el.propToFloat(KEY)</summary>
+<details class="docs-sub-details"><summary>el.bittyParent
+	- 
 
 
-<div class="doc-sub-header">Arguments</div>
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
 
-<div class="docs-preface-wrapper">
-<ul class="default-flow">
-<li>
-<div class="font-weight-900">KEY</div> 
-<div>Returns the value from a `data-*` where 
-`*` is the `KEY` (e.g. `data-KEY="value"`)</div>
-</li>
-</ul>
-</div>
-
-
-<div class="doc-sub-header">Details</div>
-
-<div class="docs-preface-wrapper"><ul class="default-flow">
-<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
-from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
-in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
-as a string.
-</li>
-
-<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element does not
-have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
-looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
-attribute. The first one that's found gets used.
-</li>
-
-<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
-or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
-</li>
-</ul></div><div class="doc-sub-header">Examples</div>
-
-
-	<div class="docs-examples-wrapper">
-	<ul>
+		<span class="docs-method-version docs-method-changed"></span>
 	
-	<li>
-		<details class="example-details">
-		<summary>Basic usage</summary>
+	
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>A reference to the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code> that contains 
+the `el`.</p>
+
+</div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Basic Usage</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptofloatEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>propToFloatEl<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-item</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>10.01<span class="punctuation definition string end html">&quot;</span></span></span>
-<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>Example Button<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>propToFloatEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    waiting
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>BittyparentEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>getBittyParent<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptofloatEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">BittyparentEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">getBittyParent</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyParent</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">bittyid</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.BittyparentEl = class {
+  getBittyParent(_, el) {
+    el.innerHTML = el.bittyParent.dataset.bittyid;
+  }
+}</script>
+
+<h5>Output<h5>
+<div class="example-block "><bitty-7-0 data-connect="BittyparentEl">
+  <div data-init="getBittyParent"></div>
+</bitty-7-0></div>
+
+
+</div>
+
+<div>
+</div>	</details>
+
+
+</details>
+<details class="docs-sub-details"><summary>el.isSender
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed"></span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>Boolean that 
+	returns <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language boolean true js">true</span></span></code> if 
+	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code>
+	element that sent the signal is also
+	the receiving element.
+</p></div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Element <strong>IS</strong> the sender</summary>
+
+<div class="default-flow">
+<h5>HTML</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IssenderEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsSender<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsSender<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Example Button
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<h5>JavaScript</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">IssenderEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">propToFloatEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToFloat</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>item<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elIsSender</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">isSender</span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
-<script>window.ProptofloatEl = class {
+<script>window.IssenderEl = class {
   bittyReady() {
     this.api.querySelector("button").click();
   }
-  propToFloatEl(_, el) {
-    el.innerHTML = el.propToFloat("item");
+  elIsSender(_, el) {
+    el.innerHTML = el.isSender;
   }
-}
-</script>
+}</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptofloatEl">
-  <div 
-    data-send="propToFloatEl"
-    data-item="10.01"
+<div class="example-block "><bitty-7-0 data-connect="IssenderEl">
+  <button 
+    data-send="elIsSender" 
+    data-receive="elIsSender"
   >
-    <button>Example Button</button>
-  </div>
-  <div data-receive="propToFloatEl">
-    waiting
-  </div>
-</bitty-7-0>
-
-</div>
+    Example Button
+  </button>
+</bitty-7-0></div>
 
 
 </div>
-
 
 <div>
-</div>		</details>
-	</li>
-	
-	
-	</ul>
-	</div>
+</div>	</details>
 
-<div class="docs-optional-wrapper">
-</div>
-
-</details>
-<details class="docs-sub-details"><summary>el.propToInt(KEY)</summary>
-
-
-<div class="doc-sub-header">Arguments</div>
-
-<div class="docs-preface-wrapper">
-<ul class="default-flow">
-<li>
-<div class="font-weight-900">KEY</div> 
-<div><p>
-  The KEY portion of <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>  attribute of the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code>.
-</p></div>
-</li>
-</ul>
-</div>
-
-
-<div class="doc-sub-header">Details</div>
-
-<div class="docs-preface-wrapper"><ul class="default-flow">
-<li>
-  Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
-  in the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code> and 
-  returns the value as a integer (Int) by running it through 
-<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="support function js">parseInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other constant js">VALUE</span><span class="punctuation separator comma js">,</span> <span class="constant numeric js">10</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span></code>.
-</li>
-
-<li>
-  If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code> does not
-  contain a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
-  attribute the method walks up the DOM looking for an ancestors that does.
-  The nearest one returned as an integer (Int) if any are found.
-</li>
-
-<li>
-  If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code>  or any of its ancestors have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>  attribute, then <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>  is returned.
-</li>
-</ul></div><div class="doc-sub-header">Examples</div>
-
-
-	<div class="docs-examples-wrapper">
-	<ul>
-	
-	<li>
-		<details class="example-details">
-		<summary><code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> <strong>HAS</strong> <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute.</summary>
+	<details class="example-details">
+	<summary>Element <strong>IS NOT</strong> the sender</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-alfa</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>received integer<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IssenderElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotSender<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotSender<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>      Example Button
+<span class="line-marker"></span>    <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<h5>JavaScript</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">IssenderElFalse</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elIsNotSender</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">isSender</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.IssenderElFalse = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+  elIsNotSender(_, el) {
+    el.innerHTML = el.isSender;
+  }
+}</script>
+
+<h5>Output<h5>
+<div class="example-block "><bitty-7-0 data-connect="IssenderElFalse">
+  <div data-send="elIsNotSender">
+    <button data-receive="elIsNotSender">
+      Example Button
+    </button>
+  </div>
+</bitty-7-0></div>
+
+
+</div>
+
+<div>
+</div>	</details>
+
+
+</details>
+<details class="docs-sub-details"><summary>el.isTarget
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed"></span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>Boolean that 
+	returns <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language boolean true js">true</span></span></code> if 
+	the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code>
+	element that initiated the signal is also
+	the receiving element.
+</p></div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Element <strong>IS</strong> the target</summary>
+
+<div class="default-flow">
+<h5>HTML</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IstargetEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsTarget<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsTarget<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Example Button
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<h5>JavaScript</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">IstargetEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elIsTarget</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">isTarget</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.IstargetEl = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
+  }
+  elIsTarget(_, el) {
+    el.innerHTML = el.isTarget;
+  }
+}</script>
+
+<h5>Output<h5>
+<div class="example-block "><bitty-7-0 data-connect="IstargetEl">
+  <button 
+    data-send="elIsTarget" 
+    data-receive="elIsTarget"
+  >
+    Example Button
+  </button>
+</bitty-7-0></div>
+
+
+</div>
+
+<div>
+</div>	</details>
+
+	<details class="example-details">
+	<summary>Element <strong>IS NOT</strong> the target</summary>
+
+<div class="default-flow">
+<h5>HTML</h5>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>IstargetElFalse<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotTarget<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    Example Button
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>elIsNotTarget<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span>    waiting
 <span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  (_, el) {
-<span class="line-marker"></span>    const value = el.<span class="meta function declaration js"><span class="entity name function js">propToInt</span><span class="punctuation section group begin js">(</span>&quot;<span class="variable parameter function js">alfa</span>&quot;<span class="punctuation section group end js">)</span></span>;
-<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">if</span><span class="meta function declaration js"> </span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">value</span> <span class="meta parameter optional js"><span class="keyword operator assignment js">=</span><span class="keyword operator comparison js">==</span> <span class="invalid illegal stray-bracket-end js">)</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>      el.innerHTML = <span class="meta object-literal key js"><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>received integer<span class="punctuation definition string end js">&quot;</span></span></span>;
-<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  }
-<span class="line-marker"></span>}</span></span></span></span></span></code></pre>
-<script>window.ProptointEl = class {
-  (_, el) {
-    const value = el.propToInt("alfa");
-    if (value === ) {
-      el.innerHTML = "received integer";
-    }
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">IstargetElFalse</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">elIsNotTarget</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">isTarget</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.IstargetElFalse = class {
+  bittyReady() {
+    this.api.querySelector("button").click();
   }
-}
-</script>
+  elIsNotTarget(_, el) {
+    el.innerHTML = el.isTarget;
+  }
+}</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptointEl">
-  <div data-init="" data-alfa="" data-expect="received integer">
+<div class="example-block "><bitty-7-0 data-connect="IstargetElFalse">
+  <button data-send="elIsNotTarget">
+    Example Button
+  </button>
+  <div data-receive="elIsNotTarget">
     waiting
   </div>
-</bitty-7-0>
-
-</div>
+</bitty-7-0></div>
 
 
 </div>
-
 
 <div>
-</div>		</details>
-	</li>
+</div>	</details>
+
+
+</details>
+<details class="docs-sub-details"><summary>el.value
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed"></span>
 	
 	
-	<li>
-		<details class="example-details">
-		<summary><code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> <strong>DOES NOT HAVE</strong> <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute. An ancestor of <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> <strong>DOES HAVE</strong> a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute.</summary>
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>The standard <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span></span></code> from HTML Elements.</p></div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Basic Usage</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">section</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-bravo</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">extra-wrapper</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>received integer<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>        waiting
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValueEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>hidden<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueEl<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">value</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>the quick brown fox<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span> <span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueElOutput<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    waiting
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  (_, el) {
-<span class="line-marker"></span>    const value = el.<span class="meta function declaration js"><span class="entity name function js">propToInt</span><span class="punctuation section group begin js">(</span>&quot;<span class="variable parameter function js">bravo</span>&quot;<span class="punctuation section group end js">)</span></span>;
-<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">if</span><span class="meta function declaration js"> </span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">value</span> <span class="meta parameter optional js"><span class="keyword operator assignment js">=</span><span class="keyword operator comparison js">==</span> <span class="invalid illegal stray-bracket-end js">)</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>      el.innerHTML = <span class="meta object-literal key js"><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>received integer<span class="punctuation definition string end js">&quot;</span></span></span>;
-<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  }
-<span class="line-marker"></span>}</span></span></span></span></span></code></pre>
-<script>window.ProptointEl = class {
-  (_, el) {
-    const value = el.propToInt("bravo");
-    if (value === ) {
-      el.innerHTML = "received integer";
-    }
-  }
-}
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ValueEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #incomingValue = null;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>valueElOutput<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueElOutput</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.ValueEl = class {
+  #incomingValue = null;
 
-</script>
+  valueEl(_, el) {
+    this.#incomingValue = el.value;
+    this.api.localTrigger("valueElOutput");
+  }
+
+  valueElOutput(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }
+}</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptointEl">
-  <section data-bravo="">
-    <div class="extra-wrapper">
-      <div data-init="" data-expect="received integer">
-        waiting
-      </div>
-    </div>
-  </section>
-</bitty-7-0>
+<div class="example-block "><bitty-7-0 data-connect="ValueEl">
+  <input 
+    type="hidden" 
+    data-init="valueEl" 
+    value="the quick brown fox"
+  />
+  <div data-receive="valueElOutput">
+    waiting
+  </div>
+</bitty-7-0></div>
+
 
 </div>
-
-
-</div>
-
 
 <div>
-</div>		</details>
-	</li>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
+
+
+</details>
+<details class="docs-sub-details"><summary>el.valueToFloat
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed"></span>
 	
 	
-	<li>
-		<details class="example-details">
-		<summary><code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> <strong>HAS</strong>
-a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute
-and an ancestor of <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> 
-<strong>HAS</strong>
-a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute</summary>
-<p>If both the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> and any
-of its ancestor have a
-<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute,
-then the one from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> is
-used and any ancestor values are ignored.</p>
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>Alias for <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="support function js">parseFloat</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span></code>.</p>
+</div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>Basic Usage</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">section</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-charlie</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>3000<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">extra-wrapper</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-charlie</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>received integer<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>        waiting
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValuetofloatEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>hidden<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueToFloatEl<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">value</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>10.01<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span> <span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueToFloatElOutput<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    waiting
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  (_, el) {
-<span class="line-marker"></span>    const value = el.<span class="meta function declaration js"><span class="entity name function js">propToInt</span><span class="punctuation section group begin js">(</span>&quot;<span class="variable parameter function js">charlie</span>&quot;<span class="punctuation section group end js">)</span></span>;
-<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">if</span><span class="meta function declaration js"> </span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">value</span> <span class="meta parameter optional js"><span class="keyword operator assignment js">=</span><span class="keyword operator comparison js">==</span> <span class="invalid illegal stray-bracket-end js">)</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>      el.innerHTML = <span class="meta object-literal key js"><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>received integer<span class="punctuation definition string end js">&quot;</span></span></span>;
-<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>  }
-<span class="line-marker"></span>}</span></span></span></span></span></code></pre>
-<script>window.ProptointEl = class {
-  (_, el) {
-    const value = el.propToInt("charlie");
-    if (value === ) {
-      el.innerHTML = "received integer";
-    }
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ValuetofloatEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #incomingValue = null;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueToFloatEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">valueToFloat</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>valueToFloatElOutput<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueToFloatElOutput</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.ValuetofloatEl = class {
+  #incomingValue = null;
+
+  valueToFloatEl(_, el) {
+    this.#incomingValue = el.valueToFloat;
+    this.api.localTrigger("valueToFloatElOutput");
   }
-}
-</script>
+
+  valueToFloatElOutput(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }
+}</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptointEl">
-  <section data-charlie="3000">
-    <div class="extra-wrapper">
-      <div data-charlie="" data-init="" data-expect="received integer">
-        waiting
-      </div>
-    </div>
-  </section>
-</bitty-7-0>
+<div class="example-block "><bitty-7-0 data-connect="ValuetofloatEl">
+  <input 
+    type="hidden" 
+    data-init="valueToFloatEl" 
+    value="10.01"
+  />
+  <div data-receive="valueToFloatElOutput">
+    waiting
+  </div>
+</bitty-7-0></div>
+
 
 </div>
-
-
-</div>
-
 
 <div>
-</div>		</details>
-	</li>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
+
+
+</details>
+<details class="docs-sub-details"><summary>el.valueToInt
+	- 
+
+
+		<span class="docs-method-version docs-method-added">
+		[added: 7.0.0]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed"></span>
 	
 	
-	<li>
-		<details class="example-details">
-		<summary><code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> 
-<strong>DOES NOT HAVE</strong> a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute.
-All ancestors 
-<strong>DO NOT HAVE</strong> a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute.</summary>
-<p>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> and any
-of its ancestor have a
-<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute,
-then the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.</p>
+	
+	<span class="docs-method-version docs-method-removed"></span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div><p>Alias for <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="support function js">parseInt</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation separator comma js">,</span> <span class="constant numeric js">10</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span></code>.</p>
+</div>
+</div><div class="doc-sub-header">Examples</div>
+
+
+
+	<details class="example-details">
+	<summary>value is an int</summary>
 
 <div class="default-flow">
 <h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">extra-wrapper</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>        waiting
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ValuetointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">input</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">type</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>hidden<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueToIntEl<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">value</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>3000<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span> <span class="punctuation definition tag end html"> /&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>valueToIntElOutput<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    waiting
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
 <span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 <h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  (_, el) {
-<span class="line-marker"></span>    el.innerHTML = el.<span class="meta function declaration js"><span class="entity name function js">propToInt</span><span class="punctuation section group begin js">(</span>&quot;<span class="variable parameter function js">delta</span>&quot;<span class="punctuation section group end js">)</span></span>;
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span></span>
-<span class="line-marker"></span>}</span></code></pre>
-<script>window.ProptointEl = class {
-  (_, el) {
-    el.innerHTML = el.propToInt("delta");
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ValuetointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #incomingValue = null;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueToIntEl</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">valueToInt</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTrigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>valueToIntElOutput<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">valueToIntElOutput</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">incomingValue</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+<script>window.ValuetointEl = class {
+  #incomingValue = null;
+
+  valueToIntEl(_, el) {
+    this.#incomingValue = el.valueToInt;
+    this.api.localTrigger("valueToIntElOutput");
   }
-}
-</script>
+
+  valueToIntElOutput(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }
+}</script>
 
 <h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptointEl">
-  <section>
-    <div class="extra-wrapper">
-      <div data-init="">
-        waiting
-      </div>
-    </div>
-  </section>
-</bitty-7-0>
+<div class="example-block "><bitty-7-0 data-connect="ValuetointEl">
+  <input 
+    type="hidden" 
+    data-init="valueToIntEl" 
+    value="3000"
+  />
+  <div data-receive="valueToIntElOutput">
+    waiting
+  </div>
+</bitty-7-0></div>
+
 
 </div>
-
-
-</div>
-
 
 <div>
-</div>		</details>
-	</li>
-	
-	
-	<li>
-		<details class="example-details">
-		<summary>TODO - NaN</summary>
-<p>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">el</span></span></code> and any
-of its ancestor have a
-<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute,
-then the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.</p>
+<p>
+  NOTE: This example uses two methods in order to show the 
+output directly on the page. Using a single method
+approach would result in having to show the
+output in the console since updating the
+input value itself wouldn't look like
+anything changed.
+</p></div>	</details>
 
-<div class="default-flow">
-<h5>HTML</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>ProptointEl<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">extra-wrapper</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span><span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>        waiting
-<span class="line-marker"></span>      <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>    <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">section</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<h5>JavaScript</h5>
-<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">ProptointEl</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  (_, el) {
-<span class="line-marker"></span>    el.innerHTML = el.<span class="meta function declaration js"><span class="entity name function js">propToInt</span><span class="punctuation section group begin js">(</span>&quot;<span class="variable parameter function js">delta</span>&quot;<span class="punctuation section group end js">)</span></span>;
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span></span>
-<span class="line-marker"></span>}</span></code></pre>
-<script>window.ProptointEl = class {
-  (_, el) {
-    el.innerHTML = el.propToInt("delta");
-  }
-}
-</script>
-
-<h5>Output<h5>
-<div class="example-block "><bitty-7-0 data-connect="ProptointEl">
-  <section>
-    <div class="extra-wrapper">
-      <div data-init="">
-        waiting
-      </div>
-    </div>
-  </section>
-</bitty-7-0>
-
-</div>
-
-
-</div>
-
-
-<div>
-</div>		</details>
-	</li>
-	
-	
-	</ul>
-	</div>
-
-<div class="docs-optional-wrapper">
-<h3>TODO: Examples to make</h3>
-<ul>
-<li>
-<p>[x] element has data-KEY</p>
-</li>
-<li>
-<p>[x] ancestor has data-KEY</p>
-</li>
-<li>
-<p>[x] both have data-KEY</p>
-</li>
-<li>
-<p>[] neither have data-KEY</p>
-</li>
-</ul>
-</div>
 
 </details>
 
-
-
-
-<h3>Properties</h3>
-
-TODO: These are done and just
-need to be uncommented. 
 
     <h2>Release Notes</h2>
 
@@ -1125,7 +894,7 @@ need to be uncommented.
     <div>By marking the work with a CC0 public domain dedication, the creator is giving up their copyright and allowing reusers to distribute, remix, adapt, and build upon the material in any medium or format, even for commercial purposes.</div>
   </details>
   <div class="text-align-center">
-    <a href="https://bitty.alanwsmith.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
+    <a href="https://www.bitty-js.com/">bitty</a> by <a href="https://www.alanwsmith.com/">alan w smith</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>
   </div>
 </footer>
     <script src="/components/github-stars-beta-1.js" type="module"></script>

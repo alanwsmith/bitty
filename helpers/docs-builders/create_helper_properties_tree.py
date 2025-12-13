@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-# NOTE: You should be able to re-run this file
-# to make updates to the structre as longs
-# as you only put content inside the 
-# `_args` and `_exampels` folders
+###################################################
+# This file should be idempotent.
+# Make a commit before running it though,
+# just in case. 
+###################################################
 
 import os
 
@@ -11,30 +12,28 @@ from pathlib import Path
 from string import Template
 
 
-data = """ev.bittyId
-ev.value
-ev.valueToFloat
-ev.valueToInt
-ev.sender
-ev.sender.bittyId
-ev.sender.value
-ev.sender.valueToFloat
-ev.sender.valueToInt
-el.bittyId
-el.bittyParent
-el.isSender
-el.isTarget
-el.value
-el.valueToFloat
-el.valueToInt"""
+items = {
+	"el": [
+		"el.bittyId",
+		"el.bittyParent",
+		"el.isSender",
+		"el.isTarget",
+		"el.value",
+		"el.valueToFloat",
+		"el.valueToInt"
+	],
+	"ev": ["ev.bittyId", "ev.value", "ev.valueToFloat", "ev.valueToInt", "ev.sender", ],
+	"ev.sender": [
+		"ev.sender.bittyId", "ev.sender.value", "ev.sender.valueToFloat", "ev.sender.valueToInt"
+	]
+}
 
-lines = data.split("\n")
 
 major_version = "7"
 minor_version = "0"
 patch_version = "0"
 
-parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes/helper-properties"
+parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
 
 
 index_skeleton = """
@@ -47,8 +46,13 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 ######################################################## -#]
 
-[!- set preface_path = file.folder + "/_includes/helper-properties/$VALUE/_preface.html" -!]
-[!- set examples_dir = file.folder + "/_includes/helper-properties/$VALUE/_examples" -!]
+[!- set property_description_path = file.folder + "/_includes/$PARENT.properties/$VALUE/property-description.html" -!]
+[!- set examples_dir = file.folder + "/_includes/$PARENT.properties/$VALUE/_examples" -!]
+
+[!- set added_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/$PARENT.properties/$VALUE/_property_removed.txt" -!]
+
 
 <details class="docs-sub-details">
 
@@ -65,10 +69,44 @@ helpers/docs-builders/create_helper_properties_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<summary>$VALUE</summary>
+	<summary>$VALUE
+	- 
 
-<div class="docs-preface-wrapper">
-	[!- include preface_path -!]
+
+		<span class="docs-method-version docs-method-added">
+		[added: [! include added_path !]]
+		</span>
+		
+
+		<span class="docs-method-version docs-method-changed">
+		[!- set changed_string|trim -!]
+	[!- include changed_path -!]
+		[!- endset -!]
+		[!- if changed_string != "" -!]
+	[changed: [@ changed_string @]]
+		[!- endif -!]
+		</span>
+	
+	
+	
+	<span class="docs-method-version docs-method-removed">
+		[!- set removed_string|trim -!]
+	[!- include removed_path -!]
+		[!- endset -!]
+		[!- if removed_string != "" -!]
+	[removed: [@ removed_string @]]
+		[!- endif -!]
+		</span>
+
+	
+	</summary>
+
+
+<div class="docs-property-description-wrapper default-flow">
+	<div class="doc-sub-header">Description</div>
+	<div>
+	[!- include property_description_path -!]
+	</div>
 </div>
 
 
@@ -80,7 +118,7 @@ helpers/docs-builders/create_helper_properties_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
-	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+	[! set example_display_path = file.folder + "/_includes/properties-display.html" !]
 
 	[! for f in folders !]
 	[! if f.parent == examples_dir !]
@@ -98,49 +136,85 @@ helpers/docs-builders/create_helper_properties_tree.py
 	[! endif !]
 	[! endfor !]
 
+[#
+#]
 
 </details>
 
-
-
 """
 
-
-
-def make_directories():
-	for key in lines:
-		base_dir = f"{parent_dir}/{key}"
-		if not os.path.isdir(base_dir):
-			print(f"mkdir: {base_dir}")
-			Path(base_dir).mkdir(exist_ok=True)
+def overwrite_wrapper_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			index_path = f"{parent_dir}/{parent}.properties/{key}/_wrapper.html"
+			print(f"Overwriting: {index_path}")
+			data = { "PARENT": parent, "VALUE": key }
+			template = Template(index_skeleton)
+			output = template.substitute(data)
+			with open(index_path, "w") as _out:
+				_out.write(output)
 			
-		examples_dir = f"{base_dir}/_examples"
-		if not os.path.isdir(examples_dir):
-			print(f"mkdir: {examples_dir}")
-			Path(examples_dir).mkdir(exist_ok=True)
-			
-
-def make_index_files():
-	for key in lines:
-		index_path = f"{parent_dir}/{key}/index.html"
-		print(f"Generating: {index_path}")
-		data = { "VALUE": key }
-		template = Template(index_skeleton)
-		output = template.substitute(data)
-		with open(index_path, "w") as _out:
-			_out.write(output)
+def make_file_if_it_does_not_exist(output_path, content):
+	if not os.path.isfile(output_path):
+		with open(output_path, "w") as _out:
+			_out.write(content)
 	
-def make_preface_files():
-	for key in lines:
-		preface_path = f"{parent_dir}/{key}/_preface.html"
-		if not os.path.isfile(preface_path):
-			print(f"Generating: {preface_path}")
-			with open(preface_path, "w") as _out:
-				_out.write("<p>TODO</p>")
+		
+def create_method_files():
+	for parent in items.keys():
+		for key in items[parent]:
+			for name in [
+				["added", "7.0.0"], 
+				["changed", ""],
+				["removed", ""]
+			]:
+				output_path = f"{parent_dir}/{parent}.properties/{key}/_property_{name[0]}.txt"
+				make_file_if_it_does_not_exist(output_path, name[1])
+				
+#		
+#			for key in items[parent]:
+#				index_path = f"{parent_dir}/{parent}.properties/{key}/_wrapper.html"
+#				print(f"Overwriting: {index_path}")
+#				data = { "PARENT": parent, "VALUE": key }
+#				template = Template(index_skeleton)
+#				output = template.substitute(data)
+#				with open(index_path, "w") as _out:
+#					_out.write(output)
+							
+			
+			
+
+# NOTE: This needs to be updated for the 
+# dir structure that splits el, ev, and ev.sender
+# if you need to use it again. 
+#def make_directories():
+#	for key in lines:
+#		base_dir = f"{parent_dir}/{key}"
+#		if not os.path.isdir(base_dir):
+#			print(f"mkdir: {base_dir}")
+#			Path(base_dir).mkdir(exist_ok=True)
+#		examples_dir = f"{base_dir}/_examples"
+#		if not os.path.isdir(examples_dir):
+#			print(f"mkdir: {examples_dir}")
+#			Path(examples_dir).mkdir(exist_ok=True)
+			
+
+
+	
+# NOTE: This needs to be updated for the 
+# dir structure that splits el, ev, and ev.sender
+# if you need to use it again. 
+#def make_preface_files():
+#	for key in lines:
+#		property_description_path = f"{parent_dir}/{key}/_preface.html"
+#		if not os.path.isfile(property_description_path):
+#			print(f"Generating: {property_description_path}")
+#			with open(property_description_path, "w") as _out:
+#				_out.write("<p>TODO</p>")
 				
 
 if __name__ == "__main__":
-	make_directories()
-	make_preface_files()
-	make_index_files()
+	overwrite_wrapper_files()
+	create_method_files()
 
+	

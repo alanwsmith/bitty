@@ -163,10 +163,22 @@ it.</p>
 window.BittyDocTestRunner = class {
   async bittyReady() {
     await sleep(300);
-    // this.api.localTrigger("restTesults");
+    this.api.localTrigger("testResults");
   }
 
   testResults(_, el) {
+    let totalTest = 0;
+    let failed = 0;
+    document.querySelectorAll("[data-expected]").forEach((el) => {
+      totalTest += 1;
+      if (el.dataset.expected === el.innerHTML.trim()) {
+        el.classList.add("doc-test-passed");
+      } else {
+        failed += 1;
+        el.classList.add("doc-test-failed");
+      }
+    });
+    el.innerHTML = "test results";
   }
 };</script>
 
@@ -187,6 +199,24 @@ window.BittyDocTestRunner = class {
 
 </bitty-7-0></div>
 
+
+<h2>Styles</h2>
+
+<style>.doc-test-passed {
+  color: green;
+}
+
+.doc-test-failed {
+  color: red;
+}</style>
+
+<pre class="code-block"><code><span class="line-marker"></span><span class="source css"><span class="meta selector css"><span class="entity other attribute-name class css"><span class="punctuation definition entity css">.</span>doc-test-passed</span> </span><span class="meta property-list css"><span class="punctuation section property-list css">{</span>
+<span class="line-marker"></span>  <span class="meta property-name css"><span class="support type property-name css">color</span></span><span class="punctuation separator key-value css">:</span><span class="meta property-value css"> </span><span class="meta property-value css"><span class="support constant color w3c-standard-color-name css">green</span></span><span class="punctuation terminator rule css">;</span>
+<span class="line-marker"></span></span><span class="punctuation section property-list css">}</span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta selector css"><span class="entity other attribute-name class css"><span class="punctuation definition entity css">.</span>doc-test-failed</span> </span><span class="meta property-list css"><span class="punctuation section property-list css">{</span>
+<span class="line-marker"></span>  <span class="meta property-name css"><span class="support type property-name css">color</span></span><span class="punctuation separator key-value css">:</span><span class="meta property-value css"> </span><span class="meta property-value css"><span class="support constant color w3c-standard-color-name css">red</span></span><span class="punctuation terminator rule css">;</span>
+<span class="line-marker"></span></span><span class="punctuation section property-list css">}</span></span></code></pre>
 
 
 </main></bitty-7-0>

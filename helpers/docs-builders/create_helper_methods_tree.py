@@ -48,7 +48,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set method_details_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_details.html" -!]
+[!- set method_description_path = file.folder + "/_includes/$PARENT.methods/$VALUE/method-description.html" -!]
 [!- set args_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_args" -!]
 [!- set examples_dir = file.folder + "/_includes/$PARENT.methods/$VALUE/_examples" -!]
 [!- set notes_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_notes.html" -!]
@@ -56,7 +56,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- set changed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_changed.txt" -!]
 [!- set removed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_removed.txt" -!]
 
-[#
 
 
 <details class="docs-method-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
@@ -133,7 +132,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 <div class="doc-sub-header">Details</div>
 
 <div class="docs-preface-wrapper">
-	[!- include method_details_path -!]
+	[!- include method_description_path -!]
 </div>
 
 [!- for f in folders !]
@@ -144,7 +143,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 	<div class="doc-sub-header">Examples</div>
 
-	[! set example_display_path = file.folder + "/_includes/helper-properties/display.html" !]
+	[! set example_display_path = file.folder + "/_includes/methods-display.html" !]
 
 	<div class="docs-examples-wrapper">
 	<ul>
@@ -176,7 +175,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 </details>
 
-#]
+
 """
 
 

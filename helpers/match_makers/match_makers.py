@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+keys = [
+		"propMatchesTarget",
+		"propMatchesSender"
+		]
 
 statuses = [
 	"has data-key",
@@ -11,44 +15,54 @@ matches = [
 	"values do not match"
 ]
 
+def payload():
+	items = []
+	for i in range(0,32):
+		m = matches[(i >> 4) & 1]
+		if ((i >> 0) & 1 == 0 and (i >> 1) & 1 == 0):
+			continue
+		if ((i >> 0) & 1 == 1 and (i >> 1) & 1 == 1):
+			continue
+		if ((i >> 2) & 1 == 0 and (i >> 3) & 1 == 0):
+			continue
+		if ((i >> 2) & 1 == 1 and (i >> 3) & 1 == 1):
+			continue
+		items.append([
+			(i >> 0) & 1, 
+			(i >> 1) & 1, 
+			(i >> 2) & 1, 
+			(i >> 3) & 1, 
+			(i >> 4) & 1, 
+		])
+	items.sort()
+	return items
+
+def report_line(item):
+	el = statuses[item[0]]
+	ela = statuses[item[1]]
+	ev = statuses[item[2]]
+	eva = statuses[item[3]]
+	m = matches[item[4]]
+	return f"el {el} - ancestor of el {ela} - ev {ev} - ancestor of ev {eva} - {m}"
 
 
-out = []
-for i in range(0,32):
-	el = f"el {statuses[(i >> 0) & 1]}"
-	ela = f"ancestor of el {statuses[(i >> 1) & 1]}"
-	ev = f"ev {statuses[(i >> 2) & 1]}"
-	eva = f"ancestor of ev {statuses[(i >> 3) & 1]}"
-	m = matches[(i >> 4) & 1]
-	if ((i >> 0) & 1 == 0 and (i >> 1) & 1 == 0):
-		continue
-	if ((i >> 0) & 1 == 1 and (i >> 1) & 1 == 1):
-		continue
-	if ((i >> 2) & 1 == 0 and (i >> 3) & 1 == 0):
-		continue
-	if ((i >> 2) & 1 == 1 and (i >> 3) & 1 == 1):
-		continue
-	out.append(f"{el} - {ela} - {ev} - {eva} - {m}")
+def print_report():
+	with open("report.txt", "w") as _out:
+		for item in payload():
+			_out.write(report_line(item))
+			_out.write("\n")
+
+def make_directories():
+	for key in keys:
+		for item in payload():
+
+		print(key)
+
+
+
 	
+if __name__ == "__main__":
+	make_directories();
 
-out.sort()
-for o in reversed(out):
-	print(o)
-	
-print(len(out))
-	
-#	
-#	f1 = (i >> 0) & 1
-#	f2 = (i >> 1) & 1
-#	f3 = (i >> 2) & 1
-#	
-#	print(f"{f1} - {f2} - {f3}")
+	print_report()
 
-
-
-#for i in range(0,10):
-#	el = f"el {statuses[i % 2]}"
-#	ela = f"ancestor of el {statuses[i % 3]}"
-#	print(f"{el} - {ela}")
-#	
-	

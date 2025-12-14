@@ -58,7 +58,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 
 
 
-<details class="docs-method-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
+<details class="docs-test-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
 [!- set counters = namespace() !]
 [!- set counters.initial = 0 !]

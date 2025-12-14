@@ -82,10 +82,12 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- if counters.count != counters.initial !],[@ " " @][! endif !]
 [!- endif !]
 [!- endfor -!]
-	) - 
+	)
 	
-	<span class="docs-method-version docs-method-added">
-	[added: [! include added_path !]]
+	<span class="added">
+		- 
+		[added: [! include added_path !]]
+		-
 	</span>
 	
 	<span class="docs-method-version docs-method-changed">
@@ -152,6 +154,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 		[! set javascript_path = example_dir + "/javascript.js" !]
 		[! set description_path = example_dir + "/description.html" !]
 		[! set postscript_path = example_dir + "/postscript.html" !]
+		[! set test_folder_name = f.name !]
 	
 	[! set supplemental_string -!]
 	[!- include example_dir + "/_supplemental_string.txt" !]
@@ -168,7 +171,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 	
 	<li>
 		<details class="example-details default-flow">
-		<summary>[! include name_path !]</summary>
+		<summary>[! include name_path !] 
+			<span class="faded-default-color"> - [[@ test_folder_name @]] - </span>
+		</summary>
 		<div class="content">
 		[! include example_display_path !]
 		</div>

@@ -1,5 +1,10 @@
 window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
   [@ method_name @](_, el) {
-    el.innerHTML = "TODO";
+    const value = el.propToFloat("[@ target_value @]");
+    if (value === 10.01) {
+      el.innerHTML = "received float";
+    }
   }
 }
+
+

@@ -89,16 +89,16 @@ export class BittyDocTestRunner {
   template(template) {
     switch (template) {
       case ("itemFailed"):
-        return `<span class="test-failed"> bug</span>`;
+        return `<span class="failed"> bug</span>`;
       case ("output"):
         return `<h4>Test Results</h4>
 <div>Number of Test: TOTAL ~ Passed: PASSED ~ Bugs: BUGS`;
       case ("passed"):
-        return `<span class="test-passed"> passed</span>`;
+        return `<span class="passed"> passed</span>`;
       case ("testFailed"):
-        return `<span class="test-failed"> bug - expected: EXPECTED - got: GOT</span>`;
+        return `<span class="failed"> bug - expected: EXPECTED - got: GOT</span>`;
       case ("testPassed"):
-        return `<span class="test-passed"> passed</span>`;
+        return `<span class="passed"> passed</span>`;
     }
   }
 }

@@ -14,7 +14,7 @@ lower_keys = [
 		]
 
 segments = [
-		"el", "el ancestor", "ev", "ev ancestor"
+		"el", "el ancestors", "ev", "ev ancestors"
 ]
 
 statuses = [
@@ -47,9 +47,8 @@ def report_line(item):
 	m = matches[item[4]]
 	return f"""{segments[0]} {el} - {segments[1]} {ela} - {segments[2]} {ev} - {segments[3]} {eva} - {m}"""
 
-
 def print_report():
-	with open("report.txt", "w") as _out:
+	with open("match_makers_with_el_report.txt", "w") as _out:
 		for item in payload():
 			_out.write(report_line(item))
 			_out.write("\n")
@@ -194,8 +193,11 @@ def make_postscripts():
 def payload():
 	items = []
 	for i in range(0,32):
-		# if ((i >> 0) & 1 == 0 and (i >> 1) & 1 == 0):
-		# 	continue
+		if (
+				(i >> 0) & 1 == 0 
+				and (i >> 1) & 1 == 0
+				):
+			continue
 		items.append([
 			(i >> 0) & 1, 
 			(i >> 1) & 1, 

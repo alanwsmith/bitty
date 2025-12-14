@@ -1,52 +1,104 @@
 export class BittyDocTestRunner {
-  async testResults(_, el) {
-    await this.sleep(1000);
-    let testCount = 0;
-    let failed = 0;
-    let bugs = 0;
+  #numberOfTests = 0;
+  #numberOfBugs = 0;
 
+  itemFailed(_, el) {
+    if (el) {
+      const output = this.api.makeHTML(this.template("itemFailed"));
+      el.appendChild(output);
+    }
+  }
+
+  itemPassed(_, el) {
+    if (el) {
+      const output = this.api.makeHTML(this.template("passed"));
+      el.appendChild(output);
+    }
+  }
+
+  setStatusProps() {
     document.querySelectorAll("[data-expects]").forEach((el) => {
-      const summary = el.closest("details").querySelector("summary");
-      const parentSummary = summary.parentNode.parentNode.closest("details")
-        .querySelector("summary");
-      testCount += 1;
-      if (el.dataset.expects === el.innerHTML.trim()) {
-        summary.dataset.status = "passed";
+      this.#numberOfTests += 1;
+      const summary = document.querySelector(
+        `details:has(details) details:has([data-bittyid="${el.bittyId}"]) > summary`,
+      );
+
+      const parentSummary = document.querySelector(
+        `details:has(details [data-bittyid="${el.bittyId}"]) > summary`,
+      );
+      const expected = el.dataset.expects;
+      const got = el.innerHTML.trim();
+      if (expected === got) {
         if (
-          parentSummary.dataset.status !== "failed" &&
-          parentSummary.dataset.status !== "bug"
+          parentSummary.dataset.receive !== "itemFailed"
         ) {
-          parentSummary.dataset.status = "passed";
+          summary.dataset.receive = "testPassed";
+          parentSummary.dataset.receive = "itemPassed";
         }
       } else {
-        failed += 1;
-        summary.dataset.status = "failed";
-        parentSummary.dataset.status = "failed";
+        this.#numberOfBugs += 1;
+        summary.dataset.receive = "testFailed";
+        summary.dataset.expected = expected;
+        summary.dataset.got = got;
+        parentSummary.dataset.receive = "itemFailed";
       }
+
+      //
     });
-    const subs = [
-      ["TOTAL", testCount],
-      ["PASSED", testCount - failed],
-      ["FAILED", failed],
-      ["BUGS", bugs],
-    ];
-    el.replaceChildren(
-      this.api.makeHTML(this.template("results"), subs),
-    );
   }
 
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  testOutput() {
+    const subs = [
+      ["TOTAL", this.#numberOfTests],
+      ["PASSED", this.#numberOfTests - this.#numberOfBugs],
+      ["BUGS", this.#numberOfBugs],
+    ];
+    const output = this.api.makeHTML(this.template("output"), subs);
+    return output;
+  }
+
+  testFailed(_, el) {
+    if (el) {
+      const subs = [
+        ["GOT", el.prop("got")],
+        ["EXPECTED", el.prop("expected")],
+      ];
+      const output = this.api.makeHTML(this.template("testFailed"), subs);
+      el.appendChild(output);
+    }
+  }
+
+  testPassed(_, el) {
+    if (el) {
+      const output = this.api.makeHTML(this.template("testPassed"));
+      el.appendChild(output);
+    }
+  }
+
+  async testResults(_, el) {
+    await this.sleep(100);
+    this.setStatusProps();
+    this.api.trigger("itemPassed itemFailed testPassed testFailed");
+    el.replaceChildren(this.testOutput());
+  }
+
   template(template) {
     switch (template) {
-      case ("results"):
+      case ("itemFailed"):
+        return `<span class="test-failed"> bug</span>`;
+      case ("output"):
         return `<h4>Test Results</h4>
-<div>Total Test: TOTAL ~ 
-<span>Passed: PASSED</span> ~
-<span>Failed: FAILED</span>`;
-        break;
+<div>Number of Test: TOTAL ~ Passed: PASSED ~ Bugs: BUGS`;
+      case ("passed"):
+        return `<span class="test-passed"> passed</span>`;
+      case ("testFailed"):
+        return `<span class="test-failed"> bug - expected: EXPECTED - got: GOT</span>`;
+      case ("testPassed"):
+        return `<span class="test-passed"> passed</span>`;
     }
   }
 }

@@ -14,7 +14,7 @@ lower_keys = [
 		]
 
 segments = [
-		"el", "el ancestors", "ev", "ev ancestors"
+		"el", "ancestors of el", "ev", "ancestors of ev"
 ]
 
 statuses = [
@@ -47,7 +47,6 @@ def make_data_key(item, item_index, key):
 		return ""
 	else:
 		return f"""data-testkey="{key}{item_number(item)}" """
-
 	
 def make_descriptions():
 	with open("templates/description.html") as _in:
@@ -59,7 +58,6 @@ def make_descriptions():
 				output_path = f"{output_dir(key, item)}/description.html"
 				write_file(output, output_path)
 				
-
 def make_html_files():
 	with open("templates/html.html") as _in:
 		template = Template(_in.read())
@@ -80,11 +78,25 @@ def make_javascript():
 		template = Template(_in.read())
 		for key in keys:
 			for item in payload():
-				data = {}
+				data = {
+						"KEY": key,
+						"MATCH_KEY": f"target{item_number(item)}"
+						}
 				output = template.substitute(data)
 				output_path = f"{output_dir(key, item)}/javascript.js"
 				write_file(output, output_path)
 				
+# def make_input_values():
+# 	with open("templates/_input_value.txt") as _in:
+# 		template = Template(_in.read())
+# 		for key in keys:
+# 			for item in payload():
+# 				data = {
+# 					"INPUT": f"el{key}{item_number(item)}"
+# 				}
+# 				output = template.substitute(data)
+# 				output_path = f"{output_dir(key, item)}/_input_value.txt"
+# 				write_file(output, output_path)
 
 def make_method_names():
 	with open("templates/_method_name.txt") as _in:
@@ -104,20 +116,11 @@ def make_names():
 		template = Template(_in.read())
 		for key_index in range(0,len(keys)):
 			for item in payload():
-
 				data = {
 						"NAME": report_line(item)
 						}
-
-				# data["EL"] = name_string(segments[0], statuses[item[0]])
-				# data["AEL"] = name_string(f"{segments[1]}.{lower_keys[key_index]}", statuses[item[1]])
-				# data["EV"] = name_string(segments[2], statuses[item[2]])
-				# data["AEV"] = name_string(f"{segments[3]}.{lower_keys[key_index]}", statuses[item[3]])
-				# data["MATCHES"] = matches[item[4]]
-				# data["TARGET"] = targets[item[4]]
 				output = template.substitute(data)
 				output_path = f"{output_dir(keys[key_index], item)}/name.txt"
-
 				write_file(output, output_path)
 				
 
@@ -200,26 +203,21 @@ def print_report():
 			_out.write("\n")
 			
 def report_line(item):
-	el = statuses[item[0]]
-	ela = statuses2[item[1]]
-	ev = statuses[item[2]]
-	eva = statuses2[item[3]]
-	m = matches[item[4]]
 	return f"""
 [! filter inline_highlight("js") !]{segments[0]}[! endfilter !]
- {el} 
+ {statuses[item[0]]}
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[1]}[! endfilter !]
- {ela} 
+ {statuses2[item[1]]}
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[2]}[! endfilter !]
- {ev} 
+ {statuses2[item[2]]}
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[3]}[! endfilter !]
- {eva}
+ {statuses2[item[3]]}
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 is 
@@ -234,13 +232,14 @@ def write_file(data, path):
 
 	
 if __name__ == "__main__":
-	make_target_values()
-	make_supplementals()
-	make_method_names()
-	make_postscripts()
 	make_descriptions()
-	make_names()
-	make_javascript()
 	make_html_files()
+	# make_input_values()
+	make_javascript()
+	make_method_names()
+	make_names()
+	make_postscripts()
+	make_supplementals()
+	make_target_values()
 	print_report()
 

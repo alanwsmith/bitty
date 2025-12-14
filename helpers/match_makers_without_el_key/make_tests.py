@@ -162,7 +162,7 @@ def output_dir(key, item):
 	dir_key = ""
 	for x in item:
 		dir_key += str(x)
-	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
+	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/auto-{dir_key}"
 	if not os.path.isdir(example_dir):
 		os.makedirs(example_dir, exist_ok=True)
 	return example_dir 
@@ -211,13 +211,13 @@ def write_file(data, path):
 
 	
 if __name__ == "__main__":
-	# make_target_values()
-	# make_supplementals()
-	# make_method_names()
-	# make_postscripts()
-	# make_descriptions()
-	# make_names()
-	# make_javascript()
-	# make_html_files()
+	make_target_values()
+	make_supplementals()
+	make_method_names()
+	make_postscripts()
+	make_descriptions()
+	make_names()
+	make_javascript()
+	make_html_files()
 	print_report()
 

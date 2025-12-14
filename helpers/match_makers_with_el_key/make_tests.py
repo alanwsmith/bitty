@@ -111,13 +111,9 @@ def make_names():
 		template = Template(_in.read())
 		for key_index in range(0,len(keys)):
 			for item in payload():
-				data = {}
-				data["EL"] = name_string(segments[0], statuses[item[0]])
-				data["AEL"] = name_string(f"{segments[1]}.{lower_keys[key_index]}", statuses[item[1]])
-				data["EV"] = name_string(segments[2], statuses[item[2]])
-				data["AEV"] = name_string(f"{segments[3]}.{lower_keys[key_index]}", statuses[item[3]])
-				data["MATCHES"] = matches[item[4]]
-				data["TARGET"] = targets[item[4]]
+				data = {
+						"NAME": report_line(item)
+						}
 				output = template.substitute(data)
 				output_path = f"{output_dir(keys[key_index], item)}/name.txt"
 				write_file(output, output_path)
@@ -174,7 +170,7 @@ def output_dir(key, item):
 	dir_key = ""
 	for x in item:
 		dir_key += str(x)
-	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
+	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/auto-{dir_key}"
 	if not os.path.isdir(example_dir):
 		os.makedirs(example_dir, exist_ok=True)
 	return example_dir 
@@ -241,13 +237,13 @@ def write_file(data, path):
 
 	
 if __name__ == "__main__":
-	# make_descriptions()
-	# make_html_files()
-	# make_javascript()
-	# make_method_names()
-	# make_names()
-	# make_postscripts()
-	# make_supplementals()
-	# make_target_values()
+	make_descriptions()
+	make_html_files()
+	make_javascript()
+	make_method_names()
+	make_names()
+	make_postscripts()
+	make_supplementals()
+	make_target_values()
 	print_report()
 

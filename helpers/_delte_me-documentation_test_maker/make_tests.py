@@ -34,7 +34,11 @@ class TestMaker():
 
     def base_dir(self):
         return f"../../content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
-
+    
+    def connection(self, test):
+        name = f"Test{test.category()}{test.item()}{test.id()}"
+        name = name.replace(".", "")
+        return name
 
     def get_template(self, test, file):
         path = f"{self.template_dir()}/{file}"
@@ -66,7 +70,7 @@ class TestMaker():
         for test in tests:
             template = self.get_template(test, "html.html")
             data = {
-                    "CONNECTION": "",
+                    "CONNECTION": self.connection(test),
                     "BITTY_TAG_EXTRA": "",
                     "CONTENT": ""
                     }
@@ -79,12 +83,23 @@ class TestMaker():
         for test in tests:
             template = self.get_template(test, "javascript.js")
             data = {
-                    "CONNECTION": "",
+                    "CONNECTION": self.connection(test),
                     "CONTENT": ""
                     }
             output = template.substitute(data)
-            output_path = self.get_output_path(test, f"javascript.js")
+            output_path = self.get_output_path(test, "javascript.js")
             self.write_file(output, output_path)
+
+    def make_names(self):
+        tests = self.get_tests()
+        for test in tests:
+            input_path = f"tests/{test.category()}/{test.item()}/{test.id()}/name.txt"
+            output_path = self.get_output_path(test, "name.txt")
+            output = self.slurp(input_path)
+            self.write_file(output, output_path)
+
+
+
 
     def make_stubs(self):
         tests = self.get_tests()
@@ -99,8 +114,10 @@ class TestMaker():
             self.write_file("", path)
             path = self.get_output_path(test, "postscript.html")
             self.write_file("", path)
-            path = self.get_output_path(test, "name.txt")
-            self.write_file("TODO: write name", path)
+
+    def slurp(self, path):
+        with open(path) as _slurp:
+            return _slurp.read()
 
     def template_dir(self):
         return "templates"
@@ -113,69 +130,12 @@ class TestMaker():
             _out.write(data)
 
 
-
-    
-
-    # def make_descriptions(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/description.html"
-    #         data = ""
-    #         self.write_file(data, path)
-
-    # def make_html_files(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/html.html"
-    #         with open("templates/html.html", "r") as _in:
-    #             data = _in.read()
-    #             self.write_file(data, path)
-
-    # def make_javascript_files(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/javascript.js"
-    #         with open("templates/javascript.js", "r") as _in:
-    #             data = _in.read()
-    #             self.write_file(data, path)
-
-    # def make_method_name_files(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/_method_name.txt"
-    #         data = f"elPropTest{test["number"]}"
-    #         self.write_file(data, path)
-
-    # def make_name_files(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/name.txt"
-    #         data = f"TODO-TEST-NAME-{test["number"]}"
-    #         self.write_file(data, path)
-
-    # def make_postscript_files(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/postscript.html"
-    #         data = ""
-    #         self.write_file(data, path)
-
-    # def make_supplementals(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/_supplemental_string.txt"
-    #         data = test["number"]
-    #         self.write_file(data, path)
-
-    # def make_target_values(self):
-    #     for test in self.tests:
-    #         path = f"{self.test_dir(test)}/_target_value.txt"
-    #         data = f"target_value_{test["number"]}"
-    #         self.write_file(data, path)
-
-    # def test_dir(self, test):
-    #     return f"{self.base_path}/auto-{test["number"]}"
-
-
-
 if __name__ == "__main__":
     tm = TestMaker()
     tm.make_stubs()
     tm.make_html_files()
     tm.make_javascript_files()
+    tm.make_names()
     # tm.make_descriptions()
     # tm.make_html_files()
     # tm.make_javascript_files()

@@ -107,11 +107,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 [removed: [@ removed_string @]]
 	[!- endif -!]
 	</span>
-
 	</summary>
 
-
-<div class="doc-sub-header">Arguments</div>
+<div class="heading">Arguments</div>
 
 <div class="docs-preface-wrapper">
 <ul class="default-flow">
@@ -129,7 +127,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 </div>
 
 
-<div class="doc-sub-header">Details</div>
+<div class="heading">Details</div>
 
 <div class="docs-preface-wrapper">
 	[!- include method_description_path -!]
@@ -141,12 +139,11 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<div class="doc-sub-header">Examples</div>
+	<div class="heading">Examples</div>
 
 	[! set example_display_path = file.folder + "/_includes/methods-display.html" !]
 
-	<div class="docs-examples-wrapper">
-	<ul>
+	<ul class="example-list">
 		[! for f in folders !]
 		[! if f.parent == examples_dir !]
 		[! set example_dir = examples_dir + "/" + f.name !]
@@ -170,21 +167,21 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[!- endset -!]
 	
 	<li>
-		<details class="example-details">
+		<details class="example-details default-flow">
 		<summary>[! include name_path !]</summary>
+		<div class="content">
 		[! include example_display_path !]
+		</div>
 		</details>
 	</li>
 	
 		[! endif !]
 		[! endfor !]
-	
 	</ul>
-	</div>
 
-<div class="docs-optional-wrapper">
-[! include notes_path !]
-</div>
+	<div class="docs-optional-wrapper">
+	[! include notes_path !]
+	</div>
 
 </details>
 

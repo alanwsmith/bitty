@@ -22,6 +22,11 @@ statuses = [
 	"HAS",
 ]
 
+statuses2 = [
+	"DO NOT HAVE",
+	"HAS",
+]
+
 matches = [
 	"do not match",
 	"match",
@@ -204,14 +209,29 @@ def print_report():
 			_out.write(report_line(item))
 			_out.write("\n")
 
-
 def report_line(item):
-	el = statuses[item[0]]
-	ela = statuses[item[1]]
-	ev = statuses[item[2]]
-	eva = statuses[item[3]]
-	m = matches[item[4]]
-	return f"""{segments[0]} {el} - {segments[1]} {ela} - {segments[2]} {ev} - {segments[3]} {eva} - {m}"""
+	return f"""
+[! filter inline_highlight("js") !]{segments[0]}[! endfilter !]
+ {statuses[item[0]]}
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[1]}[! endfilter !]
+ {statuses2[item[1]]}
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[2]}[! endfilter !]
+ {statuses2[item[2]]}
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[3]}[! endfilter !]
+ {statuses2[item[3]]}
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]values[! endfilter !]
+ {matches[item[3]]}
+-
+is 
+[! filter inline_highlight("js") !]{targets[item[4]]}[! endfilter !]"""
 
 
 

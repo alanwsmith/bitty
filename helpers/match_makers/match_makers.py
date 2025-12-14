@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import os
+from string import Template
+
 keys = [
 		"propMatchesTarget",
 		"propMatchesSender"
@@ -52,17 +55,45 @@ def print_report():
 			_out.write(report_line(item))
 			_out.write("\n")
 
-def make_directories():
-	for key in keys:
-		for item in payload():
 
-		print(key)
+# def make_directories():
+# 	for key in keys:
+# 		for item in payload():
+# 			dir_key = ""
+# 			for x in item:
+# 				dir_key += str(x)
+# 			example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
+# 			if not os.path.isdir(example_dir):
+# 				os.makedirs(example_dir, exist_ok=True)
 
 
+def output_dir(key, item):
+	dir_key = ""
+	for x in item:
+		dir_key += str(x)
+	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
+	if not os.path.isdir(example_dir):
+		os.makedirs(example_dir, exist_ok=True)
+	return example_dir 
+
+
+def make_html_files():
+	with open("templates/html.html") as _in:
+		template = Template(_in.read())
+		for key in keys:
+			for item in payload():
+				data = {}
+				output = template.substitute(data)
+				output_path = f"{output_dir(key, item)}/html.html"
+				write_file(output, output_path)
+
+
+def write_file(data, path):
+	with open(path, "w") as _out:
+		_out.write(data)
 
 	
 if __name__ == "__main__":
-	make_directories();
-
+	make_html_files()
 	print_report()
 

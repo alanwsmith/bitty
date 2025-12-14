@@ -28,7 +28,7 @@ statuses2 = [
 ]
 
 matches = [
-	"is false",
+	"does not match",
 	"match",
 ]
 
@@ -104,15 +104,20 @@ def make_names():
 		template = Template(_in.read())
 		for key_index in range(0,len(keys)):
 			for item in payload():
-				data = {}
-				data["EL"] = name_string(segments[0], statuses[item[0]])
-				data["AEL"] = name_string(f"{segments[1]}.{lower_keys[key_index]}", statuses[item[1]])
-				data["EV"] = name_string(segments[2], statuses[item[2]])
-				data["AEV"] = name_string(f"{segments[3]}.{lower_keys[key_index]}", statuses[item[3]])
-				data["MATCHES"] = matches[item[4]]
-				data["TARGET"] = targets[item[4]]
+
+				data = {
+						"NAME": report_line(item)
+						}
+
+				# data["EL"] = name_string(segments[0], statuses[item[0]])
+				# data["AEL"] = name_string(f"{segments[1]}.{lower_keys[key_index]}", statuses[item[1]])
+				# data["EV"] = name_string(segments[2], statuses[item[2]])
+				# data["AEV"] = name_string(f"{segments[3]}.{lower_keys[key_index]}", statuses[item[3]])
+				# data["MATCHES"] = matches[item[4]]
+				# data["TARGET"] = targets[item[4]]
 				output = template.substitute(data)
 				output_path = f"{output_dir(keys[key_index], item)}/name.txt"
+
 				write_file(output, output_path)
 				
 
@@ -144,9 +149,9 @@ def make_target_values():
 		template = Template(_in.read())
 		for key in keys:
 			for item in payload():
-				target = "true"
+				target = "false"
 				if item[4] == 1:
-					target = "false"
+					target = "true"
 				data = {
 						"TARGET": target
 						}
@@ -200,7 +205,25 @@ def report_line(item):
 	ev = statuses[item[2]]
 	eva = statuses2[item[3]]
 	m = matches[item[4]]
-	return f"""{segments[0]} {el} data-KEY - {segments[1]} {ela} data-KEY - {segments[2]} {ev} data-KEY - {segments[3]} {eva} data-KEY - {m}"""
+	return f"""
+[! filter inline_highlight("js") !]{segments[0]}[! endfilter !]
+ {el} 
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[1]}[! endfilter !]
+ {ela} 
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[2]}[! endfilter !]
+ {ev} 
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+[! filter inline_highlight("js") !]{segments[3]}[! endfilter !]
+ {eva}
+[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ - 
+is 
+[! filter inline_highlight("js") !]{targets[item[4]]}[! endfilter !]"""
 
 
 

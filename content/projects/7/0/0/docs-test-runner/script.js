@@ -22,17 +22,16 @@ export class BittyDocTestRunner {
       const summary = document.querySelector(
         `details:has(details) details:has([data-bittyid="${el.bittyId}"]) > summary`,
       );
-
       const parentSummary = document.querySelector(
         `details:has(details [data-bittyid="${el.bittyId}"]) > summary`,
       );
       const expected = el.dataset.expects;
       const got = el.innerHTML.trim();
       if (expected === got) {
+        summary.dataset.receive = "testPassed";
         if (
           parentSummary.dataset.receive !== "itemFailed"
         ) {
-          summary.dataset.receive = "testPassed";
           parentSummary.dataset.receive = "itemPassed";
         }
       } else {

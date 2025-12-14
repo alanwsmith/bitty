@@ -177,7 +177,6 @@ def output_dir(key, item):
 	return example_dir 
 
 
-
 def payload():
 	items = []
 	for i in range(0,32):

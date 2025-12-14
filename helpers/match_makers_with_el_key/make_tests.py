@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# match_maker_with_el_key/make_tests.py
+
 import os
 from string import Template
 
@@ -38,11 +40,8 @@ targets = [
 ]
 
 
-
-
 def item_number(item):
 	return "".join([(str(x)) for x in item])
-
 
 
 def make_data_key(item, item_index, key):
@@ -85,7 +84,9 @@ def make_javascript():
 		template = Template(_in.read())
 		for key in keys:
 			for item in payload():
-				data = {}
+				data = {
+						"MATCH_KEY": f"target{item_number(item)}"
+						}
 				output = template.substitute(data)
 				output_path = f"{output_dir(key, item)}/javascript.js"
 				write_file(output, output_path)
@@ -150,7 +151,7 @@ def make_target_values():
 		for key in keys:
 			for item in payload():
 				target = "true"
-				if item[4] == 1:
+				if item[4] == 0:
 					target = "false"
 				data = {
 						"TARGET": target

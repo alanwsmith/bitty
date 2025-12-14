@@ -27,7 +27,6 @@ statuses2 = [
 	"HAVE",
 ]
 
-
 matches = [
 	"is false",
 	"match",
@@ -38,45 +37,10 @@ targets = [
 	"true",
 ]
 
+
 def item_number(item):
 	return "".join([(str(x)) for x in item])
-
-
-def report_line(item):
-	el = statuses[item[0]]
-	ela = statuses2[item[1]]
-	ev = statuses[item[2]]
-	eva = statuses2[item[3]]
-	m = matches[item[4]]
-	return f"""{segments[0]} {el} data-KEY - {segments[1]} {ela} data-KEY - {segments[2]} {ev} data-KEY - {segments[3]} {eva} data-KEY - {m}"""
-
-def print_report():
-	with open("report.txt", "w") as _out:
-		for item in payload():
-			_out.write(report_line(item))
-			_out.write("\n")
-
-
-# def make_directories():
-# 	for key in keys:
-# 		for item in payload():
-# 			dir_key = ""
-# 			for x in item:
-# 				dir_key += str(x)
-# 			example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
-# 			if not os.path.isdir(example_dir):
-# 				os.makedirs(example_dir, exist_ok=True)
-
-
-def output_dir(key, item):
-	dir_key = ""
-	for x in item:
-		dir_key += str(x)
-	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
-	if not os.path.isdir(example_dir):
-		os.makedirs(example_dir, exist_ok=True)
-	return example_dir 
-
+	
 
 def make_data_key(item, item_index, key):
 	if item[item_index] == 0:
@@ -84,6 +48,17 @@ def make_data_key(item, item_index, key):
 	else:
 		return f"""data-testkey="{key}{item_number(item)}" """
 
+	
+def make_descriptions():
+	with open("templates/description.html") as _in:
+		template = Template(_in.read())
+		for key in keys:
+			for item in payload():
+				data = {}
+				output = template.substitute(data)
+				output_path = f"{output_dir(key, item)}/description.html"
+				write_file(output, output_path)
+				
 
 def make_html_files():
 	with open("templates/html.html") as _in:
@@ -100,19 +75,17 @@ def make_html_files():
 				output_path = f"{output_dir(keys[key_index], item)}/html.html"
 				write_file(output, output_path)
 	
-def make_supplementals():
-	with open("templates/_supplemental_string.txt") as _in:
+def make_javascript():
+	with open("templates/javascript.js") as _in:
 		template = Template(_in.read())
 		for key in keys:
 			for item in payload():
-				data = {
-						"KEY": item_number(item)
-						}
+				data = {}
 				output = template.substitute(data)
-				output_path = f"{output_dir(key, item)}/_supplemental_string.txt"
+				output_path = f"{output_dir(key, item)}/javascript.js"
 				write_file(output, output_path)
+				
 
-	
 def make_method_names():
 	with open("templates/_method_name.txt") as _in:
 		template = Template(_in.read())
@@ -124,24 +97,7 @@ def make_method_names():
 				output = template.substitute(data)
 				output_path = f"{output_dir(key, item)}/_method_name.txt"
 				write_file(output, output_path)
-	
-def make_target_values():
-	with open("templates/_target_value.txt") as _in:
-		template = Template(_in.read())
-		for key in keys:
-			for item in payload():
-				target = "true"
-				if item[4] == 1:
-					target = "false"
-				data = {
-						"TARGET": target
-						}
-				output = template.substitute(data)
-				output_path = f"{output_dir(key, item)}/_target_value.txt"
-				write_file(output, output_path)
-
-def name_string(key, line):
-	return f"{key} {line} data-key"
+				
 
 def make_names():
 	with open("templates/name.txt") as _in:
@@ -158,29 +114,7 @@ def make_names():
 				output = template.substitute(data)
 				output_path = f"{output_dir(keys[key_index], item)}/name.txt"
 				write_file(output, output_path)
-	
-
-def make_descriptions():
-	with open("templates/description.html") as _in:
-		template = Template(_in.read())
-		for key in keys:
-			for item in payload():
-				data = {}
-				output = template.substitute(data)
-				output_path = f"{output_dir(key, item)}/description.html"
-				write_file(output, output_path)
-	
-
-def make_javascript():
-	with open("templates/javascript.js") as _in:
-		template = Template(_in.read())
-		for key in keys:
-			for item in payload():
-				data = {}
-				output = template.substitute(data)
-				output_path = f"{output_dir(key, item)}/javascript.js"
-				write_file(output, output_path)
-	
+				
 
 def make_postscripts():
 	with open("templates/postscript.html") as _in:
@@ -192,6 +126,47 @@ def make_postscripts():
 				output_path = f"{output_dir(key, item)}/postscript.html"
 				write_file(output, output_path)
 	
+def make_supplementals():
+	with open("templates/_supplemental_string.txt") as _in:
+		template = Template(_in.read())
+		for key in keys:
+			for item in payload():
+				data = {
+						"KEY": item_number(item)
+						}
+				output = template.substitute(data)
+				output_path = f"{output_dir(key, item)}/_supplemental_string.txt"
+				write_file(output, output_path)
+				
+
+def make_target_values():
+	with open("templates/_target_value.txt") as _in:
+		template = Template(_in.read())
+		for key in keys:
+			for item in payload():
+				target = "true"
+				if item[4] == 1:
+					target = "false"
+				data = {
+						"TARGET": target
+						}
+				output = template.substitute(data)
+				output_path = f"{output_dir(key, item)}/_target_value.txt"
+				write_file(output, output_path)
+				
+
+def name_string(key, line):
+	return f"{key} {line} data-key"
+
+def output_dir(key, item):
+	dir_key = ""
+	for x in item:
+		dir_key += str(x)
+	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/{dir_key}-auto"
+	if not os.path.isdir(example_dir):
+		os.makedirs(example_dir, exist_ok=True)
+	return example_dir 
+
 
 def payload():
 	items = []
@@ -213,19 +188,36 @@ def payload():
 	return items
 
 
+def print_report():
+	with open("report.txt", "w") as _out:
+		for item in payload():
+			_out.write(report_line(item))
+			_out.write("\n")
+			
+def report_line(item):
+	el = statuses[item[0]]
+	ela = statuses2[item[1]]
+	ev = statuses[item[2]]
+	eva = statuses2[item[3]]
+	m = matches[item[4]]
+	return f"""{segments[0]} {el} data-KEY - {segments[1]} {ela} data-KEY - {segments[2]} {ev} data-KEY - {segments[3]} {eva} data-KEY - {m}"""
+
+
+
+
 def write_file(data, path):
 	with open(path, "w") as _out:
 		_out.write(data)
 
 	
 if __name__ == "__main__":
-	# make_html_files()
+	# make_target_values()
 	# make_supplementals()
 	# make_method_names()
-	# make_target_values()
-	# make_names()
-	# make_javascript()
 	# make_postscripts()
 	# make_descriptions()
+	# make_names()
+	# make_javascript()
+	# make_html_files()
 	print_report()
 

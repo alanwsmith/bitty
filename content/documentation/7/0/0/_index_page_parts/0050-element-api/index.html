@@ -9,9 +9,28 @@
 
 <h2>Element API Extensions</h2>
 
-[#
 <h4>Methods</h4>
 
+
+[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
+[! if item.memberof == "el" !]
+[! if item.kind == "function" !]
+
+[!- set method_wrapper_path = file.folder + "/_includes/_method-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+
+
+
+[! endif !]
+[! endif !]
+[! endfor !]
+
+
+
+
+
+[#
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "function" !]
@@ -22,12 +41,15 @@
 [! endfor !]
 #]
 
+
+
 <h4>Properties</h4>
 
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "member" !]
-[!- set item_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
+
+[!- set property_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
 [!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
 [!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
 
@@ -35,15 +57,14 @@
 [!- set item_key = "el.value" !]
 [!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
 [!- set examples_path = base_path + "/_examples" -!]
-[! include item_wrapper_path !]
+[! include property_wrapper_path !]
 [! endif !]
 
 [!- set item_key = item.longname !]
 [!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
 [!- set examples_path = base_path + "/_examples" -!]
-[! include item_wrapper_path !]
+[! include property_wrapper_path !]
 
 [! endif !]
 [! endif !]
 [! endfor !]
-

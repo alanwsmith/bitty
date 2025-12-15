@@ -1,4 +1,3 @@
-window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
   #incomingValue = null;
 
   [@ method_name @](_, el) {
@@ -9,5 +8,3 @@ window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] =
   [@ method_name @]Output(_, el) {
     el.innerHTML = this.#incomingValue;
   }
-}
-

@@ -1,5 +1,4 @@
-window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
-  #incomingValue = null;
+#incomingValue = null;
 
   [@ method_name @](_, el) {
     this.#incomingValue = el.valueToFloat;
@@ -9,4 +8,3 @@ window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] =
   [@ method_name @]Output(_, el) {
     el.innerHTML = this.#incomingValue;
   }
-}

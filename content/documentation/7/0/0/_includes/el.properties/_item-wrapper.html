@@ -14,8 +14,18 @@
   [@- folder.folder_parts[8] -@]
   [!- endset !]
 
+      [! set method_name|replace("-", "")|replace(".", "") -!]runTest
+  [@- folder.folder_parts[5] -@]
+  [@- folder.folder_parts[6] -@]
+  [@- folder.folder_parts[8] -@]
+  [!- endset !]
+
+
       [! set html_content_path = folder.path_string + "/html.html" !]
       [! set html_content !][! include html_content_path !][! endset !]
+
+      [! set javascript_content_path = folder.path_string + "/javascript.js" !]
+      [! set javascript_content !][! include javascript_content_path !][! endset !]
 
     <details open>
       <summary>[! include name_path !]</summary>
@@ -27,6 +37,13 @@
     [! filter block_highlight("js") !]
     [! include javascript_wrapper_path !]
     [! endfilter !]
+
+      <script>
+        [! include javascript_wrapper_path !]
+      </script>
+      <div class="example-block">
+        [! include html_wrapper_path !]
+      </div>
 
       
     </details>

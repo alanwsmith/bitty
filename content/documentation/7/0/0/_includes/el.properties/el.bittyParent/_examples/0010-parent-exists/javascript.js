@@ -1,4 +1,3 @@
-window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] = class {
   // put a test value that can be check for
   bittyInit() {
     this.api.dataset.checker = "ping";
@@ -9,4 +8,3 @@ window.[@ item.name|title @][@ item.memberof|title @][@ supplemental_string @] =
       el.innerHTML = "found parent";
     }
   }
-}

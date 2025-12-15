@@ -1,7 +1,14 @@
+
+[# TODO: Delete the deprecated files in el.properties
+- _method_name.txt
+- _supplemental_string.txt
+- _target_value.txt
+- description.html
+- postscript.html
+
+#]
+
 <h2>Element API Extensions</h2>
-
-<h3 class="info-color">Updates in progress</h3>
-
 
 [#
 <h4>Methods</h4>
@@ -18,32 +25,27 @@
 
 <h4>Properties</h4>
 
-[#
-<h3 class="info-color">TODO: These are done. Uncomment when everything else is done.</h3>
-#]
 
 
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "member" !]
-
 [!- set item_wrapper_path = file.folder + "/_includes/el.properties/_item-wrapper.html" -!]
 [!- set html_wrapper_path = file.folder + "/_includes/el.properties/_html-wrapper.html" -!]
 [!- set javascript_wrapper_path = file.folder + "/_includes/el.properties/_javascript-wrapper.js" -!]
-[!- set base_path = file.folder + "/_includes/el.properties/" + item.longname  -!]
-[!- set examples_path = base_path + "/_examples" -!]
 
+[! if item.longname == "el.valueToFloat" !]
+[!- set item_key = "el.value" !]
+[!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[! include item_wrapper_path !]
+[! endif !]
+
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
 [! include item_wrapper_path !]
 
-
-[#
-[! if item.longname == "el.valueToFloat" !]
-[!- set inc_path = file.folder + "/_includes/el.properties/el.value/_wrapper.html" -!]
-[! include inc_path !]
-[! endif !]
-[!- set inc_path = file.folder + "/_includes/el.properties/" + item.longname + "/_wrapper.html" -!]
-[! include inc_path !]
-#]
 [! endif !]
 [! endif !]
 [! endfor !]

@@ -1,4 +1,4 @@
-#incomingValue = null;
+  #incomingValue = null;
 
   [@ method_name @](_, el) {
     this.#incomingValue = el.valueToFloat;
@@ -6,7 +6,5 @@
   }
 
   [@ method_name @]Output(_, el) {
-    if (this.#incomingValue === 10.01) {
-      el.innerHTML = "received float";
-    }
+    el.innerHTML = this.#incomingValue;
   }

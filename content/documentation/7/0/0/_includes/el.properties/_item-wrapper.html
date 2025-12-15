@@ -1,0 +1,36 @@
+<details class="doc-item" open>
+  <summary>[@ item.longname @]</summary>
+  <div class="heading">Description</div>
+  [! set description_path = base_path + "/description.html" !]
+  [! include description_path !]
+
+  <div class="heading">Examples</div>
+  [! for folder in folders !]
+    [! if folder.parent == examples_path !]
+      [! set name_path = folder.path_string + "/name.txt" !]
+      [! set connection|replace("-", "")|replace(".", "") -!]Test 
+  [@- folder.folder_parts[5] -@]
+  [@- folder.folder_parts[6] -@]
+  [@- folder.folder_parts[8] -@]
+  [!- endset !]
+
+      [! set html_content_path = folder.path_string + "/html.html" !]
+      [! set html_content !][! include html_content_path !][! endset !]
+
+    <details open>
+      <summary>[! include name_path !]</summary>
+      <div class="sub-heading">HTML</div>
+    [! filter block_highlight("html") !]
+    [! include html_wrapper_path !]
+    [! endfilter !]
+      <div class="sub-heading">JavaScript</div>
+    [! filter block_highlight("js") !]
+    [! include javascript_wrapper_path !]
+    [! endfilter !]
+
+      
+    </details>
+    [! endif !]
+  [! endfor !]
+
+</details>

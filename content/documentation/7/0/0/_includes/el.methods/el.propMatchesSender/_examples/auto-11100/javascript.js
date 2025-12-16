@@ -9,6 +9,6 @@ Use: helpers/match_makers_without_el_key/make_tests.py
     this.api.querySelector("button").click();
   }
   [@ method_name @](_, el) {
-    el.innerHTML = el.propMatchesTarget("target11100")
+    el.innerHTML = el.propMatchesTarget("test11100")
   }
 

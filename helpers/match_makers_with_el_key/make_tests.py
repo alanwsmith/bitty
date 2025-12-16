@@ -16,17 +16,17 @@ lower_keys = [
 		]
 
 segments = [
-		"el", "el ancestors", "ev", "ev ancestors"
+		"el", "el ancestor", "ev", "ev ancestor"
 ]
 
 statuses = [
 	"does not have",
-	"hax",
+	"has",
 ]
 
 statuses2 = [
-	"do not have",
-	"hax",
+	"does not have",
+	"has",
 ]
 
 matches = [
@@ -40,15 +40,23 @@ targets = [
 ]
 
 
+def has_both_keys(item):
+	if item[0] == 1 or item[1] == 1:
+		if item[2] == 1 or item[3] == 1:
+			return True
+	return False
+
 def item_number(item):
 	return "".join([(str(x)) for x in item])
 
+def get_target_value(item):
+	return "false"
 
-def make_data_key(item, item_index, key):
+def make_data_key(item, item_index, key, extra):
 	if item[item_index] == 0:
 		return ""
 	else:
-		return f"""data-testkey="{key}{item_number(item)}" """
+		return f"""data-test{item_number(item)}="{key}{item_number(item)}{extra}" """
 
 
 def make_descriptions():
@@ -61,42 +69,36 @@ def make_descriptions():
 				output_path = f"{output_dir(key, item)}/description.html"
 				write_file(output, output_path)
 	
-
 def make_html_files():
 	with open("templates/html.html") as _in:
 		template = Template(_in.read())
 		for key_index in range(0,len(keys)):
 			for item in payload():
-				data = {
-						"EL_ITEM_DATA": make_data_key(item, 0, lower_keys[key_index]),
-						"EL_ANCESTOR_DATA": make_data_key(item, 1, lower_keys[key_index]),
-						"EV_ITEM_DATA": make_data_key(item, 2, lower_keys[key_index]),
-						"EV_ANCESTOR_DATA": make_data_key(item, 3, lower_keys[key_index])
-						}
-				data["EXPECTS"] = "true"
-				if item[4] == 0:
-					data["EXPECTS"] = "false"
-				output = template.substitute(data)
-				output_path = f"{output_dir(keys[key_index], item)}/html.html"
-				write_file(output, output_path)
-	
-
+				if output_item(item) == True:
+					data = {
+							"EL_ITEM_DATA": make_data_key(item, 0, lower_keys[key_index], ""),
+							"EL_ANCESTOR_DATA": make_data_key(item, 1, lower_keys[key_index], ""),
+							"EV_ITEM_DATA": make_data_key(item, 2, lower_keys[key_index], " DOES NOT MATCH"),
+							"EV_ANCESTOR_DATA": make_data_key(item, 3, lower_keys[key_index], " DOES NOT MATCH"),
+							"EXPECTS": get_target_value(item)
+							}
+					output = template.substitute(data)
+					output_path = f"{output_dir(keys[key_index], item)}/html.html"
+					write_file(output, output_path)
 
 def make_javascript():
 	with open("templates/javascript.js") as _in:
 		template = Template(_in.read())
 		for key in keys:
 			for item in payload():
-				data = {
-						"MATCH_KEY": f"target{item_number(item)}"
-						}
-				output = template.substitute(data)
-				output_path = f"{output_dir(key, item)}/javascript.js"
-				write_file(output, output_path)
+				if output_item(item) == True:
+					data = {
+							"MATCH_KEY": f"test{item_number(item)}"
+							}
+					output = template.substitute(data)
+					output_path = f"{output_dir(key, item)}/javascript.js"
+					write_file(output, output_path)
 	
-
-
-
 	
 def make_method_names():
 	with open("templates/_method_name.txt") as _in:
@@ -115,12 +117,13 @@ def make_names():
 		template = Template(_in.read())
 		for key_index in range(0,len(keys)):
 			for item in payload():
-				data = {
-						"NAME": report_line(item)
-						}
-				output = template.substitute(data)
-				output_path = f"{output_dir(keys[key_index], item)}/name.txt"
-				write_file(output, output_path)
+				if output_item(item) == True:
+					data = {
+							"NAME": report_line(item)
+							}
+					output = template.substitute(data)
+					output_path = f"{output_dir(keys[key_index], item)}/name.txt"
+					write_file(output, output_path)
 	
 
 def make_postscripts():
@@ -180,14 +183,22 @@ def output_dir(key, item):
 	return example_dir 
 
 
+def output_item(item):
+	if has_both_keys == True:
+		return True
+	if item[4] == 0:
+		return True
+	else:
+		return False
+
 def payload():
 	items = []
 	for i in range(0,32):
-		if (
-				(i >> 0) & 1 == 0 
-				and (i >> 1) & 1 == 0
-				):
-			continue
+		# if (
+		# 		(i >> 0) & 1 == 0 
+		# 		and (i >> 1) & 1 == 0
+		# 		):
+		# 	continue
 		items.append([
 			(i >> 0) & 1, 
 			(i >> 1) & 1, 
@@ -201,7 +212,6 @@ def payload():
 	return items
 
 
-
 def print_report():
 	with open("report.txt", "w") as _out:
 		for item in payload():
@@ -209,29 +219,34 @@ def print_report():
 			_out.write("\n")
 
 def report_line(item):
-	return f"""
+	result = f"""data-KEY: 
 [! filter inline_highlight("js") !]{segments[0]}[! endfilter !]
  <strong>{statuses[item[0]]}</strong>
-[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[1]}[! endfilter !]
  <strong>{statuses2[item[1]]}</strong>
-[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[2]}[! endfilter !]
- <strong>{statuses2[item[2]]}</strong>
-[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
+ <strong>{statuses[item[2]]}</strong>
  - 
 [! filter inline_highlight("js") !]{segments[3]}[! endfilter !]
  <strong>{statuses2[item[3]]}</strong>
-[! filter inline_highlight("html") !]data-KEY[! endfilter !] 
- - 
+"""
+
+	if has_both_keys(item):
+		result += f""" - 
 [! filter inline_highlight("js") !]values[! endfilter !]
- <strong>{matches[item[3]]}</strong>
+ <strong>{matches[item[4]]}</strong>
 -
 is 
-[! filter inline_highlight("js") !]{targets[item[4]]}[! endfilter !]"""
+[! filter inline_highlight("js") !]{get_target_value(item)}[! endfilter !]"""
+	else: 
+		result += f""" -
+returns 
+[! filter inline_highlight("js") !]{get_target_value(item)}[! endfilter !]"""
 
+
+	return result
 
 
 def write_file(data, path):

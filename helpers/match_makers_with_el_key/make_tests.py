@@ -73,6 +73,9 @@ def make_html_files():
 						"EV_ITEM_DATA": make_data_key(item, 2, lower_keys[key_index]),
 						"EV_ANCESTOR_DATA": make_data_key(item, 3, lower_keys[key_index])
 						}
+				data["EXPECTS"] = "true"
+				if item[4] == 0:
+					data["EXPECTS"] = "false"
 				output = template.substitute(data)
 				output_path = f"{output_dir(keys[key_index], item)}/html.html"
 				write_file(output, output_path)
@@ -237,13 +240,13 @@ def write_file(data, path):
 
 	
 if __name__ == "__main__":
-	make_descriptions()
+	# make_descriptions()
 	make_html_files()
 	make_javascript()
-	make_method_names()
+	#make_method_names()
 	make_names()
-	make_postscripts()
-	make_supplementals()
-	make_target_values()
+	#make_postscripts()
+	#make_supplementals()
+	#make_target_values()
 	print_report()
 

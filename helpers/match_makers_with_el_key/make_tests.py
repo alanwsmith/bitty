@@ -20,13 +20,13 @@ segments = [
 ]
 
 statuses = [
-	"DOES NOT HAVE",
-	"HAS",
+	"does not have",
+	"hax",
 ]
 
 statuses2 = [
-	"DO NOT HAVE",
-	"HAS",
+	"do not have",
+	"hax",
 ]
 
 matches = [
@@ -211,23 +211,23 @@ def print_report():
 def report_line(item):
 	return f"""
 [! filter inline_highlight("js") !]{segments[0]}[! endfilter !]
- {statuses[item[0]]}
+ <strong>{statuses[item[0]]}</strong>
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[1]}[! endfilter !]
- {statuses2[item[1]]}
+ <strong>{statuses2[item[1]]}</strong>
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[2]}[! endfilter !]
- {statuses2[item[2]]}
+ <strong>{statuses2[item[2]]}</strong>
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]{segments[3]}[! endfilter !]
- {statuses2[item[3]]}
+ <strong>{statuses2[item[3]]}</strong>
 [! filter inline_highlight("html") !]data-KEY[! endfilter !] 
  - 
 [! filter inline_highlight("js") !]values[! endfilter !]
- {matches[item[3]]}
+ <strong>{matches[item[3]]}</strong>
 -
 is 
 [! filter inline_highlight("js") !]{targets[item[4]]}[! endfilter !]"""

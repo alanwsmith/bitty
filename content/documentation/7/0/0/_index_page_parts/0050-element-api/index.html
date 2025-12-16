@@ -11,7 +11,6 @@
 
 <h4>Methods</h4>
 
-
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "function" !]
@@ -20,7 +19,10 @@
 [!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
 [!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
 
-
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/el.methods/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[! include method_wrapper_path !]
 
 [! endif !]
 [! endif !]
@@ -42,6 +44,7 @@
 #]
 
 
+[#
 
 <h4>Properties</h4>
 
@@ -68,3 +71,5 @@
 [! endif !]
 [! endif !]
 [! endfor !]
+
+#]

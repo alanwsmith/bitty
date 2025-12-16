@@ -50,14 +50,19 @@ def item_number(item):
 	return "".join([(str(x)) for x in item])
 
 def get_target_value(item):
-	return "false"
+	if item[4] == 0:
+		return "false"
+	else:
+		return "true"
 
 def make_data_key(item, item_index, key, extra):
 	if item[item_index] == 0:
 		return ""
 	else:
-		return f"""data-test{item_number(item)}="{key}{item_number(item)}{extra}" """
-
+		if item[4] == 1:
+			return f"""data-test{item_number(item)}="{key}{item_number(item)}" """
+		else:
+			return f"""data-test{item_number(item)}="{key}{item_number(item)}{extra}" """
 
 def make_descriptions():
 	with open("templates/description.html") as _in:
@@ -75,6 +80,7 @@ def make_html_files():
 		for key_index in range(0,len(keys)):
 			for item in payload():
 				if output_item(item) == True:
+					# print(f"DOING: {item}")
 					data = {
 							"EL_ITEM_DATA": make_data_key(item, 0, lower_keys[key_index], ""),
 							"EL_ANCESTOR_DATA": make_data_key(item, 1, lower_keys[key_index], ""),
@@ -85,6 +91,8 @@ def make_html_files():
 					output = template.substitute(data)
 					output_path = f"{output_dir(keys[key_index], item)}/html.html"
 					write_file(output, output_path)
+				else:
+					print(f"SKIPPING {output_item(item)} - {item}")
 
 def make_javascript():
 	with open("templates/javascript.js") as _in:
@@ -184,12 +192,15 @@ def output_dir(key, item):
 
 
 def output_item(item):
-	if has_both_keys == True:
+	if has_both_keys(item) == True:
 		return True
-	if item[4] == 0:
+	elif item[0] == 0 and item[1] == 0 and item[2] == 0 and item[3] == 0 and item[4] == 1:
+		return False
+	elif item[4] == 0:
 		return True
 	else:
 		return False
+
 
 def payload():
 	items = []
@@ -244,8 +255,6 @@ is
 		result += f""" -
 returns 
 [! filter inline_highlight("js") !]{get_target_value(item)}[! endfilter !]"""
-
-
 	return result
 
 

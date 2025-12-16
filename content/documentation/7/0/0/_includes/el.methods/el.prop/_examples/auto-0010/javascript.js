@@ -1,6 +1,6 @@
 [# #########################################
 
-DO NOTE EDIT THIS FILE MANUALLY
+do notE EDIT THis FILE MANUALLY
 Use: make_el_prop_key_tests.py
 
 ######################################### #]

@@ -1,6 +1,6 @@
 [# #########################################
 
-DO NOTE EDIT THIS FILE MANUALLY
+do notE EDIT THis FILE MANUALLY
 Use: helpers/match_makers_without_el_key/make_tests.py
 
 ######################################### #]

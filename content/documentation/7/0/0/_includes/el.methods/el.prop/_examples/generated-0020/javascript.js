@@ -1,6 +1,6 @@
 [# #########################################
 
-DO NOTE EDIT THIS FILE MANUALLY
+do notE EDIT THis FILE MANUALLY
 Use the document test maker python script
 
 

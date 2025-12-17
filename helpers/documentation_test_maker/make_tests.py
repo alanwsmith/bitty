@@ -59,7 +59,7 @@ class Test():
             return override
 
     def html_content(self):
-        path = f"tests/{self.category()}/{self.item()}/{self.id()}/html.html"
+        path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/html.html"
         skeleton = slurp(path)
         template = Template(skeleton)
         data = {
@@ -77,7 +77,7 @@ class Test():
         return self._item
 
     def javascript_content(self):
-        path = f"tests/{self.category()}/{self.item()}/{self.id()}/javascript.js"
+        path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/javascript.js"
         skeleton = slurp(path)
         template = Template(skeleton)
         data = {
@@ -112,8 +112,6 @@ class Test():
             return scrub_segment(self.item())
 
 
-
-
 class TestMaker():
     def __init__(self):
         pass
@@ -130,7 +128,7 @@ class TestMaker():
             return Template(_in.read())
 
     def get_test_file(self, test, file):
-        path = f"{self.tests_dir()}/{file}"
+        path = f"{self.tests_dir()}/{test.category()}/{test.item()}/{test.id()}/{file}"
         with open(path) as _in:
             return Template(_in.read())
 
@@ -177,7 +175,7 @@ class TestMaker():
     def make_html_files(self):
         tests = self.get_tests()
         for test in tests:
-            template = self.get_test_file(test, "html.html")
+            template = self.get_template(test, "html.html")
             data = {
                     "CONNECTION": test.connection_key(""),
                     "BITTY_TAG_EXTRA": "",
@@ -185,8 +183,8 @@ class TestMaker():
                     }
             output = template.substitute(data)
             output_path = self.get_output_path(test, f"html.html")
+            print(output_path)
             self.write_file(output, output_path)
-
 
     def make_javascript_files(self):
         tests = self.get_tests()
@@ -204,7 +202,7 @@ class TestMaker():
     def make_names(self):
         tests = self.get_tests()
         for test in tests:
-            input_path = f"tests/{test.category()}/{test.item()}/{test.id()}/name.txt"
+            input_path = f"tests/{major_version}/{minor_version}/{patch_version}/{test.category()}/{test.item()}/{test.id()}/name.txt"
             output_path = self.get_output_path(test, "name.txt")
             output = slurp(input_path)
             self.write_file(output, output_path)
@@ -227,7 +225,7 @@ class TestMaker():
         return "templates"
 
     def tests_dir(self):
-        return f"test/{major_version}/{minor_version}/{patch_version}"
+        return f"tests/{major_version}/{minor_version}/{patch_version}"
 
     def write_file(self, data, path):
         dir_path = os.path.dirname(path)
@@ -239,10 +237,10 @@ class TestMaker():
 
 if __name__ == "__main__":
     tm = TestMaker()
-    tm.make_stubs()
     tm.make_html_files()
     tm.make_javascript_files()
     tm.make_names()
+    # tm.make_stubs()
     # tm.make_descriptions()
     # tm.make_html_files()
     # tm.make_javascript_files()

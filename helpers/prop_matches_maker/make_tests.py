@@ -6,6 +6,11 @@
 
 # match_maker_with_el_key/make_tests.py
 
+major_version = 7
+minor_version = 0
+patch_version = 0
+
+
 import os
 from string import Template
 
@@ -43,7 +48,6 @@ targets = [
 	"true",
 ]
 
-
 def has_both_keys(item):
 	if item[0] == 1 or item[1] == 1:
 		if item[2] == 1 or item[3] == 1:
@@ -52,6 +56,20 @@ def has_both_keys(item):
 
 def item_number(item):
 	return "".join([(str(x)) for x in item])
+
+def get_connection(item, key_index):
+	parts = ["Test"]
+	parts.append(keys[key_index])
+	for num in item:
+		parts.append(str(num))
+	return "".join(parts)
+
+def get_method_name(item, key_index):
+	parts = [keys[key_index]]
+	parts.append("Method")
+	for num in item:
+		parts.append(str(num))
+	return "".join(parts)
 
 def get_target_value(item):
 	if item[4] == 0:
@@ -77,7 +95,7 @@ def make_descriptions():
 				output = template.substitute(data)
 				output_path = f"{output_dir(key, item)}/description.html"
 				write_file(output, output_path)
-	
+
 def make_html_files():
 	with open("templates/html.html") as _in:
 		template = Template(_in.read())
@@ -90,7 +108,11 @@ def make_html_files():
 							"EL_ANCESTOR_DATA": make_data_key(item, 1, lower_keys[key_index], ""),
 							"EV_ITEM_DATA": make_data_key(item, 2, lower_keys[key_index], " DOES NOT MATCH"),
 							"EV_ANCESTOR_DATA": make_data_key(item, 3, lower_keys[key_index], " DOES NOT MATCH"),
-							"EXPECTS": get_target_value(item)
+							"EXPECTS": get_target_value(item),
+							"MAJOR_VERSION": major_version,
+							"MINOR_VERSION": minor_version,
+							"CONNECTION": get_connection(item, key_index),
+							"METHOD_NAME": get_method_name(item, key_index),
 							}
 					output = template.substitute(data)
 					output_path = f"{output_dir(keys[key_index], item)}/html.html"
@@ -98,17 +120,22 @@ def make_html_files():
 				else:
 					print(f"SKIPPING {output_item(item)} - {item}")
 
+
 def make_javascript():
 	with open("templates/javascript.js") as _in:
 		template = Template(_in.read())
-		for key in keys:
+		for key_index in range(0,len(keys)):
 			for item in payload():
 				if output_item(item) == True:
 					data = {
-							"MATCH_KEY": f"test{item_number(item)}"
+							"MATCH_KEY": f"test{item_number(item)}",
+							# "CONNECTION": "TODO_CONN",
+							#"METHOD_NAME": "TODO_METHOD",
+							"CONNECTION": get_connection(item, key_index),
+							 "METHOD_NAME": get_method_name(item, key_index),
 							}
 					output = template.substitute(data)
-					output_path = f"{output_dir(key, item)}/javascript.js"
+					output_path = f"{output_dir(keys[key_index], item)}/javascript.js"
 					write_file(output, output_path)
 	
 	

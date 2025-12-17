@@ -5,10 +5,11 @@ Use: helpers/match_makers_without_el_key/make_tests.py
 
 ######################################### #]
 
+window.TestpropMatchesSender10111 = class {
   bittyReady() {
     this.api.querySelector("button").click();
   }
-  [@ method_name @](_, el) {
+  propMatchesSenderMethod10111(_, el) {
     el.innerHTML = el.propMatchesTarget("test10111")
   }
-
+}

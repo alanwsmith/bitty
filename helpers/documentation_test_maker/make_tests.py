@@ -3,6 +3,7 @@
 import os
 from string import Template
 import json
+import glob
 from pathlib import Path
 
 major_version = 7
@@ -115,15 +116,21 @@ class Test():
 
 class TestMaker():
     def __init__(self):
-        config_name = f"config-{major_version}-{minor_version}-{patch_version}.json"
-        with open(config_name, 'r') as json_file:
-            self.config = json.load(json_file)
+        pass
+        # config_name = f"config-{major_version}-{minor_version}-{patch_version}.json"
+        # with open(config_name, 'r') as json_file:
+        #     self.config = json.load(json_file)
 
     def base_dir(self):
         return f"../../content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
     
     def get_template(self, test, file):
         path = f"{self.template_dir()}/{file}"
+        with open(path) as _in:
+            return Template(_in.read())
+
+    def get_test_file(self, test, file):
+        path = f"{self.tests_dir()}/{file}"
         with open(path) as _in:
             return Template(_in.read())
 
@@ -135,22 +142,42 @@ class TestMaker():
         return path
 
     def get_tests(self):
+        tests_dir = f"tests/{major_version}/{minor_version}/{patch_version}"
         tests = []
-        for category in self.config["categories"]:
-            for item in category["items"]:
-                for test in item["tests"]:
-                    t = Test(
-                            category["name"],
-                            item["name"],
-                            test["id"],
-                    )
-                    tests.append(t)
+        for category_dir in glob.glob(f"{tests_dir}/*"):
+            if os.path.isdir(category_dir):
+                category = Path(category_dir).name
+                for item_dir in glob.glob(f"{category_dir}/*"):
+                    if os.path.isdir(item_dir):
+                        item = Path(item_dir).name
+                        for test_dir in glob.glob(f"{item_dir}/*"):
+                            if os.path.isdir(test_dir):
+                                test = Path(test_dir).name
+                                t = Test(category, item, test)
+                                tests.append(t)
         return tests 
+
+        # category_dirs = [
+        #     Path(dir).name for dir in glob.glob(f"{tests_dir}/*")
+        #     if os.path.isdir(dir)
+        # ]
+        #print(category_dirs)
+
+        # for category in self.config["categories"]:
+        #     for item in category["items"]:
+        #         for test in item["tests"]:
+        #             t = Test(
+        #                     category["name"],
+        #                     item["name"],
+        #                     test["id"],
+        #             )
+        #             tests.append(t)
+
 
     def make_html_files(self):
         tests = self.get_tests()
         for test in tests:
-            template = self.get_template(test, "html.html")
+            template = self.get_test_file(test, "html.html")
             data = {
                     "CONNECTION": test.connection_key(""),
                     "BITTY_TAG_EXTRA": "",
@@ -182,9 +209,6 @@ class TestMaker():
             output = slurp(input_path)
             self.write_file(output, output_path)
 
-
-
-
     def make_stubs(self):
         tests = self.get_tests()
         for test in tests:
@@ -199,9 +223,11 @@ class TestMaker():
             path = self.get_output_path(test, "postscript.html")
             self.write_file("", path)
 
-
     def template_dir(self):
         return "templates"
+
+    def tests_dir(self):
+        return f"test/{major_version}/{minor_version}/{patch_version}"
 
     def write_file(self, data, path):
         dir_path = os.path.dirname(path)

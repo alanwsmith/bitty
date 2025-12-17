@@ -1,0 +1,82 @@
+<h2>Notes</h2>
+
+<ul>
+<li>
+<p>This is the <strong>bit</strong> I use on this
+site. The spefific styles match
+my CSS. You'll need to update
+them to match your CSS for
+everything to work.</p>
+<p>(It's entirely possible to make
+the code more generic by passing
+in the class to match on in a
+<code>data-*</code> attribute if needed.)</p>
+</li>
+<li>
+<p>The <strong>bit</strong> is
+written so that it can
+be used to wrap an entire page
+without having to create a new
+instance for each individual code
+block.</p>
+</li>
+<li>
+<p>The process finds any elements
+with a <code>.code-block</code> class.
+It works on <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">pre</span><span class="punctuation definition tag end html">&gt;</span></span></span></code> tags,
+or <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>
+tags or whatever.</p>
+</li>
+<li>
+<p>The original element with the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">class=&quot;code-block&quot;</span></code> attribute is
+udpated to add the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">toggleWrap</span> <span class="variable other readwrite js">reduceCodeFont</span> <span class="variable other readwrite js">enlargeCodeFont</span></span></code> receivers on the line:</p>
+</li>
+</ul>
+<pre class="code-block no-buttons no-numbers"><code><span class="line-marker"></span><span class="source js"><span class="variable other object js">codeBlock</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">receive</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>toggleWrap reduceCodeFont enlargeCodeFont<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span></span></code></pre>
+<ul>
+<li>
+<p>Every element it finds has a new element
+(made from the
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">codeBlockTemplates.blockWrapper</span></code>
+template)
+wrapped around it. The original
+element becomes a child of the new
+wrapper along with the newly
+created buttons.</p>
+</li>
+<li>
+<p>This code is a good example of how
+multiple elements can be used as
+wrappers for elements with the <code>data-send</code>
+and <code>data-receive</code> attributes
+used for signaling.</p>
+<p>The trick is to put a unique
+identifier on the wrapper. In this
+case it's <code>data-index</code> which
+gets its value when it's created. When
+a button is clicked the
+<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propMatchesSender</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>index<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span></code> method checks to
+see if the receiving element has
+the same parent as the element
+that sent the event.</p>
+<p>This works because the various
+<code>.prop...(KEY)</code> methods start by looking
+for <code>.dataset.KEY</code> properties on themselves
+but walk up that ancestor tree if they
+don't have it. Since neither the
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>copyText<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span></code>or the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>copyText<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span></span></code>element have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-index=&quot;#&quot;</span></code>attribute the one that's on the
+parent <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>gets used.</p>
+</li>
+<li>
+<p>The <code>copyText</code> method is run async in order
+to <code>await</code> the <code>navigator.clipboard.writeText</code>
+call.</p>
+</li>
+<li>
+<p>It also sets a timeout that's stored
+on the class to change the text back from
+&quot;Copied&quot; to &quot;Copy&quot;. If the button's clicked
+again before the timeout triggers
+it gets cleared and a new one is set.</p>
+</li>
+</ul>

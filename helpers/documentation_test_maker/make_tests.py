@@ -64,6 +64,7 @@ class Test():
         template = Template(skeleton)
         data = {
                 "METHOD_NAME": self.method_name(),
+                "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
                 "KEY1": self.get_key(1, ""),
                 "VALUE1": self.get_value(1, "")
                 }
@@ -76,12 +77,14 @@ class Test():
     def item(self):
         return self._item
 
+
     def javascript_content(self):
         path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/javascript.js"
         skeleton = slurp(path)
         template = Template(skeleton)
         data = {
                 "METHOD_NAME": self.method_name(),
+                "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
                 "KEY1": self.get_key(1, ""),
                 "VALUE1": self.get_value(1, "")
                 }

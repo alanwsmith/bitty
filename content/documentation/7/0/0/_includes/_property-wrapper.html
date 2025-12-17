@@ -36,27 +36,29 @@
   [!- endset !]
 
       [! set html_content_path = folder.path_string + "/html.html" !]
-      [! set html_content !][! include html_content_path !][! endset !]
-
       [! set javascript_content_path = folder.path_string + "/javascript.js" !]
+
+  [#
+      [! set html_content !][! include html_content_path !][! endset !]
       [! set javascript_content !][! include javascript_content_path !][! endset !]
+  #]
 
     <details>
     <summary>[! include name_path !] <span class="faded-default-color">[[@ folder.name @]]</span></summary>
       <div class="sub-heading">HTML</div>
     [! filter block_highlight("html") !]
-    [! include html_wrapper_path !]
+    [! include html_content_path !]
     [! endfilter !]
       <div class="sub-heading">JavaScript</div>
     [! filter block_highlight("js") !]
-    [! include javascript_wrapper_path !]
+    [! include javascript_content_path !]
     [! endfilter !]
 
       <script>
-        [! include javascript_wrapper_path !]
+        [! include javascript_content_path !]
       </script>
       <div class="example-block">
-        [! include html_wrapper_path !]
+        [! include html_content_path !]
       </div>
       
     </details>

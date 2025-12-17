@@ -160,6 +160,7 @@ class TestMaker():
             output_path = self.get_output_path(test, f"html.html")
             self.write_file(output, output_path)
 
+
     def make_javascript_files(self):
         tests = self.get_tests()
         for test in tests:

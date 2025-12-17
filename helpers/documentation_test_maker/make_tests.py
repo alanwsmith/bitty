@@ -9,6 +9,16 @@ major_version = 7
 minor_version = 0
 patch_version = 0
 
+def slurp(path):
+    with open(path) as _slurp:
+        return _slurp.read()
+
+def scrub_segment(input):
+    return "".join([ x.capitalize() for x in input.split(".")])
+
+def lowercase_segment(input):
+    return "".join([ x.lower() for x in input.split(".")])
+
 
 class Test():
     def __init__(self, category, item, id):
@@ -19,11 +29,76 @@ class Test():
     def category(self):
         return self._category
 
+    def connection_key(self, extra):
+        parts = ["Test"]
+        parts.append(self.scrubbed_segment('category'))
+        parts.append(self.scrubbed_segment('item'))
+        parts.append(self.scrubbed_segment('id'))
+        parts.append(extra)
+        return "".join(parts)
+
+    def get_key(self, num, override):
+        if override == "":
+            parts = []
+            parts.append(self.lowercase_segment('category'))
+            parts.append(self.lowercase_segment('item'))
+            parts.append(self.lowercase_segment('id'))
+            # parts.append(f"x{num}")
+            return "".join(parts)
+        else:
+            return override
+
+    def get_value(self, num, override):
+        if override == "":
+            parts = ["value"]
+            parts.append(self.lowercase_segment('id'))
+            # parts.append(f"x{num}")
+            return "".join(parts)
+        else:
+            return override
+
+    def html_content(self):
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/html.html"
+        skeleton = slurp(path)
+        template = Template(skeleton)
+        data = {
+                "METHOD_NAME": self.method_name(),
+                "KEY1": self.get_key(1, ""),
+                "VALUE1": self.get_value(1, "")
+                }
+        output = template.substitute(data)
+        return output
+
     def id(self):
         return self._id
 
     def item(self):
         return self._item
+
+    def lowercase_segment(self, key):
+        if key == "category":
+            return lowercase_segment(self.category())
+        elif key == "id":
+            return lowercase_segment(self.id())
+        elif key == "item":
+            return lowercase_segment(self.item())
+
+    def method_name(self):
+        parts = ["run"]
+        parts.append(self.scrubbed_segment('category'))
+        parts.append(self.scrubbed_segment('item'))
+        parts.append(self.scrubbed_segment('id'))
+        return "".join(parts)
+
+    def scrubbed_segment(self, key):
+        if key == "category":
+            return scrub_segment(self.category())
+        elif key == "id":
+            return scrub_segment(self.id())
+        elif key == "item":
+            return scrub_segment(self.item())
+
+
 
 
 class TestMaker():
@@ -35,11 +110,6 @@ class TestMaker():
     def base_dir(self):
         return f"../../content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
     
-    def connection(self, test):
-        name = f"Test{test.category()}{test.item()}{test.id()}"
-        name = name.replace(".", "")
-        return name
-
     def get_template(self, test, file):
         path = f"{self.template_dir()}/{file}"
         with open(path) as _in:
@@ -70,9 +140,9 @@ class TestMaker():
         for test in tests:
             template = self.get_template(test, "html.html")
             data = {
-                    "CONNECTION": self.connection(test),
+                    "CONNECTION": test.connection_key(""),
                     "BITTY_TAG_EXTRA": "",
-                    "CONTENT": ""
+                    "CONTENT": test.html_content()
                     }
             output = template.substitute(data)
             output_path = self.get_output_path(test, f"html.html")
@@ -83,7 +153,7 @@ class TestMaker():
         for test in tests:
             template = self.get_template(test, "javascript.js")
             data = {
-                    "CONNECTION": self.connection(test),
+                    "CONNECTION": test.connection_key(""),
                     "CONTENT": ""
                     }
             output = template.substitute(data)
@@ -95,7 +165,7 @@ class TestMaker():
         for test in tests:
             input_path = f"tests/{test.category()}/{test.item()}/{test.id()}/name.txt"
             output_path = self.get_output_path(test, "name.txt")
-            output = self.slurp(input_path)
+            output = slurp(input_path)
             self.write_file(output, output_path)
 
 
@@ -115,9 +185,6 @@ class TestMaker():
             path = self.get_output_path(test, "postscript.html")
             self.write_file("", path)
 
-    def slurp(self, path):
-        with open(path) as _slurp:
-            return _slurp.read()
 
     def template_dir(self):
         return "templates"

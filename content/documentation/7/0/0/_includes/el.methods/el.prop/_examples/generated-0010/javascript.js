@@ -1,12 +1,12 @@
 [# #########################################
 
-do notE EDIT THis FILE MANUALLY
+DO NOTE EDIT THIS FILE MANUALLY
 Use the document test maker python script
 
 
 ######################################### #]
 
-window.Testelmethodselprop0010 = class {
+window.TestElMethodsElProp0010 = class {
   
 }
 

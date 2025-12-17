@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 ###################################################
 # This file should be idempotent.
 # Make a commit before running it though,
@@ -45,7 +46,6 @@ This file is created by:
 helpers/docs-builders/create_helper_properties_tree.py
 
 ######################################################## -#]
-
 
 
 [!- set property_description_path = file.folder + "/_includes/$PARENT.properties/$VALUE/property-description.html" -!]

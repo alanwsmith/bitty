@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# This makes the output files for
+# the el.propMatchesTarget() and el.propMatchesSender()
+# methods. 
+
 # match_maker_with_el_key/make_tests.py
 
 import os

@@ -7,6 +7,4 @@ Use the document test maker python script
 ######################################### #]
 
 window.$CONNECTION = class {
-  $CONTENT
-}
-
+  $CONTENT}

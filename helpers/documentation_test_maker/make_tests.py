@@ -75,6 +75,18 @@ class Test():
     def item(self):
         return self._item
 
+    def javascript_content(self):
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/javascript.js"
+        skeleton = slurp(path)
+        template = Template(skeleton)
+        data = {
+                "METHOD_NAME": self.method_name(),
+                "KEY1": self.get_key(1, ""),
+                "VALUE1": self.get_value(1, "")
+                }
+        output = template.substitute(data)
+        return output
+
     def lowercase_segment(self, key):
         if key == "category":
             return lowercase_segment(self.category())
@@ -154,7 +166,8 @@ class TestMaker():
             template = self.get_template(test, "javascript.js")
             data = {
                     "CONNECTION": test.connection_key(""),
-                    "CONTENT": ""
+                    "BITTY_TAG_EXTRA": "",
+                    "CONTENT": test.javascript_content(),
                     }
             output = template.substitute(data)
             output_path = self.get_output_path(test, "javascript.js")

@@ -2,6 +2,6 @@ bittyReady() {
     this.api.querySelector("div").click();
   }
 
-  [@ method_name @](_, el) {
+  $METHOD_NAME(_, el) {
     el.innerHTML = el.isTarget;
   }

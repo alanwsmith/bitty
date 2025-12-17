@@ -11,6 +11,6 @@ window.TestElPropertiesElIstarget0010 = class {
     this.api.querySelector("div").click();
   }
 
-  [@ method_name @](_, el) {
+  runElPropertiesElIstarget0010(_, el) {
     el.innerHTML = el.isTarget;
   }}

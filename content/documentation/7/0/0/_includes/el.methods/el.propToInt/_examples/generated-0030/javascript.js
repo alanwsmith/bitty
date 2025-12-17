@@ -8,7 +8,7 @@ Use the document test maker python script
 
 window.TestElMethodsElProptoint0030 = class {
   
-  [@ method_name @](_, el) {
+  runElMethodsElProptoint0030(_, el) {
     const value = el.propToInt("charlie");
     if (value === 3000) {
       el.innerHTML = "received integer";

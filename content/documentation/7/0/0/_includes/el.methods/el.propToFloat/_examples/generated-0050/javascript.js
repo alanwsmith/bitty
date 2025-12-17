@@ -7,7 +7,7 @@ Use the document test maker python script
 ######################################### #]
 
 window.TestElMethodsElProptofloat0050 = class {
-    [@ method_name @](_, el) {
+    runElMethodsElProptofloat0050(_, el) {
     el.innerHTML = el.propToFloat("echo")
   }
 }

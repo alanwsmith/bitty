@@ -1,3 +1,3 @@
-  [@ method_name @](_, el) {
+  $METHOD_NAME(_, el) {
     el.innerHTML = el.propToFloat("echo")
   }

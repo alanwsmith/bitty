@@ -8,7 +8,7 @@ Use the document test maker python script
 
 window.TestElMethodsElProptoint0060 = class {
   
-  [@ method_name @](_, el) {
+  runElMethodsElProptoint0060(_, el) {
     el.innerHTML = el.propToInt("foxtrot")
   }
 }

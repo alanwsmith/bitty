@@ -211,12 +211,11 @@ def name_string(key, line):
 	return f"{key} {line} data-key"
 
 
-
 def output_dir(key, item):
 	dir_key = ""
 	for x in item:
 		dir_key += str(x)
-	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/auto-{dir_key}"
+	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/generated-{dir_key}"
 	if not os.path.isdir(example_dir):
 		os.makedirs(example_dir, exist_ok=True)
 	return example_dir 

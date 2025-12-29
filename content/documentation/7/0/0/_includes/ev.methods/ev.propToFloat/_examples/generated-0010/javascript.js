@@ -6,13 +6,15 @@ Use the document test maker python script
 
 ######################################### #]
 
-window.TestEvMethodsEvProp0010 = class {
+window.TestEvMethodsEvProptofloat0010 = class {
     bittyReady() {
     this.api.querySelector("button").click();
   }
 
-  runEvMethodsEvProp0010(ev, el) {
-    el.innerHTML = ev.prop("evmethodsevprop0010")
+  runEvMethodsEvProptofloat0010(ev, el) { 
+    const got = el.propToFloat("item");
+    if (got === 10.01) {
+      el.innerHTML = "received float";
+    }
   }
-
 }

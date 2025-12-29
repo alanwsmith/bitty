@@ -6,13 +6,15 @@ Use the document test maker python script
 
 ######################################### #]
 
-window.TestEvMethodsEvProp0010 = class {
+window.TestEvMethodsEvProp0020 = class {
     bittyReady() {
     this.api.querySelector("button").click();
   }
 
-  runEvMethodsEvProp0010(ev, el) {
-    el.innerHTML = ev.prop("evmethodsevprop0010")
+  runEvMethodsEvProp0020(ev, el) {
+    el.innerHTML = ev.prop("evmethodsevprop0020")
   }
+
+
 
 }

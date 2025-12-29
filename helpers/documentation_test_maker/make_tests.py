@@ -14,8 +14,10 @@ def slurp(path):
     with open(path) as _slurp:
         return _slurp.read()
 
+
 def scrub_segment(input):
     return "".join([ x.capitalize() for x in input.split(".")])
+
 
 def lowercase_segment(input):
     return "".join([ x.lower() for x in input.split(".")])

@@ -15,11 +15,28 @@
   <summary>
     [@ item_key @] 
     <span class="faded-default-color">[added: [! include added_path !]]</span>
-[#
-    [@ updated_string @]
-#]
-
+[# [@ updated_string @] #]
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+[! for f in folders !]
+[! if f.parent == args_path !]
+[! set name_path = args_path + "/" + f.name + "/name.txt" !]
+[! set content_path = args_path + "/" + f.name + "/index.html" !]
+<li>
+<div class="font-weight-900">[! include name_path !]</div> 
+<div>[! include content_path !]</div>
+</li>
+[! endif !]
+[! endfor !]
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
   [! set description_path = base_path + "/description.html" !]
   [! include description_path !]

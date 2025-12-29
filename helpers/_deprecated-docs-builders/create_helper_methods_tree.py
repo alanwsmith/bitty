@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 ###################################################
 # This file should be idempotent.
 # Make a commit before running it though,
@@ -13,23 +12,28 @@ from pathlib import Path
 from string import Template
 
 items = {
-	"el": [
-		"el.propMatchesSender",
-		"el.propMatchesTarget",
-		"el.prop",
-		"el.propToFloat",
-		"el.propToInt",
-	],
+
+	# "el": [
+	# 	"el.propMatchesSender",
+	# 	"el.propMatchesTarget",
+	# 	"el.prop",
+	# 	"el.propToFloat",
+	# 	"el.propToInt",
+	# ],
+
 	"ev": [
 		"ev.prop",
 		"ev.propToFloat",
 		"ev.propToInt",
 	],
-	"ev.sender": [
-		"ev.sender.prop",
-		"ev.sender.propToFloat",
-		"ev.sender.propToInt",
-	],
+
+
+	# "ev.sender": [
+	# 	"ev.sender.prop",
+	# 	"ev.sender.propToFloat",
+	# 	"ev.sender.propToInt",
+	# ],
+
 }
 
 major_version = "7"
@@ -37,7 +41,6 @@ minor_version = "0"
 patch_version = "0"
 
 parent_dir = f"/Users/alan/workshop/bitty/content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
-
 
 index_skeleton = """
 [#- ####################################################
@@ -56,8 +59,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- set added_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_added.txt" -!]
 [!- set changed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_changed.txt" -!]
 [!- set removed_path = file.folder + "/_includes/$PARENT.methods/$VALUE/_method_removed.txt" -!]
-
-
 
 <details class="docs-test-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
@@ -99,8 +100,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [changed: [@ changed_string @]]
 	[!- endif -!]
 	</span>
-
-
 
 <span class="docs-method-version docs-method-removed">
 	[!- set removed_string|trim -!]
@@ -157,10 +156,10 @@ helpers/docs-builders/create_helper_methods_tree.py
 		[! set postscript_path = example_dir + "/postscript.html" !]
 		[! set test_folder_name = f.name !]
 	
+	[#
 	[! set supplemental_string -!]
 	[!- include example_dir + "/_supplemental_string.txt" !]
 	[!- endset -!]
-
 
 	[! set method_name -!]
 	[!- include example_dir + "/_method_name.txt" !]
@@ -169,6 +168,8 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[! set target_value -!]
 	[!- include example_dir + "/_target_value.txt" !]
 	[!- endset -!]
+
+  #]
 	
 	<li>
 		<details class="example-details default-flow">
@@ -176,7 +177,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 			<span class="faded-default-color"> - [[@ test_folder_name @]] - </span>
 		</summary>
 		<div class="content">
+		[#
 		[! include example_display_path !]
+   #]
 		</div>
 		</details>
 	</li>
@@ -186,7 +189,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 	</ul>
 
 	<div class="docs-optional-wrapper">
+	[#
 	[! include notes_path !]
+	#]
 	</div>
 
 </details>

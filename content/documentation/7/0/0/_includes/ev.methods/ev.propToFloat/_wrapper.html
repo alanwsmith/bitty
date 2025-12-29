@@ -1,22 +1,20 @@
 
 [#- ####################################################
 
-do notE EDIT THis FILE MANUALLY
+DO NOTE EDIT THIS FILE MANUALLY
 This file is created by:
 
 helpers/docs-builders/create_helper_methods_tree.py
 
 ######################################################## -#]
 
-[!- set method_description_path = file.folder + "/_includes/el.methods/el.prop/method-description.html" -!]
-[!- set args_path = file.folder + "/_includes/el.methods/el.prop/_args" -!]
-[!- set examples_dir = file.folder + "/_includes/el.methods/el.prop/_examples" -!]
-[!- set notes_path = file.folder + "/_includes/el.methods/el.prop/_notes.html" -!]
-[!- set added_path = file.folder + "/_includes/el.methods/el.prop/_method_added.txt" -!]
-[!- set changed_path = file.folder + "/_includes/el.methods/el.prop/_method_changed.txt" -!]
-[!- set removed_path = file.folder + "/_includes/el.methods/el.prop/_method_removed.txt" -!]
-
-
+[!- set method_description_path = file.folder + "/_includes/ev.methods/ev.propToFloat/method-description.html" -!]
+[!- set args_path = file.folder + "/_includes/ev.methods/ev.propToFloat/_args" -!]
+[!- set examples_dir = file.folder + "/_includes/ev.methods/ev.propToFloat/_examples" -!]
+[!- set notes_path = file.folder + "/_includes/ev.methods/ev.propToFloat/_notes.html" -!]
+[!- set added_path = file.folder + "/_includes/ev.methods/ev.propToFloat/_method_added.txt" -!]
+[!- set changed_path = file.folder + "/_includes/ev.methods/ev.propToFloat/_method_changed.txt" -!]
+[!- set removed_path = file.folder + "/_includes/ev.methods/ev.propToFloat/_method_removed.txt" -!]
 
 <details class="docs-test-details" data-added="[@ added_path @]" data-changed="[@ changed_path @]">
 
@@ -33,7 +31,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 [!- endif !]
 [!- endfor -!]
 
-	<summary>el.prop(
+	<summary>ev.propToFloat(
 [!- for f in folders !]
 [!- if f.parent == args_path !]
 [!- set name_path = args_path + "/" + f.name + "/name.txt" !]
@@ -58,8 +56,6 @@ helpers/docs-builders/create_helper_methods_tree.py
 [changed: [@ changed_string @]]
 	[!- endif -!]
 	</span>
-
-
 
 <span class="docs-method-version docs-method-removed">
 	[!- set removed_string|trim -!]
@@ -116,6 +112,7 @@ helpers/docs-builders/create_helper_methods_tree.py
 		[! set postscript_path = example_dir + "/postscript.html" !]
 		[! set test_folder_name = f.name !]
 	
+	[#
 	[! set supplemental_string -!]
 	[!- include example_dir + "/_supplemental_string.txt" !]
 	[!- endset -!]
@@ -127,6 +124,8 @@ helpers/docs-builders/create_helper_methods_tree.py
 	[! set target_value -!]
 	[!- include example_dir + "/_target_value.txt" !]
 	[!- endset -!]
+
+  #]
 	
 	<li>
 		<details class="example-details default-flow">
@@ -134,7 +133,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 			<span class="faded-default-color"> - [[@ test_folder_name @]] - </span>
 		</summary>
 		<div class="content">
+		[#
 		[! include example_display_path !]
+   #]
 		</div>
 		</details>
 	</li>
@@ -144,7 +145,9 @@ helpers/docs-builders/create_helper_methods_tree.py
 	</ul>
 
 	<div class="docs-optional-wrapper">
+	[#
 	[! include notes_path !]
+	#]
 	</div>
 
 </details>

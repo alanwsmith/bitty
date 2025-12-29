@@ -227,6 +227,160 @@ elements.
 
 
 
+<details class="docs-test-details">
+
+
+
+  <summary>
+    ev.prop 
+    <span class="faded-default-color">[added: 7.0.0]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div><p>The <code>KEY</code> part of <code>data-KEY</code> to match</p></div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+<ul class="default-flow">
+<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
+from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
+in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
+as a string.
+</li>
+
+<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element does not
+have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
+looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
+attribute. The first one that's found gets used.
+</li>
+
+<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">target</span></span></code> element
+or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
+</li>
+</ul>
+  <div class="heading">Examples</div>
+
+
+
+
+
+
+    <details>
+    <summary>If <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">ev</span></span></code> <strong>has</strong> 
+ a 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY=&quot;VALUE&quot;</span></code> attribute, then the 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">VALUE</span></code> is returned as a string.
+ <span class="faded-default-color">[generated-0010]</span></summary>
+      <div class="sub-heading">HTML</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>TestEvMethodsEvProp0010<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-evmethodsevprop0010</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>value0010<span class="punctuation definition string end html">&quot;</span></span></span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-init</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runEvMethodsEvProp0010<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expects</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>value0010<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>      <div class="sub-heading">JavaScript</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">TestEvMethodsEvProp0010</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">runEvMethodsEvProp0010</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>evmethodsevprop0010<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+      <script>
+
+window.TestEvMethodsEvProp0010 = class {
+    runEvMethodsEvProp0010(_, el) {
+    el.innerHTML = el.prop("evmethodsevprop0010")
+  }
+
+}      </script>
+      <div class="example-block">
+
+<bitty-7-0 data-connect="TestEvMethodsEvProp0010">
+  <div 
+    data-evmethodsevprop0010="value0010" 
+    data-init="runEvMethodsEvProp0010"
+    data-expects="value0010"
+  >waiting</div>
+
+</bitty-7-0>
+      </div>
+      
+    </details>
+
+</details>
+<details class="docs-test-details">
+
+
+
+  <summary>
+    ev.propToFloat 
+    <span class="faded-default-color">[added: ]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div><p>The <code>KEY</code> part of <code>data-KEY</code> to match</p>
+</div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+
+  <div class="heading">Examples</div>
+
+
+</details>
+<details class="docs-test-details">
+
+
+
+  <summary>
+    ev.propToInt 
+    <span class="faded-default-color">[added: ]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div><p>The <code>KEY</code> part of <code>data-KEY</code> to match</p>
+</div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+
+  <div class="heading">Examples</div>
+
+
+</details>
+
+
+
+
+
 
 
 <h3>ev.sender</h3>
@@ -246,8 +400,17 @@ elements.
   <summary>
     el.prop 
     <span class="faded-default-color">[added: 7.0.0]</span>
-
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
 <ul class="default-flow">
 <li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
@@ -431,8 +594,17 @@ window.TestElMethodsElProp0030 = class {
   <summary>
     el.propMatchesSender 
     <span class="faded-default-color">[added: 7.0.0]</span>
-
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
 <ul>
 <li>The
@@ -2100,8 +2272,17 @@ window.TestpropMatchesSender11111 = class {
   <summary>
     el.propMatchesTarget 
     <span class="faded-default-color">[added: 7.0.0]</span>
-
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
 <ul>
 <li>The
@@ -3765,8 +3946,17 @@ window.TestpropMatchesTarget11111 = class {
   <summary>
     el.propToFloat 
     <span class="faded-default-color">[added: 7.0.0]</span>
-
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
 <ul class="default-flow">
 <li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
@@ -4158,8 +4348,17 @@ window.TestElMethodsElProptofloat0060 = class {
   <summary>
     el.propToInt 
     <span class="faded-default-color">[added: 7.0.0]</span>
-
   </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+</ul>
+</div>
+
+
+
   <div class="heading">Description</div>
 <ul class="default-flow">
 <li>

@@ -1,3 +1,11 @@
+[!- set counters = namespace() !]
+[!- set counters.initial = 0 !]
+[!- set counters.count = 0 !]
+[!- set counters.initial_examples = 0 !]
+[!- set counters.count_examples = 0 !]
+[!- set counters.initial = counters.initial + 1 !]
+
+
 <details class="docs-test-details">
 
   [! set added_path = base_path + "/_method_added.txt" !]
@@ -13,7 +21,19 @@
   #]
 
   <summary>
-    [@ item_key @] 
+
+
+
+    [@ item_key @](
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set name_path = args_path + "/" + f.name + "/name.txt" !]
+[!- include name_path !]
+[!- set counters.count = counters.count + 1 !]
+[!- if counters.count != counters.initial !],[@ " " @][! endif !]
+[!- endif !]
+[!- endfor -!]
+)
     <span class="faded-default-color">[added: [! include added_path !]]</span>
 [# [@ updated_string @] #]
   </summary>

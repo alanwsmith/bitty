@@ -12,7 +12,7 @@ window.TestEvMethodsEvProptofloat0010 = class {
   }
 
   runEvMethodsEvProptofloat0010(ev, el) { 
-    const got = el.propToFloat("item");
+    const got = ev.propToFloat("alfa");
     if (got === 10.01) {
       el.innerHTML = "received float";
     }

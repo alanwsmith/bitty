@@ -14,4 +14,5 @@ window.TestEvMethodsEvProptoint0060 = class {
   runEvMethodsEvProptoint0060(ev, el) {
     el.innerHTML = ev.propToInt("foxtrot")
   }
+
 }

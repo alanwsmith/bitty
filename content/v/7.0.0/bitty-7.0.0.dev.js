@@ -224,6 +224,7 @@ class BittyJs extends HTMLElement {
     // so this.api.forward() can change .sendPayload
     // without affecting the original dataset.
     if (ev.sender.dataset && ev.sender.dataset.send) {
+      /** ignore */
       ev.sendPayload = ev.sender.dataset.send;
     }
 

@@ -61,6 +61,46 @@
 
 
 
+<h4>Properties</h4>
+
+[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
+[! if item.memberof == "ev.sender" !]
+[! if item.kind == "member" and item.name != "sendPayload" !]
+
+
+
+[! if item.longname == "ev.sender.valueToFloat" !]
+[!- set method_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+[!- set item_key = "ev.sender.value" !]
+[!- set base_path = file.folder + "/_includes/ev.sender.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[!- set args_path = base_path + "/_args" -!]
+[! include method_wrapper_path !]
+[! endif !]
+
+
+
+
+[!- set method_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/ev.sender.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[!- set args_path = base_path + "/_args" -!]
+[! include method_wrapper_path !]
+
+
+
+
+[! endif !]
+[! endif !]
+[! endfor !]
+
+
+
 
 
 
@@ -94,10 +134,10 @@ This is depcreated and can be deleted next time you see it
 #]
 
 
+[#
+
 <h3>ev.sender</h3>
 
-
-[#
 
 <h4>Methods</h4>
 

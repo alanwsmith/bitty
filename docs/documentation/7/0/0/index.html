@@ -1681,6 +1681,287 @@ window.TestEvPropertiesEvValuetoint0010 = class {
 
 
 
+<h3>ev.sender</h3>
+
+<h4>Methods</h4>
+
+
+
+<details class="docs-test-details">
+
+
+
+  <summary>
+
+
+
+    ev.sender.prop(KEY)
+    <span class="faded-default-color">[added: 7.0.0]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div></div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+<ul class="default-flow">
+<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
+from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
+as a string.
+</li>
+
+<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element does not
+have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
+looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
+attribute. The first one that's found gets used.
+</li>
+
+<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
+</li>
+</ul>
+  <div class="heading">Examples</div>
+
+
+
+
+
+
+    <details>
+    <summary>If <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> <strong>has</strong> 
+ a 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY=&quot;VALUE&quot;</span></code> attribute, then the 
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">VALUE</span></code> is returned as a string.
+ <span class="faded-default-color">[generated-0010]</span></summary>
+      <div class="sub-heading">HTML</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>TestEvSenderMethodsEvSenderProp0010<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-evsendermethodsevsenderprop0010</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>value0010<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runEvSenderMethodsEvSenderProp0010<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Test Target<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runEvSenderMethodsEvSenderProp0010<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expects</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>value0010<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>waiting<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>      <div class="sub-heading">JavaScript</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">TestEvSenderMethodsEvSenderProp0010</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runEvSenderMethodsEvSenderProp0010</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">prop</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>evsendermethodsevsenderprop0010<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+      <script>
+
+window.TestEvSenderMethodsEvSenderProp0010 = class {
+    bittyReady() {
+    this.api.querySelector("button").click();
+  }
+
+  runEvSenderMethodsEvSenderProp0010(ev, el) {
+    el.innerHTML = ev.sender.prop("evsendermethodsevsenderprop0010")
+  }
+
+}      </script>
+      <div class="example-block">
+
+<bitty-7-0 data-connect="TestEvSenderMethodsEvSenderProp0010">
+  <button data-evsendermethodsevsenderprop0010="value0010" data-send="runEvSenderMethodsEvSenderProp0010">Test Target</button>
+  <div 
+    data-receive="runEvSenderMethodsEvSenderProp0010"
+    data-expects="value0010"
+  >waiting</div>
+
+</bitty-7-0>
+      </div>
+      
+    </details>
+
+</details>
+
+
+<details class="docs-test-details">
+
+
+
+  <summary>
+
+
+
+    ev.sender.propToFloat(KEY)
+    <span class="faded-default-color">[added: 7.0.0]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div></div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+<ul class="default-flow">
+<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
+from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
+as a string.
+</li>
+
+<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element does not
+have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
+looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
+attribute. The first one that's found gets used.
+</li>
+
+<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
+</li>
+</ul>
+  <div class="heading">Examples</div>
+
+
+
+
+
+
+    <details>
+    <summary>return the value of a
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
+attribute from the
+<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">ev</span></span></code> 
+as a 
+<code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">float</span></span></code> <span class="faded-default-color">[generated-0010]</span></summary>
+      <div class="sub-heading">HTML</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-7-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>TestEvSenderMethodsEvSenderProptofloat0010<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>  <span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag inline form html">button</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-alfa</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>10.22<span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-send</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runEvSenderMethodsEvSenderProptofloat0010<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>Test Target<span class="meta tag inline form html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag inline form html">button</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> 
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>runEvSenderMethodsEvSenderProptofloat0010<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>    <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-expects</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>received float<span class="punctuation definition string end html">&quot;</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>    waiting 
+<span class="line-marker"></span>  <span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-7-0</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>      <div class="sub-heading">JavaScript</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">TestEvSenderMethodsEvSenderProptofloat0010</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>    <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>button<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">runEvSenderMethodsEvSenderProptofloat0010</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span> 
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">got</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">propToFloat</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>alfa<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">got</span> <span class="keyword operator comparison js">===</span> <span class="constant numeric js">10.22</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>received float<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></span></code></pre>
+      <script>
+
+window.TestEvSenderMethodsEvSenderProptofloat0010 = class {
+    bittyReady() {
+    this.api.querySelector("button").click();
+  }
+
+  runEvSenderMethodsEvSenderProptofloat0010(ev, el) { 
+    const got = ev.sender.propToFloat("alfa");
+    if (got === 10.22) {
+      el.innerHTML = "received float";
+    }
+  }
+
+}      </script>
+      <div class="example-block">
+
+<bitty-7-0 data-connect="TestEvSenderMethodsEvSenderProptofloat0010">
+  <button data-alfa="10.22" data-send="runEvSenderMethodsEvSenderProptofloat0010">Test Target</button>
+
+  <div 
+    data-receive="runEvSenderMethodsEvSenderProptofloat0010"
+    data-expects="received float"
+  >
+    waiting 
+  </div>
+
+</bitty-7-0>
+      </div>
+      
+    </details>
+
+</details>
+
+
+<details class="docs-test-details">
+
+
+
+  <summary>
+
+
+
+    ev.sender.propToInt(KEY)
+    <span class="faded-default-color">[added: 7.0.0]</span>
+  </summary>
+
+
+  <div class="heading">Arguments</div>
+<div class="docs-preface-wrapper">
+<ul class="default-flow">
+<li>
+<div class="font-weight-900">KEY</div> 
+<div></div>
+</li>
+</ul>
+</div>
+
+
+
+  <div class="heading">Description</div>
+<ul class="default-flow">
+<li>Looks for a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> attribute 
+from the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+in its <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span></span></code>property that matches <code class="code-span lang-txt"><span class="line-marker"></span><span class="text plain">KEY</span></code> and returns the value 
+as a string.
+</li>
+
+<li>If the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element does not
+have a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> the process
+looks for ancestors with a <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code> 
+attribute. The first one that's found gets used.
+</li>
+
+<li>If neither the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="variable other object js">ev</span><span class="punctuation accessor js">.</span><span class="meta property object js">sender</span></span></code> element
+or any of its ancestors have the <code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic">data-KEY</span></code>attribute the returned value is <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="constant language undefined js">undefined</span></span></code>.
+</li>
+</ul>
+  <div class="heading">Examples</div>
+
+
+</details>
+
+
+
+
+
+
+
 
 
 

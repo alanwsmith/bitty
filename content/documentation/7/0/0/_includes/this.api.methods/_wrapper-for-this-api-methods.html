@@ -24,5 +24,50 @@
 [!- endfor -!]
 	)</summary>
 
+	<div class="docs-preface-wrapper">
+		[!- include preface_path -!]
+	</div>
+
+	<div class="doc-sub-header">Arguments</div>
+
+	[! for f in folders !]
+	[! if f.parent == args_path !]
+	[! set name_path = args_path + "/" + f.name + "/name.txt" !]
+	[! set content_path = args_path + "/" + f.name + "/index.html" !]
+	<details class="args-details">
+	<summary>[! include name_path !]</summary>
+	[! include content_path !]
+	</details>
+	[! endif !]
+	[! endfor !]
+
+
+	[! for f in folders !]
+  [! if f.parent == samples_dir !]
+  [# Samples will output here #]
+	[! endif !]
+	[! endfor !]
+
+
+	[! for f in folders !]
+  [! if f.parent == tests_dir !]
+  [# Tests will output here #]
+	[! endif !]
+	[! endfor !]
+
+
 
 </details>
+
+
+
+[#
+	[! if f.parent == examples_dir !]
+	[! set name_path = examples_dir + "/" + f.name + "/name.txt" !]
+	[! set content_path = examples_dir + "/" + f.name + "/index.html" !]
+	<details class="example-details">
+	<summary>[! include name_path !]</summary>
+	[! include content_path !]
+	</details>
+	[! endif !]
+#]

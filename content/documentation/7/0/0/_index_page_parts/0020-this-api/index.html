@@ -1,6 +1,21 @@
 <h2>this.api Methods</h2>
 
-<h3 class="info-color">Updates in progress</h3>
+[!- set base_path = file.folder + "/_includes/this.api.methods" -!]
+[!- set wrapper_path = base_path + "/_wrapper-for-this-api-methods.html" -!]
+
+[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="name") !]
+[! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
+
+[! set item_path = base_path + "/" + item.name -!]
+[! set args_path = item_path + "/_args" -!]
+
+[!- include wrapper_path -!]
+
+[! endif !]
+[! endfor !]
+
+
+[#
 
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="name") !]
 [! if item.memberof == "BittyJs" and item.undocumented == true and item.kind == "function" !]
@@ -10,3 +25,6 @@
 
 [! endif !]
 [! endfor !]
+
+#]
+

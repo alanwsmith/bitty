@@ -1,0 +1,28 @@
+<details>
+
+[!- set counters = namespace() !]
+[!- set counters.initial = 0 !]
+[!- set counters.count = 0 !]
+
+[!- set counters.initial_examples = 0 !]
+[!- set counters.count_examples = 0 !]
+
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set counters.initial = counters.initial + 1 !]
+[!- endif !]
+[!- endfor -!]
+
+	<summary>[@ item.name @](
+[!- for f in folders !]
+[!- if f.parent == args_path !]
+[!- set name_path = args_path + "/" + f.name + "/name.txt" !]
+[!- include name_path !]
+[!- set counters.count = counters.count + 1 !]
+[!- if counters.count != counters.initial !],[@ " " @][! endif !]
+[!- endif !]
+[!- endfor -!]
+	)</summary>
+
+
+</details>

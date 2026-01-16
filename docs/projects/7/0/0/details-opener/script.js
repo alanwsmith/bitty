@@ -16,7 +16,6 @@ export class DetailsOpener {
       if (
         this.#state.openTags.has(tagIndex)
       ) {
-        console.log(tag);
         tag.open = true;
       } else {
         tag.open = false;

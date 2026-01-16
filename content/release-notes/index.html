@@ -29,14 +29,12 @@
 [! block main !]
 <main class="default-wrapper default-flow">
 [! for f in files|reverse !]
-[! if f.path_parts[1] == "entries" !]
-
-[! filter markdown|safe !]
-  [! include f.input_path !]
-[! endfilter !]
-[! endif !]
+  [! if f.path_parts[1] == "entries" !]
+    [! filter markdown|safe !]
+      [! include f.input_path !]
+    [! endfilter !]
+  [! endif !]
 [! endfor !]
-
 </main>
 
 [! endblock !]

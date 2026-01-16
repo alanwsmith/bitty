@@ -1,0 +1,69 @@
+<details class="docs-test-details">
+  [! set added_path = base_path + "/_property_added.txt" !]
+
+  [! set updated_path = base_path + "/_property_updated.txt" !]
+  [! set check_updated|trim !][! include updated_path !][! endset !]
+  [!- set updated_string -!]
+  [!- if check_updated != "" !]
+  <span class="faded-default-color"> [updated: [@ check_updated @]]</span>
+  [!- endif -!]
+  [!- endset !]
+
+  <summary>
+    [@ item_key @] 
+    <span class="faded-default-color">[added: [! include added_path !]]</span>
+    [@ updated_string @]
+  </summary>
+  <div class="heading">Description</div>
+  [! set description_path = base_path + "/description.html" !]
+  [! include description_path !]
+
+  <div class="heading">Tests</div>
+
+  [! for folder in folders !]
+    [! if folder.parent == examples_path !]
+      [! set name_path = folder.path_string + "/name.txt" !]
+      [! set connection|replace("-", "")|replace(".", "") -!]Test 
+  [@- folder.folder_parts[5] -@]
+  [@- folder.folder_parts[6] -@]
+  [@- folder.folder_parts[8] -@]
+  [!- endset !]
+
+      [! set method_name|replace("-", "")|replace(".", "") -!]runTest
+  [@- folder.folder_parts[5] -@]
+  [@- folder.folder_parts[6] -@]
+  [@- folder.folder_parts[8] -@]
+  [!- endset !]
+
+      [! set html_content_path = folder.path_string + "/html.html" !]
+      [! set javascript_content_path = folder.path_string + "/javascript.js" !]
+
+  [#
+      [! set html_content !][! include html_content_path !][! endset !]
+      [! set javascript_content !][! include javascript_content_path !][! endset !]
+  #]
+
+    <details>
+    <summary>[! include name_path !] <span class="faded-default-color">[[@ folder.name @]]</span></summary>
+      <div class="sub-heading">HTML</div>
+    [! filter block_highlight("html") !]
+    [! include html_content_path !]
+    [! endfilter !]
+      <div class="sub-heading">JavaScript</div>
+    [! filter block_highlight("js") !]
+    [! include javascript_content_path !]
+    [! endfilter !]
+
+      <script>
+        [! include javascript_content_path !]
+      </script>
+      <div class="example-block">
+        [! include html_content_path !]
+      </div>
+      
+    </details>
+    [! endif !]
+  [! endfor !]
+
+</details>
+

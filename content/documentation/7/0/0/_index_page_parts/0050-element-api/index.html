@@ -1,35 +1,55 @@
+
+[# TOdo: Delete the deprecated files in el.properties
+- _method_name.txt
+- _supplemental_string.txt
+- _target_value.txt
+- description.html
+- postscript.html
+#]
+
 <h2>Element API Extensions</h2>
 
-<h3 class="info-color">Updates in progress</h3>
-
-[#
-
 <h4>Methods</h4>
+
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "function" !]
-[!- set inc_path = file.folder + "/_includes/el.methods/" + item.longname + "/_wrapper.html" -!]
-[! include inc_path !]
+[!- set method_wrapper_path = file.folder + "/_includes/_method-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/el.methods/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[!- set args_path = base_path + "/_args" -!]
+[! include method_wrapper_path !]
 [! endif !]
 [! endif !]
 [! endfor !]
 
 
 <h4>Properties</h4>
+
 [! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "el" !]
 [! if item.kind == "member" !]
+
+[!- set property_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+
 [! if item.longname == "el.valueToFloat" !]
-[!- set inc_path = file.folder + "/_includes/el.properties/el.value/_wrapper.html" -!]
-[! include inc_path !]
+[!- set item_key = "el.value" !]
+[!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[! include property_wrapper_path !]
 [! endif !]
-[!- set inc_path = file.folder + "/_includes/el.properties/" + item.longname + "/_wrapper.html" -!]
-[! include inc_path !]
+
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/el.properties/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[! include property_wrapper_path !]
+
 [! endif !]
 [! endif !]
 [! endfor !]
-
-
-#]
-
 

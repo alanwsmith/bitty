@@ -1,5 +1,5 @@
-const template = `<div class="test">FAILED</div>`;
 export default class {
+  /*
   bittyInit() {
     const div = this.api.makeElement(template);
     if (this.api.bittyId !== undefined) {
@@ -7,5 +7,13 @@ export default class {
     }
     this.api.appendChild(div);
   }
-}
+  */
 
+  runTest1460(_, el) {
+    el.replaceChildren(
+      this.api.makeHTML(
+        this.api.template("testTemplate1460"),
+      ),
+    );
+  }
+}

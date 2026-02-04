@@ -74,6 +74,7 @@ class BittyJs extends HTMLElement {
       this.setIds(this);
       this.handleEventBridge = this.handleEvent.bind(this);
       this.addEventListeners();
+      this.loadPageTemplates();
       await this.runBittyInit();
       await this.runDataInits();
       await this.runBittyReady();
@@ -457,6 +458,15 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  loadPageTemplates() {
+    this._templates = {};
+    document.querySelectorAll("template").forEach((template) => {
+      if (template.id) {
+        this._templates[template.id] = template.innerHTML.toString();
+      }
+    });
+  }
+
   localTrigger(signal) {
     const ev = new LocalTriggerEvent(signal, this.bittyId);
     this.dispatchEvent(ev);
@@ -658,6 +668,10 @@ class BittyJs extends HTMLElement {
         el.bittyId = el.dataset.bittyid;
       }
     });
+  }
+
+  template(id) {
+    return this._templates[id];
   }
 
   trigger(signal) {

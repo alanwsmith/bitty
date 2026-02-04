@@ -5,6 +5,215 @@
 Items most likely to make it into the next
 release. 
 
+
+- TODO: Change `.propToInt()` etc... to
+`.propAsInt()` which is what I keep
+going back to and makes a little more 
+sense as it's not actually converting
+this item, but casting it. 
+
+- TODO: Make sure you can send arbitrary
+payloads with `this.api.trigger("SIGNAL", { alfa: "bravo"})`.
+I think it's better to do that there
+then in `this.api.forward` since forward
+is really for sending an existing event
+instead of adding data. Though, this should
+work too: `this.api.forward(EVENT, SIGNAL, { alfa: "bravo"})`
+
+
+- TODO: Set up to automatically pull
+`<template>` elements from a page and
+access them with `this.api.template("ID")`
+where ID is the id attribute in the template. 
+
+
+- TODO: Use a `:` when you set up so the class is
+attached to the data-connect .js string.
+(i.e. this: `data-connect="/some/path.js SomeClass"`
+goes to `data-connect="/some/path.js:SomeClass`)
+
+- TODO: Consider adding a default template storage 
+like `this.t` which doesn't use a name, but with
+the frequent use of templates that might be alright. 
+
+
+- TODO: Fix bug, when you have `data-use`
+it should set both the send and receive 
+for an element. That means if something
+else sends an event it should pick it
+up. That's not currently happening with
+the filter buttons in the mtg deck 
+refiner. 
+
+- TODO: Document `this.api.forward` where
+you can do `this.api.forward(ev, "signal")`
+or make your own object 
+`this.api.forward({alfa: "bravo"}, "signal")`
+
+- TODO: Confirm errors bubble. 
+
+- TODO: Let bitty element determine if
+they are the top bitty element in the
+DOM to provide a way to catch things
+at the top (e.g. bubble errors from 
+lower ones that get caught and
+handled at the top one)
+
+- TODO: Verify/document that if you send
+a signal with `data-use` and multiple 
+elements have the same `data-use` that
+the one that sends the signal gets
+processed first and then the rest of them
+do.
+
+
+- TODO: Document triggering an async method
+with `this.api.trigger(NAME)`
+
+
+- TODO: CONSIDER: `this.api.getLocalOrJSON(STORAGE_NAME, URL)`
+that returns something from localhost or gets
+the resource at the URL. Would need to 
+do it for all the different `this.api.getWHATEVER()`.
+And the one-shot versions. 
+
+- TODO: CONSIDER: Set up `data-use` to allow
+for two parameters separated by a space that
+work as an alias for send and receive (e.g.
+`data-use="alfa bravo"` is the same thing
+as `data-send="alfa" data-receive="bravo"`)
+TBD if you should also do: 
+`data-use="alfa|bravo charlie|delta"` to 
+allow multiple things to be stuck together. 
+
+- TODO: Come up with a way to set 
+different listeners listeners for different
+parts of the DOM under a single bitty 
+instance. The goal is to have to avoid
+having to check event types when, e.g., some
+things use only `mouseover` and some use
+only `click` events. 
+
+
+- TODO: CONSIDER: Added an optional third
+argument to bitty functions that can be 
+used to pass in arbitrary data, e.g.
+`bittyFunction(ev, el, data) {}`
+
+- TODO: CONSIDER: Changed `el.bittyId` etc..
+to `el.bittyid` so it matches `someElement.dataset.bittyid`
+
+
+- TODO: CONSIDER: `this.api.loadTemplates([])`
+that takes an array of some sort that has
+names and URLs of templates and loads them
+into a `this.templates` variable. 
+
+- TODO: CONSIDER: Added `.match` to 
+`ev` and `el` from `bittyFunction(ev, el) {}`
+which works the same way as the regular
+match to uses either `el` or the `ev.target`
+as the thing to check against. 
+
+
+- TODO: Changed `this.api.getTXT()` and
+friends to `this.api.getTEXT()` so it's
+the actual word and has better separation
+from the extension (e.g. you could pull
+a .html file as TEXT)
+
+- TODO: CONSIDER Added `el.replaceElement()`
+that replaces the incoming element 
+with either a document fragment or
+and element
+
+- TODO: Built in basic test runner. 
+Tests can include async stuff. 
+
+(Look at mtg.al9000.com/deck-runner/ for
+a prototype)
+
+```
+this.api.assert()
+this.api.assertNotEqual()
+this.api.assertTrue()
+this.api.assertFalse()
+this.api.runTests()
+```
+
+output is stored as an array in `this.api.testResults()`
+which is also dumped to the console. 
+
+The `this.api.assert()` methods take something that looks
+like this:
+
+```
+this.api.assert(
+  () => {
+    // this is the "Given" function that's run 
+    // prior to evaluation 
+  },
+  [
+    "description",
+    () => {
+      // function to run for the test
+    }, 
+    "expected result",
+    "filter"
+  ]
+)
+```
+
+where "filter" can be "skip", or "solo". 
+"skip" skips the test. If there's one 
+or more "solo" filters, only those tests
+are run. 
+
+You can also pass an array of things 
+to test for any given Given function. 
+
+```
+this.api.assert(
+  () => {
+    // this is the "Given" function that's run 
+    // prior to evaluation 
+  },
+  [
+    [
+      "description 1",
+      () => {
+        // function to run for the test
+      }, 
+      "expected result",
+      "filter"
+    ],
+    [
+      "description 2",
+      () => {
+        // function to run for the test
+      }, 
+      "expected result",
+      "filter"
+    ],
+  ]
+)
+```
+
+Test results include a test number. 
+If there's only one passed in it's alwasy
+1. If there's an array, it starts at
+1 and goes up for each test item. 
+
+
+
+- TODO: Use this post as an example of the things
+to update for: copyText(), getting external 
+resources in how shot (i.e. expecting responses
+to work and not checking explicitly for errors),
+and escaping HTML.
+
+
+
 - TODO: Make sure that if you hit a network error
 where a bad URL (e.g. "httxxx://asdf") causes
 a CORS issue that the value is caught properly.
@@ -63,6 +272,8 @@ a pipe instead of a space to separate modules
 from classes. (requires major version number
 bump)
 
+- TODO: CONSIDER: Added `this.api.shuffleArray()`
+
 - TODO: Update `data-connect` so that multiple
 connections can be made from the same bitty 
 element. will have to figure out details
@@ -82,9 +293,12 @@ can use an object with key value pairs for
 subs. 
 
 
-- TODO: CONSIDER: Added this.api.copyEl(ELEMENT)
+- TODO: CONSIDER: Added this.api.copyText(ELEMENT)
 to copy the text inside the given element, 
 input, or textarea. 
+
+- TODO: CONSIDER: Added a `this.api.copySelection()`
+method that copies whatever is currently selected. 
 
 - TODO: Consider: Added an this.api.escapeHTML function. 
 
@@ -142,7 +356,7 @@ a nested array.
 
 - TODO: Added `this.api.localForward(EVENT, SIGNAL)` which only 
 forwards inside the current module in the
-same way `this.api.localTrigger(SIGNAL)`
+same way `this.api.trigger(SIGNAL)`
 works. 
 
 

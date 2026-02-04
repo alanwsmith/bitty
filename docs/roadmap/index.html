@@ -129,6 +129,231 @@ window.GitHubStars = class {
 release.</p>
 <ul>
 <li>
+<p>TODO: Change <code>.propToInt()</code> etc... to
+<code>.propAsInt()</code> which is what I keep
+going back to and makes a little more
+sense as it's not actually converting
+this item, but casting it.</p>
+</li>
+<li>
+<p>TODO: Make sure you can send arbitrary
+payloads with <code>this.api.trigger(&quot;SIGNAL&quot;, { alfa: &quot;bravo&quot;})</code>.
+I think it's better to do that there
+then in <code>this.api.forward</code> since forward
+is really for sending an existing event
+instead of adding data. Though, this should
+work too: <code>this.api.forward(EVENT, SIGNAL, { alfa: &quot;bravo&quot;})</code></p>
+</li>
+<li>
+<p>TODO: Set up to automatically pull
+<code>&lt;template&gt;</code> elements from a page and
+access them with <code>this.api.template(&quot;ID&quot;)</code>
+where ID is the id attribute in the template.</p>
+</li>
+<li>
+<p>TODO: Use a <code>:</code> when you set up so the class is
+attached to the data-connect .js string.
+(i.e. this: <code>data-connect=&quot;/some/path.js SomeClass&quot;</code>
+goes to <code>data-connect=&quot;/some/path.js:SomeClass</code>)</p>
+</li>
+<li>
+<p>TODO: Consider adding a default template storage
+like <code>this.t</code> which doesn't use a name, but with
+the frequent use of templates that might be alright.</p>
+</li>
+<li>
+<p>TODO: Fix bug, when you have <code>data-use</code>
+it should set both the send and receive
+for an element. That means if something
+else sends an event it should pick it
+up. That's not currently happening with
+the filter buttons in the mtg deck
+refiner.</p>
+</li>
+<li>
+<p>TODO: Document <code>this.api.forward</code> where
+you can do <code>this.api.forward(ev, &quot;signal&quot;)</code>
+or make your own object
+<code>this.api.forward({alfa: &quot;bravo&quot;}, &quot;signal&quot;)</code></p>
+</li>
+<li>
+<p>TODO: Confirm errors bubble.</p>
+</li>
+<li>
+<p>TODO: Let bitty element determine if
+they are the top bitty element in the
+DOM to provide a way to catch things
+at the top (e.g. bubble errors from
+lower ones that get caught and
+handled at the top one)</p>
+</li>
+<li>
+<p>TODO: Verify/document that if you send
+a signal with <code>data-use</code> and multiple
+elements have the same <code>data-use</code> that
+the one that sends the signal gets
+processed first and then the rest of them
+do.</p>
+</li>
+<li>
+<p>TODO: Document triggering an async method
+with <code>this.api.trigger(NAME)</code></p>
+</li>
+<li>
+<p>TODO: CONSIDER: <code>this.api.getLocalOrJSON(STORAGE_NAME, URL)</code>
+that returns something from localhost or gets
+the resource at the URL. Would need to
+do it for all the different <code>this.api.getWHATEVER()</code>.
+And the one-shot versions.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Set up <code>data-use</code> to allow
+for two parameters separated by a space that
+work as an alias for send and receive (e.g.
+<code>data-use=&quot;alfa bravo&quot;</code> is the same thing
+as <code>data-send=&quot;alfa&quot; data-receive=&quot;bravo&quot;</code>)
+TBD if you should also do:
+<code>data-use=&quot;alfa|bravo charlie|delta&quot;</code> to
+allow multiple things to be stuck together.</p>
+</li>
+<li>
+<p>TODO: Come up with a way to set
+different listeners listeners for different
+parts of the DOM under a single bitty
+instance. The goal is to have to avoid
+having to check event types when, e.g., some
+things use only <code>mouseover</code> and some use
+only <code>click</code> events.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Added an optional third
+argument to bitty functions that can be
+used to pass in arbitrary data, e.g.
+<code>bittyFunction(ev, el, data) {}</code></p>
+</li>
+<li>
+<p>TODO: CONSIDER: Changed <code>el.bittyId</code> etc..
+to <code>el.bittyid</code> so it matches <code>someElement.dataset.bittyid</code></p>
+</li>
+<li>
+<p>TODO: CONSIDER: <code>this.api.loadTemplates([])</code>
+that takes an array of some sort that has
+names and URLs of templates and loads them
+into a <code>this.templates</code> variable.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Added <code>.match</code> to
+<code>ev</code> and <code>el</code> from <code>bittyFunction(ev, el) {}</code>
+which works the same way as the regular
+match to uses either <code>el</code> or the <code>ev.target</code>
+as the thing to check against.</p>
+</li>
+<li>
+<p>TODO: Changed <code>this.api.getTXT()</code> and
+friends to <code>this.api.getTEXT()</code> so it's
+the actual word and has better separation
+from the extension (e.g. you could pull
+a .html file as TEXT)</p>
+</li>
+<li>
+<p>TODO: CONSIDER Added <code>el.replaceElement()</code>
+that replaces the incoming element
+with either a document fragment or
+and element</p>
+</li>
+<li>
+<p>TODO: Built in basic test runner.
+Tests can include async stuff.</p>
+</li>
+</ul>
+<p>(Look at mtg.al9000.com/deck-runner/ for
+a prototype)</p>
+<pre><code>this.api.assert()
+this.api.assertNotEqual()
+this.api.assertTrue()
+this.api.assertFalse()
+this.api.runTests()
+</code></pre>
+<p>output is stored as an array in <code>this.api.testResults()</code>
+which is also dumped to the console.</p>
+<p>The <code>this.api.assert()</code> methods take something that looks
+like this:</p>
+<pre><code>this.api.assert(
+  () =&gt; {
+    // this is the &quot;Given&quot; function that's run 
+    // prior to evaluation 
+  },
+  [
+    &quot;description&quot;,
+    () =&gt; {
+      // function to run for the test
+    }, 
+    &quot;expected result&quot;,
+    &quot;filter&quot;
+  ]
+)
+</code></pre>
+<p>where &quot;filter&quot; can be &quot;skip&quot;, or &quot;solo&quot;.
+&quot;skip&quot; skips the test. If there's one
+or more &quot;solo&quot; filters, only those tests
+are run.</p>
+<p>You can also pass an array of things
+to test for any given Given function.</p>
+<pre><code>this.api.assert(
+  () =&gt; {
+    // this is the &quot;Given&quot; function that's run 
+    // prior to evaluation 
+  },
+  [
+    [
+      &quot;description 1&quot;,
+      () =&gt; {
+        // function to run for the test
+      }, 
+      &quot;expected result&quot;,
+      &quot;filter&quot;
+    ],
+    [
+      &quot;description 2&quot;,
+      () =&gt; {
+        // function to run for the test
+      }, 
+      &quot;expected result&quot;,
+      &quot;filter&quot;
+    ],
+  ]
+)
+</code></pre>
+<p>Test results include a test number.
+If there's only one passed in it's alwasy</p>
+<ol>
+<li>
+<p>If there's an array, it starts at
+1 and goes up for each test item.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>TODO: Use this post as an example of the things
+to update for: copyText(), getting external
+resources in how shot (i.e. expecting responses
+to work and not checking explicitly for errors),
+and escaping HTML.</p>
+</li>
+<li>
+<p>TODO: Make sure that if you hit a network error
+where a bad URL (e.g. &quot;httxxx://asdf&quot;) causes
+a CORS issue that the value is caught properly.
+In 7.0 I'm seeing an Uncaught error that
+prevents the rest of the script from running
+(it should be packaged up in a <code>response.error</code>
+payload).</p>
+</li>
+<li>
+<p>TODO: Set up <code>this.api.sendJSON()</code> which sends
+JSON as a POST request.</p>
+</li>
+<li>
 <p>TODO: Ensure <code>.prop()</code> and friends work
 directly on bitty tags</p>
 </li>
@@ -184,6 +409,9 @@ from classes. (requires major version number
 bump)</p>
 </li>
 <li>
+<p>TODO: CONSIDER: Added <code>this.api.shuffleArray()</code></p>
+</li>
+<li>
 <p>TODO: Update <code>data-connect</code> so that multiple
 connections can be made from the same bitty
 element. will have to figure out details
@@ -191,6 +419,38 @@ of bittyInit and bittyReady in terms of ordering.
 Maybe they go in the order the happen, but
 feels like it's probably gonna
 be more of a race condition.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: added alias function to get the
+value of a form field via selector. If only one
+element matches, the value is text. If multiple
+elements are found, the value is an array
+of txt.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Set up so makeHTML, etc...
+can use an object with key value pairs for
+subs.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Added this.api.copyText(ELEMENT)
+to copy the text inside the given element,
+input, or textarea.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: Added a <code>this.api.copySelection()</code>
+method that copies whatever is currently selected.</p>
+</li>
+<li>
+<p>TODO: Consider: Added an this.api.escapeHTML function.</p>
+</li>
+<li>
+<p>TODO: CONSIDER: create a default <code>this.api.errors</code>
+as an array that can store errors. Bitty will post
+an internal errors there. Anything else can throw
+errors on the array as well. The array is just
+text. The idea is to have a centralized place
+to store and check for errors.</p>
 </li>
 <li>
 <p>TODO: CONSIDER: <code>.addDataSend(someEl, SIGNALS)</code>
@@ -237,7 +497,7 @@ a nested array.</p>
 <li>
 <p>TODO: Added <code>this.api.localForward(EVENT, SIGNAL)</code> which only
 forwards inside the current module in the
-same way <code>this.api.localTrigger(SIGNAL)</code>
+same way <code>this.api.trigger(SIGNAL)</code>
 works.</p>
 </li>
 <li>

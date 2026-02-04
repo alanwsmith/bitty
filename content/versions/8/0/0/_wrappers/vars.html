@@ -1,8 +1,8 @@
 [#- primary var -#]
-[!- set major_version = "7" -!]
+[!- set major_version = "8" -!]
 [!- set minor_version = "0" -!]
 [!- set patch_version = "0" -!]
-[!- set rc_string = "" -!]
+[!- set rc_string = "-beta1" -!]
 [!- set min_switch = "" -!]
 
 [#- assembled vars -#]
@@ -53,7 +53,7 @@ versions/[@ version_dirs|safe @]/documentation/
 [!- endset -!]
 
 [!- set projects_root -!]
-projects/[@ version_dirs|safe @]/
+versions/[@ version_dirs|safe @]/projects/
 [!- endset -!]
 
 [!- set release_notes_root -!]
@@ -76,7 +76,6 @@ versions/[@ version_dirs|safe @]/unit-tests/
 
 
 
-
 [!- 
   set v_dir = "v/" + major_version 
   + "." + minor_version + "." + patch_version 
@@ -94,17 +93,18 @@ bitty-[@ major_version @].[@ minor_version @].[@ patch_version -@]
 .full.js
 [!- endset -!]
 
-[!- set bitty_js_path = "/" + v_dir + "/" + script_min_file_name  -!]
+[!- set bitty_js_path = "/v/8.0.0-beta1/bitty-8.0.0-beta1.dev.js" -!]
 
 [#-
 this is for the unpkg delivery. 
 need to set a switch to make this 
 toggle easier. 
--#]
 
 [!- set bitty_js_path -!]
-https://unpkg.com/@alanwsmith/bitty@7.0.0/bitty-7.0.0.js
+https://unpkg.com/@alanwsmith/bitty@8.0.0/bitty-8.0.0.js
 [!- endset -!]
+-#]
+
 
 [!- set bitty_script_tag -!]
 <script 

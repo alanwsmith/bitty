@@ -1,4 +1,4 @@
-[!- extends "_wrappers/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/main-wrapper.html" -!] 
+[!- extends "versions/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/_wrappers/main-wrapper.html" -!] 
 
 [!- block bittyOpenTag -!]
 [!- include wrapper_root + "includes/bitty-open-tags.html" -!]
@@ -18,6 +18,8 @@
 </header>
 [! endblock !]
 
+
+
 [!- block main -!]
 <main class="default-wrapper default-flow">
 
@@ -27,7 +29,7 @@
 
 [! for f in files !]
 [! if 
-    f.path_parts[0] == "documentation" 
+    f.path_parts[0] == "versions" 
     and
     f.path_parts[1] == major_version
     and
@@ -41,6 +43,7 @@
 [! endif !]
 [! endfor !]
 
+
 [! for fldr in folders !]
     [! if 
         fldr.folder_parts[1] == file.path_parts[1]
@@ -51,7 +54,9 @@
         and
         fldr.folder_parts[4] == file.path_parts[4]
         and
-        fldr.folder_parts[5] == "_index_page_parts"
+        fldr.folder_parts[5] == file.path_parts[5]
+        and
+        fldr.folder_parts[6] == "_index_page_parts"
     !]
     [! set page_part_path = fldr.parent + "/" + fldr.name + "/index.html" !]
     [! include page_part_path !]
@@ -60,5 +65,4 @@
 
 </main>
 [!- endblock !]
-
 

@@ -1,10 +1,46 @@
-[!- extends "_vars/7/0/0/index.html" -!]
+[!- extends "versions/7/0/0/_wrappers/vars.html" -!]
+
+[!- block payload -!]
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    [! include styles_root + "critical-colors.html" !]
+    [! include styles_root + "load-colors.html" !]
+    [! include styles_root + "critical-styles.html" !]
+    <link rel="stylesheet" href="/[@ styles_root @]/all-colors.css" />
+    <script src="/scripts/style-loader.js"></script>
+    <script src="[@ bitty_js_path|safe @]" type="module"></script>
+    <link rel="stylesheet" href="/[@ styles_root @]/custom.css" />
+    [! include wrapper_root + "includes/bitty-unhide-function.html" !]
+    [! include wrapper_root + "includes/head-tag-content.html" !]
+  </head>
+  <body>
+
+    [! include wrapper_root + "includes/no-script.html" !]
+    [! block bittyOpenTag !][! endblock !]
+    [! include wrapper_root + "includes/nav.html" !]
+    [! block header !][! endblock !]
+    [! block main !][! endblock !]
+    [! block bittyCloseTag !][! endblock !]
+    [! include wrapper_root + "includes/load-hider-backup.html" !]
+    [! include wrapper_root + "includes/footer.html" !]
+    <script src="/components/github-stars-beta-1.js" type="module"></script>
+
+  </body>
+</html>
+[!- endblock -!]
+
+
+[#
 
 [!- set local_major_version = "7" -!]
 [!- set local_minor_version = "0" -!]
 [!- set local_patch_version = "0" -!]
 
 [!- block payload -!]
+
+
+[! set styles_root = "versions/7/0/0/styles/" !]
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +63,12 @@
     [! block main !][! endblock !]
     [! block bittyCloseTag !][! endblock !]
     [! include wrapper_root + "includes/load-hider-backup.html" !]
-
     [! include wrapper_root + "includes/footer.html" !]
-
     <script src="/components/github-stars-beta-1.js" type="module"></script>
-
-
   </body>
 </html>
+
+#]
 
   [#
     [! include version_dir + "/_wrappers/head.html" !]
@@ -151,6 +185,7 @@
 
 <[@ bitty_tag @]>
 
-#]
 [!- endblock -!]
+#]
+
 

@@ -1,4 +1,13 @@
-## Make and Deploy a New Version
+# Start Working on a New Version
+
+
+
+
+
+
+---
+
+## (Original Notes to Move in) Make and Deploy a New Version
 
 ### Create the New Folder and Files 
 

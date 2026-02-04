@@ -9,3 +9,11 @@ at: [bitty.alanwsmith.com](https://bitty.alanwsmith.com/)
 - The minified versions of the code are made with
 [Terser](https://try.terser.org/)
 
+## Dev Notes
+
+Dev notes are stored under:
+
+```
+/dev/
+```
+

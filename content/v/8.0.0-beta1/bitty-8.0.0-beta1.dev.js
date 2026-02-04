@@ -1,4 +1,4 @@
-const version = [7, 1, 0];
+const version = [8, 0, 0];
 
 const tagName = `bitty-${version[0]}-${version[1]}`;
 

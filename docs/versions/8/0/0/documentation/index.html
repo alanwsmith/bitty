@@ -93,7 +93,34 @@ window.BittyUnhide = class {
 <bitty-8-0 data-connect="/versions/8/0/0/projects/details-opener/script.js DetailsOpener">
 
 
-<bitty-8-0 data-connect="/versions/8/0/0/projects/docs-test-runner/script.js BittyDocTestRunner"><header class="default-wrapper">
+<bitty-8-0 data-connect="/versions/8/0/0/projects/docs-test-runner/script.js BittyDocTestRunner"><script>
+const t = {
+  stars: `<github-stars
+  :repo="alanwsmith/bitty"
+  :text-color="var(--heading-color)"
+  :background-color="var(--faded-match-color)"
+></github-stars>`,
+};
+
+window.GitHubStars = class {
+  bittyInit() {
+    if(window.location.hostname !== "localhost") {
+      this.api.appendChild(this.api.makeElement(t.stars));
+    }
+  }
+}
+</script>
+
+<nav class="default-wrapper">
+  <a href="/">bitty</a>
+
+
+  <a href="/versions/8/0/0/unit-tests/">tests</a>
+
+
+
+  <bitty-8-0 data-connect="GitHubStars"></bitty-8-0>
+</nav><header class="default-wrapper">
 <hgroup class="default-wrapper">
   <h1>Documentation</h1>
 </hgroup>

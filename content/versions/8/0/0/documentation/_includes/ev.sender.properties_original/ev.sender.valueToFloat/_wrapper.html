@@ -1,0 +1,114 @@
+
+
+
+[#- ####################################################
+
+do notE EDIT THis FILE MANUALLY
+This file is created by:
+
+helpers/docs-builders/create_helper_properties_tree.py
+
+######################################################## -#]
+
+
+
+[!- set property_description_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToFloat/property-description.html" -!]
+[!- set examples_dir = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToFloat/_examples" -!]
+[!- set added_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToFloat/_property_added.txt" -!]
+[!- set updated_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToFloat/_property_updated.txt" -!]
+[!- set removed_path = file.folder + "/_includes/ev.sender.properties/ev.sender.valueToFloat/_property_removed.txt" -!]
+
+<details class="docs-test-details default-flow" data-added="[@ added_path @]" data-updated="[@ updated_path @]">
+
+	[!- set counters = namespace() !]
+	[!- set counters.initial = 0 !]
+	[!- set counters.count = 0 !]
+
+	[!- set counters.initial_examples = 0 !]
+	[!- set counters.count_examples = 0 !]
+
+	[!- for f in folders !]
+	[!- if f.parent == args_path !]
+	[!- set counters.initial = counters.initial + 1 !]
+	[!- endif !]
+	[!- endfor -!]
+
+	<summary>
+		ev.sender.valueToFloat
+
+		<span class="added">
+			-
+			[added: [! include added_path !]]
+			-
+		</span>
+		
+		[!- set updates_string|trim -!]
+			[!- include updated_path -!]
+		[!- endset -!]
+		[!- if updates_string != "" -!]
+			<span class="updated">
+				[updated: [@ updates_string @]]
+			</span>
+		[!- endif -!]
+	
+		[!- set removed_string|trim -!]
+			[!- include removed_path -!]
+		[!- endset -!]
+		[!- if removed_string != "" -!]
+			<span class="removed">
+				[removed: [@ removed_string @]]
+			</span>
+		[!- endif -!]
+	</summary>
+
+	<div class="description-wrapper default-flow">
+		<div class="heading">Description</div>
+		<div class="description">
+			[!- include property_description_path -!]
+		</div>
+	</div>
+
+	[!- for f in folders !]
+		[!- if f.parent == examples_dir !]
+			[!- set counters.initial_examples = counters.initial_examples + 1 !]
+		[!- endif !]
+	[!- endfor -!]
+	
+	<div class="heading">Examples</div>
+
+	[! set example_display_path = file.folder + "/_includes/properties-display.html" !]
+
+	<ul class="example-list">
+	[! for f in folders !]
+		[! if f.parent == examples_dir !]
+			[! set example_dir = examples_dir + "/" + f.name !]
+			[! set name_path = example_dir + "/name.txt" !]
+			[! set html_path = example_dir + "/html.html" !]
+			[! set javascript_path = example_dir + "/javascript.js" !]
+			[! set description_path = example_dir + "/description.html" !]
+			[! set postscript_path = example_dir + "/postscript.html" !]
+			[! set test_folder_name = f.name !]
+			[! set supplemental_string|trim -!]
+				[!- include example_dir + "/_supplemental_string.txt" !]
+			[!- endset -!]
+			[! set method_name|trim -!]
+				[!- include example_dir + "/_method_name.txt" !]
+			[!- endset -!]
+			[! set target_value|trim -!]
+				[!- include example_dir + "/_target_value.txt" !]
+			[!- endset -!]
+			<li>
+				<details class="example-details default-flow">
+					<summary>[! include name_path !]
+					<span class="faded-default-color"> - [[@ test_folder_name @]] - </span></summary>
+					<div class="content">
+						[! include example_display_path !]
+					</div>
+				</details>
+			</li>
+		[! endif !]
+	[! endfor !]
+	</ul>
+
+</details>
+

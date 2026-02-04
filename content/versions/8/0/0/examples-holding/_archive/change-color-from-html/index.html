@@ -1,0 +1,35 @@
+[! extends "versions/" + file.folder_parts[1] + "/_wrappers/wrapper.html" !]
+[! block main !]
+
+<style>
+[! include file.folder + "/styles.css" !]
+</style>
+
+[! include file.folder + "/_content.html" !]
+
+<h3>The HTML</h3>
+
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_html|safe !]
+[! include file.folder + "/_content.html" !]
+
+<script src="[@ bitty_js_path|safe @]" type="module"></script>
+[!- endfilter !]
+</code></pre>
+
+<h3>The JavaScript</h3>
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_javascript|safe !]
+[! include file.folder + "/bitty-script.js" !]
+[!- endfilter !]
+</code></pre>
+
+<h3>The CSS<h3>
+<pre class="code-block-wrapper"><code>
+[!- filter highlight_css|safe !]
+[! include file.folder + "/styles.css" !]
+[!- endfilter !]
+</code></pre>
+
+[! endblock !]
+

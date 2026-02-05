@@ -90,6 +90,7 @@ class BittyJs extends HTMLElement {
       this.handleEventBridge = this.handleEvent.bind(this);
       this.addEventListeners();
       this.loadPageTemplates();
+      this.loadPageJSONs();
       await this.runBittyInit();
       await this.runDataInits();
       await this.runBittyReady();
@@ -462,6 +463,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  json(id) {
+    return this._jsons[id];
+  }
+
   async loadCSS(url, subs = [], options = {}) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
     if (response.error) {
@@ -474,10 +479,20 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  loadPageJSONs() {
+    this._jsons = {};
+    document.querySelectorAll("template[data-type=json]").forEach(
+      (template) => {
+        // TODO: Add error handling here.
+        this._jsons[template.id] = JSON.parse(template.innerHTML.toString());
+      },
+    );
+  }
+
   loadPageTemplates() {
     this._templates = {};
     document.querySelectorAll("template").forEach((template) => {
-      if (template.id) {
+      if (!template.dataset.type || template.dataset.type !== "json") {
         this._templates[template.id] = template.innerHTML.toString();
       }
     });

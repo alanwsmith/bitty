@@ -8,4 +8,3 @@ export default class {
     this.api.appendChild(div);
   }
 }
-

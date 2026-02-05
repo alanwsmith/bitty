@@ -31,6 +31,21 @@ class LocalTriggerEvent extends Event {
   }
 }
 
+class RequestResponse {
+  constructor(value, error) {
+    if (value) {
+      this.value = value;
+    }
+    if (error) {
+      this.error = error;
+    }
+  }
+
+  unwrap() {
+    return this.value;
+  }
+}
+
 class TriggerEvent extends Event {
   constructor(signal) {
     super("bittytrigger", { bubbles: true });
@@ -344,8 +359,9 @@ class BittyJs extends HTMLElement {
     } else {
       try {
         const data = JSON.parse(response.value);
-        const payload = { value: data };
-        return payload;
+        return new RequestResponse(data);
+        // const payload = { value: data };
+        // return payload;
       } catch (error) {
         let payloadError = new BittyError({ type: "parsing" });
         const payload = { error: payloadError };
@@ -387,11 +403,11 @@ class BittyJs extends HTMLElement {
         });
       } else {
         const content = this.doSubs(await response.text(), subs);
-        return { value: content };
+        return new RequestResponse(content);
       }
     } catch (error) {
       console.error(`BittyError: ${error.message}`);
-      return { error: error };
+      return new RequestResponse(null, error);
     }
   }
 
@@ -687,72 +703,10 @@ class BittyJs extends HTMLElement {
       .map((l) => l.trim());
   }
 
-  /* All the stuff below here is experimental. It's
- neither fully documented or tested */
-
-  // Experimental
-  /** internal */
-  async getQuickElement(url, subs = [], options = {}) {
-    const response = await this.getElement(url, subs, options);
-    if (response.value) {
-      return response.value;
-    } else {
-      return this.makeElement(
-        `<span class="bitty-error">Error (check console)</span>`,
-      );
-    }
-  }
-
-  // Experimental
-  /** internal */
-  async getQuickHTML(url, subs = [], options = {}) {
-    const response = await this.getElement(url, subs, options);
-    if (response.value) {
-      return response.value;
-    } else {
-      return this.makeHTML(
-        `<span class="bitty-error">Error (check console)</span>`,
-      );
-    }
-  }
-
-  // Experimental
-  /** internal */
-  async getQuickJSON(url, subs = [], options = {}) {
-    const response = await this.getJSON(url, subs, options);
-    if (response.value) {
-      return response.value;
-    } else {
-      return response.error;
-    }
-  }
-
-  // Experimental
-  /** internal */
-  async getQuickSVG(url, subs = [], options = {}) {
-    const response = await this.getSVG(url, subs, options);
-    if (response.value) {
-      return response.value;
-    } else {
-      const tmpl = document.createElement("template");
-      tmpl.innerHTML =
-        `<svg version="1.1" width="120" height="32" xmlns="http://www.w3.org/2000/svg"><text x="60" y="16" font-size="12" text-anchor="middle" fill="red">error (check console)</text></svg>`;
-      const wrapper = tmpl.content.cloneNode(true);
-      const svg = wrapper.querySelector("svg");
-      return svg;
-    }
-  }
-
-  // Experimental
-  /** internal */
-  async getQuickTXT(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options);
-    if (response.value) {
-      return response.value;
-    } else {
-      return response.error;
-    }
-  }
+  /* *
+   * Anything in the experimental phase goes
+   * below here
+   */
 }
 
 customElements.define(tagName, BittyJs);

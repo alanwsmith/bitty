@@ -1,6 +1,11 @@
 # Documentation Notes
 
-- Create the JSON for documentaiton with:
+## jsdoc.json
 
-    jsdoc -X bitty-file.js > output-location.json
+- There's a script at `content/v/make_jsdoc_json.bash`
+that you can run to make the `jsdoc.json` file. 
+
+You just need to update the version numbers
+whenever you make a new version. 
+
 

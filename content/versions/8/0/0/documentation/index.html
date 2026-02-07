@@ -53,13 +53,19 @@ in from a `<script type="application/json" id="ID">{}</script>` tag.
     and
     f.path_parts[3] == patch_version
     and 
-    f.path_parts[4] == "_index_page_parts"
+    f.path_parts[4] == "documentation"
+    and 
+    f.path_parts[5] == "_index_page_parts"
 !]
 [! include f.input_path !]
 [! endif !]
 [! endfor !]
 
+
+[# I think this is a deprecated earlier version of
+    th above for loop. Commenting it out for now. 
 [! for fldr in folders !]
+    [@ fldr.folder_parts[6] @]
     [! if 
         fldr.folder_parts[1] == file.path_parts[1]
         and
@@ -71,12 +77,15 @@ in from a `<script type="application/json" id="ID">{}</script>` tag.
         and
         fldr.folder_parts[5] == file.path_parts[5]
         and
-        fldr.folder_parts[6] == "_index_page_parts"
+        fldr.folder_parts[6] == file.path_parts[6]
+        and
+        fldr.folder_parts[7] == "_index_page_parts"
     !]
     [! set page_part_path = fldr.parent + "/" + fldr.name + "/index.html" !]
     [! include page_part_path !]
     [! endif !]
 [! endfor !]
+    #]
 </main>
 
 [!- endblock !]

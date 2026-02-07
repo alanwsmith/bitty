@@ -89,6 +89,7 @@ class BittyJs extends HTMLElement {
       this.setIds(this);
       this.handleEventBridge = this.handleEvent.bind(this);
       this.addEventListeners();
+      this.loadPageData();
       this.loadPageTemplates();
       await this.runBittyInit();
       await this.runDataInits();
@@ -124,6 +125,10 @@ class BittyJs extends HTMLElement {
   connectedMoveCallback() {
     // NOTE: this prevs connectedCallback() from firing
     // if a bitty component is moved.
+  }
+
+  data(id) {
+    return this._data[id];
   }
 
   /** internal */
@@ -462,10 +467,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  json(id) {
-    return this._jsons[id];
-  }
-
   async loadCSS(url, subs = [], options = {}) {
     const response = await this.getTXT(url, subs, options, "loadCSS");
     if (response.error) {
@@ -478,10 +479,25 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  loadPageData() {
+    this._data = {};
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.id !== undefined) {
+        try {
+          this._data[el.id] = JSON.parse(el.text);
+        } catch (error) {
+          // TODO: make test for error state
+          // in test unit-tests test suite.
+          console.log(error);
+        }
+      }
+    });
+  }
+
   loadPageTemplates() {
     this._templates = {};
     document.querySelectorAll("script").forEach((el) => {
-      if (el.type === "text/template" && el.id !== undefined) {
+      if (el.type === "text/html" && el.id !== undefined) {
         this._templates[el.id] = el.text;
       }
     });

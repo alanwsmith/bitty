@@ -247,6 +247,14 @@ class BittyJs extends HTMLElement {
       }
       return evKey === elKey;
     };
+
+    el.setProp = (key, value) => {
+      // TODO: scrub this input to make sure
+      // it's valid for an attribute.
+      if (el.dataset[key] === undefined || el.dataset[key] !== value) {
+        el.dataset[key] = value;
+      }
+    };
   }
 
   /** internal */

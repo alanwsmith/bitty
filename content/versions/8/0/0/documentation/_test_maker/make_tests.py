@@ -238,7 +238,7 @@ class TestMaker():
 
 if __name__ == "__main__":
     tm = TestMaker()
-    # tm.make_html_files()
+    tm.make_html_files()
     tm.make_javascript_files()
     # tm.make_names()
 

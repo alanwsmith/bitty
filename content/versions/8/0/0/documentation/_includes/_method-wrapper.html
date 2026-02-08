@@ -8,10 +8,11 @@
 
 <details class="docs-test-details">
 
-  [! set added_path = base_path + "/_method_added.txt" !]
-
   [#
+  [! set added_path = base_path + "/_method_added.txt" !]
   [! set updated_path = base_path + "/_method_updated.txt" !]
+  #]
+  [#
   [! set check_updated|trim !][! include updated_path !][! endset !]
   [!- set updated_string -!]
   [!- if check_updated != "" !]
@@ -34,7 +35,9 @@
 [!- endif !]
 [!- endfor -!]
 )
+    [#
     <span class="faded-default-color">[added: [! include added_path !]]</span>
+    #]
 [# [@ updated_string @] #]
   </summary>
 

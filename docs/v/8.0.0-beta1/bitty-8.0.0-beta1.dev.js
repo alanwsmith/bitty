@@ -57,6 +57,7 @@ class TriggerEvent extends Event {
   }
 }
 
+/** @internal */
 function findDataKey(el, key) {
   if (el.dataset === undefined) {
     return undefined;
@@ -129,6 +130,13 @@ class BittyJs extends HTMLElement {
   connectedMoveCallback() {
     // NOTE: this prevs connectedCallback() from firing
     // if a bitty component is moved.
+  }
+
+  copyText(selector) {
+    // NOTE: copyText is part of `this.api` so that
+    // things like `this.api.trigger()` can be called
+    // from it.
+    // TKTKTK
   }
 
   data(id) {
@@ -600,6 +608,10 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
+  mapKeyToSignal(key, signal) {
+    // TODO: TKTKTK
+  }
+
   /** internal */
   async processEvent(ev) {
     // skip things flagged as local that aren't
@@ -718,6 +730,10 @@ class BittyJs extends HTMLElement {
         el.bittyId = el.dataset.bittyid;
       }
     });
+  }
+
+  async sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   template(id) {

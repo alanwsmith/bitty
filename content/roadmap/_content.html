@@ -5,6 +5,31 @@
 Items most likely to make it into the next
 release. 
 
+- TODO: CONSIDER: Added `this.api.copy(SELECTOR)`
+that copies either the value or the text from
+an element. (TODO: Allow passing ARGS for
+ensuring type (e.g. HTML vs Text vs Value), 
+and a join string so that if there are multiple
+selector matches they get joined with the 
+given string.)
+
+
+- TODO: CONSIDER: Created standardized `this.api.errors()`
+and `this.api.addError()` that adds error
+message. Make sure it can do just text, 
+but maybe also other error payloads with
+more details as an option. Or, maybe
+you just pull in whatever and let the
+devs sort it out. 
+
+
+- TODO: Come up with a way to set 
+different listeners listeners for different
+parts of the DOM under a single bitty 
+instance. The goal is to have to avoid
+having to check event types when, e.g., some
+things use only `mouseover` and some use
+only `click` events. 
 
 - TODO: Change `.propToInt()` etc... to
 `.propAsInt()` which is what I keep
@@ -12,43 +37,18 @@ going back to and makes a little more
 sense as it's not actually converting
 this item, but casting it. 
 
-- TODO: Make sure you can send arbitrary
-payloads with `this.api.trigger("SIGNAL", { alfa: "bravo"})`.
-I think it's better to do that there
-then in `this.api.forward` since forward
-is really for sending an existing event
-instead of adding data. Though, this should
-work too: `this.api.forward(EVENT, SIGNAL, { alfa: "bravo"})`
+- TODO: Created `this.api.send(PAYLOAD, SIGNAL) 
+that sends PAYLOAD instead of an EVENT to the
+given signal. 
 
-
-- TODO: Set up to automatically pull
-`<template>` elements from a page and
-access them with `this.api.template("ID")`
-where ID is the id attribute in the template. 
-
+- TODO: Set up `this.api.forward()` to accept
+a payload as a third argument, like
+`this.api.forward(EVENT, SIGNAL, PAYLOAD)`
 
 - TODO: Use a `:` when you set up so the class is
 attached to the data-connect .js string.
 (i.e. this: `data-connect="/some/path.js SomeClass"`
 goes to `data-connect="/some/path.js:SomeClass`)
-
-- TODO: Consider adding a default template storage 
-like `this.t` which doesn't use a name, but with
-the frequent use of templates that might be alright. 
-
-
-- TODO: Fix bug, when you have `data-use`
-it should set both the send and receive 
-for an element. That means if something
-else sends an event it should pick it
-up. That's not currently happening with
-the filter buttons in the mtg deck 
-refiner. 
-
-- TODO: Document `this.api.forward` where
-you can do `this.api.forward(ev, "signal")`
-or make your own object 
-`this.api.forward({alfa: "bravo"}, "signal")`
 
 - TODO: Confirm errors bubble. 
 
@@ -59,73 +59,9 @@ at the top (e.g. bubble errors from
 lower ones that get caught and
 handled at the top one)
 
-- TODO: Verify/document that if you send
-a signal with `data-use` and multiple 
-elements have the same `data-use` that
-the one that sends the signal gets
-processed first and then the rest of them
-do.
-
-
 - TODO: Document triggering an async method
-with `this.api.trigger(NAME)`
-
-
-- TODO: CONSIDER: `this.api.getLocalOrJSON(STORAGE_NAME, URL)`
-that returns something from localhost or gets
-the resource at the URL. Would need to 
-do it for all the different `this.api.getWHATEVER()`.
-And the one-shot versions. 
-
-- TODO: CONSIDER: Set up `data-use` to allow
-for two parameters separated by a space that
-work as an alias for send and receive (e.g.
-`data-use="alfa bravo"` is the same thing
-as `data-send="alfa" data-receive="bravo"`)
-TBD if you should also do: 
-`data-use="alfa|bravo charlie|delta"` to 
-allow multiple things to be stuck together. 
-
-- TODO: Come up with a way to set 
-different listeners listeners for different
-parts of the DOM under a single bitty 
-instance. The goal is to have to avoid
-having to check event types when, e.g., some
-things use only `mouseover` and some use
-only `click` events. 
-
-
-- TODO: CONSIDER: Added an optional third
-argument to bitty functions that can be 
-used to pass in arbitrary data, e.g.
-`bittyFunction(ev, el, data) {}`
-
-- TODO: CONSIDER: Changed `el.bittyId` etc..
-to `el.bittyid` so it matches `someElement.dataset.bittyid`
-
-
-- TODO: CONSIDER: `this.api.loadTemplates([])`
-that takes an array of some sort that has
-names and URLs of templates and loads them
-into a `this.templates` variable. 
-
-- TODO: CONSIDER: Added `.match` to 
-`ev` and `el` from `bittyFunction(ev, el) {}`
-which works the same way as the regular
-match to uses either `el` or the `ev.target`
-as the thing to check against. 
-
-
-- TODO: Changed `this.api.getTXT()` and
-friends to `this.api.getTEXT()` so it's
-the actual word and has better separation
-from the extension (e.g. you could pull
-a .html file as TEXT)
-
-- TODO: CONSIDER Added `el.replaceElement()`
-that replaces the incoming element 
-with either a document fragment or
-and element
+with `this.api.trigger(await:NAME, await:NAME, NAME)`
+or whatever combination.
 
 - TODO: Built in basic test runner. 
 Tests can include async stuff. 
@@ -204,6 +140,53 @@ If there's only one passed in it's alwasy
 1. If there's an array, it starts at
 1 and goes up for each test item. 
 
+- TODO: Created a `el.copyValue()` method
+which copies the value from the element
+to the copy/pasteboard. TODO: Make sure
+there's a good way to update the UI
+to show something is copied and then 
+reset the UI after a delay. Also,
+need to figure out how error handling
+works. 
+
+- TODO: Created `el.copyTEXT()` method
+that copies the same way as `el.copyValue()`,
+
+- TODO: CONSIDER: `debounce()`
+
+- TODO: CONSIDER: `throttle()`
+
+- TODO: CONSIDER: `memoize()` that memoizes.
+
+- TODO: CONSIDER: `clamp()`
+
+- TODO: CONSIDER: Something that pulls
+a random element form an array then returns
+the array minus that element. 
+
+- TODO: CONSIDER: `ARRAY.last()` to get the
+last item of an array (assuming -1 doesn't work)
+
+- TODO: CONSIDER: `ARRAY.max()` and `ARRAY.min()`
+
+- TODO: CONSIDER: Created `el.copyHTML()` method
+that copies the same way as `el.copyValue()`,
+(I'm not sure this one makes sense as I'm not
+sure what copying the HTML does. Need to 
+investigate that and make a decission about
+what to do here)
+
+- TODO: CONSDIER: Made `ev.copyXXX()` that
+work the same way as `el.copyXXX()` but
+work on the `ev.target` node. 
+
+
+- TODO: Create method to escape HTML
+
+- TODO: Create method to escape URLs 
+
+- TODO: CONSIDER: Create method to do various other
+escapes. 
 
 
 - TODO: Use this post as an example of the things
@@ -226,12 +209,13 @@ payload).
 JSON as a POST request. 
 
 - TODO: Ensure `.prop()` and friends work 
-directly on bitty tags
+directly on bitty tags. (I think it would
+just be `this.prop()`, etc...)
 
 - TODO: Add `data-bittyid` to any elements
 that come in via `data-send` and `data-receive`
 that don't have them when an event is
-triggered. this helps cover for when 
+triggered. This helps cover for when 
 elements are added outside the API. 
 
 - TODO: CONFIRM: If `el.bittyParent` is
@@ -240,12 +224,12 @@ a parent bitty element that it's nested in.
 If it finds one, it's return. Otherwise
 the result is undefined. 
 
-- TODO: Added namespacing capabilities. 
+- TODO: CONSIDER: Added namespacing capabilities. 
 Signals can be prefixed with a string
 followed by a ``.`` where the string
 becomes a namespace identifier. 
 
-- TODO: Figure out how to do namespacing
+- TODO: CONSDIER: Figure out how to do namespacing
 for the methods inside the classes as well
 (e.f. `data-send="ns.example"` only goes to
 this pseudo code style thing:
@@ -262,21 +246,14 @@ data-connect call to a remote file
 to see what the network traffic 
 and caching does. 
 
-
-- TODO: CONSIDER: something like `.loadTemplate()`
-that you pass a query selector into that loads
-a template from the source HTML page. 
-
-- TODO: Update `data-connect` so that it uses
-a pipe instead of a space to separate modules
-from classes. (requires major version number
-bump)
-
 - TODO: CONSIDER: Added `this.api.shuffleArray()`
+
+- TODO: Look at low dash to consdier features
+to add. 
 
 - TODO: Update `data-connect` so that multiple
 connections can be made from the same bitty 
-element. will have to figure out details
+element. Will have to figure out details
 of bittyInit and bittyReady in terms of ordering. 
 Maybe they go in the order the happen, but
 feels like it's probably gonna 
@@ -292,10 +269,12 @@ of txt.
 can use an object with key value pairs for
 subs. 
 
+- TODO: Set up `this.api.makeHTML()` and friends
+so the subs can be an arry where you just pair
+up items so you don't have to do arryas of
+arrays. 
 
-- TODO: CONSIDER: Added this.api.copyText(ELEMENT)
-to copy the text inside the given element, 
-input, or textarea. 
+
 
 - TODO: CONSIDER: Added a `this.api.copySelection()`
 method that copies whatever is currently selected. 
@@ -508,6 +487,33 @@ external module file.
 relative file paths (e.g. `./here.js`)
 instead of being limited to `http` and `/`
 urls. 
+
+- TODO: CONSIDER: Adding `this.api.sort()` and
+related that sort arrays in various ways. 
+
+- TODO: CONSDIER: Adding `this.api.unique(ARRAY)`
+that updates an array to make it contain
+only unique values. 
+
+- TODO: CONSIDER: Adding `this.api.window(ARRAY, SIZE)`
+was does an iterator with arrays coming
+in of the given window size. Could add
+a flag in args to determine if the windows
+should always be the given size or if they
+start at the beginning of the array with 
+a single element and then march forward
+increasing until they get to the size
+and then decrease back down at the end
+of the array. 
+
+- TODO: CONSDIER: Adding `this.api.shuffle(ARRAY)`
+that provides a chainable way to shuffle an
+array. Maybe these function go at the top 
+of the file as indipendent function instead
+of in `this.api....`, so it would just be
+`shuffle(ARRAY)`. Or, maybe it's added
+to ARRAY as a prototype?
+
 
 - TODO: CONSIDER: Add console log message if a signal 
 is sent that doesn't have a corresponding function

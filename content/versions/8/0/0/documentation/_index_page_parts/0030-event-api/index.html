@@ -17,11 +17,10 @@
 [! endif !]
 [! endfor !]
 
-[#
 
 <h4>Properties</h4>
 
-[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "ev" !]
 [! if item.kind == "member" and item.name != "sendPayload" !]
 [!- set method_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
@@ -43,7 +42,7 @@
 
 <h4>Methods</h4>
 
-[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "ev.sender" !]
 [! if item.kind == "function" !]
 [!- set method_wrapper_path = file.folder + "/_includes/_method-wrapper.html" -!]
@@ -62,10 +61,9 @@
 
 <h4>Properties</h4>
 
-[! for item in json.documentation[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].jsdoc|sort(attribute="longname") !]
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc|sort(attribute="longname") !]
 [! if item.memberof == "ev.sender" !]
 [! if item.kind == "member" and item.name != "sendPayload" !]
-
 
 
 [! if item.longname == "ev.sender.valueToFloat" !]
@@ -80,8 +78,6 @@
 [! endif !]
 
 
-
-
 [!- set method_wrapper_path = file.folder + "/_includes/_property-wrapper.html" -!]
 [!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
 [!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
@@ -92,12 +88,12 @@
 [! include method_wrapper_path !]
 
 
-
-
 [! endif !]
 [! endif !]
 [! endfor !]
 
+
+[#
 #]
 
 

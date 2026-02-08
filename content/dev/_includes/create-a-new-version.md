@@ -2,9 +2,6 @@
 
 
 
-
-
-
 ---
 
 ## (Original Notes to Move in) Make and Deploy a New Version

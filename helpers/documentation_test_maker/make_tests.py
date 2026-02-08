@@ -6,7 +6,7 @@ import json
 import glob
 from pathlib import Path
 
-major_version = 7
+major_version = 8
 minor_version = 0
 patch_version = 0
 

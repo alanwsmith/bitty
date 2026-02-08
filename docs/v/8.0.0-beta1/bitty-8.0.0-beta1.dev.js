@@ -41,8 +41,12 @@ class RequestResponse {
     }
   }
 
-  unwrap() {
-    return this.value;
+  unwrapOr(alt) {
+    if (this.value !== undefined) {
+      return this.value;
+    } else {
+      return alt;
+    }
   }
 }
 

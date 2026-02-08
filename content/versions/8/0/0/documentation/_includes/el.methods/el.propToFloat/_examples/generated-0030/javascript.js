@@ -1,8 +1,7 @@
 [# #########################################
 
 DO NOTE EDIT THIS FILE MANUALLY
-Use the document test maker python script
-
+Use: versions/#/#/#/documentation/_test_maker/make_test.py
 
 ######################################### #]
 

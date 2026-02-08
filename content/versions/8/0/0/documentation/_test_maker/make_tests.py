@@ -203,10 +203,11 @@ class TestMaker():
     def make_names(self):
         tests = self.get_tests()
         for test in tests:
-            input_path = f"tests/{major_version}/{minor_version}/{patch_version}/{test.category()}/{test.item()}/{test.id()}/name.txt"
+            input_path = f"tests/{test.category()}/{test.item()}/{test.id()}/name.txt"
             output_path = self.get_output_path(test, "name.txt")
             output = slurp(input_path)
             self.write_file(output, output_path)
+
 
     def make_stubs(self):
         tests = self.get_tests()
@@ -240,7 +241,7 @@ if __name__ == "__main__":
     tm = TestMaker()
     tm.make_html_files()
     tm.make_javascript_files()
-    # tm.make_names()
+    tm.make_names()
 
     # tm.make_stubs()
     # tm.make_descriptions()

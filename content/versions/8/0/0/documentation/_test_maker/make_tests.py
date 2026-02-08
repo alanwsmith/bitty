@@ -57,20 +57,17 @@ class Test():
             return override
 
     def html_content(self):
-        pass
-
-
-        # path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/html.html"
-        # skeleton = slurp(path)
-        # template = Template(skeleton)
-        # data = {
-        #         "METHOD_NAME": self.method_name(),
-        #         "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
-        #         "KEY1": self.get_key(1, ""),
-        #         "VALUE1": self.get_value(1, "")
-        #         }
-        # output = template.substitute(data)
-        # return output
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/html.html"
+        skeleton = slurp(path)
+        template = Template(skeleton)
+        data = {
+                "METHOD_NAME": self.method_name(),
+                "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
+                "KEY1": self.get_key(1, ""),
+                "VALUE1": self.get_value(1, "")
+                }
+        output = template.substitute(data)
+        return output
 
     def id(self):
         return self._id
@@ -180,8 +177,6 @@ class TestMaker():
 
     def make_html_files(self):
         tests = self.get_tests()
-
-
         for test in tests:
             template = self.get_template(test, "html.html")
             data = {
@@ -192,7 +187,7 @@ class TestMaker():
             output = template.substitute(data)
             output_path = self.get_output_path(test, f"html.html")
             print(output_path)
-            # self.write_file(output, output_path)
+            self.write_file(output, output_path)
 
     def make_javascript_files(self):
         tests = self.get_tests()

@@ -13,13 +13,13 @@ export default class {
     const param = el.getString("param");
     const value = initialValues[param];
     console.log(param);
-    this.api.setProp(`--${param}`, value);
+    this.api.setCSS(`--${param}`, value);
     el.value = value;
   }
 
   updateColor(ev, el) {
     window.requestAnimationFrame(() => {
-      this.api.setProp(
+      this.api.setCSS(
         `--${ev.target.getString("param")}`,
         ev.target.floatValue,
       );

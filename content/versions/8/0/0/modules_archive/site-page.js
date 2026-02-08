@@ -10,7 +10,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function setProp(key, value) {
+function setCSS(key, value) {
   document.documentElement.style.setProperty(key, value);
 }
 
@@ -40,7 +40,7 @@ export default class {
     // note this style.display can be removed when
     // bitty-6.0.0-rc3 or later is out
     this.api.style.display = "";
-    setProp("--load-hider", "1");
+    setCSS("--load-hider", "1");
   }
 }
 

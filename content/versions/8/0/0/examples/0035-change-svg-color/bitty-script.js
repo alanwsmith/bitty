@@ -25,7 +25,7 @@ window.ChangeSVGColor = class {
   makeSliders(_, el) {
     svgParams.forEach((param) => {
       const value = Math.floor(Math.random() * 250);
-      this.api.setProp(`--${param}`, value);
+      this.api.setCSS(`--${param}`, value);
       const subs = [
         ["PARAM", param],
         ["VALUE", value],
@@ -40,7 +40,7 @@ window.ChangeSVGColor = class {
 
   updateSVGColor(ev, el) {
     window.requestAnimationFrame(() => {
-      this.api.setProp(
+      this.api.setCSS(
         `--${ev.prop("param")}`,
         ev.valueToFloat,
       );

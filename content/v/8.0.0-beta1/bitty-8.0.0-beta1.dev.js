@@ -479,6 +479,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
   loadPageData() {
     this._data = {};
     document.querySelectorAll("script").forEach((el) => {
@@ -494,6 +495,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  /** internal */
   loadPageTemplates() {
     this._templates = {};
     document.querySelectorAll("script").forEach((el) => {
@@ -690,7 +692,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  setProp(key, value) {
+  setCSS(key, value) {
     document.documentElement.style.setProperty(key, value);
   }
 

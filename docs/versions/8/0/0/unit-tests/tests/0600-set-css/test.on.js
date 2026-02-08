@@ -1,6 +1,6 @@
 export default class {
   bittyInit() {
-    this.api.setProp("--test0600", "1rem");
+    this.api.setCSS("--test0600", "1rem");
     this.api.trigger("runTest0600");
   }
 

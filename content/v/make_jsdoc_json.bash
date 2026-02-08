@@ -10,4 +10,3 @@ OUT="../versions/${MAJOR}/${MINOR}/${PATCH}/documentation/jsdoc.json"
 
 watchexec -c -e js "jsdoc -X \"${IN}\" > \"${OUT}\""
 
-

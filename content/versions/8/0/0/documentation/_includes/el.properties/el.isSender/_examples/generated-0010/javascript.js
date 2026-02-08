@@ -7,7 +7,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 
 window.TestElPropertiesElIssender0010 = class {
     bittyReady() {
-    this.api.querySelector("div").click();
+    this.api.querySelector("button").click();
   }
 
   [@ method_name @](_, el) {

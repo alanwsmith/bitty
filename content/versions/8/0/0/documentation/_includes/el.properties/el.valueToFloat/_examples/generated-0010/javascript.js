@@ -6,7 +6,11 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElValuetofloat0010 = class {
-  #incomingValue = null;
+    #incomingValue = null;
+
+  bittyReady() {
+   this.api.localTrigger("[@ method_name @]");
+  }
 
   [@ method_name @](_, el) {
     this.#incomingValue = el.valueToFloat;
@@ -17,4 +21,5 @@ window.TestElPropertiesElValuetofloat0010 = class {
     if (this.#incomingValue === 10.01) {
       el.innerHTML = "received float";
     }
-  }}
+  }
+}

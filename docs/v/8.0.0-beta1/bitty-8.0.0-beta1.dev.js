@@ -316,12 +316,15 @@ class BittyJs extends HTMLElement {
       } else {
         return finder;
       }
-
-      // return parseInt(findDataKey.call(null, ev.target, x));
     };
 
     ev.propToFloat = (x) => {
-      return parseFloat(findDataKey.call(null, ev.target, x));
+      const finder = findDataKey.call(null, ev.target, x);
+      if (finder !== undefined) {
+        return parseFloat(finder);
+      } else {
+        return undefined;
+      }
     };
   }
 

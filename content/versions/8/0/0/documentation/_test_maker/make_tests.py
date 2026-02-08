@@ -57,7 +57,7 @@ class Test():
             return override
 
     def html_content(self):
-        break
+        pass
 
 
         # path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/html.html"
@@ -80,7 +80,7 @@ class Test():
 
 
     def javascript_content(self):
-        break
+        pass
 
         # path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/javascript.js"
         # skeleton = slurp(path)
@@ -126,7 +126,7 @@ class TestMaker():
         #     self.config = json.load(json_file)
 
     def base_dir(self):
-        return f"../../content/documentation/{major_version}/{minor_version}/{patch_version}/_includes"
+        return f"../_includes"
     
     def get_template(self, test, file):
         path = f"{self.template_dir()}/{file}"
@@ -146,7 +146,7 @@ class TestMaker():
         return path
 
     def get_tests(self):
-        tests_dir = f"tests/{major_version}/{minor_version}/{patch_version}"
+        tests_dir = f"tests"
         tests = []
         for category_dir in glob.glob(f"{tests_dir}/*"):
             if os.path.isdir(category_dir):
@@ -180,6 +180,8 @@ class TestMaker():
 
     def make_html_files(self):
         tests = self.get_tests()
+
+
         for test in tests:
             template = self.get_template(test, "html.html")
             data = {
@@ -190,7 +192,7 @@ class TestMaker():
             output = template.substitute(data)
             output_path = self.get_output_path(test, f"html.html")
             print(output_path)
-            self.write_file(output, output_path)
+            # self.write_file(output, output_path)
 
     def make_javascript_files(self):
         tests = self.get_tests()

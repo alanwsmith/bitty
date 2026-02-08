@@ -75,21 +75,19 @@ class Test():
     def item(self):
         return self._item
 
-
     def javascript_content(self):
         pass
-
-        # path = f"tests/{major_version}/{minor_version}/{patch_version}/{self.category()}/{self.item()}/{self.id()}/javascript.js"
-        # skeleton = slurp(path)
-        # template = Template(skeleton)
-        # data = {
-        #         "METHOD_NAME": self.method_name(),
-        #         "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
-        #         "KEY1": self.get_key(1, ""),
-        #         "VALUE1": self.get_value(1, "")
-        #         }
-        # output = template.substitute(data)
-        # return output
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/javascript.js"
+        skeleton = slurp(path)
+        template = Template(skeleton)
+        data = {
+                "METHOD_NAME": self.method_name(),
+                "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
+                "KEY1": self.get_key(1, ""),
+                "VALUE1": self.get_value(1, "")
+                }
+        output = template.substitute(data)
+        return output
 
     def lowercase_segment(self, key):
         if key == "category":
@@ -240,8 +238,8 @@ class TestMaker():
 
 if __name__ == "__main__":
     tm = TestMaker()
-    tm.make_html_files()
-    # tm.make_javascript_files()
+    # tm.make_html_files()
+    tm.make_javascript_files()
     # tm.make_names()
 
     # tm.make_stubs()

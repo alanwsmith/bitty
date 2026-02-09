@@ -391,7 +391,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getHTML(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options, "getHTML");
+    const response = await this.getTEXT(url, subs, options, "getHTML");
     if (response.error) {
       return response;
     } else {
@@ -400,7 +400,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getJSON(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options, "getJSON");
+    const response = await this.getTEXT(url, subs, options, "getJSON");
     if (response.error) {
       return response;
     } else {
@@ -418,7 +418,7 @@ class BittyJs extends HTMLElement {
   }
 
   async getSVG(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options, "getSVG");
+    const response = await this.getTEXT(url, subs, options, "getSVG");
     if (response.error) {
       return response;
     } else {
@@ -431,7 +431,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getTXT(url, subs = [], options = {}, incomingMethod = "getTXT") {
+  async getTEXT(url, subs = [], options = {}, incomingMethod = "getTEXT") {
     let response = await fetch(url, options);
     try {
       if (!response.ok) {
@@ -493,7 +493,7 @@ class BittyJs extends HTMLElement {
   }
 
   async loadCSS(url, subs = [], options = {}) {
-    const response = await this.getTXT(url, subs, options, "loadCSS");
+    const response = await this.getTEXT(url, subs, options, "loadCSS");
     if (response.error) {
       return response;
     } else {
@@ -599,7 +599,7 @@ class BittyJs extends HTMLElement {
 
   makeHTML(template, subs = []) {
     const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.makeTXT(template, subs).trim();
+    skeleton.innerHTML = this.makeTEXT(template, subs).trim();
     const el = skeleton.content.cloneNode(true);
     this.setIds(el);
     return el;
@@ -607,13 +607,13 @@ class BittyJs extends HTMLElement {
 
   makeSVG(template, subs = []) {
     const tmpl = document.createElement("template");
-    tmpl.innerHTML = this.makeTXT(template, subs).trim();
+    tmpl.innerHTML = this.makeTEXT(template, subs).trim();
     const wrapper = tmpl.content.cloneNode(true);
     const svg = wrapper.querySelector("svg");
     return svg;
   }
 
-  makeTXT(template, subs = []) {
+  makeTEXT(template, subs = []) {
     return this.doSubs(template, subs);
   }
 

@@ -343,8 +343,6 @@ class BittyJs extends HTMLElement {
   findSender(evTarget) {
     if (evTarget.dataset && evTarget.dataset.send) {
       return evTarget;
-    } else if (evTarget.dataset && evTarget.dataset.use) {
-      return evTarget;
     } else if (evTarget.parentNode) {
       return this.findSender(evTarget.parentNode);
     } else {
@@ -480,25 +478,8 @@ class BittyJs extends HTMLElement {
         ev.sendPayload = ev.signal;
         await this.processEvent(ev);
       } else {
-        if (ev.sender.dataset.use) {
-          const signals = this.trimInput(ev.sender.dataset.use);
-          for (let signal of signals) {
-            let doAwait = false;
-            const iSigParts = signal.split(":");
-            if (iSigParts.length === 2 && iSigParts[0] === "await") {
-              doAwait = true;
-              signal = iSigParts[1];
-            }
-            if (this.conn[signal]) {
-              this.expandElement(ev, ev.sender);
-              if (doAwait) {
-                await this.conn[signal](ev, ev.sender);
-              } else {
-                this.conn[signal](ev, ev.sender);
-              }
-            }
-          }
-        }
+        // NOTE data-use was remove from here, this
+        // can be collapsed when that work is finihed.
         if (ev.sender.dataset.send) {
           //** internal */
           ev.sendPayload = ev.sender.dataset.send;

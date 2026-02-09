@@ -131,13 +131,6 @@ class BittyJs extends HTMLElement {
     // if a bitty component is moved.
   }
 
-  copyText(selector) {
-    // NOTE: copyText is part of `this.api` so that
-    // things like `this.api.trigger()` can be called
-    // from it.
-    // TKTKTK
-  }
-
   data(id) {
     return this._data[id];
   }

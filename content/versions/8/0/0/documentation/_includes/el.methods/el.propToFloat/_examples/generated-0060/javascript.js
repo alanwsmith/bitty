@@ -6,7 +6,11 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElMethodsElProptofloat0060 = class {
-    runElMethodsElProptofloat0060(_, el) {
+    bittyReady() {
+    this.api.localTrigger("runElMethodsElProptofloat0060");
+  }
+
+  runElMethodsElProptofloat0060(_, el) {
     el.innerHTML = el.propToFloat("foxtrot")
   }
 }

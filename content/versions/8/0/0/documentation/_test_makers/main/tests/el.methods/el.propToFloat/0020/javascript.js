@@ -1,3 +1,7 @@
+  bittyReady() {
+    this.api.localTrigger("$METHOD_NAME");
+  }
+
   $METHOD_NAME(_, el) {
     const value = el.propToFloat("bravo");
     if (value === 20.02) {

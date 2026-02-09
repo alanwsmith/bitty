@@ -6,7 +6,11 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElMethodsElProptofloat0030 = class {
-    runElMethodsElProptofloat0030(_, el) {
+    bittyReady() {
+    this.api.localTrigger("runElMethodsElProptofloat0030");
+  }
+
+  runElMethodsElProptofloat0030(_, el) {
     const value = el.propToFloat("charlie");
     if (value === 30.03) {
       el.innerHTML = "received float";

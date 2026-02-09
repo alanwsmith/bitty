@@ -523,6 +523,10 @@ class BittyJs extends HTMLElement {
       if (el.type === "text/html" && el.id !== undefined) {
         this._templates[el.id] = el.text;
       }
+      if (el.type === "text/plain" && el.id !== undefined) {
+        // TODO: Note in docs that the text is trimmed.
+        this._templates[el.id] = el.text.trim();
+      }
     });
   }
 

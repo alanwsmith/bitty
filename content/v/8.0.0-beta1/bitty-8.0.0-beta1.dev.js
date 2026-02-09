@@ -260,6 +260,7 @@ class BittyJs extends HTMLElement {
       // TODO: scrub this input to make sure
       // it's valid for an attribute.
       if (el.dataset[key] === undefined || el.dataset[key] !== value) {
+        /** internal */
         el.dataset[key] = value;
       }
     };

@@ -2,6 +2,10 @@ export class BittyDocTestRunner {
   #numberOfTests = 0;
   #numberOfBugs = 0;
 
+  bittyReady() {
+    this.api.localTrigger("testResults");
+  }
+
   itemFailed(_, el) {
     if (el) {
       const output = this.api.makeHTML(this.template("itemFailed"));

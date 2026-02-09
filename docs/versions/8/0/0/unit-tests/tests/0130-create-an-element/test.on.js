@@ -1,13 +1,11 @@
-const template = `
-  <div 
-    class="test"
-    data-receive="runTest0130">FAILED</div>
-`;
-
 export default class {
-  prepTest0130(_event, el) {
+  bittyReady() {
+    this.api.trigger("initTest0130");
+  }
+
+  initTest0130(_event, el) {
     el.replaceChildren(
-      this.api.makeElement(template),
+      this.api.makeElement(this.api.template("testTemplate0130")),
     );
     this.api.trigger("runTest0130");
     el.classList.remove("test");

@@ -1,5 +1,9 @@
   #incomingValue = null;
 
+  bittyReady() {
+    this.api.localTrigger("$METHOD_NAME");
+  }
+
   $METHOD_NAME(_, el) {
     this.#incomingValue = el.valueToInt;
     this.api.localTrigger("$METHOD_OUTPUT_NAME");

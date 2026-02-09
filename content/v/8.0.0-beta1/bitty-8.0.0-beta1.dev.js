@@ -242,7 +242,7 @@ class BittyJs extends HTMLElement {
       }
     };
 
-    if (el.value) {
+    if (el.value !== undefined) {
       el.valueToInt = parseInt(el.value, 10);
       el.valueToFloat = parseFloat(el.value);
     }

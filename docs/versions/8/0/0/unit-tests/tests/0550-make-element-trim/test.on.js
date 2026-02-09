@@ -5,6 +5,10 @@ const template = `
 `;
 
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0550");
+  }
+
   runTest0550(_event, el) {
     const newChild = this.api.makeElement(
       template,

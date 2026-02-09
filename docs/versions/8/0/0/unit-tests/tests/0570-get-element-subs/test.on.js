@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0570");
+  }
+
   async runTest0570(_event, el) {
     const url = "/versions/8/0/0/unit-tests/tests/0570-get-element-subs/payload/";
     const subs = [[/FAILED/g, "PASSED"]];

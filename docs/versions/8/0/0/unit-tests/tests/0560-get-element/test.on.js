@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0560");
+  }
+
   async runTest0560(_event, el) {
     const url = "/versions/8/0/0/unit-tests/tests/0560-get-element/payload/";
     const response = await this.api.getElement(url);

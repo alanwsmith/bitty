@@ -6,10 +6,6 @@
 
 # match_maker_with_el_key/make_tests.py
 
-major_version = 7
-minor_version = 0
-patch_version = 0
-
 
 import os
 from string import Template
@@ -109,8 +105,8 @@ def make_html_files():
 							"EV_ITEM_DATA": make_data_key(item, 2, lower_keys[key_index], " DOES NOT MATCH"),
 							"EV_ANCESTOR_DATA": make_data_key(item, 3, lower_keys[key_index], " DOES NOT MATCH"),
 							"EXPECTS": get_target_value(item),
-							"MAJOR_VERSION": major_version,
-							"MINOR_VERSION": minor_version,
+							# "MAJOR_VERSION": major_version,
+							# "MINOR_VERSION": minor_version,
 							"CONNECTION": get_connection(item, key_index),
 							"METHOD_NAME": get_method_name(item, key_index),
 							}
@@ -215,7 +211,7 @@ def output_dir(key, item):
 	dir_key = ""
 	for x in item:
 		dir_key += str(x)
-	example_dir = f"../../content/documentation/7/0/0/_includes/el.methods/el.{key}/_examples/generated-{dir_key}"
+	example_dir = f"../../_includes/el.methods/el.{key}/_examples/generated-{dir_key}"
 	if not os.path.isdir(example_dir):
 		os.makedirs(example_dir, exist_ok=True)
 	return example_dir 

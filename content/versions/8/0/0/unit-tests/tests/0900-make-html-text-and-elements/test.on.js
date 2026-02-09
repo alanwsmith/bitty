@@ -2,6 +2,10 @@ const template1 = `REMOVE<div class="test">FAILED</div>`;
 const template2 = `<div>STATUS</div>`;
 
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0900");
+  }
+
   runTest0900(_, el) {
     const content = this.api.makeHTML(template1, [
       ["REMOVE", ""],

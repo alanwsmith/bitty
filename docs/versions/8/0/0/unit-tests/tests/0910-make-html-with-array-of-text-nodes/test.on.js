@@ -4,6 +4,10 @@ const template3 = `ED`;
 const template4 = `<div class="test">STATUS</div>`;
 
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0910");
+  }
+
   runTest0910(_, el) {
     const subs = [
       ["STATUS", [

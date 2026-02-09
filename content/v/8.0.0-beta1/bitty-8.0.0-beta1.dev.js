@@ -213,6 +213,17 @@ class BittyJs extends HTMLElement {
     // count.
     el.bittyParent = this.getBittyParent(el);
 
+    el.copyTEXT = async () => {
+      const text = el.value !== undefined ? el.value : el.innerHTML;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (error) {
+        // TODO: Add this to the global bitty errors
+        // when those come online.
+        console.error("Could not copy text to clipboard");
+      }
+    };
+
     el.prop = (x) => {
       return findDataKey.call(null, el, x);
     };

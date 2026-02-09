@@ -6,9 +6,10 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElBittyparent0010 = class {
+    bittyInit() {
     // put a test value that can be check for
-  bittyInit() {
     this.api.dataset.checker = "ping";
+    this.api.localTrigger("[@ method_name @]");
   }
 
   [@ method_name @](_, el) {
@@ -16,4 +17,5 @@ window.TestElPropertiesElBittyparent0010 = class {
       el.innerHTML = "found parent";
     }
   }
+
 }

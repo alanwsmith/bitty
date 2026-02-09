@@ -97,7 +97,6 @@ class BittyJs extends HTMLElement {
       this.loadPageData();
       this.loadPageTemplates();
       await this.runBittyInit();
-      await this.runDataInits();
       await this.runBittyReady();
     }
   }
@@ -683,37 +682,6 @@ class BittyJs extends HTMLElement {
         await this.conn.bittyReady();
       } else {
         this.conn.bittyReady();
-      }
-    }
-  }
-
-  /** internal */
-  async runDataInits() {
-    if (this.dataset.init) {
-      const signals = this.trimInput(this.dataset.init);
-      for (let signal of signals) {
-        if (typeof this.conn[signal] === "function") {
-          if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
-            await this.conn[signal](null, this);
-          } else {
-            this.conn[signal](null, this);
-          }
-        }
-      }
-    }
-    for (let el of this.querySelectorAll("[data-init]")) {
-      if (el.dataset.init) {
-        this.expandElement(null, el);
-        const signals = this.trimInput(el.dataset.init);
-        for (let signal of signals) {
-          if (typeof this.conn[signal] === "function") {
-            if (this.conn[signal][Symbol.toStringTag] === "AsyncFunction") {
-              await this.conn[signal](null, el);
-            } else {
-              this.conn[signal](null, el);
-            }
-          }
-        }
       }
     }
   }

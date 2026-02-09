@@ -8,6 +8,6 @@ export default class {
     const subs = [
       ["FAILED", "PASSED"],
     ];
-    el.innerHTML = this.api.makeTXT(tmpl, subs);
+    el.innerHTML = this.api.makeTEXT(tmpl, subs);
   }
 }

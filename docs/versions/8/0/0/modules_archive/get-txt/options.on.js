@@ -1,11 +1,11 @@
 export default class {
-  async getTXTOptions(_event, el) {
+  async getTEXTOptions(_event, el) {
     const url = "//payloads/get-txt/options.txt";
     const subs = [];
     const options = {
       method: "GET",
     };
-    const response = await this.api.getTXT(
+    const response = await this.api.getTEXT(
       url, subs, options
     );
     if (response.value) {

@@ -1,5 +1,5 @@
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default class {
@@ -17,5 +17,4 @@ export default class {
   runTest1430Bravo(ev, el) {
     el.innerHTML = this.#status;
   }
-
 }

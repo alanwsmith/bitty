@@ -6,7 +6,7 @@ export default class {
     const url = "/versions/8/0/0/unit-tests/tests/0493-get-txt-subs/payload.txt";
     const subs = [[/FAILED/g, "PASSED"]];
     const options = {};
-    const response = await this.api.getTXT(url, subs, options);
+    const response = await this.api.getTEXT(url, subs, options);
     if (response.value) {
       el.innerHTML = response.value;
     }

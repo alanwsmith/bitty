@@ -8,8 +8,8 @@ export default class {
      const subs = [
        ["TARGET", fragment]
      ];
-    const newTXT = this.api.makeTXT(elTemplate, subs);
-    if (newTXT === '<div><div>F1</div><div>F2</div></div>') {
+    const newTEXT = this.api.makeTEXT(elTemplate, subs);
+    if (newTEXT === '<div><div>F1</div><div>F2</div></div>') {
       el.innerHTML = "PASSED";
     }
   }

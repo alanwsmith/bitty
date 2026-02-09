@@ -1,12 +1,12 @@
 export default class {
-  async getTXTSubs(_event, el) {
+  async getTEXTSubs(_event, el) {
     const url = "//payloads/get-txt/subs.txt";
     const subs = [
       ["SPEED", "slow"],
       ["KIND", "red"]
     ];
     const options = {};
-    const response = await this.api.getTXT(
+    const response = await this.api.getTEXT(
       url, subs, options
     );
     if (response.value) {

@@ -1,6 +1,6 @@
 export default class {
   runTest0710(_event, el) {
-    const initialTXT = `TARGET`;
+    const initialTEXT = `TARGET`;
     const fragmentTemplate = `<div>ALFA</div><div>BRAVO</div>`;
     const newFragments = [
       this.api.makeHTML(fragmentTemplate),
@@ -9,8 +9,8 @@ export default class {
     const subs = [
       ["TARGET", newFragments],
     ];
-    const newTXT = this.api.makeTXT(initialTXT, subs);
-    if (newTXT.substring(0, 10) === "<div data-") {
+    const newTEXT = this.api.makeTEXT(initialTEXT, subs);
+    if (newTEXT.substring(0, 10) === "<div data-") {
       el.innerHTML = "PASSED";
     }
   }

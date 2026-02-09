@@ -9,7 +9,7 @@ window.BittyCodeBlockMaker = class {
     let prepSpacer = script.map((line) => "\n");
     el.innerHTML = prepSpacer.join("");
     const url = "/[@ version_dir @]/snippets/intro/combined-body.html";
-    const response = await this.api.getTXT(url);
+    const response = await this.api.getTEXT(url);
     if (response.value) {
       response.value.split("\n").forEach((line) => {
         lines.push(line);

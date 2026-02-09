@@ -4,7 +4,7 @@ export default class {
   }
   async runTest1475(_event, el) {
     const url = "/[@ file.folder @]/payload.txt";
-    const response = await this.api.getTXT(url);
+    const response = await this.api.getTEXT(url);
     el.innerHTML = response.unwrapOr("FAILED");
   }
 }

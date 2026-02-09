@@ -1,12 +1,12 @@
 export default class {
-  async getTXTRegEx(_event, el) {
+  async getTEXTRegEx(_event, el) {
     const url = "//payloads/get-txt/regex.txt";
     const subs = [
       [/SPEED/g, "fast"],
       [/KIND/g, "atctic"]
     ];
     const options = {};
-    const response = await this.api.getTXT(
+    const response = await this.api.getTEXT(
       url, subs, options
     );
     if (response.value) {

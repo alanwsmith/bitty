@@ -8,7 +8,7 @@ export default class {
     const subs = [
       ["TARGET", newEl]
     ];
-    const txt = this.api.makeTXT(template, subs);
+    const txt = this.api.makeTEXT(template, subs);
     if (txt === finalTarget) {
       el.innerHTML = "PASSED";
     }

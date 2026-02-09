@@ -39,12 +39,12 @@ window.MatchGame = class {
   async bittyInit() {
     for (let i = 0; i < this.#tileCount / 2; i += 1) {
       const headURL = `/[@ version_dir @]/svgs/heads/${i}.svg`;
-      const headResponse = await this.api.getTXT(headURL);
+      const headResponse = await this.api.getTEXT(headURL);
       if (headResponse.value) {
         sourceHeads.push(headResponse.value);
       }
       const faceURL = `/[@ version_dir @]/svgs/faces/${i}.svg`;
-      const faceResponse = await this.api.getTXT(faceURL);
+      const faceResponse = await this.api.getTEXT(faceURL);
       if (faceResponse.value) {
         sourceFaces.push(faceResponse.value);
       }

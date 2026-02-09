@@ -7,9 +7,9 @@ export default class {
     const subs = [
       ["TARGET", items] 
     ];
-    const newTXT = this.api.makeTXT(initialTemplate, subs);
-    const targetTXT = "<div>ALFABRAVOCHARLIE</div>";
-    if (newTXT === targetTXT) {
+    const newTEXT = this.api.makeTEXT(initialTemplate, subs);
+    const targetTEXT = "<div>ALFABRAVOCHARLIE</div>";
+    if (newTEXT === targetTEXT) {
       el.innerHTML = "PASSED";
     }
   } 

@@ -1,7 +1,7 @@
 export default class {
-  async getTXTBasic(_event, el) {
+  async getTEXTBasic(_event, el) {
     const url = "/[@ version_dir @]/payloads/get-txt/basic.txt";
-    const response = await this.api.getTXT(url);
+    const response = await this.api.getTEXT(url);
     if (response.value) {
       el.innerHTML = response.value;
     } else {

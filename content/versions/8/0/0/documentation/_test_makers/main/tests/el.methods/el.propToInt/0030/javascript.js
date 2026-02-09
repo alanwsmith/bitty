@@ -1,3 +1,6 @@
+  bittyReady() {
+    this.api.localTrigger("$METHOD_NAME");
+  }
 
   $METHOD_NAME(_, el) {
     const value = el.propToInt("charlie");

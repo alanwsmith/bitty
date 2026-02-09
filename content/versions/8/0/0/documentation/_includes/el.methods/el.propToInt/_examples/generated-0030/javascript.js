@@ -6,7 +6,10 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElMethodsElProptoint0030 = class {
-  
+    bittyReady() {
+    this.api.localTrigger("runElMethodsElProptoint0030");
+  }
+
   runElMethodsElProptoint0030(_, el) {
     const value = el.propToInt("charlie");
     if (value === 3000) {

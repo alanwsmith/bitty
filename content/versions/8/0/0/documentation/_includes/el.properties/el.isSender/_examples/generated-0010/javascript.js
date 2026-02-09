@@ -11,7 +11,6 @@ window.TestElPropertiesElIssender0010 = class {
   }
 
   [@ method_name @](_, el) {
-    console.log(el.bittyId);
     el.innerHTML = el.isSender;
   }
 }

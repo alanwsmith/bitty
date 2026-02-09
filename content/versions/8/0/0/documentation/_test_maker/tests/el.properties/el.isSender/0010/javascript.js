@@ -3,6 +3,5 @@
   }
 
   [@ method_name @](_, el) {
-    console.log(el.bittyId);
     el.innerHTML = el.isSender;
   }

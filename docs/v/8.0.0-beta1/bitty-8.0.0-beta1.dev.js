@@ -228,15 +228,19 @@ class BittyJs extends HTMLElement {
     el.propToInt = (x) => {
       const finder = findDataKey.call(null, el, x);
       if (finder !== undefined) {
-        return parseInt(finder);
+        return parseInt(finder, 10);
       } else {
         return finder;
       }
-      //return parseInt(findDataKey.call(null, el, x));
     };
 
     el.propToFloat = (x) => {
-      return parseFloat(findDataKey.call(null, el, x));
+      const finder = findDataKey.call(null, el, x);
+      if (finder !== undefined) {
+        return parseFloat(finder);
+      } else {
+        return finder;
+      }
     };
 
     if (el.value) {
@@ -319,7 +323,7 @@ class BittyJs extends HTMLElement {
     ev.propToInt = (x) => {
       const finder = findDataKey.call(null, ev.target, x);
       if (finder !== undefined) {
-        return parseInt(finder);
+        return parseInt(finder, 10);
       } else {
         return finder;
       }

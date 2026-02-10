@@ -16,10 +16,25 @@ class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
 
+    def class_name(self):
+        path_parts = self.dir.split("/")
+        return "".join(
+                [
+                "Class",
+                "_",
+                self.scrubString(path_parts[1]),
+                "_",
+                self.scrubString(path_parts[2]),
+                "_",
+                self.scrubString(path_parts[3])
+                ]
+            )
+
     def generate_output(self, input):
         template = Template(input)
         data = {
-                "SIGNAL_NAME": self.signal_name()
+                "CLASS_NAME": self.class_name(),
+                "SIGNAL_NAME": self.signal_name(),
                 }
         return template.substitute(data)
 
@@ -66,7 +81,7 @@ class Test():
                 "_",
                 self.scrubString(path_parts[3])
                 ]
-                )
+            )
 
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:

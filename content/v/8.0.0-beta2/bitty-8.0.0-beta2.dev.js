@@ -43,8 +43,14 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   makeConnection() {
-    // just working with call on the window for now
-    this.conn = new window.BittyClass();
+    if (!this.dataset.connect) {
+      this.conn = new window.BittyClass();
+    } else {
+      const connString = this.dataset.connect.trim();
+      if (window[connString]) {
+        this.conn = new window[connString]();
+      }
+    }
   }
 
   /** internal */

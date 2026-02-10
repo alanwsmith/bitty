@@ -25,6 +25,22 @@ class Test():
         self._item = item
         self._id = id
 
+    def bitty_tag_attributes(self):
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/attributes.html"
+        if os.path.isfile(path):
+            skeleton = slurp(path)
+            template = Template(skeleton)
+            data = {
+                    "METHOD_NAME": self.method_name(),
+                    "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
+                    "KEY1": self.get_key(1, ""),
+                    "VALUE1": self.get_value(1, "")
+                    }
+            output = template.substitute(data)
+            return output
+        else:
+            return ""
+
     def category(self):
         return self._category
 
@@ -178,8 +194,9 @@ class TestMaker():
         for test in tests:
             template = self.get_template(test, "html.html")
             data = {
-                    "CONNECTION": test.connection_key(""),
+                    "BITTY_TAG_ATTRIBUTES": test.bitty_tag_attributes(),
                     "BITTY_TAG_EXTRA": "",
+                    "CONNECTION": test.connection_key(""),
                     "CONTENT": test.html_content()
                     }
             output = template.substitute(data)

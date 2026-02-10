@@ -496,6 +496,9 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  htmlFromTemplate(key, subs = []) {
+  }
+
   async loadCSS(url, subs = [], options = {}) {
     const response = await this.getTEXT(url, subs, options, "loadCSS");
     if (response.error) {

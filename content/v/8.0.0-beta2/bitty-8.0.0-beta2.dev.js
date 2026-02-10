@@ -1,6 +1,13 @@
 const version = [8, 0, 0];
-
 const tagName = `bitty-${version[0]}-${version[1]}`;
+
+/** internal */
+function splitSignalString(input) {
+  return input
+    .trim()
+    .split(/\s+/m)
+    .map((l) => l.trim());
+}
 
 class BittyJs extends HTMLElement {
   constructor() {
@@ -10,14 +17,10 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addEventListeners() {
-    const eventList = [
+    const internalEvents = [
       "bittyapitrigger",
-      "click",
-      "input",
     ];
-    // TODO: Look for other `data-listeners` on the
-    // page and add them to the list.
-    eventList.forEach(
+    internalEvents.forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
           this.handleEventBridge.call(this, ev);
@@ -31,17 +34,12 @@ class BittyJs extends HTMLElement {
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
-      this.handleEventBridge = this.handleEvent.bind(this);
+      this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
       // this.loadPageData();
       // this.loadPageTemplates();
       await this.runBittyReady();
     }
-  }
-
-  /** internal */
-  async handleEvent(ev) {
-    console.log(ev);
   }
 
   /** internal */
@@ -61,16 +59,30 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  /** internal */
+  async processEvent(ev) {
+    for (let signal of splitSignalString(ev.dataset.send)) {
+      if (this.conn[signal]) {
+        document.querySelectorAll(
+          `[data-receive~='${signal}']`,
+        ).forEach((receiver) => {
+          this.conn[signal](ev, receiver);
+        });
+      }
+    }
+  }
+
   trigger(signal) {
     const ev = new TriggerEvent(signal);
     this.dispatchEvent(ev);
   }
 }
 
+/** internal */
 class TriggerEvent extends Event {
-  constructor(signal) {
+  constructor(signals) {
     super("bittyapitrigger", { bubbles: true });
-    this.signal = signal;
+    this.dataset = { send: signals };
   }
 }
 

@@ -645,11 +645,9 @@ class BittyJs extends HTMLElement {
           const receiverNodes = this.querySelectorAll("[data-receive]");
           const receivers = [...receiverNodes];
           if (this.dataset.receive) {
-            console.log(this);
             receivers.push(this);
           }
           for (let receiver of receivers) {
-            // console.log(receiver);
             const receptors = this.trimInput(receiver.dataset.receive);
             for (let receptor of receptors) {
               const rSignalParts = receptor.split(":");

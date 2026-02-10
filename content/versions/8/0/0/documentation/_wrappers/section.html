@@ -1,0 +1,19 @@
+<h2>[! include localFolder.path_string + "/name.html" !]</h2>
+
+<pre>
+[@ folders[0]|tojson(true) @]
+</pre>
+
+<ul>
+  [! for lf2 in folders !]
+  [! if 
+    lf2.path_part_strings[7] == localFolder.path_string + "/items" 
+    and lf2.path_part_strings[8]
+    and not lf2.path_part_strings[9]
+  !]
+  [! set working_dir = lf2.path_part_strings[8] !]
+  [! set name_file = working_dir + "/name.html" !]
+    <li>[! include name_file !]</li>
+  [! endif !]
+  [! endfor !]
+</ul>

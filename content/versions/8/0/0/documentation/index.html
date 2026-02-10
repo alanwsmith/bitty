@@ -1,0 +1,33 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+[! block header !]
+<hgroup>
+  <h1>Documentation</h1>
+</hgroup>
+[! endblock !]
+
+[! block main !]
+
+[! for localFolder in folders !]
+[! if 
+  localFolder.path_part_strings[5] == d.documentation_includes_dir 
+  and 
+  localFolder.path_part_strings[6]
+  and not
+  localFolder.path_part_strings[7]
+!]
+<pre>
+  [@ localFolder @]
+</pre>
+
+[! include d.documentation_wrappers_dir + "/section.html" !]
+
+
+
+
+<hr />
+
+[! endif !]
+[! endfor !]
+
+[! endblock !]

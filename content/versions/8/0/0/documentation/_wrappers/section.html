@@ -4,16 +4,30 @@
 [@ folders[0]|tojson(true) @]
 </pre>
 
-<ul>
-  [! for lf2 in folders !]
-  [! if 
-    lf2.path_part_strings[7] == localFolder.path_string + "/items" 
-    and lf2.path_part_strings[8]
-    and not lf2.path_part_strings[9]
-  !]
-  [! set working_dir = lf2.path_part_strings[8] !]
-  [! set name_file = working_dir + "/name.html" !]
-    <li>[! include name_file !]</li>
-  [! endif !]
-  [! endfor !]
-</ul>
+[! for lf2 in folders !]
+[! if 
+  lf2.path_part_strings[7] == localFolder.path_string + "/items" 
+  and lf2.path_part_strings[8]
+  and not lf2.path_part_strings[9]
+!]
+[! set working_dir = lf2.path_part_strings[8] !]
+[! set tests_dir = working_dir + "/tests" !]
+[! set name_file = working_dir + "/name.html" !]
+
+  <details open>
+    <summary>[! include name_file !]</summary>
+    <h3>Tests</h3>
+    [! for lf3 in folders !]
+      [! if 
+      lf3.path_part_strings[9] == tests_dir 
+      and lf3.path_part_strings[10]
+      and not lf3.path_part_strings[11]
+    !]
+      [! set current_test_root = lf3.path_part_strings[10] !]
+      [! set name_file = current_test_root + "/name.html" !]
+      [! include d.documentation_wrappers_dir + "/test.html" !]
+      [! endif !]
+    [! endfor !]
+  </details>
+[! endif !]
+[! endfor !]

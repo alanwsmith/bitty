@@ -15,22 +15,31 @@ class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
 
-    def html_output_path(self):
-        return os.path.join(self.output_dir(), "html.html")
-
-    def output_dir(self):
-        path_parts = self.dir.split("/")
-        return os.path.join("../../_includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
-
-
     def html_content(self):
         path = os.path.join(self.dir, "html.html")
         content = slurp(path)
         return content
 
+    def html_output_path(self):
+        return os.path.join(self.output_dir(), "html.html")
+
+    def name_content(self):
+        path = os.path.join(self.dir, "name.html")
+        content = slurp(path)
+        return content
+
+    def name_output_path(self):
+        return os.path.join(self.output_dir(), "name.html")
+
+    def output_dir(self):
+        path_parts = self.dir.split("/")
+        return os.path.join("../../_includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
+
     def write_files(self):
-        with open(self.html_output_path(), "w") as _html:
-            _html.write(self.html_content())
+        with open(self.html_output_path(), "w") as _out:
+            _out.write(self.html_content())
+        with open(self.name_output_path(), "w") as _out:
+            _out.write(self.name_content())
 
 
 

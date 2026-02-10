@@ -4,6 +4,10 @@ const svgString = `
 </svg>`;
 
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest1380");
+  }
+
   runTest1380(_, el) {
     const subs = [
       ["FAILED", "PASSED"],

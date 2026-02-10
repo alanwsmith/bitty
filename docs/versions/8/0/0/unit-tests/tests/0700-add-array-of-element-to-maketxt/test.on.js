@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0700");
+  }
+
   runTest0700(_event, el) {
     const initialTEXT = `TARGET`;
     const template = `<div>ALFA</div>`;

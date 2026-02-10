@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0710");
+  }
+
   runTest0710(_event, el) {
     const initialTEXT = `TARGET`;
     const fragmentTemplate = `<div>ALFA</div><div>BRAVO</div>`;

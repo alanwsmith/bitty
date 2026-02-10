@@ -1,6 +1,4 @@
 export default class {
-  #updates = 0;
-
   bittyReady() {
     this.api.querySelectorAll(".clickme").forEach((el) => {
       el.click();

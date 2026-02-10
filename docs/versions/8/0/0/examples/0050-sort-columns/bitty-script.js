@@ -30,7 +30,7 @@ window.SortColumns = class {
   }
 
   sortColumn(ev, el) {
-    const rowToSortOn = ev.propToInt("index");
+    const rowToSortOn = ev.propAsInt("index");
     let rows = [];
     el.querySelectorAll("tr").forEach((tr) => {
       const cells = [];

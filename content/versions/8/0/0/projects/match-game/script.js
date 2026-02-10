@@ -87,7 +87,7 @@ window.MatchGame = class {
       el.prop("state") === "hide" || el.prop("state") === "miss"
     ) {
       el.dataset.state = "try";
-      this.#tries.push(el.propToInt("pair"));
+      this.#tries.push(el.propAsInt("pair"));
     }
     this.api.trigger(`
       matchGameUpdateTile
@@ -99,7 +99,7 @@ window.MatchGame = class {
   matchGameUpdateTile(_ev, el) {
     if (
       this.#tries.length === 2 &&
-      this.#tries.includes(el.propToInt("pair"))
+      this.#tries.includes(el.propAsInt("pair"))
     ) {
       if (
         this.#tries[0] === this.#tries[1]
@@ -122,8 +122,8 @@ window.MatchGame = class {
       el.innerHTML = "?";
     } else {
       el.replaceChildren();
-      el.appendChild(this.#heads[el.propToInt("index")]);
-      el.appendChild(this.#faces[el.propToInt("index")]);
+      el.appendChild(this.#heads[el.propAsInt("index")]);
+      el.appendChild(this.#faces[el.propAsInt("index")]);
     }
   }
 

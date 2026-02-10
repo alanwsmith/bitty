@@ -5,25 +5,25 @@ export default class {
   }
 
   runTest1030Alfa(_event, el) {
-    if (el.propToInt("key") === 10) {
+    if (el.propAsInt("key") === 10) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1030Bravo(_event, el) {
-    if (el.propToInt("key") === 20) {
+    if (el.propAsInt("key") === 20) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1030Charlie(_event, el) {
-    if (el.propToInt("key") === 30) {
+    if (el.propAsInt("key") === 30) {
       el.innerHTML = "PASSED";
     }
   }
 
   runTest1030Delta(_event, el) {
-    if (el.propToInt("key") === 40) {
+    if (el.propAsInt("key") === 40) {
       el.innerHTML = "PASSED";
     }
   }

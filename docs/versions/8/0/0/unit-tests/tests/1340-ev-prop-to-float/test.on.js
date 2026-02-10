@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1340(ev, _el) {
-    if (ev.propToFloat("key") === 13.40) {
+    if (ev.propAsFloat("key") === 13.40) {
       ev.target.innerHTML = "PASSED";
     }
   }

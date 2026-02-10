@@ -60,7 +60,7 @@ export class CodeBlockControls {
 
   enlargeCodeFont(_, el) {
     if (el.propMatchesSender("index")) {
-      const size = el.propToInt("fontsize");
+      const size = el.propAsInt("fontsize");
       if (size < this.#fontSizes.length - 1) {
         el.dataset.fontsize = size + 1;
         el.style.fontSize = `var(--${this.#fontSizes[size + 1]}-font-size)`;
@@ -70,7 +70,7 @@ export class CodeBlockControls {
 
   reduceCodeFont(_, el) {
     if (el.propMatchesSender("index")) {
-      const size = el.propToInt("fontsize");
+      const size = el.propAsInt("fontsize");
       if (size > 0) {
         el.dataset.fontsize = size - 1;
         el.style.fontSize = `var(--${this.#fontSizes[size - 1]}-font-size)`;

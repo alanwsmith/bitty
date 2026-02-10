@@ -10,7 +10,7 @@ window.RandomQuote = class {
   }
 
   pickQuote(_, el) {
-    if (el.propToInt("id") === this.#quote) {
+    if (el.propAsInt("id") === this.#quote) {
       el.hidden = false;
     } else {
       el.hidden = true;

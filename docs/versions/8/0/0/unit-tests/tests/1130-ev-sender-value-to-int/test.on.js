@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1130(ev, el) {
-    if (ev.sender.valueToInt === 9000) {
+    if (ev.sender.valueAsInt === 9000) {
       ev.target.hidden = true;
       el.innerHTML = "PASSED";
     }

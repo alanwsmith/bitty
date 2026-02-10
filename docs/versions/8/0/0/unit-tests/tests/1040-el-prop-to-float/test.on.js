@@ -4,22 +4,22 @@ export default class {
     this.api.trigger("runTest1040Charlie runTest1040Delta");
   }
   runTest1040Alfa(_event, el) {
-    if (el.propToFloat("key") === 1.1) {
+    if (el.propAsFloat("key") === 1.1) {
       el.innerHTML = "PASSED";
     }
   }
   runTest1040Bravo(_event, el) {
-    if (el.propToFloat("key") === 2.2) {
+    if (el.propAsFloat("key") === 2.2) {
       el.innerHTML = "PASSED";
     }
   }
   runTest1040Charlie(_event, el) {
-    if (el.propToFloat("key") === 3.3) {
+    if (el.propAsFloat("key") === 3.3) {
       el.innerHTML = "PASSED";
     }
   }
   runTest1040Delta(_event, el) {
-    if (el.propToFloat("key") === 4.4) {
+    if (el.propAsFloat("key") === 4.4) {
       el.innerHTML = "PASSED";
     }
   }

@@ -1,0 +1,15 @@
+  #incomingValue = null;
+
+  bittyReady() {
+    this.api.localTrigger("$METHOD_NAME");
+  }
+
+  $METHOD_NAME(_, el) {
+    this.#incomingValue = el.valueAsInt;
+    this.api.localTrigger("$METHOD_OUTPUT_NAME");
+  }
+
+  $METHOD_OUTPUT_NAME(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }
+

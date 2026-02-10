@@ -9,7 +9,7 @@ export default class {
 
   runTest1310(ev, el) {
     ev.target.hidden = true;
-    if (ev.valueToFloat === 13.10) {
+    if (ev.valueAsFloat === 13.10) {
       this.api.trigger("passTest1310");
     }
   }

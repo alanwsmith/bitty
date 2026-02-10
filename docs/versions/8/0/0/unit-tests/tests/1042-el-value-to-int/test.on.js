@@ -4,7 +4,7 @@ export default class {
   }
 
   runTest1035(ev, el) {
-    if (el.valueToInt === 7878) {
+    if (el.valueAsInt === 7878) {
       this.api.localTrigger("markPassed1035");
       el.hidden = true;
     }

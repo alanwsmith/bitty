@@ -13,7 +13,7 @@ window.TestElPropertiesElValue0020 = class {
   }
 
   [@ method_name @](_, el) {
-    this.#incomingValue = el.valueToFloat;
+    this.#incomingValue = el.valueAsFloat;
     this.api.localTrigger("[@ method_name @]Output");
   }
 

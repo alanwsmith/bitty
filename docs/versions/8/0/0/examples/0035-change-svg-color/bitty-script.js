@@ -42,7 +42,7 @@ window.ChangeSVGColor = class {
     window.requestAnimationFrame(() => {
       this.api.setCSS(
         `--${ev.prop("param")}`,
-        ev.valueToFloat,
+        ev.valueAsFloat,
       );
     });
   }

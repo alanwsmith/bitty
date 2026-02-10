@@ -194,6 +194,12 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
+  elementFromTemplate(key, subs = []) {
+    // TODO: Documenation: alias for
+    // this.api.makeElement(this.api.template(key), subs))
+    return this.makeElement(this.template(key), subs);
+  }
+
   /** internal */
   expandElement(ev, el) {
     if (ev !== null) {
@@ -497,6 +503,9 @@ class BittyJs extends HTMLElement {
   }
 
   htmlFromTemplate(key, subs = []) {
+    // TODO: Documenation: alias for
+    // this.api.makeHTML(this.api.template(key), subs))
+    return this.makeHTML(this.template(key), subs);
   }
 
   async loadCSS(url, subs = [], options = {}) {

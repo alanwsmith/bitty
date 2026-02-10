@@ -31,10 +31,7 @@ class Test():
             skeleton = slurp(path)
             template = Template(skeleton)
             data = {
-                    "METHOD_NAME": self.method_name(),
-                    "METHOD_OUTPUT_NAME": f"{self.method_name()}Output",
-                    "KEY1": self.get_key(1, ""),
-                    "VALUE1": self.get_value(1, "")
+                    "METHOD_PLACEHOLDER": "$METHOD_NAME"
                     }
             output = template.substitute(data)
             return output
@@ -127,6 +124,7 @@ class Test():
             return scrub_segment(self.id())
         elif key == "item":
             return scrub_segment(self.item())
+
 
 
 class TestMaker():

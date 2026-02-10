@@ -3,6 +3,7 @@
 import os
 
 from pathlib import Path 
+from string import Template
 
 def slurp(path):
     if os.path.isfile(path):
@@ -14,6 +15,13 @@ def slurp(path):
 class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
+
+    def generate_output(self, input):
+        template = Template(input)
+        data = {
+                "SIGNAL_NAME": self.signal_name()
+                }
+        return template.substitute(data)
 
     def html_content(self):
         path = os.path.join(self.dir, "html.html")
@@ -43,13 +51,32 @@ class Test():
         path_parts = self.dir.split("/")
         return os.path.join("../../_includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
 
+    def scrubString(self, input):
+        return input.replace("-", "_")
+
+    def signal_name(self):
+        path_parts = self.dir.split("/")
+        return "".join(
+                [
+                "signal",
+                "_",
+                self.scrubString(path_parts[1]),
+                "_",
+                self.scrubString(path_parts[2]),
+                "_",
+                self.scrubString(path_parts[3])
+                ]
+                )
+
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:
-            _out.write(self.html_content())
+            _out.write(self.generate_output(self.html_content()))
         with open(self.name_output_path(), "w") as _out:
-            _out.write(self.name_content())
+            _out.write(self.generate_output(self.name_content()))
         with open(self.javascript_output_path(), "w") as _out:
-            _out.write(self.javascript_content())
+            _out.write(self.generate_output(self.javascript_content()))
+
+
 
 
 class TestMaker():

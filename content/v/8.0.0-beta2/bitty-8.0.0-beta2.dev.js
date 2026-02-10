@@ -12,7 +12,6 @@ function splitSignalString(input) {
 class BittyJs extends HTMLElement {
   constructor() {
     super();
-    console.log("Connected to script file");
   }
 
   /** internal */

@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0790");
+  }
+
   runTest0790(_event, el) {
     const t1 = `<div>TARGET</div>`;
     const t2 = `<div></div><div class="test">PASSED</div>`;

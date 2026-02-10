@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.api.localTrigger("runTest0760");
+  }
+
   runTest0760(_event, el) {
     const t1 =
       `<div data-send="stub0760" class="test">FAILED</div><div>TARGET</div>`;

@@ -31,9 +31,13 @@ class Test():
             )
 
     def generate_output(self, input):
+        path_parts = self.dir.split("/")
         template = Template(input)
         data = {
                 "CLASS_NAME": self.class_name(),
+                "DIR1": path_parts[1],
+                "DIR2": path_parts[2],
+                "DIR3": path_parts[3],
                 "SIGNAL_NAME": self.signal_name(),
                 }
         return template.substitute(data)
@@ -64,7 +68,7 @@ class Test():
 
     def output_dir(self):
         path_parts = self.dir.split("/")
-        return os.path.join("../../_includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
+        return os.path.join("../../includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
 
     def scrubString(self, input):
         return input.replace("-", "_")

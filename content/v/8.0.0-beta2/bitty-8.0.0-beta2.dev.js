@@ -42,13 +42,18 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  makeConnection() {
+  async makeConnection() {
     if (!this.dataset.connect) {
       this.conn = new window.BittyClass();
     } else {
       const connString = this.dataset.connect.trim();
       if (window[connString]) {
         this.conn = new window[connString]();
+      } else if (connString.substring(0, 1) === "/") {
+        const windowURL = new URL(window.location.href);
+        const moduleURL = new URL(connString, windowURL.origin).toString();
+        const mod = await import(moduleURL);
+        this.conn = new mod.default();
       }
     }
   }

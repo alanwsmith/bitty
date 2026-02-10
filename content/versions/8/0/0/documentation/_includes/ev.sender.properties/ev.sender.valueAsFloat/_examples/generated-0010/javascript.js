@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestEvSenderPropertiesEvSenderValueasfloat0010 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.querySelector("input").click();
   }
 

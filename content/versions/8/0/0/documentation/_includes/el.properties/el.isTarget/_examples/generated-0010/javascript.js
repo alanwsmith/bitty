@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElIstarget0010 = class {
-  bittyReady() {
+bittyReady() {
     this.api.querySelector("div").click();
   }
 

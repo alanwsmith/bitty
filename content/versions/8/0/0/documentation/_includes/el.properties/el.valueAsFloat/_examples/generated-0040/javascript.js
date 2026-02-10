@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElValueasfloat0040 = class {
-    #incomingValue = null;
+  #incomingValue = null;
 
   bittyReady() {
     this.api.localTrigger("[@ method_name @]");

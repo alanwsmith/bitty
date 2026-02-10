@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElIssender0020 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.querySelector(".clickme").click();
   }
 

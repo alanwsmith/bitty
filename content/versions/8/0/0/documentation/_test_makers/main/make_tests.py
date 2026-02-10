@@ -91,7 +91,7 @@ class Test():
                 "METHOD_NAME": self.method_name(),
                 }
             output = template.substitute(data)
-            return output
+            return f"{output}\n"
         else:
             return ""
 

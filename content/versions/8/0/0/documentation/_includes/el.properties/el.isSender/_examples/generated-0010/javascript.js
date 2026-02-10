@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElPropertiesElIssender0010 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.querySelector('[data-name=elbid0010]').click();
   }
 

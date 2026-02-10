@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElMethodsElProp0030 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.localTrigger("runElMethodsElProp0030");
   }
 

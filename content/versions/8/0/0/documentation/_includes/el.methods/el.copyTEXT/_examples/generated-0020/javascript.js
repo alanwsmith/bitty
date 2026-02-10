@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestElMethodsElCopytext0020 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.localTrigger("runElMethodsElCopytext0020");
   }
 

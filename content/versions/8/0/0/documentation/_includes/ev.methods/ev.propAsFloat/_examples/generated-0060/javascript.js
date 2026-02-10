@@ -6,7 +6,7 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.TestEvMethodsEvPropasfloat0060 = class {
-    bittyReady() {
+  bittyReady() {
     this.api.querySelector("button").click();
   }
 

@@ -6,4 +6,4 @@ Use: versions/#/#/#/documentation/_test_maker/make_test.py
 ######################################### #]
 
 window.$CONNECTION = class {
-  $CONTENT}
+$CONTENT}

@@ -1,7 +1,21 @@
 <h2>HTML data-*attribute API</h2>
 
+[!- set wrapper_path = file.folder + "/_includes/html.attributes.api/wrapper.html" -!]
+[!- set target_root = documentation_root + "_includes/html.attributes.api" -!]
 
-[! for f in files !]
+[! for local_folder in folders !]
+  [! if 
+    local_folder.path_part_strings[6] == target_root
+    and local_folder.path_parts[7]
+    and not local_folder.path_parts[8]
+  !]
+    [!- set active_dir = local_folder.path_part_strings[7] -!]
+    [! include wrapper_path !]
+  [! endif !]
+[!- endfor !]
+
+
+[#
 [! if 
   f.folder_parts[0] == "versions"
   and f.path_parts[1] == major_version
@@ -10,14 +24,45 @@
   and f.path_parts[4] == "documentation"
   and f.path_parts[5] == "_includes"
   and f.path_parts[6] == "html.attributes.api"
-  and f.path_parts[8] == "index.html"
+  and not f.path_parts[8]
 !]
 
+[! set container_path = f.input_path !]
+
+[! set examples_dir = f.path_part_strings[7] + "/_examples" !]
+
+#]
+
+  [#
 <details><summary class="documentation-details-section">[@ f.parent_folder @]</summary>
-[! include f.input_path !]
+  [@ examples_dir @]
+[! include wrapper_path !]
 </details>
 
+
+<pre>
+  [@ f|tojson(true) @]
+</pre>
 
 [!- endif !]
 [!- endfor !]
 
+  #]
+
+[#
+[! for item in json.versions[file.path_parts[1]][file.path_parts[2]][file.path_parts[3]].documentation.jsdoc|sort(attribute="longname") !]
+[! if item.memberof == "el" !]
+[! if item.kind == "function" !]
+[!- set method_wrapper_path = file.folder + "/_includes/_method-wrapper.html" -!]
+[!- set html_wrapper_path = file.folder + "/_includes/_html-wrapper.html" -!]
+[!- set javascript_wrapper_path = file.folder + "/_includes/_javascript-wrapper.js" -!]
+[!- set item_key = item.longname !]
+[!- set base_path = file.folder + "/_includes/el.methods/" + item_key  -!]
+[!- set examples_path = base_path + "/_examples" -!]
+[!- set args_path = base_path + "/_args" -!]
+[! include method_wrapper_path !]
+[! endif !]
+[! endif !]
+[! endfor !]
+
+#]

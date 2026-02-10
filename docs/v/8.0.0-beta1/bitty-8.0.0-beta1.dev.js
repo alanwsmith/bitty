@@ -41,6 +41,9 @@ class RequestResponse {
     }
   }
 
+  // TODO: Determine if this is the
+  // name and approach you want to
+  // go with.
   unwrapOr(alt) {
     if (this.value !== undefined) {
       return this.value;
@@ -127,8 +130,9 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   connectedMoveCallback() {
-    // NOTE: this prevs connectedCallback() from firing
-    // if a bitty component is moved.
+    // NOTE: this prevents connectedCallback() from firing
+    // if a bitty component is moved. It doesn't
+    // need to have any functionality at this point.
   }
 
   data(id) {
@@ -638,8 +642,14 @@ class BittyJs extends HTMLElement {
         }
         if (this.conn[signal]) {
           let foundReceiver = false;
-          const receivers = this.querySelectorAll("[data-receive]");
+          const receiverNodes = this.querySelectorAll("[data-receive]");
+          const receivers = [...receiverNodes];
+          if (this.dataset.receive) {
+            console.log(this);
+            receivers.push(this);
+          }
           for (let receiver of receivers) {
+            // console.log(receiver);
             const receptors = this.trimInput(receiver.dataset.receive);
             for (let receptor of receptors) {
               const rSignalParts = receptor.split(":");

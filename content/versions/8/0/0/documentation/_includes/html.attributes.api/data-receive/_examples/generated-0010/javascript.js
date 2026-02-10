@@ -9,4 +9,8 @@ window.TestHtmlAttributesApiData_receive0010 = class {
     bittyReady() {
     this.api.localTrigger("runHtmlAttributesApiData_receive0010")
   }
+
+  runHtmlAttributesApiData_receive0010(_, el) {
+    el.replaceChildren(this.api.makeHTML(this.api.template("divForrunHtmlAttributesApiData_receive0010")))
+  }
 }

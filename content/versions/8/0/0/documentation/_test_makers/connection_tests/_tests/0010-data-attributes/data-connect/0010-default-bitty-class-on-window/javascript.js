@@ -1,10 +1,11 @@
 <script>
   window.BittyClass = class {
     bittyReady() {
-      this.api.trigger("$METHOD_NAME");
+      console.log("This is bittyReady from the initial window.BittyClass test");
+      this.api.trigger("$SIGNAL_NAME");
     }
 
-    $METHOD_NAME(_, el) {
+    $SIGNAL_NAME(_, el) {
       el.innerHTML = "PASSED";
     }
   }

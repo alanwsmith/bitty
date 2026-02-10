@@ -9,21 +9,42 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
+  addEventListeners() {
+    const eventList = [
+      "bittyapitrigger",
+      "click",
+      "input",
+    ];
+    // TODO: Look for other `data-listeners` on the
+    // page and add them to the list.
+    eventList.forEach(
+      (listener) => {
+        window.addEventListener(listener, (ev) => {
+          this.handleEventBridge.call(this, ev);
+        });
+      },
+    );
+  }
+
+  /** internal */
   async connectedCallback() {
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
-      // this.handleEventBridge = this.handleEvent.bind(this);
-      //this.addEventListeners();
+      this.handleEventBridge = this.handleEvent.bind(this);
+      this.addEventListeners();
       // this.loadPageData();
       // this.loadPageTemplates();
       await this.runBittyReady();
     }
   }
 
+  /** internal */
   async handleEvent(ev) {
+    console.log(ev);
   }
 
+  /** internal */
   makeConnection() {
     // just working with call on the window for now
     this.conn = new window.BittyClass();
@@ -48,7 +69,7 @@ class BittyJs extends HTMLElement {
 
 class TriggerEvent extends Event {
   constructor(signal) {
-    super("bittytrigger", { bubbles: true });
+    super("bittyapitrigger", { bubbles: true });
     this.signal = signal;
   }
 }

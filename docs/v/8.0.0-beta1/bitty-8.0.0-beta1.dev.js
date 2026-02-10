@@ -633,7 +633,7 @@ class BittyJs extends HTMLElement {
     return this.doSubs(template, subs);
   }
 
-  mapKeyToSignal(key, signal) {
+  mapKeyToSignals(key, signals) {
     // TODO: TKTKTK
   }
 
@@ -714,6 +714,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  send(payload, signals) {
+    // TODO: Implement.
+  }
+
   setCSS(key, value) {
     document.documentElement.style.setProperty(key, value);
   }
@@ -732,6 +736,10 @@ class BittyJs extends HTMLElement {
 
   async sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  svgFromTemplate(key, subs = []) {
+    return this.api.makeSVG(this.api.template(key), subs);
   }
 
   template(id) {

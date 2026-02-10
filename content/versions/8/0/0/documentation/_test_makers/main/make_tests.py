@@ -82,6 +82,20 @@ class Test():
         output = template.substitute(data)
         return output
 
+    def html_prelude(self):
+        path = f"tests/{self.category()}/{self.item()}/{self.id()}/prelude.html"
+        if os.path.isfile(path):
+            skeleton = slurp(path)
+            template = Template(skeleton)
+            data = {
+                "METHOD_NAME": self.method_name(),
+                }
+            output = template.substitute(data)
+            return output
+        else:
+            return ""
+
+
     def id(self):
         return self._id
 
@@ -195,7 +209,8 @@ class TestMaker():
                     "BITTY_TAG_ATTRIBUTES": test.bitty_tag_attributes(),
                     "BITTY_TAG_EXTRA": "",
                     "CONNECTION": test.connection_key(""),
-                    "CONTENT": test.html_content()
+                    "CONTENT": test.html_content(),
+                    "HTML_PRELUDE": test.html_prelude(),
                     }
             output = template.substitute(data)
             output_path = self.get_output_path(test, f"html.html")

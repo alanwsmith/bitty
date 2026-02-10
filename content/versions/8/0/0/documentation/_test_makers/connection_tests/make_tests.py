@@ -23,6 +23,14 @@ class Test():
     def html_output_path(self):
         return os.path.join(self.output_dir(), "html.html")
 
+    def javascript_content(self):
+        path = os.path.join(self.dir, "javascript.js")
+        content = slurp(path)
+        return content
+
+    def javascript_output_path(self):
+        return os.path.join(self.output_dir(), "javascript.js")
+
     def name_content(self):
         path = os.path.join(self.dir, "name.html")
         content = slurp(path)
@@ -40,7 +48,8 @@ class Test():
             _out.write(self.html_content())
         with open(self.name_output_path(), "w") as _out:
             _out.write(self.name_content())
-
+        with open(self.javascript_output_path(), "w") as _out:
+            _out.write(self.javascript_content())
 
 
 class TestMaker():

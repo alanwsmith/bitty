@@ -12,7 +12,7 @@ def slurp(path):
 
 
 def scrub_segment(input):
-    return "".join([ x.capitalize() for x in input.split(".")])
+    return "".join([ x.capitalize() for x in input.split(".")]).replace("-", "_")
 
 
 def lowercase_segment(input):
@@ -31,8 +31,8 @@ class Test():
             skeleton = slurp(path)
             template = Template(skeleton)
             data = {
-                    "METHOD_PLACEHOLDER": "$METHOD_NAME"
-                    }
+                "METHOD_NAME": self.method_name(),
+                }
             output = template.substitute(data)
             return output
         else:

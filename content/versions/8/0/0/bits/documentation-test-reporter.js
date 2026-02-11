@@ -43,15 +43,18 @@ sectionTestStatus
 
   sectionTestStatus(_, el) {
     const testEls = el.closest(".documentation-section")
-      .querySelectorAll(".individual-test");
+      .querySelectorAll(".test");
 
     let count = testEls.length;
     let passed = 0;
     let failed = 0;
 
     testEls.forEach((testEl) => {
-      passed += parseInt(testEl.dataset.passed, 10);
-      failed += parseInt(testEl.dataset.failed, 10);
+      if (testEl.dataset.testStatus === "passed") {
+        passed += 1;
+      } else {
+        failed += 1;
+      }
     });
     if (count === 0) {
       el.dataset.testStatus = "todo";
@@ -60,6 +63,7 @@ sectionTestStatus
       el.dataset.testStatus = "failed";
       el.innerHTML = "failed";
     } else if (count !== (passed + failed)) {
+      console.log(`count: ${count} - passed: ${passed}`);
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
     } else {

@@ -174,5 +174,3 @@ if __name__ == "__main__":
     c = ContentMover()
     c.move_content()
 
-
-

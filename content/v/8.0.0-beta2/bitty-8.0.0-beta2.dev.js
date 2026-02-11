@@ -10,8 +10,6 @@ function splitSignalString(input) {
 }
 
 class BittyJs extends HTMLElement {
-  #listenerTypes = [];
-
   constructor() {
     super();
   }
@@ -46,8 +44,15 @@ class BittyJs extends HTMLElement {
           }),
       ),
     ];
+    customListeners.forEach((listener) => {
+      window.addEventListener(listener, (ev) => {
+        if (ev.target.dataset.send) {
+          this.handleEventBridge.call(this, ev);
+        }
+      });
+    });
 
-    this.#listenerTypes = defaultListeners;
+    console.log(customListeners);
 
     // [...new Set(customLis)];
     //   customListeners.forEach((listener) => {
@@ -80,10 +85,6 @@ class BittyJs extends HTMLElement {
     } else {
       return JSON.parse(storage);
     }
-  }
-
-  listenerTypes() {
-    return this.#listenerTypes;
   }
 
   /** internal */

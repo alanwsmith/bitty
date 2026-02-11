@@ -13,24 +13,24 @@
 
   <details class="default-flow documentation-section" data-receive="updateSectionResults">
   <summary>[! include name_file !] <span data-receive="initSectionTestStatus sectionTestStatus"></span></summary>
-    <h3>Description</h3>
-  [! include description_file !]
+    <div class="header">Description</div>
+    [! include description_file !]
 
 
-    <h3>Tests</h3>
-    [! for lf3 in folders !]
-      [! if 
-      lf3.path_part_strings[9] == tests_dir 
-      and lf3.path_part_strings[10]
-      and not lf3.path_part_strings[11]
-    !]
-      [! set current_test_root = lf3.path_part_strings[10] !]
-      [! set name_file = current_test_root + "/name.html" !]
-      [! set html_file = current_test_root + "/html.html" !]
-      [! set javascript_file = current_test_root + "/javascript.js" !]
-      [! include d.documentation_wrappers_dir + "/test.html" !]
-      [! endif !]
-    [! endfor !]
+      <div class="header">Examples</div>
+      [! for lf3 in folders !]
+        [! if 
+        lf3.path_part_strings[9] == tests_dir 
+        and lf3.path_part_strings[10]
+        and not lf3.path_part_strings[11]
+      !]
+        [! set current_test_root = lf3.path_part_strings[10] !]
+        [! set name_file = current_test_root + "/name.html" !]
+        [! set html_file = current_test_root + "/html.html" !]
+        [! set javascript_file = current_test_root + "/javascript.js" !]
+        [! include d.documentation_wrappers_dir + "/test.html" !]
+        [! endif !]
+      [! endfor !]
   </details>
 [! endif !]
 [! endfor !]

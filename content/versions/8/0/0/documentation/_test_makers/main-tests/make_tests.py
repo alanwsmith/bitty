@@ -19,7 +19,7 @@ class ContentMover():
             self.html_wrapper = Template(_in.read())
 
     def move_content(self):
-        file_names = ["name.html", "description.html"]
+        file_names = ["name.html", "description.html", "notes.html"]
         for dir in os.walk("_tests"):
             for file in dir[2]:
                 if file in file_names:

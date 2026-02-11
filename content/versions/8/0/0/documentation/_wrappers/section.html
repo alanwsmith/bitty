@@ -1,9 +1,5 @@
 <h2>[! include localFolder.path_string + "/name.html" !]</h2>
 
-<pre>
-[@ folders[0]|tojson(true) @]
-</pre>
-
 [! for lf2 in folders !]
 [! if 
   lf2.path_part_strings[7] == localFolder.path_string + "/items" 
@@ -13,9 +9,14 @@
 [! set working_dir = lf2.path_part_strings[8] !]
 [! set tests_dir = working_dir + "/tests" !]
 [! set name_file = working_dir + "/name.html" !]
+[! set description_file = working_dir + "/description.html" !]
 
   <details open>
     <summary>[! include name_file !]</summary>
+    <h3>Description</h3>
+  [! include description_file !]
+
+
     <h3>Tests</h3>
     [! for lf3 in folders !]
       [! if 

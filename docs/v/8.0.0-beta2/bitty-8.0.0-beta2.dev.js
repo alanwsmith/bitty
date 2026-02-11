@@ -37,6 +37,9 @@ class BittyJs extends HTMLElement {
       this.addEventListeners();
       // this.loadPageData();
       // this.loadPageTemplates();
+      // TODO: Document running bittyReady()
+      // since it's not picked up automatically by
+      // jsdoc.
       await this.runBittyReady();
     }
   }

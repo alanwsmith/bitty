@@ -1,5 +1,394 @@
+.code, .text.html.basic .meta.tag.other.html, .text.html.basic .meta.tag.any.html, .text.html.basic .meta.tag.block.any, .text.html.basic .meta.tag.inline.any, .text.html.basic .meta.tag.structure.any.html, .text.html.basic .source.js.embedded.html, .punctuation.separator.key-value.html, .sublimelinter.outline.violation, .sublimelinter.gutter-mark, .variable.other.readwrite.js, .variable.other.object.js, .variable.other.constant.js { color: var(--highlight-1-color); }
+.variable, .entity.other.inherited-class, .entity.name.tag, .storage.type, .meta.brace.square, .punctuation.section.brackets, .entity.other.attribute-name.pseudo-element, .entity.other.attribute-name.tag.pseudo-element, .entity.other.attribute-name.pseudo-class, .entity.other.attribute-name.tag.pseudo-class, .support.function.perl, .meta.diff.range, .variable.language, .constant.numeric, .constant.other.reference.link.markdown { color: var(--highlight-2-color); }
+.string, .string.regexp, .string.quoted.double, .string.quoted.single, .constant.other.symbol.ruby, .meta.preprocessor.c.include .string.quoted.other.lt-gt.include.c, .meta.preprocessor.c.include .punctuation.definition.string.begin.c, .meta.preprocessor.c.include .punctuation.definition.string.end.c, .other.add, .text.tex.latex .constant.other.math.tex, .constant.other.general.math.tex, .constant.other.general.math.tex, .constant.character.math.tex, .keyword.control.label.latex, .text.tex.latex .constant.other.general.math.tex, .support.function.general.tex, .keyword.control.ref.latex, .markup.changed, .markup.underline.link.markdown, .meta.link.reference .constant.other.reference.link.markdown, .entity.name.filename.find-in-files { color: var(--highlight-3-color); }
+.storage.modifier, .meta.scope.for-in-loop.shell, .variable.other.loop.shell, .meta.scope.case-block.shell, .meta.scope.case-body.shell, .comment, .meta.documentation, .punctuation.definition.tag.html, .punctuation.definition.tag.begin, .punctuation.definition.tag.end, .meta.diff, .meta.diff.header, .sublimelinter.outline.illegal, .brackethighlighter.all, .constant.numeric.line-number.find-in-files, .sublimelinter.notes, .punctuation.definition.string, .sublimelinter.outline.warning { color: var(--highlight-4-color); }
+.keyword, .storage, .support, .support.type, .support.class, .punctuation.definition.variable, .support.function, .keyword.other.special-method.ruby, .support.function.be.latex, .storage.type.class.python, .storage.type.function.python, .storage.modifier.global.python, .storage.modifier.c\+\+, .markup.inserted, .markup.quote, .markup.inserted.git_gutter { color: var(--highlight-5-color); }
+.variable.function, .keyword.control.class, .entity.name, .entity.name.class, .entity.name.type.class, .entity.other.attribute-name, .entity.name.function, .constant, .constant.language, .meta.preprocessor, .support.constant.color, .invalid.deprecated.color.w3c-non-standard-color-name.scss, .entity.name.tag.css, .entity.name.tag.scss, .source.less .keyword.control.html.elements, .source.sass .keyword.control.untitled, .entity.other.attribute-name.class, .entity.other.attribute-name.id, .text.html.basic .entity.other.attribute-name.html, .meta.tag.xml .entity.other.attribute-name, .variable.other.constant.ruby, .meta.array .support.function.construct.php, .meta.group.braces.tex, .string.other.math.tex, .string.other.math.tex, .support.type.exception.python, .markup.heading, .punctuation.definition.heading.markdown, .sublimelinter.mark.warning, .markup.changed.git_gutter { color: var(--highlight-6-color); }
+.meta.import .keyword, .keyword.control.import, .keyword.control.import.from, .keyword.other.import, .keyword.control.at-rule.include, .keyword.control.at-rule.import, .entity.name.section, .constant.character, .constant.other, .support.type.exception, .keyword.other.special-method, .keyword.other.special-method.ruby, .entity.name.function.preprocessor.c, .meta.preprocessor.c.include, .meta.preprocessor.macro.c, .variable.parameter.function.latex, .support.function.section.latex { color: var(--highlight-7-color); }
+.keyword.operator.comparison, .keyword.operator.assignment, .keyword.operator.arithmetic, .meta.brace.round, .meta.brace.curly, .punctuation.section, .punctuation.section.block, .punctuation.definition.parameters, .punctuation.section.group, .meta.selector.css, .constant.character.escape, .support.function.construct, .keyword.other.new, .punctuation.separator.continuation, .other.package.exclude, .other.remove, .punctuation.section.group.tex, .punctuation.definition.arguments.begin.latex, .punctuation.definition.arguments.end.latex, .punctuation.definition.arguments.latex, .punctuation.definition.constant.math.tex, .punctuation.definition.string.begin.tex, .punctuation.definition.string.end.tex, .variable.parameter.definition.label.latex, .punctuation.definition.logical-expression.shell, .markup.deleted, .sublimelinter.mark.error, .markup.deleted.git_gutter { color: var(--highlight-8-color); }
+
+@font-face { 
+  font-family: "Hack";
+  src: url("/fonts/HackNerdFontMono-Regular.ttf");
+  font-display: block;
+}
+
+* {
+  margin: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+::marker {
+  color: var(--default-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:focus {
+  color: var(--accent-color);
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+aside {
+  margin-left: 20vw;
+  font-style: italic;
+  border-left: 3px solid var(--faded-reverse-color);
+  padding: var(--default-padding);
+}
+
+b {
+  font-weight: var(font-weight-900);
+}
+
+bitty-7-0 {
+  display: block;
+}
+
+blockquote {
+  margin: var(--large-margin);
+  padding: var(--default-padding);
+  background-color: var(--faded-reverse);
+}
+
+button {
+  background: none;
+  border: var(--accent-border);
+  border-radius: var(--default-border-radius);
+  color: var(--link-color);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--small-font-size);
+  outline: inherit;
+  padding-block: var(--xxsmall-padding);
+  padding-inline: var(--xsmall-padding);
+}
+
+button:hover {
+  color: var(--accent-color);
+}
+
 body {
-  background-color: black;
-  color: #aaa;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--default-color);
+  font-family: system-ui, sans-serif;
+  font-size-adjust: 0.5;
+  font-size: var(--default-font-size);
+  line-height: var(--default-line-height);
+}
+
+code {
+  font-family: Hack, monospace;
+}
+
+.code-block {
+  background-color: var(--match-color);
+  border: var(--faded-reverse-border);
+  border-radius: var(--default-border-radius);
+  font-size: var(--small-font-size);
+  margin-block: var(--default-margin);
+  padding-block: var(--xlarge-padding);
+  padding-left: 3.2rem;
+  padding-right: var(--default-padding);
+  white-space: pre-wrap; 
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  overscroll-behavior-x: auto;
+
+  & .line-marker {
+    counter-increment: codeBlockLineNumberX;
+  }
+
+  & .line-marker:before {
+      content: counter(codeBlockLineNumberX);
+      display: inline-block;
+      margin-left: -7.8ch;
+      padding-right: 1ch;
+      position: absolute;
+      text-align: end;
+      width: 7ch;
+      color: var(--accent-color);
+      border-right: var(--faded-accent-border);
+  }
+}
+
+.code-block.nowrap {
+  white-space: pre; 
+  overflow-wrap: normal;
+  overflow-x: scroll; 
+  overscroll-behavior-x: none;
+}
+
+.code-block.nonums {
+  padding-left: var(--default-padding);
+
+  & .line-marker:before {
+    opacity: 0;
+  }
+}
+
+
+.contrast-button.active:hover {
+  color: var(--reverse-color);
+}
+
+del {
+  text-decoration: line-through;
+}
+
+footer {
+  color: var(--default-color);
+  font-size: var(--small-font);
+  margin-bottom: var(--default-margin);
+  margin-inline: auto;
+  margin-top: var(--xlarge-margin);
+  text-align: var(--align-center);
+  width: var(--default-width);
+}
+
+h1 {
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xxlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h2 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  border-bottom: var(--accent-border);
+  font-size: var(--xlarge-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h3 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--large-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h4 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--default-font-size);
+  font-weight: var(--font-weight-900);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h5 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+h6 {
+  --flow-space: var(--xxxlarge-margin);
+  color: var(--heading-color);
+  font-size: var(--small-font-size);
+  font-style: var(--italic);
+  font-weight: var(--font-weight-700);
+  line-height: var(--xxsmall-line-height);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+hgroup {
+  margin-top: var(--large-margin);
+  padding-bottom: var(--large-padding);
+}
+
+hr {
+  border: none;
+  border-top: 3px double var(--faded-reverse-color);
+  color: var(--reverse-color);
+  overflow: visible;
+  text-align: var(--align-center);
+  height: 5px;
+}
+
+hr::after {
+  background: var(--background-color);
+  content: "§";
+  padding-inline: var(--large-padding);
+  position: relative;
+  top: -13px;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+.image-wrapper {
+  details :where(:not(:first-child)) {
+    margin-top: var(--flow-space, 1em);
+    padding-inline: 0.4rem;
+  }
+
+  details {
+    margin-block: var(--default-margin);
+    & summary {
+      cursor: pointer;
+      padding-inline: 0.6rem;
+    }
+  }
+
+  details[open]{
+    border-radius: 0.4rem;
+    outline: var(--faded-accent-border);
+    padding-bottom: 0.4rem;
+
+    & summary {
+      display: block;
+      border-bottom: var(--faded-accent-border);
+    }
+
+    & summary:before {
+      content: "▼ ";
+      font-family: monospace;
+    }
+  }
+
+  details:not([open]) {
+    & summary {
+      border-radius: 0.4rem;
+      display: inline-block;
+      outline: var(--faded-accent-border);
+    }
+
+    & summary:before {
+      content: "▶ ";
+      font-family: monospace;
+    }
+  }
+
+  & .image-block {
+    background-color: var(--white-color);
+    padding-inline: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+
+    & img {
+      border: 3px solid var(--black-color);
+    }
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input {
+  font: inherit;
+}
+
+kbd {
+  background-color: var(--faded-reverse-color);
+  border: var(--faded-reverse-color);
+  border-radius: var(--xsmall-radius);
+  font-family: monospace;
+  font-size: var(--small-font);
+  padding-inline: var(--xxsmall-padding);
+}
+
+li > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+mark {
+  background-color: var(--faded-accent);
+}
+
+meter {
+  padding-inline: var(--default-padding);
+}
+
+ol > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
+}
+
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+p > code {
+  background-color: var(--match-color);
+  border-radius: var(--xsmall-border-radius);
+  padding-inline: var(--xxsmall-padding);
+  outline: var(--faded-reverse-border);
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+textarea {
+  font: inherit;
+  max-width: 100%;
+}
+
+th {
+  font-weight: var(--weight-900);
+}
+
+.theme-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--small-padding);
+}
+
+.top-nav {
+  border-left: var(--faded-accent-border);
+  border-right: var(--faded-accent-border);
+  border-bottom: var(--faded-accent-border);
+  border-end-end-radius: var(--default-border-radius);
+  border-end-start-radius: var(--default-border-radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--default-padding);
+  padding: var(--small-padding);
+
+  & button.active {
+      background-color: var(--faded-reverse-color);
+      color: var(--match-color);
+  }
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--default-padding);
+}
+
+ul > :where(:not(:first-child)) {
+  margin-top: var(--flow-space, var(--default-flow));
 }
 

@@ -52,6 +52,7 @@ class Test():
                 "SIGNAL4_NAME": f"signal_4_{self.hash()}",
                 "SIGNAL5_NAME": f"signal_5_{self.hash()}",
                 "STORAGE_KEY": f"storage_{self.hash()}",
+                "CLICK_CLASS": f"clickme-{self.hash()}",
             }
         return template.substitute(data)
 

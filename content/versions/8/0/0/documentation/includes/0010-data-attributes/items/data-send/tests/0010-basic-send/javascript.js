@@ -4,6 +4,6 @@ window.ClassABF58 = class {
   }
 
   signal_ABF58(ev, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

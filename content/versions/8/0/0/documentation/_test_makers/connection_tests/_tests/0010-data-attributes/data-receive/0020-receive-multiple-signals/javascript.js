@@ -10,6 +10,6 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL2_NAME(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

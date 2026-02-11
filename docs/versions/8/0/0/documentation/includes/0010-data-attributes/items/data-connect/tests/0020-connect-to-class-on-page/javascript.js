@@ -4,6 +4,6 @@ window.Class5EF10 = class {
   }
 
   signal_5EF10(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

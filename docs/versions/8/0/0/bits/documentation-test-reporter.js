@@ -15,29 +15,29 @@ sectionTestStatus
     const testEls = el.closest(".test-wrapper")
       .querySelectorAll(".test");
     let count = testEls.length;
-    let passed = 0;
-    let failed = 0;
+    let ok = 0;
+    let bug = 0;
 
     testEls.forEach((testEl) => {
-      if (testEl.dataset.testStatus === "passed") {
-        passed += 1;
+      if (testEl.dataset.testStatus === "ok") {
+        ok += 1;
       } else {
-        failed += 1;
+        bug += 1;
       }
     });
 
     if (count === 0) {
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
-    } else if (failed > 0) {
-      el.dataset.testStatus = "failed";
-      el.innerHTML = "failed";
-    } else if (count !== (passed + failed)) {
+    } else if (bug > 0) {
+      el.dataset.testStatus = "bug";
+      el.innerHTML = "bug";
+    } else if (count !== (ok + bug)) {
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
     } else {
-      el.dataset.testStatus = "passed";
-      el.innerHTML = "passed";
+      el.dataset.testStatus = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -46,106 +46,105 @@ sectionTestStatus
       .querySelectorAll(".test");
 
     let count = testEls.length;
-    let passed = 0;
-    let failed = 0;
+    let ok = 0;
+    let bug = 0;
 
     testEls.forEach((testEl) => {
-      if (testEl.dataset.testStatus === "passed") {
-        passed += 1;
+      if (testEl.dataset.testStatus === "ok") {
+        ok += 1;
       } else {
-        failed += 1;
+        bug += 1;
       }
     });
     if (count === 0) {
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
-    } else if (failed > 0) {
-      el.dataset.testStatus = "failed";
-      el.innerHTML = "failed";
-    } else if (count !== (passed + failed)) {
-      console.log(`count: ${count} - passed: ${passed}`);
+    } else if (bug > 0) {
+      el.dataset.testStatus = "bug";
+      el.innerHTML = "bug";
+    } else if (count !== (ok + bug)) {
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
     } else {
-      el.dataset.testStatus = "passed";
-      el.innerHTML = "passed";
+      el.dataset.testStatus = "ok";
+      el.innerHTML = "ok";
     }
 
-    // if (failed > 0) {
-    //   el.dataset.testStatus = "failed";
-    //   el.innerHTML = "failed";
-    // } else if (passed === 0 && failed === 0) {
+    // if (bug > 0) {
+    //   el.dataset.testStatus = "bug";
+    //   el.innerHTML = "bug";
+    // } else if (ok === 0 && bug === 0) {
     //   el.dataset.testStatus = "todo";
     //   el.innerHTML = "todo";
     // } else {
-    //   el.dataset.testStatus = "passed";
-    //   el.innerHTML = "passed";
+    //   el.dataset.testStatus = "ok";
+    //   el.innerHTML = "ok";
     // }
 
     // .forEach((testEl) => {
     //   console.log(testEl);
     // });
 
-    // if (parent.dataset.testOverview === "failed") {
-    //   el.dataset.testStatus = "failed";
-    //   el.innerHTML = "failed";
+    // if (parent.dataset.testOverview === "bug") {
+    //   el.dataset.testStatus = "bug";
+    //   el.innerHTML = "bug";
     // } else {
-    //   el.dataset.testStatus = "passed";
-    //   el.innerHTML = "passed";
+    //   el.dataset.testStatus = "ok";
+    //   el.innerHTML = "ok";
     // }
   }
 
   // updateSectionResults(_, el) {
-  //   let passed = 0;
-  //   let failed = 0;
-  //   [...el.querySelectorAll("[data-failed]")].forEach((testEl) => {
-  //     if (testEl.dataset.failed) {
-  //       failed += parseInt(testEl.dataset.failed, 10);
+  //   let ok = 0;
+  //   let bug = 0;
+  //   [...el.querySelectorAll("[data-bug]")].forEach((testEl) => {
+  //     if (testEl.dataset.bug) {
+  //       bug += parseInt(testEl.dataset.bug, 10);
   //     }
-  //     if (testEl.dataset.passed) {
-  //       failed += parseInt(testEl.dataset.passed, 10);
+  //     if (testEl.dataset.ok) {
+  //       bug += parseInt(testEl.dataset.ok, 10);
   //     }
   //   });
   //   // ) {
-  //   //   el.dataset.testOverview = "failed";
+  //   //   el.dataset.testOverview = "bug";
   //   // } else {
-  //   //   el.dataset.testOverview = "passed";
+  //   //   el.dataset.testOverview = "ok";
   //   // }
-  //   //   // TODO: Update this to use el.propAsInt("passed")
+  //   //   // TODO: Update this to use el.propAsInt("ok")
   //   //   // when .propAsInt() is done.
   //   //   const parent = el.closest(".documentation-section");
-  //   //   if (parent.dataset.failed !== "0") {
-  //   //     el.dataset.testStatus = "failed";
-  //   //     el.innerHTML = `failed`;
+  //   //   if (parent.dataset.bug !== "0") {
+  //   //     el.dataset.testStatus = "bug";
+  //   //     el.innerHTML = `bug`;
   //   //   } else {
-  //   //     el.dataset.testStatus = "passed";
-  //   //     el.innerHTML = `passed`;
+  //   //     el.dataset.testStatus = "ok";
+  //   //     el.innerHTML = `ok`;
   //   //   }
   // }
 
   updateIndividualTest(_, el) {
     const testEls = el.querySelectorAll(".test")
       .forEach((testEl) => {
-        if (testEl.innerHTML.trim() === "PASSED") {
-          testEl.dataset.testStatus = "passed";
+        if (testEl.innerHTML.trim() === "ok") {
+          testEl.dataset.testStatus = "ok";
         } else {
-          testEl.dataset.testStatus = "failed";
+          testEl.dataset.testStatus = "bug";
         }
       });
 
-    // const passed = [...el.querySelectorAll(".test")].filter((testEl) => {
-    //   return testEl.innerHTML.trim() === "PASSED";
+    // const ok = [...el.querySelectorAll(".test")].filter((testEl) => {
+    //   return testEl.innerHTML.trim() === "ok";
     // }).map((testEl) => {
-    //   testEl.dataset.testStatus = "passed";
+    //   testEl.dataset.testStatus = "ok";
     //   return testEl;
     // }).length;
-    // el.dataset.passed = passed;
-    // const failed = [...el.querySelectorAll(".test")].filter((testEl) => {
-    //   return testEl.innerHTML.trim() !== "PASSED";
+    // el.dataset.ok = ok;
+    // const bug = [...el.querySelectorAll(".test")].filter((testEl) => {
+    //   return testEl.innerHTML.trim() !== "ok";
     // }).map((testEl) => {
-    //   testEl.dataset.testStatus = "failed";
+    //   testEl.dataset.testStatus = "bug";
     //   return testEl;
     // }).length;
-    // el.dataset.failed = failed;
+    // el.dataset.bug = bug;
   }
 }

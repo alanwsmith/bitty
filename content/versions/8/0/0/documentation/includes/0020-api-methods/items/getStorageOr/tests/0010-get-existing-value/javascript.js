@@ -4,7 +4,7 @@ window.Class475EF = class {
   bittyReady() {
     this.api.setStorage(
       this.#storageKey,
-      { status: "PASSED" },
+      { status: "ok" },
     );
     this.api.trigger("signal_475EF");
   }
@@ -12,7 +12,7 @@ window.Class475EF = class {
   signal_475EF(_, el) {
     const data = this.api.getStorageOr(
       this.#storageKey,
-      { status: "FAILED" },
+      { status: "bug" },
     );
     el.innerHTML = data.status;
   }

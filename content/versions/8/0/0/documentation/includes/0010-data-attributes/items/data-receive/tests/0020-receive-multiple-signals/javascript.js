@@ -10,6 +10,6 @@ window.ClassCBE64 = class {
   }
 
   signal_CBE64_2(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

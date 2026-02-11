@@ -4,6 +4,6 @@ window.Class86B74 = class {
   }
 
   signal_86B74(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

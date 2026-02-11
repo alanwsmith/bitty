@@ -4,6 +4,6 @@ export default class {
   }
 
   signal_15881(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 }

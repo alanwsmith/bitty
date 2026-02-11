@@ -6,14 +6,14 @@ window.ClassD8DA8 = class {
   }
 
   signal_D8DA8(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 
   signal_D8DA8_2(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 
   signal_D8DA8_3(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

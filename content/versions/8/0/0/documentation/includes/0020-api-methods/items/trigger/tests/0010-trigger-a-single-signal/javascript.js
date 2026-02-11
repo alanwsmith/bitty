@@ -4,6 +4,6 @@ window.Class3E263 = class {
   }
 
   signal_3E263(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

@@ -4,6 +4,6 @@ window.BittyClass = class {
   }
 
   signal_DA553(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

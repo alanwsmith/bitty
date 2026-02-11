@@ -4,7 +4,7 @@ window.Class9A1E8 = class {
   bittyReady() {
     this.api.setStorage(
       this.#storageKey,
-      { status: "PASSED" },
+      { status: "ok" },
     );
     this.api.trigger("signal_9A1E8");
   }
@@ -12,7 +12,7 @@ window.Class9A1E8 = class {
   signal_9A1E8(_, el) {
     const data = this.api.getStorageOr(
       this.#storageKey,
-      { status: "FAILED" },
+      { status: "bug" },
     );
     el.innerHTML = data.status;
   }

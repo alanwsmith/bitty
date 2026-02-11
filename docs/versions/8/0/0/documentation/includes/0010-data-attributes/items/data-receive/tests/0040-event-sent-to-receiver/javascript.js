@@ -4,6 +4,6 @@ window.Class1DDF3 = class {
   }
 
   signal_1DDF3(ev, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

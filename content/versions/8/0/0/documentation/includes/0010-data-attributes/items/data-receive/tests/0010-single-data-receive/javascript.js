@@ -4,6 +4,6 @@ window.Class90DD9 = class {
   }
 
   signal_90DD9(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

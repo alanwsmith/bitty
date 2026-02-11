@@ -4,6 +4,6 @@ export class ExampleClass {
   }
 
   signal_CD4FD(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 }

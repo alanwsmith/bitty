@@ -4,6 +4,6 @@ window.Class327E5 = class {
   }
 
   signal_327E5(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 };

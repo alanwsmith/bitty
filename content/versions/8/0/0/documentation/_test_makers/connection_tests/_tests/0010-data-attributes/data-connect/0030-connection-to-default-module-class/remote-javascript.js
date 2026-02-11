@@ -4,6 +4,6 @@ export default class {
   }
 
   $SIGNAL_NAME(_, el) {
-    el.innerHTML = "PASSED";
+    el.innerHTML = "ok";
   }
 }

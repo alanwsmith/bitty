@@ -6,7 +6,7 @@ window.ClassCBCDA = class {
   signal_CBCDA(_, el) {
     const data = this.api.getStorageOr(
       "some-key-that-does-not-exist",
-      { status: "PASSED" },
+      { status: "ok" },
     );
     el.innerHTML = data.status;
   }

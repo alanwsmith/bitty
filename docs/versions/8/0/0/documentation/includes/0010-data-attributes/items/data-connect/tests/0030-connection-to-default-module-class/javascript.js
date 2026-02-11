@@ -1,9 +1,9 @@
 export default class {
   bittyReady() {
-    this.api.trigger("signal_0010_data_attributes_data_connect_0030_connection_to_default_module_class");
+    this.api.trigger("signal_dcbe7");
   }
 
-  signal_0010_data_attributes_data_connect_0030_connection_to_default_module_class(_, el) {
+  signal_dcbe7(_, el) {
     el.innerHTML = "PASSED";
   }
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import uuid
 
 from pathlib import Path 
 from string import Template
@@ -38,9 +39,9 @@ class Test():
                 "DIR1": path_parts[1],
                 "DIR2": path_parts[2],
                 "DIR3": path_parts[3],
-                "SIGNAL_NAME": self.signal_name(),
-                "SIGNAL2_NAME": f"{self.signal_name()}2",
-                "SIGNAL3_NAME": f"{self.signal_name()}3",
+                "SIGNAL_NAME": self.signal_name(1),
+                "SIGNAL2_NAME": self.signal_name(2),
+                "SIGNAL3_NAME": self.signal_name(3),
                 }
         return template.substitute(data)
 
@@ -75,9 +76,10 @@ class Test():
     def scrubString(self, input):
         return input.replace("-", "_")
 
-    def signal_name(self):
+    def signal_name(self, num):
+        namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
         path_parts = self.dir.split("/")
-        return "".join(
+        input = "".join(
                 [
                 "signal",
                 "_",
@@ -88,6 +90,8 @@ class Test():
                 self.scrubString(path_parts[3])
                 ]
             )
+        return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
+
 
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:

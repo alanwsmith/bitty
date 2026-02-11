@@ -10,8 +10,11 @@ window.Class9CE5F = class {
   }
 };
 
+// This test uses a custom event instead of
+// something like mouseover to facilitate
+// automated test output.
 class TestEventClass9CE5F extends Event {
   constructor() {
-    super("bittylocallistenertest1", { bubbles: true });
+    super("bittylocallistenertest", { bubbles: true });
   }
 }

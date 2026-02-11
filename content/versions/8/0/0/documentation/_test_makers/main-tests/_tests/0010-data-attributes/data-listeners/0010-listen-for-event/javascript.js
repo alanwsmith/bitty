@@ -10,8 +10,11 @@ window.$CLASS_NAME = class {
   }
 };
 
+// This test uses a custom event instead of
+// something like mouseover to facilitate
+// automated test output.
 class TestEvent$CLASS_NAME extends Event {
   constructor() {
-    super("bittylocallistenertest1", { bubbles: true });
+    super("bittylocallistenertest", { bubbles: true });
   }
 }

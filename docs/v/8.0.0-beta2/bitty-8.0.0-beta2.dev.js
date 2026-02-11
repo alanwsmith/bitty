@@ -16,6 +16,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addEventListeners() {
+    // Internal bitty listeners
     ["bittyapitrigger"].forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
@@ -23,15 +24,25 @@ class BittyJs extends HTMLElement {
         });
       },
     );
-    ["click", "input"].forEach((listener) => {
-      window.addEventListener(listener, (ev) => {
-        if (
-          ev.target.dataset.send && ev.target.dataset.listeners === undefined
-        ) {
-          this.handleEventBridge.call(this, ev);
-        }
+    if (this.dataset.listeners !== undefined) {
+      this.dataset.listeners.trim().split(/\s+/m).forEach((listener) => {
+        window.addEventListener(listener, (ev) => {
+          if (ev.target.dataset.send) {
+            this.handleEventBridge.call(this, ev);
+          }
+        });
       });
-    });
+    } else {
+      ["click", "input"].forEach((listener) => {
+        window.addEventListener(listener, (ev) => {
+          if (
+            ev.target.dataset.send && ev.target.dataset.listeners === undefined
+          ) {
+            this.handleEventBridge.call(this, ev);
+          }
+        });
+      });
+    }
     const customListeners = [
       ...new Set(
         [...document.querySelectorAll("[data-listeners]")]

@@ -10,6 +10,9 @@ window.ClassAC896 = class {
   }
 };
 
+// This test uses a custom event instead of
+// something like mouseover to facilitate
+// automated test output.
 class TestEventClassAC896 extends Event {
   constructor() {
     super("bittygloballistenertest", { bubbles: true });

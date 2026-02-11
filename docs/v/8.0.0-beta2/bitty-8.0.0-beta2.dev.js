@@ -44,6 +44,15 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  getStorageOr(key, alt) {
+    const storage = localStorage.getItem(key);
+    if (storage === null) {
+      return alt;
+    } else {
+      return JSON.parse(storage);
+    }
+  }
+
   /** internal */
   async makeConnection() {
     if (!this.dataset.connect) {
@@ -68,6 +77,7 @@ class BittyJs extends HTMLElement {
         }
       }
     }
+    // TODO: Log error if no connection is made
   }
 
   /** internal */
@@ -92,6 +102,10 @@ class BittyJs extends HTMLElement {
         });
       }
     }
+  }
+
+  setStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
   trigger(signal) {

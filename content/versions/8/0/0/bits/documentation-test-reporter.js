@@ -4,7 +4,9 @@ export default class {
     this.api.trigger(`
 updateIndividualTest 
 individualTestStatus 
-updateSectionResults`);
+updateSectionResults
+sectionTestStatus
+`);
   }
 
   individualTestStatus(_, el) {
@@ -15,6 +17,17 @@ updateSectionResults`);
     } else {
       el.dataset.testStatus = "passed";
       el.innerHTML = `passed`;
+    }
+  }
+
+  sectionTestStatus(_, el) {
+    const parent = el.closest(".documentation-section");
+    if (parent.dataset.testOverview === "failed") {
+      el.dataset.testStatus = "failed";
+      el.innerHTML = "failed";
+    } else {
+      el.dataset.testStatus = "passed";
+      el.innerHTML = "passed";
     }
   }
 

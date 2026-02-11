@@ -5,6 +5,10 @@ window.Class_cbe64 = class {
     );
   }
 
+  signal_cbe64(_, el) {
+    el.innerHTML = "UPDATED";
+  }
+
   signal_2_cbe64(_, el) {
     el.innerHTML = "PASSED";
   }

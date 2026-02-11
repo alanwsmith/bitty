@@ -80,7 +80,12 @@ class Test():
                 "SIGNAL4_NAME": f"signal_{self.hash()}_4",
                 "SIGNAL5_NAME": f"signal_{self.hash()}_5",
                 "STORAGE_KEY": f"key-{self.hash()}",
+                # TODO Find an replace to switch
+                # `CLICK_CLASS` to `STYLE_NAME`
+                # then remove it. 
                 "CLICK_CLASS": f"el-{self.hash()}",
+                "STYLE_NAME": f"el-{self.hash()}",
+                "ID_NAME": f"id-{self.hash()}",
             }
         return template.substitute(data)
 

@@ -10,6 +10,8 @@ function splitSignalString(input) {
 }
 
 class BittyJs extends HTMLElement {
+  #_data = {};
+
   constructor() {
     super();
   }
@@ -76,13 +78,17 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
-      // this.loadPageData();
+      this.loadPageData();
       // this.loadPageTemplates();
       // TODO: Document running bittyReady()
       // since it's not picked up automatically by
       // jsdoc.
       await this.runBittyReady();
     }
+  }
+
+  data(key) {
+    return this.#_data[key];
   }
 
   getStorageOr(key, alt) {
@@ -92,6 +98,21 @@ class BittyJs extends HTMLElement {
     } else {
       return JSON.parse(storage);
     }
+  }
+
+  /** internal */
+  loadPageData() {
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.id !== undefined) {
+        try {
+          this.#_data[el.id] = JSON.parse(el.text);
+        } catch (error) {
+          // TODO: make test for error state
+          // in test unit-tests test suite.
+          console.log(error);
+        }
+      }
+    });
   }
 
   /** internal */

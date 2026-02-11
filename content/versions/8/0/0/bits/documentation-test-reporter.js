@@ -4,11 +4,7 @@ export default class {
 
   async bittyReady() {
     await this.api.sleep(200);
-    this.api.trigger(`
-updateIndividualTest 
-individualTestStatus 
-sectionTestStatus
-`);
+    this.api.trigger(`testStatus sectionStatus`);
   }
 
   xindividualTestStatus(_, el) {
@@ -75,9 +71,15 @@ sectionTestStatus
     //
   }
 
-  updateIndividualTest(_, el) {
+  sectionStatus(_, el) {
+    el.dataset.testSectionStatus = "todo";
+  }
+
+  testStatus(_, el) {
+    console.log(el);
     const testEls = el.querySelectorAll(".test");
     if (testEls.length === 0) {
+      console.log("asdf");
       el.dataset.testStatus = "todo";
     } else {
       el.dataset.testStatus = "ok";

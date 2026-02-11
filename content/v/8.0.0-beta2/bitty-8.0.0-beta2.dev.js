@@ -25,7 +25,9 @@ class BittyJs extends HTMLElement {
     );
     ["click", "input"].forEach((listener) => {
       window.addEventListener(listener, (ev) => {
-        if (ev.target.dataset.send && !ev.target.dataset.listeners) {
+        if (
+          ev.target.dataset.send && ev.target.dataset.listeners === undefined
+        ) {
           this.handleEventBridge.call(this, ev);
         }
       });

@@ -12,13 +12,32 @@ sectionTestStatus
   }
 
   individualTestStatus(_, el) {
-    const parent = el.closest(".individual-test");
-    if (parent.dataset.failed !== "0") {
+    const testEls = el.closest(".test-wrapper")
+      .querySelectorAll(".test");
+    let count = testEls.length;
+    let passed = 0;
+    let failed = 0;
+
+    testEls.forEach((testEl) => {
+      if (testEl.dataset.testStatus === "passed") {
+        passed += 1;
+      } else {
+        failed += 1;
+      }
+    });
+
+    if (count === 0) {
+      el.dataset.testStatus = "todo";
+      el.innerHTML = "todo";
+    } else if (failed > 0) {
       el.dataset.testStatus = "failed";
-      el.innerHTML = `failed`;
+      el.innerHTML = "failed";
+    } else if (count !== (passed + failed)) {
+      el.dataset.testStatus = "todo";
+      el.innerHTML = "todo";
     } else {
       el.dataset.testStatus = "passed";
-      el.innerHTML = `passed`;
+      el.innerHTML = "passed";
     }
   }
 
@@ -34,7 +53,6 @@ sectionTestStatus
       passed += parseInt(testEl.dataset.passed, 10);
       failed += parseInt(testEl.dataset.failed, 10);
     });
-
     if (count === 0) {
       el.dataset.testStatus = "todo";
       el.innerHTML = "todo";
@@ -102,15 +120,14 @@ sectionTestStatus
   // }
 
   updateIndividualTest(_, el) {
-    let passed = 0;
-    let failed = 0;
-    el.querySelectorAll(".test").forEach((testEl) => {
-      if (testEl.innerHTML.trim === "PASSED") {
-        passed += 1;
-      } else {
-        failed += 1;
-      }
-    });
+    const testEls = el.querySelectorAll(".test")
+      .forEach((testEl) => {
+        if (testEl.innerHTML.trim() === "PASSED") {
+          testEl.dataset.testStatus = "passed";
+        } else {
+          testEl.dataset.testStatus = "failed";
+        }
+      });
 
     // const passed = [...el.querySelectorAll(".test")].filter((testEl) => {
     //   return testEl.innerHTML.trim() === "PASSED";

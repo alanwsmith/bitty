@@ -1,19 +1,19 @@
-window.Class_d8da8 = class {
+window.ClassD8DA8 = class {
   bittyReady() {
     this.api.trigger(
-      `signal_d8da8 signal_2_d8da8 signal_3_d8da8`,
+      `signal_D8DA8 signal_D8DA8_2 signal_D8DA8_3`,
     );
   }
 
-  signal_d8da8(_, el) {
+  signal_D8DA8(_, el) {
     el.innerHTML = "PASSED";
   }
 
-  signal_2_d8da8(_, el) {
+  signal_D8DA8_2(_, el) {
     el.innerHTML = "PASSED";
   }
 
-  signal_3_d8da8(_, el) {
+  signal_D8DA8_3(_, el) {
     el.innerHTML = "PASSED";
   }
 };

@@ -1,9 +1,9 @@
 export class ExampleClass {
   bittyReady() {
-    this.api.trigger("signal_cd4fd");
+    this.api.trigger("signal_CD4FD");
   }
 
-  signal_cd4fd(_, el) {
+  signal_CD4FD(_, el) {
     el.innerHTML = "PASSED";
   }
 }

@@ -1,9 +1,9 @@
-window.Class_5ef10 = class {
+window.Class5EF10 = class {
   bittyReady() {
-    this.api.trigger("signal_5ef10");
+    this.api.trigger("signal_5EF10");
   }
 
-  signal_5ef10(_, el) {
+  signal_5EF10(_, el) {
     el.innerHTML = "PASSED";
   }
 };

@@ -1,15 +1,15 @@
-window.Class_cbe64 = class {
+window.ClassCBE64 = class {
   bittyReady() {
     this.api.trigger(
-      `signal_cbe64 signal_2_cbe64`,
+      `signal_CBE64 signal_CBE64_2`,
     );
   }
 
-  signal_cbe64(_, el) {
+  signal_CBE64(_, el) {
     el.innerHTML = "UPDATED";
   }
 
-  signal_2_cbe64(_, el) {
+  signal_CBE64_2(_, el) {
     el.innerHTML = "PASSED";
   }
 };

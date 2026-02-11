@@ -38,27 +38,27 @@ class Test():
         path_parts = self.dir.split("/")
         template = Template(input)
         data = {
-                "CLASS_NAME": f"Class_{self.hash()}",
-                "CLASS2_NAME": f"Class_2_{self.hash()}",
-                "CLASS3_NAME": f"Class_3_{self.hash()}",
-                "CLASS4_NAME": f"Class_4_{self.hash()}",
-                "CLASS5_NAME": f"Class_5_{self.hash()}",
+                "CLASS_NAME": f"Class{self.hash()}",
+                "CLASS2_NAME": f"Class{self.hash()}_2",
+                "CLASS3_NAME": f"Class{self.hash()}_3",
+                "CLASS4_NAME": f"Class{self.hash()}_4",
+                "CLASS5_NAME": f"Class{self.hash()}_5",
                 "DIR1": path_parts[1],
                 "DIR2": path_parts[2],
                 "DIR3": path_parts[3],
                 "SIGNAL_NAME": f"signal_{self.hash()}",
-                "SIGNAL2_NAME": f"signal_2_{self.hash()}",
-                "SIGNAL3_NAME": f"signal_3_{self.hash()}",
-                "SIGNAL4_NAME": f"signal_4_{self.hash()}",
-                "SIGNAL5_NAME": f"signal_5_{self.hash()}",
-                "STORAGE_KEY": f"storage_{self.hash()}",
-                "CLICK_CLASS": f"clickme-{self.hash()}",
+                "SIGNAL2_NAME": f"signal_{self.hash()}_2",
+                "SIGNAL3_NAME": f"signal_{self.hash()}_3",
+                "SIGNAL4_NAME": f"signal_{self.hash()}_4",
+                "SIGNAL5_NAME": f"signal_{self.hash()}_5",
+                "STORAGE_KEY": f"key-{self.hash()}",
+                "CLICK_CLASS": f"el-{self.hash()}",
             }
         return template.substitute(data)
 
     def hash(self):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
-        return str(uuid.uuid5(namespace, str(self.dir)))[:5]
+        return str(uuid.uuid5(namespace, str(self.dir)))[:5].upper()
 
     def html_content(self):
         path = os.path.join(self.dir, "html.html")
@@ -136,7 +136,7 @@ class TestMaker():
     def make_tests(self):
         for test in [self.make_test(dir) for dir in os.walk("_tests")]:
             if test is not None:
-                Path(test.output_dir()).mkdir(exist_ok=True)
+                Path(test.output_dir()).mkdir(parents=True, exist_ok=True)
                 test.write_files()
 
 

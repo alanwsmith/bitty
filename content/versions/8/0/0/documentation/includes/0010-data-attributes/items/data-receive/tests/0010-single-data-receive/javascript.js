@@ -1,9 +1,9 @@
-window.Class_90dd9 = class {
+window.Class90DD9 = class {
   bittyReady() {
-    this.api.trigger("signal_90dd9");
+    this.api.trigger("signal_90DD9");
   }
 
-  signal_90dd9(_, el) {
+  signal_90DD9(_, el) {
     el.innerHTML = "PASSED";
   }
 };

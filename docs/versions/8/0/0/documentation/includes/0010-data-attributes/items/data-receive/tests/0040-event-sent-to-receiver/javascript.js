@@ -1,9 +1,9 @@
-window.Class_1ddf3 = class {
+window.Class1DDF3 = class {
   bittyReady() {
-    document.querySelector(".clickme-1ddf3").click();
+    document.querySelector(".el-1DDF3").click();
   }
 
-  signal_1ddf3(ev, el) {
+  signal_1DDF3(ev, el) {
     el.innerHTML = "PASSED";
   }
 };

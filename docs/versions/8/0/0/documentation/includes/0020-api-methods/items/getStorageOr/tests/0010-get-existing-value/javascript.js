@@ -1,15 +1,15 @@
-window.Class_475ef = class {
-  #storageKey = "storage_475ef";
+window.Class475EF = class {
+  #storageKey = "key-475EF";
 
   bittyReady() {
     this.api.setStorage(
       this.#storageKey,
       { status: "PASSED" },
     );
-    this.api.trigger("signal_475ef");
+    this.api.trigger("signal_475EF");
   }
 
-  signal_475ef(_, el) {
+  signal_475EF(_, el) {
     const data = this.api.getStorageOr(
       this.#storageKey,
       { status: "FAILED" },

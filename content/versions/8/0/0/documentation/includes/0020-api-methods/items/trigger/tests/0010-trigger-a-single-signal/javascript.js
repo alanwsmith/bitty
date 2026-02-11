@@ -1,9 +1,9 @@
-window.Class_3e263 = class {
+window.Class3E263 = class {
   bittyReady() {
-    this.api.trigger("signal_3e263");
+    this.api.trigger("signal_3E263");
   }
 
-  signal_3e263(_, el) {
+  signal_3E263(_, el) {
     el.innerHTML = "PASSED";
   }
 };

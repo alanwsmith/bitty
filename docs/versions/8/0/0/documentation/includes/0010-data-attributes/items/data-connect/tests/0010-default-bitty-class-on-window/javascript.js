@@ -1,9 +1,9 @@
 window.BittyClass = class {
   bittyReady() {
-    this.api.trigger("signal_da553");
+    this.api.trigger("signal_DA553");
   }
 
-  signal_da553(_, el) {
+  signal_DA553(_, el) {
     el.innerHTML = "PASSED";
   }
 };

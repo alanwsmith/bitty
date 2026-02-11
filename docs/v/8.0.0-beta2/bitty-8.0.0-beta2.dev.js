@@ -26,6 +26,13 @@ class BittyJs extends HTMLElement {
         });
       },
     );
+    ["click", "input"].forEach((listener) => {
+      window.addEventListener(listener, (ev) => {
+        if (ev.target.dataset.send) {
+          this.handleEventBridge.call(this, ev);
+        }
+      });
+    });
   }
 
   /** internal */
@@ -94,7 +101,12 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    for (let signal of splitSignalString(ev.dataset.send)) {
+    // handle trigger signals
+    if (ev.type === "bittyapitrigger") {
+      ev = ev.bittyPayload;
+    }
+
+    for (let signal of splitSignalString(ev.target.dataset.send)) {
       if (this.conn[signal]) {
         document.querySelectorAll(
           `[data-receive~='${signal}']`,
@@ -123,7 +135,7 @@ class BittyJs extends HTMLElement {
 class TriggerEvent extends Event {
   constructor(signals) {
     super("bittyapitrigger", { bubbles: true });
-    this.dataset = { send: signals };
+    this.bittyPayload = { target: { dataset: { send: signals } } };
   }
 }
 

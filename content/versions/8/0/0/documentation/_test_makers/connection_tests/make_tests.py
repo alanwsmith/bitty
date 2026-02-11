@@ -18,10 +18,11 @@ class Test():
         self.dir = dirItem[0]
 
     def class_name(self):
+        namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
         path_parts = self.dir.split("/")
-        return "".join(
+        input = "".join(
                 [
-                "Class",
+                "class",
                 "_",
                 self.scrubString(path_parts[1]),
                 "_",
@@ -30,6 +31,8 @@ class Test():
                 self.scrubString(path_parts[3])
                 ]
             )
+        return f"Class_{str(uuid.uuid5(namespace, input))[:5]}"
+
 
     def generate_output(self, input):
         path_parts = self.dir.split("/")
@@ -82,6 +85,7 @@ class Test():
         input = "".join(
                 [
                 "signal",
+                str(num), 
                 "_",
                 self.scrubString(path_parts[1]),
                 "_",

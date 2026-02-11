@@ -1,9 +1,9 @@
 export default class {
   bittyReady() {
-    this.api.trigger("signal_dcbe7");
+    this.api.trigger("signal_833ab");
   }
 
-  signal_dcbe7(_, el) {
+  signal_833ab(_, el) {
     el.innerHTML = "PASSED";
   }
 }

@@ -1,10 +1,10 @@
 <script>
-  window.Class_0010_data_attributes_data_connect_0020_connect_to_class_on_page = class {
+  window.Class_9c574 = class {
     bittyReady() {
-      this.api.trigger("signal_8d7d9");
+      this.api.trigger("signal_218ac");
     }
 
-  signal_8d7d9(_, el) {
+  signal_218ac(_, el) {
       el.innerHTML = "PASSED";
     }
   }

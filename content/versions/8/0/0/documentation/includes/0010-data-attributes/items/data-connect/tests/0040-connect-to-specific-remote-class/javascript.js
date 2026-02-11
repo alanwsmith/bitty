@@ -1,9 +1,9 @@
 export class ExampleClass {
   bittyReady() {
-    this.api.trigger("signal_6bbb5");
+    this.api.trigger("signal_12d9b");
   }
 
-  signal_6bbb5(_, el) {
+  signal_12d9b(_, el) {
     el.innerHTML = "PASSED";
   }
 }

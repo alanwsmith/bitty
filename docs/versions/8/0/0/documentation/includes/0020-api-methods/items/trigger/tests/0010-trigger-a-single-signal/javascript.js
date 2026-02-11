@@ -1,10 +1,10 @@
 <script>
-  window.Class_0020_api_methods_trigger_0010_trigger_a_single_signal = class {
+  window.Class_5e2b6 = class {
     bittyReady() {
-      this.api.trigger("signal_e83f9");
+      this.api.trigger("signal_2bffb");
     }
 
-  signal_e83f9(_, el) {
+  signal_2bffb(_, el) {
       el.innerHTML = "PASSED";
     }
   }

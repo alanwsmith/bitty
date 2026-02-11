@@ -1,22 +1,22 @@
 <script>
-  window.Class_0020_api_methods_trigger_0020_multiple_signal_trigger = class {
+  window.Class_26856 = class {
     bittyReady() {
       this.api.trigger(`
-signal_1106b 
-signal_1106b
-signal_1106b
+signal_0e8dc 
+signal_c3e0b
+signal_de574
 `);
     }
 
-  signal_1106b(_, el) {
+  signal_0e8dc(_, el) {
       el.innerHTML = "PASSED";
     }
 
-  signal_1106b(_, el) {
+  signal_c3e0b(_, el) {
       el.innerHTML = "PASSED";
     }
 
-  signal_1106b(_, el) {
+  signal_de574(_, el) {
       el.innerHTML = "PASSED";
     }
   }

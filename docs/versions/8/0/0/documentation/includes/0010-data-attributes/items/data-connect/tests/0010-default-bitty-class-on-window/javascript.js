@@ -1,10 +1,10 @@
 <script>
   window.BittyClass = class {
     bittyReady() {
-      this.api.trigger("signal_d5395");
+      this.api.trigger("signal_9458f");
     }
 
-  signal_d5395(_, el) {
+  signal_9458f(_, el) {
       el.innerHTML = "PASSED";
     }
   }

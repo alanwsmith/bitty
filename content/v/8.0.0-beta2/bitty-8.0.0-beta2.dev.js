@@ -11,6 +11,7 @@ function splitSignalString(input) {
 
 class BittyJs extends HTMLElement {
   #_data = {};
+  #_templates = {};
 
   constructor() {
     super();
@@ -79,7 +80,7 @@ class BittyJs extends HTMLElement {
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
       this.loadPageData();
-      // this.loadPageTemplates();
+      this.loadPageTemplates();
       // TODO: Document running bittyReady()
       // since it's not picked up automatically by
       // jsdoc.
@@ -106,6 +107,21 @@ class BittyJs extends HTMLElement {
       if (el.type === "application/json" && el.id !== undefined) {
         try {
           this.#_data[el.id] = JSON.parse(el.text);
+        } catch (error) {
+          // TODO: make test for error state
+          // in test unit-tests test suite.
+          console.log(error);
+        }
+      }
+    });
+  }
+
+  /** internal */
+  loadPageTemplates() {
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "text/html" && el.id !== undefined) {
+        try {
+          this.#_templates[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -178,6 +194,10 @@ class BittyJs extends HTMLElement {
 
   async sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  template(key) {
+    return this.#_templates[key];
   }
 
   trigger(signal) {

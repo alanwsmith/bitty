@@ -39,6 +39,8 @@ class Test():
                 "DIR2": path_parts[2],
                 "DIR3": path_parts[3],
                 "SIGNAL_NAME": self.signal_name(),
+                "SIGNAL2_NAME": f"{self.signal_name()}2",
+                "SIGNAL3_NAME": f"{self.signal_name()}3",
                 }
         return template.substitute(data)
 

@@ -4,6 +4,7 @@ export default class {
 
   bittyReady() {
     this.loadStates();
+    this.setStates();
     this.addListener();
   }
 
@@ -19,26 +20,37 @@ export default class {
   loadStates() {
     this.#states = this.api.getStorageOr(
       this.#storageKey,
-      { elements: [] },
+      { pages: {} },
     );
-    const elements = document.querySelectorAll("details");
-    if (elements.length !== this.#states.elements.length) {
-      this.#states = { elements: [] };
-    }
-    elements.forEach((el, elIndex) => {
-      if (this.#states.elements[elIndex]) {
-        el.open = true;
+  }
+
+  setStates() {
+    console.log("setting states");
+    const pathname = window.location.pathname;
+    if (this.#states.pages[pathname]) {
+      const elements = document.querySelectorAll("details");
+      if (elements.length !== this.#states.pages[pathname].length) {
+        this.#states.pages[pathname] = [];
       }
-    });
+      elements.forEach((el, elIndex) => {
+        if (this.#states.pages[pathname][elIndex]) {
+          el.open = true;
+        }
+      });
+    }
   }
 
   updateStates() {
+    const pathname = window.location.pathname;
     const elements = document.querySelectorAll("details");
-    if (elements.length !== this.#states.elements.length) {
-      this.#states = { elements: [] };
+    if (!this.#states.pages[pathname]) {
+      this.#states.pages[pathname] = [];
+    }
+    if (elements.length !== this.#states.pages[pathname].length) {
+      this.#states.pages[pathname] = [];
     }
     elements.forEach((el, elIndex) => {
-      this.#states.elements[elIndex] = el.open;
+      this.#states.pages[pathname][elIndex] = el.open;
     });
     this.api.setStorage(this.#storageKey, this.#states);
   }

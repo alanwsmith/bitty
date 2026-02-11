@@ -1,4 +1,4 @@
-class TestEvent extends Event {
+class TestEvent$CLASS_NAME extends Event {
   constructor() {
     super("bittytest", { bubbles: true });
   }
@@ -7,7 +7,7 @@ class TestEvent extends Event {
 window.$CLASS_NAME = class {
   bittyReady() {
     const testSender = document.querySelector(".$CLICK_CLASS");
-    const testEvent = new TestEvent();
+    const testEvent = new TestEvent$CLASS_NAME();
     testSender.dispatchEvent(testEvent);
   }
 

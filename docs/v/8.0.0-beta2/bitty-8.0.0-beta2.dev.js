@@ -16,26 +16,20 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addEventListeners() {
-    const internalEvents = [
-      "bittyapitrigger",
-    ];
-    internalEvents.forEach(
+    ["bittyapitrigger"].forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
           this.handleEventBridge.call(this, ev);
         });
       },
     );
-    const defaultListeners = ["click", "input"];
-    defaultListeners.forEach((listener) => {
+    ["click", "input"].forEach((listener) => {
       window.addEventListener(listener, (ev) => {
-        if (ev.target.dataset.send) {
+        if (ev.target.dataset.send && !ev.target.dataset.listeners) {
           this.handleEventBridge.call(this, ev);
         }
       });
     });
-
-    // find custom listeners
     const customListeners = [
       ...new Set(
         [...document.querySelectorAll("[data-listeners]")]
@@ -47,19 +41,16 @@ class BittyJs extends HTMLElement {
     customListeners.forEach((listener) => {
       window.addEventListener(listener, (ev) => {
         if (ev.target.dataset.send) {
-          this.handleEventBridge.call(this, ev);
+          if (ev.target.dataset.listeners) {
+            if (
+              splitSignalString(ev.target.dataset.listeners).includes(listener)
+            ) {
+              this.handleEventBridge.call(this, ev);
+            }
+          }
         }
       });
     });
-
-    console.log(customListeners);
-
-    // [...new Set(customLis)];
-    //   customListeners.forEach((listener) => {
-    //       window k
-    //     });
-
-    //console.log(customListeners);
   }
 
   /** internal */

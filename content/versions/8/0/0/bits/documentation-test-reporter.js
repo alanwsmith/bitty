@@ -14,19 +14,20 @@ export default class {
   }
 
   updateSectionResults(_, el) {
-    // console.log([...el.querySelectorAll(".test")]);
-    [...el.querySelectorAll(".test")].filter((testEl) => {
+    const passed = [...el.querySelectorAll(".test")].filter((testEl) => {
       return testEl.innerHTML.trim() === "PASSED";
     }).map((testEl) => {
       testEl.dataset.testStatus = "passed";
       return testEl;
-    });
+    }).length;
+    el.dataset.passed = passed;
 
-    // el.querySelectorAll(".test").forEach((testEl) => testEl)
-    //   .filter((testEl) => {
-    //     testEl.innerHTML.trim() !== "PASSED";
-    //   }).forEach((testEl) => {
-    //     console.log(el);
-    //   });
+    const failed = [...el.querySelectorAll(".test")].filter((testEl) => {
+      return testEl.innerHTML.trim() !== "PASSED";
+    }).map((testEl) => {
+      testEl.dataset.testStatus = "failed";
+      return testEl;
+    }).length;
+    el.dataset.failed = failed;
   }
 }

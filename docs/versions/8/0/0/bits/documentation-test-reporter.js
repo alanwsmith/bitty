@@ -72,14 +72,29 @@ export default class {
   }
 
   sectionStatus(_, el) {
-    el.dataset.testSectionStatus = "todo";
+    const testEls = el.querySelectorAll(".test-wrapper");
+    if (testEls.length === 0) {
+      el.dataset.sectionStatus = "todo";
+    } else if (
+      [...testEls].filter((testEl) => {
+        return testEl.dataset.testStatus === "bug";
+      }).length > 0
+    ) {
+      el.dataset.sectionStatus = "bug";
+    } else if (
+      [...testEls].filter((testEl) => {
+        return testEl.dataset.testStatus === "todo";
+      }).length > 0
+    ) {
+      el.dataset.sectionStatus = "todo";
+    } else {
+      el.dataset.sectionStatus = "ok";
+    }
   }
 
   testStatus(_, el) {
-    console.log(el);
     const testEls = el.querySelectorAll(".test");
     if (testEls.length === 0) {
-      console.log("asdf");
       el.dataset.testStatus = "todo";
     } else {
       el.dataset.testStatus = "ok";

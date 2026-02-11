@@ -26,13 +26,31 @@ class BittyJs extends HTMLElement {
         });
       },
     );
-    ["click", "input"].forEach((listener) => {
+    const defaultListeners = ["click", "input"];
+    defaultListeners.forEach((listener) => {
       window.addEventListener(listener, (ev) => {
         if (ev.target.dataset.send) {
           this.handleEventBridge.call(this, ev);
         }
       });
     });
+
+    // find custom listeners
+    const customListeners = [
+      ...new Set(
+        [...document.querySelectorAll("[data-listeners]")]
+          .map((el) => {
+            return el.dataset.listeners;
+          }),
+      ),
+    ];
+
+    // [...new Set(customLis)];
+    //   customListeners.forEach((listener) => {
+    //       window k
+    //     });
+
+    console.log(customListeners);
   }
 
   /** internal */

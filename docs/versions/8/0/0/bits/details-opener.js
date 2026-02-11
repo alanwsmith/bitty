@@ -25,7 +25,6 @@ export default class {
   }
 
   setStates() {
-    console.log("setting states");
     const pathname = window.location.pathname;
     if (this.#states.pages[pathname]) {
       const elements = document.querySelectorAll("details");

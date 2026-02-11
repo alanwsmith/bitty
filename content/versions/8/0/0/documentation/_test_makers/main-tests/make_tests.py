@@ -32,21 +32,13 @@ class ContentMover():
                     elif len(parts) == 5:
                         output_path = f"../../includes/{parts[1]}/items/{parts[2]}/tests/{parts[3]}/{parts[4]}"
                     if output_path != None:
-                        print(output_path)
-
-
-                    # print(output_path)
-                    # print(parts)
-
-                    # if len(parts) == 2:
-                    #     pass
-                    # else:
-                    #     output_path = f"../../includes/{parts[1]}/items/{parts[2]}"
-                    #     print(parts)
-                    #     print(output_path)
-
-                    #with open (in_path) as _in:
-    
+                        with open(input_path) as _in:
+                            data = {"HTML_CONTENT": _in.read() }
+                            output_dir = os.path.dirname(output_path)
+                            Path(output_dir).mkdir(parents=True, exist_ok=True)
+                            output= self.html_wrapper.substitute(data)
+                            with open(output_path, "w") as _out:
+                                _out.write(output)
 
 
 class Test():

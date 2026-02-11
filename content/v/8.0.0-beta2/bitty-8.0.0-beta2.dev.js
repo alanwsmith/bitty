@@ -82,6 +82,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async runBittyReady() {
+    // TODO: Add tests for sync and async runs.
     if (typeof this.conn.bittyReady === "function") {
       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
         await this.conn.bittyReady();
@@ -106,6 +107,10 @@ class BittyJs extends HTMLElement {
 
   setStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  async sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   trigger(signal) {

@@ -49,11 +49,20 @@ class BittyJs extends HTMLElement {
       const connString = this.dataset.connect.trim();
       if (window[connString]) {
         this.conn = new window[connString]();
-      } else if (connString.substring(0, 1) === "/") {
-        const windowURL = new URL(window.location.href);
-        const moduleURL = new URL(connString, windowURL.origin).toString();
-        const mod = await import(moduleURL);
-        this.conn = new mod.default();
+      } else {
+        // TODO: Handle `http...` URLS
+        // TODO: Handle `./...` URLS
+        const connParts = connString.split(":");
+        if (connParts[0].substring(0, 1) === "/") {
+          const windowURL = new URL(window.location.href);
+          const moduleURL = new URL(connParts[0], windowURL.origin).toString();
+          const mod = await import(moduleURL);
+          if (connParts[1] !== undefined) {
+            this.conn = new mod[connParts[1]]();
+          } else {
+            this.conn = new mod.default();
+          }
+        }
       }
     }
   }

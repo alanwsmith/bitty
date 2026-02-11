@@ -13,6 +13,42 @@ def slurp(path):
     else:
         return ""
 
+class ContentMover():
+    def __init__(self):
+        with open("_templates/html-wrapper.html") as _in:
+            self.html_wrapper = Template(_in.read())
+
+    def move_content(self):
+        file_names = ["name.html", "description.html"]
+        for dir in os.walk("_tests"):
+            for file in dir[2]:
+                if file in file_names:
+                    input_path = f"{dir[0]}/{file}"
+                    parts = input_path.split("/")
+                    if len(parts) == 3:
+                        output_path = f"../../includes/{parts[1]}/{parts[2]}"
+                    elif len(parts) == 4:
+                        output_path = f"../../includes/{parts[1]}/items/{parts[2]}/{parts[3]}"
+                    elif len(parts) == 5:
+                        output_path = f"../../includes/{parts[1]}/items/{parts[2]}/tests/{parts[3]}/{parts[4]}"
+                    if output_path != None:
+                        print(output_path)
+
+
+                    # print(output_path)
+                    # print(parts)
+
+                    # if len(parts) == 2:
+                    #     pass
+                    # else:
+                    #     output_path = f"../../includes/{parts[1]}/items/{parts[2]}"
+                    #     print(parts)
+                    #     print(output_path)
+
+                    #with open (in_path) as _in:
+    
+
+
 class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
@@ -143,5 +179,8 @@ class TestMaker():
 if __name__ == "__main__":
     tm = TestMaker()
     tm.make_tests()
+    c = ContentMover()
+    c.move_content()
+
 
 

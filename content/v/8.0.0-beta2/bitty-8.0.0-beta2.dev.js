@@ -119,7 +119,10 @@ class BittyJs extends HTMLElement {
   /** internal */
   loadPageTemplates() {
     document.querySelectorAll("script").forEach((el) => {
-      if (el.type === "text/html" && el.id !== undefined) {
+      if (
+        (el.type === "text/html" || el.type === "text/plain") &&
+        el.id !== undefined
+      ) {
         try {
           this.#_templates[el.id] = el.text;
         } catch (error) {

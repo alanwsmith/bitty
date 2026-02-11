@@ -4,6 +4,10 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(ev, el) {
-    el.innerHTML = this.api.template("$ID_NAME");
+    const target = `<div>example template</div>`;
+    const template = this.api.template("$ID_NAME").trim();
+    if (target === template) {
+      el.innerHTML = "ok";
+    }
   }
 };

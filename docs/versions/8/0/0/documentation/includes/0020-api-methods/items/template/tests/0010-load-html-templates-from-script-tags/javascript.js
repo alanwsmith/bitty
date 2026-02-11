@@ -4,6 +4,10 @@ window.ClassECC83 = class {
   }
 
   signal_ECC83(ev, el) {
-    el.innerHTML = this.api.template("id-ECC83");
+    const target = `<div>example template</div>`;
+    const template = this.api.template("id-ECC83").trim();
+    if (target === template) {
+      el.innerHTML = "ok";
+    }
   }
 };

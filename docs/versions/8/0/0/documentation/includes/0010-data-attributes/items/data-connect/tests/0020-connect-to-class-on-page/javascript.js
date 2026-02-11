@@ -1,13 +1,9 @@
-<script>
-  window.Class_9c574 = class {
-    bittyReady() {
-      this.api.trigger("signal_218ac");
-    }
-
-  signal_218ac(_, el) {
-      el.innerHTML = "PASSED";
-    }
+window.Class_5ef10 = class {
+  bittyReady() {
+    this.api.trigger("signal_5ef10");
   }
-</script>
 
-
+  signal_5ef10(_, el) {
+    el.innerHTML = "PASSED";
+  }
+};

@@ -1,12 +1,9 @@
-<script>
-  window.BittyClass = class {
-    bittyReady() {
-      this.api.trigger("$SIGNAL_NAME");
-    }
+window.BittyClass = class {
+  bittyReady() {
+    this.api.trigger("$SIGNAL_NAME");
+  }
 
   $SIGNAL_NAME(_, el) {
-      el.innerHTML = "PASSED";
-    }
+    el.innerHTML = "PASSED";
   }
-</script>
-
+};

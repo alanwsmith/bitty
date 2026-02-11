@@ -1,13 +1,19 @@
-<script>
-  window.$CLASS_NAME = class {
-    bittyReady() {
-      this.api.setStorage("test-$SIGNAL_NAME", { status: "PASSED" });
-      this.api.trigger("$SIGNAL_NAME");
-    }
+window.$CLASS_NAME = class {
+  #storageKey = "$STORAGE_KEY";
 
-    $SIGNAL_NAME(_, el) {
-      const data = this.api.getStorageOr("test-$SIGNAL_NAME", { status: "FAILED"});
-      el.innerHTML = data.status;
-    }
+  bittyReady() {
+    this.api.setStorage(
+      this.#storageKey,
+      { status: "PASSED" },
+    );
+    this.api.trigger("$SIGNAL_NAME");
   }
-</script>
+
+  $SIGNAL_NAME(_, el) {
+    const data = this.api.getStorageOr(
+      this.#storageKey,
+      { status: "FAILED" },
+    );
+    el.innerHTML = data.status;
+  }
+};

@@ -1,26 +1,19 @@
-<script>
-  window.Class_26856 = class {
-    bittyReady() {
-      this.api.trigger(`
-signal_0e8dc 
-signal_c3e0b
-signal_de574
-`);
-    }
-
-  signal_0e8dc(_, el) {
-      el.innerHTML = "PASSED";
-    }
-
-  signal_c3e0b(_, el) {
-      el.innerHTML = "PASSED";
-    }
-
-  signal_de574(_, el) {
-      el.innerHTML = "PASSED";
-    }
+window.Class_d8da8 = class {
+  bittyReady() {
+    this.api.trigger(
+      `signal_d8da8 signal_2_d8da8 signal_3_d8da8`,
+    );
   }
-</script>
 
+  signal_d8da8(_, el) {
+    el.innerHTML = "PASSED";
+  }
 
+  signal_2_d8da8(_, el) {
+    el.innerHTML = "PASSED";
+  }
 
+  signal_3_d8da8(_, el) {
+    el.innerHTML = "PASSED";
+  }
+};

@@ -38,15 +38,26 @@ class Test():
         path_parts = self.dir.split("/")
         template = Template(input)
         data = {
-                "CLASS_NAME": self.class_name(),
+                "CLASS_NAME": f"Class_{self.hash()}",
+                "CLASS2_NAME": f"Class_2_{self.hash()}",
+                "CLASS3_NAME": f"Class_3_{self.hash()}",
+                "CLASS4_NAME": f"Class_4_{self.hash()}",
+                "CLASS5_NAME": f"Class_5_{self.hash()}",
                 "DIR1": path_parts[1],
                 "DIR2": path_parts[2],
                 "DIR3": path_parts[3],
-                "SIGNAL_NAME": self.signal_name(1),
-                "SIGNAL2_NAME": self.signal_name(2),
-                "SIGNAL3_NAME": self.signal_name(3),
-                }
+                "SIGNAL_NAME": f"signal_{self.hash()}",
+                "SIGNAL2_NAME": f"signal_2_{self.hash()}",
+                "SIGNAL3_NAME": f"signal_3_{self.hash()}",
+                "SIGNAL4_NAME": f"signal_4_{self.hash()}",
+                "SIGNAL5_NAME": f"signal_5_{self.hash()}",
+                "STORAGE_KEY": f"storage_{self.hash()}",
+            }
         return template.substitute(data)
+
+    def hash(self):
+        namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
+        return str(uuid.uuid5(namespace, str(self.dir)))[:5]
 
     def html_content(self):
         path = os.path.join(self.dir, "html.html")
@@ -76,6 +87,14 @@ class Test():
         path_parts = self.dir.split("/")
         return os.path.join("../../includes", path_parts[1], "items", path_parts[2], "tests", path_parts[3])
 
+    def remote_javascript_content(self):
+        path = os.path.join(self.dir, "remote-javascript.js")
+        content = slurp(path)
+        return content
+
+    def remote_javascript_output_path(self):
+        return os.path.join(self.output_dir(), "remote-javascript.js")
+
     def scrubString(self, input):
         return input.replace("-", "_")
 
@@ -100,12 +119,12 @@ class Test():
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:
             _out.write(self.generate_output(self.html_content()))
-        with open(self.name_output_path(), "w") as _out:
-            _out.write(self.generate_output(self.name_content()))
         with open(self.javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.javascript_content()))
-
-
+        with open(self.name_output_path(), "w") as _out:
+            _out.write(self.generate_output(self.name_content()))
+        with open(self.remote_javascript_output_path(), "w") as _out:
+            _out.write(self.generate_output(self.remote_javascript_content()))
 
 
 class TestMaker():

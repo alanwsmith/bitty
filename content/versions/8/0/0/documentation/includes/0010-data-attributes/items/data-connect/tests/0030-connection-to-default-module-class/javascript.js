@@ -1,9 +1,2 @@
-export default class {
-  bittyReady() {
-    this.api.trigger("signal_833ab");
-  }
-
-  signal_833ab(_, el) {
-    el.innerHTML = "PASSED";
-  }
-}
+// this content is in an external file
+// TODO: show the external file here.

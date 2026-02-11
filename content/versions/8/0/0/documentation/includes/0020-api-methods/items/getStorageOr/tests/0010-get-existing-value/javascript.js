@@ -1,14 +1,19 @@
-<script>
-  window.Class_657b5 = class {
-    bittyReady() {
-      const payload = JSON.stringify({ status: "PASSED" });
-      localStorage.setItem("test-signal_3e4c1", payload);
-      this.api.trigger("signal_3e4c1");
-    }
+window.Class_475ef = class {
+  #storageKey = "storage_475ef";
 
-    signal_3e4c1(_, el) {
-      const data = this.api.getStorageOr("test-signal_3e4c1", { status: "FAILED"});
-      el.innerHTML = data.status;
-    }
+  bittyReady() {
+    this.api.setStorage(
+      this.#storageKey,
+      { status: "PASSED" },
+    );
+    this.api.trigger("signal_475ef");
   }
-</script>
+
+  signal_475ef(_, el) {
+    const data = this.api.getStorageOr(
+      this.#storageKey,
+      { status: "FAILED" },
+    );
+    el.innerHTML = data.status;
+  }
+};

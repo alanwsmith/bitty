@@ -10,6 +10,8 @@ function splitSignalString(input) {
 }
 
 class BittyJs extends HTMLElement {
+  #listenerTypes = [];
+
   constructor() {
     super();
   }
@@ -45,12 +47,14 @@ class BittyJs extends HTMLElement {
       ),
     ];
 
+    this.#listenerTypes = defaultListeners;
+
     // [...new Set(customLis)];
     //   customListeners.forEach((listener) => {
     //       window k
     //     });
 
-    console.log(customListeners);
+    //console.log(customListeners);
   }
 
   /** internal */
@@ -76,6 +80,10 @@ class BittyJs extends HTMLElement {
     } else {
       return JSON.parse(storage);
     }
+  }
+
+  listenerTypes() {
+    return this.#listenerTypes;
   }
 
   /** internal */

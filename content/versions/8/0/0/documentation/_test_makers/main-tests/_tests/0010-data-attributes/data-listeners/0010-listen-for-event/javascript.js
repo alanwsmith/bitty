@@ -1,9 +1,3 @@
-class TestEvent$CLASS_NAME extends Event {
-  constructor() {
-    super("bittytest", { bubbles: true });
-  }
-}
-
 window.$CLASS_NAME = class {
   bittyReady() {
     const testSender = document.querySelector(".$CLICK_CLASS");
@@ -15,3 +9,9 @@ window.$CLASS_NAME = class {
     el.innerHTML = "ok";
   }
 };
+
+class TestEvent$CLASS_NAME extends Event {
+  constructor() {
+    super("bittylocallistenertest1", { bubbles: true });
+  }
+}

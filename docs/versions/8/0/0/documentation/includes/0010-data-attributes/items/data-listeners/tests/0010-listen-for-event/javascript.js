@@ -1,9 +1,3 @@
-class TestEventClass9CE5F extends Event {
-  constructor() {
-    super("bittytest", { bubbles: true });
-  }
-}
-
 window.Class9CE5F = class {
   bittyReady() {
     const testSender = document.querySelector(".el-9CE5F");
@@ -15,3 +9,9 @@ window.Class9CE5F = class {
     el.innerHTML = "ok";
   }
 };
+
+class TestEventClass9CE5F extends Event {
+  constructor() {
+    super("bittylocallistenertest1", { bubbles: true });
+  }
+}

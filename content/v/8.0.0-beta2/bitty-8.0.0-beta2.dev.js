@@ -36,19 +36,22 @@ class BittyJs extends HTMLElement {
       ...new Set(
         [...document.querySelectorAll("[data-listeners]")]
           .map((el) => {
-            return el.dataset.listeners;
+            return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
+              return signal.trim();
+            });
           }),
       ),
     ];
-    customListeners.forEach((listener) => {
+    customListeners.flat().forEach((listener) => {
       window.addEventListener(listener, (ev) => {
-        if (ev.target.dataset.send) {
-          if (ev.target.dataset.listeners) {
-            if (
-              splitSignalString(ev.target.dataset.listeners).includes(listener)
-            ) {
-              this.handleEventBridge.call(this, ev);
-            }
+        if (
+          ev.target.dataset.send !== undefined &&
+          ev.target.dataset.listeners !== undefined
+        ) {
+          if (
+            splitSignalString(ev.target.dataset.listeners).includes(listener)
+          ) {
+            this.handleEventBridge.call(this, ev);
           }
         }
       });

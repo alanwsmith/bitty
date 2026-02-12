@@ -189,6 +189,18 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
+  makeTEXT(template, subs = []) {
+    console.log(subs);
+    while (subs.length > 0) {
+      const find = subs.shift();
+      const replace = subs.shift();
+      template = template.replaceAll(find, replace);
+    }
+
+    console.log(subs);
+    return template;
+  }
+
   /** internal */
   async processEvent(ev) {
     // handle trigger signals

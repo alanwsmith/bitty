@@ -84,6 +84,15 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
+  addLog(level, payload) {
+    const log = new BittyLog(level, payload);
+    this.#_logs.push(log);
+    if (this.#_logLevel <= level) {
+      this.#_logFunctions[level](log);
+    }
+  }
+
+  /** internal */
   async connectedCallback() {
     this.initLogFunctions();
     await this.makeConnection();
@@ -116,6 +125,10 @@ class BittyJs extends HTMLElement {
     return this.#_data[key];
   }
 
+  debug(payload) {
+    this.addLog(1, payload);
+  }
+
   getStorageOr(key, alt) {
     const storage = localStorage.getItem(key);
     if (storage === null) {
@@ -125,10 +138,30 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  error(payload) {
+    this.addLog(4, payload);
+  }
+
+  info(payload) {
+    this.addLog(2, payload);
+  }
+
   initLogFunctions() {
     this.#_logFunctions = [];
     this.#_logFunctions[0] = (log) => {
       console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
+    };
+    this.#_logFunctions[1] = (log) => {
+      console.log(`[DEBUG|${log.timestamp.toISOString()}] ${log.payload}`);
+    };
+    this.#_logFunctions[2] = (log) => {
+      console.log(`[INFO|${log.timestamp.toISOString()}] ${log.payload}`);
+    };
+    this.#_logFunctions[3] = (log) => {
+      console.log(`[WARN|${log.timestamp.toISOString()}] ${log.payload}`);
+    };
+    this.#_logFunctions[4] = (log) => {
+      console.log(`[ERROR|${log.timestamp.toISOString()}] ${log.payload}`);
     };
   }
 
@@ -291,16 +324,16 @@ class BittyJs extends HTMLElement {
   }
 
   trace(payload) {
-    const log = new BittyLog(0, payload);
-    this.#_logs.push(log);
-    if (this.#_logLevel === 0) {
-      this.#_logFunctions[0](log);
-    }
+    this.addLog(0, payload);
   }
 
   trigger(signal) {
     const ev = new TriggerEvent(signal);
     this.dispatchEvent(ev);
+  }
+
+  warn(payload) {
+    this.addLog(3, payload);
   }
 }
 

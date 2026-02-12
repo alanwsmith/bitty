@@ -95,6 +95,20 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async copyTEXT(selector) {
+    const el = document.querySelector(selector);
+    const text = el.value;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      // TODO: Add this to the global bitty errors
+      // when those come online.
+      console.error("Could not copy text to clipboard");
+    }
+
+    //const text = el.value !== undefined ? el.value : el.innerHTML;
+  }
+
   data(key) {
     return this.#_data[key];
   }

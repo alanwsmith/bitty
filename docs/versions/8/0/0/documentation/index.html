@@ -1915,7 +1915,9 @@ window.ClassCBCDA = class {
   <li>An optional array of substitutions can be added to 
 find and replace strings in the template while generating
     the output.</li>
-  </ul>
+  <li>See the <em>substitutions</em> section below
+  for details on substitution array formats.</li>
+</ul>
 
 
 
@@ -1993,9 +1995,13 @@ for details on the array formats that can be used).
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">signal_6ADEB</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">template</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>REPLACE_ALFA REPLACE_BRAVO REPLACE_ALFA<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>xxx<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">template</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TARGET_ALFA<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TARGET_ALFA<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>updated_alfa<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">expected</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>updated_alfa<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">got</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">api</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">makeTEXT</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">template</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">expected</span> <span class="keyword operator comparison js">===</span> <span class="variable other readwrite js">got</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>ok<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
@@ -2008,9 +2014,13 @@ window.Class6ADEB = class {
   }
 
   signal_6ADEB(ev, el) {
-    const template = "REPLACE_ALFA REPLACE_BRAVO REPLACE_ALFA";
-    const subs = [];
-    el.innerHTML = "xxx";
+    const template = "TARGET_ALFA";
+    const subs = ["TARGET_ALFA", "updated_alfa"];
+    const expected = "updated_alfa";
+    const got = this.api.makeTEXT(template, subs);
+    if (expected === got) {
+      el.innerHTML = "ok";
+    }
   }
 };</script>
 
@@ -2898,7 +2908,13 @@ an optional array used for find/replace
   </summary>
       <div class="header heading-color font-weight-900">Description</div>
 <ul>
-  <li>Base text substitutions</li>
+  <li>These are the base text substitution patterns.</li>
+  <li>
+    The examples use the `this.api.makeTEXT()` method. 
+    The same patterns are valid for the other 
+    `.makeXXX()`, `.getXXX()`, and `.XXXFromTemplate()`
+    methods. 
+  </li>
 </ul>
 
 

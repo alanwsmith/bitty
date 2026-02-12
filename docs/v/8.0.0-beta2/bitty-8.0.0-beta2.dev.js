@@ -148,8 +148,27 @@ class BittyJs extends HTMLElement {
 
   initLogFunctions() {
     this.#_logFunctions = [];
+    [0, 1, 2, 3, 4].forEach((index) => {
+      const key = this.#_logLevels[index].toUpperCase();
+      this.#_logFunctions[index] = (log) => {
+        if (typeof log.payload === "string") {
+          console.log(`[${key}|${log.timestamp.toISOString()}] ${log.payload}`);
+        } else {
+          console.log(
+            `[${key}|${log.timestamp.toISOString()}|See object below]`,
+          );
+          console.log(log.payload);
+        }
+      };
+    });
+    /*
     this.#_logFunctions[0] = (log) => {
-      console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
+      if (typeof log.payload === "string") {
+        console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
+      } else {
+        console.log(`[TRACE|${log.timestamp.toISOString()}|See object below]`);
+        console.log(log.payload);
+      }
     };
     this.#_logFunctions[1] = (log) => {
       console.log(`[DEBUG|${log.timestamp.toISOString()}] ${log.payload}`);
@@ -163,6 +182,7 @@ class BittyJs extends HTMLElement {
     this.#_logFunctions[4] = (log) => {
       console.log(`[ERROR|${log.timestamp.toISOString()}] ${log.payload}`);
     };
+    */
   }
 
   /** internal */

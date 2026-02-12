@@ -190,14 +190,14 @@ class BittyJs extends HTMLElement {
   }
 
   makeTEXT(template, subs = []) {
-    console.log(subs);
+    if (subs.length % 2 === 1) {
+      return undefined;
+    }
     while (subs.length > 0) {
       const find = subs.shift();
       const replace = subs.shift();
       template = template.replaceAll(find, replace);
     }
-
-    console.log(subs);
     return template;
   }
 

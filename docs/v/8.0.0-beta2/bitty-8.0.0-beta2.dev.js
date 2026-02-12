@@ -161,28 +161,6 @@ class BittyJs extends HTMLElement {
         }
       };
     });
-    /*
-    this.#_logOutputFunctions[0] = (log) => {
-      if (typeof log.payload === "string") {
-        console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
-      } else {
-        console.log(`[TRACE|${log.timestamp.toISOString()}|See object below]`);
-        console.log(log.payload);
-      }
-    };
-    this.#_logOutputFunctions[1] = (log) => {
-      console.log(`[DEBUG|${log.timestamp.toISOString()}] ${log.payload}`);
-    };
-    this.#_logOutputFunctions[2] = (log) => {
-      console.log(`[INFO|${log.timestamp.toISOString()}] ${log.payload}`);
-    };
-    this.#_logOutputFunctions[3] = (log) => {
-      console.log(`[WARN|${log.timestamp.toISOString()}] ${log.payload}`);
-    };
-    this.#_logOutputFunctions[4] = (log) => {
-      console.log(`[ERROR|${log.timestamp.toISOString()}] ${log.payload}`);
-    };
-    */
   }
 
   /** internal */

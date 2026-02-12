@@ -178,11 +178,17 @@ class BittyJs extends HTMLElement {
     }
     for (let signal of splitSignalString(ev.target.dataset.send)) {
       if (this.conn[signal]) {
-        document.querySelectorAll(
+        const receivers = document.querySelectorAll(
           `[data-receive~='${signal}']`,
-        ).forEach((receiver) => {
-          this.conn[signal](ev, receiver);
-        });
+        );
+
+        if (receivers.length === 0) {
+          this.conn[signal](ev, null);
+        } else {
+          receivers.forEach((receiver) => {
+            this.conn[signal](ev, receiver);
+          });
+        }
       }
     }
   }
@@ -199,7 +205,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  setCSS(key, value) {
+  setCSSProperty(key, value) {
     document.documentElement.style.setProperty(key, value);
   }
 

@@ -1,5 +1,5 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
+  $SIGNAL_NAME() {
     this.api.warn({ warn: "$EXAMPLE_NAME" });
   }
 };

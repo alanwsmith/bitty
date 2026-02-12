@@ -1,6 +1,6 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
+  $SIGNAL_NAME() {
     this.api.setLogLevel("trace");
-    this.api.trace("set log level to trace at $EXAMPLE_NAME");
+    this.api.trace("set log level to trace: $EXAMPLE_NAME");
   }
 };

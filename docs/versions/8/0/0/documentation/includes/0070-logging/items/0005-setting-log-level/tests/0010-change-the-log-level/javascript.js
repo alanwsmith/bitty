@@ -1,6 +1,6 @@
 window.Class524A8 = class {
-  bittyReady() {
+  signal_524A8() {
     this.api.setLogLevel("trace");
-    this.api.trace("set log level to trace at example-524A8");
+    this.api.trace("set log level to trace: example-524A8");
   }
 };

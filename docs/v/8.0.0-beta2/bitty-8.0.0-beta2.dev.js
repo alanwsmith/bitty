@@ -13,7 +13,7 @@ class BittyJs extends HTMLElement {
   #_data = {};
   #_logOutputFunctions;
   #_logLevel = 2;
-  #_logLevels = ["trace", "debug", "info", "warn", "error"];
+  #_logLevels = ["trace", "debug", "log", "warn", "error", "none"];
   #_logs = [];
   #_templates = {};
 
@@ -102,9 +102,6 @@ class BittyJs extends HTMLElement {
       this.addEventListeners();
       this.loadPageData();
       this.loadPageTemplates();
-      // TODO: Document running bittyReady()
-      // since it's not picked up automatically by
-      // jsdoc.
       await this.runBittyReady();
     }
   }
@@ -142,7 +139,7 @@ class BittyJs extends HTMLElement {
     this.addLog(4, payload);
   }
 
-  info(payload) {
+  log(payload) {
     this.addLog(2, payload);
   }
 
@@ -284,14 +281,14 @@ class BittyJs extends HTMLElement {
   }
 
   setLogLevel(key) {
-    switch (key) {
+    switch (key.toLowerCase()) {
       case "trace":
         this.#_logLevel = 0;
         break;
       case "debug":
         this.#_logLevel = 1;
         break;
-      case "info":
+      case "log":
         this.#_logLevel = 2;
         break;
       case "warn":
@@ -338,7 +335,6 @@ class BittyJs extends HTMLElement {
   }
 }
 
-/** internal */
 class BittyLog {
   constructor(level, payload) {
     this.level = level;

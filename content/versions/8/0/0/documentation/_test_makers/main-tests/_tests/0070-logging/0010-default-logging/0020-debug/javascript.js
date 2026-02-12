@@ -1,6 +1,6 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
+  $SIGNAL_NAME() {
     this.api.setLogLevel("debug");
-    this.api.debug("$EXAMPLE_NAME");
+    this.api.debug("debug: $EXAMPLE_NAME");
   }
 };

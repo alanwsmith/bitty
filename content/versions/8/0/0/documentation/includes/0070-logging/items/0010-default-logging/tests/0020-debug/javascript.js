@@ -1,6 +1,6 @@
 window.ClassA8D16 = class {
-  bittyReady() {
+  signal_A8D16() {
     this.api.setLogLevel("debug");
-    this.api.debug("example-A8D16");
+    this.api.debug("debug: example-A8D16");
   }
 };

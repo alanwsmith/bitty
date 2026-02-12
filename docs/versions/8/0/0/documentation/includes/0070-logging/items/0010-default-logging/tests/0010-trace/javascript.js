@@ -1,6 +1,6 @@
 window.ClassDDF5A = class {
-  bittyReady() {
+  signal_DDF5A() {
     this.api.setLogLevel("trace");
-    this.api.trace("example-DDF5A");
+    this.api.trace("trace: example-DDF5A");
   }
 };

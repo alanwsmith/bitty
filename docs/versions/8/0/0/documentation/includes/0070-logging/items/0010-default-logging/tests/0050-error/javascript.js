@@ -1,5 +1,5 @@
 window.Class4FDAF = class {
-  bittyReady() {
-    this.api.error("example-4FDAF");
+  signal_4FDAF() {
+    this.api.error("error: example-4FDAF");
   }
 };

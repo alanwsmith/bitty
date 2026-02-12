@@ -302,6 +302,9 @@ class BittyJs extends HTMLElement {
       case "error":
         this.#_logLevel = 4;
         break;
+      case "none":
+        this.#_logLevel = 5;
+        break;
       default:
         this.#_logLevel = 2;
     }

@@ -1,16 +1,21 @@
 window.Class8A1DD = class {
   bittyReady() {
-    this.api.trigger("signal_8A1DD");
+    this.api.trigger("run_signal_8A1DD");
   }
 
-  signal_8A1DD(ev, el) {
-    const styles = `
-:root {
-  --style-signal_8A1DD: crimson;
-}`;
-
+  run_signal_8A1DD(_, __) {
+    const styles = `:root { --el-8A1DD: crimson; }`;
     this.api.addStyles(styles);
+    this.api.trigger("verify_signal_8A1DD");
+  }
 
-    el.innerHTML = "in-progress";
+  verify_signal_8A1DD(_, el) {
+    const result = document
+      .documentElement
+      .style
+      .getPropertyValue("--el-8A1DD");
+    if (result === "crimson") {
+      el.innerHTML = "ok";
+    }
   }
 };

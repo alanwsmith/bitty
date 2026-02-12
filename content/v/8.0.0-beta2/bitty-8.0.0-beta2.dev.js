@@ -72,6 +72,12 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addStyles(styles) {
+    const newStylesheet = new CSSStyleSheet();
+    newStylesheet.replaceSync(styles);
+    document.adoptedStyleSheets.push(newStylesheet);
+  }
+
   /** internal */
   async connectedCallback() {
     await this.makeConnection();

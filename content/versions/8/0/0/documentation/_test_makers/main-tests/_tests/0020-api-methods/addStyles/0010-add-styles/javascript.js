@@ -1,16 +1,21 @@
 window.$CLASS_NAME = class {
   bittyReady() {
-    this.api.trigger("$SIGNAL_NAME");
+    this.api.trigger("run_$SIGNAL_NAME");
   }
 
-  $SIGNAL_NAME(ev, el) {
-    const styles = `
-:root {
-  --style-$SIGNAL_NAME: crimson;
-}`;
-
+  run_$SIGNAL_NAME(_, __) {
+    const styles = `:root { --$STYLE_NAME: crimson; }`;
     this.api.addStyles(styles);
+    this.api.trigger("verify_$SIGNAL_NAME");
+  }
 
-    el.innerHTML = "in-progress";
+  verify_$SIGNAL_NAME(_, el) {
+    const result = document
+      .documentElement
+      .style
+      .getPropertyValue("--$STYLE_NAME");
+    if (result === "crimson") {
+      el.innerHTML = "ok";
+    }
   }
 };

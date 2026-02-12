@@ -11,6 +11,10 @@ function splitSignalString(input) {
 
 class BittyJs extends HTMLElement {
   #_data = {};
+  #_logFunctions;
+  #_logLevel = 2;
+  #_logLevels = ["trace", "debug", "info", "warn", "error"];
+  #_logs = [];
   #_templates = {};
 
   constructor() {
@@ -81,6 +85,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async connectedCallback() {
+    this.initLogFunctions();
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
@@ -118,6 +123,13 @@ class BittyJs extends HTMLElement {
     } else {
       return JSON.parse(storage);
     }
+  }
+
+  initLogFunctions() {
+    this.#_logFunctions = [];
+    this.#_logFunctions[0] = (log) => {
+      console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
+    };
   }
 
   /** internal */
@@ -240,6 +252,28 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
+  setLogLevel(key) {
+    switch (key) {
+      case "trace":
+        this.#_logLevel = 0;
+        break;
+      case "debug":
+        this.#_logLevel = 1;
+        break;
+      case "info":
+        this.#_logLevel = 2;
+        break;
+      case "warn":
+        this.#_logLevel = 3;
+        break;
+      case "error":
+        this.#_logLevel = 4;
+        break;
+      default:
+        this.#_logLevel = 2;
+    }
+  }
+
   setStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
   }
@@ -252,9 +286,31 @@ class BittyJs extends HTMLElement {
     return this.#_templates[key];
   }
 
+  textFromTemplate(key, subs = []) {
+    return this.makeTEXT(this.template(key), subs);
+  }
+
+  trace(payload) {
+    const log = new BittyLog(0, payload);
+    this.#_logs.push(log);
+    if (this.#_logLevel === 0) {
+      this.#_logFunctions[0](log);
+    }
+  }
+
   trigger(signal) {
     const ev = new TriggerEvent(signal);
     this.dispatchEvent(ev);
+  }
+}
+
+/** internal */
+class BittyLog {
+  constructor(level, payload) {
+    this.level = level;
+    this.payload = payload;
+    this.timestamp = new Date();
+    this.performanceTime = performance.now();
   }
 }
 

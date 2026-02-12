@@ -86,6 +86,8 @@ class Test():
                 "CLICK_CLASS": f"el-{self.hash()}",
                 "STYLE_NAME": f"el-{self.hash()}",
                 "ID_NAME": f"id-{self.hash()}",
+                "EXAMPLE_NAME": f"example-{self.hash()}",
+                "HASH": self.hash(),
             }
         return template.substitute(data)
 

@@ -11,8 +11,10 @@ function splitSignalString(input) {
 
 class BittyJs extends HTMLElement {
   #_data = {};
+  #_logCollectionLevel = 2;
+  #_logCollectionFunctions;
+  #_logOutputLevel = 2;
   #_logOutputFunctions;
-  #_logLevel = 2;
   #_logLevels = ["trace", "debug", "log", "warn", "error", "none"];
   #_logs = [];
   #_templates = {};
@@ -87,7 +89,7 @@ class BittyJs extends HTMLElement {
   addLog(level, payload) {
     const log = new BittyLog(level, payload);
     this.#_logs.push(log);
-    if (this.#_logLevel <= level) {
+    if (this.#_logOutputLevel <= level) {
       this.#_logOutputFunctions[level](log);
     }
   }
@@ -280,28 +282,28 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
-  setLogLevel(key) {
+  setOutputLogLevel(key) {
     switch (key.toLowerCase()) {
       case "trace":
-        this.#_logLevel = 0;
+        this.#_logOutputLevel = 0;
         break;
       case "debug":
-        this.#_logLevel = 1;
+        this.#_logOutputLevel = 1;
         break;
       case "log":
-        this.#_logLevel = 2;
+        this.#_logOutputLevel = 2;
         break;
       case "warn":
-        this.#_logLevel = 3;
+        this.#_logOutputLevel = 3;
         break;
       case "error":
-        this.#_logLevel = 4;
+        this.#_logOutputLevel = 4;
         break;
       case "none":
-        this.#_logLevel = 5;
+        this.#_logOutputLevel = 5;
         break;
       default:
-        this.#_logLevel = 2;
+        this.#_logOutputLevel = 2;
     }
   }
 

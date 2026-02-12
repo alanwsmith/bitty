@@ -97,7 +97,7 @@ class BittyJs extends HTMLElement {
 
   async copyTEXT(selector) {
     const el = document.querySelector(selector);
-    const text = el.value;
+    const text = el.value !== undefined ? el.value : el.innerHTML;
     try {
       await navigator.clipboard.writeText(text);
     } catch (error) {
@@ -105,8 +105,6 @@ class BittyJs extends HTMLElement {
       // when those come online.
       console.error("Could not copy text to clipboard");
     }
-
-    //const text = el.value !== undefined ? el.value : el.innerHTML;
   }
 
   data(key) {

@@ -1,9 +1,9 @@
 window.Class5E0C7 = class {
   bittyReady() {
-    this.api.trigger("initial_signal_5E0C7");
+    this.api.trigger("run_signal_5E0C7");
   }
 
-  initial_signal_5E0C7(_, __) {
+  run_signal_5E0C7(_, __) {
     this.api.trigger("verify_signal_5E0C7");
   }
 

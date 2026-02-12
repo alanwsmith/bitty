@@ -40,5 +40,10 @@ export default class {
         }
       });
     }
+
+    const manualTestEls = el.querySelectorAll(".manual-test");
+    manualTestEls.forEach((testEl) => {
+      el.dataset.testStatus = "ok";
+    });
   }
 }

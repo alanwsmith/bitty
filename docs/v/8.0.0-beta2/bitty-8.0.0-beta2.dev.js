@@ -11,7 +11,7 @@ function splitSignalString(input) {
 
 class BittyJs extends HTMLElement {
   #_data = {};
-  #_logFunctions;
+  #_logOutputFunctions;
   #_logLevel = 2;
   #_logLevels = ["trace", "debug", "info", "warn", "error"];
   #_logs = [];
@@ -88,13 +88,13 @@ class BittyJs extends HTMLElement {
     const log = new BittyLog(level, payload);
     this.#_logs.push(log);
     if (this.#_logLevel <= level) {
-      this.#_logFunctions[level](log);
+      this.#_logOutputFunctions[level](log);
     }
   }
 
   /** internal */
   async connectedCallback() {
-    this.initLogFunctions();
+    this.initLogOutputFunctions();
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
@@ -146,11 +146,11 @@ class BittyJs extends HTMLElement {
     this.addLog(2, payload);
   }
 
-  initLogFunctions() {
-    this.#_logFunctions = [];
+  initLogOutputFunctions() {
+    this.#_logOutputFunctions = [];
     [0, 1, 2, 3, 4].forEach((index) => {
       const key = this.#_logLevels[index].toUpperCase();
-      this.#_logFunctions[index] = (log) => {
+      this.#_logOutputFunctions[index] = (log) => {
         if (typeof log.payload === "string") {
           console.log(`[${key}|${log.timestamp.toISOString()}] ${log.payload}`);
         } else {
@@ -162,7 +162,7 @@ class BittyJs extends HTMLElement {
       };
     });
     /*
-    this.#_logFunctions[0] = (log) => {
+    this.#_logOutputFunctions[0] = (log) => {
       if (typeof log.payload === "string") {
         console.log(`[TRACE|${log.timestamp.toISOString()}] ${log.payload}`);
       } else {
@@ -170,16 +170,16 @@ class BittyJs extends HTMLElement {
         console.log(log.payload);
       }
     };
-    this.#_logFunctions[1] = (log) => {
+    this.#_logOutputFunctions[1] = (log) => {
       console.log(`[DEBUG|${log.timestamp.toISOString()}] ${log.payload}`);
     };
-    this.#_logFunctions[2] = (log) => {
+    this.#_logOutputFunctions[2] = (log) => {
       console.log(`[INFO|${log.timestamp.toISOString()}] ${log.payload}`);
     };
-    this.#_logFunctions[3] = (log) => {
+    this.#_logOutputFunctions[3] = (log) => {
       console.log(`[WARN|${log.timestamp.toISOString()}] ${log.payload}`);
     };
-    this.#_logFunctions[4] = (log) => {
+    this.#_logOutputFunctions[4] = (log) => {
       console.log(`[ERROR|${log.timestamp.toISOString()}] ${log.payload}`);
     };
     */

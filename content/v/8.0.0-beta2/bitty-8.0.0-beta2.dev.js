@@ -164,14 +164,34 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getTEXT(url) {
-    let response = await fetch(url);
+  async getTEXT(url, subs = {}, options = {}) {
+    let response = await fetch(url, options);
     try {
       if (!response.ok) {
+        const bittyError = new BittyFetchError(
+          response.url,
+          response.status,
+          response.statusText,
+        );
+
+        this.addLog(4, bittyError);
+        // this.level = level;
+        // this.payload = payload;
+        // this.timestamp = new Date();
+        // this.performanceTime = performance.now();
+
         // TODO: Log error with BittyLog
+        throw bittyError;
       } else {
+        // TODO: Figure out what to do with errors here.
+        let content = await response.text();
+        for (let needle of Object.keys(subs)) {
+          content = content.replaceAll(needle, subs[needle]);
+        }
+        return new BittyRequestResponse(content, null);
       }
     } catch (error) {
+      return new BittyRequestResponse(undefined, error);
     }
   }
 
@@ -450,12 +470,35 @@ class BittyJs extends HTMLElement {
   }
 }
 
+class BittyFetchError {
+  constructor(url, status, statusText) {
+    this.url = url;
+    this.status = status;
+    this.statusText = statusText;
+  }
+}
+
 class BittyLog {
   constructor(level, payload) {
     this.level = level;
     this.payload = payload;
     this.timestamp = new Date();
     this.performanceTime = performance.now();
+  }
+}
+
+class BittyRequestResponse {
+  constructor(value, error) {
+    if (value !== undefined) {
+      this.value = value;
+    } else {
+      this.value = undefined;
+    }
+    if (error) {
+      this.error = error;
+    } else {
+      this.error = null;
+    }
   }
 }
 

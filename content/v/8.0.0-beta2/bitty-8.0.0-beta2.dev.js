@@ -96,7 +96,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async connectedCallback() {
-    this.initLogOutputFunctions();
+    this.initLogFunctions();
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
@@ -141,17 +141,55 @@ class BittyJs extends HTMLElement {
     this.addLog(4, payload);
   }
 
+  getLogLevelIndex(key) {
+    switch (key.toLowerCase()) {
+      case "trace":
+        return 0;
+        break;
+      case "debug":
+        return 1;
+        break;
+      case "log":
+        return 2;
+        break;
+      case "warn":
+        return 3;
+        break;
+      case "error":
+        return 4;
+        break;
+      case "none":
+        return 5;
+        break;
+      default:
+        return 2;
+    }
+  }
+
   log(payload) {
     this.addLog(2, payload);
   }
 
-  initLogOutputFunctions() {
+  initLogFunctions() {
     this.#_logOutputFunctions = [];
-    [0, 1, 2, 3, 4].forEach((index) => {
+    this.#_logCollectionFunctions = [];
+    [0, 1, 2, 3, 4].forEach((
+      index,
+    ) => {
+      this.#_logCollectionFunctions[index] = (payload) => {
+        const log = new BittyLog(index, payload);
+        this.#_logs.push(log);
+        if (this.#_logOutputLevel <= index) {
+          this.#_logOutputFunctions[level](log);
+        }
+      };
+
       const key = this.#_logLevels[index].toUpperCase();
       this.#_logOutputFunctions[index] = (log) => {
         if (typeof log.payload === "string") {
-          console.log(`[${key}|${log.timestamp.toISOString()}] ${log.payload}`);
+          console.log(
+            `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
+          );
         } else {
           console.log(
             `[${key}|${log.timestamp.toISOString()}|See object below]`,
@@ -278,6 +316,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  setCollectionLogFunction(key, fn) {
+    const logLevelIndex = this.getLogLevelIndex(key);
+    this.#_logCollectionFunctions[logLevelIndex] = fn;
+  }
+
   setCollectionLogLevel(key) {
     switch (key.toLowerCase()) {
       case "trace":
@@ -305,6 +348,11 @@ class BittyJs extends HTMLElement {
 
   setCSSProperty(key, value) {
     document.documentElement.style.setProperty(key, value);
+  }
+
+  setOutputLogFunction(key, fn) {
+    const logLevelIndex = this.getLogLevelIndex(key);
+    this.#_logOutputFunctions[logLevelIndex] = fn;
   }
 
   setOutputLogLevel(key) {

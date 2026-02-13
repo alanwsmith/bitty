@@ -4,11 +4,8 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(ev, el) {
-    const subs = [
-      "TARGET_ALFA",
-      "updated_alfa",
-    ];
-    const expected = "$EXAMPLE_NAME updated_alfa";
+    const subs = { "TARGET_$HASH": "UPDATED_$HASH" };
+    const expected = "$EXAMPLE_NAME UPDATED_$HASH";
     const got = this.api.textFromTemplate("$ID_NAME", subs);
     if (expected === got) {
       el.innerHTML = "ok";

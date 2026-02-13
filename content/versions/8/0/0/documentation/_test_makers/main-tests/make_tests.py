@@ -4,6 +4,7 @@ import os
 import uuid
 
 from pathlib import Path 
+from shutil import copy2
 from string import Template
 
 def slurp(path):
@@ -39,6 +40,18 @@ class ContentMover():
                             output= self.html_wrapper.substitute(data)
                             with open(output_path, "w") as _out:
                                 _out.write(output)
+
+    def move_other_files(self):
+        file_names = ["payload.txt", "payload.html", "payload.json", "payload.svg"]
+        for dir in os.walk("_tests"):
+            for file in dir[2]:
+                if file in file_names:
+                    input_path = f"{dir[0]}/{file}"
+                    parts = input_path.split("/")
+                    output_path = f"../../includes/{parts[1]}/items/{parts[2]}/tests/{parts[3]}/{parts[4]}"
+                    output_dir = os.path.dirname(output_path)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                    copy2(input_path, output_path)
 
 
 class Test():
@@ -180,4 +193,5 @@ if __name__ == "__main__":
     tm.make_tests()
     c = ContentMover()
     c.move_content()
+    c.move_other_files()
 

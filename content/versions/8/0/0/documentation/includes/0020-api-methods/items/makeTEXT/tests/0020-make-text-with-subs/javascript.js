@@ -4,9 +4,9 @@ window.Class6ADEB = class {
   }
 
   signal_6ADEB(ev, el) {
-    const template = "TARGET_ALFA";
-    const subs = ["TARGET_ALFA", "updated_alfa"];
-    const expected = "updated_alfa";
+    const template = "TARGET_6ADEB";
+    const subs = { "TARGET_6ADEB": "UPDATED_6ADEB" };
+    const expected = "UPDATED_6ADEB";
     const got = this.api.makeTEXT(template, subs);
     if (expected === got) {
       el.innerHTML = "ok";

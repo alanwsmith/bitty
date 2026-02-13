@@ -136,15 +136,6 @@ class BittyJs extends HTMLElement {
     this.addLog(4, payload);
   }
 
-  getStorageOr(key, alt) {
-    const storage = localStorage.getItem(key);
-    if (storage === null) {
-      return alt;
-    } else {
-      return JSON.parse(storage);
-    }
-  }
-
   getLogLevelIndex(key) {
     switch (key.toLowerCase()) {
       case "trace":
@@ -161,6 +152,26 @@ class BittyJs extends HTMLElement {
         return 5;
       default:
         return 2;
+    }
+  }
+
+  getStorageOr(key, alt) {
+    const storage = localStorage.getItem(key);
+    if (storage === null) {
+      return alt;
+    } else {
+      return JSON.parse(storage);
+    }
+  }
+
+  async getTEXT(url) {
+    let response = await fetch(url);
+    try {
+      if (!response.ok) {
+        // TODO: Log error with BittyLog
+      } else {
+      }
+    } catch (error) {
     }
   }
 

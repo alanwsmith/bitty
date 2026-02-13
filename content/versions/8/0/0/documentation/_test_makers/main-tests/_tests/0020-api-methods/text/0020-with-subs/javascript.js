@@ -6,7 +6,8 @@ window.$CLASS_NAME = class {
   $SIGNAL_NAME(ev, el) {
     const subs = { "TARGET_$HASH": "UPDATED_$HASH" };
     const expected = "$EXAMPLE_NAME UPDATED_$HASH";
-    const got = this.api.textFromTemplate("$ID_NAME", subs);
+    const got = this.api.text("$ID_NAME", subs);
+    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

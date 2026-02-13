@@ -5,7 +5,7 @@ window.Class594F6 = class {
 
   signal_594F6(ev, el) {
     const expected = "example-594F6";
-    const got = this.api.textFromTemplate("id-594F6");
+    const got = this.api.text("id-594F6");
     if (expected === got) {
       el.innerHTML = "ok";
     }

@@ -5,7 +5,7 @@ window.$CLASS_NAME = class {
 
   $SIGNAL_NAME(ev, el) {
     const expected = "$EXAMPLE_NAME";
-    const got = this.api.textFromTemplate("$ID_NAME");
+    const got = this.api.text("$ID_NAME");
     if (expected === got) {
       el.innerHTML = "ok";
     }

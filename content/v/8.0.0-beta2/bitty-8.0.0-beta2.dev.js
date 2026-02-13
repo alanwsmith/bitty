@@ -18,7 +18,7 @@ class BittyJs extends HTMLElement {
   #_logLevels = ["trace", "debug", "log", "warn", "error", "none"];
   #_logs = [];
   #_svgs = {};
-  #_templates = {};
+  #_text = {};
 
   constructor() {
     super();
@@ -108,7 +108,7 @@ class BittyJs extends HTMLElement {
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
       this.loadPageJSON();
-      this.loadPageTemplates();
+      this.loadPageTEXT();
       this.loadPageSVGs();
       await this.runBittyReady();
     }
@@ -303,14 +303,11 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  loadPageTemplates() {
+  loadPageTEXT() {
     document.querySelectorAll("script").forEach((el) => {
-      if (
-        (el.type === "text/html" || el.type === "text/plain") &&
-        el.id !== undefined
-      ) {
+      if (el.type === "text/plain" && el.id !== undefined) {
         try {
-          this.#_templates[el.id] = el.text;
+          this.#_text[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -475,12 +472,12 @@ class BittyJs extends HTMLElement {
     return svg;
   }
 
-  template(key) {
-    return this.#_templates[key];
-  }
-
-  textFromTemplate(key, subs = []) {
-    return this.makeTEXT(this.template(key), subs);
+  text(key, subs = {}) {
+    let content = this.#_text[key];
+    for (let needle of Object.keys(subs)) {
+      content = content.replaceAll(needle, subs[needle]);
+    }
+    return content;
   }
 
   trace(payload) {

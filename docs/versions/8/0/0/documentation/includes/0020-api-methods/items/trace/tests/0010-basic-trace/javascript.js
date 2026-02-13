@@ -1,10 +1,19 @@
 window.Class14556 = class {
   bittyReady() {
-    this.api.trigger("signal_14556");
+    this.api.trigger("automatic_test_signal_14556");
   }
 
-  signal_14556(_, el) {
-    this.api.trace("trace: example-14556");
-    console.log(this.api.logs());
+  automatic_test_signal_14556(_, el) {
+    this.api.setOutputLogLevel("none");
+    this.api.trace("example-14556");
+    const got = this.api.logs()[0].payload;
+    if (got === "example-14556") {
+      el.innerHTML = "ok";
+    }
+  }
+
+  manual_review_signal_14556(_, __) {
+    this.api.setOutputLogLevel("trace");
+    this.api.trace("Example log - example-14556");
   }
 };

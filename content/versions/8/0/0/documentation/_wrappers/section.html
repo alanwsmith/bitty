@@ -1,0 +1,46 @@
+<h2>[! include localFolder.path_string + "/name.html" !]</h2>
+<h3>Overview</h3>
+[! include localFolder.path_string + "/description.html" !]
+
+<h3>Items</h3>
+
+[! for lf2 in folders !]
+[! if 
+  lf2.path_part_strings[7] == localFolder.path_string + "/items" 
+  and lf2.path_part_strings[8]
+  and not lf2.path_part_strings[9]
+!]
+[! set working_dir = lf2.path_part_strings[8] !]
+[! set tests_dir = working_dir + "/tests" !]
+[! set name_file = working_dir + "/name.html" !]
+[! set description_file = working_dir + "/description.html" !]
+[! set notes_file = working_dir + "/notes.html" !]
+
+  <details class="default-flow section-wrapper" data-receive="sectionStatus">
+  <summary>
+    <span class="section-status"></span>
+    <strong>[! include name_file !]</strong> 
+  </summary>
+      <div class="header heading-color font-weight-900">Description</div>
+      [! include description_file !]
+
+      <div class="header heading-color font-weight-900">Examples</div>
+      [! for lf3 in folders !]
+        [! if 
+        lf3.path_part_strings[9] == tests_dir 
+        and lf3.path_part_strings[10]
+        and not lf3.path_part_strings[11]
+      !]
+        [! set current_test_root = lf3.path_part_strings[10] !]
+        [! set test_dir_name = lf3.path_parts[10] !]
+        [! set name_file = current_test_root + "/name.html" !]
+        [! set html_file = current_test_root + "/html.html" !]
+        [! set javascript_file = current_test_root + "/javascript.js" !]
+        [! include d.documentation_wrappers_dir + "/test.html" !]
+        [! endif !]
+      [! endfor !]
+
+      [! include notes_file !]
+  </details>
+[! endif !]
+[! endfor !]

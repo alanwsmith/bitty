@@ -92,12 +92,6 @@ class BittyJs extends HTMLElement {
     if (this.#_logOutputLevel <= level) {
       this.#_logOutputFunctions[level](log);
     }
-
-    // const log = new BittyLog(level, payload);
-    // this.#_logs.push(log);
-    // if (this.#_logOutputLevel <= level) {
-    //   this.#_logOutputFunctions[level](log);
-    // }
   }
 
   /** internal */

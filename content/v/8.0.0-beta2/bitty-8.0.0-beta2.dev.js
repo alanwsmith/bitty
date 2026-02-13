@@ -12,6 +12,7 @@ function splitSignalString(input) {
 class BittyJs extends HTMLElement {
   #_collectionLogLevel = 2;
   #_collectionLogFunctions;
+  #_html = {};
   #_json = {};
   #_outputLogLevel = 2;
   #_outputLogFunctions;
@@ -77,6 +78,26 @@ class BittyJs extends HTMLElement {
         }
       });
     });
+  }
+
+  addHTML(id, content) {
+    //Object.prototype.toString.call(obj);
+    if (typeof content === "string") {
+      this.#_html[id] = content;
+    } else if (
+      content instanceof HTMLElement
+    ) {
+      this.#_html[id] = content.outerHTML;
+
+      // console.log("ssssssssssssss");
+      // console.log(Object.prototype.toString.call(content));
+      // console.log(Object.prototype.toString.call(content));
+      // console.log(typeof content);
+      // console.log("ssssssssssssss");
+      //this.#_html[id] = JSON.stringify(content);
+    } else {
+      console.log("here1");
+    }
   }
 
   addJSON(id, content) {
@@ -191,13 +212,11 @@ class BittyJs extends HTMLElement {
           response.status,
           response.statusText,
         );
-
         this.addLog(4, bittyError);
         // this.level = level;
         // this.payload = payload;
         // this.timestamp = new Date();
         // this.performanceTime = performance.now();
-
         // TODO: Log error with BittyLog
         throw bittyError;
       } else {
@@ -211,6 +230,12 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       return new BittyRequestResponse(undefined, error);
     }
+  }
+
+  html(id, subs = {}) {
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = this.#_html[id];
+    return skeleton.content.cloneNode(true);
   }
 
   log(payload) {

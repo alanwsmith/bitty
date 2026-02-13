@@ -9,8 +9,6 @@ window.$CLASS_NAME = class {
 
   $SIGNAL_NAME(ev, el) {
     const html = this.api.html(this.#id);
-    if (this.api.html(this.#id).status === "ok") {
-      el.innerHTML = "ok";
-    }
+    el.innerHTML = html.querySelector("div").innerHTML;
   }
 };

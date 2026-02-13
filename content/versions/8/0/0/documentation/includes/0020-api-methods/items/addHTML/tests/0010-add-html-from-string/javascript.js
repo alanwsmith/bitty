@@ -9,8 +9,6 @@ window.Class54575 = class {
 
   signal_54575(ev, el) {
     const html = this.api.html(this.#id);
-    if (this.api.html(this.#id).status === "ok") {
-      el.innerHTML = "ok";
-    }
+    el.innerHTML = html.querySelector("div").innerHTML;
   }
 };

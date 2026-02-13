@@ -1,0 +1,53 @@
+<h2>Notes</h2>
+<ul>
+<li>
+<p>This script isn't really bitty specific.
+All the methods are generic with no requirement
+for adding <code>data-*</code> attributes to any elements.
+bitty is merely used to wrap the class and load
+it.</p>
+</li>
+<li>
+<p>Adding <code>open</code> attributes to
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag other html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag other html">details</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>  elements directly in the HTML opens
+them by default. If an element with an
+open attribute is closed it stays closed
+on the next refresh regardless of
+if the <code>open</code> attribute exists or not.</p>
+<p>That provides a way for doing things
+like opening an introduction section on
+a page by default and then preventing
+it from re-opening if the user decides
+to close it.</p>
+</li>
+<li>
+<p>Nested
+<code class="code-span lang-html"><span class="line-marker"></span><span class="text html basic"><span class="meta tag other html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag other html">details</span><span class="punctuation definition tag end html">&gt;</span></span></span></code>tags maintain their state regardless of their
+parent. For example, if you do the following:</p>
+<ul>
+<li>open a parent tag</li>
+<li>open a child tag</li>
+<li>close the parent tag</li>
+<li>re-open the parent tag</li>
+</ul>
+<p>The child tag will be open when the
+parent is re-opened.</p>
+</li>
+<li>
+<p>If the number of details elements
+on the page changes when it's
+refreshed/reloaded everything goes
+back to its default state (i.e.
+any tags with <code>open</code> attributes are
+opened and all the other ones are
+closed).</p>
+</li>
+<li>
+<p>Data is stored with a key that
+uses the <code class="code-span lang-js"><span class="line-marker"></span><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">location</span><span class="punctuation accessor js">.</span><span class="meta property object js">pathname</span></span></code>.
+If a single URL is used to host multiple
+content pages (e.g. in a single page app)
+things will get weird. The code would
+need to be updated to accommodate that.</p>
+</li>
+</ul>

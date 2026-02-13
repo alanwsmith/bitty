@@ -180,35 +180,55 @@ class BittyJs extends HTMLElement {
     ) => {
       this.#_collectionLogFunctions[index] = (payload) => {
         return new BittyLog(index, payload);
-        //this.#_logs.push(log);
-        // if (this.#_outputLogLevel <= index) {
-        //   this.#_outputLogFunctions[index](log);
-        // }
       };
 
       const key = this.#_logLevels[index].toUpperCase();
       this.#_outputLogFunctions[index] = (log) => {
         if (log.timestamp !== undefined) {
           if (typeof log.payload === "string") {
-            console.log(
-              `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
-            );
+            if (log.level === undefined || log.level <= 2) {
+              console.log(
+                `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
+              );
+            } else {
+              console.error(
+                `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
+              );
+            }
           } else {
-            console.log(
-              `[${key}|${log.timestamp.toISOString()}|See object below]`,
-            );
+            if (log.level === undefined || log.level <= 2) {
+              console.log(
+                `[${key}|${log.timestamp.toISOString()}|See object below]`,
+              );
+            } else {
+              console.error(
+                `[${key}|${log.timestamp.toISOString()}|See object below]`,
+              );
+            }
             console.log(log.payload);
           }
         } else {
           const localTimestamp = new Date();
           if (typeof log.payload === "string") {
-            console.log(
-              `[${key}|${localTimestamp.toISOString()}] ${log.payload}`,
-            );
+            if (log.level === undefined || log.level <= 2) {
+              console.log(
+                `[${key}|${localTimestamp.toISOString()}] ${log.payload}`,
+              );
+            } else {
+              console.error(
+                `[${key}|${localTimestamp.toISOString()}] ${log.payload}`,
+              );
+            }
           } else {
-            console.log(
-              `[${key}|${localTimestamp.toISOString()}|See object below]`,
-            );
+            if (log.level === undefined || log.level <= 2) {
+              console.log(
+                `[${key}|${localTimestamp.toISOString()}|See object below]`,
+              );
+            } else {
+              console.error(
+                `[${key}|${localTimestamp.toISOString()}|See object below]`,
+              );
+            }
             console.log(log.payload);
           }
         }

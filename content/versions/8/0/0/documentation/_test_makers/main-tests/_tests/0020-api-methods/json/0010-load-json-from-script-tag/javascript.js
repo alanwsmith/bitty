@@ -4,6 +4,6 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(ev, el) {
-    el.innerHTML = this.api.data("$ID_NAME").status;
+    el.innerHTML = this.api.json("$ID_NAME").status;
   }
 };

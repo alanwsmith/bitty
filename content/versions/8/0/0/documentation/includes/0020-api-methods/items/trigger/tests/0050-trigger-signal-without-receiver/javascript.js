@@ -1,13 +1,20 @@
 window.Class5E0C7 = class {
+  #gotNull = false;
+
   bittyReady() {
     this.api.trigger("run_signal_5E0C7");
   }
 
-  run_signal_5E0C7(_, __) {
+  run_signal_5E0C7(_, x) {
+    if (x === null) {
+      this.#gotNull = true;
+    }
     this.api.trigger("verify_signal_5E0C7");
   }
 
   verify_signal_5E0C7(_, el) {
-    el.innerHTML = "ok";
+    if (this.#gotNull === true) {
+      el.innerHTML = "ok";
+    }
   }
 };

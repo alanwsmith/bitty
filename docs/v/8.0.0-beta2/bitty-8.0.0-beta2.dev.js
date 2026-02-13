@@ -81,22 +81,20 @@ class BittyJs extends HTMLElement {
   }
 
   addHTML(id, content) {
-    //Object.prototype.toString.call(obj);
     if (typeof content === "string") {
       this.#_html[id] = content;
+    } else if (
+      content instanceof DocumentFragment
+    ) {
+      const copier = document.createElement("div");
+      copier.appendChild(content.cloneNode(true));
+      this.#_html[id] = copier.innerHTML;
     } else if (
       content instanceof HTMLElement
     ) {
       this.#_html[id] = content.outerHTML;
-
-      // console.log("ssssssssssssss");
-      // console.log(Object.prototype.toString.call(content));
-      // console.log(Object.prototype.toString.call(content));
-      // console.log(typeof content);
-      // console.log("ssssssssssssss");
-      //this.#_html[id] = JSON.stringify(content);
     } else {
-      console.log("here1");
+      console.error("Unknown type of input sent to `addHTML`");
     }
   }
 

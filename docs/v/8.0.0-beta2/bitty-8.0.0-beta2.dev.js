@@ -82,6 +82,8 @@ class BittyJs extends HTMLElement {
   addJSON(id, content) {
     if (typeof content === "string") {
       this.#_json[id] = content;
+    } else {
+      this.#_json[id] = JSON.stringify(content);
     }
   }
 

@@ -435,7 +435,7 @@ class BittyJs extends HTMLElement {
   // awaiting it won't make a real impact
   // since all it does is fire the event.
   async trigger(signal) {
-    const ev = new TriggerEvent(signal);
+    const ev = new BittyTriggerEvent(signal);
     this.dispatchEvent(ev);
   }
 
@@ -454,10 +454,13 @@ class BittyLog {
 }
 
 /** internal */
-class TriggerEvent extends Event {
+class BittyTriggerEvent extends Event {
   constructor(signals) {
     super("bittyapitrigger", { bubbles: true });
-    this.bittyPayload = { target: { dataset: { send: signals } } };
+    this.bittyPayload = {
+      type: "bittyapitrigger",
+      target: { dataset: { send: signals } },
+    };
   }
 }
 

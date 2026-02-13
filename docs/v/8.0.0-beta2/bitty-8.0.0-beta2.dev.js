@@ -10,7 +10,7 @@ function splitSignalString(input) {
 }
 
 class BittyJs extends HTMLElement {
-  #_data = {};
+  #_json = {};
   #_collectionLogLevel = 2;
   #_collectionLogFunctions;
   #_outputLogLevel = 2;
@@ -106,7 +106,7 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
-      this.loadPageData();
+      this.loadPageJSON();
       this.loadPageTemplates();
       await this.runBittyReady();
     }
@@ -124,8 +124,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  data(key) {
-    return this.#_data[key];
+  json(key) {
+    return this.#_json[key];
   }
 
   debug(payload) {
@@ -268,11 +268,11 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  loadPageData() {
+  loadPageJSON() {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.id !== undefined) {
         try {
-          this.#_data[el.id] = JSON.parse(el.text);
+          this.#_json[el.id] = JSON.parse(el.text);
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -281,7 +281,7 @@ class BittyJs extends HTMLElement {
       }
       if (el.type === "text/plain" && el.id !== undefined) {
         try {
-          this.#_data[el.id] = el.text;
+          this.#_json[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.

@@ -149,22 +149,16 @@ class BittyJs extends HTMLElement {
     switch (key.toLowerCase()) {
       case "trace":
         return 0;
-        break;
       case "debug":
         return 1;
-        break;
       case "log":
         return 2;
-        break;
       case "warn":
         return 3;
-        break;
       case "error":
         return 4;
-        break;
       case "none":
         return 5;
-        break;
       default:
         return 2;
     }

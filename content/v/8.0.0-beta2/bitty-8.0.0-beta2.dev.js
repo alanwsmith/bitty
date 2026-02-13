@@ -87,11 +87,17 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addLog(level, payload) {
-    const log = new BittyLog(level, payload);
+    const log = this.#_logCollectionFunctions[level](payload);
     this.#_logs.push(log);
     if (this.#_logOutputLevel <= level) {
       this.#_logOutputFunctions[level](log);
     }
+
+    // const log = new BittyLog(level, payload);
+    // this.#_logs.push(log);
+    // if (this.#_logOutputLevel <= level) {
+    //   this.#_logOutputFunctions[level](log);
+    // }
   }
 
   /** internal */
@@ -397,11 +403,7 @@ class BittyJs extends HTMLElement {
   }
 
   trace(payload) {
-    const log = this.#_logCollectionFunctions[0](payload);
-    this.#_logs.push(log);
-    if (this.#_logOutputLevel <= 0) {
-      this.#_logOutputFunctions[0](log);
-    }
+    this.addLog(0, payload);
   }
 
   trigger(signal) {

@@ -10,13 +10,14 @@ function splitSignalString(input) {
 }
 
 class BittyJs extends HTMLElement {
-  #_json = {};
   #_collectionLogLevel = 2;
   #_collectionLogFunctions;
+  #_json = {};
   #_outputLogLevel = 2;
   #_outputLogFunctions;
   #_logLevels = ["trace", "debug", "log", "warn", "error", "none"];
   #_logs = [];
+  #_svgs = {};
   #_templates = {};
 
   constructor() {
@@ -108,6 +109,7 @@ class BittyJs extends HTMLElement {
       this.addEventListeners();
       this.loadPageJSON();
       this.loadPageTemplates();
+      this.loadPageSVGs();
       await this.runBittyReady();
     }
   }
@@ -279,9 +281,18 @@ class BittyJs extends HTMLElement {
           console.log(error);
         }
       }
-      if (el.type === "text/plain" && el.id !== undefined) {
+    });
+  }
+
+  /** internal */
+  loadPageSVGs() {
+    document.querySelectorAll("script").forEach((el) => {
+      if (
+        (el.type === "image/svg+xml") &&
+        el.id !== undefined
+      ) {
         try {
-          this.#_json[el.id] = el.text;
+          this.#_svgs[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -334,6 +345,15 @@ class BittyJs extends HTMLElement {
       }
     }
     // TODO: Log error if no connection is made
+  }
+
+  makeSVG(template, subs = {}) {
+    // TODO: Add test for makeSVG
+    const tmpl = document.createElement("template");
+    tmpl.innerHTML = this.makeTEXT(template, subs).trim();
+    const wrapper = tmpl.content.cloneNode(true);
+    const svg = wrapper.querySelector("svg");
+    return svg;
   }
 
   makeTEXT(template, subs = {}) {
@@ -443,6 +463,10 @@ class BittyJs extends HTMLElement {
 
   async sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  svg(key, subs = {}) {
+    return this.makeSVG(this.#_svgs[key], subs);
   }
 
   template(key) {

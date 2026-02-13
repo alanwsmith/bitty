@@ -281,6 +281,12 @@ class BittyJs extends HTMLElement {
     return template;
   }
 
+  outputLogLevel() {
+    return this.#_logLevels[
+      this.#_logOutputLevel
+    ];
+  }
+
   /** internal */
   async processEvent(ev) {
     // handle trigger signals
@@ -292,7 +298,6 @@ class BittyJs extends HTMLElement {
         const receivers = document.querySelectorAll(
           `[data-receive~='${signal}']`,
         );
-
         if (receivers.length === 0) {
           this.conn[signal](ev, null);
         } else {

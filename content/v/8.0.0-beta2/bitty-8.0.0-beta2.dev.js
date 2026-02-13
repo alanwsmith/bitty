@@ -188,15 +188,29 @@ class BittyJs extends HTMLElement {
 
       const key = this.#_logLevels[index].toUpperCase();
       this.#_outputLogFunctions[index] = (log) => {
-        if (typeof log.payload === "string") {
-          console.log(
-            `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
-          );
+        if (log.timestamp !== undefined) {
+          if (typeof log.payload === "string") {
+            console.log(
+              `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
+            );
+          } else {
+            console.log(
+              `[${key}|${log.timestamp.toISOString()}|See object below]`,
+            );
+            console.log(log.payload);
+          }
         } else {
-          console.log(
-            `[${key}|${log.timestamp.toISOString()}|See object below]`,
-          );
-          console.log(log.payload);
+          const localTimestamp = new Date();
+          if (typeof log.payload === "string") {
+            console.log(
+              `[${key}|${localTimestamp.toISOString()}] ${log.payload}`,
+            );
+          } else {
+            console.log(
+              `[${key}|${localTimestamp.toISOString()}|See object below]`,
+            );
+            console.log(log.payload);
+          }
         }
       };
     });

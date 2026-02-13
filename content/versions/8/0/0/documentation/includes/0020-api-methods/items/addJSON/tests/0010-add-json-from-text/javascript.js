@@ -8,8 +8,7 @@ window.ClassADD80 = class {
   }
 
   signal_ADD80(ev, el) {
-    if (this.api.json(this.#id).status === "ok") {
-      el.innerHTML = "ok";
-    }
+    const json = this.api.json(this.#id);
+    el.innerHTML = json.status;
   }
 };

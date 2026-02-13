@@ -8,8 +8,7 @@ window.ClassE5DE2 = class {
   }
 
   signal_E5DE2(ev, el) {
-    if (this.api.json(this.#id).status === "ok") {
-      el.innerHTML = "ok";
-    }
+    const json = this.api.json(this.#id);
+    el.innerHTML = json.status;
   }
 };

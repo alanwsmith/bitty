@@ -342,28 +342,7 @@ class BittyJs extends HTMLElement {
   }
 
   setOutputLogLevel(key) {
-    switch (key.toLowerCase()) {
-      case "trace":
-        this.#_logOutputLevel = 0;
-        break;
-      case "debug":
-        this.#_logOutputLevel = 1;
-        break;
-      case "log":
-        this.#_logOutputLevel = 2;
-        break;
-      case "warn":
-        this.#_logOutputLevel = 3;
-        break;
-      case "error":
-        this.#_logOutputLevel = 4;
-        break;
-      case "none":
-        this.#_logOutputLevel = 5;
-        break;
-      default:
-        this.#_logOutputLevel = 2;
-    }
+    this.#_logOutputLevel = this.getLogLevelIndex(key);
   }
 
   setStorage(key, data) {

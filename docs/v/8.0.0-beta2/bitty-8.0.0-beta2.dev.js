@@ -114,7 +114,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async copyTEXT(selector) {
+  async copy(selector) {
     const el = document.querySelector(selector);
     const text = el.value !== undefined ? el.value : el.innerHTML;
     try {

@@ -347,13 +347,11 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
+  // TODO: Add a key to this and load it into
+  // the pages this.api.svg() collection.
+  // Remove the subs from this. They're done
+  // when the `this.api.svg(key)` is called.
   makeSVG(template, subs = {}) {
-    // TODO: Add test for makeSVG
-    const tmpl = document.createElement("template");
-    tmpl.innerHTML = this.makeTEXT(template, subs).trim();
-    const wrapper = tmpl.content.cloneNode(true);
-    const svg = wrapper.querySelector("svg");
-    return svg;
   }
 
   makeTEXT(template, subs = {}) {
@@ -466,7 +464,15 @@ class BittyJs extends HTMLElement {
   }
 
   svg(key, subs = {}) {
-    return this.makeSVG(this.#_svgs[key], subs);
+    const tmpl = document.createElement("template");
+    let content = this.#_svgs[key];
+    for (let needle of Object.keys(subs)) {
+      content = content.replaceAll(needle, subs[needle]);
+    }
+    tmpl.innerHTML = content;
+    const wrapper = tmpl.content.cloneNode(true);
+    const svg = wrapper.querySelector("svg");
+    return svg;
   }
 
   template(key) {

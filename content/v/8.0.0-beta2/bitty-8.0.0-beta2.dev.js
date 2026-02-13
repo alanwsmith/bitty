@@ -329,14 +329,8 @@ class BittyJs extends HTMLElement {
     for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
       const signalParts = rawSignalString.split(":");
       signalParts.reverse();
-      if (signalParts.length > 1) {
-        console.log(signalParts);
-      }
       const signal = signalParts[0];
       const doAwait = signalParts[1] === "await" ? true : false;
-      if (doAwait === true) {
-        console.log("here3");
-      }
       if (typeof this.conn[signal] === "function") {
         const receivers = document.querySelectorAll(
           `[data-receive~='${signal}']`,
@@ -440,7 +434,7 @@ class BittyJs extends HTMLElement {
   // TODO: Call this async even though
   // awaiting it won't make a real impact
   // since all it does is fire the event.
-  trigger(signal) {
+  async trigger(signal) {
     const ev = new TriggerEvent(signal);
     this.dispatchEvent(ev);
   }

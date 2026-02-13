@@ -1,7 +1,7 @@
 window.$CLASS_NAME = class {
   $SIGNAL_NAME() {
-    this.api.setOutputLogLevel("trace");
-    this.api.setOutputLogFunction("trace", (log) => {
+    this.api.setOutputLogLevel("warn");
+    this.api.setOutputLogFunction("warn", (log) => {
       console.log(`$${new Date()} - Custom Log Output - see below`);
       console.log({
         log_type: "some_name",
@@ -9,6 +9,6 @@ window.$CLASS_NAME = class {
         whatever: ["alfa", "bravo", "charlie"],
       });
     });
-    this.api.trace("custom trace output $EXAMPLE_NAME");
+    this.api.warn("custom warn output $EXAMPLE_NAME");
   }
 };

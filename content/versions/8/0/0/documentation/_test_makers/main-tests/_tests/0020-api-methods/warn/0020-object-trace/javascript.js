@@ -5,7 +5,7 @@ window.$CLASS_NAME = class {
 
   automatic_test_$SIGNAL_NAME(_, el) {
     this.api.setOutputLogLevel("none");
-    this.api.trace({ example: "$EXAMPLE_NAME" });
+    this.api.warn({ example: "$EXAMPLE_NAME" });
     const got = this.api.logs()[0].payload.example;
     if (got === "$EXAMPLE_NAME") {
       el.innerHTML = "ok";
@@ -13,7 +13,7 @@ window.$CLASS_NAME = class {
   }
 
   manual_review_$SIGNAL_NAME(_, __) {
-    this.api.setOutputLogLevel("trace");
-    this.api.trace({ example: "$EXAMPLE_NAME" });
+    this.api.setOutputLogLevel("warn");
+    this.api.warn({ example: "$EXAMPLE_NAME" });
   }
 };

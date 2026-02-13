@@ -79,7 +79,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  addCSS(styles) {
+  addStylesheet(styles) {
     const newStylesheet = new CSSStyleSheet();
     newStylesheet.replaceSync(styles);
     document.adoptedStyleSheets.push(newStylesheet);
@@ -351,11 +351,8 @@ class BittyJs extends HTMLElement {
   makeSVG(template, subs = {}) {
   }
 
-  makeTEXT(template, subs = {}) {
-    for (let key of Object.keys(subs)) {
-      template = template.replaceAll(key, subs[key]);
-    }
-    return template;
+  makeTEXT(id, content) {
+    this.#_text[id] = content;
   }
 
   outputLogLevel() {

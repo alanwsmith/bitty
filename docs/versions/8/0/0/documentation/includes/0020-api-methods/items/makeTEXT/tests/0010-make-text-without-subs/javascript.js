@@ -4,9 +4,10 @@ window.ClassCCFCE = class {
   }
 
   signal_CCFCE(ev, el) {
-    const template = "content for signal_CCFCE";
-    const got = this.api.makeTEXT(template);
-    if (got === template) {
+    const key = "id-CCFCE";
+    const content = "content-CCFCE";
+    this.api.makeTEXT(key, content);
+    if (this.api.text(key) === content) {
       el.innerHTML = "ok";
     }
   }

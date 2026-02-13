@@ -7,13 +7,13 @@ window.$CLASS_NAME = class {
   }
 
   automatic_test_$SIGNAL_NAME(_, el) {
-    this.api.setCollectionLogFunction("trace", (payload) => {
+    this.api.setCollectionLogFunction("debug", (payload) => {
       return {
         custom_key: "custom_value_$HASH",
         payload: payload,
       };
     });
-    this.api.trace({ object_example: "test_value_$HASH" });
+    this.api.debug({ object_example: "test_value_$HASH" });
     if (this.api.logs()[0].custom_key === "custom_value_$HASH") {
       el.innerHTML = "ok";
     }
@@ -24,9 +24,9 @@ window.$CLASS_NAME = class {
   // example button is activated manually.
 
   $SIGNAL_NAME(_, __) {
-    this.api.setOutputLogLevel("trace");
-    this.api.trace("text based log from custome example $HASH");
-    this.api.trace(
+    this.api.setOutputLogLevel("debug");
+    this.api.debug("text based log from custome example $HASH");
+    this.api.debug(
       { exampleLogObject: "$HASH", message: "alfa bravo charle" },
     );
   }

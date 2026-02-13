@@ -4,7 +4,7 @@ window.Class45C38 = class {
   }
 
   automatic_test_signal_45C38(_, el) {
-    //this.api.setOutputLogLevel("none");
+    this.api.setOutputLogLevel("none");
     this.api.trace({ example: "example-45C38" });
     const got = this.api.logs()[0].payload.example;
     if (got === "example-45C38") {

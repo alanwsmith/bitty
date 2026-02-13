@@ -177,11 +177,11 @@ class BittyJs extends HTMLElement {
       index,
     ) => {
       this.#_logCollectionFunctions[index] = (payload) => {
-        const log = new BittyLog(index, payload);
-        this.#_logs.push(log);
-        if (this.#_logOutputLevel <= index) {
-          this.#_logOutputFunctions[level](log);
-        }
+        return new BittyLog(index, payload);
+        //this.#_logs.push(log);
+        // if (this.#_logOutputLevel <= index) {
+        //   this.#_logOutputFunctions[index](log);
+        // }
       };
 
       const key = this.#_logLevels[index].toUpperCase();
@@ -397,7 +397,11 @@ class BittyJs extends HTMLElement {
   }
 
   trace(payload) {
-    this.addLog(0, payload);
+    const log = this.#_logCollectionFunctions[0](payload);
+    this.#_logs.push(log);
+    if (this.#_logOutputLevel <= 0) {
+      this.#_logOutputFunctions[0](log);
+    }
   }
 
   trigger(signal) {

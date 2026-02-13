@@ -1,6 +1,19 @@
 window.$CLASS_NAME = class {
-  $SIGNAL_NAME() {
+  bittyReady() {
+    this.api.trigger("automatic_test_$SIGNAL_NAME");
+  }
+
+  automatic_test_$SIGNAL_NAME(_, el) {
+    //this.api.setOutputLogLevel("none");
+    this.api.trace({ example: "$EXAMPLE_NAME" });
+    const got = this.api.logs()[0].payload.example;
+    if (got === "$EXAMPLE_NAME") {
+      el.innerHTML = "ok";
+    }
+  }
+
+  manual_review_$SIGNAL_NAME(_, __) {
     this.api.setOutputLogLevel("trace");
-    this.api.trace({ trace: "$EXAMPLE_NAME" });
+    this.api.trace({ example: "$EXAMPLE_NAME" });
   }
 };

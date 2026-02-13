@@ -305,14 +305,9 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
-  makeTEXT(template, subs = []) {
-    if (subs.length % 2 === 1) {
-      return undefined;
-    }
-    while (subs.length > 0) {
-      const find = subs.shift();
-      const replace = subs.shift();
-      template = template.replaceAll(find, replace);
+  makeTEXT(template, subs = {}) {
+    for (let key of Object.keys(subs)) {
+      template = template.replaceAll(key, subs[key]);
     }
     return template;
   }

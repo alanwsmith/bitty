@@ -1,6 +1,16 @@
 window.ClassA97CA = class {
-  signal_A97CA() {
+  bittyReady() {
+    this.api.trigger("signal_A97CA");
+  }
+
+  signal_A97CA(_, el) {
     this.api.setCollectionLogLevel("trace");
-    this.api.trace("set log level to trace: example-A97CA");
+    if (this.api.collectionLogLevel() === "trace") {
+      el.innerHTML = "ok";
+    } else {
+      console.log(
+        this.api.collectionLogLevel(),
+      );
+    }
   }
 };

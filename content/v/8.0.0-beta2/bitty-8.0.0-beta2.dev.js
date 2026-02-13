@@ -94,6 +94,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  collectionLogLevel() {
+    return this.#_logLevels[this.#_logCollectionLevel];
+  }
+
   /** internal */
   async connectedCallback() {
     this.initLogFunctions();
@@ -282,9 +286,7 @@ class BittyJs extends HTMLElement {
   }
 
   outputLogLevel() {
-    return this.#_logLevels[
-      this.#_logOutputLevel
-    ];
+    return this.#_logLevels[this.#_logOutputLevel];
   }
 
   /** internal */
@@ -327,28 +329,7 @@ class BittyJs extends HTMLElement {
   }
 
   setCollectionLogLevel(key) {
-    switch (key.toLowerCase()) {
-      case "trace":
-        this.#_logOutputLevel = 0;
-        break;
-      case "debug":
-        this.#_logOutputLevel = 1;
-        break;
-      case "log":
-        this.#_logOutputLevel = 2;
-        break;
-      case "warn":
-        this.#_logOutputLevel = 3;
-        break;
-      case "error":
-        this.#_logOutputLevel = 4;
-        break;
-      case "none":
-        this.#_logOutputLevel = 5;
-        break;
-      default:
-        this.#_logOutputLevel = 2;
-    }
+    this.#_logCollectionLevel = this.getLogLevelIndex(key);
   }
 
   setCSSProperty(key, value) {

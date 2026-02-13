@@ -1,6 +1,16 @@
 window.$CLASS_NAME = class {
-  $SIGNAL_NAME() {
+  bittyReady() {
+    this.api.trigger("$SIGNAL_NAME");
+  }
+
+  $SIGNAL_NAME(_, el) {
     this.api.setCollectionLogLevel("trace");
-    this.api.trace("set log level to trace: $EXAMPLE_NAME");
+    if (this.api.collectionLogLevel() === "trace") {
+      el.innerHTML = "ok";
+    } else {
+      console.log(
+        this.api.collectionLogLevel(),
+      );
+    }
   }
 };

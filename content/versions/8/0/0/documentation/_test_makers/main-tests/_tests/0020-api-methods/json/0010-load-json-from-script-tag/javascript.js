@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
     this.api.trigger("$SIGNAL_NAME");
   }
 
-  $SIGNAL_NAME(ev, el) {
+  $SIGNAL_NAME(_, el) {
     el.innerHTML = this.api.json("$ID_NAME").status;
   }
 };

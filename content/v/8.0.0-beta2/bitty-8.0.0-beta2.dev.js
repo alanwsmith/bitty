@@ -79,11 +79,10 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  addStylesheet(styles) {
-    const newStylesheet = new CSSStyleSheet();
-    newStylesheet.replaceSync(styles);
-    document.adoptedStyleSheets.push(newStylesheet);
-    return newStylesheet;
+  addJSON(id, content) {
+    if (typeof content === "string") {
+      this.#_json[id] = content;
+    }
   }
 
   /** internal */
@@ -93,6 +92,21 @@ class BittyJs extends HTMLElement {
     if (this.#_outputLogLevel <= level) {
       this.#_outputLogFunctions[level](log);
     }
+  }
+
+  addSVG(id, content) {
+    this.#_svgs[id] = content;
+  }
+
+  addStylesheet(styles) {
+    const newStylesheet = new CSSStyleSheet();
+    newStylesheet.replaceSync(styles);
+    document.adoptedStyleSheets.push(newStylesheet);
+    return newStylesheet;
+  }
+
+  addTEXT(id, content) {
+    this.#_text[id] = content;
   }
 
   collectionLogLevel() {
@@ -126,8 +140,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  json(key) {
-    return this.#_json[key];
+  json(id, subs = {}) {
+    return JSON.parse(this.#_json[id]);
   }
 
   debug(payload) {
@@ -274,7 +288,7 @@ class BittyJs extends HTMLElement {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.id !== undefined) {
         try {
-          this.#_json[el.id] = JSON.parse(el.text);
+          this.#_json[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -342,14 +356,6 @@ class BittyJs extends HTMLElement {
       }
     }
     // TODO: Log error if no connection is made
-  }
-
-  makeSVG(id, content) {
-    this.#_svgs[id] = content;
-  }
-
-  makeTEXT(id, content) {
-    this.#_text[id] = content;
   }
 
   outputLogLevel() {

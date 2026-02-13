@@ -11,10 +11,10 @@ function splitSignalString(input) {
 
 class BittyJs extends HTMLElement {
   #_data = {};
-  #_logCollectionLevel = 2;
-  #_logCollectionFunctions;
-  #_logOutputLevel = 2;
-  #_logOutputFunctions;
+  #_collectionLogLevel = 2;
+  #_collectionLogFunctions;
+  #_outputLogLevel = 2;
+  #_outputLogFunctions;
   #_logLevels = ["trace", "debug", "log", "warn", "error", "none"];
   #_logs = [];
   #_templates = {};
@@ -87,15 +87,15 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addLog(level, payload) {
-    const log = this.#_logCollectionFunctions[level](payload);
+    const log = this.#_collectionLogFunctions[level](payload);
     this.#_logs.push(log);
-    if (this.#_logOutputLevel <= level) {
-      this.#_logOutputFunctions[level](log);
+    if (this.#_outputLogLevel <= level) {
+      this.#_outputLogFunctions[level](log);
     }
   }
 
   collectionLogLevel() {
-    return this.#_logLevels[this.#_logCollectionLevel];
+    return this.#_logLevels[this.#_collectionLogLevel];
   }
 
   /** internal */
@@ -169,21 +169,21 @@ class BittyJs extends HTMLElement {
   }
 
   initLogFunctions() {
-    this.#_logOutputFunctions = [];
-    this.#_logCollectionFunctions = [];
+    this.#_outputLogFunctions = [];
+    this.#_collectionLogFunctions = [];
     [0, 1, 2, 3, 4].forEach((
       index,
     ) => {
-      this.#_logCollectionFunctions[index] = (payload) => {
+      this.#_collectionLogFunctions[index] = (payload) => {
         return new BittyLog(index, payload);
         //this.#_logs.push(log);
-        // if (this.#_logOutputLevel <= index) {
-        //   this.#_logOutputFunctions[index](log);
+        // if (this.#_outputLogLevel <= index) {
+        //   this.#_outputLogFunctions[index](log);
         // }
       };
 
       const key = this.#_logLevels[index].toUpperCase();
-      this.#_logOutputFunctions[index] = (log) => {
+      this.#_outputLogFunctions[index] = (log) => {
         if (typeof log.payload === "string") {
           console.log(
             `[${key}|${log.timestamp.toISOString()}] ${log.payload}`,
@@ -280,7 +280,7 @@ class BittyJs extends HTMLElement {
   }
 
   outputLogLevel() {
-    return this.#_logLevels[this.#_logOutputLevel];
+    return this.#_logLevels[this.#_outputLogLevel];
   }
 
   /** internal */
@@ -319,11 +319,11 @@ class BittyJs extends HTMLElement {
 
   setCollectionLogFunction(key, fn) {
     const logLevelIndex = this.getLogLevelIndex(key);
-    this.#_logCollectionFunctions[logLevelIndex] = fn;
+    this.#_collectionLogFunctions[logLevelIndex] = fn;
   }
 
   setCollectionLogLevel(key) {
-    this.#_logCollectionLevel = this.getLogLevelIndex(key);
+    this.#_collectionLogLevel = this.getLogLevelIndex(key);
   }
 
   setCSSProperty(key, value) {
@@ -332,11 +332,11 @@ class BittyJs extends HTMLElement {
 
   setOutputLogFunction(key, fn) {
     const logLevelIndex = this.getLogLevelIndex(key);
-    this.#_logOutputFunctions[logLevelIndex] = fn;
+    this.#_outputLogFunctions[logLevelIndex] = fn;
   }
 
   setOutputLogLevel(key) {
-    this.#_logOutputLevel = this.getLogLevelIndex(key);
+    this.#_outputLogLevel = this.getLogLevelIndex(key);
   }
 
   setStorage(key, data) {

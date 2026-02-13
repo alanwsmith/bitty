@@ -344,11 +344,8 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
-  // TODO: Add a key to this and load it into
-  // the pages this.api.svg() collection.
-  // Remove the subs from this. They're done
-  // when the `this.api.svg(key)` is called.
-  makeSVG(template, subs = {}) {
+  makeSVG(id, content) {
+    this.#_svgs[id] = content;
   }
 
   makeTEXT(id, content) {

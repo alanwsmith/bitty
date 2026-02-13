@@ -4,10 +4,10 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(ev, el) {
-    const key = "$ID_NAME";
+    const id = "$ID_NAME";
     const content = "content-$HASH";
-    this.api.makeTEXT(key, content);
-    if (this.api.text(key) === content) {
+    this.api.makeTEXT(id, content);
+    if (this.api.text(id) === content) {
       el.innerHTML = "ok";
     }
   }

@@ -323,22 +323,62 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    // handle trigger signals
     if (ev.type === "bittyapitrigger") {
       ev = ev.bittyPayload;
     }
-    for (let signal of splitSignalString(ev.target.dataset.send)) {
-      if (this.conn[signal]) {
+    for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
+      const signalParts = rawSignalString.split(":");
+      signalParts.reverse();
+      if (signalParts.length > 1) {
+        console.log(signalParts);
+      }
+      const signal = signalParts[0];
+      const doAwait = signalParts[1] === "await" ? true : false;
+      if (doAwait === true) {
+        console.log("here3");
+      }
+      if (typeof this.conn[signal] === "function") {
         const receivers = document.querySelectorAll(
           `[data-receive~='${signal}']`,
         );
-        if (receivers.length === 0) {
-          this.conn[signal](ev, null);
+        if (doAwait === true) {
+          if (receivers.length === 0) {
+            await this.conn[signal](ev, null);
+          } else {
+            for (const receiver of receivers) {
+              await this.conn[signal](ev, receiver);
+            }
+          }
         } else {
-          receivers.forEach((receiver) => {
-            this.conn[signal](ev, receiver);
-          });
+          if (receivers.length === 0) {
+            this.conn[signal](ev, null);
+          } else {
+            for (const receiver of receivers) {
+              this.conn[signal](ev, receiver);
+            }
+          }
         }
+
+        //
+        //this.conn[signal](ev, null);
+
+        // if (receivers.length === 0) {
+        //   if (doAwait === true) {
+        //     await this.conn[signal](ev, null);
+        //   } else {
+        //     this.conn[signal](ev, null);
+        //   }
+        // } else {
+        //   for (const receiver of receivers) {
+        //     if (doAwait === true) {
+        //       await this.conn[signal](ev, receiver);
+        //     } else {
+        //       this.conn[signal](ev, receiver);
+        //     }
+        //   }
+        // }
+
+        //
       }
     }
   }
@@ -397,6 +437,9 @@ class BittyJs extends HTMLElement {
     this.addLog(0, payload);
   }
 
+  // TODO: Call this async even though
+  // awaiting it won't make a real impact
+  // since all it does is fire the event.
   trigger(signal) {
     const ev = new TriggerEvent(signal);
     this.dispatchEvent(ev);

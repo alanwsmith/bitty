@@ -132,6 +132,10 @@ class BittyJs extends HTMLElement {
     this.addLog(1, payload);
   }
 
+  error(payload) {
+    this.addLog(4, payload);
+  }
+
   getStorageOr(key, alt) {
     const storage = localStorage.getItem(key);
     if (storage === null) {
@@ -139,10 +143,6 @@ class BittyJs extends HTMLElement {
     } else {
       return JSON.parse(storage);
     }
-  }
-
-  error(payload) {
-    this.addLog(4, payload);
   }
 
   getLogLevelIndex(key) {
@@ -166,6 +166,10 @@ class BittyJs extends HTMLElement {
 
   log(payload) {
     this.addLog(2, payload);
+  }
+
+  logs() {
+    return this.#_logs;
   }
 
   initLogFunctions() {

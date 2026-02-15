@@ -517,10 +517,7 @@ class BittyJs extends HTMLElement {
 
   svg(key, subs = {}) {
     const tmpl = document.createElement("template");
-    let content = this.#_svgs[key];
-    for (let needle of Object.keys(subs)) {
-      content = content.replaceAll(needle, subs[needle]);
-    }
+    let content = this.replaceSubs(this.#_svgs[key], subs);
     tmpl.innerHTML = content;
     const wrapper = tmpl.content.cloneNode(true);
     const svg = wrapper.querySelector("svg");
@@ -528,8 +525,6 @@ class BittyJs extends HTMLElement {
   }
 
   replaceSubs(content, subs) {
-    //
-
     for (let needle of Object.keys(subs)) {
       if (Array.isArray(subs[needle]) && subs[needle][0] !== undefined) {
         if (subs[needle][0] instanceof HTMLElement) {
@@ -563,50 +558,10 @@ class BittyJs extends HTMLElement {
       }
     }
     return content;
-
-    //
   }
 
   text(key, subs = {}) {
     return this.replaceSubs(this.#_text[key], subs);
-    //let content = this.#_text[key];
-    //
-
-    // for (let needle of Object.keys(subs)) {
-    //   if (Array.isArray(subs[needle]) && subs[needle][0] !== undefined) {
-    //     if (subs[needle][0] instanceof HTMLElement) {
-    //       content = content.replaceAll(
-    //         needle,
-    //         subs[needle].map((item) => item.outerHTML).join(""),
-    //       );
-    //     } else if (subs[needle][0] instanceof DocumentFragment) {
-    //       content = content.replaceAll(
-    //         needle,
-    //         subs[needle].map((item) => item.innerHTML).join(""),
-    //       );
-    //     } else if (subs[needle][0] instanceof SVGSVGElement) {
-    //       content = content.replaceAll(
-    //         needle,
-    //         subs[needle].map((item) => item.outerHTML).join(""),
-    //       );
-    //     } else {
-    //       content = content.replaceAll(needle, subs[needle].join(""));
-    //     }
-    //   } else {
-    //     if (subs[needle] instanceof HTMLElement) {
-    //       content = content.replaceAll(needle, subs[needle].outerHTML);
-    //     } else if (subs[needle] instanceof DocumentFragment) {
-    //       content = content.replaceAll(needle, subs[needle].innerHTML);
-    //     } else if (subs[needle] instanceof SVGSVGElement) {
-    //       content = content.replaceAll(needle, subs[needle].outerHTML);
-    //     } else {
-    //       content = content.replaceAll(needle, subs[needle]);
-    //     }
-    //   }
-    // }
-    // //
-
-    //return content;
   }
 
   trace(payload) {
@@ -622,14 +577,6 @@ class BittyJs extends HTMLElement {
     this.addLog(3, payload);
   }
 }
-
-// class BittyFetchError {
-//   constructor(url, status, statusText) {
-//     this.url = url;
-//     this.status = status;
-//     this.statusText = statusText;
-//   }
-// }
 
 class DefaultBittyLog {
   constructor(level, payload) {
@@ -652,9 +599,6 @@ class BittySendAPIEvent extends Event {
   constructor(payload, signals) {
     super("bittysendapi", { bubbles: true });
     this.bittyPayload = payload;
-    // TODO: Document how .type and .target
-    // are added to the payload and would
-    // overwrite anything with those keys.
     this.bittyPayload.type = "bittysendapi";
     this.bittyPayload.target = {
       dataset: { send: signals },

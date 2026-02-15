@@ -29,17 +29,12 @@ class BittyJs extends HTMLElement {
   addElement(id, content) {
     if (typeof content === "string") {
       this.#_elements[id] = content;
-      // } else if (
-      //   content instanceof DocumentFragment
-      // ) {
-      //   const copier = document.createElement("div");
-      //   copier.appendChild(content.cloneNode(true));
-      //   this.#_elements[id] = copier.innerHTML;
-      // } else if (
-      //   content instanceof HTMLElement
-      // ) {
-      //   this.#_elements[id] = content.outerHTML;
+      // TODO: accept html element.
+      // TODO: If you pass in a document frag, pull
+      // the first element and throw a warning.
+      // Should be able to pull stuff from addHTML
     } else {
+      // TODO: Convert this to a bitty error.
       console.error("Unknown type of input sent to `addHTML`");
     }
   }
@@ -113,6 +108,7 @@ class BittyJs extends HTMLElement {
     ) {
       this.#_html[id] = content.outerHTML;
     } else {
+      // TODO: Convert this to a bitty error.
       console.error("Unknown type of input sent to `addHTML`");
     }
   }

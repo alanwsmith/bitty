@@ -556,6 +556,11 @@ class BittyJs extends HTMLElement {
             needle,
             subs[needle].map((item) => item.innerHTML).join(""),
           );
+        } else if (subs[needle][0] instanceof SVGSVGElement) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((item) => item.outerHTML).join(""),
+          );
         } else {
           content = content.replaceAll(needle, subs[needle].join(""));
         }
@@ -564,6 +569,8 @@ class BittyJs extends HTMLElement {
           content = content.replaceAll(needle, subs[needle].outerHTML);
         } else if (subs[needle] instanceof DocumentFragment) {
           content = content.replaceAll(needle, subs[needle].innerHTML);
+        } else if (subs[needle] instanceof SVGSVGElement) {
+          content = content.replaceAll(needle, subs[needle].outerHTML);
         } else {
           content = content.replaceAll(needle, subs[needle]);
         }

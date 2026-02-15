@@ -1,13 +1,12 @@
 window.Class8DE54 = class {
-  #sourceSVG = `<svg version="1.1"
-     width="300" height="200"
-     xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="green" />
-  TARGET_8DE54
+  #sourceSVG = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="green" />
+TARGET_8DE54
 </svg>`;
 
-  #secondSVG = `<rect width="100%" height="100%" fill="blue" />
-  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">ok</text>`;
+  #secondSVG = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+<text class="Class8DE54" x="150" y="125" font-size="60" text-anchor="middle" fill="blue">ok</text>
+</svg>`;
 
   #updated;
 
@@ -22,7 +21,7 @@ window.Class8DE54 = class {
       "TARGET_8DE54": this.#secondSVG,
     };
     this.#updated = this.api.svg("id-8DE54", subs); 
-    el.innerHTML = "xxx";
+    el.innerHTML = this.#updated.querySelector(".Class8DE54").innerHTML;
     this.api.trigger("display_signal_8DE54");
   }
 

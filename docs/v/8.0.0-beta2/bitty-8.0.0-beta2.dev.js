@@ -527,8 +527,9 @@ class BittyJs extends HTMLElement {
     return svg;
   }
 
-  text(key, subs = {}) {
-    let content = this.#_text[key];
+  replaceSubs(content, subs) {
+    //
+
     for (let needle of Object.keys(subs)) {
       if (Array.isArray(subs[needle]) && subs[needle][0] !== undefined) {
         if (subs[needle][0] instanceof HTMLElement) {
@@ -562,6 +563,50 @@ class BittyJs extends HTMLElement {
       }
     }
     return content;
+
+    //
+  }
+
+  text(key, subs = {}) {
+    return this.replaceSubs(this.#_text[key], subs);
+    //let content = this.#_text[key];
+    //
+
+    // for (let needle of Object.keys(subs)) {
+    //   if (Array.isArray(subs[needle]) && subs[needle][0] !== undefined) {
+    //     if (subs[needle][0] instanceof HTMLElement) {
+    //       content = content.replaceAll(
+    //         needle,
+    //         subs[needle].map((item) => item.outerHTML).join(""),
+    //       );
+    //     } else if (subs[needle][0] instanceof DocumentFragment) {
+    //       content = content.replaceAll(
+    //         needle,
+    //         subs[needle].map((item) => item.innerHTML).join(""),
+    //       );
+    //     } else if (subs[needle][0] instanceof SVGSVGElement) {
+    //       content = content.replaceAll(
+    //         needle,
+    //         subs[needle].map((item) => item.outerHTML).join(""),
+    //       );
+    //     } else {
+    //       content = content.replaceAll(needle, subs[needle].join(""));
+    //     }
+    //   } else {
+    //     if (subs[needle] instanceof HTMLElement) {
+    //       content = content.replaceAll(needle, subs[needle].outerHTML);
+    //     } else if (subs[needle] instanceof DocumentFragment) {
+    //       content = content.replaceAll(needle, subs[needle].innerHTML);
+    //     } else if (subs[needle] instanceof SVGSVGElement) {
+    //       content = content.replaceAll(needle, subs[needle].outerHTML);
+    //     } else {
+    //       content = content.replaceAll(needle, subs[needle]);
+    //     }
+    //   }
+    // }
+    // //
+
+    //return content;
   }
 
   trace(payload) {

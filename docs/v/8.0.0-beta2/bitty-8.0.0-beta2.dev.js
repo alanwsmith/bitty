@@ -480,7 +480,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async send(payload, signal) {
+  send(payload, signal) {
     const ev = new BittySendAPIEvent(payload, signal);
     this.dispatchEvent(ev);
   }
@@ -568,11 +568,7 @@ class BittyJs extends HTMLElement {
     this.addLog(0, payload);
   }
 
-  async trigger(signal) {
-    // NOTE: this is called async, but it
-    // doesn't really have an effect since
-    // all this does is fire an event.
-    // TBD of it can be move to synchronous
+  trigger(signal) {
     const ev = new BittyTriggerEvent(signal);
     this.dispatchEvent(ev);
   }

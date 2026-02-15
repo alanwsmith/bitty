@@ -545,7 +545,11 @@ class BittyJs extends HTMLElement {
   text(key, subs = {}) {
     let content = this.#_text[key];
     for (let needle of Object.keys(subs)) {
-      content = content.replaceAll(needle, subs[needle]);
+      if (Array.isArray(subs[needle])) {
+        content = content.replaceAll(needle, subs[needle].join(""));
+      } else {
+        content = content.replaceAll(needle, subs[needle]);
+      }
     }
     return content;
   }

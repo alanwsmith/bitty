@@ -15,6 +15,5 @@ window.$CLASS_NAME = class {
     if (expected === got) {
       el.innerHTML = "ok";
     }
-    //el.innerHTML = got;
   }
 };

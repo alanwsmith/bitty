@@ -15,6 +15,5 @@ window.Class75F19 = class {
     if (expected === got) {
       el.innerHTML = "ok";
     }
-    //el.innerHTML = got;
   }
 };

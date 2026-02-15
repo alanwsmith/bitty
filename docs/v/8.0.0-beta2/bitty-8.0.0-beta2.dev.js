@@ -551,6 +551,11 @@ class BittyJs extends HTMLElement {
             needle,
             subs[needle].map((item) => item.outerHTML).join(""),
           );
+        } else if (subs[needle][0] instanceof DocumentFragment) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((item) => item.innerHTML).join(""),
+          );
         } else {
           content = content.replaceAll(needle, subs[needle].join(""));
         }

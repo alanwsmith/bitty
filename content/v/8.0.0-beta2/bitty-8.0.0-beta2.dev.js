@@ -557,6 +557,8 @@ class BittyJs extends HTMLElement {
       } else {
         if (subs[needle] instanceof HTMLElement) {
           content = content.replaceAll(needle, subs[needle].outerHTML);
+        } else if (subs[needle] instanceof DocumentFragment) {
+          content = content.replaceAll(needle, subs[needle].innerHTML);
         } else {
           content = content.replaceAll(needle, subs[needle]);
         }

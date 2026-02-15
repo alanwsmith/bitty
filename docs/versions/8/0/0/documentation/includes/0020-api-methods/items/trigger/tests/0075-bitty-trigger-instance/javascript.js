@@ -5,7 +5,7 @@ window.ClassB68D3 = class {
 
   signal_B68D3(ev, el) {
     if (
-      ev.type === "bittyapitrigger" &&
+      ev.type === "bittytriggerapi" &&
       ev.target.dataset.send === "signal_B68D3"
     ) {
       el.innerHTML = "ok";

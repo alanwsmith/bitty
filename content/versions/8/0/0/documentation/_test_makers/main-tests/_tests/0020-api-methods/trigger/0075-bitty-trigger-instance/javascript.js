@@ -5,7 +5,7 @@ window.$CLASS_NAME = class {
 
   $SIGNAL_NAME(ev, el) {
     if (
-      ev.type === "bittyapitrigger" &&
+      ev.type === "bittytriggerapi" &&
       ev.target.dataset.send === "$SIGNAL_NAME"
     ) {
       el.innerHTML = "ok";

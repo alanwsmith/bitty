@@ -1,5 +1,6 @@
 window.ClassA2CFB = class {
   bittyReady() {
+    this.api.addTEXT("id-A2CFB", "example-A2CFB TARGET_A2CFB");
     this.api.trigger("signal_A2CFB");
   }
 
@@ -9,7 +10,6 @@ window.ClassA2CFB = class {
     };
     const expected = "example-A2CFB OUT_1_A2CFB OUT_2_A2CFB OUT_3_A2CFB";
     const got = this.api.text("id-A2CFB", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

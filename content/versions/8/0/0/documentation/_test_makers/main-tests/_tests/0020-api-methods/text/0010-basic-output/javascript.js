@@ -1,5 +1,6 @@
 window.$CLASS_NAME = class {
   bittyReady() {
+    this.api.addTEXT("$ID_NAME", "example-$HASH");
     this.api.trigger("$SIGNAL_NAME");
   }
 

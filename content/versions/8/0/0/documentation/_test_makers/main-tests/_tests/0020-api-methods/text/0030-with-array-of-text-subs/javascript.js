@@ -1,5 +1,6 @@
 window.$CLASS_NAME = class {
   bittyReady() {
+    this.api.addTEXT("$ID_NAME", "$EXAMPLE_NAME TARGET_$HASH");
     this.api.trigger("$SIGNAL_NAME");
   }
 
@@ -9,7 +10,6 @@ window.$CLASS_NAME = class {
     };
     const expected = "$EXAMPLE_NAME OUT_1_$HASH OUT_2_$HASH OUT_3_$HASH";
     const got = this.api.text("$ID_NAME", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

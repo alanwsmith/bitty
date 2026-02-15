@@ -1,5 +1,6 @@
 window.Class594F6 = class {
   bittyReady() {
+    this.api.addTEXT("id-594F6", "example-594F6");
     this.api.trigger("signal_594F6");
   }
 

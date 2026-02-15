@@ -13,9 +13,13 @@ window.ClassBD4CA = class {
   }
 
   signal_BD4CA(_, el) {
-    const subs = { };
+    const fragment = document.createDocumentFragment();
+    fragment.innerHTML = "<div>example-BD4CA-1</div><div>example-BD4CA-2</div>";
+    const subs = {
+      "TARGET_BD4CA": fragment,
+    };
     this.#updated = this.api.svg("id-BD4CA", subs); 
-    el.innerHTML = "xxx";
+    el.innerHTML = "ok";
     this.api.trigger("display_signal_BD4CA");
   }
 

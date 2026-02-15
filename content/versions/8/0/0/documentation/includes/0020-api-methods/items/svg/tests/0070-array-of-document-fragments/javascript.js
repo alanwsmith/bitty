@@ -13,9 +13,17 @@ window.ClassA5C48 = class {
   }
 
   signal_A5C48(_, el) {
-    const subs = { };
+    const items = [
+      document.createDocumentFragment(),
+      document.createDocumentFragment(),
+    ];
+    items[0].innerHTML = "<div>example-A5C48-1</div><div>example-A5C48-2</div>";
+    items[1].innerHTML = "<div>example-A5C48-3</div><div>example-A5C48-4</div>";
+    const subs = {
+      "TARGET_A5C48": items,
+    };
     this.#updated = this.api.svg("id-A5C48", subs); 
-    el.innerHTML = "xxx";
+    el.innerHTML = "ok";
     this.api.trigger("display_signal_A5C48");
   }
 

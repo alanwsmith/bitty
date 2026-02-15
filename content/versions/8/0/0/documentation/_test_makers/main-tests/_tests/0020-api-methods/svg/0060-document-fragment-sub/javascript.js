@@ -13,9 +13,13 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(_, el) {
-    const subs = { };
+    const fragment = document.createDocumentFragment();
+    fragment.innerHTML = "<div>$EXAMPLE_NAME-1</div><div>$EXAMPLE_NAME-2</div>";
+    const subs = {
+      "TARGET_$HASH": fragment,
+    };
     this.#updated = this.api.svg("$ID_NAME", subs); 
-    el.innerHTML = "xxx";
+    el.innerHTML = "ok";
     this.api.trigger("display_$SIGNAL_NAME");
   }
 

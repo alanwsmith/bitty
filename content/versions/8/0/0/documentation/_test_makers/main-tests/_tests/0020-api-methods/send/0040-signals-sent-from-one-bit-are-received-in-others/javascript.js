@@ -7,7 +7,7 @@ window.$CLASS_NAME = class {
 };
 
 window.$CLASS2_NAME = class {
-  $SIGNAL2_NAME(ev, el) {
-    el.innerHTML = ev.payload.status;
+  $SIGNAL2_NAME(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

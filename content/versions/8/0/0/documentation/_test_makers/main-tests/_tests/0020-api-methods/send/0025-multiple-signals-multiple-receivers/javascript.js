@@ -6,15 +6,15 @@ window.$CLASS_NAME = class {
     );
   }
 
-  $SIGNAL_NAME(ev, el) {
-    el.innerHTML = ev.payload.status;
+  $SIGNAL_NAME(payload, el) {
+    el.innerHTML = payload.status;
   }
 
-  $SIGNAL2_NAME(ev, el) {
-    el.innerHTML = ev.payload.status;
+  $SIGNAL2_NAME(payload, el) {
+    el.innerHTML = payload.status;
   }
 
-  $SIGNAL3_NAME(ev, el) {
-    el.innerHTML = ev.payload.status;
+  $SIGNAL3_NAME(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

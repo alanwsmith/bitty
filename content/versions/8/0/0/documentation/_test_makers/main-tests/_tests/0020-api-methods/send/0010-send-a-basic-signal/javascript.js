@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
     this.api.send({ status: "ok" }, "$SIGNAL_NAME");
   }
 
-  $SIGNAL_NAME(ev, el) {
-    el.innerHTML = ev.payload.status;
+  $SIGNAL_NAME(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

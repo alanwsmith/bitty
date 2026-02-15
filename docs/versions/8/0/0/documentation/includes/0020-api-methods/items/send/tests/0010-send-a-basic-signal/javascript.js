@@ -3,7 +3,7 @@ window.ClassABC35 = class {
     this.api.send({ status: "ok" }, "signal_ABC35");
   }
 
-  signal_ABC35(ev, el) {
-    el.innerHTML = ev.payload.status;
+  signal_ABC35(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

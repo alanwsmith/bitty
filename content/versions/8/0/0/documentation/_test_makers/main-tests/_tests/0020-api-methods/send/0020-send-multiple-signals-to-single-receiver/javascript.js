@@ -6,17 +6,17 @@ window.$CLASS_NAME = class {
     );
   }
 
-  $SIGNAL_NAME(ev, el) {
-    el.innerHTML = `alfa-$${ev.payload.status}`;
+  $SIGNAL_NAME(payload, el) {
+    el.innerHTML = `alfa-$${payload.status}`;
   }
 
-  $SIGNAL2_NAME(ev, el) {
-    el.innerHTML = `$${el.innerHTML}-bravo-$${ev.payload.status}`;
+  $SIGNAL2_NAME(payload, el) {
+    el.innerHTML = `$${el.innerHTML}-bravo-$${payload.status}`;
     console.log(el.innerHTML);
   }
 
-  $SIGNAL3_NAME(ev, el) {
-    if (ev.payload.status === "ok" && el.innerHTML === "alfa-ok-bravo-ok") {
+  $SIGNAL3_NAME(payload, el) {
+    if (payload.status === "ok" && el.innerHTML === "alfa-ok-bravo-ok") {
       el.innerHTML = "ok";
     }
   }

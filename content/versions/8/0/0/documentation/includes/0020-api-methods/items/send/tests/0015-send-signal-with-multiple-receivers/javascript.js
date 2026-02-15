@@ -3,7 +3,7 @@ window.Class7E257 = class {
     this.api.send({ status: "ok" }, "signal_7E257");
   }
 
-  signal_7E257(_, el) {
-    el.innerHTML = "ok";
+  signal_7E257(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

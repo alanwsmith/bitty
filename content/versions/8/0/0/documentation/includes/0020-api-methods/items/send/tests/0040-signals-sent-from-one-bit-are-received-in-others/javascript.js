@@ -7,7 +7,7 @@ window.Class31A28 = class {
 };
 
 window.Class31A28_2 = class {
-  signal_31A28_2(ev, el) {
-    el.innerHTML = ev.payload.status;
+  signal_31A28_2(payload, el) {
+    el.innerHTML = payload.status;
   }
 };

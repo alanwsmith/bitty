@@ -606,12 +606,13 @@ class BittyFetchResponse {
 class BittySendAPIEvent extends Event {
   constructor(payload, signals) {
     super("bittysendapi", { bubbles: true });
-    this.bittyPayload = {
-      type: "bittysendapi",
-      payload: payload,
-      target: {
-        dataset: { send: signals },
-      },
+    this.bittyPayload = payload;
+    // TODO: Document how .type and .target
+    // are added to the payload and would
+    // overwrite anything with those keys.
+    this.bittyPayload.type = "bittysendapi";
+    this.bittyPayload.target = {
+      dataset: { send: signals },
     };
   }
 }

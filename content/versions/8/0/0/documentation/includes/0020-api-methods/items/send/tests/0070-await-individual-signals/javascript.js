@@ -9,14 +9,14 @@ window.Class8FAC5 = class {
     );
   }
 
-  async test_signal_8FAC5(ev, el) {
+  async test_signal_8FAC5(payload, el) {
     await this.api.sleep(50);
   }
 
-  verify_signal_8FAC5(ev, el) {
+  verify_signal_8FAC5(payload, el) {
     const t2 = performance.now();
     if ((t2 - this.#t1) > 40) {
-      el.innerHTML = ev.payload.status;
+      el.innerHTML = payload.status;
     }
   }
 };

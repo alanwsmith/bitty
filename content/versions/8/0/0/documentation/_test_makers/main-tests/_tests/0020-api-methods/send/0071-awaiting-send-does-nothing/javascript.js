@@ -24,12 +24,12 @@ window.$CLASS_NAME = class {
     //////////////////////////////////////////////
   }
 
-  async test_$SIGNAL_NAME(ev, el) {
+  async test_$SIGNAL_NAME(payload, el) {
     await this.api.sleep(50);
-    this.#_updated = ev.payload.updated;
+    this.#_updated = payload.updated;
   }
 
-  verify_$SIGNAL_NAME(ev, el) {
+  verify_$SIGNAL_NAME(payload, el) {
     const t2 = performance.now();
     //////////////////////////////////////////////
     //  This result is less than the above      //

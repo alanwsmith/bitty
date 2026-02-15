@@ -24,12 +24,12 @@ window.Class754F8 = class {
     //////////////////////////////////////////////
   }
 
-  async test_signal_754F8(ev, el) {
+  async test_signal_754F8(payload, el) {
     await this.api.sleep(50);
-    this.#_updated = ev.payload.updated;
+    this.#_updated = payload.updated;
   }
 
-  verify_signal_754F8(ev, el) {
+  verify_signal_754F8(payload, el) {
     const t2 = performance.now();
     //////////////////////////////////////////////
     //  This result is less than the above      //

@@ -47,7 +47,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   addEventListeners() {
     // Internal bitty listeners
-    ["bittyapitrigger"].forEach(
+    ["bittyapisend", "bittyapitrigger"].forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
           this.handleEventBridge.call(this, ev);
@@ -434,7 +434,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    if (ev.type === "bittyapitrigger") {
+    if (ev.type === "bittyapitrigger" || ev.type === "bittyapisend") {
       ev = ev.bittyPayload;
     }
 
@@ -481,35 +481,41 @@ class BittyJs extends HTMLElement {
   }
 
   async send(payload, signal) {
-    for (let rawSignalString of splitSignalString(signal)) {
-      const signalParts = rawSignalString.split(":");
-      signalParts.reverse();
-      const signal = signalParts[0];
-      const doAwait = signalParts[1] === "await" ? true : false;
+    const ev = new BittySendAPIEvent(payload, signal);
+    this.dispatchEvent(ev);
 
-      if (typeof this.conn[signal] === "function") {
-        const receivers = document.querySelectorAll(
-          `[data-receive~='${signal}']`,
-        );
-        if (doAwait === true) {
-          if (receivers.length === 0) {
-            await this.conn[signal](payload, null);
-          } else {
-            for (const receiver of receivers) {
-              await this.conn[signal](payload, receiver);
-            }
-          }
-        } else {
-          if (receivers.length === 0) {
-            this.conn[signal](payload, null);
-          } else {
-            for (const receiver of receivers) {
-              this.conn[signal](payload, receiver);
-            }
-          }
-        }
-      }
-    }
+    //
+
+    //   for (let rawSignalString of splitSignalString(signal)) {
+    //     const signalParts = rawSignalString.split(":");
+    //     signalParts.reverse();
+    //     const signal = signalParts[0];
+    //     const doAwait = signalParts[1] === "await" ? true : false;
+    //     if (typeof this.conn[signal] === "function") {
+    //       const receivers = document.querySelectorAll(
+    //         `[data-receive~='${signal}']`,
+    //       );
+    //       if (doAwait === true) {
+    //         if (receivers.length === 0) {
+    //           await this.conn[signal](payload, null);
+    //         } else {
+    //           for (const receiver of receivers) {
+    //             await this.conn[signal](payload, receiver);
+    //           }
+    //         }
+    //       } else {
+    //         if (receivers.length === 0) {
+    //           this.conn[signal](payload, null);
+    //         } else {
+    //           for (const receiver of receivers) {
+    //             this.conn[signal](payload, receiver);
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+
+    //
   }
 
   setCollectionLogFunction(key, fn) {
@@ -629,6 +635,20 @@ class BittyFetchResponse {
   constructor(ok, error) {
     this.ok = ok;
     this.error = error;
+  }
+}
+
+/** internal */
+class BittySendAPIEvent extends Event {
+  constructor(payload, signals) {
+    super("bittyapisend", { bubbles: true });
+    this.bittyPayload = {
+      type: "bittyapisend",
+      target: {
+        payload: payload,
+        dataset: { send: signals },
+      },
+    };
   }
 }
 

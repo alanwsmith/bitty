@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
     this.api.trigger("$SIGNAL_NAME");
   }
 
-  $SIGNAL_NAME(ev, el) {
+  $SIGNAL_NAME(_, el) {
     const items = [
       document.createElement("div"),
       document.createElement("div"),

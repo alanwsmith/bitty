@@ -4,7 +4,7 @@ window.Class38706 = class {
     this.api.trigger("signal_38706");
   }
 
-  signal_38706(ev, el) {
+  signal_38706(_, el) {
     const items = [
       document.createElement("div"),
       document.createElement("div"),

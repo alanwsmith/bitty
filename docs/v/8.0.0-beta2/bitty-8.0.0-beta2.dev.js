@@ -548,7 +548,11 @@ class BittyJs extends HTMLElement {
       if (Array.isArray(subs[needle])) {
         content = content.replaceAll(needle, subs[needle].join(""));
       } else {
-        content = content.replaceAll(needle, subs[needle]);
+        if (subs[needle] instanceof HTMLElement) {
+          content = content.replaceAll(needle, subs[needle].outerHTML);
+        } else {
+          content = content.replaceAll(needle, subs[needle]);
+        }
       }
     }
     return content;

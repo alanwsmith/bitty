@@ -437,6 +437,7 @@ class BittyJs extends HTMLElement {
     if (ev.type === "bittyapitrigger") {
       ev = ev.bittyPayload;
     }
+
     for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
       const signalParts = rawSignalString.split(":");
       signalParts.reverse();
@@ -463,27 +464,6 @@ class BittyJs extends HTMLElement {
             }
           }
         }
-
-        //
-        //this.conn[signal](ev, null);
-
-        // if (receivers.length === 0) {
-        //   if (doAwait === true) {
-        //     await this.conn[signal](ev, null);
-        //   } else {
-        //     this.conn[signal](ev, null);
-        //   }
-        // } else {
-        //   for (const receiver of receivers) {
-        //     if (doAwait === true) {
-        //       await this.conn[signal](ev, receiver);
-        //     } else {
-        //       this.conn[signal](ev, receiver);
-        //     }
-        //   }
-        // }
-
-        //
       }
     }
   }
@@ -496,6 +476,38 @@ class BittyJs extends HTMLElement {
         await this.conn.bittyReady();
       } else {
         this.conn.bittyReady();
+      }
+    }
+  }
+
+  async send(payload, signal) {
+    for (let rawSignalString of splitSignalString(signal)) {
+      const signalParts = rawSignalString.split(":");
+      signalParts.reverse();
+      const signal = signalParts[0];
+      const doAwait = signalParts[1] === "await" ? true : false;
+
+      if (typeof this.conn[signal] === "function") {
+        const receivers = document.querySelectorAll(
+          `[data-receive~='${signal}']`,
+        );
+        if (doAwait === true) {
+          if (receivers.length === 0) {
+            await this.conn[signal](payload, null);
+          } else {
+            for (const receiver of receivers) {
+              await this.conn[signal](payload, receiver);
+            }
+          }
+        } else {
+          if (receivers.length === 0) {
+            this.conn[signal](payload, null);
+          } else {
+            for (const receiver of receivers) {
+              this.conn[signal](payload, receiver);
+            }
+          }
+        }
       }
     }
   }

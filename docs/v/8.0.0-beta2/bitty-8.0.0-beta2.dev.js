@@ -162,9 +162,9 @@ class BittyJs extends HTMLElement {
       this.conn.api = this;
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
-      this.loadPageJSON();
+      this.ingestJSON();
       this.ingestTEXT();
-      this.loadPageSVGs();
+      this.ingestSVGs();
       await this.runBittyReady();
     }
   }
@@ -354,7 +354,7 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  loadPageJSON() {
+  ingestJSON() {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.id !== undefined) {
         try {
@@ -369,7 +369,7 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  loadPageSVGs() {
+  ingestSVGs() {
     document.querySelectorAll("script").forEach((el) => {
       if (
         (el.type === "image/svg+xml") &&

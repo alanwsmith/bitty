@@ -132,6 +132,7 @@ class BittyJs extends HTMLElement {
     if (this.#_outputLogLevel <= level) {
       this.#_outputLogFunctions[level](log);
     }
+    return log;
   }
 
   addSVG(id, content) {
@@ -232,8 +233,20 @@ class BittyJs extends HTMLElement {
     try {
       if (response.ok === true) {
         this.#_text[key] = await response.text();
-      } else {}
-    } catch (error) {}
+        return new BittyFetchResponse(true, null);
+      } else {
+        const log = this.addLog(4, {
+          type: "fetchError",
+          url: response.url,
+          status: response.status,
+          statusText: response.statusText,
+        });
+        return new BittyFetchResponse(false, log);
+      }
+    } catch (error) {
+      const log = this.addLog(4, {});
+      return new BittyFetchResponse(false, log);
+    }
 
     // try {
     //   if (!response.ok) {
@@ -283,7 +296,7 @@ class BittyJs extends HTMLElement {
       index,
     ) => {
       this.#_collectionLogFunctions[index] = (payload) => {
-        return new BittyLog(index, payload);
+        return new DefaultBittyLog(index, payload);
       };
 
       const preface = `BITTY_${this.#_logLevels[index].toUpperCase()}`;
@@ -554,15 +567,15 @@ class BittyJs extends HTMLElement {
   }
 }
 
-class BittyFetchError {
-  constructor(url, status, statusText) {
-    this.url = url;
-    this.status = status;
-    this.statusText = statusText;
-  }
-}
+// class BittyFetchError {
+//   constructor(url, status, statusText) {
+//     this.url = url;
+//     this.status = status;
+//     this.statusText = statusText;
+//   }
+// }
 
-class BittyLog {
+class DefaultBittyLog {
   constructor(level, payload) {
     this.level = level;
     this.payload = payload;
@@ -573,16 +586,8 @@ class BittyLog {
 
 class BittyFetchResponse {
   constructor(ok, error) {
-    // if (value !== undefined) {
-    //   this.value = value;
-    // } else {
-    //   this.value = undefined;
-    // }
-    // if (error) {
-    //   this.error = error;
-    // } else {
-    //   this.error = null;
-    // }
+    this.ok = ok;
+    this.error = error;
   }
 }
 

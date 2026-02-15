@@ -3,15 +3,22 @@ window.ClassB0DCF = class {
     this.api.trigger("signal_B0DCF");
   }
 
-  // async signal_B0DCF(ev, el) {
-  //   const url =
-  //     "/[@ file.parent @]/includes/0020-api-methods/items/getTEXT/tests/0030-basic-options/payload.txt";
-  //   const subs = {};
-  //   const options = {
-  //     // Options in this object are padded
-  //     // directly to the internal fetch call.
-  //   };
-  //   const response = await this.api.getTEXT(url, subs, options);
-  //   el.innerHTML = response.value;
-  // }
+  async signal_B0DCF(ev, el) {
+    const key = "key-B0DCF";
+    const url =
+      "/[@ file.parent @]/includes/0020-api-methods/items/fetchTEXT/tests/0030-basic-options/payload.txt";
+    const options = {
+      // Options in this object are added
+      // directly to the internal fetch call.
+      //
+      // NOTE: The documentation server doesn't
+      // provide the responses necessary to provide
+      // a live example here. Check on the `fetchJSON()`
+      // entry for a live example.
+    };
+    const response = await this.api.fetchTEXT(key, url, options);
+    if (response.ok === true && response.error === null) {
+      el.innerHTML = this.api.text(key);
+    }
+  }
 };

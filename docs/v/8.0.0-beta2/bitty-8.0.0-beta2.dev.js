@@ -47,7 +47,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   addEventListeners() {
     // Internal bitty listeners
-    ["bittyapisend", "bittyapitrigger"].forEach(
+    ["bittysendapi", "bittytriggerapi"].forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
           this.handleEventBridge.call(this, ev);
@@ -434,7 +434,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    if (ev.type === "bittyapitrigger" || ev.type === "bittyapisend") {
+    if (ev.type === "bittytriggerapi" || ev.type === "bittysendapi") {
       ev = ev.bittyPayload;
     }
 
@@ -483,39 +483,6 @@ class BittyJs extends HTMLElement {
   async send(payload, signal) {
     const ev = new BittySendAPIEvent(payload, signal);
     this.dispatchEvent(ev);
-
-    //
-
-    //   for (let rawSignalString of splitSignalString(signal)) {
-    //     const signalParts = rawSignalString.split(":");
-    //     signalParts.reverse();
-    //     const signal = signalParts[0];
-    //     const doAwait = signalParts[1] === "await" ? true : false;
-    //     if (typeof this.conn[signal] === "function") {
-    //       const receivers = document.querySelectorAll(
-    //         `[data-receive~='${signal}']`,
-    //       );
-    //       if (doAwait === true) {
-    //         if (receivers.length === 0) {
-    //           await this.conn[signal](payload, null);
-    //         } else {
-    //           for (const receiver of receivers) {
-    //             await this.conn[signal](payload, receiver);
-    //           }
-    //         }
-    //       } else {
-    //         if (receivers.length === 0) {
-    //           this.conn[signal](payload, null);
-    //         } else {
-    //           for (const receiver of receivers) {
-    //             this.conn[signal](payload, receiver);
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //
   }
 
   setCollectionLogFunction(key, fn) {
@@ -601,10 +568,11 @@ class BittyJs extends HTMLElement {
     this.addLog(0, payload);
   }
 
-  // TODO: Call this async even though
-  // awaiting it won't make a real impact
-  // since all it does is fire the event.
   async trigger(signal) {
+    // NOTE: this is called async, but it
+    // doesn't really have an effect since
+    // all this does is fire an event.
+    // TBD of it can be move to synchronous
     const ev = new BittyTriggerEvent(signal);
     this.dispatchEvent(ev);
   }
@@ -641,11 +609,11 @@ class BittyFetchResponse {
 /** internal */
 class BittySendAPIEvent extends Event {
   constructor(payload, signals) {
-    super("bittyapisend", { bubbles: true });
+    super("bittysendapi", { bubbles: true });
     this.bittyPayload = {
-      type: "bittyapisend",
+      type: "bittysendapi",
+      payload: payload,
       target: {
-        payload: payload,
         dataset: { send: signals },
       },
     };
@@ -655,9 +623,9 @@ class BittySendAPIEvent extends Event {
 /** internal */
 class BittyTriggerEvent extends Event {
   constructor(signals) {
-    super("bittyapitrigger", { bubbles: true });
+    super("bittytriggerapi", { bubbles: true });
     this.bittyPayload = {
-      type: "bittyapitrigger",
+      type: "bittytriggerapi",
       target: { dataset: { send: signals } },
     };
   }

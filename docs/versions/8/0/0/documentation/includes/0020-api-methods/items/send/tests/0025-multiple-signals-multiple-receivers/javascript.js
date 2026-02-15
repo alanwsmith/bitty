@@ -6,15 +6,15 @@ window.ClassC9113 = class {
     );
   }
 
-  signal_C9113(payload, el) {
-    el.innerHTML = payload.status;
+  signal_C9113(ev, el) {
+    el.innerHTML = ev.payload.status;
   }
 
-  signal_C9113_2(payload, el) {
-    el.innerHTML = payload.status;
+  signal_C9113_2(ev, el) {
+    el.innerHTML = ev.payload.status;
   }
 
-  signal_C9113_3(payload, el) {
-    el.innerHTML = payload.status;
+  signal_C9113_3(ev, el) {
+    el.innerHTML = ev.payload.status;
   }
 };

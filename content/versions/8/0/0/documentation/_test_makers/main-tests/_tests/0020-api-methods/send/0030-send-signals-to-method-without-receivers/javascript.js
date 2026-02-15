@@ -6,8 +6,8 @@ window.$CLASS_NAME = class {
     this.api.send({ status: "ok" }, "test_$SIGNAL_NAME");
   }
 
-  test_$SIGNAL_NAME(payload, x) {
-    this.#_status = payload.status;
+  test_$SIGNAL_NAME(ev, x) {
+    this.#_status = ev.payload.status;
     if (x === null) {
       this.#_elIsNull = true;
     }

@@ -14,7 +14,6 @@ window.Class73A35 = class {
     };
     const expected = "<div>example-73A35</div>";
     const got = this.api.text("id-73A35", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

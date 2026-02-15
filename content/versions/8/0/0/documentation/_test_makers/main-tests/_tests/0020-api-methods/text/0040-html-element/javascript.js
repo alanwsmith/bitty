@@ -14,7 +14,6 @@ window.$CLASS_NAME = class {
     };
     const expected = "<div>$EXAMPLE_NAME</div>";
     const got = this.api.text("$ID_NAME", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

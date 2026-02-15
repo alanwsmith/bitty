@@ -12,6 +12,7 @@ function splitSignalString(input) {
 class BittyJs extends HTMLElement {
   #_collectionLogLevel = 2;
   #_collectionLogFunctions;
+  #_elements = {};
   #_html = {};
   #_json = {};
   #_outputLogLevel = 2;
@@ -23,6 +24,24 @@ class BittyJs extends HTMLElement {
 
   constructor() {
     super();
+  }
+
+  addElement(id, content) {
+    if (typeof content === "string") {
+      this.#_elements[id] = content;
+      // } else if (
+      //   content instanceof DocumentFragment
+      // ) {
+      //   const copier = document.createElement("div");
+      //   copier.appendChild(content.cloneNode(true));
+      //   this.#_elements[id] = copier.innerHTML;
+      // } else if (
+      //   content instanceof HTMLElement
+      // ) {
+      //   this.#_elements[id] = content.outerHTML;
+    } else {
+      console.error("Unknown type of input sent to `addHTML`");
+    }
   }
 
   /** internal */
@@ -143,7 +162,7 @@ class BittyJs extends HTMLElement {
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
       this.loadPageJSON();
-      this.loadPageTEXT();
+      this.ingestTEXT();
       this.loadPageSVGs();
       await this.runBittyReady();
     }
@@ -159,6 +178,13 @@ class BittyJs extends HTMLElement {
       // when those come online.
       console.error("Could not copy text to clipboard");
     }
+  }
+
+  element(id, subs = {}) {
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = this.#_elements[id];
+    const tmpEl = skeleton.content.cloneNode(true);
+    return tmpEl.firstChild;
   }
 
   json(id, subs = {}) {
@@ -201,33 +227,39 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async getTEXT(url, subs = {}, options = {}) {
+  async fetchTEXT(key, url, options = {}) {
     let response = await fetch(url, options);
     try {
-      if (!response.ok) {
-        const bittyError = new BittyFetchError(
-          response.url,
-          response.status,
-          response.statusText,
-        );
-        this.addLog(4, bittyError);
-        // this.level = level;
-        // this.payload = payload;
-        // this.timestamp = new Date();
-        // this.performanceTime = performance.now();
-        // TODO: Log error with BittyLog
-        throw bittyError;
-      } else {
-        // TODO: Figure out what to do with errors here.
-        let content = await response.text();
-        for (let needle of Object.keys(subs)) {
-          content = content.replaceAll(needle, subs[needle]);
-        }
-        return new BittyRequestResponse(content, null);
-      }
-    } catch (error) {
-      return new BittyRequestResponse(undefined, error);
-    }
+      if (response.ok === true) {
+        this.#_text[key] = await response.text();
+      } else {}
+    } catch (error) {}
+
+    // try {
+    //   if (!response.ok) {
+    //     const bittyError = new BittyFetchError(
+    //       response.url,
+    //       response.status,
+    //       response.statusText,
+    //     );
+    //     this.addLog(4, bittyError);
+    //     // this.level = level;
+    //     // this.payload = payload;
+    //     // this.timestamp = new Date();
+    //     // this.performanceTime = performance.now();
+    //     // TODO: Log error with BittyLog
+    //     throw bittyError;
+    //   } else {
+    //     // TODO: Figure out what to do with errors here.
+    //     let content = await response.text();
+    //     for (let needle of Object.keys(subs)) {
+    //       content = content.replaceAll(needle, subs[needle]);
+    //     }
+    //     return new BittyRequestResponse(content, null);
+    //   }
+    // } catch (error) {
+    //   return new BittyRequestResponse(undefined, error);
+    // }
   }
 
   html(id, subs = {}) {
@@ -342,7 +374,7 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  loadPageTEXT() {
+  ingestTEXT() {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "text/plain" && el.id !== undefined) {
         try {
@@ -539,18 +571,18 @@ class BittyLog {
   }
 }
 
-class BittyRequestResponse {
-  constructor(value, error) {
-    if (value !== undefined) {
-      this.value = value;
-    } else {
-      this.value = undefined;
-    }
-    if (error) {
-      this.error = error;
-    } else {
-      this.error = null;
-    }
+class BittyFetchResponse {
+  constructor(ok, error) {
+    // if (value !== undefined) {
+    //   this.value = value;
+    // } else {
+    //   this.value = undefined;
+    // }
+    // if (error) {
+    //   this.error = error;
+    // } else {
+    //   this.error = null;
+    // }
   }
 }
 

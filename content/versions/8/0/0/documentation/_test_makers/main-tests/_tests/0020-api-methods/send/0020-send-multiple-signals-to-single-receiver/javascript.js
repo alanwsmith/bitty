@@ -12,7 +12,6 @@ window.$CLASS_NAME = class {
 
   $SIGNAL2_NAME(payload, el) {
     el.innerHTML = `$${el.innerHTML}-bravo-$${payload.status}`;
-    console.log(el.innerHTML);
   }
 
   $SIGNAL3_NAME(payload, el) {

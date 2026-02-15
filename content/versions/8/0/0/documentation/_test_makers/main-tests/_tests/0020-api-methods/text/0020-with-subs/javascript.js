@@ -11,7 +11,6 @@ window.$CLASS_NAME = class {
     const subs = { "TARGET_$HASH": "UPDATED_$HASH" };
     const expected = "$EXAMPLE_NAME UPDATED_$HASH";
     const got = this.api.text("$ID_NAME", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

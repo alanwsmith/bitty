@@ -11,7 +11,6 @@ window.Class5AAB0 = class {
     const subs = { "TARGET_5AAB0": "UPDATED_5AAB0" };
     const expected = "example-5AAB0 UPDATED_5AAB0";
     const got = this.api.text("id-5AAB0", subs);
-    console.log(got);
     if (expected === got) {
       el.innerHTML = "ok";
     }

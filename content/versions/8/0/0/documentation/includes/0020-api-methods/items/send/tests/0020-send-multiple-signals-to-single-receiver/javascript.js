@@ -12,7 +12,6 @@ window.ClassE22AA = class {
 
   signal_E22AA_2(payload, el) {
     el.innerHTML = `${el.innerHTML}-bravo-${payload.status}`;
-    console.log(el.innerHTML);
   }
 
   signal_E22AA_3(payload, el) {

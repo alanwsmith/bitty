@@ -16,10 +16,4 @@ window.Class68BED = class {
     }
     this.api.trigger("logcheck68BED");
   }
-
-  logcheck68BED(_, el) {
-    if (this.api.logs()[0].payload.type === "fetchError") {
-      el.innerHTML = "ok";
-    }
-  }
 };

@@ -16,10 +16,4 @@ window.$CLASS_NAME = class {
     }
     this.api.trigger("logcheck$HASH");
   }
-
-  logcheck$HASH(_, el) {
-    if (this.api.logs()[0].payload.type === "fetchError") {
-      el.innerHTML = "ok";
-    }
-  }
 };

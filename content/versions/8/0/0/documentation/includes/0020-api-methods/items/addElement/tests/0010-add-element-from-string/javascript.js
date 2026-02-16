@@ -5,7 +5,6 @@ window.Class0CF85 = class {
   }
 
   signal_0CF85(ev, el) {
-    console.log(this.element["id-0CF85"]);
     if (this.element["id-0CF85"] === `<div>ok</div>`) {
       el.innerHTML = "ok";
     }

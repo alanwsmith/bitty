@@ -196,8 +196,11 @@ class BittyJs extends HTMLElement {
   }
 
   elementAdd(key, content) {
-    console.log("HERE9");
-    this.conn.element[key] = content;
+    if (content instanceof Element) {
+      this.conn.element[key] = content.outerHTML;
+    } else {
+      this.conn.element[key] = content;
+    }
   }
 
   async copy(selector) {

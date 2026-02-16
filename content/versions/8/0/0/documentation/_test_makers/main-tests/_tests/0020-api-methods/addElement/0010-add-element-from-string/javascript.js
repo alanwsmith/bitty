@@ -5,7 +5,6 @@ window.$CLASS_NAME = class {
   }
 
   $SIGNAL_NAME(ev, el) {
-    console.log(this.element["$ID_NAME"]);
     if (this.element["$ID_NAME"] === `<div>ok</div>`) {
       el.innerHTML = "ok";
     }

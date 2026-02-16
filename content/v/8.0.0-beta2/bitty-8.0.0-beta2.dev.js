@@ -199,6 +199,12 @@ class BittyJs extends HTMLElement {
     if (content instanceof Element) {
       this.conn.element[key] = content.outerHTML;
       return new BittyResult(true, null);
+    } else if (content instanceof DocumentFragment) {
+      const error = new DefaultBittyLog(
+        4,
+        "Attempted to send document fragment to .addElement(key, content)",
+      );
+      return new BittyResult(false, error);
     } else {
       this.conn.element[key] = content;
       return new BittyResult(true);

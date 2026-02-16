@@ -10,10 +10,9 @@ window.$CLASS_NAME = class {
     this.api.send(result, "verify_$SIGNAL_NAME");
   }
 
-  verify_$SIGNAL_NAME(payload, el) {
-    console.log(payload);
-    // if (this.element["$ID_NAME"] === `<div>ok</div>`) {
-    //   el.innerHTML = "ok";
-    // }
+  verify_$SIGNAL_NAME(result, el) {
+    if (result.ok === false) {
+      el.innerHTML = "ok";
+    }
   }
 };

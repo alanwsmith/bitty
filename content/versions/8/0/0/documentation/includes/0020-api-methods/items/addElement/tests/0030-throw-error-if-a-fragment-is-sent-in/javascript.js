@@ -10,10 +10,9 @@ window.ClassA665B = class {
     this.api.send(result, "verify_signal_A665B");
   }
 
-  verify_signal_A665B(payload, el) {
-    console.log(payload);
-    // if (this.element["id-A665B"] === `<div>ok</div>`) {
-    //   el.innerHTML = "ok";
-    // }
+  verify_signal_A665B(result, el) {
+    if (result.ok === false) {
+      el.innerHTML = "ok";
+    }
   }
 };

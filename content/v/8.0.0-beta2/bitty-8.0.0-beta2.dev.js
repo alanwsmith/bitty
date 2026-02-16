@@ -198,8 +198,10 @@ class BittyJs extends HTMLElement {
   elementAdd(key, content) {
     if (content instanceof Element) {
       this.conn.element[key] = content.outerHTML;
+      return new BittyResult(true, null);
     } else {
       this.conn.element[key] = content;
+      return new BittyResult(true);
     }
   }
 
@@ -683,6 +685,14 @@ class DefaultBittyLog {
   }
 }
 
+class BittyResult {
+  constructor(ok, error = null) {
+    this.ok = ok;
+    this.error = error;
+  }
+}
+
+// TODO: Transfer into general BittyResult
 class BittyFetchResponse {
   constructor(ok, error) {
     this.ok = ok;

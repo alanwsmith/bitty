@@ -1,10 +1,13 @@
 window.$CLASS_NAME = class {
   bittyReady() {
-    this.addElement("$ID_NAME", `<div>ok</div>`);
-    this.api.trigger("$SIGNAL_NAME");
+    this.api.trigger("given_$SIGNAL_NAME verify_$SIGNAL_NAME");
   }
 
-  $SIGNAL_NAME(ev, el) {
+  given_$SIGNAL_NAME(ev, el) {
+    this.addElement("$ID_NAME", `<div>ok</div>`);
+  }
+
+  verify_$SIGNAL_NAME(ev, el) {
     if (this.element["$ID_NAME"] === `<div>ok</div>`) {
       el.innerHTML = "ok";
     }

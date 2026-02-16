@@ -40,7 +40,14 @@
         [! endif !]
       [! endfor !]
 
-      [! include notes_file !]
+      [!- set notes_content -!]
+      [!- include notes_file -!]
+      [!- endset !]
+      
+      [! if notes_content|trim != "" !]
+      <div class="header heading-color font-weight-900">Notes</div>
+      [@ notes_content @]
+      [! endif !]
   </details>
 [! endif !]
 [! endfor !]

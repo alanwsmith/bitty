@@ -143,7 +143,7 @@ class BittyJs extends HTMLElement {
   }
 
   addTEXT(id, content) {
-    this.#_text[id] = content;
+    this.conn.text[id] = content;
   }
 
   collectionLogLevel() {
@@ -177,15 +177,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO, if you call this.api.element without
+  // an argument, return the list of
+  // available IDs sorted alphabetically.
   element(id, subs = {}) {
     const skeleton = document.createElement("template");
     skeleton.innerHTML = this.#_elements[id];
     const tmpEl = skeleton.content.cloneNode(true);
     return tmpEl.firstChild;
-  }
-
-  json(id, subs = {}) {
-    return JSON.parse(this.#_json[id]);
   }
 
   debug(payload) {
@@ -228,7 +227,7 @@ class BittyJs extends HTMLElement {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
-        this.#_text[key] = await response.text();
+        this.conn.text[key] = await response.text();
         return new BittyFetchResponse(true, null);
       } else {
         const log = this.addLog(4, {
@@ -271,10 +270,52 @@ class BittyJs extends HTMLElement {
     // }
   }
 
+  // TODO, if you call this.api.html without
+  // an argument, return the list of
+  // available IDs sorted alphabetically.
   html(id, subs = {}) {
     const skeleton = document.createElement("template");
     skeleton.innerHTML = this.#_html[id];
     return skeleton.content.cloneNode(true);
+  }
+
+  // TODO, if you call this.api.json without
+  // an argument, return the list of
+  // available IDs sorted alphabetically.
+  json(key, subs = {}) {
+    return JSON.parse(this.#_json[key]);
+    //return JSON.parse(this.#_json[id]);
+  }
+
+  // Things that need to be combined for
+  // testing:
+  // - No json on the page with the id
+  // - There is json on the page with
+  // the id
+  // - no key in localstorage with
+  // no fallback
+  // - no key in localstoraeg with
+  // a fallback.
+  // - data in localstorage
+  // - calling fetchJSON to override
+  // data
+  //
+  //
+
+  // Return `loaded`, `initialized`,
+  // `missing`, or `error` (for parsing
+  // errors), and "fallback" if the data
+  // from the page was used. depending on what happens.
+  loadJSON(key) {
+    const storage = localStorage.getItem(key);
+    if (storage !== undefined) {
+      this.#_json[key] = JSON.stringify(
+        JSON.parse(storage).data,
+      );
+      // console.log(JSON.parse(storage));
+      //this.#_json[key] = JSON.stringify(JSON.parse(storage).data);
+    }
+    //  console.log(this.#_json);
   }
 
   log(payload) {
@@ -354,7 +395,9 @@ class BittyJs extends HTMLElement {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.id !== undefined) {
         try {
-          this.#_json[el.id] = el.text;
+          //if (el.text.trim() !== "") {
+          this.#_json[el.id] = el.text.trim();
+          //}
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -384,10 +427,11 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   ingestTEXT() {
+    this.conn.text = {};
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "text/plain" && el.id !== undefined) {
         try {
-          this.#_text[el.id] = el.text;
+          this.conn.text[el.id] = el.text;
         } catch (error) {
           // TODO: make test for error state
           // in test unit-tests test suite.
@@ -476,6 +520,20 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO: log error if the JSON doesn't parse
+  // properly before saving the string.
+  saveJSON(key) {
+    localStorage.setItem(
+      key,
+      JSON.stringify(JSON.parse(`{ "data": ${this.#_json[key]} }`)),
+    );
+    return { ok: true };
+  }
+
+  // TODO: Add setJSON(key, string|object) that
+  // upcerts the data into `this.#_json`
+  // and saves it
+
   send(payload, signal) {
     const ev = new BittySendAPIEvent(payload, signal);
     this.dispatchEvent(ev);
@@ -503,14 +561,15 @@ class BittyJs extends HTMLElement {
     this.#_outputLogLevel = this.getLogLevelIndex(key);
   }
 
-  setStorage(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
   async sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  // TODO: Stort data in `this.conn.svg` and
+  // switch this to `renderSVG(key, subs={})`
+  // TODO, if you call this.api.svg without
+  // an argument, return the list of
+  // available IDs sorted alphabetically.
   svg(key, subs = {}) {
     const tmpl = document.createElement("template");
     let content = this.replaceSubs(this.#_svgs[key], subs);
@@ -556,8 +615,11 @@ class BittyJs extends HTMLElement {
     return content;
   }
 
-  text(key, subs = {}) {
-    return this.replaceSubs(this.#_text[key], subs);
+  // TODO, if you call this.api.text without
+  // an argument, return the list of
+  // available IDs sorted alphabetically.
+  renderTEXT(key, subs = {}) {
+    return this.replaceSubs(this.conn.text[key], subs);
   }
 
   trace(payload) {

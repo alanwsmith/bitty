@@ -1,4 +1,5 @@
 export default class {
+  /*
   #storageKey = "detailsOpener";
   #states;
 
@@ -53,4 +54,5 @@ export default class {
     });
     this.api.setStorage(this.#storageKey, this.#states);
   }
+  */
 }

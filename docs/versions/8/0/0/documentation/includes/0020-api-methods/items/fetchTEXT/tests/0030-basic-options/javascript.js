@@ -18,7 +18,7 @@ window.ClassB0DCF = class {
     };
     const response = await this.api.fetchTEXT(key, url, options);
     if (response.ok === true && response.error === null) {
-      el.innerHTML = this.api.text(key);
+      el.innerHTML = this.text[key];
     }
   }
 };

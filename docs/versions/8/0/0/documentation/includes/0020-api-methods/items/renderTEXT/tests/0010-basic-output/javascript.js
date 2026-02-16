@@ -1,12 +1,12 @@
-window.Class4A2E0 = class {
+window.Class95A32 = class {
   bittyReady() {
-    this.api.addTEXT("id-4A2E0", "example-4A2E0");
-    this.api.trigger("signal_4A2E0");
+    this.api.addTEXT("id-95A32", "example-95A32");
+    this.api.trigger("signal_95A32");
   }
 
-  signal_4A2E0(ev, el) {
-    const expected = "example-4A2E0";
-    const got = this.api.renderTEXT("id-4A2E0");
+  signal_95A32(ev, el) {
+    const expected = "example-95A32";
+    const got = this.api.renderTEXT("id-95A32");
     if (expected === got) {
       el.innerHTML = "ok";
     }

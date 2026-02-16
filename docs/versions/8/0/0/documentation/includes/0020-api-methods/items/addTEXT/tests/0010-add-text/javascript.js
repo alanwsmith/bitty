@@ -1,13 +1,10 @@
-window.Class34844 = class {
+window.ClassDD649 = class {
   bittyReady() {
-    this.api.addTEXT("id-34844", "example-34844");
-    this.api.trigger("signal_34844");
+    this.api.addTEXT("id-DD649", "ok");
+    this.api.trigger("signal_DD649");
   }
 
-  signal_34844(ev, el) {
-    console.log(this.text);
-    if (this.text["id-34844"] === "example-34844") {
-      el.innerHTML = "ok";
-    }
+  signal_DD649(ev, el) {
+    el.innerHTML = this.text["id-DD649"];
   }
 };

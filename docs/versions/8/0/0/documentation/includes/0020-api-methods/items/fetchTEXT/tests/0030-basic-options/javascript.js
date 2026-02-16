@@ -1,10 +1,10 @@
-window.ClassB0DCF = class {
+window.ClassE1FBF = class {
   bittyReady() {
-    this.api.trigger("signal_B0DCF");
+    this.api.trigger("signal_E1FBF");
   }
 
-  async signal_B0DCF(ev, el) {
-    const key = "key-B0DCF";
+  async signal_E1FBF(ev, el) {
+    const key = "key-E1FBF";
     const url =
       "/[@ file.parent @]/includes/0020-api-methods/items/fetchTEXT/tests/0030-basic-options/payload.txt";
     const options = {

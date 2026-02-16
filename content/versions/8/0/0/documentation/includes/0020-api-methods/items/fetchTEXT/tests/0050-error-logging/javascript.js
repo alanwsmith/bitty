@@ -1,14 +1,14 @@
-window.ClassF0EEE = class {
+window.Class6D83C = class {
   bittyReady() {
-    this.api.trigger("signal_F0EEE");
+    this.api.trigger("signal_6D83C");
   }
 
-  async signal_F0EEE(ev, el) {
+  async signal_6D83C(ev, el) {
     console.error(
-      "The 404 error for `/intentionally-missing-file-F0EEE.txt` is part of the test suite. It is an expected error.",
+      "The 404 error for `/intentionally-missing-file-6D83C.txt` is part of the test suite. It is an expected error.",
     );
-    const key = "key-F0EEE";
-    const url = "/intentionally-missing-file-F0EEE.txt";
+    const key = "key-6D83C";
+    const url = "/intentionally-missing-file-6D83C.txt";
     this.api.setOutputLogLevel("none");
     await this.api.fetchTEXT(key, url);
     if (this.api.logs()[0].payload.type === "fetchError") {

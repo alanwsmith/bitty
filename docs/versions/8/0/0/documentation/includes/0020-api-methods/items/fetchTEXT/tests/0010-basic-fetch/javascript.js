@@ -1,10 +1,10 @@
-window.Class40476 = class {
+window.Class415EB = class {
   bittyReady() {
-    this.api.trigger("signal_40476");
+    this.api.trigger("signal_415EB");
   }
 
-  async signal_40476(ev, el) {
-    const key = "key-40476";
+  async signal_415EB(ev, el) {
+    const key = "key-415EB";
     const url =
       "/[@ file.parent @]/includes/0020-api-methods/items/fetchTEXT/tests/0010-basic-fetch/payload.txt";
     await this.api.fetchTEXT(key, url);

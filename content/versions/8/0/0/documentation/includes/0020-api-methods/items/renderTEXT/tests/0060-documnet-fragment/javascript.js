@@ -1,17 +1,17 @@
-window.ClassC8FAD = class {
+window.Class48BB8 = class {
   bittyReady() {
-    this.api.addTEXT("id-C8FAD", "TARGET_C8FAD");
-    this.api.trigger("signal_C8FAD");
+    this.api.addTEXT("id-48BB8", "TARGET_48BB8");
+    this.api.trigger("signal_48BB8");
   }
 
-  signal_C8FAD(ev, el) {
+  signal_48BB8(ev, el) {
     const fragment = document.createDocumentFragment();
-    fragment.innerHTML = "<div>example-C8FAD-1</div><div>example-C8FAD-2</div>";
+    fragment.innerHTML = "<div>example-48BB8-1</div><div>example-48BB8-2</div>";
     const subs = {
-      "TARGET_C8FAD": fragment,
+      "TARGET_48BB8": fragment,
     };
-    const expected = "<div>example-C8FAD-1</div><div>example-C8FAD-2</div>";
-    const got = this.api.renderTEXT("id-C8FAD", subs);
+    const expected = "<div>example-48BB8-1</div><div>example-48BB8-2</div>";
+    const got = this.api.renderTEXT("id-48BB8", subs);
     if (expected === got) {
       el.innerHTML = "ok";
     }

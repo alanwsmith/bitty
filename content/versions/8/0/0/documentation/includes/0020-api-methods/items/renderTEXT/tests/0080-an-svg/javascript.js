@@ -1,16 +1,16 @@
-window.Class598C9 = class {
+window.Class57B24 = class {
   bittyReady() {
-    this.api.addTEXT("id-598C9", "TARGET_598C9");
-    this.api.trigger("signal_598C9");
+    this.api.addTEXT("id-57B24", "TARGET_57B24");
+    this.api.trigger("signal_57B24");
   }
 
-  signal_598C9(ev, el) {
+  signal_57B24(ev, el) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     const subs = {
-      "TARGET_598C9": svg,
+      "TARGET_57B24": svg,
     };
     const expected = "<svg></svg>";
-    const got = this.api.renderTEXT("id-598C9", subs);
+    const got = this.api.renderTEXT("id-57B24", subs);
     if (expected === got) {
       el.innerHTML = "ok";
     }

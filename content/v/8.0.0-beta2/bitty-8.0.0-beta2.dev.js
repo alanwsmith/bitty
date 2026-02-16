@@ -28,7 +28,7 @@ class BittyJs extends HTMLElement {
 
   addElement(id, content) {
     if (typeof content === "string") {
-      this.#_elements[id] = content;
+      this.conn.element[id] = content;
       // TODO: accept html element.
       // TODO: If you pass in a document frag, pull
       // the first element and throw a warning.
@@ -114,10 +114,11 @@ class BittyJs extends HTMLElement {
   }
 
   addJSON(id, content) {
+    // TODO: Add error if JSON doesn't parse
     if (typeof content === "string") {
-      this.#_json[id] = content;
+      this.conn.json[id] = content;
     } else {
-      this.#_json[id] = JSON.stringify(content);
+      this.conn.json[id] = JSON.stringify(content);
     }
   }
 
@@ -156,6 +157,11 @@ class BittyJs extends HTMLElement {
     await this.makeConnection();
     if (this.conn) {
       this.conn.api = this;
+      this.conn.element = {};
+      this.conn.fragment = {};
+      this.conn.json = {};
+      this.conn.svg = {};
+      this.conn.text = {};
       this.handleEventBridge = this.processEvent.bind(this);
       this.addEventListeners();
       this.ingestJSON();
@@ -180,9 +186,9 @@ class BittyJs extends HTMLElement {
   // TODO, if you call this.api.element without
   // an argument, return the list of
   // available IDs sorted alphabetically.
-  element(id, subs = {}) {
+  renderElement(id, subs = {}) {
     const skeleton = document.createElement("template");
-    skeleton.innerHTML = this.#_elements[id];
+    skeleton.innerHTML = this.conn.element[id];
     const tmpEl = skeleton.content.cloneNode(true);
     return tmpEl.firstChild;
   }

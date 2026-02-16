@@ -1,21 +1,21 @@
-window.Class39015 = class {
+window.ClassA9659 = class {
   bittyReady() {
-    this.api.addTEXT("id-39015", "TARGET_39015");
-    this.api.trigger("signal_39015");
+    this.api.addTEXT("id-A9659", "TARGET_A9659");
+    this.api.trigger("signal_A9659");
   }
 
-  signal_39015(_, el) {
+  signal_A9659(_, el) {
     const items = [
       document.createElement("div"),
       document.createElement("div"),
     ];
-    items[0].innerHTML = "example-39015-1";
-    items[1].innerHTML = "example-39015-2";
+    items[0].innerHTML = "example-A9659-1";
+    items[1].innerHTML = "example-A9659-2";
     const subs = {
-      "TARGET_39015": items,
+      "TARGET_A9659": items,
     };
-    const expected = "<div>example-39015-1</div><div>example-39015-2</div>";
-    const got = this.api.renderTEXT("id-39015", subs);
+    const expected = "<div>example-A9659-1</div><div>example-A9659-2</div>";
+    const got = this.api.renderTEXT("id-A9659", subs);
     if (expected === got) {
       el.innerHTML = "ok";
     }

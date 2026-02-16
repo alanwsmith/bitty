@@ -3,12 +3,11 @@ window.$CLASS_NAME = class {
   #content = `{ "status": "ok" }`;
 
   bittyReady() {
-    this.api.addJSON(this.#id, this.#content);
+    this.api.addJSON("$ID_NAME", `{ "status": "ok"}`);
     this.api.trigger("$SIGNAL_NAME");
   }
 
   $SIGNAL_NAME(ev, el) {
-    const json = this.api.json(this.#id);
-    el.innerHTML = json.status;
+    el.innerHTML = this.json["$ID_NAME"].status;
   }
 };

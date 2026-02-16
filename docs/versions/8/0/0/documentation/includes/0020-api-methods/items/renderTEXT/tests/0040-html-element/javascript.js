@@ -1,19 +1,19 @@
-window.ClassF6A4F = class {
+window.ClassB840F = class {
   #_el;
 
   bittyReady() {
-    this.api.addTEXT("id-F6A4F", "TARGET_F6A4F");
-    this.api.trigger("signal_F6A4F");
+    this.api.addTEXT("id-B840F", "TARGET_B840F");
+    this.api.trigger("signal_B840F");
   }
 
-  signal_F6A4F(ev, el) {
+  signal_B840F(ev, el) {
     const newEl = document.createElement("div");
-    newEl.innerHTML = "example-F6A4F";
+    newEl.innerHTML = "example-B840F";
     const subs = {
-      "TARGET_F6A4F": newEl,
+      "TARGET_B840F": newEl,
     };
-    const expected = "<div>example-F6A4F</div>";
-    const got = this.api.renderTEXT("id-F6A4F", subs);
+    const expected = "<div>example-B840F</div>";
+    const got = this.api.renderTEXT("id-B840F", subs);
     if (expected === got) {
       el.innerHTML = "ok";
     }

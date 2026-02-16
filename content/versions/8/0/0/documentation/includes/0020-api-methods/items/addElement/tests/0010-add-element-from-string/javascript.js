@@ -1,14 +1,10 @@
 window.Class0CF85 = class {
-  #id = "id-0CF85";
-  #content = `<div>ok</div>`;
-
   bittyReady() {
-    this.api.addElement(this.#id, this.#content);
+    this.api.addElement("id-0CF85", `<div>ok</div>`);
     this.api.trigger("signal_0CF85");
   }
 
   signal_0CF85(ev, el) {
-    const html = this.api.element(this.#id);
-    el.innerHTML = html.innerHTML;
+    el.innerHTML = this.api.renderElement("id-0CF85").innerHTML;
   }
 };

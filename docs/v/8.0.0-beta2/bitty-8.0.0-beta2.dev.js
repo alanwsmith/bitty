@@ -26,18 +26,18 @@ class BittyJs extends HTMLElement {
     super();
   }
 
-  addElement(id, content) {
-    if (typeof content === "string") {
-      this.conn.element[id] = content;
-      // TODO: accept html element.
-      // TODO: If you pass in a document frag, pull
-      // the first element and throw a warning.
-      // Should be able to pull stuff from addHTML
-    } else {
-      // TODO: Convert this to a bitty error.
-      console.error("Unknown type of input sent to `addHTML`");
-    }
-  }
+  // addElement(id, content) {
+  //   if (typeof content === "string") {
+  //     this.conn.element[id] = content;
+  //     // TODO: accept html element.
+  //     // TODO: If you pass in a document frag, pull
+  //     // the first element and throw a warning.
+  //     // Should be able to pull stuff from addHTML
+  //   } else {
+  //     // TODO: Convert this to a bitty error.
+  //     console.error("Unknown type of input sent to `addHTML`");
+  //   }
+  // }
 
   /** internal */
   addEventListeners() {
@@ -156,6 +156,7 @@ class BittyJs extends HTMLElement {
     this.initLogFunctions();
     await this.makeConnection();
     if (this.conn) {
+      this.initElementMethods();
       this.conn.api = this;
       this.conn.element = {};
       this.conn.fragment = {};
@@ -169,6 +170,34 @@ class BittyJs extends HTMLElement {
       this.ingestSVGs();
       await this.runBittyReady();
     }
+  }
+
+  initElementMethods() {
+    this.conn.element = {};
+    this.conn.addElement = this.elementAdd.bind(this);
+
+    // (key, content) => {
+    // if (typeof content === "string") {
+    //   console.log("HEHREHRHEHRHEHR");
+    //   this.conn.element[id] = content;
+    // }
+    // //     // TODO: accept html element.
+    // //     // TODO: If you pass in a document frag, pull
+    // //     // the first element and throw a warning.
+    // //     // Should be able to pull stuff from addHTML
+    // //   } else {
+    // //     // TODO: Convert this to a bitty error.
+    // //     console.error("Unknown type of input sent to `addHTML`");
+    // //   }
+    //};
+    this.conn.renderElement = (key, subs) => {};
+    this.conn.saveElement = (key, content) => {};
+    this.conn.updateElement = (key, content) => {};
+  }
+
+  elementAdd(key, content) {
+    console.log("HERE9");
+    this.conn.element[key] = content;
   }
 
   async copy(selector) {

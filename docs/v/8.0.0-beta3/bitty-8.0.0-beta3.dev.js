@@ -57,6 +57,13 @@ class BittyJs extends HTMLElement {
         );
       }
     } catch (error) {
+      return this.conn.addLog(
+        "error",
+        "fetchJSON",
+        false,
+        `Error fetching JSON from '${url}' for key '${key}'`,
+        error.toString(),
+      );
     }
   }
 

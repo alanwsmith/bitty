@@ -16,5 +16,6 @@ window.$CLASS_NAME = class {
   $SIGNAL_NAME(ev, el) {
     const html = this.api.html(this.#id);
     el.innerHTML = html.querySelector("div").innerHTML;
+  el.innerHTML = "todo";
   }
 };

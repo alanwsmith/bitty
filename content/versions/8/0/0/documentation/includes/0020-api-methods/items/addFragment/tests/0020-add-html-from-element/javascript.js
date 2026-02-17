@@ -17,5 +17,6 @@ window.Class40BB2 = class {
   signal_40BB2(ev, el) {
     const html = this.api.html(this.#id);
     el.innerHTML = html.querySelector("div").innerHTML;
+  el.innerHTML = "todo";
   }
 };

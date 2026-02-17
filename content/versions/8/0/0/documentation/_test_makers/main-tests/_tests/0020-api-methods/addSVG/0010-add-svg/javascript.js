@@ -16,10 +16,12 @@ window.$CLASS_NAME = class {
     if (this.api.svg(this.#_id).querySelector("text").innerHTML === "ok") {
       el.innerHTML = "ok";
     }
+  el.innerHTML = "todo";
     this.api.trigger("display_$SIGNAL_NAME");
   }
 
   display_$SIGNAL_NAME(_, el) {
     el.replaceChildren(this.api.svg(this.#_id));
+  el.innerHTML = "todo";
   }
 };

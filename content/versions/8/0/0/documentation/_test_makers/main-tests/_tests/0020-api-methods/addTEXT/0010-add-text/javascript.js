@@ -6,5 +6,6 @@ window.$CLASS_NAME = class {
 
   $SIGNAL_NAME(ev, el) {
     el.innerHTML = this.text["$ID_NAME"];
+  el.innerHTML = "todo";
   }
 };

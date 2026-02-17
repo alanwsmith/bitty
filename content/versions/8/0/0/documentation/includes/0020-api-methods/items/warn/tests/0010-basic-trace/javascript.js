@@ -10,6 +10,7 @@ window.ClassAC409 = class {
     if (got === "example-AC409") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 
   manual_review_signal_AC409(_, __) {

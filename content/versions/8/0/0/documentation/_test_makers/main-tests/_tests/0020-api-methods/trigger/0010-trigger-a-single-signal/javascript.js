@@ -6,4 +6,5 @@ window.$CLASS_NAME = class {
   $SIGNAL_NAME(_, el) {
     el.innerHTML = "ok";
   }
+el.innerHTML = "TODO: Move to using bit class directly"
 };

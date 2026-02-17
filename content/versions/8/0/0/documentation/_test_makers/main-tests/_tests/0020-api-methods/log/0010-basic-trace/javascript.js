@@ -10,6 +10,7 @@ window.$CLASS_NAME = class {
     if (got === "$EXAMPLE_NAME") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 
   manual_review_$SIGNAL_NAME(_, __) {

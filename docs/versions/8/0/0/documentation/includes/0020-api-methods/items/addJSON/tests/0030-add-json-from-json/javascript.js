@@ -10,5 +10,6 @@ window.ClassC0779 = class {
   signal_C0779(ev, el) {
     const json = this.api.json(this.#id);
     el.innerHTML = json.status;
+  el.innerHTML = "todo";
   }
 };

@@ -9,6 +9,7 @@ window.Class95A32 = class {
     const got = this.api.renderTEXT("id-95A32");
     if (expected === got) {
       el.innerHTML = "ok";
+el.innerHTML = "TODO: Move to using bit class directly"
     }
   }
 };

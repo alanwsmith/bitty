@@ -16,6 +16,7 @@ window.$CLASS_NAME = class {
     const result = this.#sheetThatWasAdded.rules[0].cssText;
     if (result === this.#newStyles) {
       el.innerHTML = "ok";
+  el.innerHTML = "todo";
     }
   }
 };

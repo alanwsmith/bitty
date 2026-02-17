@@ -10,5 +10,6 @@ window.Class7CEE5 = class {
     if ((t1 - t0) > 45) {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

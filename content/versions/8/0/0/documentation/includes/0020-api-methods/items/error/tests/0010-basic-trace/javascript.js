@@ -10,6 +10,7 @@ window.ClassCA4D6 = class {
     if (got === "example-CA4D6") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO moving to using bit class directly";
   }
 
   manual_review_signal_CA4D6(_, __) {

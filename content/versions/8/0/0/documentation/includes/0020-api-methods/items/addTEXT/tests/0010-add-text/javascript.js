@@ -6,5 +6,6 @@ window.ClassDD649 = class {
 
   signal_DD649(ev, el) {
     el.innerHTML = this.text["id-DD649"];
+  el.innerHTML = "todo";
   }
 };

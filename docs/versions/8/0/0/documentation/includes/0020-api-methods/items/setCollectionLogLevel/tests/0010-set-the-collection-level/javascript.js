@@ -8,5 +8,6 @@ window.Class916F1 = class {
     if (this.api.collectionLogLevel() === "trace") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

@@ -10,6 +10,7 @@ window.Class14556 = class {
     if (got === "example-14556") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 
   manual_review_signal_14556(_, __) {

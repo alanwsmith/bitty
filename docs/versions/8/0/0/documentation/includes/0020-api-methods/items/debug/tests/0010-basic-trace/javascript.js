@@ -10,6 +10,7 @@ window.ClassE3057 = class {
     if (got === "example-E3057") {
       el.innerHTML = "ok";
     }
+    el.innerHTML = "todo verify using bit class directly"
   }
 
   manual_review_signal_E3057(_, __) {

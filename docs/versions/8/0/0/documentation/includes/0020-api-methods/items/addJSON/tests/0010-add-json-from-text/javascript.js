@@ -9,5 +9,6 @@ window.ClassADD80 = class {
 
   signal_ADD80(ev, el) {
     el.innerHTML = this.json["id-ADD80"].status;
+  el.innerHTML = "todo";
   }
 };

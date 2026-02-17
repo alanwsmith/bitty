@@ -15,5 +15,6 @@ window.ClassCC556 = class {
     if (gotValue === "crimson") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

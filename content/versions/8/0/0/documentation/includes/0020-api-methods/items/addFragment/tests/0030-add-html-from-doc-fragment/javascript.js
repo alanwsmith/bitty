@@ -16,5 +16,6 @@ window.Class9067F = class {
   signal_9067F(ev, el) {
     const html = this.api.html(this.#id);
     el.innerHTML = html.querySelector("div").innerHTML;
+  el.innerHTML = "todo";
   }
 };

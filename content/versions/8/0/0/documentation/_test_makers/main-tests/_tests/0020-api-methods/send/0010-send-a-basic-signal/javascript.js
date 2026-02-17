@@ -5,5 +5,6 @@ window.$CLASS_NAME = class {
 
   $SIGNAL_NAME(payload, el) {
     el.innerHTML = payload.status;
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

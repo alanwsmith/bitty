@@ -10,5 +10,6 @@ window.$CLASS_NAME = class {
   $SIGNAL_NAME(ev, el) {
     const json = this.api.json(this.#id);
     el.innerHTML = json.status;
+  el.innerHTML = "todo";
   }
 };

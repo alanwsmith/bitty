@@ -5,5 +5,6 @@ window.ClassABC35 = class {
 
   signal_ABC35(payload, el) {
     el.innerHTML = payload.status;
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

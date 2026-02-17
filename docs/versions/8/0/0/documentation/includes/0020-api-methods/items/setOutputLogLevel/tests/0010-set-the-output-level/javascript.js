@@ -8,5 +8,6 @@ window.Class04C3D = class {
     if (this.api.outputLogLevel() === "trace") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 };

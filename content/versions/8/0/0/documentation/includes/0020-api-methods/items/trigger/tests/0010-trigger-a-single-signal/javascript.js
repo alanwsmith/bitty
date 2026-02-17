@@ -6,4 +6,5 @@ window.Class3E263 = class {
   signal_3E263(_, el) {
     el.innerHTML = "ok";
   }
+el.innerHTML = "TODO: Move to using bit class directly"
 };

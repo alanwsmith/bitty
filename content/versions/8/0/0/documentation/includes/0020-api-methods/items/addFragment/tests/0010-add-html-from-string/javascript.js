@@ -10,5 +10,7 @@ window.Class84554 = class {
   signal_84554(ev, el) {
     const html = this.api.html(this.#id);
     el.innerHTML = html.querySelector("div").innerHTML;
+  el.innerHTML = "todo";
   }
+
 };

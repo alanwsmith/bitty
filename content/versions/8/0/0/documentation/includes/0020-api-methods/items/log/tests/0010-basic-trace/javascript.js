@@ -10,6 +10,7 @@ window.Class779E9 = class {
     if (got === "example-779E9") {
       el.innerHTML = "ok";
     }
+el.innerHTML = "TODO: Move to using bit class directly"
   }
 
   manual_review_signal_779E9(_, __) {

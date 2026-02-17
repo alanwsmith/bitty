@@ -10,5 +10,6 @@ window.ClassF598E = class {
   signal_F598E(_, el) {
     this.api.loadJSON("example-F598E");
     el.innerHTML = this.api.json("example-F598E").status;
+    el.innerHTML = "todo";
   }
 };

@@ -9,6 +9,7 @@ window.$CLASS_NAME = class {
     const got = this.api.renderTEXT("$ID_NAME");
     if (expected === got) {
       el.innerHTML = "ok";
+el.innerHTML = "TODO: Move to using bit class directly"
     }
   }
 };

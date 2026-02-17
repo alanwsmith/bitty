@@ -17,8 +17,8 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     await this.makeConnection();
     if (this.conn) {
-      //this.conn.api = this;
       this.createBridges();
+      this.ingestJSON();
       this.addEventListeners();
       await this.runBittyReady();
     }
@@ -105,49 +105,77 @@ class BittyJs extends HTMLElement {
     this.processEventBridge = this.processEvent.bind(this);
   }
 
+  ingestJSON() {
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.dataset.key !== undefined) {
+        try {
+          this.conn.json[el.dataset.key] = JSON.parse(el.text.trim());
+        } catch (error) {
+          return this.conn.addLog(
+            4,
+            "ingestjson",
+            `Failed to parse JSON from a script tag on the page.`,
+            false,
+            error,
+          );
+        }
+      }
+    });
+  }
+
   // TODO: throw error if parsing fails
   loadJSONBridge(key, fallback = null) {
     const storage = localStorage.getItem(key);
-    if (storage !== null) {
-      this.conn.json[key] = JSON.parse(storage).data;
-      return this.conn.addLog(
-        2,
-        "loadjson",
-        `Loaded JSON for key: ${key}`,
-        true,
-        null,
-      );
-    }
-    if (fallback !== null) {
-      if (typeof fallback === "string") {
-        this.conn.json[key] = JSON.parse(fallback);
-        localStorage.setItem(key, `{ "data": ${fallback} }`);
+    try {
+      if (storage !== null) {
+        this.conn.json[key] = JSON.parse(storage).data;
         return this.conn.addLog(
           2,
           "loadjson",
-          `Loaded fallback JSON for key: ${key}`,
-          true,
-          null,
-        );
-      } else if (typeof fallback === "object") {
-        this.conn.json[key] = fallback;
-        localStorage.setItem(key, JSON.stringify({ data: fallback }));
-        return this.conn.addLog(
-          2,
-          "loadjson",
-          `Loaded fallback JSON for key: ${key}`,
+          `Loaded JSON for key: ${key}`,
           true,
           null,
         );
       }
+      if (fallback !== null) {
+        if (typeof fallback === "string") {
+          this.conn.json[key] = JSON.parse(fallback);
+          localStorage.setItem(key, `{ "data": ${fallback} }`);
+          return this.conn.addLog(
+            2,
+            "loadjson",
+            `Loaded fallback JSON for key: ${key}`,
+            true,
+            null,
+          );
+        } else if (typeof fallback === "object") {
+          this.conn.json[key] = fallback;
+          localStorage.setItem(key, JSON.stringify({ data: fallback }));
+          return this.conn.addLog(
+            2,
+            "loadjson",
+            `Loaded fallback JSON for key: ${key}`,
+            true,
+            null,
+          );
+        }
+      }
+      return this.conn.addLog(
+        4,
+        "loadjson",
+        `No JSON in storage or fallback for key: ${key}`,
+        false,
+        null,
+      );
+    } catch (error) {
+      return this.conn.addLog(
+        4,
+        "loadjson",
+        `Could not parse fallback JSON for key: ${key}`,
+        false,
+        null,
+      );
     }
-    return this.conn.addLog(
-      4,
-      "loadjson",
-      `No JSON in storage or fallback for key: ${key}`,
-      false,
-      null,
-    );
   }
 
   /** internal */

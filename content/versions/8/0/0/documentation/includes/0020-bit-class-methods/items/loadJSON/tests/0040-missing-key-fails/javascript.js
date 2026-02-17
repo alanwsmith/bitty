@@ -4,14 +4,15 @@ window.ClassD89BE = class {
   }
 
   given_signal_D89BE(_, __) {
+    this.consoleLogLevel = 5;
+    localStorage.removeItem("missing_key_signal_D89BE");
     this.trigger("test_signal_D89BE");
   }
 
   test_signal_D89BE(_, el) {
-    const result = this.loadJSON("xxissing_key_signal_D89BE");
-    console.log("asdf");
-    console.log(this.json["issing_key_signal_D89BE"]);
-    console.log(result);
-    //el.innerHTML = JSON.parse(storage).data.status;
+    const result = this.loadJSON("missing_key_signal_D89BE");
+    if (result.ok === false) {
+      el.innerHTML = "ok";
+    }
   }
 };

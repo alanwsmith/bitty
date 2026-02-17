@@ -8,14 +8,14 @@ window.ClassD781E = class {
       `{ "status": "failed to overwrite"}`,
     );
     const jsonAsString = `{ "data": { "status": "ok"} }`;
-    localStorage.setItem("test_signal_D781E", jsonAsString);
+    localStorage.setItem("data_signal_D781E", jsonAsString);
     this.trigger("test_signal_D781E");
   }
 
   test_signal_D781E(_, el) {
-    const result = this.loadJSON("test_signal_D781E");
+    const result = this.loadJSON("data_signal_D781E");
     if (result.ok === true) {
-      el.innerHTML = this.json["test_signal_D781E"].status;
+      el.innerHTML = this.json["data_signal_D781E"].status;
     }
   }
 };

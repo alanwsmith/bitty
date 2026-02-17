@@ -104,9 +104,18 @@ class BittyJs extends HTMLElement {
   }
 
   _renderJSON(key, subs = {}, pretty = true) {
-    let jsonString = JSON.stringify(this.conn.json[key], null, 2);
-    for (const needle of Object.keys(subs)) {
-      jsonString = jsonString.replaceAll(needle, subs[needle]);
+    // TODO at some point for a consistent API:
+    // handle arrays of strings, elements/arrays-of-elements,
+    // fragments/arrays-of-fragments, svgs/arrays-of-svgs,
+    // and other jsons.
+
+    let jsonString = pretty
+      ? JSON.stringify(this.conn.json[key], null, 2)
+      : JSON.stringify(this.conn.json[key]);
+    if (subs !== null) {
+      for (const needle of Object.keys(subs)) {
+        jsonString = jsonString.replaceAll(needle, subs[needle]);
+      }
     }
     return jsonString;
   }

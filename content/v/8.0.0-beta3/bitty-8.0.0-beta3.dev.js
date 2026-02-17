@@ -173,7 +173,15 @@ class BittyJs extends HTMLElement {
   }
 
   addJSONBridge(key, json) {
-    if (typeof json === "string") {
+    if (json === undefined) {
+      return this.conn.addLog(
+        "error",
+        "addJSON",
+        false,
+        `No value passed in for key '${key}'`,
+        null,
+      );
+    } else if (typeof json === "string") {
       try {
         this.conn.json[key] = JSON.parse(json);
         localStorage.setItem(

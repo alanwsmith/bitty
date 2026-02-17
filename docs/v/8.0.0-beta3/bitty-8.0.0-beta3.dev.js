@@ -76,8 +76,17 @@ class BittyJs extends HTMLElement {
   }
 
   _setLogLevel(level) {
-    this.#_logLevel = level;
-    // console.log(`${level} - ${this.#_logLevel}`);
+    if (this.getLogLevelIndex(level) === -1) {
+      this.#_logLevel = "warn";
+      this.addLogBridge(
+        "warn",
+        "setLogLevel",
+        false,
+        `Attempted to setLogLevel(level) to an invalid level: '${level}'. Resetting log level to 'warn'`,
+      );
+    } else {
+      this.#_logLevel = level;
+    }
   }
 
   /** internal */

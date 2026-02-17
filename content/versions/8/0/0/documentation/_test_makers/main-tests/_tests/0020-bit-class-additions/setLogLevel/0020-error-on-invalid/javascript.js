@@ -1,16 +1,16 @@
-window.ClassE2600 = class {
+window.$CLASS_NAME = class {
   bittyReady() {
-    this.trigger("given_signal_E2600");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_E2600(_, __) {
-    this.trigger("test_signal_E2600");
+  given_$SIGNAL_NAME(_, __) {
+    this.trigger("test_$SIGNAL_NAME");
   }
 
-  test_signal_E2600(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     this.addLog(
       "warn",
-      "test_signal_E2600",
+      "test_$SIGNAL_NAME",
       true,
       "This warning and the upcoming one about setLogLevel being set to an invalid level are expected. They are part of the test suite",
     );

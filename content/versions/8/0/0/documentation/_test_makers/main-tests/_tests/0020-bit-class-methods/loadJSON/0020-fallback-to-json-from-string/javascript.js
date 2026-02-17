@@ -8,7 +8,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.loadJSON("test_$SIGNAL_NAME", `{ "status": "asdf" }`);
+    const result = this.loadJSON("test_$SIGNAL_NAME", `{ "status": "ok" }`);
     if (result.ok === true) {
       el.innerHTML = this.json["test_$SIGNAL_NAME"].status;
     }

@@ -8,7 +8,7 @@ window.Class75A3F = class {
   }
 
   test_signal_75A3F(_, el) {
-    const result = this.loadJSON("test_signal_75A3F", `{ "status": "asdf" }`);
+    const result = this.loadJSON("test_signal_75A3F", `{ "status": "ok" }`);
     if (result.ok === true) {
       el.innerHTML = this.json["test_signal_75A3F"].status;
     }

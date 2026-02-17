@@ -12,6 +12,7 @@ window.ClassA665B = class {
 
   verify_signal_A665B(result, el) {
     if (result.ok === false) {
+      console.log(result.error);
       el.innerHTML = "ok";
     }
   }

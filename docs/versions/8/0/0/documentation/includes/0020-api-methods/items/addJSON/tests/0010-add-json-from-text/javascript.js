@@ -1,4 +1,5 @@
 window.ClassADD80 = class {
+  /*
   #id = "id-ADD80";
   #content = `{ "status": "ok" }`;
 
@@ -11,4 +12,5 @@ window.ClassADD80 = class {
     el.innerHTML = this.json["id-ADD80"].status;
   el.innerHTML = "todo";
   }
+  */
 };

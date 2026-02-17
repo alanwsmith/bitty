@@ -1,4 +1,5 @@
 window.$CLASS_NAME = class {
+  /*
   #id = "$ID_NAME";
   #content = `{ "status": "ok" }`;
 
@@ -11,4 +12,5 @@ window.$CLASS_NAME = class {
     el.innerHTML = this.json["$ID_NAME"].status;
   el.innerHTML = "todo";
   }
+  */
 };

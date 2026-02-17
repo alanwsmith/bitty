@@ -1,4 +1,5 @@
 window.$CLASS_NAME = class {
+  /*
   #id = "$ID_NAME";
   #content = { status: "ok" };
 
@@ -12,4 +13,5 @@ window.$CLASS_NAME = class {
     el.innerHTML = json.status;
   el.innerHTML = "todo";
   }
+  */
 };

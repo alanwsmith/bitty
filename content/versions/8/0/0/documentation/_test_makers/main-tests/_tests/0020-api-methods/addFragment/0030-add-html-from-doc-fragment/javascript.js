@@ -1,4 +1,5 @@
 window.$CLASS_NAME = class {
+  /*
   #id = "$ID_NAME";
 
   bittyReady() {
@@ -18,4 +19,5 @@ window.$CLASS_NAME = class {
     el.innerHTML = html.querySelector("div").innerHTML;
   el.innerHTML = "todo";
   }
+  */
 };

@@ -12,6 +12,7 @@ window.$CLASS_NAME = class {
 
   verify_$SIGNAL_NAME(result, el) {
     if (result.ok === false) {
+      console.log(result.error);
       el.innerHTML = "ok";
     }
   }

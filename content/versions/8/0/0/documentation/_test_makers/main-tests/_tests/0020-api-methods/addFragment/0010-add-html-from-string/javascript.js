@@ -1,4 +1,5 @@
 window.$CLASS_NAME = class {
+  /*
   #id = "$ID_NAME";
   #content = `<div>ok</div>`;
 
@@ -12,5 +13,5 @@ window.$CLASS_NAME = class {
     el.innerHTML = html.querySelector("div").innerHTML;
   el.innerHTML = "todo";
   }
-
+  */
 };

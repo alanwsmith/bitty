@@ -1,4 +1,5 @@
 window.ClassE5DE2 = class {
+  /*
   #id = "id-E5DE2";
   #content = { status: "ok" };
 
@@ -12,4 +13,5 @@ window.ClassE5DE2 = class {
     el.innerHTML = json.status;
   el.innerHTML = "todo";
   }
+  */
 };

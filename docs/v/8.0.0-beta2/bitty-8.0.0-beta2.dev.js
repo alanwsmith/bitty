@@ -1,3 +1,8 @@
+// NOTE: This version is transitional.
+// Mostly, it doesn't work because things
+// were in flight before it became obvious
+// that moving to beta3 was the right play.
+
 const version = [8, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
@@ -123,13 +128,13 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
-  addLog(level, payload) {
-    const log = this.#_collectionLogFunctions[level](payload);
-    this.#_logs.push(log);
-    if (this.#_outputLogLevel <= level) {
-      this.#_outputLogFunctions[level](log);
-    }
-    return log;
+  addLog(level, type, payload) {
+    // const log = this.#_collectionLogFunctions[level](type, payload);
+    // this.#_logs.push(log);
+    // if (this.#_outputLogLevel <= level) {
+    //   this.#_outputLogFunctions[level](log);
+    // }
+    // return log;
   }
 
   addSVG(id, content) {
@@ -174,7 +179,7 @@ class BittyJs extends HTMLElement {
 
   initElementMethods() {
     this.conn.element = {};
-    this.conn.addElement = this.elementAdd.bind(this);
+    this.conn.addElement = this.addElementBridge.bind(this);
 
     // (key, content) => {
     // if (typeof content === "string") {
@@ -195,7 +200,7 @@ class BittyJs extends HTMLElement {
     this.conn.updateElement = (key, content) => {};
   }
 
-  elementAdd(key, content) {
+  addElementBridge(key, content) {
     if (content instanceof Element) {
       this.conn.element[key] = content.outerHTML;
       return new BittyResult(true, null);
@@ -373,67 +378,66 @@ class BittyJs extends HTMLElement {
   }
 
   initLogFunctions() {
-    this.#_outputLogFunctions = [];
-    this.#_collectionLogFunctions = [];
-    [0, 1, 2, 3, 4].forEach((
-      index,
-    ) => {
-      this.#_collectionLogFunctions[index] = (payload) => {
-        return new DefaultBittyLog(index, payload);
-      };
-
-      const preface = `BITTY_${this.#_logLevels[index].toUpperCase()}`;
-      this.#_outputLogFunctions[index] = (log) => {
-        if (log.timestamp !== undefined) {
-          if (typeof log.payload === "string") {
-            if (log.level === undefined || log.level <= 2) {
-              console.log(
-                `[${preface}|${log.timestamp.toISOString()}] ${log.payload}`,
-              );
-            } else {
-              console.error(
-                `[${preface}|${log.timestamp.toISOString()}] ${log.payload}`,
-              );
-            }
-          } else {
-            if (log.level === undefined || log.level <= 2) {
-              console.log(
-                `[${preface}|${log.timestamp.toISOString()}|See object below]`,
-              );
-            } else {
-              console.error(
-                `[${preface}|${log.timestamp.toISOString()}|See object below]`,
-              );
-            }
-            console.log(log.payload);
-          }
-        } else {
-          const localTimestamp = new Date();
-          if (typeof log.payload === "string") {
-            if (log.level === undefined || log.level <= 2) {
-              console.log(
-                `[${preface}|${localTimestamp.toISOString()}] ${log.payload}`,
-              );
-            } else {
-              console.error(
-                `[${preface}|${localTimestamp.toISOString()}] ${log.payload}`,
-              );
-            }
-          } else {
-            if (log.level === undefined || log.level <= 2) {
-              console.log(
-                `[${preface}|${localTimestamp.toISOString()}|See object below]`,
-              );
-            } else {
-              console.error(
-                `[${preface}|${localTimestamp.toISOString()}|See object below]`,
-              );
-            }
-            console.log(log.payload);
-          }
-        }
-      };
-    });
+    // this.#_outputLogFunctions = [];
+    // this.#_collectionLogFunctions = [];
+    // [0, 1, 2, 3, 4].forEach((
+    //   index,
+    // ) => {
+    //   this.#_collectionLogFunctions[index] = (payload) => {
+    //     return new DefaultBittyLog(index, payload);
+    //   };
+    //   const preface = `BITTY_${this.#_logLevels[index].toUpperCase()}`;
+    //   this.#_outputLogFunctions[index] = (log) => {
+    //     if (log.timestamp !== undefined) {
+    //       if (typeof log.payload === "string") {
+    //         if (log.level === undefined || log.level <= 2) {
+    //           console.log(
+    //             `[${preface}|${log.timestamp.toISOString()}] ${log.payload}`,
+    //           );
+    //         } else {
+    //           console.error(
+    //             `[${preface}|${log.timestamp.toISOString()}] ${log.payload}`,
+    //           );
+    //         }
+    //       } else {
+    //         if (log.level === undefined || log.level <= 2) {
+    //           console.log(
+    //             `[${preface}|${log.timestamp.toISOString()}|See object below]`,
+    //           );
+    //         } else {
+    //           console.error(
+    //             `[${preface}|${log.timestamp.toISOString()}|See object below]`,
+    //           );
+    //         }
+    //         console.log(log.payload);
+    //       }
+    //     } else {
+    //       const localTimestamp = new Date();
+    //       if (typeof log.payload === "string") {
+    //         if (log.level === undefined || log.level <= 2) {
+    //           console.log(
+    //             `[${preface}|${localTimestamp.toISOString()}] ${log.payload}`,
+    //           );
+    //         } else {
+    //           console.error(
+    //             `[${preface}|${localTimestamp.toISOString()}] ${log.payload}`,
+    //           );
+    //         }
+    //       } else {
+    //         if (log.level === undefined || log.level <= 2) {
+    //           console.log(
+    //             `[${preface}|${localTimestamp.toISOString()}|See object below]`,
+    //           );
+    //         } else {
+    //           console.error(
+    //             `[${preface}|${localTimestamp.toISOString()}|See object below]`,
+    //           );
+    //         }
+    //         console.log(log.payload);
+    //       }
+    //     }
+    //   };
+    // });
   }
 
   /** internal */
@@ -586,12 +590,12 @@ class BittyJs extends HTMLElement {
   }
 
   setCollectionLogFunction(key, fn) {
-    const logLevelIndex = this.getLogLevelIndex(key);
-    this.#_collectionLogFunctions[logLevelIndex] = fn;
+    // const logLevelIndex = this.getLogLevelIndex(key);
+    // this.#_collectionLogFunctions[logLevelIndex] = fn;
   }
 
   setCollectionLogLevel(key) {
-    this.#_collectionLogLevel = this.getLogLevelIndex(key);
+    // this.#_collectionLogLevel = this.getLogLevelIndex(key);
   }
 
   setCSSProperty(key, value) {

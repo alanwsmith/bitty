@@ -1,4 +1,5 @@
 window.Class84554 = class {
+  /*
   #id = "id-84554";
   #content = `<div>ok</div>`;
 
@@ -12,5 +13,5 @@ window.Class84554 = class {
     el.innerHTML = html.querySelector("div").innerHTML;
   el.innerHTML = "todo";
   }
-
+  */
 };

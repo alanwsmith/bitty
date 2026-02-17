@@ -1,4 +1,5 @@
 window.ClassC0779 = class {
+  /*
   #id = "id-C0779";
   #content = JSON.parse(`{ "status": "ok" }`);
 
@@ -12,4 +13,5 @@ window.ClassC0779 = class {
     el.innerHTML = json.status;
   el.innerHTML = "todo";
   }
+  */
 };

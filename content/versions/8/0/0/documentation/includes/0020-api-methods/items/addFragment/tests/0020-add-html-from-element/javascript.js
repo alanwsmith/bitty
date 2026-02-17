@@ -1,4 +1,5 @@
 window.Class40BB2 = class {
+  /*
   #id = "id-40BB2";
 
   bittyReady() {
@@ -19,4 +20,5 @@ window.Class40BB2 = class {
     el.innerHTML = html.querySelector("div").innerHTML;
   el.innerHTML = "todo";
   }
+  */
 };

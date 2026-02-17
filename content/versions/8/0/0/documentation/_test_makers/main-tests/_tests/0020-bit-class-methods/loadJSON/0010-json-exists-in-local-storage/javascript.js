@@ -6,10 +6,10 @@ window.$CLASS_NAME = class {
   given_$SIGNAL_NAME(_, __) {
     const jsonAsString = `{ "data": { "status": "ok"} }`;
     localStorage.setItem("test_$SIGNAL_NAME", jsonAsString);
-    this.trigger("verify_$SIGNAL_NAME");
+    this.trigger("test_$SIGNAL_NAME");
   }
 
-  verify_$SIGNAL_NAME(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const result = this.loadJSON("test_$SIGNAL_NAME");
     if (result.ok === true) {
       el.innerHTML = this.json["test_$SIGNAL_NAME"].status;

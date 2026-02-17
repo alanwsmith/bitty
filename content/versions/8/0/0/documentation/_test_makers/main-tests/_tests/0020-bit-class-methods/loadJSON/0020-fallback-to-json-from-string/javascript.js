@@ -4,16 +4,11 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.json["test_$SIGNAL_NAME"] = JSON.parse(
-      `{ "status": "failed to overwrite"}`,
-    );
-    const jsonAsString = `{ "data": { "status": "ok"} }`;
-    localStorage.setItem("test_$SIGNAL_NAME", jsonAsString);
     this.trigger("test_$SIGNAL_NAME");
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.loadJSON("test_$SIGNAL_NAME");
+    const result = this.loadJSON("test_$SIGNAL_NAME", `{ "status": "asdf" }`);
     if (result.ok === true) {
       el.innerHTML = this.json["test_$SIGNAL_NAME"].status;
     }

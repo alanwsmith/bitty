@@ -9,10 +9,10 @@ window.ClassD781E = class {
     );
     const jsonAsString = `{ "data": { "status": "ok"} }`;
     localStorage.setItem("test_signal_D781E", jsonAsString);
-    this.trigger("verify_signal_D781E");
+    this.trigger("test_signal_D781E");
   }
 
-  verify_signal_D781E(_, el) {
+  test_signal_D781E(_, el) {
     const result = this.loadJSON("test_signal_D781E");
     if (result.ok === true) {
       el.innerHTML = this.json["test_signal_D781E"].status;

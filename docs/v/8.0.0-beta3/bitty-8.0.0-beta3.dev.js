@@ -91,7 +91,9 @@ class BittyJs extends HTMLElement {
   loadJSONBridge(key, fallback = null) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
+      // TODO: throw error if parsing fails
       this.conn.json[key] = JSON.parse(storage).data;
+    } else if (fallback instanceof String) {
     }
     return new BittyResult(true);
   }

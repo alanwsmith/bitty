@@ -10,7 +10,7 @@ window.Class1C2EF = class {
 
   test_signal_1C2EF(_, el) {
     const result = this.removeJSON("data_signal_1C2EF");
-    if (result.ok === true && result.level === 2) {
+    if (result.ok === true && result.level === "warn") {
       el.innerHTML = "ok";
     }
   }

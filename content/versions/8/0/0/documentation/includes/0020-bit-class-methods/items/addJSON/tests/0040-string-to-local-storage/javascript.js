@@ -4,6 +4,7 @@ window.Class2B0F2 = class {
   }
 
   given_signal_2B0F2(_, __) {
+    localStorage.removeItem("data_signal_2B0F2");
     const jsonString = `{ "status": "ok" }`;
     this.addJSON("data_signal_2B0F2", jsonString);
     this.trigger("test_signal_2B0F2");

@@ -104,17 +104,19 @@ class BittyJs extends HTMLElement {
         );
       }
     } else {
-      // The stringify then parse is to flatten
-      // other objects since that's how they get stored
       this.conn.json[key] = JSON.parse(JSON.stringify(json));
+      localStorage.setItem(
+        key,
+        JSON.stringify({ data: this.conn.json[key] }),
+      );
+      return this.conn.addLog(
+        3,
+        "addJSON",
+        `Added JSON with key: ${key}`,
+        true,
+        null,
+      );
     }
-    return this.conn.addLog(
-      3,
-      "addJSON",
-      `Added JSON with key: ${key}`,
-      true,
-      null,
-    );
   }
 
   // TODO: Add stacktrace

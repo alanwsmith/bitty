@@ -87,6 +87,13 @@ class BittyJs extends HTMLElement {
       // other objects since that's how they get stored
       this.conn.json[key] = JSON.parse(JSON.stringify(json));
     }
+    return this.conn.addLog(
+      3,
+      "addJSON",
+      `Added JSON with key: ${key}`,
+      true,
+      null,
+    );
   }
 
   addLogBridge(level, type, message, ok, extraInfo = null) {
@@ -143,7 +150,7 @@ class BittyJs extends HTMLElement {
         this.conn.json[key] = JSON.parse(storage).data;
         return this.conn.addLog(
           3,
-          "loadjson",
+          "loadJSON",
           `Loaded JSON for key: ${key}`,
           true,
           null,
@@ -155,7 +162,7 @@ class BittyJs extends HTMLElement {
           localStorage.setItem(key, `{ "data": ${fallback} }`);
           return this.conn.addLog(
             3,
-            "loadjson",
+            "loadJSON",
             `Loaded fallback JSON for key: ${key}`,
             true,
             null,
@@ -165,7 +172,7 @@ class BittyJs extends HTMLElement {
           localStorage.setItem(key, JSON.stringify({ data: fallback }));
           return this.conn.addLog(
             3,
-            "loadjson",
+            "loadJSON",
             `Loaded fallback JSON for key: ${key}`,
             true,
             null,
@@ -174,7 +181,7 @@ class BittyJs extends HTMLElement {
       }
       return this.conn.addLog(
         1,
-        "loadjson",
+        "loadJSON",
         `No JSON in storage or fallback for key: ${key}`,
         false,
         null,
@@ -182,7 +189,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       return this.conn.addLog(
         1,
-        "loadjson",
+        "loadJSON",
         `Could not parse fallback JSON for key: ${key}`,
         false,
         null,

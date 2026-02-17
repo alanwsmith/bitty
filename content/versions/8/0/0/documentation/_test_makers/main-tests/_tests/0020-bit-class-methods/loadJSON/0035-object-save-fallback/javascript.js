@@ -10,7 +10,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const data = localStorage.getItem("data_$SIGNAL_NAME");
-    el.innerHTML = data;
+    const storage = localStorage.getItem("data_$SIGNAL_NAME");
+    el.innerHTML = JSON.parse(storage).data.status;
   }
 };

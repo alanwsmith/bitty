@@ -88,16 +88,17 @@ class BittyJs extends HTMLElement {
     this.processEventBridge = this.processEvent.bind(this);
   }
 
+  // TODO: throw error if parsing fails
   loadJSONBridge(key, fallback = null) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
-      // TODO: throw error if parsing fails
       this.conn.json[key] = JSON.parse(storage).data;
     } else if (typeof fallback === "string") {
       this.conn.json[key] = JSON.parse(fallback);
       localStorage.setItem(key, `{ "data": ${fallback} }`);
     } else if (typeof fallback === "object") {
       this.conn.json[key] = fallback;
+      localStorage.setItem(key, JSON.stringify({ data: fallback }));
     }
     return new BittyResult(true);
   }

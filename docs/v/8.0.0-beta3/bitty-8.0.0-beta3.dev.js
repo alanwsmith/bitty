@@ -176,20 +176,20 @@ class BittyJs extends HTMLElement {
 
   // TODO: Add stacktrace
   addLogBridge(level, type, ok, message, extraInfo = null) {
-    //level = level.toLowerCase();
     const log = new BittyLog(level, type, ok, extraInfo);
     this.conn.logs.push(log);
-
-    // let levelIndex = this.#_logLevels.indexOf(level.toLowerCase());
-    // if (level <= this.conn.logLevel) {
-    //   if (level === 1) {
-    //     console.error(log);
-    //   } else if (level === 2) {
-    //     console.warn(log);
-    //   } else {
-    //     console.log(log);
-    //   }
-    // }
+    if (
+      this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.conn.logLevel)
+    ) {
+      console.log(this.getLogLevelIndex(level));
+      if (this.getLogLevelIndex(level) === 1) {
+        console.error(log);
+      } else if (this.getLogLevelIndex(level) === 2) {
+        console.warn(log);
+      } else {
+        // console.log(log);
+      }
+    }
     return log;
   }
 
@@ -210,6 +210,7 @@ class BittyJs extends HTMLElement {
   }
 
   getLogLevelIndex(level) {
+    console.log(level);
     return this.#_logLevels.indexOf(level.toLowerCase);
   }
 

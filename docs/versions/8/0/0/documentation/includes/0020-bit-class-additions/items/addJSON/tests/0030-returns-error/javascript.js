@@ -4,7 +4,7 @@ window.ClassA76D8 = class {
   }
 
   given_signal_A76D8(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     this.trigger("test_signal_A76D8");
   }
 

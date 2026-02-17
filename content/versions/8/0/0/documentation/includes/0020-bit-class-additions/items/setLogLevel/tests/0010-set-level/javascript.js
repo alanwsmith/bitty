@@ -8,7 +8,7 @@ window.Class94188 = class {
   }
 
   test_signal_94188(_, el) {
-    this.setLogLevel("none");
+    // this.setLogLevel("none");
     this.addLog("error");
     el.innerHTML = "ok";
   }

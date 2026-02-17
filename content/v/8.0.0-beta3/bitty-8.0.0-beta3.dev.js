@@ -17,7 +17,6 @@ class BittyJs extends HTMLElement {
   async connectedCallback() {
     await this.makeConnection();
     if (this.conn) {
-      // TODO: Deprecate .createBridges in favor of .createMethods
       this.createBridges();
       this.createMethods();
       this.ingestJSON();
@@ -81,103 +80,10 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  // addJSONBridge(key, json) {
-  //   if (typeof json === "string") {
-  //     try {
-  //       this.conn.json[key] = JSON.parse(json);
-  //       localStorage.setItem(
-  //         key,
-  //         JSON.stringify({ data: this.conn.json[key] }),
-  //       );
-  //       return this.conn.addLog(
-  //         3,
-  //         "addJSON",
-  //         `Added JSON with key: ${key}`,
-  //         true,
-  //         null,
-  //       );
-  //     } catch (error) {
-  //       return this.conn.addLog(
-  //         1,
-  //         "addJSON",
-  //         `Could not parse JSON for key: ${key}`,
-  //         false,
-  //         null,
-  //       );
-  //     }
-  //   } else {
-  //     this.conn.json[key] = JSON.parse(JSON.stringify(json));
-  //     localStorage.setItem(
-  //       key,
-  //       JSON.stringify({ data: this.conn.json[key] }),
-  //     );
-  //     return this.conn.addLog(
-  //       3,
-  //       "addJSON",
-  //       `Added JSON with key: ${key}`,
-  //       true,
-  //       null,
-  //     );
-  //   }
-  // }
-
-  // // TODO: Add stacktrace
-  // addLogBridge(level, type, message, ok, extraInfo = null) {
-  //   const log = new BittyLog(level, type, message, ok, extraInfo);
-  //   this.conn.logs.push(log);
-  //   if (level <= this.conn.logLevel) {
-  //     if (level === 1) {
-  //       console.error(log);
-  //     } else if (level === 2) {
-  //       console.warn(log);
-  //     } else {
-  //       console.log(log);
-  //     }
-  //   }
-  //   return log;
-  // }
-
-  createBridges() {
-    this.conn.logLevel = 2;
-    // this.conn.logs = [];
-    // this.conn.json = {};
-    //this.conn.addJSON = this.addJSONBridge.bind(this);
-    // this.conn.addLog = this.addLogBridge.bind(this);
-    this.conn.loadJSON = this.loadJSONBridge.bind(this);
-    this.conn.saveJSON = this.saveJSONBridge.bind(this);
-    this.conn.sleep = this.sleepBridge.bind(this);
-    this.conn.trigger = this.triggerBridge.bind(this);
-    this.processEventBridge = this.processEvent.bind(this);
-  }
-
-  createMethods() {
-    this.conn.json = {};
-    this.conn.addJSON = (key, json) => {
-      if (typeof json === "string") {
-        try {
-          this.conn.json[key] = JSON.parse(json);
-          localStorage.setItem(
-            key,
-            JSON.stringify({ data: this.conn.json[key] }),
-          );
-          return this.conn.addLog(
-            3,
-            "addJSON",
-            `Added JSON with key: ${key}`,
-            true,
-            null,
-          );
-        } catch (error) {
-          return this.conn.addLog(
-            1,
-            "addJSON",
-            `Could not parse JSON for key: ${key}`,
-            false,
-            null,
-          );
-        }
-      } else {
-        this.conn.json[key] = JSON.parse(JSON.stringify(json));
+  addJSONBridge(key, json) {
+    if (typeof json === "string") {
+      try {
+        this.conn.json[key] = JSON.parse(json);
         localStorage.setItem(
           key,
           JSON.stringify({ data: this.conn.json[key] }),
@@ -189,25 +95,61 @@ class BittyJs extends HTMLElement {
           true,
           null,
         );
+      } catch (error) {
+        return this.conn.addLog(
+          1,
+          "addJSON",
+          `Could not parse JSON for key: ${key}`,
+          false,
+          null,
+        );
       }
-    };
+    } else {
+      this.conn.json[key] = JSON.parse(JSON.stringify(json));
+      localStorage.setItem(
+        key,
+        JSON.stringify({ data: this.conn.json[key] }),
+      );
+      return this.conn.addLog(
+        3,
+        "addJSON",
+        `Added JSON with key: ${key}`,
+        true,
+        null,
+      );
+    }
+  }
 
-    // TODO: Add stacktrace
-    this.conn.logs = [];
-    this.conn.addLog = (level, type, message, ok, extraInfo = null) => {
-      const log = new BittyLog(level, type, message, ok, extraInfo);
-      this.conn.logs.push(log);
-      if (level <= this.conn.logLevel) {
-        if (level === 1) {
-          console.error(log);
-        } else if (level === 2) {
-          console.warn(log);
-        } else {
-          console.log(log);
-        }
+  // TODO: Add stacktrace
+  addLogBridge(level, type, message, ok, extraInfo = null) {
+    const log = new BittyLog(level, type, message, ok, extraInfo);
+    this.conn.logs.push(log);
+    if (level <= this.conn.logLevel) {
+      if (level === 1) {
+        console.error(log);
+      } else if (level === 2) {
+        console.warn(log);
+      } else {
+        console.log(log);
       }
-      return log;
-    };
+    }
+    return log;
+  }
+
+  createBridges() {
+    this.conn.logLevel = 2;
+    this.conn.logs = [];
+    this.conn.json = {};
+    this.conn.addJSON = this.addJSONBridge.bind(this);
+    this.conn.addLog = this.addLogBridge.bind(this);
+    this.conn.loadJSON = this.loadJSONBridge.bind(this);
+    this.conn.saveJSON = this.saveJSONBridge.bind(this);
+    this.conn.sleep = this.sleepBridge.bind(this);
+    this.conn.trigger = this.triggerBridge.bind(this);
+    this.processEventBridge = this.processEvent.bind(this);
+  }
+
+  createMethods() {
   }
 
   ingestJSON() {

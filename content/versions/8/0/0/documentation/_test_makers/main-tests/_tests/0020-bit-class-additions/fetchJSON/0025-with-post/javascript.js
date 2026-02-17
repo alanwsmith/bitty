@@ -10,7 +10,7 @@ window.$CLASS_NAME = class {
       "/[@ file.parent @]/includes/",
       "0020-bit-class-additions/items/",
       "fetchJSON/tests/",
-      "0020-pass-options/payload.json",
+      "0030-with-post/payload.json",
     ];
     this.#url = urlParts.join("");
     this.trigger("test_$SIGNAL_NAME");
@@ -18,9 +18,7 @@ window.$CLASS_NAME = class {
 
   async test_$SIGNAL_NAME(_, el) {
     const options = {
-      headers: {
-        "x-bitty-test": "data_$SIGNAL_NAME",
-      },
+      method: "POST",
     };
     // await this.fetchJSON("data_$SIGNAL_NAME", this.#url, options);
     //

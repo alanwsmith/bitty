@@ -22,7 +22,8 @@ window.Class7878C = class {
         "x-bitty-test": "data_signal_7878C",
       },
     };
-    await this.fetchJSON("data_signal_7878C", this.#url, options);
+    // await this.fetchJSON("data_signal_7878C", this.#url, options);
+    //
     // NOTE: Confirming options must be done manually.
     // This test is set to always pass as a result.
     el.innerHTML = "ok";

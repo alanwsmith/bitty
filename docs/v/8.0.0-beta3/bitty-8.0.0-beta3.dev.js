@@ -79,6 +79,16 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addJSONBridge(key, json) {
+    if (typeof json === "string") {
+      this.conn.json[key] = JSON.parse(json);
+    } else {
+      // The stringify then parse is to flatten
+      // other objects since that's how they get stored
+      this.conn.json[key] = JSON.parse(JSON.stringify(json));
+    }
+  }
+
   addLogBridge(level, type, message, ok, extraInfo = null) {
     const log = new BittyLog(level, type, message, ok, extraInfo);
     this.conn.logs.push(log);
@@ -98,6 +108,7 @@ class BittyJs extends HTMLElement {
     this.conn.consoleLogLevel = 3;
     this.conn.logs = [];
     this.conn.json = {};
+    this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);

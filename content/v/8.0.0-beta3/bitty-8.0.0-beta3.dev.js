@@ -95,8 +95,10 @@ class BittyJs extends HTMLElement {
       this.conn.json[key] = JSON.parse(storage).data;
     } else if (typeof fallback === "string") {
       this.conn.json[key] = JSON.parse(fallback);
+      localStorage.setItem(key, `{ "data": ${fallback} }`);
+    } else if (typeof fallback === "object") {
+      this.conn.json[key] = fallback;
     }
-    console.log(fallback instanceof String);
     return new BittyResult(true);
   }
 

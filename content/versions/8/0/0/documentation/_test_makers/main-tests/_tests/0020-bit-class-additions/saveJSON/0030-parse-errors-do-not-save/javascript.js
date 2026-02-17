@@ -5,7 +5,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.json["invalid_json"] = "not json";
-    this.logLevel = 0;
+    this.setLogLevel("none");
     this.trigger("test_$SIGNAL_NAME");
   }
 

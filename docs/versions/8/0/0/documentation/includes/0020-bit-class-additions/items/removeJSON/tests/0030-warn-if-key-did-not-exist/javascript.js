@@ -4,7 +4,7 @@ window.Class1C2EF = class {
   }
 
   given_signal_1C2EF(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     this.trigger("test_signal_1C2EF");
   }
 

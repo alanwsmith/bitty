@@ -4,7 +4,7 @@ window.ClassDBB47 = class {
   }
 
   given_signal_DBB47(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     const noDataAtTop = `{}`;
     localStorage.setItem("data_signal_DBB47", noDataAtTop);
     this.trigger("test_signal_DBB47");

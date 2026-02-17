@@ -4,7 +4,7 @@ window.ClassF4560 = class {
   }
 
   given_signal_F4560(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     this.trigger("test_signal_F4560");
   }
 

@@ -5,7 +5,7 @@ window.Class47EC2 = class {
 
   given_signal_47EC2(_, __) {
     this.json["invalid_json"] = "not json";
-    this.logLevel = 0;
+    this.setLogLevel("none");
     this.trigger("test_signal_47EC2");
   }
 

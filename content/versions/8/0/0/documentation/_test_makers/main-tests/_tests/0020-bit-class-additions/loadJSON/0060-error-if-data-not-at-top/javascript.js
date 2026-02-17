@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     const noDataAtTop = `{}`;
     localStorage.setItem("data_$SIGNAL_NAME", noDataAtTop);
     this.trigger("test_$SIGNAL_NAME");

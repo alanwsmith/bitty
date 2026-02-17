@@ -4,7 +4,7 @@ window.Class194AD = class {
   }
 
   given_signal_194AD(_, __) {
-    this.logLevel = 0;
+    this.setLogLevel("none");
     localStorage.removeItem("missing_key_signal_194AD");
     this.trigger("test_signal_194AD");
   }

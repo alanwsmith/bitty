@@ -175,14 +175,25 @@ class BittyJs extends HTMLElement {
     const storage = localStorage.getItem(key);
     try {
       if (storage !== null) {
-        this.conn.json[key] = JSON.parse(storage).data;
-        return this.conn.addLog(
-          3,
-          "loadJSON",
-          `Loaded JSON for key: ${key}`,
-          true,
-          null,
-        );
+        const json = JSON.parse(storage);
+        if (json.data === undefined) {
+          return this.conn.addLog(
+            1,
+            "loadJSON",
+            `Attempted to load storage without a top level 'data' in key: ${key}`,
+            false,
+            null,
+          );
+        } else {
+          this.conn.json[key] = JSON.parse(storage).data;
+          return this.conn.addLog(
+            3,
+            "loadJSON",
+            `Loaded JSON for key: ${key}`,
+            true,
+            null,
+          );
+        }
       }
       if (fallback !== null) {
         if (typeof fallback === "string") {

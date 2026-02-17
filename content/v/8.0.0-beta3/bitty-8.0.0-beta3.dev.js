@@ -41,17 +41,22 @@ class BittyJs extends HTMLElement {
           null,
         );
       } else {
-        // const log = this.addLog(4, {
-        //   type: "fetchError",
-        //   url: response.url,
-        //   status: response.status,
-        //   statusText: response.statusText,
-        // });
-        // return new BittyFetchResponse(false, log);
+        console.error(response);
+        return this.conn.addLog(
+          "error",
+          "fetchJSON",
+          false,
+          `Error fetching JSON from '${url}' for key '${key}'`,
+          {
+            redirect: response.redirect,
+            status: response.status,
+            statusText: response.statusText,
+            type: response.type,
+            url: response.url,
+          },
+        );
       }
     } catch (error) {
-      // const log = this.addLog(4, {});
-      // return new BittyFetchResponse(false, log);
     }
   }
 

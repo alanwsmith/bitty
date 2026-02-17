@@ -9,7 +9,7 @@ window.ClassCEAF0 = class {
     this.trigger("test_signal_CEAF0");
   }
 
-  async test_signal_CEAF0(_, el) {
+  test_signal_CEAF0(_, el) {
     const verify = JSON.parse(localStorage.getItem("data_signal_CEAF0")).data;
     el.innerHTML = verify.status;
   }

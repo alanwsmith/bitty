@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
     this.trigger("test_$SIGNAL_NAME");
   }
 
-  async test_$SIGNAL_NAME(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const verify = JSON.parse(localStorage.getItem("data_$SIGNAL_NAME")).data;
     el.innerHTML = verify.status;
   }

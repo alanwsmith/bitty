@@ -54,6 +54,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _getLogLevel() {
+    return this.#_logLevel;
+  }
+
   _removeJSON(key) {
     if (this.conn.json[key] === undefined) {
       return this.conn.addLog(
@@ -210,6 +214,7 @@ class BittyJs extends HTMLElement {
     this.conn.logs = [];
     this.conn.json = {};
     this.conn.fetchJSON = this._fetchJSON.bind(this);
+    this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.addJSON = this.addJSONBridge.bind(this);

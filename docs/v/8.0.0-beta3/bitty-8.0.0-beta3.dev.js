@@ -31,15 +31,26 @@ class BittyJs extends HTMLElement {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
-        const result = await response.json();
-        this.addJSONBridge(key, result);
-        return this.conn.addLog(
-          "info",
-          "fetchJSON",
-          true,
-          `fetched JSON from '${url}' and stored in key '${key}'`,
-          null,
-        );
+        const json = await response.json();
+        if (this.conn.json[key] !== undefined) {
+          this.conn.json[key] = json;
+          return this.conn.addLog(
+            "warn",
+            "fetchJSON",
+            true,
+            `Overwrote existing key '${key}' with JSON fetched from '${url}'`,
+            null,
+          );
+        } else {
+          this.conn.json[key] = json;
+          return this.conn.addLog(
+            "info",
+            "fetchJSON",
+            true,
+            `fetched JSON from '${url}' and stored in key '${key}'`,
+            null,
+          );
+        }
       } else {
         console.error(response);
         return this.conn.addLog(

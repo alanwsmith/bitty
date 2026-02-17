@@ -33,7 +33,7 @@ class BittyJs extends HTMLElement {
       if (response.ok === true) {
         this.conn.json[key] = await response.json();
         return this.conn.addLog(
-          "error",
+          "info",
           "fetchJSON",
           true,
           `fetched JSON from '${url}' and stored in key '${key}'`,
@@ -66,7 +66,7 @@ class BittyJs extends HTMLElement {
     } else {
       delete this.conn.json[key];
       return this.conn.addLog(
-        "error",
+        "info",
         "removeJSON",
         true,
         `Removed JSON with key: ${key}`,
@@ -76,7 +76,8 @@ class BittyJs extends HTMLElement {
   }
 
   _setLogLevel(level) {
-    this.$_logLevel = level;
+    this.#_logLevel = level;
+    // console.log(`${level} - ${this.#_logLevel}`);
   }
 
   /** internal */
@@ -176,18 +177,20 @@ class BittyJs extends HTMLElement {
 
   // TODO: Add stacktrace
   addLogBridge(level, type, ok, message, extraInfo = null) {
-    const log = new BittyLog(level, type, ok, extraInfo);
+    const log = new BittyLog(level, type, ok, message, extraInfo);
     this.conn.logs.push(log);
+    //    console.log(`${level} - ${this.#_logLevel}`);
+
     if (
-      this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.conn.logLevel)
+      this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
     ) {
-      console.log(this.getLogLevelIndex(level));
+      //  console.log(this.getLogLevelIndex(level));
       if (this.getLogLevelIndex(level) === 1) {
         console.error(log);
       } else if (this.getLogLevelIndex(level) === 2) {
         console.warn(log);
       } else {
-        // console.log(log);
+        console.log(log);
       }
     }
     return log;
@@ -210,8 +213,7 @@ class BittyJs extends HTMLElement {
   }
 
   getLogLevelIndex(level) {
-    console.log(level);
-    return this.#_logLevels.indexOf(level.toLowerCase);
+    return this.#_logLevels.indexOf(level.toLowerCase());
   }
 
   ingestJSON() {

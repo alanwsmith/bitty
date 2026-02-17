@@ -359,7 +359,7 @@ class BittyJs extends HTMLElement {
   // from the page was used. depending on what happens.
   loadJSON(key) {
     const storage = localStorage.getItem(key);
-    if (storage !== undefined) {
+    if (storage !== null) {
       this.#_json[key] = JSON.stringify(
         JSON.parse(storage).data,
       );

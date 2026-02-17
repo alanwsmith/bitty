@@ -81,9 +81,19 @@ class BittyJs extends HTMLElement {
 
   createBridges() {
     this.conn.logs = [];
+    this.conn.json = {};
+    this.conn.loadJSON = this.loadJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);
     this.processEventBridge = this.processEvent.bind(this);
+  }
+
+  loadJSONBridge(key, fallback = null) {
+    const storage = localStorage.getItem(key);
+    if (storage !== null) {
+      this.conn.json[key] = JSON.parse(storage).data;
+    }
+    return new BittyResult(true);
   }
 
   /** internal */
@@ -167,6 +177,13 @@ class BittyJs extends HTMLElement {
   triggerBridge(signal) {
     const ev = new BittyTriggerEvent(signal);
     this.dispatchEvent(ev);
+  }
+}
+
+class BittyResult {
+  constructor(ok, error = null) {
+    this.ok = ok;
+    this.error = error;
   }
 }
 

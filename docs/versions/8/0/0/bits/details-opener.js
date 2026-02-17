@@ -1,4 +1,8 @@
 export default class {
+  bittyReady() {
+    this.loadJSON("detailsStatus");
+  }
+
   /*
   #storageKey = "detailsOpener";
   #states;

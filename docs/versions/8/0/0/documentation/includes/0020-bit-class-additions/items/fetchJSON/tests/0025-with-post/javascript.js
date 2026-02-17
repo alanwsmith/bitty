@@ -1,22 +1,14 @@
 window.Class9D58C = class {
-  #url;
-
   bittyReady() {
     this.trigger("given_signal_9D58C");
   }
 
   given_signal_9D58C(_, __) {
-    const urlParts = [
-      "/[@ file.parent @]/includes/",
-      "0020-bit-class-additions/items/",
-      "fetchJSON/tests/",
-      "0030-with-post/payload.json",
-    ];
-    this.#url = urlParts.join("");
     this.trigger("test_signal_9D58C");
   }
 
   async test_signal_9D58C(_, el) {
+    const url = "/[@ file.parent @]/payloads/valid-json.json";
     const options = {
       method: "POST",
     };

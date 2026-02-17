@@ -29,9 +29,13 @@ class BittyJs extends HTMLElement {
     try {
       if (response.ok === true) {
         this.conn.json[key] = await response.json();
-
-        //this.conn.text[key] = await response.text();
-        //return new BittyFetchResponse(true, null);
+        return this.conn.addLog(
+          3,
+          "fetchJSON",
+          `fetched JSON from '${url}' and stored in key '${key}'`,
+          true,
+          null,
+        );
       } else {
         // const log = this.addLog(4, {
         //   type: "fetchError",

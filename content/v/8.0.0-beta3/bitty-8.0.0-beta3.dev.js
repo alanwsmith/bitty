@@ -83,6 +83,10 @@ class BittyJs extends HTMLElement {
   }
 
   _removeJSON(key) {
+    // TODO: Improve messaging if value
+    // was in localstorage but not in
+    // the current this.conn.json set.
+    localStorage.removeItem(key);
     if (this.conn.json[key] === undefined) {
       return this.conn.addLog(
         "warn",

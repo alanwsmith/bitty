@@ -1,6 +1,31 @@
 export default class {
   bittyReady() {
-    this.loadJSON("detailsStatus");
+    this.loadJSON(this.key(), { openItems: [] });
+    console.log(this.json[this.key()]);
+    this.trigger("initPage");
+  }
+
+  key() {
+    return `details-${window.location.pathname}`;
+  }
+
+  initPage() {
+    const elements = document.querySelectorAll("details");
+
+    console.log(elements);
+
+    // const pathname = window.location.pathname;
+    // if (this.#states.pages[pathname]) {
+    //   const elements = document.querySelectorAll("details");
+    //   if (elements.length !== this.#states.pages[pathname].length) {
+    //     this.#states.pages[pathname] = [];
+    //   }
+    //   elements.forEach((el, elIndex) => {
+    //     if (this.#states.pages[pathname][elIndex]) {
+    //       el.open = true;
+    //     }
+    //   });
+    // }
   }
 
   /*

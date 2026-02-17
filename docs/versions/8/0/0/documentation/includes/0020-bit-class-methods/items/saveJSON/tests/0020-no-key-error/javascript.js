@@ -4,7 +4,7 @@ window.Class9378D = class {
   }
 
   given_signal_9378D(_, __) {
-    this.consoleLogLevel = 5;
+    this.logLevel = 0;
     this.trigger("test_signal_9378D");
   }
 

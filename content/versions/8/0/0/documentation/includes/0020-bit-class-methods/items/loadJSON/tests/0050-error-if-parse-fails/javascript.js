@@ -4,7 +4,7 @@ window.Class6FBAC = class {
   }
 
   given_signal_6FBAC(_, __) {
-    this.consoleLogLevel = 5;
+    this.logLevel = 0;
     this.trigger("test_signal_6FBAC");
   }
 

@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.consoleLogLevel = 5;
+    this.logLevel = 0;
     localStorage.removeItem("missing_key_$SIGNAL_NAME");
     this.trigger("test_$SIGNAL_NAME");
   }

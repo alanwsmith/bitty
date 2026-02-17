@@ -79,9 +79,26 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  addLogBridge(level, type, ok, error = null, payload = null) {
+    const log = new BittyLog(level, type, ok, error, payload);
+    this.conn.logs.push(log);
+    if (level >= this.conn.consoleLogLevel) {
+      if (level === 4) {
+        console.error(log);
+      } else if (level === 3) {
+        console.warn(log);
+      } else {
+        console.log(log);
+      }
+    }
+    return log;
+  }
+
   createBridges() {
+    this.conn.consoleLogLevel = 3;
     this.conn.logs = [];
     this.conn.json = {};
+    this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);
@@ -100,7 +117,7 @@ class BittyJs extends HTMLElement {
       this.conn.json[key] = fallback;
       localStorage.setItem(key, JSON.stringify({ data: fallback }));
     }
-    return new BittyResult(true);
+    return this.conn.addLog(2, "loadjson", true, null, null);
   }
 
   /** internal */
@@ -187,10 +204,17 @@ class BittyJs extends HTMLElement {
   }
 }
 
-class BittyResult {
-  constructor(ok, error = null) {
+// Used both for logging and for
+// returned responses from methods
+class BittyLog {
+  constructor(level, type, ok, error = null, payload = null) {
+    this.level = level;
+    this.type = type;
     this.ok = ok;
     this.error = error;
+    this.payload = payload;
+    this.timestamp = new Date();
+    this.performanceTime = performance.now();
   }
 }
 

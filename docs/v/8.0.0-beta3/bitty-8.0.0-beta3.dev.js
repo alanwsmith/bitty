@@ -83,6 +83,10 @@ class BittyJs extends HTMLElement {
     if (typeof json === "string") {
       try {
         this.conn.json[key] = JSON.parse(json);
+        localStorage.setItem(
+          key,
+          JSON.stringify({ data: this.conn.json[key] }),
+        );
         return this.conn.addLog(
           3,
           "addJSON",
@@ -113,6 +117,7 @@ class BittyJs extends HTMLElement {
     );
   }
 
+  // TODO: Add stacktrace
   addLogBridge(level, type, message, ok, extraInfo = null) {
     const log = new BittyLog(level, type, message, ok, extraInfo);
     this.conn.logs.push(log);

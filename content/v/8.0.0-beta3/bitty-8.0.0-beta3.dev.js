@@ -111,6 +111,7 @@ class BittyJs extends HTMLElement {
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
+    this.conn.saveJSON = this.saveJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);
     this.processEventBridge = this.processEvent.bind(this);
@@ -261,6 +262,18 @@ class BittyJs extends HTMLElement {
         this.conn.bittyReady();
       }
     }
+  }
+
+  saveJSONBridge(key) {
+    const payload = JSON.stringify({ data: this.conn.json[key] });
+    localStorage.setItem(key, payload);
+    return this.conn.addLog(
+      2,
+      "savejson",
+      `Saved JSON for key: ${key}`,
+      true,
+      null,
+    );
   }
 
   async sleepBridge(ms) {

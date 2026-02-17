@@ -121,28 +121,28 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-  // TODO: Add stacktrace
-  addLogBridge(level, type, message, ok, extraInfo = null) {
-    const log = new BittyLog(level, type, message, ok, extraInfo);
-    this.conn.logs.push(log);
-    if (level <= this.conn.logLevel) {
-      if (level === 1) {
-        console.error(log);
-      } else if (level === 2) {
-        console.warn(log);
-      } else {
-        console.log(log);
-      }
-    }
-    return log;
-  }
+  // // TODO: Add stacktrace
+  // addLogBridge(level, type, message, ok, extraInfo = null) {
+  //   const log = new BittyLog(level, type, message, ok, extraInfo);
+  //   this.conn.logs.push(log);
+  //   if (level <= this.conn.logLevel) {
+  //     if (level === 1) {
+  //       console.error(log);
+  //     } else if (level === 2) {
+  //       console.warn(log);
+  //     } else {
+  //       console.log(log);
+  //     }
+  //   }
+  //   return log;
+  // }
 
   createBridges() {
     this.conn.logLevel = 2;
-    this.conn.logs = [];
-    this.conn.json = {};
+    // this.conn.logs = [];
+    // this.conn.json = {};
     //this.conn.addJSON = this.addJSONBridge.bind(this);
-    this.conn.addLog = this.addLogBridge.bind(this);
+    // this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
     this.conn.saveJSON = this.saveJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
@@ -151,6 +151,7 @@ class BittyJs extends HTMLElement {
   }
 
   createMethods() {
+    this.conn.json = {};
     this.conn.addJSON = (key, json) => {
       if (typeof json === "string") {
         try {
@@ -189,6 +190,23 @@ class BittyJs extends HTMLElement {
           null,
         );
       }
+    };
+
+    // TODO: Add stacktrace
+    this.conn.logs = [];
+    this.conn.addLog = (level, type, message, ok, extraInfo = null) => {
+      const log = new BittyLog(level, type, message, ok, extraInfo);
+      this.conn.logs.push(log);
+      if (level <= this.conn.logLevel) {
+        if (level === 1) {
+          console.error(log);
+        } else if (level === 2) {
+          console.warn(log);
+        } else {
+          console.log(log);
+        }
+      }
+      return log;
     };
   }
 

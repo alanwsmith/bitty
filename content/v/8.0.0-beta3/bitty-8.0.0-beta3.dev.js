@@ -79,8 +79,8 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  addLogBridge(level, type, ok, error = null, payload = null) {
-    const log = new BittyLog(level, type, ok, error, payload);
+  addLogBridge(level, type, message, ok, extraInfo = null) {
+    const log = new BittyLog(level, type, message, ok, extraInfo);
     this.conn.logs.push(log);
     if (level >= this.conn.consoleLogLevel) {
       if (level === 4) {
@@ -110,14 +110,44 @@ class BittyJs extends HTMLElement {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       this.conn.json[key] = JSON.parse(storage).data;
-    } else if (typeof fallback === "string") {
-      this.conn.json[key] = JSON.parse(fallback);
-      localStorage.setItem(key, `{ "data": ${fallback} }`);
-    } else if (typeof fallback === "object") {
-      this.conn.json[key] = fallback;
-      localStorage.setItem(key, JSON.stringify({ data: fallback }));
+      return this.conn.addLog(
+        2,
+        "loadjson",
+        `Loaded JSON for key: ${key}`,
+        true,
+        null,
+      );
     }
-    return this.conn.addLog(2, "loadjson", true, null, null);
+    if (fallback !== null) {
+      if (typeof fallback === "string") {
+        this.conn.json[key] = JSON.parse(fallback);
+        localStorage.setItem(key, `{ "data": ${fallback} }`);
+        return this.conn.addLog(
+          2,
+          "loadjson",
+          `Loaded fallback JSON for key: ${key}`,
+          true,
+          null,
+        );
+      } else if (typeof fallback === "object") {
+        this.conn.json[key] = fallback;
+        localStorage.setItem(key, JSON.stringify({ data: fallback }));
+        return this.conn.addLog(
+          2,
+          "loadjson",
+          `Loaded fallback JSON for key: ${key}`,
+          true,
+          null,
+        );
+      }
+    }
+    return this.conn.addLog(
+      4,
+      "loadjson",
+      `No JSON in storage or fallback for key: ${key}`,
+      false,
+      null,
+    );
   }
 
   /** internal */
@@ -207,12 +237,12 @@ class BittyJs extends HTMLElement {
 // Used both for logging and for
 // returned responses from methods
 class BittyLog {
-  constructor(level, type, ok, error = null, payload = null) {
+  constructor(level, type, message, ok, extraInfo = null) {
     this.level = level;
     this.type = type;
+    this.message = message;
     this.ok = ok;
-    this.error = error;
-    this.payload = payload;
+    this.extraInfo = extraInfo;
     this.timestamp = new Date();
     this.performanceTime = performance.now();
   }

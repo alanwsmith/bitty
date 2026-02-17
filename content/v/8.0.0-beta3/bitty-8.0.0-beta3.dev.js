@@ -117,6 +117,14 @@ class BittyJs extends HTMLElement {
         jsonString = jsonString.replaceAll(needle, subs[needle]);
       }
     }
+    if (jsonString === undefined) {
+      this.addLogBridge(
+        "error",
+        "renderJSON",
+        false,
+        `Attempted to render non-existing json with key '${key}'`,
+      );
+    }
     return jsonString;
   }
 

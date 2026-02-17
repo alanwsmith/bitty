@@ -31,7 +31,8 @@ class BittyJs extends HTMLElement {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
-        this.conn.json[key] = await response.json();
+        const result = await response.json();
+        this.addJSONBridge(key, result);
         return this.conn.addLog(
           "info",
           "fetchJSON",

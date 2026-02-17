@@ -18,10 +18,30 @@ class BittyJs extends HTMLElement {
     await this.makeConnection();
     if (this.conn) {
       this.createBridges();
-      this.createMethods();
       this.ingestJSON();
       this.addEventListeners();
       await this.runBittyReady();
+    }
+  }
+
+  _removeJSON(key) {
+    if (this.conn.json[key] === undefined) {
+      return this.conn.addLog(
+        2,
+        "removeJSON",
+        `JSON with key '${key}' already does not exist.`,
+        true,
+        null,
+      );
+    } else {
+      delete this.conn.json[key];
+      return this.conn.addLog(
+        3,
+        "removeJSON",
+        `Removed JSON with key: ${key}`,
+        true,
+        null,
+      );
     }
   }
 
@@ -143,13 +163,11 @@ class BittyJs extends HTMLElement {
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
+    this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.saveJSON = this.saveJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);
     this.processEventBridge = this.processEvent.bind(this);
-  }
-
-  createMethods() {
   }
 
   ingestJSON() {

@@ -8,8 +8,8 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    // this.setLogLevel("none");
-    this.addLog("error");
+    this.setLogLevel("none");
+    this.addLog("error", "test_$SIGNAL_NAME", false);
     el.innerHTML = "ok";
   }
 };

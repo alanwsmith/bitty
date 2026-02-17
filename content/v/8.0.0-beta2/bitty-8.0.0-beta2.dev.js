@@ -359,7 +359,7 @@ class BittyJs extends HTMLElement {
   // from the page was used. depending on what happens.
   loadJSON(key) {
     const storage = localStorage.getItem(key);
-    if (storage !== null) {
+    if (storage !== undefined) {
       this.#_json[key] = JSON.stringify(
         JSON.parse(storage).data,
       );
@@ -527,6 +527,7 @@ class BittyJs extends HTMLElement {
     if (ev.type === "bittytriggerapi" || ev.type === "bittysendapi") {
       ev = ev.bittyPayload;
     }
+
     for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
       const signalParts = rawSignalString.split(":");
       signalParts.reverse();

@@ -27,7 +27,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   addEventListeners() {
     // Internal bitty listeners
-    ["bittysendapi", "bittytriggerapi"].forEach(
+    ["bittysendevent", "bittytriggerevent"].forEach(
       (listener) => {
         window.addEventListener(listener, (ev) => {
           this.processEventBridge.call(this, ev);
@@ -113,7 +113,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
-    if (ev.type === "bittytriggerapi" || ev.type === "bittysendapi") {
+    if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
       ev = ev.bittyPayload;
     }
     for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
@@ -158,7 +158,21 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  triggerBridge() {}
+  triggerBridge(signal) {
+    const ev = new BittyTriggerEvent(signal);
+    this.dispatchEvent(ev);
+  }
+}
+
+/** internal */
+class BittyTriggerEvent extends Event {
+  constructor(signals) {
+    super("bittytriggerevent", { bubbles: true });
+    this.bittyPayload = {
+      type: "bittytriggerevent",
+      target: { dataset: { send: signals } },
+    };
+  }
 }
 
 customElements.define(tagName, BittyJs);

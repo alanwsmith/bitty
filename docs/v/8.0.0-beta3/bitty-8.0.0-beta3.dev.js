@@ -24,6 +24,29 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async _fetchJSON(key, url, options = {}) {
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        this.conn.json[key] = await response.json();
+
+        //this.conn.text[key] = await response.text();
+        //return new BittyFetchResponse(true, null);
+      } else {
+        // const log = this.addLog(4, {
+        //   type: "fetchError",
+        //   url: response.url,
+        //   status: response.status,
+        //   statusText: response.statusText,
+        // });
+        // return new BittyFetchResponse(false, log);
+      }
+    } catch (error) {
+      // const log = this.addLog(4, {});
+      // return new BittyFetchResponse(false, log);
+    }
+  }
+
   _removeJSON(key) {
     if (this.conn.json[key] === undefined) {
       return this.conn.addLog(
@@ -160,10 +183,11 @@ class BittyJs extends HTMLElement {
     this.conn.logLevel = 2;
     this.conn.logs = [];
     this.conn.json = {};
+    this.conn.fetchJSON = this._fetchJSON.bind(this);
+    this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
-    this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.saveJSON = this.saveJSONBridge.bind(this);
     this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);

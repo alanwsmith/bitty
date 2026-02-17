@@ -81,7 +81,24 @@ class BittyJs extends HTMLElement {
 
   addJSONBridge(key, json) {
     if (typeof json === "string") {
-      this.conn.json[key] = JSON.parse(json);
+      try {
+        this.conn.json[key] = JSON.parse(json);
+        return this.conn.addLog(
+          3,
+          "addJSON",
+          `Added JSON with key: ${key}`,
+          true,
+          null,
+        );
+      } catch (error) {
+        return this.conn.addLog(
+          1,
+          "addJSON",
+          `Could not parse JSON for key: ${key}`,
+          false,
+          null,
+        );
+      }
     } else {
       // The stringify then parse is to flatten
       // other objects since that's how they get stored

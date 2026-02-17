@@ -80,6 +80,8 @@ class BittyJs extends HTMLElement {
   }
 
   createBridges() {
+    this.conn.logs = [];
+    this.conn.sleep = this.sleepBridge.bind(this);
     this.conn.trigger = this.triggerBridge.bind(this);
     this.processEventBridge = this.processEvent.bind(this);
   }
@@ -156,6 +158,10 @@ class BittyJs extends HTMLElement {
         this.conn.bittyReady();
       }
     }
+  }
+
+  async sleepBridge(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   triggerBridge(signal) {

@@ -527,7 +527,6 @@ class BittyJs extends HTMLElement {
     if (ev.type === "bittytriggerapi" || ev.type === "bittysendapi") {
       ev = ev.bittyPayload;
     }
-
     for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
       const signalParts = rawSignalString.split(":");
       signalParts.reverse();

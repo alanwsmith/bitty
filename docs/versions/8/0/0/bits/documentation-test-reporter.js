@@ -3,8 +3,8 @@ export default class {
   // when bitty-8-0 is fully built.
 
   async bittyReady() {
-    await this.api.sleep(200);
-    this.api.trigger(`testStatus sectionStatus`);
+    //await this.api.sleep(200);
+    // this.api.trigger(`testStatus sectionStatus`);
   }
 
   sectionStatus(_, el) {

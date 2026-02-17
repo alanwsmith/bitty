@@ -103,6 +103,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _renderJSON(key, subs = {}, pretty = true) {
+    let jsonString = JSON.stringify(this.conn.json[key], null, 2);
+    for (const needle of Object.keys(subs)) {
+      jsonString = jsonString.replaceAll(needle, subs[needle]);
+    }
+    return jsonString;
+  }
+
   _setLogLevel(level) {
     if (this.getLogLevelIndex(level) === -1) {
       this.#_logLevel = "warn";
@@ -248,6 +256,7 @@ class BittyJs extends HTMLElement {
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
+    this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);

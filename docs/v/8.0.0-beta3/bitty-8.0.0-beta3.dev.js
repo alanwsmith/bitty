@@ -411,10 +411,15 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
+    let inputSignalString;
+
     if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
+      inputSignalString = ev.bittyPayload.target.dataset.send;
       ev = ev.bittyPayload;
+    } else {
+      inputSignalString = ev.target.dataset.send;
     }
-    for (let rawSignalString of splitSignalString(ev.target.dataset.send)) {
+    for (let rawSignalString of splitSignalString(inputSignalString)) {
       const signalParts = rawSignalString.split(":");
       signalParts.reverse();
       const signal = signalParts[0];

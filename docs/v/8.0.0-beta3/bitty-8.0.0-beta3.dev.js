@@ -28,6 +28,7 @@ class BittyJs extends HTMLElement {
   }
 
   _addElement(key, input = null) {
+    const storageKey = `bittyElement_${key}`;
     if (input === null) {
       return this.conn.addLog(
         "error",
@@ -46,7 +47,7 @@ class BittyJs extends HTMLElement {
     if (input instanceof HTMLElement) {
       this.conn.element[key] = input;
       localStorage.setItem(
-        key,
+        storageKey,
         JSON.stringify({ data: this.conn.element[key].outerHTML }),
       );
       return this.conn.addLog(
@@ -68,7 +69,7 @@ class BittyJs extends HTMLElement {
       } else {
         this.conn.element[key] = input.firstChild;
         localStorage.setItem(
-          key,
+          storageKey,
           JSON.stringify({ data: this.conn.element[key].outerHTML }),
         );
         if (input.childElementCount > 1) {
@@ -94,7 +95,7 @@ class BittyJs extends HTMLElement {
       tmp.innerHTML = input;
       this.conn.element[key] = tmp.content.firstChild;
       localStorage.setItem(
-        key,
+        storageKey,
         JSON.stringify({ data: this.conn.element[key].outerHTML }),
       );
       return this.conn.addLog(
@@ -218,6 +219,9 @@ class BittyJs extends HTMLElement {
 
   _getLogLevel() {
     return this.#_logLevel;
+  }
+
+  _loadElement(key, fallback) {
   }
 
   _removeJSON(key) {
@@ -424,6 +428,7 @@ class BittyJs extends HTMLElement {
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
+    this.conn.loadElement = this._loadElement.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);

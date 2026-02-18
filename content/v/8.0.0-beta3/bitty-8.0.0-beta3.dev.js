@@ -234,10 +234,17 @@ class BittyJs extends HTMLElement {
         `Warning: Overwriting existing element with key ${key}`,
       );
     }
-    const storage = JSON.parse(localStorage.getItem(storageKey)).data;
-    const template = document.createElement("template");
-    template.innerHTML = storage;
-    this.conn.element[key] = template.content.firstChild;
+    const storage = localStorage.getItem(storageKey);
+    if (storage !== null) {
+      const payload = JSON.parse(storage).data;
+      const template = document.createElement("template");
+      template.innerHTML = payload;
+      this.conn.element[key] = template.content.firstChild;
+    } else {
+      const template = document.createElement("template");
+      template.innerHTML = fallback;
+      this.conn.element[key] = template.content.firstChild;
+    }
 
     return this.conn.addLog(
       details.level,

@@ -8,8 +8,8 @@ window.Class4BF4A = class {
   }
 
   async test_signal_4BF4A(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element/";
-    await this.fetchElement("data_signal_4BF4A", url);
+    // const url = "/[@ file.parent @]/payloads/valid-element/";
+    // await this.fetchElement("data_signal_4BF4A", url);
     // el.innerHTML = this.json["data_signal_4BF4A"].status;
   }
 };

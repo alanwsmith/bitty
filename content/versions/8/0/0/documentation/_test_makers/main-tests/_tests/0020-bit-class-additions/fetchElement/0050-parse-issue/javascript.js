@@ -8,8 +8,8 @@ window.$CLASS_NAME = class {
   }
 
   async test_$SIGNAL_NAME(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element/";
-    await this.fetchElement("data_$SIGNAL_NAME", url);
+    // const url = "/[@ file.parent @]/payloads/valid-element/";
+    // await this.fetchElement("data_$SIGNAL_NAME", url);
     // el.innerHTML = this.json["data_$SIGNAL_NAME"].status;
   }
 };

@@ -27,6 +27,12 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _addElement(key, input) {
+    const tmp = document.createElement("template");
+    tmp.innerHTML = input;
+    this.conn.element[key] = tmp.content.firstChild;
+  }
+
   async _fetchJSON(key, url, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -277,8 +283,12 @@ class BittyJs extends HTMLElement {
 
   createBridges() {
     this.conn.logLevel = 2;
-    this.conn.logs = [];
+    this.conn.element = {};
+    this.conn.fragment = {};
     this.conn.json = {};
+    this.conn.svg = {};
+    this.conn.logs = [];
+    this.conn.addElement = this._addElement.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);

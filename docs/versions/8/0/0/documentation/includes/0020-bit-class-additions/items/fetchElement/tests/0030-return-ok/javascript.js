@@ -8,8 +8,10 @@ window.Class0938C = class {
   }
 
   async test_signal_0938C(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element/";
-    await this.fetchElement("data_signal_0938C", url);
-    // el.innerHTML = this.json["data_signal_0938C"].status;
+    const url = "/[@ file.parent @]/payloads/valid-element.xml";
+    const result = await this.fetchElement("data_signal_0938C", url);
+    if (result.ok === true) {
+      el.innerHTML = "ok";
+    }
   }
 };

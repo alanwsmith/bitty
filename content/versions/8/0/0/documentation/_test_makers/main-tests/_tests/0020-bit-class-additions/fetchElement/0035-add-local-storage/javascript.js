@@ -3,13 +3,16 @@ window.$CLASS_NAME = class {
     this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_$SIGNAL_NAME(_, __) {
+  async given_$SIGNAL_NAME(_, __) {
+    const url = "/[@ file.parent @]/payloads/valid-element.xml";
+    await this.fetchElement("el_$SIGNAL_NAME", url);
     this.trigger("test_$SIGNAL_NAME");
   }
 
   async test_$SIGNAL_NAME(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element/";
-    await this.fetchElement("data_$SIGNAL_NAME", url);
-    // el.innerHTML = this.json["data_$SIGNAL_NAME"].status;
+    const storage = JSON.parse(localStorage.getItem("el_$SIGNAL_NAME")).data;
+    const tmp = document.createElement("template");
+    tmp.innerHTML = storage;
+    el.innerHTML = tmp.content.firstChild.innerHTML;
   }
 };

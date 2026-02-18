@@ -109,16 +109,19 @@ class BittyJs extends HTMLElement {
 
   async _fetchElement(key, url, options = {}) {
     let response = await fetch(url, options);
+    const logKey = "fetchElement";
     try {
       if (response.ok === true) {
         const body = await response.text();
+        localStorage.setItem(key, JSON.stringify({ data: body }));
         const tmp = document.createElement("template");
         tmp.innerHTML = body;
         this.conn.element[key] = tmp.content.firstChild;
+
         if (tmp.content.childElementCount > 1) {
           return this.conn.addLog(
             "warn",
-            "fetchJSON",
+            logKey,
             true,
             `Fetched Element from '${url}' and stored in key '${key}'. Warning: the incoming content was a document fragment with more than one element. Only the first one was ingested. The rest were ignored.`,
             null,
@@ -126,7 +129,7 @@ class BittyJs extends HTMLElement {
         } else {
           return this.conn.addLog(
             "info",
-            "fetchJSON",
+            logKey,
             true,
             `Fetched Element from '${url}' and stored in key '${key}'.`,
             null,

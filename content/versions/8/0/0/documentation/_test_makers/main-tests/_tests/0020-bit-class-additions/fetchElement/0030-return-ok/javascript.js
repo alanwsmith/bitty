@@ -8,8 +8,10 @@ window.$CLASS_NAME = class {
   }
 
   async test_$SIGNAL_NAME(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element/";
-    await this.fetchElement("data_$SIGNAL_NAME", url);
-    // el.innerHTML = this.json["data_$SIGNAL_NAME"].status;
+    const url = "/[@ file.parent @]/payloads/valid-element.xml";
+    const result = await this.fetchElement("data_$SIGNAL_NAME", url);
+    if (result.ok === true) {
+      el.innerHTML = "ok";
+    }
   }
 };

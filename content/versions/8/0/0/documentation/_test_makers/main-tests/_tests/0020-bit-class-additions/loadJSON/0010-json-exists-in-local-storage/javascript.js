@@ -4,15 +4,14 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    const jsonAsString = `{ "data": { "status": "ok"} }`;
-    localStorage.setItem("test_$SIGNAL_NAME", jsonAsString);
+    this.addJSON("json_$SIGNAL_NAME", `{ "status": "ok" }`);
     this.trigger("test_$SIGNAL_NAME");
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.loadJSON("test_$SIGNAL_NAME");
+    const result = this.loadJSON("json_$SIGNAL_NAME");
     if (result.ok === true) {
-      el.innerHTML = this.json["test_$SIGNAL_NAME"].status;
+      el.innerHTML = this.json["json_$SIGNAL_NAME"].status;
     }
   }
 };

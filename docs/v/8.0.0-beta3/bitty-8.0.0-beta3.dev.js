@@ -349,6 +349,7 @@ class BittyJs extends HTMLElement {
   }
 
   addJSONBridge(key, json) {
+    const storageKey = `bittyJSON_${key}`;
     if (json === undefined) {
       return this.conn.addLog(
         "error",
@@ -361,7 +362,7 @@ class BittyJs extends HTMLElement {
       try {
         this.conn.json[key] = JSON.parse(json);
         localStorage.setItem(
-          key,
+          storageKey,
           JSON.stringify({ data: this.conn.json[key] }),
         );
         return this.conn.addLog(
@@ -383,7 +384,7 @@ class BittyJs extends HTMLElement {
     } else {
       this.conn.json[key] = JSON.parse(JSON.stringify(json));
       localStorage.setItem(
-        key,
+        storageKey,
         JSON.stringify({ data: this.conn.json[key] }),
       );
       return this.conn.addLog(
@@ -466,7 +467,13 @@ class BittyJs extends HTMLElement {
 
   // TODO: throw error if parsing fails
   loadJSONBridge(key, fallback = null) {
-    const storage = localStorage.getItem(key);
+    const storageKey = `bittyJSON_${key}`;
+    const storage = localStorage.getItem(storageKey);
+    const details = { level: "info", extraText: "" };
+    if (this.conn.json[key] !== undefined) {
+      details.level = "warn";
+      details.extraText = " Warning - overwrote exsiting key";
+    }
     try {
       if (storage !== null) {
         const json = JSON.parse(storage);
@@ -475,16 +482,16 @@ class BittyJs extends HTMLElement {
             "error",
             "loadJSON",
             false,
-            `Attempted to load storage without a top level 'data' in key: ${key}`,
+            `Attempted to load storage without a top level 'data' in key: ${key}${details.extraText}`,
             null,
           );
         } else {
           this.conn.json[key] = JSON.parse(storage).data;
           return this.conn.addLog(
-            "info",
+            details.level,
             "loadJSON",
             true,
-            `Loaded JSON for key: ${key}`,
+            `Loaded JSON for key: ${key}${details.extraText}`,
             null,
           );
         }
@@ -494,20 +501,20 @@ class BittyJs extends HTMLElement {
           this.conn.json[key] = JSON.parse(fallback);
           localStorage.setItem(key, `{ "data": ${fallback} }`);
           return this.conn.addLog(
-            "info",
+            details.level,
             "loadJSON",
             true,
-            `Loaded fallback JSON for key: ${key}`,
+            `Loaded fallback JSON for key: ${key}${details.extraText}`,
             null,
           );
         } else if (typeof fallback === "object") {
           this.conn.json[key] = fallback;
           localStorage.setItem(key, JSON.stringify({ data: fallback }));
           return this.conn.addLog(
-            "info",
+            details.level,
             "loadJSON",
             true,
-            `Loaded fallback JSON for key: ${key}`,
+            `Loaded fallback JSON for key: ${key}${details.extraText}`,
             null,
           );
         }
@@ -516,7 +523,7 @@ class BittyJs extends HTMLElement {
         "error",
         "loadJSON",
         false,
-        `No JSON in storage or fallback for key: ${key}`,
+        `No JSON in storage or fallback for key: ${key}${details.extraText}`,
         null,
       );
     } catch (error) {
@@ -524,7 +531,7 @@ class BittyJs extends HTMLElement {
         "error",
         "loadJSON",
         false,
-        `Could not parse fallback JSON for key: ${key}`,
+        `Could not parse fallback JSON for key: ${key}${details.extraText}`,
         null,
       );
     }

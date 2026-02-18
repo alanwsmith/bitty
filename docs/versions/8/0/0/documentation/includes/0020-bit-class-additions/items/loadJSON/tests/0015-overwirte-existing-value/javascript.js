@@ -4,18 +4,18 @@ window.Class92D8A = class {
   }
 
   given_signal_92D8A(_, __) {
-    this.json["test_signal_92D8A"] = JSON.parse(
-      `{ "status": "failed to overwrite"}`,
+    this.addJSON(
+      "json_signal_92D8A",
+      { status: "ok" },
     );
-    const jsonAsString = `{ "data": { "status": "ok"} }`;
-    localStorage.setItem("data_signal_92D8A", jsonAsString);
     this.trigger("test_signal_92D8A");
   }
 
   test_signal_92D8A(_, el) {
-    const result = this.loadJSON("data_signal_92D8A");
-    if (result.ok === true) {
-      el.innerHTML = this.json["data_signal_92D8A"].status;
+    const result = this.loadJSON("json_signal_92D8A");
+    console.log(result);
+    if (result.ok === true && result.level === "warn") {
+      el.innerHTML = this.json["json_signal_92D8A"].status;
     }
   }
 };

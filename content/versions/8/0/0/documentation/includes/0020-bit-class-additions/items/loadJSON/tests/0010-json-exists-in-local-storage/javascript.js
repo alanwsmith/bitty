@@ -4,15 +4,14 @@ window.ClassC89F4 = class {
   }
 
   given_signal_C89F4(_, __) {
-    const jsonAsString = `{ "data": { "status": "ok"} }`;
-    localStorage.setItem("test_signal_C89F4", jsonAsString);
+    this.addJSON("json_signal_C89F4", `{ "status": "ok" }`);
     this.trigger("test_signal_C89F4");
   }
 
   test_signal_C89F4(_, el) {
-    const result = this.loadJSON("test_signal_C89F4");
+    const result = this.loadJSON("json_signal_C89F4");
     if (result.ok === true) {
-      el.innerHTML = this.json["test_signal_C89F4"].status;
+      el.innerHTML = this.json["json_signal_C89F4"].status;
     }
   }
 };

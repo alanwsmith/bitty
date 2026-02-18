@@ -640,10 +640,11 @@ class BittyJs extends HTMLElement {
   }
 
   saveJSONBridge(key) {
+    const storageKey = `bittyJSON_${key}`;
     if (this.conn.json[key] !== undefined) {
       if (typeof this.conn.json[key] === "object") {
         const payload = JSON.stringify({ data: this.conn.json[key] });
-        localStorage.setItem(key, payload);
+        localStorage.setItem(storageKey, payload);
         return this.conn.addLog(
           "info",
           "savejson",

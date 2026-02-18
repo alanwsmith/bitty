@@ -27,7 +27,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _addElement(key, input) {
+  _addElement(key, input = null) {
+    if (input === null) {
+      return this.conn.addLog(
+        "error",
+        "addElement",
+        false,
+        `Attempted to make element with key ${key} but nothing was passed in to make it.`,
+        null,
+      );
+    }
     const overwriteLevel = this.conn.element[key] !== undefined
       ? "warn"
       : "info";

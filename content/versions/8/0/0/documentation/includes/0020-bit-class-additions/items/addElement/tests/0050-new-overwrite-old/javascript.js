@@ -4,6 +4,7 @@ window.Class758B2 = class {
   }
 
   given_signal_758B2(_, __) {
+    this.setLogLevel("none");
     this.addElement("el_signal_758B2", "<div>bug</div>");
     this.trigger("test_signal_758B2");
   }

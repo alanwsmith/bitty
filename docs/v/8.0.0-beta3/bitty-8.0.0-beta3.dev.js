@@ -107,6 +107,19 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async _fetchElement(key, url, options = {}) {
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        const body = await response.text();
+        const tmp = document.createElement("template");
+        tmp.innerHTML = body;
+        this.conn.element[key] = tmp.content.firstChild;
+      }
+    } catch (error) {
+    }
+  }
+
   async _fetchJSON(key, url, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -363,6 +376,7 @@ class BittyJs extends HTMLElement {
     this.conn.svg = {};
     this.conn.logs = [];
     this.conn.addElement = this._addElement.bind(this);
+    this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);

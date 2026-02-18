@@ -132,6 +132,11 @@ class BittyJs extends HTMLElement {
     return jsonString;
   }
 
+  _send(payload, signal) {
+    const ev = new BittySendEvent(payload, signal);
+    this.dispatchEvent(ev);
+  }
+
   _setLogLevel(level) {
     if (this.getLogLevelIndex(level) === -1) {
       this.#_logLevel = "warn";
@@ -279,6 +284,7 @@ class BittyJs extends HTMLElement {
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
+    this.conn.send = this._send.bind(this);
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);
@@ -494,6 +500,7 @@ class BittyJs extends HTMLElement {
 
 // Used both for logging and for
 // returned responses from methods
+/** internal */
 class BittyLog {
   constructor(
     level = "error",
@@ -509,6 +516,18 @@ class BittyLog {
     this.extraInfo = extraInfo;
     this.timestamp = new Date();
     this.performanceTime = performance.now();
+  }
+}
+
+/** internal */
+class BittySendEvent extends Event {
+  constructor(payload, signals) {
+    super("bittysendevent", { bubbles: true });
+    this.bittyPayload = payload;
+    this.bittyPayload.type = "bittysendevent";
+    this.bittyPayload.target = {
+      dataset: { send: signals },
+    };
   }
 }
 

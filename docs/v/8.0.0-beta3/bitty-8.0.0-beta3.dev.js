@@ -225,12 +225,27 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
-      extraText: "",
+      ok: true,
+      messages: [],
     };
+    if (this.conn.element[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: Overwriting existing element with key ${key}`,
+      );
+    }
     const storage = JSON.parse(localStorage.getItem(storageKey)).data;
     const template = document.createElement("template");
     template.innerHTML = storage;
     this.conn.element[key] = template.content.firstChild;
+
+    return this.conn.addLog(
+      details.level,
+      "loadElement",
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
   }
 
   _removeJSON(key) {

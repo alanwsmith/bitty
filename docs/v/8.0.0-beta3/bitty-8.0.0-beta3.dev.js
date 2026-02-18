@@ -115,6 +115,23 @@ class BittyJs extends HTMLElement {
         const tmp = document.createElement("template");
         tmp.innerHTML = body;
         this.conn.element[key] = tmp.content.firstChild;
+        if (tmp.content.childElementCount > 1) {
+          return this.conn.addLog(
+            "warn",
+            "fetchJSON",
+            true,
+            `Fetched Element from '${url}' and stored in key '${key}'. Warning: the incoming content was a document fragment with more than one element. Only the first one was ingested. The rest were ignored.`,
+            null,
+          );
+        } else {
+          return this.conn.addLog(
+            "indo",
+            "fetchJSON",
+            true,
+            `Fetched Element from '${url}' and stored in key '${key}'.`,
+            null,
+          );
+        }
       }
     } catch (error) {
     }

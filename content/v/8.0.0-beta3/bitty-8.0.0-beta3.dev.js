@@ -110,13 +110,17 @@ class BittyJs extends HTMLElement {
   async _fetchElement(key, url, options = {}) {
     let response = await fetch(url, options);
     const logKey = "fetchElement";
+    const result = { level: "info" };
     try {
       if (response.ok === true) {
         const body = await response.text();
-        localStorage.setItem(key, JSON.stringify({ data: body }));
+        if (this.conn.element[key] !== undefined) {
+          result.level = "warn";
+        }
         const tmp = document.createElement("template");
         tmp.innerHTML = body;
         this.conn.element[key] = tmp.content.firstChild;
+        localStorage.setItem(key, JSON.stringify({ data: body }));
         if (tmp.content.childElementCount > 1) {
           return this.conn.addLog(
             "warn",
@@ -127,7 +131,7 @@ class BittyJs extends HTMLElement {
           );
         } else {
           return this.conn.addLog(
-            "info",
+            result.level,
             logKey,
             true,
             `Fetched Element from '${url}' and stored in key '${key}'.`,
@@ -151,6 +155,13 @@ class BittyJs extends HTMLElement {
         );
       }
     } catch (error) {
+      return this.conn.addLog(
+        "error",
+        logKey,
+        false,
+        `Error fetching JSON from '${url}' for key '${key}'`,
+        error,
+      );
     }
   }
 

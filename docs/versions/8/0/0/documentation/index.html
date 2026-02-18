@@ -172,6 +172,17 @@ body {
     </header>
 
     <main class="default-margin default-flow">
+
+<script type="text/html" data-key="parsingHTMLFootnote">
+Browser HTML parsers are very forgiving. They'll try to turn anything you
+throw at them into an element or fragment, even if it's not valid HTML. 
+Bitty doesn't try to circumvent this. Nor does it try to handle
+exceptions that might be thrown as a result. Sending invalid
+HTML in considered undefined behaviour. 
+</script>
+
+
+
 <bitty-8-0 data-connect="/versions&#x2f;8&#x2f;0&#x2f;0&#x2f;bits/documentation-test-reporter.js"></bitty-8-0>
 
 <h2>data-* attributes
@@ -1990,7 +2001,7 @@ window.Class1D78E = class {
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-Elements are added to localStorage automatically. They are stored under a `data` key in a stringified JSON object.
+Elements are added to storage automatically. (NOTE: Data is are currently stored in localStorage. It should considered private to bitty as the internal mechanisms may change.)
 
 
   <span class="faded-default-color">[0040-store-in-local-storage]</span>
@@ -2131,7 +2142,7 @@ window.Class758B2 = class {
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-Log and return an error if not value was passed in with which to make the element. 
+Log and return an error if no value was passed in with which to make the element. 
 
 
   <span class="faded-default-color">[0060-error-if-no-value]</span>
@@ -2195,6 +2206,13 @@ window.Class8DF02 = class {
 </details>
 
       
+      <div class="header heading-color font-weight-900">Notes</div>
+      <ul>
+  <li data-receive="footnote" data-id="parsingHTMLFootnote">TODO: Display parsing HTML Footnote</li>
+</ul>
+
+
+
   </details>
 
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
@@ -3445,62 +3463,12 @@ window.ClassEFEFA = class {
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-  <span class="faded-default-color">[0050-parse-issue]</span>
-  </summary>
-
-<div>HTML</div>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-8-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Class4BF4A<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-8-0</span><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>test_signal_4BF4A<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>bug<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-<div>JavaScript</div>
-<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span>
-<span class="line-marker"></span><span class="source js embedded html"><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">Class4BF4A</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>given_signal_4BF4A<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">given_signal_4BF4A</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test_signal_4BF4A<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">test_signal_4BF4A</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> const url = &quot;/versions/8/0/0/documentation/payloads/valid-element/&quot;;
-<span class="line-marker"></span></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> await this.fetchElement(&quot;data_signal_4BF4A&quot;, url);
-<span class="line-marker"></span></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = this.json[&quot;data_signal_4BF4A&quot;].status;
-<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
-
-<div>Results</div>
-<script>
-window.Class4BF4A = class {
-  bittyReady() {
-    this.trigger("given_signal_4BF4A");
-  }
-
-  given_signal_4BF4A(_, __) {
-    this.trigger("test_signal_4BF4A");
-  }
-
-  async test_signal_4BF4A(_, el) {
-    // const url = "/versions/8/0/0/documentation/payloads/valid-element/";
-    // await this.fetchElement("data_signal_4BF4A", url);
-    // el.innerHTML = this.json["data_signal_4BF4A"].status;
-  }
-};</script>
-
-<div class="example-block"><bitty-8-0 data-connect="Class4BF4A"></bitty-8-0>
-<div class="test" data-receive="test_signal_4BF4A">bug</div>
-</div>
+If a fetch overwrites an existing `this.element[key]` 
+an warning is logged and returned with `level === "warn"`
+and `ok === true`.
 
 
 
-
-
-</details>
-
-<details class="default-flow test-wrapper" data-receive="testStatus">
-  <summary>
-    <span class="test-status"></span>
   <span class="faded-default-color">[0060-overwrite-warning]</span>
   </summary>
 
@@ -3515,14 +3483,18 @@ window.Class4BF4A = class {
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">given_signal_97CD8</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>none<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">addElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>el_signal_97CD8<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;first&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test_signal_97CD8<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">async</span><span class="meta function declaration js"> </span></span><span class="meta function declaration js"><span class="entity name function js">test_signal_97CD8</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="storage type js">const</span> <span class="support module node js">url</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/payloads/valid-element.xml<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="keyword control flow js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>data_signal_97CD8<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = this.json[&quot;data_signal_97CD8&quot;].status;
-<span class="line-marker"></span></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">result</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>el_signal_97CD8<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span> <span class="support module node js">url</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">result</span><span class="punctuation accessor js">.</span><span class="meta property object js">level</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>warn<span class="punctuation definition string end js">&quot;</span></span> <span class="keyword operator logical js">&amp;&amp;</span> <span class="variable other object js">result</span><span class="punctuation accessor js">.</span><span class="meta property object js">ok</span> <span class="keyword operator comparison js">===</span> <span class="constant language boolean true js">true</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>ok<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
 
@@ -3534,13 +3506,17 @@ window.Class97CD8 = class {
   }
 
   given_signal_97CD8(_, __) {
+    this.setLogLevel("none");
+    this.addElement("el_signal_97CD8", `<div>first</div>`);
     this.trigger("test_signal_97CD8");
   }
 
   async test_signal_97CD8(_, el) {
     const url = "/versions/8/0/0/documentation/payloads/valid-element.xml";
-    await this.fetchElement("data_signal_97CD8", url);
-    // el.innerHTML = this.json["data_signal_97CD8"].status;
+    const result = await this.fetchElement("el_signal_97CD8", url);
+    if (result.level === "warn" && result.ok === true) {
+      el.innerHTML = "ok";
+    }
   }
 };</script>
 
@@ -3555,6 +3531,14 @@ window.Class97CD8 = class {
 </details>
 
       
+      <div class="header heading-color font-weight-900">Notes</div>
+      <ul>
+  <li data-receive="footnote" data-id="parsingHTMLFootnote">TODO: Display parsing HTML Footnote</li>
+</ul>
+
+
+
+
   </details>
 
   <details class="default-flow section-wrapper" data-receive="sectionStatus">

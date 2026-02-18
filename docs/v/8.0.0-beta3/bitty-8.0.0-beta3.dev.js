@@ -28,33 +28,71 @@ class BittyJs extends HTMLElement {
   }
 
   _addElement(key, input) {
+    const overwriteLevel = this.conn.element[key] !== undefined
+      ? "warn"
+      : "info";
+    const overwriteNote = this.conn.element[key] !== undefined
+      ? "Warning: overwrite existing key. "
+      : "";
     if (input instanceof HTMLElement) {
       this.conn.element[key] = input;
+      localStorage.setItem(
+        key,
+        JSON.stringify({ data: this.conn.element[key].outerHTML }),
+      );
       return this.conn.addLog(
-        "info",
+        overwriteLevel,
         "addElement",
         true,
-        `Added element with key ${key} from element.`,
+        `${overwriteNote}Added element with key ${key} from element.`,
         null,
       );
     } else if (input instanceof DocumentFragment) {
-      this.conn.element[key] = input.firstChild;
-      return this.conn.addLog(
-        "info",
-        "addElement",
-        true,
-        `Added element with key ${key} from document fragment.`,
-        null,
-      );
+      if (input.firstChild === null) {
+        return this.conn.addLog(
+          "error",
+          "addElement",
+          false,
+          `Tried to add element with ${key} from document fragment, but there was nothing in it.`,
+          null,
+        );
+      } else {
+        this.conn.element[key] = input.firstChild;
+        localStorage.setItem(
+          key,
+          JSON.stringify({ data: this.conn.element[key].outerHTML }),
+        );
+        if (input.childElementCount > 1) {
+          return this.conn.addLog(
+            "warn",
+            "addElement",
+            true,
+            `Added the first document fragment element to key '${key}'. The fragment had more than one element in it. The rest were dropped.`,
+            null,
+          );
+        } else {
+          return this.conn.addLog(
+            overwriteLevel,
+            "addElement",
+            true,
+            `${overwriteNote}Added element with key ${key} from document fragment.`,
+            null,
+          );
+        }
+      }
     } else {
       const tmp = document.createElement("template");
       tmp.innerHTML = input;
       this.conn.element[key] = tmp.content.firstChild;
+      localStorage.setItem(
+        key,
+        JSON.stringify({ data: this.conn.element[key].outerHTML }),
+      );
       return this.conn.addLog(
-        "info",
+        overwriteLevel,
         "addElement",
         true,
-        `Added element with key ${key} from string.`,
+        `${overwriteNote}Added element with key ${key} from string.`,
         null,
       );
     }

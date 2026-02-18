@@ -1,14 +1,14 @@
-window.Class1D78E = class {
+window.$CLASS_NAME = class {
   bittyReady() {
-    this.trigger("given_signal_1D78E");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_1D78E(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.trigger("test_signal_1D78E");
+    this.trigger("test_$SIGNAL_NAME");
   }
 
-  test_signal_1D78E(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const newFragment = document.createDocumentFragment();
     const newEl = document.createElement("div");
     newEl.innerHTML = "ok";
@@ -16,9 +16,9 @@ window.Class1D78E = class {
     const newEl2 = document.createElement("div");
     newEl2.innerHTML = "ok";
     newFragment.appendChild(newEl2);
-    const result = this.addElement("el_signal_1D78E", newFragment);
+    const result = this.addElement("el_$SIGNAL_NAME", newFragment);
     if (result.level === "warn" && result.ok === true) {
-      el.innerHTML = this.element["el_signal_1D78E"].innerHTML;
+      el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;
     }
   }
 };

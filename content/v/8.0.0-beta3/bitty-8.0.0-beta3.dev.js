@@ -221,7 +221,7 @@ class BittyJs extends HTMLElement {
     return this.#_logLevel;
   }
 
-  _loadElement(key, fallback) {
+  _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
@@ -240,12 +240,28 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = payload;
       this.conn.element[key] = template.content.firstChild;
+      details.messages.push(`Loaded elemnet with key '${key}' from storage.`);
+    } else if (fallback === null) {
+      details.level = "error";
+      details.ok = false;
+    } else if (fallback instanceof Element) {
+      this.conn.element[key] = fallback;
+    } else if (fallback instanceof DocumentFragment) {
+      this.conn.element[key] = fallback.firstChild;
+      details.level = "warn";
+      details.messages.push(
+        "Warning: A document fragment was used as a fallback. Everything beyond the first element was dropped",
+      );
     } else {
       const template = document.createElement("template");
       template.innerHTML = fallback;
       this.conn.element[key] = template.content.firstChild;
+      //console.log(this.conn.element[key].outerHTML);
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn.element[key].outerHTML }),
+      );
     }
-
     return this.conn.addLog(
       details.level,
       "loadElement",
@@ -253,6 +269,12 @@ class BittyJs extends HTMLElement {
       details.messages.join(" "),
       null,
     );
+  }
+
+  _removeElement(key) {
+    const storageKey = `bittyElement_${key}`;
+    localStorage.removeItem(storageKey);
+    delete this.conn.element[key];
   }
 
   _removeJSON(key) {
@@ -462,6 +484,7 @@ class BittyJs extends HTMLElement {
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
+    this.conn.removeElement = this._removeElement.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);

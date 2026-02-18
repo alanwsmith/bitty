@@ -4,6 +4,7 @@ window.ClassB86EE = class {
   }
 
   given_signal_B86EE(_, __) {
+    this.removeElement("el_signal_B86EE");
     this.trigger("test_signal_B86EE");
   }
 

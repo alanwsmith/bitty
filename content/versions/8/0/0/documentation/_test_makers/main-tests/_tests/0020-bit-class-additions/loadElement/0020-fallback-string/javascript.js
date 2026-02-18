@@ -4,6 +4,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
+    this.removeElement("el_$SIGNAL_NAME");
     this.trigger("test_$SIGNAL_NAME");
   }
 

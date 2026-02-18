@@ -540,7 +540,6 @@ class BittyTriggerEvent extends Event {
     super("bittytriggerevent", { bubbles: true });
     this.bittyPayload = {
       content: null,
-      //type: "bittytriggerevent",
       target: { dataset: { send: signals } },
     };
   }

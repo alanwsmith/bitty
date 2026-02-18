@@ -412,10 +412,9 @@ class BittyJs extends HTMLElement {
   /** internal */
   async processEvent(ev) {
     let inputSignalString;
-
     if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
       inputSignalString = ev.bittyPayload.target.dataset.send;
-      ev = ev.bittyPayload;
+      ev = ev.bittyPayload.content;
     } else {
       inputSignalString = ev.target.dataset.send;
     }
@@ -528,10 +527,9 @@ class BittyLog {
 class BittySendEvent extends Event {
   constructor(payload, signals) {
     super("bittysendevent", { bubbles: true });
-    this.bittyPayload = payload;
-    this.bittyPayload.type = "bittysendevent";
-    this.bittyPayload.target = {
-      dataset: { send: signals },
+    this.bittyPayload = {
+      content: payload,
+      target: { dataset: { send: signals } },
     };
   }
 }
@@ -541,7 +539,8 @@ class BittyTriggerEvent extends Event {
   constructor(signals) {
     super("bittytriggerevent", { bubbles: true });
     this.bittyPayload = {
-      type: "bittytriggerevent",
+      content: null,
+      //type: "bittytriggerevent",
       target: { dataset: { send: signals } },
     };
   }

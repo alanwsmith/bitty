@@ -227,6 +227,10 @@ class BittyJs extends HTMLElement {
       level: "info",
       extraText: "",
     };
+    const storage = JSON.parse(localStorage.getItem(storageKey)).data;
+    const template = document.createElement("template");
+    template.innerHTML = storage;
+    this.conn.element[key] = template.content.firstChild;
   }
 
   _removeJSON(key) {

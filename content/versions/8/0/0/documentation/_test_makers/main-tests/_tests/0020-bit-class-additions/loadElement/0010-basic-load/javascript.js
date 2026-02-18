@@ -12,7 +12,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.loadElement(this.#key);
+    this.loadElement(this.#key);
     el.innerHTML = this.element[this.#key].innerHTML;
   }
 };

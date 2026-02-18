@@ -28,9 +28,36 @@ class BittyJs extends HTMLElement {
   }
 
   _addElement(key, input) {
-    const tmp = document.createElement("template");
-    tmp.innerHTML = input;
-    this.conn.element[key] = tmp.content.firstChild;
+    if (input instanceof HTMLElement) {
+      this.conn.element[key] = input;
+      return this.conn.addLog(
+        "info",
+        "addElement",
+        true,
+        `Added element with key ${key} from element.`,
+        null,
+      );
+    } else if (input instanceof DocumentFragment) {
+      this.conn.element[key] = input.firstChild;
+      return this.conn.addLog(
+        "info",
+        "addElement",
+        true,
+        `Added element with key ${key} from document fragment.`,
+        null,
+      );
+    } else {
+      const tmp = document.createElement("template");
+      tmp.innerHTML = input;
+      this.conn.element[key] = tmp.content.firstChild;
+      return this.conn.addLog(
+        "info",
+        "addElement",
+        true,
+        `Added element with key ${key} from string.`,
+        null,
+      );
+    }
   }
 
   async _fetchJSON(key, url, options = {}) {

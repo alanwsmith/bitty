@@ -4,6 +4,7 @@ window.ClassE0510 = class {
   }
 
   given_signal_E0510(_, __) {
+    this.setLogLevel("none");
     this.trigger("test_signal_E0510");
   }
 

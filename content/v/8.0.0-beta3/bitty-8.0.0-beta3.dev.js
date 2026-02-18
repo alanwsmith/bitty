@@ -125,7 +125,7 @@ class BittyJs extends HTMLElement {
           );
         } else {
           return this.conn.addLog(
-            "indo",
+            "info",
             "fetchJSON",
             true,
             `Fetched Element from '${url}' and stored in key '${key}'.`,

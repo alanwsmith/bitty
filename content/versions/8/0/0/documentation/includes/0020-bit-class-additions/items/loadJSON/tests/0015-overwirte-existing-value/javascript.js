@@ -4,6 +4,7 @@ window.Class92D8A = class {
   }
 
   given_signal_92D8A(_, __) {
+    this.setLogLevel("none");
     this.addJSON(
       "json_signal_92D8A",
       { status: "ok" },
@@ -13,7 +14,6 @@ window.Class92D8A = class {
 
   test_signal_92D8A(_, el) {
     const result = this.loadJSON("json_signal_92D8A");
-    console.log(result);
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = this.json["json_signal_92D8A"].status;
     }

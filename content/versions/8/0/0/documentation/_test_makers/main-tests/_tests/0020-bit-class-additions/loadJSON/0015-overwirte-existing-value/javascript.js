@@ -4,6 +4,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
+    this.setLogLevel("none");
     this.addJSON(
       "json_$SIGNAL_NAME",
       { status: "ok" },
@@ -13,7 +14,6 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     const result = this.loadJSON("json_$SIGNAL_NAME");
-    console.log(result);
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = this.json["json_$SIGNAL_NAME"].status;
     }

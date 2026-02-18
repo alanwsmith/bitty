@@ -222,6 +222,11 @@ class BittyJs extends HTMLElement {
   }
 
   _loadElement(key, fallback) {
+    const storageKey = `bittyElement_${key}`;
+    const details = {
+      level: "info",
+      extraText: "",
+    };
   }
 
   _removeJSON(key) {

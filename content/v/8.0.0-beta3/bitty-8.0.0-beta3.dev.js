@@ -342,8 +342,22 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _renderElement(key, subs = {}) {
-    return this.conn.element[key];
+  _renderElement(key, subs = null) {
+    if (subs === null) {
+      return this.conn.element[key];
+    } else {
+      let content = this.conn.element[key].outerHTML;
+      for (const needle of Object.keys(subs)) {
+        if (subs[needle] instanceof Array === false) {
+          content = content.replaceAll(needle, subs[needle]);
+        } else {
+          content = content.replaceAll(needle, subs[needle].join(""));
+        }
+      }
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      return template.content.firstChild;
+    }
   }
 
   _renderJSON(key, subs = {}, pretty = true) {

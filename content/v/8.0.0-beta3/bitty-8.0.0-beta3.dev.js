@@ -302,21 +302,37 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
-      ok: true,
       key: "fetchFragment",
+      ok: true,
       messages: [],
       extraInfo: null,
     };
     try {
-      let response = await fetch(url);
+      const fetchOptions = options.fetchOptions !== undefined
+        ? options.fetchOptions
+        : {};
+      let response = await fetch(url, fetchOptions);
       if (response.ok === true) {
         const text = await response.text();
-        console.log(text);
         this.conn._fragment[key] = text;
       }
     } catch (error) {
     }
-    //const logKey = "fetchElement";
+
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._fragment[key] }),
+      );
+    }
+
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
   }
 
   async _fetchJSON(key, url, options = {}) {

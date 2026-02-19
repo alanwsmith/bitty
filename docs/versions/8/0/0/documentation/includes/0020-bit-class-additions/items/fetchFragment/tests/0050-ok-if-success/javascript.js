@@ -1,0 +1,23 @@
+window.ClassBE8EB = class {
+  #key = "fragment_signal_BE8EB";
+
+  async test_signal_BE8EB(url, el) {
+    const result = await this.fetchFragment(this.#key, url);
+    if (result.ok === true && result.level === "info") {
+      el.innerHTML = "ok";
+    }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.trigger("given_signal_BE8EB");
+  }
+
+  given_signal_BE8EB(_, __) {
+    const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
+    this.send(url, "test_signal_BE8EB");
+  }
+};

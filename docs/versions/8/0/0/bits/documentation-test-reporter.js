@@ -3,7 +3,7 @@ export default class {
   // when bitty-8-0 is fully built.
 
   async bittyReady() {
-    await this.sleep(300);
+    await this.sleep(400);
     this.trigger(`testStatus sectionStatus`);
   }
 

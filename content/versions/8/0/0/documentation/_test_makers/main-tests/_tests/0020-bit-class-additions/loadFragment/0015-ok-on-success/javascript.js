@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   test_$SIGNAL_NAME(_, el) {
     const result = this.loadFragment(this.#key);
     if (result.ok === true && result.level === "info") {
-      el.innerHTML = "ok";
+      //      el.innerHTML = "ok";
     }
   }
 

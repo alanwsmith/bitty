@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     this.loadFragment(this.#key);
-    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////
@@ -16,9 +16,8 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
-    this.addFragment(this.#key, `<div>ok</div>`);
-    delete this.element[this.#key];
+    this.addFragment(this.#key, "<div>ok</div>");
+    delete this._fragment[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }
 };

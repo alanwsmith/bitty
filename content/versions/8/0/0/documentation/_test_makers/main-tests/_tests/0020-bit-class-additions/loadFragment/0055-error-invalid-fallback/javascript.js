@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   test_$SIGNAL_NAME(fallbackFragment, el) {
     const result = this.loadFragment(this.#key, fallbackFragment);
     if (result.ok === false && result.level === "error") {
-      el.innerHTML = "ok";
+      //      el.innerHTML = "ok";
     }
   }
 

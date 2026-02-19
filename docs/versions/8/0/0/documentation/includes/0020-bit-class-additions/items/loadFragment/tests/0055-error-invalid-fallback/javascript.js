@@ -4,7 +4,7 @@ window.Class99F17 = class {
   test_signal_99F17(fallbackFragment, el) {
     const result = this.loadFragment(this.#key, fallbackFragment);
     if (result.ok === false && result.level === "error") {
-      el.innerHTML = "ok";
+      //      el.innerHTML = "ok";
     }
   }
 

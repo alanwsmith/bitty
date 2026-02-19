@@ -175,7 +175,10 @@ class BittyJs extends HTMLElement {
       );
     }
     if (details.ok === true) {
-      localStorage.setItem(storageKey, this.conn._fragment[key]);
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._fragment[key] }),
+      );
     }
     return this.conn.addLog(
       details.level,
@@ -356,76 +359,89 @@ class BittyJs extends HTMLElement {
     };
     const storage = localStorage.getItem(storageKey);
     if (storage !== null) {
-      if (this.conn.fragment[key] !== undefined) {
-        details.level = "warn";
-        details.messages.push(
-          `Warning: loading fragment '${key}' from storage overwrote an existing fragment 'this.fragment[${key}]'.`,
-        );
-      }
-      const payload = JSON.parse(storage).data;
-      const template = document.createElement("template");
-      template.innerHTML = payload;
-      this.conn.fragment[key] = template.content;
-      details.messages.push(`Loaded fragment with key '${key}' from storage.`);
-    } else if (
-      typeof fallback !== "string" &&
-      fallback instanceof Element === false &&
-      fallback instanceof DocumentFragment === false
-    ) {
-      details.ok = false;
-      details.level = "error";
-      details.messages.push(
-        `Attempted to use an invalid fallback in 'loadFragment("${key}", fallback)'. The fallback must be either a String, Element, or DocumentFragment`,
-      );
-    } else if (
-      typeof fallback === "string"
-    ) {
-      const template = document.createElement("template");
-      template.innerHTML = fallback;
-      this.conn.fragment[key] = template.content;
-      details.messages.push(
-        `Loaded fragment with key '${key}' from fallback string.`,
-      );
-    } else if (
-      fallback instanceof Element
-    ) {
-      const fragment = document.createDocumentFragment();
-      fragment.appendChild(fallback);
-      this.conn.fragment[key] = fragment;
-      details.messages.push(
-        `Loaded fragment with key '${key}' from fallback element.`,
-      );
-    } else if (
-      fallback instanceof DocumentFragment
-    ) {
-      this.conn.fragment[key] = fallback;
-      details.messages.push(
-        `Loaded fragment with key '${key}' from fallback document fragment.`,
-      );
-    } else {
-      details.level = "error";
-      details.ok = false;
-      details.messages.push(
-        `Attempted to load non-existing fragment with key '${key}' from storage`,
-      );
+      //console.log(storage);
+      this.conn._fragment[key] = JSON.parse(storage).data;
+      // console.log(this.conn._fragment[key]);
     }
-    if (details.ok === true) {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          data: [...this.conn.fragment[key].children].map((el) => el.outerHTML)
-            .join(""),
-        }),
-      );
-    }
-    return this.conn.addLog(
-      details.level,
-      "loadFragment",
-      details.ok,
-      details.messages.join(" "),
-      null,
-    );
   }
+
+  // const storageKey = `bittyFragment_${key}`;
+  // const details = {
+  //   level: "info",
+  //   ok: true,
+  //   messages: [],
+  // };
+  // const storage = localStorage.getItem(storageKey);
+  // if (storage !== null) {
+  //   if (this.conn.fragment[key] !== undefined) {
+  //     details.level = "warn";
+  //     details.messages.push(
+  //       `Warning: loading fragment '${key}' from storage overwrote an existing fragment 'this.fragment[${key}]'.`,
+  //     );
+  //   }
+  //   const payload = JSON.parse(storage).data;
+  //   const template = document.createElement("template");
+  //   template.innerHTML = payload;
+  //   this.conn.fragment[key] = template.content;
+  //   details.messages.push(`Loaded fragment with key '${key}' from storage.`);
+  // } else if (
+  //   typeof fallback !== "string" &&
+  //   fallback instanceof Element === false &&
+  //   fallback instanceof DocumentFragment === false
+  // ) {
+  //   details.ok = false;
+  //   details.level = "error";
+  //   details.messages.push(
+  //     `Attempted to use an invalid fallback in 'loadFragment("${key}", fallback)'. The fallback must be either a String, Element, or DocumentFragment`,
+  //   );
+  // } else if (
+  //   typeof fallback === "string"
+  // ) {
+  //   const template = document.createElement("template");
+  //   template.innerHTML = fallback;
+  //   this.conn.fragment[key] = template.content;
+  //   details.messages.push(
+  //     `Loaded fragment with key '${key}' from fallback string.`,
+  //   );
+  // } else if (
+  //   fallback instanceof Element
+  // ) {
+  //   const fragment = document.createDocumentFragment();
+  //   fragment.appendChild(fallback);
+  //   this.conn.fragment[key] = fragment;
+  //   details.messages.push(
+  //     `Loaded fragment with key '${key}' from fallback element.`,
+  //   );
+  // } else if (
+  //   fallback instanceof DocumentFragment
+  // ) {
+  //   this.conn.fragment[key] = fallback;
+  //   details.messages.push(
+  //     `Loaded fragment with key '${key}' from fallback document fragment.`,
+  //   );
+  // } else {
+  //   details.level = "error";
+  //   details.ok = false;
+  //   details.messages.push(
+  //     `Attempted to load non-existing fragment with key '${key}' from storage`,
+  //   );
+  // }
+  // if (details.ok === true) {
+  //   localStorage.setItem(
+  //     storageKey,
+  //     JSON.stringify({
+  //       data: [...this.conn.fragment[key].children].map((el) => el.outerHTML)
+  //         .join(""),
+  //     }),
+  //   );
+  // }
+  // return this.conn.addLog(
+  //   details.level,
+  //   "loadFragment",
+  //   details.ok,
+  //   details.messages.join(" "),
+  //   null,
+  // );
 
   _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;

@@ -3,7 +3,7 @@ window.ClassD027C = class {
 
   test_signal_D027C(fallbackFragment, el) {
     this.loadFragment(this.#key);
-    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    //    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////

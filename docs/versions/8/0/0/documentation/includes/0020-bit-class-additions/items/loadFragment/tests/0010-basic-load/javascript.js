@@ -3,7 +3,7 @@ window.Class5D60F = class {
 
   test_signal_5D60F(_, el) {
     this.loadFragment(this.#key);
-    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////
@@ -16,9 +16,8 @@ window.Class5D60F = class {
 
   given_signal_5D60F(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
-    this.addFragment(this.#key, `<div>ok</div>`);
-    delete this.element[this.#key];
+    this.addFragment(this.#key, "<div>ok</div>");
+    delete this._fragment[this.#key];
     this.trigger("test_signal_5D60F");
   }
 };

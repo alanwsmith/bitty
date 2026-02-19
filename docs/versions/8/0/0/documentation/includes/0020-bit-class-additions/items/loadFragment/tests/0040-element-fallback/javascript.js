@@ -3,7 +3,7 @@ window.Class5A3FB = class {
 
   test_signal_5A3FB(newElement, el) {
     this.loadFragment(this.#key, newElement);
-    el.innerHTML = this.fragment[this.#key].children[0].innerHTML;
+    //    el.innerHTML = this.fragment[this.#key].children[0].innerHTML;
   }
 
   /////////////////////////////////////////////////

@@ -431,11 +431,25 @@ class BittyJs extends HTMLElement {
   }
 
   _saveElement(key) {
+    if (this.conn.element[key] === undefined) {
+      return this.addLogBridge(
+        "error",
+        "saveElement",
+        false,
+        `Tried to save an element with key '${key}', but it does not exist.`,
+      );
+    }
     const storageKey = `bittyElement_${key}`;
     const payload = JSON.stringify({
       data: this.conn.element[key].outerHTML,
     });
     localStorage.setItem(storageKey, payload);
+    return this.addLogBridge(
+      "info",
+      "saveElement",
+      true,
+      `Saved element with key '${key}'`,
+    );
   }
 
   _send(payload, signal) {

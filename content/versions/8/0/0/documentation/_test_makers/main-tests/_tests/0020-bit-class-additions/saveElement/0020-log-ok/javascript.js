@@ -2,10 +2,10 @@ window.$CLASS_NAME = class {
   #key = "el_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    this.saveElement(this.#key);
-    delete this.element[this.#key];
-    this.loadElement(this.#key);
-    el.innerHTML = this.element[this.#key].innerHTML;
+    const result = this.saveElement(this.#key);
+    if (result.ok === true && result.level === "info") {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////
@@ -17,8 +17,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.addElement(this.#key, "<div>failed</div>");
-    this.element[this.#key].innerHTML = "ok";
+    this.addElement(this.#key, "<div>ok</div>");
     this.trigger("test_$SIGNAL_NAME");
   }
 };

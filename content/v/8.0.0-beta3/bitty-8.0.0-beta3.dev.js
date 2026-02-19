@@ -244,16 +244,25 @@ class BittyJs extends HTMLElement {
     } else if (fallback === null) {
       details.level = "error";
       details.ok = false;
+      details.messages.push(
+        `Noting in storage for ${key} and no fallback provided.`,
+      );
     } else if (fallback instanceof Element) {
       this.conn.element[key] = fallback;
       localStorage.setItem(
         storageKey,
         JSON.stringify({ data: this.conn.element[key].outerHTML }),
       );
+      details.messages.push(
+        `No elemnet with key '${key}' in storage. The fallback was used.`,
+      );
     } else if (fallback instanceof DocumentFragment) {
       console.log(fallback);
       this.conn.element[key] = fallback.firstChild;
       details.level = "warn";
+      details.messages.push(
+        `No elemnet with key '${key}' in storage. The fallback was used.`,
+      );
       details.messages.push(
         "Warning: A document fragment was used as a fallback. Everything beyond the first element was dropped",
       );
@@ -265,6 +274,9 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = fallback;
       this.conn.element[key] = template.content.firstChild;
+      details.messages.push(
+        `No elemnet with key '${key}' in storage. The fallback was used.`,
+      );
       localStorage.setItem(
         storageKey,
         JSON.stringify({ data: this.conn.element[key].outerHTML }),

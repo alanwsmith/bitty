@@ -112,9 +112,23 @@ class BittyJs extends HTMLElement {
   // easier until tests are written for
   // this method specifically.
   _addFragment(key, content = null) {
+    const details = {
+      level: "info",
+      key: "addFragment",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
     const template = document.createElement("template");
     template.innerHTML = content;
     this.conn.fragment[key] = template.content;
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(""),
+      details.extraInfo,
+    );
   }
 
   async _fetchElement(key, url, options = {}) {
@@ -353,7 +367,7 @@ class BittyJs extends HTMLElement {
 
   _renderElement(key, subs = null) {
     if (this.conn.element[key] === undefined) {
-      this.addLogBridge(
+      this.conn.addLog(
         "error",
         "renderElement",
         false,
@@ -420,7 +434,7 @@ class BittyJs extends HTMLElement {
       }
     }
     if (jsonString === undefined) {
-      this.addLogBridge(
+      this.conn.addLog(
         "error",
         "renderJSON",
         false,
@@ -432,7 +446,7 @@ class BittyJs extends HTMLElement {
 
   _saveElement(key) {
     if (this.conn.element[key] === undefined) {
-      return this.addLogBridge(
+      return this.conn.addLog(
         "error",
         "saveElement",
         false,
@@ -444,7 +458,7 @@ class BittyJs extends HTMLElement {
       data: this.conn.element[key].outerHTML,
     });
     localStorage.setItem(storageKey, payload);
-    return this.addLogBridge(
+    return this.conn.addLog(
       "info",
       "saveElement",
       true,
@@ -460,7 +474,7 @@ class BittyJs extends HTMLElement {
   _setLogLevel(level) {
     if (this.getLogLevelIndex(level) === -1) {
       this.#_logLevel = "warn";
-      this.addLogBridge(
+      this.conn.addLog(
         "warn",
         "setLogLevel",
         false,

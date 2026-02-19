@@ -2976,7 +2976,7 @@ in local storage. Those methods being:
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
   <summary>
     <span class="section-status"></span>
-    <strong>fetchElement(key, url [, options = {}])
+    <strong>fetchElement(key, url [, options])
 <span class="faded-default-color">[DONE]</span>
 
 
@@ -3565,7 +3565,7 @@ window.Class97CD8 = class {
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
   <summary>
     <span class="section-status"></span>
-    <strong>fetchJSON(key, url [, options = {}]) 
+    <strong>fetchJSON(key, url [, options]) 
 <span class="faded-default-color">[DONE]</span>
 
 
@@ -6193,7 +6193,7 @@ window.Class1C2EF = class {
   <summary>
     <span class="section-status"></span>
     <strong>renderElement(key [, substitutions])
-<span class="faded-info-color">[In Progress]</span>
+<span class="faded-default-color">[DONE]</span>
 
 
 </strong> 
@@ -6271,7 +6271,7 @@ window.Class3EB4D = class {
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-Undefined if the key doesn't exist. 
+Undefined if the key doesn't exist. (An error is added to the logs)
 
 
   <span class="faded-default-color">[0015-undefined-if-no-key]</span>
@@ -6290,11 +6290,15 @@ Undefined if the key doesn't exist.
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">given_signal_30B5D</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>none<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test_signal_30B5D<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
 <span class="line-marker"></span>
 <span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">test_signal_30B5D</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">renderElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="constant language undefined js">undefined</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">renderElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="constant language undefined js">undefined</span> <span class="keyword operator logical js">&amp;&amp;</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">logs</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="constant numeric js">0</span><span class="punctuation section brackets js">]</span></span><span class="punctuation accessor js">.</span><span class="meta property object js">level</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>error<span class="punctuation definition string end js">&quot;</span></span>
+<span class="line-marker"></span>    <span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>      <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>ok<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>    </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
@@ -6311,11 +6315,15 @@ window.Class30B5D = class {
   }
 
   given_signal_30B5D(_, __) {
+    this.setLogLevel("none");
     this.trigger("test_signal_30B5D");
   }
 
   test_signal_30B5D(_, el) {
-    if (this.renderElement(this.#key) === undefined) {
+    if (
+      this.renderElement(this.#key) === undefined &&
+      this.logs[0].level === "error"
+    ) {
       el.innerHTML = "ok";
     }
   }
@@ -6726,13 +6734,112 @@ window.Class00B6E = class {
 
 </details>
 
+<details class="default-flow test-wrapper" data-receive="testStatus">
+  <summary>
+    <span class="test-status"></span>
+Use an array of document fragments for a replacement. 
+
+
+  <span class="faded-default-color">[0045-fragment-array]</span>
+  </summary>
+
+<div>HTML</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-8-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Class81AA3<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-8-0</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>test_signal_81AA3<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>bug<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<div>JavaScript</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="source js embedded html"><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">Class81AA3</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #key = &quot;el_signal_81AA3&quot;;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>given_signal_81AA3<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">given_signal_81AA3</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">addElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span><span class="punctuation separator comma js">,</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div&gt;TARGET_81AA3&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">addFragment</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>replacement1_81AA3<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div class=&quot;test&quot;&gt;ok&lt;/div&gt;&lt;div class=&quot;test&quot;&gt;ok&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">addFragment</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>replacement2_81AA3<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="string template js"><span class="punctuation definition string template begin js">`</span>&lt;div class=&quot;test&quot;&gt;ok&lt;/div&gt;&lt;div class=&quot;test&quot;&gt;ok&lt;/div&gt;<span class="punctuation definition string template end js">`</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test_signal_81AA3<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">test_signal_81AA3</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="storage type js">const</span> <span class="variable other readwrite js">subs</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>      <span class="meta object-literal key js"><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>TARGET_81AA3<span class="punctuation definition string end js">&quot;</span></span></span><span class="punctuation separator key-value js">:</span> <span class="meta sequence js"><span class="punctuation section brackets js">[</span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">fragment</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>replacement1_81AA3<span class="punctuation definition string template end js">`</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>        <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">fragment</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>replacement2_81AA3<span class="punctuation definition string template end js">`</span></span><span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>      <span class="punctuation section brackets js">]</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    <span class="punctuation section block js">}</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">replaceWith</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>      <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">renderElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">subs</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>    </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<div>Results</div>
+<script>
+window.Class81AA3 = class {
+  #key = "el_signal_81AA3";
+
+  bittyReady() {
+    this.trigger("given_signal_81AA3");
+  }
+
+  given_signal_81AA3(_, __) {
+    this.addElement(this.#key, `<div>TARGET_81AA3</div>`);
+    this.addFragment(
+      `replacement1_81AA3`,
+      `<div class="test">ok</div><div class="test">ok</div>`,
+    );
+    this.addFragment(
+      `replacement2_81AA3`,
+      `<div class="test">ok</div><div class="test">ok</div>`,
+    );
+    this.trigger("test_signal_81AA3");
+  }
+
+  test_signal_81AA3(_, el) {
+    const subs = {
+      "TARGET_81AA3": [
+        this.fragment[`replacement1_81AA3`],
+        this.fragment[`replacement2_81AA3`],
+      ],
+    };
+    el.replaceWith(
+      this.renderElement(this.#key, subs),
+    );
+  }
+};</script>
+
+<div class="example-block"><bitty-8-0 data-connect="Class81AA3"></bitty-8-0>
+<div class="test" data-receive="test_signal_81AA3">bug</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</details>
+
       
   </details>
 
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
   <summary>
     <span class="section-status"></span>
-    <strong>renderJSON(key [, subs = {} [, pretty = true]]) 
+    <strong>renderJSON(key [, substitutions [, pretty]]) 
 <span class="faded-default-color">[DONE]</span>
 
 
@@ -7122,6 +7229,97 @@ window.ClassB4876 = class {
 
 <div class="example-block"><bitty-8-0 data-connect="ClassB4876"></bitty-8-0>
 <div class="test" data-receive="test_signal_B4876">bug</div>
+</div>
+
+
+
+
+
+</details>
+
+      
+  </details>
+
+  <details class="default-flow section-wrapper" data-receive="sectionStatus">
+  <summary>
+    <span class="section-status"></span>
+    <strong>saveElement(key)
+<span class="faded-info-color">[In Progresss]</span>
+
+
+</strong> 
+  </summary>
+      <div class="header heading-color font-weight-900">Description</div>
+      <div>
+Saves Element `this.element[key]` into storage. It can be retrieved later (including after reloading the page) with `this.loadElement(key, fallback)`.
+
+
+      </div>
+
+      <div class="header heading-color font-weight-900">Examples</div>
+<details class="default-flow test-wrapper" data-receive="testStatus">
+  <summary>
+    <span class="test-status"></span>
+Save `this.element[key]` into storage. 
+
+
+  <span class="faded-default-color">[0010-basic-save]</span>
+  </summary>
+
+<div>HTML</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag custom html">bitty-8-0</span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-connect</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>Class8D266<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span><span class="meta tag custom html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag custom html">bitty-8-0</span><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag block any html">div</span> <span class="meta attribute-with-value class html"><span class="entity other attribute-name class html">class</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span></span></span><span class="meta attribute-with-value class html"><span class="string quoted double html"><span class="meta class-name html">test</span><span class="punctuation definition string end html">&quot;</span></span></span> <span class="meta attribute-with-value html"><span class="entity other attribute-name html">data-receive</span><span class="punctuation separator key-value html">=</span></span><span class="meta attribute-with-value html"><span class="string quoted double html"><span class="punctuation definition string begin html">&quot;</span>test_signal_8D266<span class="punctuation definition string end html">&quot;</span></span></span><span class="punctuation definition tag end html">&gt;</span></span>bug<span class="meta tag block any html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag block any html">div</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+<div>JavaScript</div>
+<pre class="code-block"><code><span class="line-marker"></span><span class="text html basic"><span class="meta tag script begin html"><span class="punctuation definition tag begin html">&lt;</span><span class="entity name tag script html">script</span></span><span class="meta tag script begin html"><span class="punctuation definition tag end html">&gt;</span></span>
+<span class="line-marker"></span><span class="source js embedded html"><span class="source js"><span class="support type object dom js">window</span><span class="punctuation accessor js">.</span><span class="meta property object js">Class8D266</span> <span class="keyword operator assignment js">=</span> <span class="meta class js"><span class="storage type class js">class</span> <span class="meta class js"><span class="meta block js"><span class="punctuation section block js">{</span></span></span></span><span class="meta class js"><span class="meta block js">
+<span class="line-marker"></span>  #key = &quot;el_signal_8D266&quot;;
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">bittyReady</span><span class="punctuation section group begin js">(</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>given_signal_8D266<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">given_signal_8D266</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">__</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">addElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span><span class="punctuation separator comma js">,</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>&lt;div&gt;ok&lt;/div&gt;<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable other object js">localStorage</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">removeItem</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string template js"><span class="punctuation definition string template begin js">`</span>bittyElement_<span class="punctuation definition string template end js">`</span></span> <span class="keyword operator arithmetic js">+</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">trigger</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test_signal_8D266<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span>
+<span class="line-marker"></span>  <span class="meta function declaration js"><span class="entity name function js">test_signal_8D266</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">_</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">saveElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">loadElement</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>    <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> console.log(this.element[this.#key]);
+<span class="line-marker"></span></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta property object js">element</span><span class="meta brackets js"><span class="punctuation section brackets js">[</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span>#<span class="variable other readwrite js">key</span><span class="punctuation section brackets js">]</span></span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span></span></span><span class="meta tag script end html"><span class="punctuation definition tag begin html">&lt;/</span><span class="entity name tag script html">script</span><span class="punctuation definition tag end html">&gt;</span></span></span></code></pre>
+
+<div>Results</div>
+<script>
+window.Class8D266 = class {
+  #key = "el_signal_8D266";
+
+  bittyReady() {
+    this.trigger("given_signal_8D266");
+  }
+
+  given_signal_8D266(_, __) {
+    this.addElement(this.#key, "<div>ok</div>");
+    localStorage.removeItem(`bittyElement_` + this.#key);
+    this.trigger("test_signal_8D266");
+  }
+
+  test_signal_8D266(_, el) {
+    this.saveElement(this.#key);
+    this.loadElement(this.#key);
+    // console.log(this.element[this.#key]);
+    el.innerHTML = this.element[this.#key].innerHTML;
+  }
+};</script>
+
+<div class="example-block"><bitty-8-0 data-connect="Class8D266"></bitty-8-0>
+<div class="test" data-receive="test_signal_8D266">bug</div>
+
+
 </div>
 
 

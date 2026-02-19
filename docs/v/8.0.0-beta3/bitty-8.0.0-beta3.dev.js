@@ -352,13 +352,30 @@ class BittyJs extends HTMLElement {
   }
 
   _renderElement(key, subs = null) {
+    if (this.conn.element[key] === undefined) {
+      this.addLogBridge(
+        "error",
+        "renderElement",
+        false,
+        `Attempted to render non-existing element with key '${key}'`,
+      );
+    }
     if (subs === null) {
       return this.conn.element[key];
     } else {
       let content = this.conn.element[key].outerHTML;
       for (const needle of Object.keys(subs)) {
         if (subs[needle] instanceof Array) {
-          if (subs[needle][0] instanceof Element) {
+          if (subs[needle][0] instanceof DocumentFragment) {
+            content = content.replaceAll(
+              needle,
+              subs[needle].map((fragment) => {
+                return [...fragment.childNodes].map((el) => {
+                  return el.outerHTML;
+                }).join("");
+              }).join(""),
+            );
+          } else if (subs[needle][0] instanceof Element) {
             content = content.replaceAll(
               needle,
               subs[needle].map((el) => {
@@ -394,7 +411,6 @@ class BittyJs extends HTMLElement {
     // handle arrays of strings, elements/arrays-of-elements,
     // fragments/arrays-of-fragments, svgs/arrays-of-svgs,
     // and other jsons.
-
     let jsonString = pretty
       ? JSON.stringify(this.conn.json[key], null, 2)
       : JSON.stringify(this.conn.json[key]);
@@ -412,6 +428,14 @@ class BittyJs extends HTMLElement {
       );
     }
     return jsonString;
+  }
+
+  _saveElement(key) {
+    const storageKey = `bittyElement_${key}`;
+    const payload = JSON.stringify({
+      data: this.conn.element[key].outerHTML,
+    });
+    localStorage.setItem(storageKey, payload);
   }
 
   _send(payload, signal) {
@@ -575,6 +599,7 @@ class BittyJs extends HTMLElement {
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);
+    this.conn.saveElement = this._saveElement.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.send = this._send.bind(this);
     this.conn.addJSON = this.addJSONBridge.bind(this);

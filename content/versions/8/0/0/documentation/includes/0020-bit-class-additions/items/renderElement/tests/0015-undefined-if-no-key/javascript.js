@@ -6,11 +6,15 @@ window.Class30B5D = class {
   }
 
   given_signal_30B5D(_, __) {
+    this.setLogLevel("none");
     this.trigger("test_signal_30B5D");
   }
 
   test_signal_30B5D(_, el) {
-    if (this.renderElement(this.#key) === undefined) {
+    if (
+      this.renderElement(this.#key) === undefined &&
+      this.logs[0].level === "error"
+    ) {
       el.innerHTML = "ok";
     }
   }

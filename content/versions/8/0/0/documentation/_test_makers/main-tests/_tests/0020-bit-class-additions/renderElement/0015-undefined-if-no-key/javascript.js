@@ -6,11 +6,15 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
+    this.setLogLevel("none");
     this.trigger("test_$SIGNAL_NAME");
   }
 
   test_$SIGNAL_NAME(_, el) {
-    if (this.renderElement(this.#key) === undefined) {
+    if (
+      this.renderElement(this.#key) === undefined &&
+      this.logs[0].level === "error"
+    ) {
       el.innerHTML = "ok";
     }
   }

@@ -325,7 +325,25 @@ class BittyJs extends HTMLElement {
       const template = document.createElement("template");
       template.innerHTML = fallback;
       this.conn.fragment[key] = template.content;
-      details.messages.push(`Loaded fragment with key '${key}' from fallback.`);
+      details.messages.push(
+        `Loaded fragment with key '${key}' from fallback string.`,
+      );
+    } else if (
+      fallback instanceof Element
+    ) {
+      const fragment = document.createDocumentFragment();
+      fragment.appendChild(fallback);
+      this.conn.fragment[key] = fragment;
+      details.messages.push(
+        `Loaded fragment with key '${key}' from fallback element.`,
+      );
+    } else if (
+      fallback instanceof DocumentFragment
+    ) {
+      this.conn.fragment[key] = fallback;
+      details.messages.push(
+        `Loaded fragment with key '${key}' from fallback document fragment.`,
+      );
     } else {
       details.level = "error";
       details.ok = false;

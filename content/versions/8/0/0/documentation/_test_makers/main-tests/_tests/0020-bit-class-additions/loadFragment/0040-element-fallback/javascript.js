@@ -1,7 +1,7 @@
-window.Class5A3FB = class {
-  #key = "el_signal_5A3FB";
+window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
 
-  test_signal_5A3FB(newElement, el) {
+  test_$SIGNAL_NAME(newElement, el) {
     this.loadFragment(this.#key, newElement);
     el.innerHTML = this.fragment[this.#key].children[0].innerHTML;
   }
@@ -11,14 +11,14 @@ window.Class5A3FB = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_5A3FB");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_5A3FB(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.removeFragment(this.#key);
     const newElement = document.createElement("div");
     newElement.innerHTML = "ok";
-    this.send(newElement, "test_signal_5A3FB");
+    this.send(newElement, "test_$SIGNAL_NAME");
   }
 };

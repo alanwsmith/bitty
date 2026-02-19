@@ -1,7 +1,7 @@
-window.Class119D0 = class {
-  #key = "el_signal_119D0";
+window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
 
-  test_signal_119D0(fallbackFragment, el) {
+  test_$SIGNAL_NAME(fallbackFragment, el) {
     this.loadFragment(this.#key, fallbackFragment);
     el.innerHTML = this.fragment[this.#key].children[1].innerHTML;
   }
@@ -11,10 +11,10 @@ window.Class119D0 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_119D0");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_119D0(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.removeFragment(this.#key);
     const fallbackFragment = document.createDocumentFragment();
@@ -23,6 +23,6 @@ window.Class119D0 = class {
     fallbackElement2.innerHTML = "ok";
     fallbackFragment.appendChild(fallbackElement1);
     fallbackFragment.appendChild(fallbackElement2);
-    this.send(fallbackFragment, "test_signal_119D0");
+    this.send(fallbackFragment, "test_$SIGNAL_NAME");
   }
 };

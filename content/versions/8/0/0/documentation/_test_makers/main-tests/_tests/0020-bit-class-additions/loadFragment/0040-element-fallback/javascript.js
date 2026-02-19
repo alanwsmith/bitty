@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(newElement, el) {
     this.loadFragment(this.#key, newElement);
-    //    el.innerHTML = this.fragment[this.#key].children[0].innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).children[0].innerHTML;
   }
 
   /////////////////////////////////////////////////

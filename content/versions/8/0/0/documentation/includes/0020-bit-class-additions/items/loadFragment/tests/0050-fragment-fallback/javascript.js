@@ -3,7 +3,7 @@ window.Class119D0 = class {
 
   test_signal_119D0(fallbackFragment, el) {
     this.loadFragment(this.#key, fallbackFragment);
-    //    el.innerHTML = this.fragment[this.#key].children[1].innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
   }
 
   /////////////////////////////////////////////////

@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(fallbackFragment, el) {
     this.loadFragment(this.#key);
-    //    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////

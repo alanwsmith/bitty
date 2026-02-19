@@ -364,7 +364,6 @@ class BittyJs extends HTMLElement {
         `Warning: loadFragment() replaced an existing key: ${key}`,
       );
     }
-
     if (key === null) {
       details.level = "error";
       details.ok = false;
@@ -380,9 +379,21 @@ class BittyJs extends HTMLElement {
         `No storage found for '${key}' and not fallback provided.`,
       );
     } else if (storage !== null) {
-      //console.log(storage);
       this.conn._fragment[key] = JSON.parse(storage).data;
-      // console.log(this.conn._fragment[key]);
+    } else if (typeof fallback === "string") {
+      this.conn._fragment[key] = fallback;
+    } else if (fallback instanceof Element) {
+      this.conn._fragment[key] = fallback.outerHTML;
+    } else if (fallback instanceof DocumentFragment) {
+      this.conn._fragment[key] = [...fallback.children].map((el) =>
+        el.outerHTML
+      ).join("");
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `loadFragment() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
+      );
     }
 
     return this.conn.addLog(

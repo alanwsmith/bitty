@@ -17,6 +17,7 @@ window.Class45911 = class {
   }
 
   given_signal_45911(_, __) {
+    this.setLogLevel("none");
     this.addFragment(this.#key, `<div></div>`);
     this.trigger("test_signal_45911");
   }

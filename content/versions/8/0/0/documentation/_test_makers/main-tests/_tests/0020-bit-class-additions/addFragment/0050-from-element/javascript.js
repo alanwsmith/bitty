@@ -1,7 +1,7 @@
-window.Class140A5 = class {
-  #key = "fragment_signal_140A5";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_140A5(element, el) {
+  test_$SIGNAL_NAME(element, el) {
     this.addFragment(this.#key, element);
     el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
   }
@@ -11,12 +11,12 @@ window.Class140A5 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_140A5");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_140A5(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     const element = document.createElement("div");
     element.innerHTML = "ok";
-    this.send(element, "test_signal_140A5");
+    this.send(element, "test_$SIGNAL_NAME");
   }
 };

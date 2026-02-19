@@ -119,9 +119,37 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    const template = document.createElement("template");
-    template.innerHTML = content;
-    this.conn.fragment[key] = template.content;
+    if (this.conn.fragment[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning. addFragment overwrite an exsiting fragment with key '${key}'`,
+      );
+    }
+    if (typeof content === "string") {
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      this.conn.fragment[key] = template.content;
+      details.messages.push(`Added fragment with key '${key}'`);
+    } else if (
+      content instanceof DocumentFragment
+    ) {
+      this.conn.fragment[key] = content;
+      details.messages.push(`Added fragment with key '${key}'`);
+    } else if (
+      content instanceof Element
+    ) {
+      const fragment = document.createDocumentFragment();
+      fragment.appendChild(content);
+      this.conn.fragment[key] = fragment;
+      details.messages.push(`Added fragment with key '${key}'`);
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Could not add fragment for key '${key}'. The 'content' argument must be a String, Element, or Document Fragment.`,
+      );
+    }
+
     return this.conn.addLog(
       details.level,
       details.key,

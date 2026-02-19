@@ -1,7 +1,7 @@
-window.Class129C2 = class {
-  #key = "fragment_signal_129C2";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_129C2(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const result = this.addFragment(this.#key, {
       key: "not a string, element, or document fragment",
     });
@@ -15,11 +15,11 @@ window.Class129C2 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_129C2");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_129C2(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.trigger("test_signal_129C2");
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

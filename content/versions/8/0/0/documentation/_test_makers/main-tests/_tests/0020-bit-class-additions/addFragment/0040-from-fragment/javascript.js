@@ -1,7 +1,7 @@
-window.ClassDBF25 = class {
-  #key = "fragment_signal_DBF25";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_DBF25(fragment, el) {
+  test_$SIGNAL_NAME(fragment, el) {
     this.addFragment(this.#key, fragment);
     el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
   }
@@ -11,14 +11,14 @@ window.ClassDBF25 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_DBF25");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_DBF25(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     const fragment = document.createDocumentFragment();
     const element = document.createElement("div");
     element.innerHTML = "ok";
     fragment.appendChild(element);
-    this.send(fragment, "test_signal_DBF25");
+    this.send(fragment, "test_$SIGNAL_NAME");
   }
 };

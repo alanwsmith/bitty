@@ -1,7 +1,7 @@
-window.Class46488 = class {
-  #key = "fragment_signal_46488";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_46488(element, el) {
+  test_$SIGNAL_NAME(element, el) {
     // Finish this test when loadFragment is ready.
     el.classList.remove("test");
   }
@@ -11,13 +11,13 @@ window.Class46488 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_46488");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_46488(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     const element = document.createElement("div");
     element.innerHTML = "ok";
     this.addFragment(this.#key, element);
-    this.send(element, "test_signal_46488");
+    this.send(element, "test_$SIGNAL_NAME");
   }
 };

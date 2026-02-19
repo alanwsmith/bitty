@@ -342,6 +342,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _renderElement(key, subs = {}) {
+    return this.conn.element[key];
+  }
+
   _renderJSON(key, subs = {}, pretty = true) {
     // TODO at some point for a consistent API:
     // handle arrays of strings, elements/arrays-of-elements,
@@ -525,6 +529,7 @@ class BittyJs extends HTMLElement {
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.removeElement = this._removeElement.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
+    this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.send = this._send.bind(this);

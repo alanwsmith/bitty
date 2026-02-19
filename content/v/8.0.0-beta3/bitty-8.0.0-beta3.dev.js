@@ -315,6 +315,13 @@ class BittyJs extends HTMLElement {
       if (response.ok === true) {
         const text = await response.text();
         this.conn._fragment[key] = text;
+      } else {
+        details.level = "error";
+        details.ok = false;
+        details.messages.push(
+          `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+        );
+        details.extraInfo = response;
       }
     } catch (error) {
     }

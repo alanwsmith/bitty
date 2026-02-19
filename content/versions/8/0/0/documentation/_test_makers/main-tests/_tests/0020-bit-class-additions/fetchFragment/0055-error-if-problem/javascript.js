@@ -1,7 +1,7 @@
-window.ClassC7878 = class {
-  #key = "fragment_signal_C7878";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  async test_signal_C7878(url, el) {
+  async test_$SIGNAL_NAME(url, el) {
     const result = await this.fetchFragment(this.#key, url);
     if (result.ok === false && result.level === "error") {
       el.innerHTML = "ok";
@@ -12,8 +12,8 @@ window.ClassC7878 = class {
   // Test Setup
   /////////////////////////////////////////////////
 
-  run_signal_C7878(_, __) {
+  run_$SIGNAL_NAME(_, __) {
     const url = "/non-exising-page.html";
-    this.send(url, "test_signal_C7878");
+    this.send(url, "test_$SIGNAL_NAME");
   }
 };

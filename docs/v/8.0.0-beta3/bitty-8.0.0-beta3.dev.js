@@ -298,7 +298,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async _fetchFragment(key, url, options = {}) {
+  async _fetchFragment(key, url, fallback = null, options = {}) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
@@ -322,12 +322,22 @@ class BittyJs extends HTMLElement {
         }
         this.conn._fragment[key] = text;
       } else {
-        details.level = "error";
-        details.ok = false;
-        details.messages.push(
-          `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
-        );
-        details.extraInfo = response;
+        if (typeof fallback === "string") {
+          this.conn._fragment[key] = fallback;
+        } else if (fallback instanceof Element) {
+          this.conn._fragment[key] = fallback.outerHTML;
+        } else if (fallback instanceof DocumentFragment) {
+          this.conn._fragment[key] = [...fallback.children].map((el) => {
+            return el.outerHTML;
+          }).join("");
+        } else {
+          details.level = "error";
+          details.ok = false;
+          details.messages.push(
+            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+          );
+          details.extraInfo = response;
+        }
       }
     } catch (error) {
       details.level = "error";
@@ -335,7 +345,6 @@ class BittyJs extends HTMLElement {
       details.messages.push(
         `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
       );
-      details.extraInfo = response;
     }
     if (details.ok === true) {
       localStorage.setItem(

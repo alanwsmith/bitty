@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
         },
       },
     };
-    await this.fetchFragment(this.#key, url, options);
+    await this.fetchFragment(this.#key, url, null, options);
     el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
   }
 

@@ -1,7 +1,7 @@
-window.Class80552 = class {
-  #key = "fragment_signal_80552";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  async test_signal_80552(payload, el) {
+  async test_$SIGNAL_NAME(payload, el) {
     await this.fetchFragment(this.#key, payload.url, payload.fallback);
     el.innerHTML = this.renderFragment(this.#key).children[0].innerHTML;
   }
@@ -11,17 +11,17 @@ window.Class80552 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_80552");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_80552(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     const fallbackTemplate = document.createElement("template");
     fallbackTemplate.innerHTML = "<div>ok</div>";
     console.log(fallbackTemplate);
     const url = "/intentionally-missing-file.html";
     this.send(
       { url: url, fallback: fallbackTemplate.content },
-      "test_signal_80552",
+      "test_$SIGNAL_NAME",
     );
   }
 };

@@ -12,7 +12,7 @@ window.$CLASS_NAME = class {
     // POST Requests. This is the line that
     // would make one:
     //
-    // await this.fetchFragment(this.#key, url, options);
+    // await this.fetchFragment(this.#key, url, null, options);
     //
     // Since the server would reject it, it's
     // not tested here.

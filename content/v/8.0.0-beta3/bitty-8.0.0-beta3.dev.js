@@ -349,7 +349,16 @@ class BittyJs extends HTMLElement {
       let content = this.conn.element[key].outerHTML;
       for (const needle of Object.keys(subs)) {
         if (subs[needle] instanceof Array) {
-          content = content.replaceAll(needle, subs[needle].join(""));
+          if (subs[needle][0] instanceof Element) {
+            content = content.replaceAll(
+              needle,
+              subs[needle].map((el) => {
+                return el.outerHTML;
+              }).join(""),
+            );
+          } else {
+            content = content.replaceAll(needle, subs[needle].join(""));
+          }
         } else {
           if (subs[needle] instanceof Element) {
             content = content.replaceAll(needle, subs[needle].outerHTML);

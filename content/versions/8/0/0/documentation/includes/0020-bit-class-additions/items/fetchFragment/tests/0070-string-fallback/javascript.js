@@ -10,11 +10,7 @@ window.ClassF3B99 = class {
   // Test Setup
   /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("given_signal_F3B99");
-  }
-
-  given_signal_F3B99(_, __) {
+  run_signal_F3B99(_, __) {
     const fallback = "<div></div><div>ok</div>";
     const url = "/intentionally-missing-file.html";
     this.send(

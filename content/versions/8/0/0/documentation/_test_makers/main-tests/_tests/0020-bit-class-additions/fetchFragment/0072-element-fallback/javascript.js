@@ -10,11 +10,7 @@ window.$CLASS_NAME = class {
   // Test Setup
   /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
+  run_$SIGNAL_NAME(_, __) {
     const fallbackElement = document.createElement("div");
     fallbackElement.innerHTML = "ok";
     const url = "/intentionally-missing-file.html";

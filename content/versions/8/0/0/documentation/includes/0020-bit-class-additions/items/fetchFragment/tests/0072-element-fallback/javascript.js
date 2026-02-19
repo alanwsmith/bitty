@@ -10,11 +10,7 @@ window.Class11320 = class {
   // Test Setup
   /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("given_signal_11320");
-  }
-
-  given_signal_11320(_, __) {
+  run_signal_11320(_, __) {
     const fallbackElement = document.createElement("div");
     fallbackElement.innerHTML = "ok";
     const url = "/intentionally-missing-file.html";

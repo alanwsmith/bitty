@@ -10,14 +10,9 @@ window.$CLASS_NAME = class {
   // Test Setup
   /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
+  run_$SIGNAL_NAME(_, __) {
     const fallbackTemplate = document.createElement("template");
     fallbackTemplate.innerHTML = "<div>ok</div>";
-    console.log(fallbackTemplate);
     const url = "/intentionally-missing-file.html";
     this.send(
       { url: url, fallback: fallbackTemplate.content },

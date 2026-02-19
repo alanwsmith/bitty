@@ -134,49 +134,36 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    if (this.conn.fragment[key] !== undefined) {
-      details.level = "warn";
+    if (key === null) {
+      details.ok = false;
+      details.level = "error";
       details.messages.push(
-        `Warning. addFragment overwrite an exsiting fragment with key '${key}'`,
+        `this.addFragment(key, content) was called without 'key' and 'content' arguments.`,
       );
-    }
-    if (typeof content === "string") {
-      const template = document.createElement("template");
-      template.innerHTML = content;
-      this.conn.fragment[key] = template.content;
-      details.messages.push(`Added fragment with key '${key}'`);
-    } else if (
-      content instanceof DocumentFragment
-    ) {
-      this.conn.fragment[key] = content;
-      details.messages.push(`Added fragment with key '${key}'`);
-    } else if (
-      content instanceof Element
-    ) {
-      const fragment = document.createDocumentFragment();
-      fragment.appendChild(content);
-      this.conn.fragment[key] = fragment;
-      details.messages.push(`Added fragment with key '${key}'`);
+    } else if (content === null) {
+      details.ok = false;
+      details.level = "error";
+      details.messages.push(
+        `this.addFragment(key, content) was called without either a 'content' argument.`,
+      );
+    } else if (typeof content === "string") {
+      this.conn._fragment[key] = content;
+    } else if (content instanceof Element) {
+      this.conn._fragment[key] = content.outerHTML;
+    } else if (content instanceof DocumentFragment) {
+      console.log(content.children);
+      //console.log("HERE1");
+      const c2 = [...content.children].map((el) => el.outerHTML)
+        .join("");
+      console.log(c2);
+      this.conn._fragment[key] = c2;
     } else {
       details.level = "error";
       details.ok = false;
       details.messages.push(
-        `Could not add fragment for key '${key}'. The 'content' argument must be a String, Element, or Document Fragment.`,
+        `Attempted to make a frament for key '${key}' out of something other than a String, Element, or Document Fragment`,
       );
     }
-
-    if (details.ok === true) {
-      const storageKey = `bittyFragment_${key}`;
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          data: [...this.conn.fragment[key].children].map((el) => {
-            return el.outerHTML;
-          }).join(""),
-        }),
-      );
-    }
-
     return this.conn.addLog(
       details.level,
       details.key,
@@ -184,6 +171,50 @@ class BittyJs extends HTMLElement {
       details.messages.join(" "),
       details.extraInfo,
     );
+
+    // if (this.conn.fragment[key] !== undefined) {
+    //   details.level = "warn";
+    //   details.messages.push(
+    //     `Warning. addFragment overwrite an exsiting fragment with key '${key}'`,
+    //   );
+    // }
+
+    // if (typeof content === "string") {
+    //   const template = document.createElement("template");
+    //   template.innerHTML = content;
+    //   this.conn.fragment[key] = template.content;
+    //   details.messages.push(`Added fragment with key '${key}'`);
+    // } else if (
+    //   content instanceof DocumentFragment
+    // ) {
+    //   this.conn.fragment[key] = content;
+    //   details.messages.push(`Added fragment with key '${key}'`);
+    // } else if (
+    //   content instanceof Element
+    // ) {
+    //   const fragment = document.createDocumentFragment();
+    //   fragment.appendChild(content);
+    //   this.conn.fragment[key] = fragment;
+    //   details.messages.push(`Added fragment with key '${key}'`);
+    // } else {
+    //   details.level = "error";
+    //   details.ok = false;
+    //   details.messages.push(
+    //     `Could not add fragment for key '${key}'. The 'content' argument must be a String, Element, or Document Fragment.`,
+    //   );
+    // }
+
+    // if (details.ok === true) {
+    //   const storageKey = `bittyFragment_${key}`;
+    //   localStorage.setItem(
+    //     storageKey,
+    //     JSON.stringify({
+    //       data: [...this.conn.fragment[key].children].map((el) => {
+    //         return el.outerHTML;
+    //       }).join(""),
+    //     }),
+    //   );
+    // }
   }
 
   async _fetchElement(key, url, options = {}) {
@@ -361,6 +392,15 @@ class BittyJs extends HTMLElement {
         `Attempted to load non-existing fragment with key '${key}' from storage`,
       );
     }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          data: [...this.conn.fragment[key].children].map((el) => el.outerHTML)
+            .join(""),
+        }),
+      );
+    }
     return this.conn.addLog(
       details.level,
       "loadFragment",
@@ -470,8 +510,34 @@ class BittyJs extends HTMLElement {
   // TODO: Cover this with tests.
   _removeFragment(key) {
     const storageKey = `bittyFragment_${key}`;
-    delete this.conn.json[key];
-    localStorage.removeItem(storageKey);
+    const details = {
+      level: "info",
+      ok: true,
+      key: "removeFragment",
+      messages: [],
+    };
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn.fragment[key] === undefined
+    ) {
+      details.level = "warn",
+        details.messages.push(
+          `No fragment with key '${key}' exists. Nothing to remove.`,
+        );
+    } else {
+      delete this.conn.fragment[key];
+      localStorage.removeItem(storageKey);
+      details.messages.push(
+        `Fragment with key '${key}' was removed`,
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
   }
 
   _removeJSON(key) {
@@ -550,6 +616,12 @@ class BittyJs extends HTMLElement {
       template.innerHTML = content;
       return template.content.firstChild;
     }
+  }
+
+  _renderFragment(key, subs = null) {
+    const template = document.createElement("template");
+    template.innerHTML = this.conn._fragment[key];
+    return template.content;
   }
 
   _renderJSON(key, subs = {}, pretty = true) {
@@ -745,7 +817,10 @@ class BittyJs extends HTMLElement {
   createBridges() {
     this.conn.logLevel = 2;
     this.conn.element = {};
+    // TODO: Deprecate this.conn.fragment in favor
+    // of this.conn._fragment (with an underscore)
     this.conn.fragment = {};
+    this.conn._fragment = {};
     this.conn.json = {};
     this.conn.svg = {};
     this.conn.logs = [];
@@ -760,6 +835,8 @@ class BittyJs extends HTMLElement {
     this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
+    this.conn.renderFragment = this._renderFragment.bind(this);
+    // TODO: Deprecate and remove renderJSON.
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.saveElement = this._saveElement.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);

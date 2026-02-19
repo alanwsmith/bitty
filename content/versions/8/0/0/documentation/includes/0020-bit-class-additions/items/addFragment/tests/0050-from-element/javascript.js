@@ -3,7 +3,7 @@ window.Class140A5 = class {
 
   test_signal_140A5(element, el) {
     this.addFragment(this.#key, element);
-    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////

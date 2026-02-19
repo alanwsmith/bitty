@@ -2,8 +2,8 @@ window.Class46488 = class {
   #key = "fragment_signal_46488";
 
   test_signal_46488(element, el) {
-    // Finish this test when loadFragment is ready.
-    el.classList.remove("test");
+    const result = this.loadFragment(this.#key);
+    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////
@@ -15,9 +15,9 @@ window.Class46488 = class {
   }
 
   given_signal_46488(_, __) {
-    const element = document.createElement("div");
-    element.innerHTML = "ok";
-    this.addFragment(this.#key, element);
-    this.send(element, "test_signal_46488");
+    this.removeFragment(this.#key);
+    this.addFragment(this.#key, `<div>ok</div>`);
+    delete this.fragment[this.#key];
+    this.trigger("test_signal_46488");
   }
 };

@@ -150,6 +150,19 @@ class BittyJs extends HTMLElement {
       );
     }
 
+    if (details.ok === true) {
+      const storageKey = `bittyFragment_${key}`;
+      console.log(storageKey);
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          data: [...this.conn.fragment[key].children].map((el) => {
+            return el.outerHTML;
+          }).join(""),
+        }),
+      );
+    }
+
     return this.conn.addLog(
       details.level,
       details.key,
@@ -272,6 +285,23 @@ class BittyJs extends HTMLElement {
     return this.#_logLevel;
   }
 
+  _loadFragment(key, fallback = null) {
+    const storageKey = `bittyFragment_${key}`;
+    const details = {
+      level: "info",
+      ok: true,
+      messages: [],
+    };
+    const storage = localStorage.getItem(storageKey);
+    if (storage !== null) {
+      const payload = JSON.parse(storage).data;
+      const template = document.createElement("template");
+      template.innerHTML = payload;
+      this.conn.fragment[key] = template.content;
+      details.messages.push(`Loaded fragment with key '${key}' from storage.`);
+    }
+  }
+
   _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;
     const details = {
@@ -367,10 +397,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // This is just a stub to help
+  // make loadFragment tests.
+  // TODO: Cover this with tests.
+  _removeFragment(key) {
+    const storageKey = `bittyFragment_${key}`;
+    delete this.conn.json[key];
+    localStorage.removeItem(storageKey);
+  }
+
   _removeJSON(key) {
-    // TODO: Improve messaging if value
-    // was in localstorage but not in
-    // the current this.conn.json set.
     const storageKey = `bittyJSON_${key}`;
     localStorage.removeItem(storageKey);
     if (this.conn.json[key] === undefined) {
@@ -651,7 +687,9 @@ class BittyJs extends HTMLElement {
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
+    this.conn.loadFragment = this._loadFragment.bind(this);
     this.conn.removeElement = this._removeElement.bind(this);
+    this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderJSON = this._renderJSON.bind(this);

@@ -2,8 +2,8 @@ window.$CLASS_NAME = class {
   #key = "fragment_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(element, el) {
-    // Finish this test when loadFragment is ready.
-    el.classList.remove("test");
+    const result = this.loadFragment(this.#key);
+    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////
@@ -15,9 +15,9 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    const element = document.createElement("div");
-    element.innerHTML = "ok";
-    this.addFragment(this.#key, element);
-    this.send(element, "test_$SIGNAL_NAME");
+    this.removeFragment(this.#key);
+    this.addFragment(this.#key, `<div>ok</div>`);
+    delete this.fragment[this.#key];
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

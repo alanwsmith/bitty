@@ -324,12 +324,27 @@ class BittyJs extends HTMLElement {
       } else {
         if (typeof fallback === "string") {
           this.conn._fragment[key] = fallback;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
         } else if (fallback instanceof Element) {
           this.conn._fragment[key] = fallback.outerHTML;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
         } else if (fallback instanceof DocumentFragment) {
           this.conn._fragment[key] = [...fallback.children].map((el) => {
             return el.outerHTML;
           }).join("");
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;

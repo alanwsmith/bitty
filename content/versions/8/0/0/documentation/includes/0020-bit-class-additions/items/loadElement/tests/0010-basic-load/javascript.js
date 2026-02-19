@@ -6,6 +6,7 @@ window.Class23191 = class {
   }
 
   given_signal_23191(_, __) {
+    this.removeElement(this.#key);
     this.addElement(this.#key, `<div>ok</div>`);
     delete this.element[this.#key];
     this.trigger("test_signal_23191");

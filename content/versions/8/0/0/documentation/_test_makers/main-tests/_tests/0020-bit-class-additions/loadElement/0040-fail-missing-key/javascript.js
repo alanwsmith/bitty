@@ -1,4 +1,6 @@
 window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
+
   bittyReady() {
     this.trigger("given_$SIGNAL_NAME");
   }
@@ -10,13 +12,9 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    //this.loadElement("el_$SIGNAL_NAME", `<div>ok</div>`);
     const result = this.loadElement("el_$SIGNAL_NAME");
     if (result.ok === false && result.level === "error") {
       el.innerHTML = "ok";
     }
-    //console.log(this.element["el_$SIGNAL_NAME"]);
-    //delete this.element["el_$SIGNAL_NAME"];
-    //    this.loadElement("el_$SIGNAL_NAME");
   }
 };

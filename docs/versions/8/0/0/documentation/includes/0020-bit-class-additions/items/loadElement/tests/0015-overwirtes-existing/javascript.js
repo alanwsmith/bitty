@@ -6,6 +6,7 @@ window.ClassFFDD5 = class {
   }
 
   given_signal_FFDD5(_, __) {
+    this.removeElement(this.#key);
     this.setLogLevel("none");
     this.addElement(this.#key, `<div>ok</div>`);
     this.trigger("test_signal_FFDD5");

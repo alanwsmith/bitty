@@ -6,6 +6,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
+    this.removeElement(this.#key);
     this.addElement(this.#key, `<div>ok</div>`);
     delete this.element[this.#key];
     this.trigger("test_$SIGNAL_NAME");

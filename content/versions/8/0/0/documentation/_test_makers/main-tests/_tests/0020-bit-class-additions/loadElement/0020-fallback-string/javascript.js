@@ -1,15 +1,17 @@
 window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
+
   bittyReady() {
     this.trigger("given_$SIGNAL_NAME");
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.removeElement("el_$SIGNAL_NAME");
+    this.removeElement(this.#key);
     this.trigger("test_$SIGNAL_NAME");
   }
 
   test_$SIGNAL_NAME(_, el) {
-    this.loadElement("el_$SIGNAL_NAME", `<div>ok</div>`);
-    el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;
+    this.loadElement(this.#key, `<div>ok</div>`);
+    el.innerHTML = this.element[this.#key].innerHTML;
   }
 };

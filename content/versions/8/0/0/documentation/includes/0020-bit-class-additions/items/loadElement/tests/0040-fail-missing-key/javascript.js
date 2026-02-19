@@ -1,4 +1,6 @@
 window.Class94D78 = class {
+  #key = "el_signal_94D78";
+
   bittyReady() {
     this.trigger("given_signal_94D78");
   }
@@ -10,13 +12,9 @@ window.Class94D78 = class {
   }
 
   test_signal_94D78(_, el) {
-    //this.loadElement("el_signal_94D78", `<div>ok</div>`);
     const result = this.loadElement("el_signal_94D78");
     if (result.ok === false && result.level === "error") {
       el.innerHTML = "ok";
     }
-    //console.log(this.element["el_signal_94D78"]);
-    //delete this.element["el_signal_94D78"];
-    //    this.loadElement("el_signal_94D78");
   }
 };

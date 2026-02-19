@@ -1,19 +1,21 @@
 window.Class31502 = class {
+  #key = "el_signal_31502";
+
   bittyReady() {
     this.trigger("given_signal_31502");
   }
 
   given_signal_31502(_, __) {
-    this.removeElement("el_signal_31502");
+    this.removeElement(this.#key);
     this.trigger("test_signal_31502");
   }
 
   test_signal_31502(_, el) {
     const newEl = document.createElement("div");
     newEl.innerHTML = "ok";
-    this.loadElement("el_signal_31502", newEl);
-    delete this.element["el_signal_31502"];
-    this.loadElement("el_signal_31502");
-    el.innerHTML = this.element["el_signal_31502"].innerHTML;
+    this.loadElement(this.#key, newEl);
+    delete this.element[this.#key];
+    this.loadElement(this.#key);
+    el.innerHTML = this.element[this.#key].innerHTML;
   }
 };

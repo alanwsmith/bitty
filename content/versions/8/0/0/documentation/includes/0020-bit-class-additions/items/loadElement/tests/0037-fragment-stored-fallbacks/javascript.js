@@ -1,11 +1,13 @@
 window.Class2B7D0 = class {
+  #key = "el_signal_2B7D0";
+
   bittyReady() {
     this.trigger("given_signal_2B7D0");
   }
 
   given_signal_2B7D0(_, __) {
     this.setLogLevel("none");
-    this.removeElement("el_signal_2B7D0");
+    this.removeElement(this.#key);
     this.trigger("test_signal_2B7D0");
   }
 
@@ -14,9 +16,9 @@ window.Class2B7D0 = class {
     const newEl = document.createElement("div");
     newEl.innerHTML = "ok";
     newFragment.appendChild(newEl);
-    this.loadElement("el_signal_2B7D0", newFragment);
-    delete this.element["el_signal_2B7D0"];
-    this.loadElement("el_signal_2B7D0");
-    el.innerHTML = this.element["el_signal_2B7D0"].innerHTML;
+    this.loadElement(this.#key, newFragment);
+    delete this.element[this.#key];
+    this.loadElement(this.#key);
+    el.innerHTML = this.element[this.#key].innerHTML;
   }
 };

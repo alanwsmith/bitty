@@ -6,6 +6,7 @@ window.ClassBB0D2 = class {
   }
 
   given_signal_BB0D2(_, __) {
+    this.removeElement(this.#key);
     this.addElement(this.#key, `<div>ok</div>`);
     delete this.element[this.#key];
     this.trigger("test_signal_BB0D2");

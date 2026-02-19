@@ -1,11 +1,13 @@
 window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
+
   bittyReady() {
     this.trigger("given_$SIGNAL_NAME");
   }
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeElement("el_$SIGNAL_NAME");
+    this.removeElement(this.#key);
     this.trigger("test_$SIGNAL_NAME");
   }
 
@@ -14,9 +16,9 @@ window.$CLASS_NAME = class {
     const newEl = document.createElement("div");
     newEl.innerHTML = "ok";
     newFragment.appendChild(newEl);
-    this.loadElement("el_$SIGNAL_NAME", newFragment);
-    delete this.element["el_$SIGNAL_NAME"];
-    this.loadElement("el_$SIGNAL_NAME");
-    el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;
+    this.loadElement(this.#key, newFragment);
+    delete this.element[this.#key];
+    this.loadElement(this.#key);
+    el.innerHTML = this.element[this.#key].innerHTML;
   }
 };

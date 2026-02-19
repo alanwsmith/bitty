@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   test_$SIGNAL_NAME(_, el) {
     const result = this.loadFragment(this.#key);
     if (result.ok === true && result.level === "info") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -20,7 +20,7 @@ window.$CLASS_NAME = class {
     this.setLogLevel("none");
     this.removeFragment(this.#key);
     this.addFragment(this.#key, `<div>ok</div>`);
-    delete this.fragment[this.#key];
+    delete this._fragment[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }
 };

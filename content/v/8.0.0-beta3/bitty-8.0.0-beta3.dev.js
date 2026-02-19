@@ -358,11 +358,40 @@ class BittyJs extends HTMLElement {
       messages: [],
     };
     const storage = localStorage.getItem(storageKey);
-    if (storage !== null) {
+    if (key !== null && this.conn._fragment[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: loadFragment() replaced an existing key: ${key}`,
+      );
+    }
+
+    if (key === null) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No key provided for 'this.loadFragment(key [,fallback])'`,
+      );
+    } else if (
+      storage === null && fallback === null
+    ) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No storage found for '${key}' and not fallback provided.`,
+      );
+    } else if (storage !== null) {
       //console.log(storage);
       this.conn._fragment[key] = JSON.parse(storage).data;
       // console.log(this.conn._fragment[key]);
     }
+
+    return this.conn.addLog(
+      details.level,
+      "loadFragment",
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
   }
 
   // const storageKey = `bittyFragment_${key}`;

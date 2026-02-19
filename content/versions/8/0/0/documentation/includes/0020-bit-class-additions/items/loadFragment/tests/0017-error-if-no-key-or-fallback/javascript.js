@@ -4,7 +4,7 @@ window.Class7EF03 = class {
   test_signal_7EF03(_, el) {
     const result = this.loadFragment(this.#key);
     if (result.ok === false && result.level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 

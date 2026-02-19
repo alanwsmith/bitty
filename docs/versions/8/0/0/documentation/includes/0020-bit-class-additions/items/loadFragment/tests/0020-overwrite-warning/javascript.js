@@ -4,7 +4,7 @@ window.ClassF8382 = class {
   test_signal_F8382(_, el) {
     const result = this.loadFragment(this.#key);
     if (result.ok === true && result.level === "warn") {
-      //      el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+      el.innerHTML = "ok";
     }
   }
 
@@ -18,7 +18,7 @@ window.ClassF8382 = class {
 
   given_signal_F8382(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, `<div>ok</div>`);
+    this.addFragment(this.#key, `<div></div>`);
     this.trigger("test_signal_F8382");
   }
 };

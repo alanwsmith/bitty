@@ -1,5 +1,5 @@
 window.Class38302 = class {
-  #key = "el_signal_38302";
+  #key = "fragment_signal_38302";
 
   test_signal_38302(_, el) {
     this.loadFragment(this.#key, `<div></div><div>ok</div>`);

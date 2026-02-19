@@ -1,5 +1,5 @@
 window.ClassF8382 = class {
-  #key = "el_signal_F8382";
+  #key = "fragment_signal_F8382";
 
   test_signal_F8382(_, el) {
     const result = this.loadFragment(this.#key);

@@ -1,5 +1,5 @@
 window.$CLASS_NAME = class {
-  #key = "el_$SIGNAL_NAME";
+  #key = "fragment_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
     this.loadFragment(this.#key, `<div></div><div>ok</div>`);

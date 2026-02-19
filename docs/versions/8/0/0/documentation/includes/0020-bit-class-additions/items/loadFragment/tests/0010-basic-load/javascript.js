@@ -1,5 +1,5 @@
 window.Class5D60F = class {
-  #key = "el_signal_5D60F";
+  #key = "fragment_signal_5D60F";
 
   test_signal_5D60F(_, el) {
     this.loadFragment(this.#key);

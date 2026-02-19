@@ -1,5 +1,5 @@
 window.Class119D0 = class {
-  #key = "el_signal_119D0";
+  #key = "fragment_signal_119D0";
 
   test_signal_119D0(fallbackFragment, el) {
     this.loadFragment(this.#key, fallbackFragment);

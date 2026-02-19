@@ -320,6 +320,16 @@ class BittyJs extends HTMLElement {
       this.conn.fragment[key] = template.content;
       details.messages.push(`Loaded fragment with key '${key}' from storage.`);
     } else if (
+      typeof fallback !== "string" &&
+      fallback instanceof Element === false &&
+      fallback instanceof DocumentFragment === false
+    ) {
+      details.ok = false;
+      details.level = "error";
+      details.messages.push(
+        `Attempted to use an invalid fallback in 'loadFragment("${key}", fallback)'. The fallback must be either a String, Element, or DocumentFragment`,
+      );
+    } else if (
       typeof fallback === "string"
     ) {
       const template = document.createElement("template");
@@ -413,7 +423,7 @@ class BittyJs extends HTMLElement {
       template.innerHTML = fallback;
       this.conn.element[key] = template.content.firstChild;
       details.messages.push(
-        `No elemnet with key '${key}' in storage. The fallback was used.`,
+        `No element with key '${key}' in storage. The fallback was used.`,
       );
       localStorage.setItem(
         storageKey,

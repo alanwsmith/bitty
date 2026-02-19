@@ -1,5 +1,5 @@
 window.Class5A3FB = class {
-  #key = "el_signal_5A3FB";
+  #key = "fragment_signal_5A3FB";
 
   test_signal_5A3FB(newElement, el) {
     this.loadFragment(this.#key, newElement);

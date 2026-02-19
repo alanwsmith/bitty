@@ -313,7 +313,20 @@ class BittyJs extends HTMLElement {
       template.innerHTML = payload;
       this.conn.fragment[key] = template.content;
       details.messages.push(`Loaded fragment with key '${key}' from storage.`);
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Attempted to load non-existing fragment with key '${key}' from storage`,
+      );
     }
+    return this.conn.addLog(
+      details.level,
+      "loadFragment",
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
   }
 
   _loadElement(key, fallback = null) {

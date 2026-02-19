@@ -1,7 +1,7 @@
-window.Class697D1 = class {
-  #key = "el_signal_697D1";
+window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
 
-  test_signal_697D1(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const result = this.loadFragment(this.#key);
     if (result.ok === true && result.level === "info") {
       el.innerHTML = "ok";
@@ -13,13 +13,13 @@ window.Class697D1 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_697D1");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_697D1(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.removeFragment(this.#key);
     this.addFragment(this.#key, `<div>ok</div>`);
     delete this.element[this.#key];
-    this.trigger("test_signal_697D1");
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -1,0 +1,25 @@
+window.Class697D1 = class {
+  #key = "el_signal_697D1";
+
+  test_signal_697D1(_, el) {
+    const result = this.loadFragment(this.#key);
+    if (result.ok === true && result.level === "info") {
+      el.innerHTML = "ok";
+    }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.trigger("given_signal_697D1");
+  }
+
+  given_signal_697D1(_, __) {
+    this.removeFragment(this.#key);
+    this.addFragment(this.#key, `<div>ok</div>`);
+    delete this.element[this.#key];
+    this.trigger("test_signal_697D1");
+  }
+};

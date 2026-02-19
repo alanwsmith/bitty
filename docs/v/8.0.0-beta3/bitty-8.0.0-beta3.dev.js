@@ -108,6 +108,15 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // this is temporary to make testing addElement
+  // easier until tests are written for
+  // this method specifically.
+  _addFragment(key, content = null) {
+    const template = document.createElement("template");
+    template.innerHTML = content;
+    this.conn.fragment[key] = template.content;
+  }
+
   async _fetchElement(key, url, options = {}) {
     let response = await fetch(url, options);
     const logKey = "fetchElement";
@@ -360,7 +369,14 @@ class BittyJs extends HTMLElement {
             content = content.replaceAll(needle, subs[needle].join(""));
           }
         } else {
-          if (subs[needle] instanceof Element) {
+          if (subs[needle] instanceof DocumentFragment) {
+            content = content.replaceAll(
+              needle,
+              [...subs[needle].childNodes].map((el) => {
+                return el.outerHTML;
+              }).join(""),
+            );
+          } else if (subs[needle] instanceof Element) {
             content = content.replaceAll(needle, subs[needle].outerHTML);
           } else {
             content = content.replaceAll(needle, subs[needle]);
@@ -550,6 +566,7 @@ class BittyJs extends HTMLElement {
     this.conn.svg = {};
     this.conn.logs = [];
     this.conn.addElement = this._addElement.bind(this);
+    this.conn.addFragment = this._addFragment.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);

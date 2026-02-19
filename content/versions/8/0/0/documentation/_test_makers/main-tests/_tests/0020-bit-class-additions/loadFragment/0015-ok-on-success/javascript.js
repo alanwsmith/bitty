@@ -19,7 +19,7 @@ window.$CLASS_NAME = class {
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.removeFragment(this.#key);
-    this.addFragment(this.#key, `<div>ok</div>`);
+    this.createFragment(this.#key, `<div>ok</div>`);
     delete this._fragment[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }

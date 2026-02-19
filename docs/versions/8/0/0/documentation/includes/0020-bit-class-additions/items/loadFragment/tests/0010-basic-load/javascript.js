@@ -16,7 +16,7 @@ window.Class5D60F = class {
 
   given_signal_5D60F(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, "<div>ok</div>");
+    this.createFragment(this.#key, "<div>ok</div>");
     delete this._fragment[this.#key];
     this.trigger("test_signal_5D60F");
   }

@@ -2,7 +2,7 @@ window.$CLASS_NAME = class {
   #key = "fragment_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(fragment, el) {
-    this.addFragment(this.#key, fragment);
+    this.createFragment(this.#key, fragment);
     el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 

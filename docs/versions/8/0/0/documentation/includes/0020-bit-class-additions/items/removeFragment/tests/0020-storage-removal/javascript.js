@@ -19,7 +19,7 @@ window.ClassBED08 = class {
 
   given_signal_BED08(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, "<div></div>");
+    this.createFragment(this.#key, "<div></div>");
     this.trigger("test_signal_BED08");
   }
 };

@@ -29,7 +29,7 @@ class BittyJs extends HTMLElement {
 
   _addElement(key, input = null) {
     // TODO: This is in heavy need of a refactor
-    // to make it look more like `_addFragment()`
+    // to make it look more like `_createFragment()`
     const storageKey = `bittyElement_${key}`;
     if (input === null) {
       return this.conn.addLog(
@@ -126,11 +126,11 @@ class BittyJs extends HTMLElement {
   // this is temporary to make testing addElement
   // easier until tests are written for
   // this method specifically.
-  _addFragment(key, content = null) {
+  _createFragment(key, content = null) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
-      key: "addFragment",
+      key: "createFragment",
       ok: true,
       messages: [],
       extraInfo: null,
@@ -143,13 +143,13 @@ class BittyJs extends HTMLElement {
       details.ok = false;
       details.level = "error";
       details.messages.push(
-        `this.addFragment(key, content) was called without 'key' and 'content' arguments.`,
+        `this.createFragment(key, content) was called without 'key' and 'content' arguments.`,
       );
     } else if (content === null) {
       details.ok = false;
       details.level = "error";
       details.messages.push(
-        `this.addFragment(key, content) was called without either a 'content' argument.`,
+        `this.createFragment(key, content) was called without either a 'content' argument.`,
       );
     } else if (typeof content === "string") {
       this.conn._fragment[key] = content;
@@ -195,7 +195,7 @@ class BittyJs extends HTMLElement {
     // if (this.conn.fragment[key] !== undefined) {
     //   details.level = "warn";
     //   details.messages.push(
-    //     `Warning. addFragment overwrite an exsiting fragment with key '${key}'`,
+    //     `Warning. createFragment overwrite an exsiting fragment with key '${key}'`,
     //   );
     // }
 
@@ -898,7 +898,7 @@ class BittyJs extends HTMLElement {
     this.conn.svg = {};
     this.conn.logs = [];
     this.conn.addElement = this._addElement.bind(this);
-    this.conn.addFragment = this._addFragment.bind(this);
+    this.conn.createFragment = this._createFragment.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);

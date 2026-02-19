@@ -7,7 +7,7 @@ window.Class00B6E = class {
 
   given_signal_00B6E(_, __) {
     this.addElement(this.#key, `<div>TARGET_00B6E</div>`);
-    this.addFragment(
+    this.createFragment(
       `replacement_00B6E`,
       `<div class="test">ok</div><div class="test">ok</div>`,
     );

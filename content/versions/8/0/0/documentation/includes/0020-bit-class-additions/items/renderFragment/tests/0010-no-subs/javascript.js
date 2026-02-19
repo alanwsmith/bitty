@@ -16,7 +16,7 @@ window.ClassFC310 = class {
 
   given_signal_FC310(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, `<div></div><div>ok</div>`);
+    this.createFragment(this.#key, `<div></div><div>ok</div>`);
     this.trigger("test_signal_FC310");
   }
 };

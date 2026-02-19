@@ -2,7 +2,7 @@ window.$CLASS_NAME = class {
   #key = "fragment_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.addFragment();
+    const result = this.createFragment();
     if (result.ok === false && result.level === "error") {
       el.innerHTML = "ok";
     }

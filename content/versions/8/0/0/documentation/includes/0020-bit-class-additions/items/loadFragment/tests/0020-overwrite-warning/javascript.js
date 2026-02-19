@@ -18,7 +18,7 @@ window.ClassF8382 = class {
 
   given_signal_F8382(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, `<div></div>`);
+    this.createFragment(this.#key, `<div></div>`);
     this.trigger("test_signal_F8382");
   }
 };

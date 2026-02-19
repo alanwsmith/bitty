@@ -18,7 +18,7 @@ window.Class24C1A = class {
 
   given_signal_24C1A(_, __) {
     this.setLogLevel("none");
-    this.addFragment(this.#key, "<div></div>");
+    this.createFragment(this.#key, "<div></div>");
     this.trigger("test_signal_24C1A");
   }
 };

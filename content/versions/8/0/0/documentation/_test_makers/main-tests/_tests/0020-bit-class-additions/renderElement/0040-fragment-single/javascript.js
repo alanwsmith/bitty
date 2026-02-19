@@ -7,7 +7,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.addElement(this.#key, `<div>TARGET_$HASH</div>`);
-    this.addFragment(
+    this.createFragment(
       `replacement_$HASH`,
       `<div class="test">ok</div><div class="test">ok</div>`,
     );

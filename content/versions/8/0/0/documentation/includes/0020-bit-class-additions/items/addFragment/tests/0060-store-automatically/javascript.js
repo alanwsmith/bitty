@@ -3,7 +3,7 @@ window.Class46488 = class {
 
   test_signal_46488(element, el) {
     const result = this.loadFragment(this.#key);
-    el.innerHTML = this.fragment[this.#key].firstChild.innerHTML;
+    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
   }
 
   /////////////////////////////////////////////////
@@ -17,7 +17,7 @@ window.Class46488 = class {
   given_signal_46488(_, __) {
     this.removeFragment(this.#key);
     this.addFragment(this.#key, `<div>ok</div>`);
-    delete this.fragment[this.#key];
+    delete this._fragment[this.#key];
     this.trigger("test_signal_46488");
   }
 };

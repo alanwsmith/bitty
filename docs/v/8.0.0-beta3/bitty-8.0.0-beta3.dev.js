@@ -127,6 +127,7 @@ class BittyJs extends HTMLElement {
   // easier until tests are written for
   // this method specifically.
   _addFragment(key, content = null) {
+    const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
       key: "addFragment",
@@ -134,6 +135,10 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
+    if (key !== null & this.conn._fragment[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(`Warning overwriting an existing key: '${key}'`);
+    }
     if (key === null) {
       details.ok = false;
       details.level = "error";
@@ -148,21 +153,29 @@ class BittyJs extends HTMLElement {
       );
     } else if (typeof content === "string") {
       this.conn._fragment[key] = content;
+      details.messages.push(
+        `Stored string as fragment with key ${key}.`,
+      );
     } else if (content instanceof Element) {
       this.conn._fragment[key] = content.outerHTML;
+      details.messages.push(
+        `Stored element as fragment with key ${key}.`,
+      );
     } else if (content instanceof DocumentFragment) {
-      console.log(content.children);
-      //console.log("HERE1");
-      const c2 = [...content.children].map((el) => el.outerHTML)
+      this.conn._fragment[key] = [...content.children].map((el) => el.outerHTML)
         .join("");
-      console.log(c2);
-      this.conn._fragment[key] = c2;
+      details.messages.push(
+        `Stored documnet fragment with key ${key}.`,
+      );
     } else {
       details.level = "error";
       details.ok = false;
       details.messages.push(
         `Attempted to make a frament for key '${key}' out of something other than a String, Element, or Document Fragment`,
       );
+    }
+    if (details.ok === true) {
+      localStorage.setItem(storageKey, this.conn._fragment[key]);
     }
     return this.conn.addLog(
       details.level,
@@ -171,6 +184,10 @@ class BittyJs extends HTMLElement {
       details.messages.join(" "),
       details.extraInfo,
     );
+
+    // TODO: Remove all the comments below
+    // when all fragments stuff have been moved
+    // to string storage.
 
     // if (this.conn.fragment[key] !== undefined) {
     //   details.level = "warn";

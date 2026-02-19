@@ -17,9 +17,10 @@ window.Class697D1 = class {
   }
 
   given_signal_697D1(_, __) {
+    this.setLogLevel("none");
     this.removeFragment(this.#key);
     this.addFragment(this.#key, `<div>ok</div>`);
-    delete this.element[this.#key];
+    delete this.fragment[this.#key];
     this.trigger("test_signal_697D1");
   }
 };

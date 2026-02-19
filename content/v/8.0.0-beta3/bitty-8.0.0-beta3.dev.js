@@ -308,6 +308,12 @@ class BittyJs extends HTMLElement {
     };
     const storage = localStorage.getItem(storageKey);
     if (storage !== null) {
+      if (this.conn.fragment[key] !== undefined) {
+        details.level = "warn";
+        details.messages.push(
+          `Warning: loading fragment '${key}' from storage overwrote an existing fragment 'this.fragment[${key}]'.`,
+        );
+      }
       const payload = JSON.parse(storage).data;
       const template = document.createElement("template");
       template.innerHTML = payload;

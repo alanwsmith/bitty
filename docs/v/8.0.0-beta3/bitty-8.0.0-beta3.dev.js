@@ -135,11 +135,12 @@ class BittyJs extends HTMLElement {
       extraInfo: null,
     };
     if (
-      options.update === false &&
       key !== null & this.conn._fragment[key] !== undefined
     ) {
-      details.level = "warn";
-      details.messages.push(`Warning overwriting an existing key: '${key}'`);
+      if (options.update === undefined || options.update === false) {
+        details.level = "warn";
+        details.messages.push(`Warning overwriting an existing key: '${key}'`);
+      }
     }
     if (key === null) {
       details.ok = false;
@@ -295,6 +296,27 @@ class BittyJs extends HTMLElement {
         error,
       );
     }
+  }
+
+  async _fetchFragment(key, url, options = {}) {
+    const storageKey = `bittyFragment_${key}`;
+    const details = {
+      level: "info",
+      ok: true,
+      key: "fetchFragment",
+      messages: [],
+      extraInfo: null,
+    };
+    try {
+      let response = await fetch(url);
+      if (response.ok === true) {
+        const text = await response.text();
+        console.log(text);
+        this.conn._fragment[key] = text;
+      }
+    } catch (error) {
+    }
+    //const logKey = "fetchElement";
   }
 
   async _fetchJSON(key, url, options = {}) {
@@ -905,6 +927,7 @@ class BittyJs extends HTMLElement {
     this.conn.addElement = this._addElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
+    this.conn.fetchFragment = this._fetchFragment.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);

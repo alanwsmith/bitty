@@ -1,7 +1,7 @@
-window.ClassF9E7D = class {
-  #key = "fragment_signal_F9E7D";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  async test_signal_F9E7D(url, el) {
+  async test_$SIGNAL_NAME(url, el) {
     const result = await this.fetchFragment(this.#key, url);
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = "ok";
@@ -13,13 +13,13 @@ window.ClassF9E7D = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_F9E7D");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_F9E7D(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.createFragment(this.#key, "<div></div>");
     const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-    this.send(url, "test_signal_F9E7D");
+    this.send(url, "test_$SIGNAL_NAME");
   }
 };

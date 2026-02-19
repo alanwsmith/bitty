@@ -314,6 +314,12 @@ class BittyJs extends HTMLElement {
       let response = await fetch(url, fetchOptions);
       if (response.ok === true) {
         const text = await response.text();
+        if (this.conn._fragment[key] !== undefined) {
+          details.level = "warn";
+          details.messages.push(
+            `Warning: fetch of ${url} overwrote existing fragment with key '${key}'`,
+          );
+        }
         this.conn._fragment[key] = text;
       } else {
         details.level = "error";
@@ -324,15 +330,19 @@ class BittyJs extends HTMLElement {
         details.extraInfo = response;
       }
     } catch (error) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
+      );
+      details.extraInfo = response;
     }
-
     if (details.ok === true) {
       localStorage.setItem(
         storageKey,
         JSON.stringify({ data: this.conn._fragment[key] }),
       );
     }
-
     return this.conn.addLog(
       details.level,
       details.key,

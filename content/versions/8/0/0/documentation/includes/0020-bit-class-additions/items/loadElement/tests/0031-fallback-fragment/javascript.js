@@ -17,7 +17,6 @@ window.ClassBC589 = class {
     newEl.innerHTML = "ok";
     newFragment.appendChild(newEl);
     const result = this.loadElement(this.#key, newFragment);
-    console.log(result);
     if (result.level === "warn" && result.ok === true) {
       el.innerHTML = this.element[this.#key].innerHTML;
     }

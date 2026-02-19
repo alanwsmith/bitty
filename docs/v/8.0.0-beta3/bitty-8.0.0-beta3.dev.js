@@ -257,7 +257,6 @@ class BittyJs extends HTMLElement {
         `No elemnet with key '${key}' in storage. The fallback was used.`,
       );
     } else if (fallback instanceof DocumentFragment) {
-      console.log(fallback);
       this.conn.element[key] = fallback.firstChild;
       details.level = "warn";
       details.messages.push(

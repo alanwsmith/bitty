@@ -1,7 +1,7 @@
-window.Class41274 = class {
-  #key = "fragment_signal_41274";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_41274(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const result = this.addFragment();
     if (result.ok === false && result.level === "error") {
       el.innerHTML = "ok";
@@ -13,11 +13,11 @@ window.Class41274 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_41274");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_41274(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.trigger("test_signal_41274");
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

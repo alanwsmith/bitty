@@ -15,7 +15,7 @@ class BittyJs extends HTMLElement {
   }
 
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
-  #_logLevel = "error";
+  #_logLevel = "warn";
 
   async connectedCallback() {
     await this.makeConnection();
@@ -154,7 +154,7 @@ class BittyJs extends HTMLElement {
       details.level,
       details.key,
       details.ok,
-      details.messages.join(""),
+      details.messages.join(" "),
       details.extraInfo,
     );
   }

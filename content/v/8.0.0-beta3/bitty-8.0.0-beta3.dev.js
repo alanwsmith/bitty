@@ -771,9 +771,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _renderFragment(key, subs = null) {
+  _renderFragment(key, subs = {}) {
+    let content = this.conn._fragment[key];
+    for (const needle of Object.keys(subs)) {
+      if (subs[needle] instanceof Array === false) {
+        subs[needle] = [subs[needle]];
+      }
+      content = content.replaceAll(needle, subs[needle].join(""));
+    }
     const template = document.createElement("template");
-    template.innerHTML = this.conn._fragment[key];
+    template.innerHTML = content;
     return template.content;
   }
 

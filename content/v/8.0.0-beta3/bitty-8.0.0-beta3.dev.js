@@ -52,7 +52,6 @@ class BittyJs extends HTMLElement {
         null,
       );
     }
-
     const overwriteLevel = this.conn.element[key] !== undefined
       ? "warn"
       : "info";
@@ -126,7 +125,7 @@ class BittyJs extends HTMLElement {
   // this is temporary to make testing addElement
   // easier until tests are written for
   // this method specifically.
-  _createFragment(key, content = null) {
+  _createFragment(key, content = null, update = false) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
@@ -135,7 +134,9 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    if (key !== null & this.conn._fragment[key] !== undefined) {
+    if (
+      update === false && key !== null & this.conn._fragment[key] !== undefined
+    ) {
       details.level = "warn";
       details.messages.push(`Warning overwriting an existing key: '${key}'`);
     }
@@ -395,7 +396,6 @@ class BittyJs extends HTMLElement {
         `loadFragment() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
       );
     }
-
     return this.conn.addLog(
       details.level,
       "loadFragment",
@@ -762,6 +762,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _updateFragment(key, content) {
+    return this._createFragment(key, content, true);
+  }
+
   /** internal */
   addEventListeners() {
     // Internal bitty listeners
@@ -914,6 +918,8 @@ class BittyJs extends HTMLElement {
     this.conn.saveElement = this._saveElement.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.send = this._send.bind(this);
+    this.conn.updateFragment = this._updateFragment.bind(this);
+    // TODO: Rename these to use underscores.
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);
     this.conn.loadJSON = this.loadJSONBridge.bind(this);

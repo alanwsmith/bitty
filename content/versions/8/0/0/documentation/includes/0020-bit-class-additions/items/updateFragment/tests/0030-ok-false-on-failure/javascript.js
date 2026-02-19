@@ -1,0 +1,25 @@
+window.ClassC09FC = class {
+  #key = "fragment_signal_C09FC";
+
+  test_signal_C09FC(_, el) {
+    const result = this.updateFragment(this.#key, {
+      key: "not a string, element, or document fragment",
+    });
+    if (result.ok === false && result.level === "error") {
+      el.innerHTML = "ok";
+    }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.trigger("given_signal_C09FC");
+  }
+
+  given_signal_C09FC(_, __) {
+    this.setLogLevel("none");
+    this.trigger("test_signal_C09FC");
+  }
+};

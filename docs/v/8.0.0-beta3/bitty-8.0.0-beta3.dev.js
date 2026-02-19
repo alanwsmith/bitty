@@ -292,8 +292,28 @@ class BittyJs extends HTMLElement {
 
   _removeElement(key) {
     const storageKey = `bittyElement_${key}`;
-    localStorage.removeItem(storageKey);
-    delete this.conn.element[key];
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn.element[key] === undefined
+    ) {
+      return this.conn.addLog(
+        "warn",
+        "removeElement",
+        true,
+        `No existing element with '${key}' available to remove.`,
+        null,
+      );
+    } else {
+      localStorage.removeItem(storageKey);
+      delete this.conn.element[key];
+      return this.conn.addLog(
+        "info",
+        "removeElement",
+        true,
+        `Removed element with key '${key}'`,
+        null,
+      );
+    }
   }
 
   _removeJSON(key) {

@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
 
   async test_$SIGNAL_NAME(_, el) {
     const logLevel = this.getLogLevel();
-    if (logLevel === "warn") {
+    if (logLevel === "error") {
       el.innerHTML = "ok";
     }
   }

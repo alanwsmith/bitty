@@ -9,7 +9,7 @@ window.ClassE1B2F = class {
 
   async test_signal_E1B2F(_, el) {
     const logLevel = this.getLogLevel();
-    if (logLevel === "warn") {
+    if (logLevel === "error") {
       el.innerHTML = "ok";
     }
   }

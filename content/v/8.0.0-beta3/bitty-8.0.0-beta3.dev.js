@@ -125,7 +125,7 @@ class BittyJs extends HTMLElement {
   // this is temporary to make testing addElement
   // easier until tests are written for
   // this method specifically.
-  _createFragment(key, content = null, update = false) {
+  _createFragment(key, content = null, options = {}) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
@@ -135,7 +135,8 @@ class BittyJs extends HTMLElement {
       extraInfo: null,
     };
     if (
-      update === false && key !== null & this.conn._fragment[key] !== undefined
+      options.update === false &&
+      key !== null & this.conn._fragment[key] !== undefined
     ) {
       details.level = "warn";
       details.messages.push(`Warning overwriting an existing key: '${key}'`);
@@ -763,7 +764,7 @@ class BittyJs extends HTMLElement {
   }
 
   _updateFragment(key, content) {
-    return this._createFragment(key, content, true);
+    return this._createFragment(key, content, { update: true });
   }
 
   /** internal */

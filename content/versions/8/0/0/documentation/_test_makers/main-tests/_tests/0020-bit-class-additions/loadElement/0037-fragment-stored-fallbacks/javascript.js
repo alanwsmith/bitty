@@ -14,10 +14,9 @@ window.$CLASS_NAME = class {
     const newEl = document.createElement("div");
     newEl.innerHTML = "ok";
     newFragment.appendChild(newEl);
-    const result = this.loadElement("el_$SIGNAL_NAME", newFragment);
-    console.log(result);
-    if (result.level === "warn" && result.ok === true) {
-      el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;
-    }
+    this.loadElement("el_$SIGNAL_NAME", newFragment);
+    delete this.element["el_$SIGNAL_NAME"];
+    this.loadElement("el_$SIGNAL_NAME");
+    el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;
   }
 };

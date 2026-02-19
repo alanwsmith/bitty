@@ -9,7 +9,9 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    this.loadElement("el_$SIGNAL_NAME", `<div>ok</div>`);
+    const newEl = document.createElement("div");
+    newEl.innerHTML = "ok";
+    this.loadElement("el_$SIGNAL_NAME", newEl);
     delete this.element["el_$SIGNAL_NAME"];
     this.loadElement("el_$SIGNAL_NAME");
     el.innerHTML = this.element["el_$SIGNAL_NAME"].innerHTML;

@@ -246,17 +246,25 @@ class BittyJs extends HTMLElement {
       details.ok = false;
     } else if (fallback instanceof Element) {
       this.conn.element[key] = fallback;
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn.element[key].outerHTML }),
+      );
     } else if (fallback instanceof DocumentFragment) {
+      console.log(fallback);
       this.conn.element[key] = fallback.firstChild;
       details.level = "warn";
       details.messages.push(
         "Warning: A document fragment was used as a fallback. Everything beyond the first element was dropped",
       );
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn.element[key].outerHTML }),
+      );
     } else {
       const template = document.createElement("template");
       template.innerHTML = fallback;
       this.conn.element[key] = template.content.firstChild;
-      //console.log(this.conn.element[key].outerHTML);
       localStorage.setItem(
         storageKey,
         JSON.stringify({ data: this.conn.element[key].outerHTML }),

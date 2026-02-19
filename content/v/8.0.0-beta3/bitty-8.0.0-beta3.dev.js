@@ -28,6 +28,8 @@ class BittyJs extends HTMLElement {
   }
 
   _addElement(key, input = null) {
+    // TODO: This is in heavy need of a refactor
+    // to make it look more like `_addFragment()`
     const storageKey = `bittyElement_${key}`;
     if (input === null) {
       return this.conn.addLog(
@@ -38,6 +40,19 @@ class BittyJs extends HTMLElement {
         null,
       );
     }
+    if (
+      typeof input !== "string" && input instanceof Element === false &&
+      input instanceof DocumentFragment === false
+    ) {
+      return this.conn.addLog(
+        "error",
+        "addElement",
+        false,
+        `Attempted to make element with key '${key}' with invalid input (i.e. something other than a String, Element, or Document Fragment).`,
+        null,
+      );
+    }
+
     const overwriteLevel = this.conn.element[key] !== undefined
       ? "warn"
       : "info";
@@ -152,7 +167,6 @@ class BittyJs extends HTMLElement {
 
     if (details.ok === true) {
       const storageKey = `bittyFragment_${key}`;
-      console.log(storageKey);
       localStorage.setItem(
         storageKey,
         JSON.stringify({

@@ -1,8 +1,8 @@
 window.ClassFACB7 = class {
-  #key = "fragment_signal_FACB7";
+  #key = "svg_signal_FACB7";
 
   test_signal_FACB7(input, el) {
-    const result = this.createFragment(this.#key, input);
+    const result = this.createSVG(this.#key, input);
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = "ok";
     }
@@ -19,7 +19,7 @@ window.ClassFACB7 = class {
   <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
     this.setLogLevel("none");
-    this.createFragment(this.#key, input);
+    this.createSVG(this.#key, input);
     this.send(input, "test_signal_FACB7");
   }
 };

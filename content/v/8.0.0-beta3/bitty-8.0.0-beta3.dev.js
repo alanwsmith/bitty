@@ -203,20 +203,11 @@ class BittyJs extends HTMLElement {
       );
     } else if (typeof content === "string") {
       this.conn._fragment[key] = content;
-      details.messages.push(
-        `Stored string as fragment with key ${key}.`,
-      );
     } else if (content instanceof Element) {
       this.conn._fragment[key] = content.outerHTML;
-      details.messages.push(
-        `Stored element as fragment with key ${key}.`,
-      );
     } else if (content instanceof DocumentFragment) {
       this.conn._fragment[key] = [...content.children].map((el) => el.outerHTML)
         .join("");
-      details.messages.push(
-        `Stored documnet fragment with key ${key}.`,
-      );
     } else {
       details.level = "error";
       details.ok = false;
@@ -270,9 +261,6 @@ class BittyJs extends HTMLElement {
       );
     } else if (typeof content === "string") {
       this.conn._svg[key] = content;
-      details.messages.push(
-        `Stored string as SVG with key ${key}.`,
-      );
     } else if (content instanceof SVGSVGElement) {
       this.conn._svg[key] = content.outerHTML;
     } else {

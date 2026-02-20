@@ -1,10 +1,10 @@
 window.Class226E6 = class {
-  #key = "fragment_signal_226E6";
+  #key = "svg_signal_226E6";
 
   test_signal_226E6(_, el) {
-    const result = this.createFragment();
+    const result = this.createSVG();
     if (result.ok === false && result.level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -13,10 +13,6 @@ window.Class226E6 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_226E6");
-  }
-
-  given_signal_226E6(_, __) {
     this.setLogLevel("none");
     this.trigger("test_signal_226E6");
   }

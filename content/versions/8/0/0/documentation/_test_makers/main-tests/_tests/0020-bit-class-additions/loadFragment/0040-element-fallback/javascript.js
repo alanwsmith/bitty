@@ -16,7 +16,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     const newElement = document.createElement("div");
     newElement.innerHTML = "ok";
     this.send(newElement, "test_$SIGNAL_NAME");

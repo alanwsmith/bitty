@@ -12,7 +12,7 @@ window.Class6291C = class {
 
   bittyReady() {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     this.createElement(this.#key, `<div class="test">bug</div>`);
     this.updateElement(this.#key, `<div class="test">ok</div>`);
     delete this._element[this.#key];

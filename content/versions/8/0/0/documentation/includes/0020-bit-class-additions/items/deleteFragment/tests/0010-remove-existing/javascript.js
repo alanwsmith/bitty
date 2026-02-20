@@ -2,7 +2,7 @@ window.Class108CD = class {
   #key = "fragment_signal_108CD";
 
   test_signal_108CD(_, el) {
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     if (this._fragment[this.#key] === undefined) {
       el.innerHTML = "ok";
     }

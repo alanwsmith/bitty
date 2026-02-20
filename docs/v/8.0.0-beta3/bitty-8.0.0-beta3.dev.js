@@ -831,7 +831,7 @@ class BittyJs extends HTMLElement {
   // This is just a stub to help
   // make loadFragment tests.
   // TODO: Cover this with tests.
-  _removeFragment(key) {
+  _deleteFragment(key) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
@@ -1216,6 +1216,7 @@ class BittyJs extends HTMLElement {
     this.conn.createJSON = this._createJSON.bind(this);
     this.conn.createSVG = this._createSVG.bind(this);
     this.conn.deleteElement = this._deleteElement.bind(this);
+    this.conn.deleteFragment = this._deleteFragment.bind(this);
     this.conn.deleteJSON = this._deleteJSON.bind(this);
     this.conn.deleteSVG = this._deleteSVG.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
@@ -1226,7 +1227,6 @@ class BittyJs extends HTMLElement {
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
     this.conn.loadSVG = this._loadSVG.bind(this);
-    this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);
     this.conn.renderSVG = this._renderSVG.bind(this);

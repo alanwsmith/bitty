@@ -16,7 +16,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     const fallbackFragment = document.createDocumentFragment();
     const fallbackElement1 = document.createElement("div");
     const fallbackElement2 = document.createElement("div");

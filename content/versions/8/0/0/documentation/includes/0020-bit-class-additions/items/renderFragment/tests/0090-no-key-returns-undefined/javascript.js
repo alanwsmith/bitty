@@ -18,7 +18,7 @@ window.ClassAD946 = class {
 
   given_signal_AD946(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     this.trigger("test_signal_AD946");
   }
 };

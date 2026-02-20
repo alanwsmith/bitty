@@ -2,7 +2,7 @@ window.ClassE279E = class {
   #key = "fragment_signal_E279E";
 
   test_signal_E279E(_, el) {
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     const result = this.loadFragment(this.#key);
     if (result.ok === false) {
       el.innerHTML = "ok";

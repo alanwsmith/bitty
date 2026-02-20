@@ -15,7 +15,7 @@ window.Class3BC5E = class {
   }
 
   given_signal_3BC5E(_, __) {
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     this.updateFragment(this.#key, `<div>ok</div>`);
     delete this._fragment[this.#key];
     this.trigger("test_signal_3BC5E");

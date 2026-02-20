@@ -18,7 +18,7 @@ window.Class7EF03 = class {
 
   given_signal_7EF03(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     this.trigger("test_signal_7EF03");
   }
 };

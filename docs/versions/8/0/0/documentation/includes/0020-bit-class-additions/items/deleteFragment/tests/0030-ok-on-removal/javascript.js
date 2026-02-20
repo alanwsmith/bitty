@@ -2,7 +2,7 @@ window.Class53DF8 = class {
   #key = "fragment_signal_53DF8";
 
   test_signal_53DF8(_, el) {
-    const result = this.removeFragment(this.#key);
+    const result = this.deleteFragment(this.#key);
     if (result.ok === true) {
       el.innerHTML = "ok";
     }

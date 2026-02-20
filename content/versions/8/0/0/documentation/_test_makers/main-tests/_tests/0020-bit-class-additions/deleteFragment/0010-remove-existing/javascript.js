@@ -2,7 +2,7 @@ window.$CLASS_NAME = class {
   #key = "fragment_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     if (this._fragment[this.#key] === undefined) {
       el.innerHTML = "ok";
     }

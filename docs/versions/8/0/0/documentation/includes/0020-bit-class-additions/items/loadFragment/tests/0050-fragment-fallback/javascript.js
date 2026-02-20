@@ -16,7 +16,7 @@ window.Class119D0 = class {
 
   given_signal_119D0(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     const fallbackFragment = document.createDocumentFragment();
     const fallbackElement1 = document.createElement("div");
     const fallbackElement2 = document.createElement("div");

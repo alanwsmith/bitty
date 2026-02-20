@@ -16,7 +16,7 @@ window.Class5A3FB = class {
 
   given_signal_5A3FB(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     const newElement = document.createElement("div");
     newElement.innerHTML = "ok";
     this.send(newElement, "test_signal_5A3FB");

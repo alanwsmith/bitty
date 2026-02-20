@@ -16,7 +16,7 @@ window.ClassD027C = class {
 
   given_signal_D027C(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.deleteFragment(this.#key);
     this.loadFragment(this.#key, "<div>ok</div>");
     delete this._fragment[this.#key];
     this.trigger("test_signal_D027C");

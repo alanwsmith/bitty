@@ -239,6 +239,62 @@ class BittyJs extends HTMLElement {
     );
   }
 
+  _createSVG(key, content = null, options = {}) {
+    const storageKey = `bittySVG_${key}`;
+    const details = {
+      level: "info",
+      key: "createSVG",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    if (
+      key !== null & this.conn._svg[key] !== undefined
+    ) {
+      if (options.update === undefined || options.update === false) {
+        details.level = "warn";
+        details.messages.push(`Warning overwriting an existing key: '${key}'`);
+      }
+    }
+    if (key === null) {
+      details.ok = false;
+      details.level = "error";
+      details.messages.push(
+        `this.createSVG(key, content) was called without 'key' and 'content' arguments.`,
+      );
+    } else if (content === null) {
+      details.ok = false;
+      details.level = "error";
+      details.messages.push(
+        `this.createSVG(key, content) was called without either a 'content' argument.`,
+      );
+    } else if (typeof content === "string") {
+      this.conn._svg[key] = content;
+      details.messages.push(
+        `Stored string as SVG with key ${key}.`,
+      );
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Attempted to make a frament for key '${key}' out of something other than a String or an SVG.`,
+      );
+    }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._svg[key] }),
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
+  }
+
   // TODO: Remove all the comments below
   // when all fragments stuff have been moved
   // to string storage.
@@ -1051,6 +1107,50 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _renderSVG(key, subs = {}) {
+    if (this.conn._svg[key] === undefined) {
+      this.conn.addLog(
+        "error",
+        "renderSVG",
+        false,
+        `Attempted to render non-existing SVG using key '${key}'`,
+      );
+      return undefined;
+    } else {
+      let content = this.conn._svg[key];
+      for (const needle of Object.keys(subs)) {
+        if (subs[needle] instanceof Array === false) {
+          subs[needle] = [subs[needle]];
+        }
+        if (typeof subs[needle][0] === "string") {
+          content = content.replaceAll(needle, subs[needle].join(""));
+        } else if (
+          subs[needle][0] instanceof Element
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((el) => el.outerHTML).join(""),
+          );
+        } else if (
+          subs[needle][0] instanceof DocumentFragment
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((fragment) => {
+              return [...fragment.children].map((el) => {
+                return el.outerHTML;
+              }).join("");
+            }).join(""),
+          );
+        }
+      }
+      const template = document.createElement("template");
+      template.innerHTML = content.trim();
+      return template.content.querySelector("svg");
+    }
+  }
+
+  // TODO: Deprecate and remove this.
   _renderJSON(key, subs = {}, pretty = true) {
     // TODO at some point for a consistent API:
     // handle arrays of strings, elements/arrays-of-elements,
@@ -1259,6 +1359,7 @@ class BittyJs extends HTMLElement {
     // of this.conn._fragment (with an underscore)
     this.conn.fragment = {};
     this.conn._fragment = {};
+    this.conn._svg = {};
     this.conn.json = {};
     this.conn.svg = {};
     this.conn.logs = [];
@@ -1266,6 +1367,7 @@ class BittyJs extends HTMLElement {
     //    this.conn.addElement = this._addElement.bind(this);
     this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
+    this.conn.createSVG = this._createSVG.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchFragment = this._fetchFragment.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
@@ -1277,6 +1379,7 @@ class BittyJs extends HTMLElement {
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);
+    this.conn.renderSVG = this._renderSVG.bind(this);
     // TODO: Deprecate and remove renderJSON.
     this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.saveElement = this._saveElement.bind(this);

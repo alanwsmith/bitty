@@ -1,11 +1,11 @@
 window.ClassD68A0 = class {
-  #key = "fragment_signal_D68A0";
+  #key = "svg_signal_D68A0";
 
   test_signal_D68A0(_, el) {
     this.logs = [];
-    this.renderFragment(this.#key);
+    this.renderSVG(this.#key);
     if (this.logs[0].ok === false && this.logs[0].level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -14,12 +14,8 @@ window.ClassD68A0 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_D68A0");
-  }
-
-  given_signal_D68A0(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.removeSVG(this.#key);
     this.trigger("test_signal_D68A0");
   }
 };

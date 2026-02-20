@@ -1,24 +1,20 @@
 window.ClassBC589 = class {
   #key = "el_signal_BC589";
 
-  bittyReady() {
-    this.trigger("given_signal_BC589");
+  test_signal_BC589(_, el) {
+    const template = document.createElement("template");
+    template.innerHTML = `<div class="test">ok</div>`;
+    this.loadElement(this.#key, template.content);
+    el.replaceWith(this.renderElement(this.#key));
   }
 
-  given_signal_BC589(_, __) {
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
     this.setLogLevel("none");
     this.removeElement(this.#key);
     this.trigger("test_signal_BC589");
-  }
-
-  test_signal_BC589(_, el) {
-    const newFragment = document.createDocumentFragment();
-    const newEl = document.createElement("div");
-    newEl.innerHTML = "ok";
-    newFragment.appendChild(newEl);
-    const result = this.loadElement(this.#key, newFragment);
-    if (result.level === "warn" && result.ok === true) {
-      el.innerHTML = this.element[this.#key].innerHTML;
-    }
   }
 };

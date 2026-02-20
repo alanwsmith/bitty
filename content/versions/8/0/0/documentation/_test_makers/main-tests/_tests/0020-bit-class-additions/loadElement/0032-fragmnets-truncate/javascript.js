@@ -3,9 +3,13 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     const template = document.createElement("template");
-    template.innerHTML = `<div class="test">ok</div>`;
-    this.loadElement(this.#key, template.content);
-    el.replaceWith(this.renderElement(this.#key));
+    template.innerHTML = `<div></div><div></div>`;
+    const result = this.loadElement(this.#key, template.content);
+    if (result.ok === true && result.level === "warn") {
+      el.innerHTML = "ok";
+    }
+
+    // el.replaceWith(this.renderElement(this.#key));
   }
 
   /////////////////////////////////////////////////

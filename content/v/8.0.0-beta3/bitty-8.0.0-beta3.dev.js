@@ -729,8 +729,13 @@ class BittyJs extends HTMLElement {
     } else if (fallback instanceof Element) {
       this.conn._element[key] = fallback.outerHTML;
     } else if (fallback instanceof DocumentFragment) {
-      this.conn._element[key] = [...fallback.children].map((el) => el.outerHTML)
-        .join("");
+      this.conn._element[key] = fallback.firstChild.outerHTML;
+      if (fallback.children.length > 1) {
+        details.level = "warn";
+        details.messages.push(
+          `Warning. The fallback documnet fragment used to loadElement with key '${key}' contained more than one element at its root. The first one was used. The rest were dropped.`,
+        );
+      }
     } else {
       details.level = "error";
       details.ok = false;

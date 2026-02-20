@@ -11,6 +11,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
+    this.logs = [];
     if (
       this.renderElement(this.#key) === undefined &&
       this.logs[0].level === "error"

@@ -11,6 +11,7 @@ window.Class30B5D = class {
   }
 
   test_signal_30B5D(_, el) {
+    this.logs = [];
     if (
       this.renderElement(this.#key) === undefined &&
       this.logs[0].level === "error"

@@ -14,7 +14,6 @@ window.ClassC24F9 = class {
       "TARGET_C24F9": replacementArray,
     };
     const fragment = this.renderFragment(this.#key, subs);
-    console.log(fragment);
     el.innerHTML = fragment.firstChild.children[3].innerHTML;
   }
 

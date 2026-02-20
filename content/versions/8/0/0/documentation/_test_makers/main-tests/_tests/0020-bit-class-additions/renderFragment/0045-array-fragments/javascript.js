@@ -14,7 +14,6 @@ window.$CLASS_NAME = class {
       "TARGET_$HASH": replacementArray,
     };
     const fragment = this.renderFragment(this.#key, subs);
-    console.log(fragment);
     el.innerHTML = fragment.firstChild.children[3].innerHTML;
   }
 

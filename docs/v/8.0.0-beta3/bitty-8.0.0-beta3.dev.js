@@ -772,36 +772,46 @@ class BittyJs extends HTMLElement {
   }
 
   _renderFragment(key, subs = {}) {
-    let content = this.conn._fragment[key];
-    for (const needle of Object.keys(subs)) {
-      if (subs[needle] instanceof Array === false) {
-        subs[needle] = [subs[needle]];
+    if (this.conn._fragment[key] === undefined) {
+      this.conn.addLog(
+        "error",
+        "renderFragment",
+        false,
+        `Attempted to render non-existing fragment using key '${key}'`,
+      );
+      return undefined;
+    } else {
+      let content = this.conn._fragment[key];
+      for (const needle of Object.keys(subs)) {
+        if (subs[needle] instanceof Array === false) {
+          subs[needle] = [subs[needle]];
+        }
+        if (typeof subs[needle][0] === "string") {
+          content = content.replaceAll(needle, subs[needle].join(""));
+        } else if (
+          subs[needle][0] instanceof Element
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((el) => el.outerHTML).join(""),
+          );
+        } else if (
+          subs[needle][0] instanceof DocumentFragment
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((fragment) => {
+              return [...fragment.children].map((el) => {
+                return el.outerHTML;
+              }).join("");
+            }).join(""),
+          );
+        }
       }
-      if (typeof subs[needle][0] === "string") {
-        content = content.replaceAll(needle, subs[needle].join(""));
-      } else if (
-        subs[needle][0] instanceof Element
-      ) {
-        content = content.replaceAll(
-          needle,
-          subs[needle].map((el) => el.outerHTML).join(""),
-        );
-      } else if (
-        subs[needle][0] instanceof DocumentFragment
-      ) {
-        content = content.replaceAll(
-          needle,
-          subs[needle].map((fragment) => {
-            return [...fragment.children].map((el) => {
-              return el.outerHTML;
-            }).join("");
-          }).join(""),
-        );
-      }
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      return template.content;
     }
-    const template = document.createElement("template");
-    template.innerHTML = content;
-    return template.content;
   }
 
   _renderJSON(key, subs = {}, pretty = true) {

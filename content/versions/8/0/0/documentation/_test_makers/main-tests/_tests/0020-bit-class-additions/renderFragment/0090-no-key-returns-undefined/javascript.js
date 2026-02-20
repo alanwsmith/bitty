@@ -1,7 +1,7 @@
-window.ClassAD946 = class {
-  #key = "fragment_signal_AD946";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_AD946(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const fragment = this.renderFragment(this.#key);
     if (fragment === undefined) {
       el.innerHTML = "ok";
@@ -13,12 +13,12 @@ window.ClassAD946 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_AD946");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_AD946(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.removeFragment(this.#key);
-    this.trigger("test_signal_AD946");
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

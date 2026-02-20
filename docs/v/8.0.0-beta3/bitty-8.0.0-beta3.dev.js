@@ -1311,6 +1311,13 @@ class BittyJs extends HTMLElement {
         if (typeof subs[needle][0] === "string") {
           content = content.replaceAll(needle, subs[needle].join(""));
         } else if (
+          subs[needle][0] instanceof Element
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((el) => el.outerHTML).join(""),
+          );
+        } else if (
           subs[needle][0] instanceof SVGElement
         ) {
           content = content.replaceAll(

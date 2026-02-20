@@ -1,14 +1,14 @@
 window.ClassDC5B2 = class {
-  #key = "fragment_signal_DC5B2";
+  #key = "svg_signal_DC5B2";
 
-  test_signal_DC5B2(_, el) {
-    const template = document.createElement("template");
-    template.innerHTML = "<div></div><div>ok</div>";
-    const subs = {
-      "TARGET_DC5B2": template.content,
-    };
-    const fragment = this.renderFragment(this.#key, subs);
-    //    el.innerHTML = fragment.firstChild.children[1].innerHTML;
+  test_signal_DC5B2(subs, el) {
+    const svg = this.renderSVG(this.#key, subs);
+    el.innerHTML = svg.querySelector("text").textContent;
+    this.send(svg, "view_signal_DC5B2");
+  }
+
+  view_signal_DC5B2(svg, el) {
+    el.replaceWith(svg);
   }
 
   /////////////////////////////////////////////////
@@ -16,12 +16,19 @@ window.ClassDC5B2 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_DC5B2");
-  }
-
-  given_signal_DC5B2(_, __) {
+    const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="green" />
+  TARGET_DC5B2
+</svg>`;
+    const template = document.createElement("template");
+    template.innerHTML =
+      `<text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>`;
+    const subs = {
+      "TARGET_DC5B2": template.content,
+    };
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div>TARGET_DC5B2</div>`);
-    this.trigger("test_signal_DC5B2");
+    this.createSVG(this.#key, input);
+    this.send(subs, "test_signal_DC5B2");
   }
 };

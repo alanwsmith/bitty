@@ -1319,6 +1319,17 @@ class BittyJs extends HTMLElement {
               return item.outerHTML;
             }).join(""),
           );
+        } else if (
+          subs[needle][0] instanceof DocumentFragment
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((fragment) => {
+              return [...fragment.children].map((el) => {
+                return el.outerHTML;
+              }).join("");
+            }).join(""),
+          );
         }
       }
       const template = document.createElement("template");

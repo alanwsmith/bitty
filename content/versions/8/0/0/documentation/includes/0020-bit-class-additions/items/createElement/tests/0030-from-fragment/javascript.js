@@ -13,10 +13,6 @@ window.ClassDA138 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_DA138");
-  }
-
-  given_signal_DA138(_, __) {
     this.trigger("test_signal_DA138");
   }
 };

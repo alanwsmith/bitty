@@ -5,6 +5,7 @@ window.$CLASS_NAME = class {
     this.createElement(this.#key, `<div class="test">ok</div>`);
     delete this._element[this.#key];
     this.loadElement(this.#key);
+    console.log(this._element[this.#key]);
     el.replaceWith(this.renderElement(this.#key));
   }
 
@@ -13,10 +14,6 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
     this.trigger("test_$SIGNAL_NAME");
   }

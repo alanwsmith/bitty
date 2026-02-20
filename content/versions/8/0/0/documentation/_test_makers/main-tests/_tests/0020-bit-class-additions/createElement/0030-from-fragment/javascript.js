@@ -13,10 +13,6 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
     this.trigger("test_$SIGNAL_NAME");
   }
 };

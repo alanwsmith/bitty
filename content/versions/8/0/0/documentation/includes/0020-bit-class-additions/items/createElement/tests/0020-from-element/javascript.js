@@ -14,10 +14,6 @@ window.ClassC54A9 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_C54A9");
-  }
-
-  given_signal_C54A9(_, __) {
     this.trigger("test_signal_C54A9");
   }
 };

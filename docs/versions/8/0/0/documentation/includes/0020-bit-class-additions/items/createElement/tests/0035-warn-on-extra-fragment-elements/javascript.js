@@ -1,7 +1,7 @@
-window.Class148BC = class {
-  #key = "el_signal_148BC";
+window.Class4C991 = class {
+  #key = "el_signal_4C991";
 
-  test_signal_148BC(_, el) {
+  test_signal_4C991(_, el) {
     const template = document.createElement("template");
     template.innerHTML = `<div></div><div></div>`;
     const result = this.createElement(this.#key, template.content);
@@ -15,11 +15,7 @@ window.Class148BC = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_148BC");
-  }
-
-  given_signal_148BC(_, __) {
     this.setLogLevel("none");
-    this.trigger("test_signal_148BC");
+    this.trigger("test_signal_4C991");
   }
 };

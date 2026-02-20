@@ -122,7 +122,7 @@ class BittyJs extends HTMLElement {
   }
 
   _createElement(key, content = null, options = {}) {
-    const storageKey = `bittyFragment_${key}`;
+    const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
       key: "createElement",
@@ -150,7 +150,6 @@ class BittyJs extends HTMLElement {
       );
     }
     if (details.ok === true) {
-      console.log(`HERE5: ` + key + this.conn._element[key]);
       localStorage.setItem(
         storageKey,
         JSON.stringify({ data: this.conn._element[key] }),
@@ -604,7 +603,6 @@ class BittyJs extends HTMLElement {
   // );
 
   _loadElement(key, fallback = null) {
-    console.log("LOADING: " + key);
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
@@ -773,7 +771,6 @@ class BittyJs extends HTMLElement {
       return undefined;
     } else {
       let content = this.conn._element[key];
-      // console.log("HERE^: " + content);
       for (const needle of Object.keys(subs)) {
         if (subs[needle] instanceof Array === false) {
           subs[needle] = [subs[needle]];

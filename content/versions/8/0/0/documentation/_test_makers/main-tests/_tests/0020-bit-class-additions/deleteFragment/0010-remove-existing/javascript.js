@@ -3,7 +3,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     this.removeFragment(this.#key);
-    if (this.fragment[this.#key] === undefined) {
+    if (this._fragment[this.#key] === undefined) {
       el.innerHTML = "ok";
     }
   }

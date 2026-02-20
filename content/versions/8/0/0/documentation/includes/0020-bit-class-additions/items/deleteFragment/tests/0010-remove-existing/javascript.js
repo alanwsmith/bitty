@@ -3,7 +3,7 @@ window.Class108CD = class {
 
   test_signal_108CD(_, el) {
     this.removeFragment(this.#key);
-    if (this.fragment[this.#key] === undefined) {
+    if (this._fragment[this.#key] === undefined) {
       el.innerHTML = "ok";
     }
   }

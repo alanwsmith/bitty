@@ -14,9 +14,12 @@ class BittyJs extends HTMLElement {
     super();
   }
 
+  /** internal */
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
+  /** internal */
   #_logLevel = "warn";
 
+  /** internal */
   async connectedCallback() {
     await this.makeConnection();
     if (this.conn) {
@@ -24,100 +27,6 @@ class BittyJs extends HTMLElement {
       this.ingestJSON();
       this.addEventListeners();
       await this.runBittyReady();
-    }
-  }
-
-  // TODO: Deprecate this in favor of _createElement
-  _addElement(key, input = null) {
-    const storageKey = `bittyElement_${key}`;
-    if (input === null) {
-      return this.conn.addLog(
-        "error",
-        "addElement",
-        false,
-        `Attempted to make element with key ${key} but nothing was passed in to make it.`,
-        null,
-      );
-    }
-    if (
-      typeof input !== "string" && input instanceof Element === false &&
-      input instanceof DocumentFragment === false
-    ) {
-      return this.conn.addLog(
-        "error",
-        "addElement",
-        false,
-        `Attempted to make element with key '${key}' with invalid input (i.e. something other than a String, Element, or Document Fragment).`,
-        null,
-      );
-    }
-    const overwriteLevel = this.conn.element[key] !== undefined
-      ? "warn"
-      : "info";
-    const overwriteNote = this.conn.element[key] !== undefined
-      ? "Warning: overwrite existing key. "
-      : "";
-    if (input instanceof HTMLElement) {
-      this.conn.element[key] = input;
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ data: this.conn.element[key].outerHTML }),
-      );
-      return this.conn.addLog(
-        overwriteLevel,
-        "addElement",
-        true,
-        `${overwriteNote}Added element with key ${key} from element.`,
-        null,
-      );
-    } else if (input instanceof DocumentFragment) {
-      if (input.firstChild === null) {
-        return this.conn.addLog(
-          "error",
-          "addElement",
-          false,
-          `Tried to add element with ${key} from document fragment, but there was nothing in it.`,
-          null,
-        );
-      } else {
-        this.conn.element[key] = input.firstChild;
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.conn.element[key].outerHTML }),
-        );
-        if (input.childElementCount > 1) {
-          return this.conn.addLog(
-            "warn",
-            "addElement",
-            true,
-            `Added the first document fragment element to key '${key}'. The fragment had more than one element in it. The rest were dropped.`,
-            null,
-          );
-        } else {
-          return this.conn.addLog(
-            overwriteLevel,
-            "addElement",
-            true,
-            `${overwriteNote}Added element with key ${key} from document fragment.`,
-            null,
-          );
-        }
-      }
-    } else {
-      const tmp = document.createElement("template");
-      tmp.innerHTML = input;
-      this.conn.element[key] = tmp.content.firstChild;
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ data: this.conn.element[key].outerHTML }),
-      );
-      return this.conn.addLog(
-        overwriteLevel,
-        "addElement",
-        true,
-        `${overwriteNote}Added element with key ${key} from string.`,
-        null,
-      );
     }
   }
 
@@ -1196,7 +1105,7 @@ class BittyJs extends HTMLElement {
           `No fragment with key '${key}' exists. Nothing to remove.`,
         );
     } else {
-      delete this.conn.fragment[key];
+      delete this.conn._fragment[key];
       localStorage.removeItem(storageKey);
       details.messages.push(
         `Fragment with key '${key}' was removed`,
@@ -1664,20 +1573,12 @@ class BittyJs extends HTMLElement {
 
   createBridges() {
     this.conn.logLevel = 2;
-    // TODO: Deprecate this.conn.element in
-    // favor of this.conn._element. (with an underscore)
-    this.conn.element = {};
     this.conn._element = {};
-    // TODO: Deprecate this.conn.fragment in favor
-    // of this.conn._fragment (with an underscore)
-    this.conn.fragment = {};
     this.conn._fragment = {};
     this.conn._svg = {};
     this.conn.json = {};
     this.conn.svg = {};
     this.conn.logs = [];
-    // TODO: Deprecate and remove addElemnet in favor of createElement.
-    //    this.conn.addElement = this._addElement.bind(this);
     this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.createJSON = this._createJSON.bind(this);

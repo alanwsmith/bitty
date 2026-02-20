@@ -13,10 +13,6 @@ window.ClassD2EBD = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_D2EBD");
-  }
-
-  given_signal_D2EBD(_, __) {
     this.trigger("test_signal_D2EBD");
   }
 };

@@ -12,7 +12,7 @@ window.$CLASS_NAME = class {
 
   bittyReady() {
     this.deleteElement(this.#key);
-    this.addElement(this.#key, `<div class="test">ok</div>`);
+    this.createElement(this.#key, `<div class="test">ok</div>`);
     delete this.element[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }

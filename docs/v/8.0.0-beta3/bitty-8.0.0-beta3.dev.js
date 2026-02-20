@@ -948,6 +948,32 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _deleteSVG(key) {
+    const storageKey = `bittySVG_${key}`;
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn._svg[key] === undefined
+    ) {
+      return this.conn.addLog(
+        "warn",
+        "deleteSVG",
+        true,
+        `No existing SVG with '${key}' available to remove.`,
+        null,
+      );
+    } else {
+      localStorage.removeItem(storageKey);
+      delete this.conn._svg[key];
+      return this.conn.addLog(
+        "info",
+        "deleteSVG",
+        true,
+        `Removed SVG with key '${key}'`,
+        null,
+      );
+    }
+  }
+
   // This is just a stub to help
   // make loadFragment tests.
   // TODO: Cover this with tests.
@@ -1026,7 +1052,7 @@ class BittyJs extends HTMLElement {
       delete this.conn._svg[key];
       localStorage.removeItem(storageKey);
       details.messages.push(
-        `SVG with key '${key}' was removed`,
+        `SVG with key '${key}' was deleted`,
       );
     }
     return this.conn.addLog(
@@ -1447,6 +1473,7 @@ class BittyJs extends HTMLElement {
     this.conn.loadFragment = this._loadFragment.bind(this);
     this.conn.loadSVG = this._loadSVG.bind(this);
     this.conn.deleteElement = this._deleteElement.bind(this);
+    this.conn.deleteSVG = this._deleteSVG.bind(this);
     this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.removeSVG = this._removeSVG.bind(this);

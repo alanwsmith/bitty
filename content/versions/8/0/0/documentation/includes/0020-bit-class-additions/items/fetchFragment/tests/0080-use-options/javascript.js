@@ -18,10 +18,6 @@ window.Class6F792 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_6F792");
-  }
-
-  given_signal_6F792(_, __) {
     const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
     this.send(url, "test_signal_6F792");
   }

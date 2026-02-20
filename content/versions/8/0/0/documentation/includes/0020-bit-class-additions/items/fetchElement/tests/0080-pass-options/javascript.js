@@ -8,11 +8,10 @@ window.Class7572B = class {
         "x-bitty-test": "data_signal_7572B",
       },
     };
-    // await this.fetchJSON("data_signal_7572B", this.#url, options);
+    // await this.fetchElement(key, url, fallback, options);
     //
     // NOTE: Confirming options must be done manually.
     // This test is set to always pass as a result.
-    el.innerHTML = "ok";
   }
 
   /////////////////////////////////////////////////

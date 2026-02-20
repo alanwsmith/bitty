@@ -6,11 +6,10 @@ window.Class6B398 = class {
     const options = {
       method: "POST",
     };
-    // await this.fetchJSON("data_signal_6B398", this.#url, options);
+    // await this.fetchElement(key, url, fallback, options);
     //
     // NOTE: Confirming options must be done manually.
     // This test is set to always pass as a result.
-    el.innerHTML = "ok";
   }
 
   /////////////////////////////////////////////////

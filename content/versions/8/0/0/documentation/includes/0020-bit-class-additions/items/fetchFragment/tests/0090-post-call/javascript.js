@@ -12,7 +12,7 @@ window.ClassBC346 = class {
     // POST Requests. This is the line that
     // would make one:
     //
-    // await this.fetchFragment(this.#key, url, null, options);
+    // await this.fetchFragment(key, url, null, options);
     //
     // Since the server would reject it, it's
     // not tested here.
@@ -23,10 +23,6 @@ window.ClassBC346 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_BC346");
-  }
-
-  given_signal_BC346(_, __) {
     this.trigger("test_signal_BC346");
   }
 };

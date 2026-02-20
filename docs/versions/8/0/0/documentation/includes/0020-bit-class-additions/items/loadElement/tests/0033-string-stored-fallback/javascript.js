@@ -13,7 +13,7 @@ window.Class9D350 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.removeElement(this.#key);
+    this.deleteElement(this.#key);
     this.trigger("test_signal_9D350");
   }
 };

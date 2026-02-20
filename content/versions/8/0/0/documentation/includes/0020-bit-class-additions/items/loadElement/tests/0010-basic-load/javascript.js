@@ -11,7 +11,7 @@ window.Class23191 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.removeElement(this.#key);
+    this.deleteElement(this.#key);
     this.addElement(this.#key, `<div class="test">ok</div>`);
     delete this.element[this.#key];
     this.trigger("test_signal_23191");

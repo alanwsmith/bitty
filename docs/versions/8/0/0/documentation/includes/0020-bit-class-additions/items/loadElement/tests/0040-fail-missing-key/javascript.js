@@ -7,7 +7,7 @@ window.Class94D78 = class {
 
   given_signal_94D78(_, __) {
     this.setLogLevel("none");
-    this.removeElement("el_signal_94D78");
+    this.deleteElement("el_signal_94D78");
     this.trigger("test_signal_94D78");
   }
 

@@ -7,7 +7,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeElement("el_$SIGNAL_NAME");
+    this.deleteElement("el_$SIGNAL_NAME");
     this.trigger("test_$SIGNAL_NAME");
   }
 

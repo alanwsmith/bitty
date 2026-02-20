@@ -825,25 +825,25 @@ class BittyJs extends HTMLElement {
   //   null,
   // );
 
-  _removeElement(key) {
+  _deleteElement(key) {
     const storageKey = `bittyElement_${key}`;
     if (
       localStorage.getItem(storageKey) === null &&
-      this.conn.element[key] === undefined
+      this.conn._element[key] === undefined
     ) {
       return this.conn.addLog(
         "warn",
-        "removeElement",
+        "deleteElement",
         true,
         `No existing element with '${key}' available to remove.`,
         null,
       );
     } else {
       localStorage.removeItem(storageKey);
-      delete this.conn.element[key];
+      delete this.conn._element[key];
       return this.conn.addLog(
         "info",
-        "removeElement",
+        "deleteElement",
         true,
         `Removed element with key '${key}'`,
         null,
@@ -1256,7 +1256,8 @@ class BittyJs extends HTMLElement {
     this.conn.json = {};
     this.conn.svg = {};
     this.conn.logs = [];
-    this.conn.addElement = this._addElement.bind(this);
+    // TODO: Deprecate and remove addElemnet in favor of createElement.
+    //    this.conn.addElement = this._addElement.bind(this);
     this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
@@ -1265,7 +1266,7 @@ class BittyJs extends HTMLElement {
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
-    this.conn.removeElement = this._removeElement.bind(this);
+    this.conn.deleteElement = this._deleteElement.bind(this);
     this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);

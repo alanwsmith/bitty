@@ -11,7 +11,7 @@ window.ClassB86EE = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.removeElement(this.#key);
+    this.deleteElement(this.#key);
     this.trigger("test_signal_B86EE");
   }
 };

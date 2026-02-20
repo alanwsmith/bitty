@@ -13,7 +13,7 @@ window.ClassFFDD5 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.removeElement(this.#key);
+    this.deleteElement(this.#key);
     this.setLogLevel("none");
     this.createElement(this.#key, `<div>ok</div>`);
     this.trigger("test_signal_FFDD5");

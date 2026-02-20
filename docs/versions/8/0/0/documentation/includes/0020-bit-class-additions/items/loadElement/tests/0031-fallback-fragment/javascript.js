@@ -14,7 +14,7 @@ window.ClassBC589 = class {
 
   bittyReady() {
     this.setLogLevel("none");
-    this.removeElement(this.#key);
+    this.deleteElement(this.#key);
     this.trigger("test_signal_BC589");
   }
 };

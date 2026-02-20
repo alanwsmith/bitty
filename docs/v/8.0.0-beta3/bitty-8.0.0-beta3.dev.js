@@ -394,7 +394,7 @@ class BittyJs extends HTMLElement {
   //   );
   // }
 
-  async _fetchElement(key, url, options = {}) {
+  async _fetchElement(key, url, fallback = null, options = {}) {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
@@ -1647,7 +1647,6 @@ class BittyJs extends HTMLElement {
     const log = new BittyLog(level, type, ok, message, extraInfo);
     this.conn.logs.push(log);
     //    console.log(`${level} - ${this.#_logLevel}`);
-
     if (
       this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
     ) {

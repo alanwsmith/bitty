@@ -1,16 +1,20 @@
 window.ClassE097F = class {
-  bittyReady() {
-    this.trigger("given_signal_E097F");
-  }
-
-  given_signal_E097F(_, __) {
-    this.json["data_signal_E097F"] = JSON.parse(`{ "status": "ok" }`);
-    this.trigger("test_signal_E097F");
-  }
+  #key = "json_signal_E097F";
 
   test_signal_E097F(_, el) {
-    this.saveJSON("data_signal_E097F");
-    const verify = JSON.parse(localStorage.getItem("data_signal_E097F"));
-    el.innerHTML = verify.data.status;
+    this.createJSON(this.#key, { status: "bug" });
+    this.json[this.#key].status = "ok";
+    this.saveJSON(this.#key);
+    delete this.json[this.#key];
+    this.loadJSON(this.#key);
+    el.innerHTML = this.json[this.#key].status;
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.trigger("test_signal_E097F");
   }
 };

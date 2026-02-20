@@ -1,17 +1,21 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
-    this.json["data_$SIGNAL_NAME"] = JSON.parse(`{ "status": "ok" }`);
-    this.trigger("test_$SIGNAL_NAME");
-  }
+  #key = "json_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.saveJSON("data_$SIGNAL_NAME");
+    this.createJSON(this.#key, { status: "bug" });
+    this.json[this.#key].status = "ok";
+    this.saveJSON(this.#key);
+    const result = this.saveJSON(this.#key);
     if (result.ok === true) {
       el.innerHTML = "ok";
     }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

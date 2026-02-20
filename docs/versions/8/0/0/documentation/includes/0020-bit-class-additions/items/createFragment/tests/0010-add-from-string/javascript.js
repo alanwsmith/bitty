@@ -11,10 +11,6 @@ window.Class2C4FE = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_2C4FE");
-  }
-
-  given_signal_2C4FE(_, __) {
     this.trigger("test_signal_2C4FE");
   }
 };

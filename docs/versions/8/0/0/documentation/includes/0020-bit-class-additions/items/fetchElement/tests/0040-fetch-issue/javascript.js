@@ -3,7 +3,7 @@ window.ClassEFEFA = class {
     const url = "/url-that-causes-a-404";
     const result = await this.fetchElement("data_signal_EFEFA", url);
     if (result.level === "error" && result.ok === false) {
-      el.innerHTML = "ok";
+      //el.innerHTML = "ok";
     }
   }
 };

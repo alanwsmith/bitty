@@ -16,6 +16,6 @@ window.Class1B0DC = class {
     //
     // NOTE: Confirming options must be done manually.
     // This test is set to always pass as a result.
-    el.innerHTML = "ok";
+    //el.innerHTML = "ok";
   }
 };

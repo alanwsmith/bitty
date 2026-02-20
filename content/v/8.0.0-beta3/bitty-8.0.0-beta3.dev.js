@@ -286,62 +286,138 @@ class BittyJs extends HTMLElement {
   // }
 
   async _fetchElement(key, url, options = {}) {
-    let response = await fetch(url, options);
-    const logKey = "fetchElement";
-    const result = { level: "info" };
+    const storageKey = `bittyElement_${key}`;
+    const details = {
+      level: "info",
+      key: "fetchElement",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
     try {
+      const fetchOptions = options.fetchOptions !== undefined
+        ? options.fetchOptions
+        : {};
+      let response = await fetch(url, fetchOptions);
       if (response.ok === true) {
-        const body = await response.text();
-        if (this.conn.element[key] !== undefined) {
-          result.level = "warn";
-        }
-        const tmp = document.createElement("template");
-        tmp.innerHTML = body;
-        this.conn.element[key] = tmp.content.firstChild;
-        localStorage.setItem(key, JSON.stringify({ data: body }));
-        if (tmp.content.childElementCount > 1) {
-          return this.conn.addLog(
-            "warn",
-            logKey,
-            true,
-            `Fetched Element from '${url}' and stored in key '${key}'. Warning: the incoming content was a document fragment with more than one element. Only the first one was ingested. The rest were ignored.`,
-            null,
-          );
-        } else {
-          return this.conn.addLog(
-            result.level,
-            logKey,
-            true,
-            `Fetched Element from '${url}' and stored in key '${key}'.`,
-            null,
+        const text = await response.text();
+        if (this.conn._element[key] !== undefined) {
+          details.level = "warn";
+          details.messages.push(
+            `Warning: fetch of ${url} overwrote existing element with key '${key}'`,
           );
         }
+        this.conn._element[key] = text;
       } else {
-        console.error(response);
-        return this.conn.addLog(
-          "error",
-          logKey,
-          false,
-          `Error fetching JSON from '${url}' for key '${key}'`,
-          {
-            redirect: response.redirect,
-            status: response.status,
-            statusText: response.statusText,
-            type: response.type,
-            url: response.url,
-          },
-        );
+        if (typeof fallback === "string") {
+          this.conn._element[key] = fallback;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
+        } else if (fallback instanceof Element) {
+          this.conn._element[key] = fallback.outerHTML;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
+        } else if (fallback instanceof DocumentFragment) {
+          this.conn._element[key] = [...fallback.children].map((el) => {
+            return el.outerHTML;
+          }).join("");
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
+        } else {
+          details.level = "error";
+          details.ok = false;
+          details.messages.push(
+            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+          );
+          details.extraInfo = response;
+        }
       }
     } catch (error) {
-      return this.conn.addLog(
-        "error",
-        logKey,
-        false,
-        `Error fetching JSON from '${url}' for key '${key}'`,
-        error,
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
       );
     }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._element[key] }),
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
   }
+
+  // let response = await fetch(url, options);
+  // const logKey = "fetchElement";
+  // const result = { level: "info" };
+  // try {
+  //   if (response.ok === true) {
+  //     const body = await response.text();
+  //     if (this.conn.element[key] !== undefined) {
+  //       result.level = "warn";
+  //     }
+  //     const tmp = document.createElement("template");
+  //     tmp.innerHTML = body;
+  //     this.conn.element[key] = tmp.content.firstChild;
+  //     localStorage.setItem(key, JSON.stringify({ data: body }));
+  //     if (tmp.content.childElementCount > 1) {
+  //       return this.conn.addLog(
+  //         "warn",
+  //         logKey,
+  //         true,
+  //         `Fetched Element from '${url}' and stored in key '${key}'. Warning: the incoming content was a document fragment with more than one element. Only the first one was ingested. The rest were ignored.`,
+  //         null,
+  //       );
+  //     } else {
+  //       return this.conn.addLog(
+  //         result.level,
+  //         logKey,
+  //         true,
+  //         `Fetched Element from '${url}' and stored in key '${key}'.`,
+  //         null,
+  //       );
+  //     }
+  //   } else {
+  //     console.error(response);
+  //     return this.conn.addLog(
+  //       "error",
+  //       logKey,
+  //       false,
+  //       `Error fetching JSON from '${url}' for key '${key}'`,
+  //       {
+  //         redirect: response.redirect,
+  //         status: response.status,
+  //         statusText: response.statusText,
+  //         type: response.type,
+  //         url: response.url,
+  //       },
+  //     );
+  //   }
+  // } catch (error) {
+  //   return this.conn.addLog(
+  //     "error",
+  //     logKey,
+  //     false,
+  //     `Error fetching JSON from '${url}' for key '${key}'`,
+  //     error,
+  //   );
+  // }
 
   async _fetchFragment(key, url, fallback = null, options = {}) {
     const storageKey = `bittyFragment_${key}`;

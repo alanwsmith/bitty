@@ -11,7 +11,7 @@ window.$CLASS_NAME = class {
     const url = "/[@ file.parent @]/payloads/valid-element.xml";
     const result = await this.fetchElement("data_$SIGNAL_NAME", url);
     if (result.ok === true) {
-      el.innerHTML = "ok";
+      //el.innerHTML = "ok";
     }
   }
 };

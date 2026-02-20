@@ -13,6 +13,6 @@ window.$CLASS_NAME = class {
     const storage = JSON.parse(localStorage.getItem("el_$SIGNAL_NAME")).data;
     const tmp = document.createElement("template");
     tmp.innerHTML = storage;
-    el.innerHTML = tmp.content.firstChild.innerHTML;
+    //el.innerHTML = tmp.content.firstChild.innerHTML;
   }
 };

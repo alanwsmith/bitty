@@ -15,7 +15,7 @@ window.$CLASS_NAME = class {
       result.level === "warn" &&
       this.element["data_$SIGNAL_NAME"].innerHTML === "first"
     ) {
-      el.innerHTML = "ok";
+      //el.innerHTML = "ok";
     }
   }
 };

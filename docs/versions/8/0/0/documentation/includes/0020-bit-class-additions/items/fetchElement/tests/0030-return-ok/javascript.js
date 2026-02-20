@@ -11,7 +11,7 @@ window.Class0938C = class {
     const url = "/[@ file.parent @]/payloads/valid-element.xml";
     const result = await this.fetchElement("data_signal_0938C", url);
     if (result.ok === true) {
-      el.innerHTML = "ok";
+      //el.innerHTML = "ok";
     }
   }
 };

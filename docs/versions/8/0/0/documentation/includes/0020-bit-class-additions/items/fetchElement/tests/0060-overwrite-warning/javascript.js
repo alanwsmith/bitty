@@ -13,7 +13,7 @@ window.Class97CD8 = class {
     const url = "/[@ file.parent @]/payloads/valid-element.xml";
     const result = await this.fetchElement("el_signal_97CD8", url);
     if (result.level === "warn" && result.ok === true) {
-      el.innerHTML = "ok";
+      //      el.innerHTML = "ok";
     }
   }
 };

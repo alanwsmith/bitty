@@ -15,7 +15,7 @@ window.ClassE0510 = class {
       result.level === "warn" &&
       this.element["data_signal_E0510"].innerHTML === "first"
     ) {
-      el.innerHTML = "ok";
+      //el.innerHTML = "ok";
     }
   }
 };

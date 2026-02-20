@@ -23,7 +23,7 @@ window.ClassD4DA1 = class {
   <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.createSVG(this.#key, input);
     delete this._svg[this.#key];
     this.trigger("test_signal_D4DA1");

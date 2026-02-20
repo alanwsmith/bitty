@@ -15,7 +15,7 @@ window.ClassD68A0 = class {
 
   bittyReady() {
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.trigger("test_signal_D68A0");
   }
 };

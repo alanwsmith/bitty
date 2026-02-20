@@ -18,7 +18,7 @@ window.ClassDB540 = class {
 
   given_signal_DB540(_, __) {
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.trigger("test_signal_DB540");
   }
 };

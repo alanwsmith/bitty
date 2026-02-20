@@ -30,7 +30,7 @@ window.$CLASS_NAME = class {
     template.innerHTML = input;
     const fallback = template.content.querySelector("svg");
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.send(fallback, "test_$SIGNAL_NAME");
   }
 };

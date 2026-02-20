@@ -30,7 +30,7 @@ window.ClassCEDB1 = class {
     template.innerHTML = input;
     const fallback = template.content.querySelector("svg");
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.send(fallback, "test_signal_CEDB1");
   }
 };

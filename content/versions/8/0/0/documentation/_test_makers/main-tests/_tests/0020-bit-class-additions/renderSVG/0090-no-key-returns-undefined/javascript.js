@@ -14,7 +14,7 @@ window.$CLASS_NAME = class {
 
   bittyReady() {
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -14,7 +14,7 @@ window.Class01959 = class {
 
   bittyReady() {
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.trigger("test_signal_01959");
   }
 };

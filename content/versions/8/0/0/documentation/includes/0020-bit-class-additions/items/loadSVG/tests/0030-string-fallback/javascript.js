@@ -27,7 +27,7 @@ window.Class655D9 = class {
   <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
     this.setLogLevel("none");
-    this.removeSVG(this.#key);
+    this.deleteSVG(this.#key);
     this.send(fallback, "test_signal_655D9");
   }
 };

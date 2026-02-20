@@ -602,6 +602,41 @@ class BittyJs extends HTMLElement {
     );
   }
 
+  async _fetchTemplates(url, options = {}) {
+    const details = {
+      level: "info",
+      key: "fetchTemplates",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    try {
+      const fetchOptions = options.fetchOptions !== undefined
+        ? options.fetchOptions
+        : {};
+      let response = await fetch(url, fetchOptions);
+      if (response.ok === true) {
+        try {
+          const text = await response.text();
+          const template = document.createElement("template");
+          template.innerHTML = text;
+          this.ingestScriptTags(template.content);
+        } catch (e2) {
+          // todo
+        }
+      }
+    } catch (error) {
+      // todo
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
+  }
+
   _getLogLevel() {
     return this.#_logLevel;
   }
@@ -1241,6 +1276,7 @@ class BittyJs extends HTMLElement {
     this.conn.fetchFragment = this._fetchFragment.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
     this.conn.fetchSVG = this._fetchSVG.bind(this);
+    this.conn.fetchTemplates = this._fetchTemplates.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
@@ -1281,7 +1317,6 @@ class BittyJs extends HTMLElement {
           );
         }
       }
-
       if (el.type === "text/html" && el.dataset.key !== undefined) {
         const template = document.createElement("template");
         template.innerHTML = el.text.trim();
@@ -1291,8 +1326,7 @@ class BittyJs extends HTMLElement {
           this.conn.createElement(el.dataset.key, el.text.trim());
         }
       }
-
-      if (el.type === "image/svg+xml" && el.dataset.key !== undefined) {
+      if (el.type === "image/svg" && el.dataset.key !== undefined) {
         this.conn.createSVG(el.dataset.key, el.text.trim());
       }
     });

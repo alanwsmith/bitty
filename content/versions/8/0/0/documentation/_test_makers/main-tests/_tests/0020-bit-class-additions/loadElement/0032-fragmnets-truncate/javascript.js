@@ -8,8 +8,6 @@ window.$CLASS_NAME = class {
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = "ok";
     }
-
-    // el.replaceWith(this.renderElement(this.#key));
   }
 
   /////////////////////////////////////////////////

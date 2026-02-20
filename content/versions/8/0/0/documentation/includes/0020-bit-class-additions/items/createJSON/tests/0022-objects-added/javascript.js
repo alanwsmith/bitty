@@ -3,7 +3,7 @@ window.ClassC2FB6 = class {
 
   test_signal_C2FB6(_, el) {
     const jsObject = { "status": "ok" };
-    this.createJSON(this.#key, jsonObject);
+    this.createJSON(this.#key, jsObject);
     el.innerHTML = this.json[this.#key].status;
   }
 

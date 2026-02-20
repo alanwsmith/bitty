@@ -1,12 +1,24 @@
 window.Class81AA3 = class {
   #key = "el_signal_81AA3";
 
-  bittyReady() {
-    this.trigger("given_signal_81AA3");
+  test_signal_81AA3(_, el) {
+    const subs = {
+      "TARGET_81AA3": [
+        this.renderFragment(`replacement1_81AA3`),
+        this.renderFragment(`replacement2_81AA3`),
+      ],
+    };
+    el.replaceWith(
+      this.renderElement(this.#key, subs),
+    );
   }
 
-  given_signal_81AA3(_, __) {
-    this.addElement(this.#key, `<div>TARGET_81AA3</div>`);
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.createElement(this.#key, `<div>TARGET_81AA3</div>`);
     this.createFragment(
       `replacement1_81AA3`,
       `<div class="test">ok</div><div class="test">ok</div>`,
@@ -16,17 +28,5 @@ window.Class81AA3 = class {
       `<div class="test">ok</div><div class="test">ok</div>`,
     );
     this.trigger("test_signal_81AA3");
-  }
-
-  test_signal_81AA3(_, el) {
-    const subs = {
-      "TARGET_81AA3": [
-        this.fragment[`replacement1_81AA3`],
-        this.fragment[`replacement2_81AA3`],
-      ],
-    };
-    el.replaceWith(
-      this.renderElement(this.#key, subs),
-    );
   }
 };

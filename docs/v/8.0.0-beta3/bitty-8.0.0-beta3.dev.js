@@ -24,8 +24,8 @@ class BittyJs extends HTMLElement {
     await this.makeConnection();
     if (this.conn) {
       this.createBridges();
-      this.ingestJSON();
       this.addEventListeners();
+      this.ingestScriptTags(document);
       await this.runBittyReady();
     }
   }
@@ -1248,12 +1248,8 @@ class BittyJs extends HTMLElement {
     return this.#_logLevels.indexOf(level.toLowerCase());
   }
 
-  // TODO: make a single ingest that takes an DOM tree
-  // and parses out from it. That way you can parse
-  // the page as well as using the same function for
-  // loading fetched templates.
-  ingestJSON() {
-    document.querySelectorAll("script").forEach((el) => {
+  ingestScriptTags(root) {
+    root.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {
         try {
           this.conn.json[el.dataset.key] = JSON.parse(el.text.trim());
@@ -1265,6 +1261,16 @@ class BittyJs extends HTMLElement {
             `Failed to parse JSON from a script tag.`,
             error,
           );
+        }
+      }
+
+      if (el.type === "text/html" && el.dataset.key !== undefined) {
+        const template = document.createElement("template");
+        template.innerHTML = el.text.trim();
+        if (template.content.childElementCount > 1) {
+          this.conn.createFragment(el.dataset.key, el.text.trim());
+        } else {
+          this.conn.createElement(el.dataset.key, el.text.trim());
         }
       }
     });

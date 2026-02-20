@@ -13,9 +13,4 @@ window.ClassC0D64 = class {
   /////////////////////////////////////////////////
   // Test Setup
   /////////////////////////////////////////////////
-
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_signal_C0D64");
-  }
 };

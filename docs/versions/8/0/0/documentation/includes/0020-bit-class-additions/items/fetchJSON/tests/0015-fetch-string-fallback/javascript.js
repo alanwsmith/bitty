@@ -13,9 +13,4 @@ window.Class5A151 = class {
   /////////////////////////////////////////////////
   // Test Setup
   /////////////////////////////////////////////////
-
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_signal_5A151");
-  }
 };

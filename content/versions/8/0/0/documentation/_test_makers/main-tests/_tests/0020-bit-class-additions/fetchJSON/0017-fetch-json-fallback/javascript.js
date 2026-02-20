@@ -13,9 +13,4 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
   // Test Setup
   /////////////////////////////////////////////////
-
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_$SIGNAL_NAME");
-  }
 };

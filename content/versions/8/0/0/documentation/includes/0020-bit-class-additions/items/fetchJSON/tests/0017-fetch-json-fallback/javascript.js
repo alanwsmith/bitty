@@ -13,9 +13,4 @@ window.Class4F5DF = class {
   /////////////////////////////////////////////////
   // Test Setup
   /////////////////////////////////////////////////
-
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_signal_4F5DF");
-  }
 };

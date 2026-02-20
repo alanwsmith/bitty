@@ -1,12 +1,17 @@
 window.ClassF7B2A = class {
-  #key = "fragment_signal_F7B2A";
+  #key = "svg_signal_F7B2A";
 
   test_signal_F7B2A(_, el) {
     const subs = {
       "TARGET_F7B2A": ["o", "k"],
     };
-    const fragment = this.renderFragment(this.#key, subs);
-    //    el.innerHTML = fragment.children[1].innerHTML;
+    const svg = this.renderSVG(this.#key, subs);
+    el.innerHTML = svg.querySelector("text").innerHTML;
+    this.send(svg, "view_signal_F7B2A");
+  }
+
+  view_signal_F7B2A(svg, el) {
+    el.replaceWith(svg);
   }
 
   /////////////////////////////////////////////////
@@ -14,12 +19,13 @@ window.ClassF7B2A = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_F7B2A");
-  }
-
-  given_signal_F7B2A(_, __) {
+    const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="green" />
+  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_F7B2A</text>
+</svg>`;
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div></div><div>TARGET_F7B2A</div>`);
+    this.createSVG(this.#key, input);
     this.trigger("test_signal_F7B2A");
   }
 };

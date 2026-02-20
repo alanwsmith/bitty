@@ -1,12 +1,17 @@
 window.$CLASS_NAME = class {
-  #key = "fragment_$SIGNAL_NAME";
+  #key = "svg_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
     const subs = {
       "TARGET_$HASH": ["o", "k"],
     };
-    const fragment = this.renderFragment(this.#key, subs);
-    //    el.innerHTML = fragment.children[1].innerHTML;
+    const svg = this.renderSVG(this.#key, subs);
+    el.innerHTML = svg.querySelector("text").innerHTML;
+    this.send(svg, "view_$SIGNAL_NAME");
+  }
+
+  view_$SIGNAL_NAME(svg, el) {
+    el.replaceWith(svg);
   }
 
   /////////////////////////////////////////////////
@@ -14,12 +19,13 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
+    const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="green" />
+  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_$HASH</text>
+</svg>`;
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div></div><div>TARGET_$HASH</div>`);
+    this.createSVG(this.#key, input);
     this.trigger("test_$SIGNAL_NAME");
   }
 };

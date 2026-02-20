@@ -886,38 +886,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // _removeSVG(key) {
-  //   const storageKey = `bittySVG_${key}`;
-  //   const details = {
-  //     level: "info",
-  //     ok: true,
-  //     key: "removeSVG",
-  //     messages: [],
-  //   };
-  //   if (
-  //     localStorage.getItem(storageKey) === null &&
-  //     this.conn._svg[key] === undefined
-  //   ) {
-  //     details.level = "warn",
-  //       details.messages.push(
-  //         `No SVG with key '${key}' exists. Nothing to remove.`,
-  //       );
-  //   } else {
-  //     delete this.conn._svg[key];
-  //     localStorage.removeItem(storageKey);
-  //     details.messages.push(
-  //       `SVG with key '${key}' was deleted`,
-  //     );
-  //   }
-  //   return this.conn.addLog(
-  //     details.level,
-  //     details.key,
-  //     details.ok,
-  //     details.messages.join(" "),
-  //     null,
-  //   );
-  // }
-
   _renderElement(key, subs = {}) {
     if (this.conn._element[key] === undefined) {
       this.conn.addLog(
@@ -960,60 +928,6 @@ class BittyJs extends HTMLElement {
       return template.content.firstChild;
     }
   }
-
-  // if (this.conn.element[key] === undefined) {
-  //   this.conn.addLog(
-  //     "error",
-  //     "renderElement",
-  //     false,
-  //     `Attempted to render non-existing element with key '${key}'`,
-  //   );
-  // }
-  // if (subs === null) {
-  //   return this.conn.element[key];
-  // } else {
-  //   let content = this.conn.element[key].outerHTML;
-  //   for (const needle of Object.keys(subs)) {
-  //     if (subs[needle] instanceof Array) {
-  //       if (subs[needle][0] instanceof DocumentFragment) {
-  //         content = content.replaceAll(
-  //           needle,
-  //           subs[needle].map((fragment) => {
-  //             return [...fragment.childNodes].map((el) => {
-  //               return el.outerHTML;
-  //             }).join("");
-  //           }).join(""),
-  //         );
-  //       } else if (subs[needle][0] instanceof Element) {
-  //         content = content.replaceAll(
-  //           needle,
-  //           subs[needle].map((el) => {
-  //             return el.outerHTML;
-  //           }).join(""),
-  //         );
-  //       } else {
-  //         content = content.replaceAll(needle, subs[needle].join(""));
-  //       }
-  //     } else {
-  //       if (subs[needle] instanceof DocumentFragment) {
-  //         content = content.replaceAll(
-  //           needle,
-  //           [...subs[needle].childNodes].map((el) => {
-  //             return el.outerHTML;
-  //           }).join(""),
-  //         );
-  //       } else if (subs[needle] instanceof Element) {
-  //         content = content.replaceAll(needle, subs[needle].outerHTML);
-  //       } else {
-  //         content = content.replaceAll(needle, subs[needle]);
-  //       }
-  //     }
-  //   }
-  //   const template = document.createElement("template");
-  //   template.innerHTML = content;
-  //   return template.content.firstChild;
-  // }
-  // }
 
   _renderFragment(key, subs = {}) {
     if (this.conn._fragment[key] === undefined) {
@@ -1108,31 +1022,6 @@ class BittyJs extends HTMLElement {
       template.innerHTML = content.trim();
       return template.content.querySelector("svg");
     }
-  }
-
-  // TODO: Deprecate and remove this.
-  _renderJSON(key, subs = {}, pretty = true) {
-    // TODO at some point for a consistent API:
-    // handle arrays of strings, elements/arrays-of-elements,
-    // fragments/arrays-of-fragments, svgs/arrays-of-svgs,
-    // and other jsons.
-    let jsonString = pretty
-      ? JSON.stringify(this.conn.json[key], null, 2)
-      : JSON.stringify(this.conn.json[key]);
-    if (subs !== null) {
-      for (const needle of Object.keys(subs)) {
-        jsonString = jsonString.replaceAll(needle, subs[needle]);
-      }
-    }
-    if (jsonString === undefined) {
-      this.conn.addLog(
-        "error",
-        "renderJSON",
-        false,
-        `Attempted to render non-existing json with key '${key}'`,
-      );
-    }
-    return jsonString;
   }
 
   _saveElement(key) {
@@ -1341,8 +1230,6 @@ class BittyJs extends HTMLElement {
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);
     this.conn.renderSVG = this._renderSVG.bind(this);
-    // TODO: Deprecate and remove renderJSON.
-    this.conn.renderJSON = this._renderJSON.bind(this);
     this.conn.saveElement = this._saveElement.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.send = this._send.bind(this);
@@ -1363,6 +1250,10 @@ class BittyJs extends HTMLElement {
     return this.#_logLevels.indexOf(level.toLowerCase());
   }
 
+  // TODO: make a single ingest that takes an DOM tree
+  // and parses out from it. That way you can parse
+  // the page as well as using the same function for
+  // loading fetched templates.
   ingestJSON() {
     document.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {

@@ -2,11 +2,7 @@ window.$CLASS_NAME = class {
   #key = "json_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const invalidJSON = "this is not valid JSON";
-    const result = this.createJSON(this.#key, invalidJSON);
-    if (result.ok === false) {
-      el.innerHTML = "ok";
-    }
+    el.innerHTML = this.json[this.#key].status;
   }
 
   /////////////////////////////////////////////////
@@ -15,6 +11,9 @@ window.$CLASS_NAME = class {
 
   bittyReady() {
     this.setLogLevel("none");
+    this.deleteJSON(this.#key);
+    this.createJSON(this.#key, { status: "ok" });
+    delete this.json[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -628,24 +628,41 @@ class BittyJs extends HTMLElement {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
-        const json = await response.json();
-        if (this.conn.json[key] !== undefined) {
-          this.conn.json[key] = json;
-          return this.conn.addLog(
-            "warn",
-            "fetchJSON",
-            true,
-            `Overwrote existing key '${key}' with JSON fetched from '${url}'`,
-            null,
-          );
-        } else {
-          this.conn.json[key] = json;
-          details.messages.push(
-            `fetched JSON from '${url}' and stored in key '${key}'`,
-          );
+        try {
+          const json = await response.json();
+          if (this.conn.json[key] !== undefined) {
+            this.conn.json[key] = json;
+            return this.conn.addLog(
+              "warn",
+              "fetchJSON",
+              true,
+              `Overwrote existing key '${key}' with JSON fetched from '${url}'`,
+              null,
+            );
+          } else {
+            this.conn.json[key] = json;
+            details.messages.push(
+              `fetched JSON from '${url}' and stored in key '${key}'`,
+            );
+          }
+        } catch (parseError) {
+          if (fallback !== null) {
+            details.level = "warn";
+            details.messages.push(
+              `Warning: Could not parse JSON from URL ${url}`,
+            );
+            if (typeof fallback === "string") {
+              this.conn.json[key] = JSON.parse(fallback);
+            } else if (fallback instanceof Object) {
+              this.conn.json[key] = fallback;
+            }
+          } else {
+            details.level = "error";
+            details.ok = false;
+            details.messages(`Could not parse fallback for key '${key}'.`);
+          }
         }
       } else {
-        console.error(response);
         return this.conn.addLog(
           "error",
           "fetchJSON",

@@ -5,7 +5,7 @@ window.Class78263 = class {
 
   given_signal_78263(_, __) {
     this.setLogLevel("none");
-    this.addJSON("data_signal_78263", {});
+    this.createJSON("data_signal_78263", {});
     this.trigger("test_signal_78263");
   }
 

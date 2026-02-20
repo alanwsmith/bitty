@@ -5,7 +5,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.addJSON(
+    this.createJSON(
       "json_$SIGNAL_NAME",
       { status: "ok" },
     );

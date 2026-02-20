@@ -4,7 +4,7 @@ window.ClassC89F4 = class {
   }
 
   given_signal_C89F4(_, __) {
-    this.addJSON("json_signal_C89F4", `{ "status": "ok" }`);
+    this.createJSON("json_signal_C89F4", `{ "status": "ok" }`);
     delete this.json["json_signal_C89F4"];
     this.trigger("test_signal_C89F4");
   }

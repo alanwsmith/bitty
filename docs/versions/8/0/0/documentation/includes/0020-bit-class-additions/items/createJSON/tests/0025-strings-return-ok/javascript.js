@@ -9,7 +9,7 @@ window.ClassF264E = class {
 
   test_signal_F264E(_, el) {
     const jsonString = `{}`;
-    const result = this.addJSON("data_signal_F264E", jsonString);
+    const result = this.createJSON("data_signal_F264E", jsonString);
     if (result.ok === true) {
       //el.innerHTML = "ok";
     }

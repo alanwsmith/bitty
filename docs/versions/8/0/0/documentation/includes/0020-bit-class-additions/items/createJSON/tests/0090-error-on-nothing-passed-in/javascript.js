@@ -9,7 +9,7 @@ window.Class45CAA = class {
   }
 
   test_signal_45CAA(_, el) {
-    const result = this.addJSON("data_signal_45CAA");
+    const result = this.createJSON("data_signal_45CAA");
     if (result.ok === false) {
       //      el.innerHTML = "ok";
     }

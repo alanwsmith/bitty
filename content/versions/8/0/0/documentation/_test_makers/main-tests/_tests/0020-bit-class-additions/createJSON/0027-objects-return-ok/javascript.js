@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     const jsonObject = JSON.parse(`{}`);
-    const result = this.addJSON("data_$SIGNAL_NAME", jsonObject);
+    const result = this.createJSON("data_$SIGNAL_NAME", jsonObject);
     if (result.ok === true) {
       //      el.innerHTML = "ok";
     }

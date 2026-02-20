@@ -5,7 +5,7 @@ window.Class92D8A = class {
 
   given_signal_92D8A(_, __) {
     this.setLogLevel("none");
-    this.addJSON(
+    this.createJSON(
       "json_signal_92D8A",
       { status: "ok" },
     );

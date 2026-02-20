@@ -6,7 +6,7 @@ window.ClassB3DA4 = class {
   given_signal_B3DA4(_, __) {
     localStorage.removeItem("bittyJSON_data_signal_B3DA4");
     const jsonObject = { status: "ok" };
-    this.addJSON("data_signal_B3DA4", jsonObject);
+    this.createJSON("data_signal_B3DA4", jsonObject);
     this.trigger("test_signal_B3DA4");
   }
 

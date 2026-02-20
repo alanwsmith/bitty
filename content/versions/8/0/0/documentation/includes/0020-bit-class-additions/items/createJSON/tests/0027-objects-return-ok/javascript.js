@@ -9,7 +9,7 @@ window.ClassB3123 = class {
 
   test_signal_B3123(_, el) {
     const jsonObject = JSON.parse(`{}`);
-    const result = this.addJSON("data_signal_B3123", jsonObject);
+    const result = this.createJSON("data_signal_B3123", jsonObject);
     if (result.ok === true) {
       //      el.innerHTML = "ok";
     }

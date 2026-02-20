@@ -4,7 +4,7 @@ window.Class5E09F = class {
   }
 
   given_signal_5E09F(_, __) {
-    this.addJSON("data_signal_5E09F", `{}`);
+    this.createJSON("data_signal_5E09F", `{}`);
     this.trigger("test_signal_5E09F");
   }
 

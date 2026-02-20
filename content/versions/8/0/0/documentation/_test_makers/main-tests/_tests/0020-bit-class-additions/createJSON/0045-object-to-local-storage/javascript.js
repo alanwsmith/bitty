@@ -6,7 +6,7 @@ window.$CLASS_NAME = class {
   given_$SIGNAL_NAME(_, __) {
     localStorage.removeItem("bittyJSON_data_$SIGNAL_NAME");
     const jsonObject = { status: "ok" };
-    this.addJSON("data_$SIGNAL_NAME", jsonObject);
+    this.createJSON("data_$SIGNAL_NAME", jsonObject);
     this.trigger("test_$SIGNAL_NAME");
   }
 

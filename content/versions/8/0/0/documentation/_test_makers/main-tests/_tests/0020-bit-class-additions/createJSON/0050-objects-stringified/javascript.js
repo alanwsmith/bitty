@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     const jsObject = { method_$HASH: () => {} };
-    this.addJSON("data_$SIGNAL_NAME", jsObject);
+    this.createJSON("data_$SIGNAL_NAME", jsObject);
     const verify = JSON.parse(localStorage.getItem("data_$SIGNAL_NAME")).data;
     if (verify.method_$HASH === undefined) {
       //      el.innerHTML = "ok";

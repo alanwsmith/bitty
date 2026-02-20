@@ -6,7 +6,7 @@ window.Class2515C = class {
   given_signal_2515C(_, __) {
     localStorage.removeItem("bittyJSON_data_signal_2515C");
     const jsonString = `{ "status": "ok" }`;
-    this.addJSON("data_signal_2515C", jsonString);
+    this.createJSON("data_signal_2515C", jsonString);
     this.trigger("test_signal_2515C");
   }
 

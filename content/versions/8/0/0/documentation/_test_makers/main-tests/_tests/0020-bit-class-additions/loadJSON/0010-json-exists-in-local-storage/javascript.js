@@ -4,7 +4,7 @@ window.$CLASS_NAME = class {
   }
 
   given_$SIGNAL_NAME(_, __) {
-    this.addJSON("json_$SIGNAL_NAME", `{ "status": "ok" }`);
+    this.createJSON("json_$SIGNAL_NAME", `{ "status": "ok" }`);
     delete this.json["json_$SIGNAL_NAME"];
     this.trigger("test_$SIGNAL_NAME");
   }

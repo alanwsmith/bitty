@@ -10,7 +10,7 @@ window.$CLASS_NAME = class {
 
   test_$SIGNAL_NAME(_, el) {
     const invalidJSON = "this is not valid JSON";
-    const result = this.addJSON("data_$SIGNAL_NAME", invalidJSON);
+    const result = this.createJSON("data_$SIGNAL_NAME", invalidJSON);
     if (result.ok === false) {
       //      el.innerHTML = "ok";
     }

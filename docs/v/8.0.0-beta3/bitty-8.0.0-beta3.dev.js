@@ -1419,6 +1419,10 @@ class BittyJs extends HTMLElement {
     return this._createFragment(key, content, { update: true });
   }
 
+  _updateSVG(key, content) {
+    return this._createSVG(key, content, { update: true });
+  }
+
   /** internal */
   addEventListeners() {
     // Internal bitty listeners
@@ -1586,6 +1590,7 @@ class BittyJs extends HTMLElement {
     this.conn.send = this._send.bind(this);
     this.conn.updateElement = this._updateElement.bind(this);
     this.conn.updateFragment = this._updateFragment.bind(this);
+    this.conn.updateSVG = this._updateSVG.bind(this);
     // TODO: Rename these to use underscores.
     this.conn.addJSON = this.addJSONBridge.bind(this);
     this.conn.addLog = this.addLogBridge.bind(this);

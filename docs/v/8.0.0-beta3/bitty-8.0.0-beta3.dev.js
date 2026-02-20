@@ -130,7 +130,7 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    if (options.update !== undefined && options.update === false) {
+    if (options.update === undefined || options.update === false) {
       if (key !== null && this.conn._element[key] !== undefined) {
         details.level = "warn";
         details.messages.push(

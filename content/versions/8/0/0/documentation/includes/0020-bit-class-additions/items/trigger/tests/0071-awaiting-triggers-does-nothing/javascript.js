@@ -5,22 +5,10 @@ window.Class7DC67 = class {
     this.#t1 = performance.now();
     //////////////////////////////////////////////
     //  THIS DOES NOT WORK AS YOU MIGHT EXPECT  //
-    //  Read the description above for why.     //
+    //  Read the notes section for details.     //
     //////////////////////////////////////////////
     await this.trigger("await:signal_7DC67");
     this.trigger("signal_7DC67_2");
-    //////////////////////////////////////////////
-    //  See the prior example that combines     //
-    //  multiple signals inside a single        //
-    //  trigger to accommodate async/await.     //
-    //  For example:                            //
-    //  this.trigger("await:SIG_1 SIG_2");      //
-    //                                          //
-    //  See also the next example which         //
-    //  demonstrates using `.trigger() calls    //
-    //  inside individual events to utilize     //
-    //  async/await across methods.             //
-    //////////////////////////////////////////////
   }
 
   async signal_7DC67(_, el) {

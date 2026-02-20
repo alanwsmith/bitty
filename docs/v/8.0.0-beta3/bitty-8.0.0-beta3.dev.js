@@ -722,6 +722,12 @@ class BittyJs extends HTMLElement {
         `loadFragment() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
       );
     }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._fragment[key] }),
+      );
+    }
     return this.conn.addLog(
       details.level,
       "loadFragment",
@@ -860,6 +866,12 @@ class BittyJs extends HTMLElement {
         `loadElement() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
       );
     }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._element[key] }),
+      );
+    }
     return this.conn.addLog(
       details.level,
       details.key,
@@ -982,6 +994,12 @@ class BittyJs extends HTMLElement {
       details.ok = false;
       details.messages.push(
         `loadSVG() attempted to use an invalid fallback for key '${key}'. Valid values must be a String or an SVG.`,
+      );
+    }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._svg[key] }),
       );
     }
     return this.conn.addLog(

@@ -8,9 +8,9 @@ window.ClassCEDB1 = class {
     this.send(svg, "view_signal_CEDB1");
   }
 
-  // view_signal_CEDB1(svg, el) {
-  //   el.replaceWith(svg);
-  // }
+  view_signal_CEDB1(svg, el) {
+    el.replaceWith(svg);
+  }
 
   /////////////////////////////////////////////////
   // Test Setup

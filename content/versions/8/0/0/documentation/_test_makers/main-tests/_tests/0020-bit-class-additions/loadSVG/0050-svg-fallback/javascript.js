@@ -8,9 +8,9 @@ window.$CLASS_NAME = class {
     this.send(svg, "view_$SIGNAL_NAME");
   }
 
-  // view_$SIGNAL_NAME(svg, el) {
-  //   el.replaceWith(svg);
-  // }
+  view_$SIGNAL_NAME(svg, el) {
+    el.replaceWith(svg);
+  }
 
   /////////////////////////////////////////////////
   // Test Setup

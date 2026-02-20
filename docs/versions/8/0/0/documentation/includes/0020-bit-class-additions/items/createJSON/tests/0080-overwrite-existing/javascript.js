@@ -1,17 +1,22 @@
 window.ClassB76EB = class {
-  bittyReady() {
-    this.trigger("given_signal_B76EB");
-  }
-
-  given_signal_B76EB(_, __) {
-    const initialObject = { status: "failed" };
-    this.createJSON("data_signal_B76EB", initialObject);
-    this.trigger("test_signal_B76EB");
-  }
+  #key = "json_signal_B76EB";
 
   test_signal_B76EB(_, el) {
-    const overwritingObject = { status: "ok" };
-    this.createJSON("data_signal_B76EB", overwritingObject);
-    //    el.innerHTML = this.json["data_signal_B76EB"].status;
+    const result = this.createJSON(this.#key, { status: "ok" });
+    console.log(result);
+    if (result.ok === true && result.level === "warn") {
+      el.innerHTML = this.json[this.#key].status;
+    }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.setLogLevel("none");
+    this.deleteJSON(this.#key);
+    this.createJSON(this.#key, { status: "bug" });
+    this.trigger("test_signal_B76EB");
   }
 };

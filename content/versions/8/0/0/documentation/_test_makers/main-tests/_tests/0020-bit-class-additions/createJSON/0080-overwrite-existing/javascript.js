@@ -1,17 +1,22 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
-    const initialObject = { status: "failed" };
-    this.createJSON("data_$SIGNAL_NAME", initialObject);
-    this.trigger("test_$SIGNAL_NAME");
-  }
+  #key = "json_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const overwritingObject = { status: "ok" };
-    this.createJSON("data_$SIGNAL_NAME", overwritingObject);
-    //    el.innerHTML = this.json["data_$SIGNAL_NAME"].status;
+    const result = this.createJSON(this.#key, { status: "ok" });
+    console.log(result);
+    if (result.ok === true && result.level === "warn") {
+      el.innerHTML = this.json[this.#key].status;
+    }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.setLogLevel("none");
+    this.deleteJSON(this.#key);
+    this.createJSON(this.#key, { status: "bug" });
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -232,6 +232,22 @@ class BittyJs extends HTMLElement {
 
   _createJSON(key, json) {
     const storageKey = `bittyJSON_${key}`;
+    // TODO: Update the result of the method
+    // to update details and then just
+    // return it at the end.
+    const details = {
+      level: "info",
+      key: "createJSON",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    if (json !== undefined && this.conn.json[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
+      );
+    }
     if (json === undefined) {
       return this.conn.addLog(
         "error",
@@ -247,13 +263,7 @@ class BittyJs extends HTMLElement {
           storageKey,
           JSON.stringify({ data: this.conn.json[key] }),
         );
-        return this.conn.addLog(
-          "info",
-          "addJSON",
-          true,
-          `Added JSON with key: ${key}`,
-          null,
-        );
+        details.messages.push(`Added JSON with key: ${key}`);
       } catch (error) {
         return this.conn.addLog(
           "error",
@@ -269,14 +279,16 @@ class BittyJs extends HTMLElement {
         storageKey,
         JSON.stringify({ data: this.conn.json[key] }),
       );
-      return this.conn.addLog(
-        "info",
-        "addJSON",
-        true,
-        `Added JSON with key: ${key}`,
-        null,
-      );
+      details.messages.push(`Added JSON with key: ${key}`);
     }
+
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(""),
+      details.extraInfo,
+    );
   }
 
   _createSVG(key, content = null, options = {}) {
@@ -1147,13 +1159,13 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  _removeJSON(key) {
+  _deleteJSON(key) {
     const storageKey = `bittyJSON_${key}`;
     localStorage.removeItem(storageKey);
     if (this.conn.json[key] === undefined) {
       return this.conn.addLog(
         "warn",
-        "removeJSON",
+        "deleteJSON",
         true,
         `JSON with key '${key}' already does not exist.`,
         null,
@@ -1162,7 +1174,7 @@ class BittyJs extends HTMLElement {
       delete this.conn.json[key];
       return this.conn.addLog(
         "info",
-        "removeJSON",
+        "deleteJSON",
         true,
         `Removed JSON with key: ${key}`,
         null,
@@ -1619,6 +1631,9 @@ class BittyJs extends HTMLElement {
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.createJSON = this._createJSON.bind(this);
     this.conn.createSVG = this._createSVG.bind(this);
+    this.conn.deleteElement = this._deleteElement.bind(this);
+    this.conn.deleteJSON = this._deleteJSON.bind(this);
+    this.conn.deleteSVG = this._deleteSVG.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchFragment = this._fetchFragment.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
@@ -1627,10 +1642,7 @@ class BittyJs extends HTMLElement {
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
     this.conn.loadSVG = this._loadSVG.bind(this);
-    this.conn.deleteElement = this._deleteElement.bind(this);
-    this.conn.deleteSVG = this._deleteSVG.bind(this);
     this.conn.removeFragment = this._removeFragment.bind(this);
-    this.conn.removeJSON = this._removeJSON.bind(this);
     this.conn.removeSVG = this._removeSVG.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);

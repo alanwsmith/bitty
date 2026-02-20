@@ -9,7 +9,7 @@ window.Class926B8 = class {
   }
 
   test_signal_926B8(_, el) {
-    this.removeJSON("data_signal_926B8");
+    this.deleteJSON("data_signal_926B8");
     if (this.json["data_signal_926B8"] === undefined) {
       el.innerHTML = "ok";
     }

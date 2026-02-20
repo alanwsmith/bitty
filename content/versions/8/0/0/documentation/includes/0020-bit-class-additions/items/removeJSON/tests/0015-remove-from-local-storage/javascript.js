@@ -9,7 +9,7 @@ window.Class57CC1 = class {
   }
 
   test_signal_57CC1(_, el) {
-    this.removeJSON("data_signal_57CC1");
+    this.deleteJSON("data_signal_57CC1");
     const checkStorage = localStorage.getItem("data_signal_57CC1");
     if (checkStorage === null) {
       el.innerHTML = "ok";

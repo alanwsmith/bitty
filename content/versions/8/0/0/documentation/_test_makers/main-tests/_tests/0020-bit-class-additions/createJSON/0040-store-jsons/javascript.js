@@ -2,6 +2,7 @@ window.$CLASS_NAME = class {
   #key = "json_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
+    this.loadJSON(this.#key);
     el.innerHTML = this.json[this.#key].status;
   }
 

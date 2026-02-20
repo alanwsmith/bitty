@@ -9,7 +9,7 @@ window.Class5E09F = class {
   }
 
   test_signal_5E09F(_, el) {
-    const result = this.removeJSON("data_signal_5E09F");
+    const result = this.deleteJSON("data_signal_5E09F");
     if (result.ok === true) {
       el.innerHTML = "ok";
     }

@@ -1134,7 +1134,7 @@ class BittyJs extends HTMLElement {
 
   // TODO: Deprecate and remove in favor of
   // _createJSON(key, data)
-  addJSONBridge(key, json) {
+  _addJSON(key, json) {
     const storageKey = `bittyJSON_${key}`;
     if (json === undefined) {
       return this.conn.addLog(
@@ -1184,7 +1184,7 @@ class BittyJs extends HTMLElement {
   }
 
   // TODO: Add stacktrace
-  addLogBridge(level, type, ok, message, extraInfo = null) {
+  _addLog(level, type, ok, message, extraInfo = null) {
     const log = new BittyLog(level, type, ok, message, extraInfo);
     this.conn.logs.push(log);
     //    console.log(`${level} - ${this.#_logLevel}`);
@@ -1204,13 +1204,14 @@ class BittyJs extends HTMLElement {
   }
 
   createBridges() {
-    this.conn.logLevel = 2;
     this.conn._element = {};
     this.conn._fragment = {};
     this.conn._svg = {};
     this.conn.json = {};
-    this.conn.svg = {};
+    this.conn.logLevel = 2;
     this.conn.logs = [];
+    this.conn.addJSON = this._addJSON.bind(this);
+    this.conn.addLog = this._addLog.bind(this);
     this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.createJSON = this._createJSON.bind(this);
@@ -1226,23 +1227,20 @@ class BittyJs extends HTMLElement {
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
+    this.conn.loadJSON = this._loadJSON.bind(this);
     this.conn.loadSVG = this._loadSVG.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);
     this.conn.renderSVG = this._renderSVG.bind(this);
     this.conn.saveElement = this._saveElement.bind(this);
-    this.conn.setLogLevel = this._setLogLevel.bind(this);
+    this.conn.saveJSON = this._saveJSON.bind(this);
     this.conn.send = this._send.bind(this);
+    this.conn.setLogLevel = this._setLogLevel.bind(this);
+    this.conn.sleep = this._sleep.bind(this);
+    this.conn.trigger = this._trigger.bind(this);
     this.conn.updateElement = this._updateElement.bind(this);
     this.conn.updateFragment = this._updateFragment.bind(this);
     this.conn.updateSVG = this._updateSVG.bind(this);
-    // TODO: Rename these to use underscores.
-    this.conn.addJSON = this.addJSONBridge.bind(this);
-    this.conn.addLog = this.addLogBridge.bind(this);
-    this.conn.loadJSON = this.loadJSONBridge.bind(this);
-    this.conn.saveJSON = this.saveJSONBridge.bind(this);
-    this.conn.sleep = this.sleepBridge.bind(this);
-    this.conn.trigger = this.triggerBridge.bind(this);
     this.processEventBridge = this.processEvent.bind(this);
   }
 
@@ -1273,7 +1271,7 @@ class BittyJs extends HTMLElement {
   }
 
   // TODO: throw error if parsing fails
-  loadJSONBridge(key, fallback = null) {
+  _loadJSON(key, fallback = null) {
     const storageKey = `bittyJSON_${key}`;
     const storage = localStorage.getItem(storageKey);
     // TODO: Update so details has everything
@@ -1425,7 +1423,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  saveJSONBridge(key) {
+  _saveJSON(key) {
     const storageKey = `bittyJSON_${key}`;
     if (this.conn.json[key] !== undefined) {
       if (typeof this.conn.json[key] === "object") {
@@ -1458,11 +1456,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async sleepBridge(ms) {
+  async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  triggerBridge(signal) {
+  _trigger(signal) {
     const ev = new BittyTriggerEvent(signal);
     this.dispatchEvent(ev);
   }

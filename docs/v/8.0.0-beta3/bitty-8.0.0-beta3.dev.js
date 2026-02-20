@@ -1273,6 +1273,10 @@ class BittyJs extends HTMLElement {
           this.conn.createElement(el.dataset.key, el.text.trim());
         }
       }
+
+      if (el.type === "image/svg+xml" && el.dataset.key !== undefined) {
+        this.conn.createSVG(el.dataset.key, el.text.trim());
+      }
     });
   }
 

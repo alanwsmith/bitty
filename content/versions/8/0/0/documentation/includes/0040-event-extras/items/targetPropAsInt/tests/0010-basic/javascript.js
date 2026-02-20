@@ -1,6 +1,8 @@
 window.Class072F8 = class {
   test_signal_072F8(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    if (ev.targetPropAsInt("needle") === 4) {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

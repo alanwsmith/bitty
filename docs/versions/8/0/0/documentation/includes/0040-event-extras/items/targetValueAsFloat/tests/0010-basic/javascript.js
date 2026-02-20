@@ -1,6 +1,8 @@
 window.Class68366 = class {
   test_signal_68366(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    if (ev.targetValueAsFloat("needle") === 7.8) {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

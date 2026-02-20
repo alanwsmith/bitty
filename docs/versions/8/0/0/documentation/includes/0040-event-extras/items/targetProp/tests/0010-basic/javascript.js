@@ -1,6 +1,6 @@
 window.ClassF7F9E = class {
   test_signal_F7F9E(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    el.innerHTML = ev.targetProp("needle");
   }
 
   /////////////////////////////////////////////////

@@ -1448,13 +1448,31 @@ class BittyJs extends HTMLElement {
     ev.propAsInt = function (key, closest = true) {
       return parseInt(ev.target.dataset[key], 10);
     };
-    ev.value = function (key, closest = true) {
+    ev.value = function (key) {
       return ev.target.value;
     };
-    ev.valueAsFloat = function (key, closest = true) {
+    ev.valueAsFloat = function (key) {
       return parseFloat(ev.target.value);
     };
-    ev.valueAsInt = function (key, closest = true) {
+    ev.valueAsInt = function (key) {
+      return parseInt(ev.target.value, 10);
+    };
+    ev.targetProp = function (key, closest = true) {
+      return ev.target.dataset[key];
+    };
+    ev.targetPropAsFloat = function (key, closest = true) {
+      return parseFloat(ev.target.dataset[key]);
+    };
+    ev.targetPropAsInt = function (key, closest = true) {
+      return parseInt(ev.target.dataset[key], 10);
+    };
+    ev.targetValue = function (key) {
+      return ev.target.value;
+    };
+    ev.targetValueAsFloat = function (key) {
+      return parseFloat(ev.target.value);
+    };
+    ev.targetValueAsInt = function (key) {
       return parseInt(ev.target.value, 10);
     };
   }

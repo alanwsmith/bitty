@@ -1,6 +1,8 @@
 window.$CLASS_NAME = class {
   test_$SIGNAL_NAME(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    if (ev.targetValue("needle") === "value_$HASH") {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

@@ -1,6 +1,8 @@
 window.Class5569A = class {
   test_signal_5569A(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    if (ev.targetValueAsInt("needle") === 9) {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

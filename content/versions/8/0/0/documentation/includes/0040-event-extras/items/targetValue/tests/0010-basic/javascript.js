@@ -1,6 +1,8 @@
 window.Class9DFE6 = class {
   test_signal_9DFE6(ev, el) {
-    //el.innerHTML = ev.prop("needle");
+    if (ev.targetValue("needle") === "value_9DFE6") {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

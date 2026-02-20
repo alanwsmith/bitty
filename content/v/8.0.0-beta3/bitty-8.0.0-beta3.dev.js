@@ -27,9 +27,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO: Deprecate this in favor of _createElement
   _addElement(key, input = null) {
-    // TODO: This is in heavy need of a refactor
-    // to make it look more like `_createFragment()`
     const storageKey = `bittyElement_${key}`;
     if (input === null) {
       return this.conn.addLog(
@@ -120,6 +119,11 @@ class BittyJs extends HTMLElement {
         null,
       );
     }
+  }
+
+  _createElement(key, content = null, options = {}) {
+    console.log(key);
+    this.conn._element[key] = content;
   }
 
   // this is temporary to make testing addElement
@@ -716,53 +720,41 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _renderElement(key, subs = null) {
-    if (this.conn.element[key] === undefined) {
+  _renderElement(key, subs = {}) {
+    if (this.conn._element[key] === undefined) {
       this.conn.addLog(
         "error",
         "renderElement",
         false,
-        `Attempted to render non-existing element with key '${key}'`,
+        `Attempted to render non-existing element using key '${key}'`,
       );
-    }
-    if (subs === null) {
-      return this.conn.element[key];
+      return undefined;
     } else {
-      let content = this.conn.element[key].outerHTML;
+      let content = this.conn._element[key];
       for (const needle of Object.keys(subs)) {
-        if (subs[needle] instanceof Array) {
-          if (subs[needle][0] instanceof DocumentFragment) {
-            content = content.replaceAll(
-              needle,
-              subs[needle].map((fragment) => {
-                return [...fragment.childNodes].map((el) => {
-                  return el.outerHTML;
-                }).join("");
-              }).join(""),
-            );
-          } else if (subs[needle][0] instanceof Element) {
-            content = content.replaceAll(
-              needle,
-              subs[needle].map((el) => {
+        if (subs[needle] instanceof Array === false) {
+          subs[needle] = [subs[needle]];
+        }
+        if (typeof subs[needle][0] === "string") {
+          content = content.replaceAll(needle, subs[needle].join(""));
+        } else if (
+          subs[needle][0] instanceof Element
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((el) => el.outerHTML).join(""),
+          );
+        } else if (
+          subs[needle][0] instanceof DocumentFragment
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((fragment) => {
+              return [...fragment.children].map((el) => {
                 return el.outerHTML;
-              }).join(""),
-            );
-          } else {
-            content = content.replaceAll(needle, subs[needle].join(""));
-          }
-        } else {
-          if (subs[needle] instanceof DocumentFragment) {
-            content = content.replaceAll(
-              needle,
-              [...subs[needle].childNodes].map((el) => {
-                return el.outerHTML;
-              }).join(""),
-            );
-          } else if (subs[needle] instanceof Element) {
-            content = content.replaceAll(needle, subs[needle].outerHTML);
-          } else {
-            content = content.replaceAll(needle, subs[needle]);
-          }
+              }).join("");
+            }).join(""),
+          );
         }
       }
       const template = document.createElement("template");
@@ -770,6 +762,60 @@ class BittyJs extends HTMLElement {
       return template.content.firstChild;
     }
   }
+
+  // if (this.conn.element[key] === undefined) {
+  //   this.conn.addLog(
+  //     "error",
+  //     "renderElement",
+  //     false,
+  //     `Attempted to render non-existing element with key '${key}'`,
+  //   );
+  // }
+  // if (subs === null) {
+  //   return this.conn.element[key];
+  // } else {
+  //   let content = this.conn.element[key].outerHTML;
+  //   for (const needle of Object.keys(subs)) {
+  //     if (subs[needle] instanceof Array) {
+  //       if (subs[needle][0] instanceof DocumentFragment) {
+  //         content = content.replaceAll(
+  //           needle,
+  //           subs[needle].map((fragment) => {
+  //             return [...fragment.childNodes].map((el) => {
+  //               return el.outerHTML;
+  //             }).join("");
+  //           }).join(""),
+  //         );
+  //       } else if (subs[needle][0] instanceof Element) {
+  //         content = content.replaceAll(
+  //           needle,
+  //           subs[needle].map((el) => {
+  //             return el.outerHTML;
+  //           }).join(""),
+  //         );
+  //       } else {
+  //         content = content.replaceAll(needle, subs[needle].join(""));
+  //       }
+  //     } else {
+  //       if (subs[needle] instanceof DocumentFragment) {
+  //         content = content.replaceAll(
+  //           needle,
+  //           [...subs[needle].childNodes].map((el) => {
+  //             return el.outerHTML;
+  //           }).join(""),
+  //         );
+  //       } else if (subs[needle] instanceof Element) {
+  //         content = content.replaceAll(needle, subs[needle].outerHTML);
+  //       } else {
+  //         content = content.replaceAll(needle, subs[needle]);
+  //       }
+  //     }
+  //   }
+  //   const template = document.createElement("template");
+  //   template.innerHTML = content;
+  //   return template.content.firstChild;
+  // }
+  // }
 
   _renderFragment(key, subs = {}) {
     if (this.conn._fragment[key] === undefined) {
@@ -1010,7 +1056,10 @@ class BittyJs extends HTMLElement {
 
   createBridges() {
     this.conn.logLevel = 2;
+    // TODO: Deprecate this.conn.element in
+    // favor of this.conn._element. (with an underscore)
     this.conn.element = {};
+    this.conn._element = {};
     // TODO: Deprecate this.conn.fragment in favor
     // of this.conn._fragment (with an underscore)
     this.conn.fragment = {};
@@ -1019,6 +1068,7 @@ class BittyJs extends HTMLElement {
     this.conn.svg = {};
     this.conn.logs = [];
     this.conn.addElement = this._addElement.bind(this);
+    this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchFragment = this._fetchFragment.bind(this);

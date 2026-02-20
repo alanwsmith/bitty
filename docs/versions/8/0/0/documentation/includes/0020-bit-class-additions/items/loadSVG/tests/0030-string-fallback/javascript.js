@@ -1,9 +1,15 @@
 window.Class655D9 = class {
-  #key = "fragment_signal_655D9";
+  #key = "svg_signal_655D9";
 
-  test_signal_655D9(_, el) {
-    this.loadFragment(this.#key, `<div></div><div>ok</div>`);
-    //    el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  test_signal_655D9(fallback, el) {
+    this.loadSVG(this.#key, fallback);
+    const svg = this.renderSVG(this.#key);
+    el.innerHTML = svg.querySelector("text").innerHTML;
+    this.send(svg, "view_signal_655D9");
+  }
+
+  view_signal_655D9(svg, el) {
+    el.replaceWith(svg);
   }
 
   /////////////////////////////////////////////////
@@ -15,8 +21,13 @@ window.Class655D9 = class {
   }
 
   given_signal_655D9(_, __) {
+    const fallback = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="green" />
+  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
+</svg>`;
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
-    this.trigger("test_signal_655D9");
+    this.removeSVG(this.#key);
+    this.send(fallback, "test_signal_655D9");
   }
 };

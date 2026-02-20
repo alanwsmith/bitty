@@ -975,6 +975,8 @@ class BittyJs extends HTMLElement {
       this.conn._svg[key] = JSON.parse(storage).data;
     } else if (typeof fallback === "string") {
       this.conn._svg[key] = fallback;
+    } else if (fallback instanceof SVGSVGElement) {
+      this.conn._svg[key] = fallback.outerHTML;
     } else {
       details.level = "error";
       details.ok = false;

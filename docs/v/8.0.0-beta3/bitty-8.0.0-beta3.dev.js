@@ -1435,6 +1435,11 @@ class BittyJs extends HTMLElement {
   }
 
   updateEvent(ev) {
+    // TODO: Update so that is the sender is
+    // different from the target it's reflected
+    // in the sender property.
+    ev.sender = ev.target;
+
     // NOTE These are current set to target.
     // They need to be set to use the sending
     // element if it's different from the

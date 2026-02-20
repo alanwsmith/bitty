@@ -1,9 +1,15 @@
 window.$CLASS_NAME = class {
-  #key = "fragment_$SIGNAL_NAME";
+  #key = "svg_$SIGNAL_NAME";
 
-  test_$SIGNAL_NAME(element, el) {
-    const result = this.loadFragment(this.#key);
-    //    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  test_$SIGNAL_NAME(_, el) {
+    this.loadSVG(this.#key);
+    const svg = this.renderSVG(this.#key);
+    el.innerHTML = svg.querySelector("text").innerHTML;
+    this.send(svg, "view_$SIGNAL_NAME");
+  }
+
+  view_$SIGNAL_NAME(svg, el) {
+    el.replaceWith(svg);
   }
 
   /////////////////////////////////////////////////
@@ -11,13 +17,15 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
-    this.removeFragment(this.#key);
-    this.createFragment(this.#key, `<div>ok</div>`);
-    delete this._fragment[this.#key];
+    const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="green" />
+  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
+</svg>`;
+    this.setLogLevel("none");
+    this.removeSVG(this.#key);
+    this.createSVG(this.#key, input);
+    delete this._svg[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }
 };

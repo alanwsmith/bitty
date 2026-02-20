@@ -884,6 +884,55 @@ class BittyJs extends HTMLElement {
   //   details.messages.join(" "),
   //   null,
   // );
+  //
+
+  _loadSVG(key, fallback = null) {
+    const storageKey = `bittySVG_${key}`;
+    const details = {
+      level: "info",
+      ok: true,
+      messages: [],
+    };
+    const storage = localStorage.getItem(storageKey);
+    if (key !== null && this.conn._svg[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: loadSVG() replaced an existing key: ${key}`,
+      );
+    }
+    if (key === null) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No key provided for 'this.loadSVG(key [,fallback])'`,
+      );
+    } else if (
+      storage === null && fallback === null
+    ) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No storage found for '${key}' and not fallback provided.`,
+      );
+    } else if (storage !== null) {
+      this.conn._svg[key] = JSON.parse(storage).data;
+    } else if (typeof fallback === "string") {
+      this.conn._svg[key] = fallback;
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `loadSVG() attempted to use an invalid fallback for key '${key}'. Valid values must be a String or an SVG.`,
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      "loadSVG",
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
+  }
 
   _deleteElement(key) {
     const storageKey = `bittyElement_${key}`;
@@ -924,7 +973,7 @@ class BittyJs extends HTMLElement {
     };
     if (
       localStorage.getItem(storageKey) === null &&
-      this.conn.fragment[key] === undefined
+      this.conn._fragment[key] === undefined
     ) {
       details.level = "warn",
         details.messages.push(
@@ -967,6 +1016,38 @@ class BittyJs extends HTMLElement {
         null,
       );
     }
+  }
+
+  _removeSVG(key) {
+    const storageKey = `bittySVG_${key}`;
+    const details = {
+      level: "info",
+      ok: true,
+      key: "removeSVG",
+      messages: [],
+    };
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn._svg[key] === undefined
+    ) {
+      details.level = "warn",
+        details.messages.push(
+          `No SVG with key '${key}' exists. Nothing to remove.`,
+        );
+    } else {
+      delete this.conn._svg[key];
+      localStorage.removeItem(storageKey);
+      details.messages.push(
+        `SVG with key '${key}' was removed`,
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
   }
 
   _renderElement(key, subs = {}) {
@@ -1376,9 +1457,11 @@ class BittyJs extends HTMLElement {
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);
+    this.conn.loadSVG = this._loadSVG.bind(this);
     this.conn.deleteElement = this._deleteElement.bind(this);
     this.conn.removeFragment = this._removeFragment.bind(this);
     this.conn.removeJSON = this._removeJSON.bind(this);
+    this.conn.removeSVG = this._removeSVG.bind(this);
     this.conn.renderElement = this._renderElement.bind(this);
     this.conn.renderFragment = this._renderFragment.bind(this);
     this.conn.renderSVG = this._renderSVG.bind(this);

@@ -1260,9 +1260,9 @@ class BittyJs extends HTMLElement {
         } catch (error) {
           return this.conn.addLog(
             "error",
-            "ingestjson",
-            `Failed to parse JSON from a script tag on the page.`,
+            "ingestJSON",
             false,
+            `Failed to parse JSON from a script tag.`,
             error,
           );
         }

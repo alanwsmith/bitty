@@ -663,19 +663,35 @@ class BittyJs extends HTMLElement {
           }
         }
       } else {
-        return this.conn.addLog(
-          "error",
-          "fetchJSON",
-          false,
-          `Error fetching JSON from '${url}' for key '${key}'`,
-          {
-            redirect: response.redirect,
-            status: response.status,
-            statusText: response.statusText,
-            type: response.type,
-            url: response.url,
-          },
-        );
+        if (fallback !== null) {
+          details.level = "warn";
+          details.messages.push(
+            `Warning: Could not parse JSON from URL ${url}`,
+          );
+          if (typeof fallback === "string") {
+            this.conn.json[key] = JSON.parse(fallback);
+          } else if (fallback instanceof Object) {
+            this.conn.json[key] = fallback;
+          } else {
+            details.level = "error";
+            details.ok = false;
+            details.messages(`Could not parse fallback for key '${key}'.`);
+          }
+        } else {
+          return this.conn.addLog(
+            "error",
+            "fetchJSON",
+            false,
+            `Error fetching JSON from '${url}' for key '${key}'`,
+            {
+              redirect: response.redirect,
+              status: response.status,
+              statusText: response.statusText,
+              type: response.type,
+              url: response.url,
+            },
+          );
+        }
       }
     } catch (error) {
       return this.conn.addLog(

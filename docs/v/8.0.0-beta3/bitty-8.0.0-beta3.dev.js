@@ -1114,6 +1114,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _updateElement(key, content) {
+    return this._createElement(key, content, { update: true });
+  }
+
   _updateFragment(key, content) {
     return this._createFragment(key, content, { update: true });
   }
@@ -1276,6 +1280,7 @@ class BittyJs extends HTMLElement {
     this.conn.saveElement = this._saveElement.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.send = this._send.bind(this);
+    this.conn.updateElement = this._updateElement.bind(this);
     this.conn.updateFragment = this._updateFragment.bind(this);
     // TODO: Rename these to use underscores.
     this.conn.addJSON = this.addJSONBridge.bind(this);

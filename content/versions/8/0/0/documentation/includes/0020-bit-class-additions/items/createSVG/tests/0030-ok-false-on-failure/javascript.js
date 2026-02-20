@@ -1,12 +1,12 @@
 window.ClassB555B = class {
-  #key = "fragment_signal_B555B";
+  #key = "svg_signal_B555B";
 
-  test_signal_B555B(_, el) {
-    const result = this.createFragment(this.#key, {
-      key: "not a string, element, or document fragment",
+  test_signal_B555B(input, el) {
+    const result = this.createSVG(this.#key, {
+      key: "not a string or svg",
     });
     if (result.ok === false && result.level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -15,10 +15,6 @@ window.ClassB555B = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_B555B");
-  }
-
-  given_signal_B555B(_, __) {
     this.setLogLevel("none");
     this.trigger("test_signal_B555B");
   }

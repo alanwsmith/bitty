@@ -13,6 +13,7 @@ window.Class9D350 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.deleteElement(this.#key);
     this.trigger("test_signal_9D350");
   }

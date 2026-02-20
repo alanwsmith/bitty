@@ -13,6 +13,7 @@ window.ClassE84D4 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.createElement(this.#key, `<div>ok</div>`);
     this.trigger("test_signal_E84D4");
   }

@@ -11,6 +11,7 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.deleteElement(this.#key);
     this.createElement(this.#key, `<div class="test">ok</div>`);
     delete this.element[this.#key];

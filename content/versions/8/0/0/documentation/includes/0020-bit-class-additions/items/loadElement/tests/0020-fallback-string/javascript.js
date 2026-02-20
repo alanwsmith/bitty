@@ -11,6 +11,7 @@ window.ClassB86EE = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.deleteElement(this.#key);
     this.trigger("test_signal_B86EE");
   }

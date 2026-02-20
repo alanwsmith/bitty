@@ -14,6 +14,7 @@ window.Class31037 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.deleteElement(this.#key);
     this.trigger("test_signal_31037");
   }

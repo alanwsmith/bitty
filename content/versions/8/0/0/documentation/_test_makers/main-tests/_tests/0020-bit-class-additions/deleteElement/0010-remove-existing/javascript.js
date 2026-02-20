@@ -13,6 +13,7 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
+    this.setLogLevel("none");
     this.createElement(this.#key, `<div>ok</div>`);
     this.trigger("test_$SIGNAL_NAME");
   }

@@ -1,11 +1,11 @@
-window.ClassF7489 = class {
-  #key = "fragment_signal_F7489";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_F7489(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const template = document.createElement("template");
     template.innerHTML = "<div></div><div>ok</div>";
     const subs = {
-      "TARGET_F7489": template.content,
+      "TARGET_$HASH": template.content,
     };
     const fragment = this.renderFragment(this.#key, subs);
     el.innerHTML = fragment.firstChild.children[1].innerHTML;
@@ -16,12 +16,12 @@ window.ClassF7489 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_F7489");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_F7489(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div>TARGET_F7489</div>`);
-    this.trigger("test_signal_F7489");
+    this.createFragment(this.#key, `<div>TARGET_$HASH</div>`);
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

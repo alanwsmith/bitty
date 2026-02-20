@@ -1,7 +1,7 @@
-window.ClassC24F9 = class {
-  #key = "fragment_signal_C24F9";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_C24F9(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const template = document.createElement("template");
     template.innerHTML = "<div></div><div></div>";
     const template2 = document.createElement("template");
@@ -11,7 +11,7 @@ window.ClassC24F9 = class {
       template2.content,
     ];
     const subs = {
-      "TARGET_C24F9": replacementArray,
+      "TARGET_$HASH": replacementArray,
     };
     const fragment = this.renderFragment(this.#key, subs);
     console.log(fragment);
@@ -23,12 +23,12 @@ window.ClassC24F9 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_C24F9");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_C24F9(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div>TARGET_C24F9</div>`);
-    this.trigger("test_signal_C24F9");
+    this.createFragment(this.#key, `<div>TARGET_$HASH</div>`);
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

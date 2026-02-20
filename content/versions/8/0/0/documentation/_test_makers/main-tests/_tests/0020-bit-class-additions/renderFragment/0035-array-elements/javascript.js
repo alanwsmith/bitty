@@ -1,7 +1,7 @@
-window.ClassA86C1 = class {
-  #key = "fragment_signal_A86C1";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_A86C1(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const replacementEl = document.createElement("div");
     replacementEl.innerHTML = "ok";
     const replacementEl2 = document.createElement("div");
@@ -11,7 +11,7 @@ window.ClassA86C1 = class {
       replacementEl2,
     ];
     const subs = {
-      "TARGET_A86C1": replacementArray,
+      "TARGET_$HASH": replacementArray,
     };
     const fragment = this.renderFragment(this.#key, subs);
     el.innerHTML = fragment.firstChild.children[1].innerHTML;
@@ -22,12 +22,12 @@ window.ClassA86C1 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_A86C1");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_A86C1(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div>TARGET_A86C1</div>`);
-    this.trigger("test_signal_A86C1");
+    this.createFragment(this.#key, `<div>TARGET_$HASH</div>`);
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -1,11 +1,11 @@
-window.Class31065 = class {
-  #key = "fragment_signal_31065";
+window.$CLASS_NAME = class {
+  #key = "fragment_$SIGNAL_NAME";
 
-  test_signal_31065(_, el) {
+  test_$SIGNAL_NAME(_, el) {
     const replacementEl = document.createElement("div");
     replacementEl.innerHTML = "ok";
     const subs = {
-      "TARGET_31065": replacementEl,
+      "TARGET_$HASH": replacementEl,
     };
     const fragment = this.renderFragment(this.#key, subs);
     el.innerHTML = fragment.firstChild.firstChild.innerHTML;
@@ -16,12 +16,12 @@ window.Class31065 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_31065");
+    this.trigger("given_$SIGNAL_NAME");
   }
 
-  given_signal_31065(_, __) {
+  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.createFragment(this.#key, `<div>TARGET_31065</div>`);
-    this.trigger("test_signal_31065");
+    this.createFragment(this.#key, `<div>TARGET_$HASH</div>`);
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -777,7 +777,27 @@ class BittyJs extends HTMLElement {
       if (subs[needle] instanceof Array === false) {
         subs[needle] = [subs[needle]];
       }
-      content = content.replaceAll(needle, subs[needle].join(""));
+      if (typeof subs[needle][0] === "string") {
+        content = content.replaceAll(needle, subs[needle].join(""));
+      } else if (
+        subs[needle][0] instanceof Element
+      ) {
+        content = content.replaceAll(
+          needle,
+          subs[needle].map((el) => el.outerHTML).join(""),
+        );
+      } else if (
+        subs[needle][0] instanceof DocumentFragment
+      ) {
+        content = content.replaceAll(
+          needle,
+          subs[needle].map((fragment) => {
+            return [...fragment.children].map((el) => {
+              return el.outerHTML;
+            }).join("");
+          }).join(""),
+        );
+      }
     }
     const template = document.createElement("template");
     template.innerHTML = content;

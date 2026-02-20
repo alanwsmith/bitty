@@ -30,6 +30,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async _copy(selector) {
+    console.log(selector);
+    const el = document.querySelector(selector);
+    const text = el.value !== undefined ? el.value : el.innerHTML;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      // TODO: Switch this to logging an error.
+      console.error("Could not copy text to clipboard");
+    }
+  }
+
   _createElement(key, content = null, options = {}) {
     const storageKey = `bittyElement_${key}`;
     const details = {
@@ -1212,6 +1224,7 @@ class BittyJs extends HTMLElement {
     this.conn.logs = [];
     this.conn.addJSON = this._addJSON.bind(this);
     this.conn.addLog = this._addLog.bind(this);
+    this.conn.copy = this._copy.bind(this);
     this.conn.createElement = this._createElement.bind(this);
     this.conn.createFragment = this._createFragment.bind(this);
     this.conn.createJSON = this._createJSON.bind(this);

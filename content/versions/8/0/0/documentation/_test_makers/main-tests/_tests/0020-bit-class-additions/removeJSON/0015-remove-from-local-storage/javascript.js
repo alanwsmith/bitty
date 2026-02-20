@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    this.removeJSON("data_$SIGNAL_NAME");
+    this.deleteJSON("data_$SIGNAL_NAME");
     const checkStorage = localStorage.getItem("data_$SIGNAL_NAME");
     if (checkStorage === null) {
       el.innerHTML = "ok";

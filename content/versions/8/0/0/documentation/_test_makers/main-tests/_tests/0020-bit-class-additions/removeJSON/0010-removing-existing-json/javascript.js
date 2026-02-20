@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    this.removeJSON("data_$SIGNAL_NAME");
+    this.deleteJSON("data_$SIGNAL_NAME");
     if (this.json["data_$SIGNAL_NAME"] === undefined) {
       el.innerHTML = "ok";
     }

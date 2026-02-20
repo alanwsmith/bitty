@@ -9,7 +9,7 @@ window.$CLASS_NAME = class {
   }
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.removeJSON("data_$SIGNAL_NAME");
+    const result = this.deleteJSON("data_$SIGNAL_NAME");
     if (result.ok === true && result.level === "warn") {
       el.innerHTML = "ok";
     }

@@ -1,21 +1,22 @@
 window.$CLASS_NAME = class {
-  bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
-    this.setLogLevel("none");
-    this.trigger("test_$SIGNAL_NAME");
-  }
+  #key = "el_$SIGNAL_NAME";
 
   async test_$SIGNAL_NAME(_, el) {
     const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-    const result = await this.fetchElement("data_$SIGNAL_NAME", url);
+    const result = await this.fetchElement(this.#key, url);
     if (
-      result.level === "warn" &&
-      this.element["data_$SIGNAL_NAME"].innerHTML === "first"
+      result.level === "warn"
     ) {
-      //el.innerHTML = "ok";
+      el.replaceWith(this.renderElement(this.#key));
     }
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
+  bittyReady() {
+    this.setLogLevel("none");
+    this.trigger("test_$SIGNAL_NAME");
   }
 };

@@ -4,7 +4,6 @@ window.$CLASS_NAME = class {
   async test_$SIGNAL_NAME(_, el) {
     const url = "/[@ file.parent @]/payloads/valid-element.xml";
     await this.fetchElement(this.#key, url);
-    console.log(this.renderElement(this.#key));
     el.replaceWith(this.renderElement(this.#key));
   }
 

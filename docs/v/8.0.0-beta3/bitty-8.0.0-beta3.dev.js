@@ -307,7 +307,15 @@ class BittyJs extends HTMLElement {
             `Warning: fetch of ${url} overwrote existing element with key '${key}'`,
           );
         }
-        this.conn._element[key] = text;
+        const template = document.createElement("template");
+        template.innerHTML = text;
+        if (template.content.childElementCount > 1) {
+          details.level = "warn";
+          details.messages.push(
+            `Warning: The got a document fragment with more than one element from ${url} while creating element with key ${key}. Only the first element was used. The others were dropped`,
+          );
+        }
+        this.conn._element[key] = template.content.firstChild.outerHTML;
       } else {
         if (typeof fallback === "string") {
           this.conn._element[key] = fallback;
@@ -688,75 +696,129 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
+      key: "loadElement",
       ok: true,
       messages: [],
+      extraInfo: null,
     };
-    if (this.conn._element[key] !== undefined) {
+    const storage = localStorage.getItem(storageKey);
+    if (key !== null && this.conn._element[key] !== undefined) {
       details.level = "warn";
       details.messages.push(
-        `Warning: Overwriting existing element with key ${key}`,
+        `Warning: loadElement() replaced an existing key: ${key}`,
       );
     }
-    const storage = localStorage.getItem(storageKey);
-    if (storage !== null) {
+    if (key === null) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No key provided for 'this.loadElement(key [,fallback])'`,
+      );
+    } else if (
+      storage === null && fallback === null
+    ) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No storage found for '${key}' and not fallback provided.`,
+      );
+    } else if (storage !== null) {
       this.conn._element[key] = JSON.parse(storage).data;
+    } else if (typeof fallback === "string") {
+      this.conn._element[key] = fallback;
+    } else if (fallback instanceof Element) {
+      this.conn._element[key] = fallback.outerHTML;
+    } else if (fallback instanceof DocumentFragment) {
+      this.conn._element[key] = [...fallback.children].map((el) => el.outerHTML)
+        .join("");
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `loadElement() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
+      );
     }
-
-    // if (storage !== null) {
-    //   const payload = JSON.parse(storage).data;
-    //   const template = document.createElement("template");
-    //   template.innerHTML = payload;
-    //   this.conn._element[key] = template.content.firstChild;
-    //   details.messages.push(`Loaded elemnet with key '${key}' from storage.`);
-    // } else if (fallback === null) {
-    //   details.level = "error";
-    //   details.ok = false;
-    //   details.messages.push(
-    //     `Noting in storage for ${key} and no fallback provided.`,
-    //   );
-    // } else if (fallback instanceof Element) {
-    //   this.conn._element[key] = fallback;
-    //   localStorage.setItem(
-    //     storageKey,
-    //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
-    //   );
-    //   details.messages.push(
-    //     `No elemnet with key '${key}' in storage. The fallback was used.`,
-    //   );
-    // } else if (fallback instanceof DocumentFragment) {
-    //   this.conn._element[key] = fallback.firstChild;
-    //   details.level = "warn";
-    //   details.messages.push(
-    //     `No elemnet with key '${key}' in storage. The fallback was used.`,
-    //   );
-    //   details.messages.push(
-    //     "Warning: A document fragment was used as a fallback. Everything beyond the first element was dropped",
-    //   );
-    //   localStorage.setItem(
-    //     storageKey,
-    //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
-    //   );
-    // } else {
-    //   const template = document.createElement("template");
-    //   template.innerHTML = fallback;
-    //   this.conn._element[key] = template.content.firstChild;
-    //   details.messages.push(
-    //     `No element with key '${key}' in storage. The fallback was used.`,
-    //   );
-    //   localStorage.setItem(
-    //     storageKey,
-    //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
-    //   );
-    // }
-
-    // return this.conn.addLog(
-    //   details.level,
-    //   "loadElement",
-    //   details.ok,
-    //   details.messages.join(" "),
-    //   null,
-    // );
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
   }
+
+  // _loadElement(key, fallback = null) {
+  //   const storageKey = `bittyElement_${key}`;
+  //   const details = {
+  //     level: "info",
+  //     ok: true,
+  //     messages: [],
+  //   };
+  //   if (this.conn._element[key] !== undefined) {
+  //     details.level = "warn";
+  //     details.messages.push(
+  //       `Warning: Overwriting existing element with key ${key}`,
+  //     );
+  //   }
+  //   const storage = localStorage.getItem(storageKey);
+  //   if (storage !== null) {
+  //     this.conn._element[key] = JSON.parse(storage).data;
+  //   }
+  // }
+
+  // if (storage !== null) {
+  //   const payload = JSON.parse(storage).data;
+  //   const template = document.createElement("template");
+  //   template.innerHTML = payload;
+  //   this.conn._element[key] = template.content.firstChild;
+  //   details.messages.push(`Loaded elemnet with key '${key}' from storage.`);
+  // } else if (fallback === null) {
+  //   details.level = "error";
+  //   details.ok = false;
+  //   details.messages.push(
+  //     `Noting in storage for ${key} and no fallback provided.`,
+  //   );
+  // } else if (fallback instanceof Element) {
+  //   this.conn._element[key] = fallback;
+  //   localStorage.setItem(
+  //     storageKey,
+  //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
+  //   );
+  //   details.messages.push(
+  //     `No elemnet with key '${key}' in storage. The fallback was used.`,
+  //   );
+  // } else if (fallback instanceof DocumentFragment) {
+  //   this.conn._element[key] = fallback.firstChild;
+  //   details.level = "warn";
+  //   details.messages.push(
+  //     `No elemnet with key '${key}' in storage. The fallback was used.`,
+  //   );
+  //   details.messages.push(
+  //     "Warning: A document fragment was used as a fallback. Everything beyond the first element was dropped",
+  //   );
+  //   localStorage.setItem(
+  //     storageKey,
+  //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
+  //   );
+  // } else {
+  //   const template = document.createElement("template");
+  //   template.innerHTML = fallback;
+  //   this.conn._element[key] = template.content.firstChild;
+  //   details.messages.push(
+  //     `No element with key '${key}' in storage. The fallback was used.`,
+  //   );
+  //   localStorage.setItem(
+  //     storageKey,
+  //     JSON.stringify({ data: this.conn._element[key].outerHTML }),
+  //   );
+  // }
+  // return this.conn.addLog(
+  //   details.level,
+  //   "loadElement",
+  //   details.ok,
+  //   details.messages.join(" "),
+  //   null,
+  // );
 
   _removeElement(key) {
     const storageKey = `bittyElement_${key}`;

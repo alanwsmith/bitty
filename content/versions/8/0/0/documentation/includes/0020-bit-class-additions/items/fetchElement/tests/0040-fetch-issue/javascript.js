@@ -1,9 +1,11 @@
 window.ClassEFEFA = class {
+  #key = "el_signal_EFEFA";
+
   async signal_EFEFA(_, el) {
-    const url = "/url-that-causes-a-404";
-    const result = await this.fetchElement("data_signal_EFEFA", url);
+    const url = "/intentionally-missing-file.html";
+    const result = await this.fetchElement(this.#key, url);
     if (result.level === "error" && result.ok === false) {
-      //el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 };

@@ -1,9 +1,11 @@
 window.$CLASS_NAME = class {
+  #key = "el_$SIGNAL_NAME";
+
   async $SIGNAL_NAME(_, el) {
-    const url = "/url-that-causes-a-404";
-    const result = await this.fetchElement("data_$SIGNAL_NAME", url);
+    const url = "/intentionally-missing-file.html";
+    const result = await this.fetchElement(this.#key, url);
     if (result.level === "error" && result.ok === false) {
-      //el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 };

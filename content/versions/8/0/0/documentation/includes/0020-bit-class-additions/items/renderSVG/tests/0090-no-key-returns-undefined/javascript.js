@@ -1,10 +1,10 @@
 window.Class01959 = class {
-  #key = "fragment_signal_01959";
+  #key = "svg_signal_01959";
 
   test_signal_01959(_, el) {
-    const fragment = this.renderFragment(this.#key);
+    const fragment = this.renderSVG(this.#key);
     if (fragment === undefined) {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -18,7 +18,7 @@ window.Class01959 = class {
 
   given_signal_01959(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.removeSVG(this.#key);
     this.trigger("test_signal_01959");
   }
 };

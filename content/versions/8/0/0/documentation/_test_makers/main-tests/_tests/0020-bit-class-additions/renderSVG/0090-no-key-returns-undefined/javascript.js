@@ -1,10 +1,10 @@
 window.$CLASS_NAME = class {
-  #key = "fragment_$SIGNAL_NAME";
+  #key = "svg_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const fragment = this.renderFragment(this.#key);
+    const fragment = this.renderSVG(this.#key);
     if (fragment === undefined) {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -18,7 +18,7 @@ window.$CLASS_NAME = class {
 
   given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
-    this.removeFragment(this.#key);
+    this.removeSVG(this.#key);
     this.trigger("test_$SIGNAL_NAME");
   }
 };

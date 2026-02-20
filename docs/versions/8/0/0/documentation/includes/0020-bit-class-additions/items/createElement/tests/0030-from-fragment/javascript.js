@@ -1,18 +1,22 @@
 window.ClassDA138 = class {
+  #key = "el_signal_DA138";
+
+  test_signal_DA138(_, el) {
+    const template = document.createElement("template");
+    template.innerHTML = `<div class="test">ok</div>`;
+    this.createElement(this.#key, template.content);
+    el.replaceWith(this.renderElement(this.#key));
+  }
+
+  /////////////////////////////////////////////////
+  // Test Setup
+  /////////////////////////////////////////////////
+
   bittyReady() {
     this.trigger("given_signal_DA138");
   }
 
   given_signal_DA138(_, __) {
     this.trigger("test_signal_DA138");
-  }
-
-  test_signal_DA138(_, el) {
-    const newFragment = document.createDocumentFragment();
-    const newEl = document.createElement("div");
-    newEl.innerHTML = "ok";
-    newFragment.appendChild(newEl);
-    this.addElement("el_signal_DA138", newFragment);
-    //el.innerHTML = this.element["el_signal_DA138"].innerHTML;
   }
 };

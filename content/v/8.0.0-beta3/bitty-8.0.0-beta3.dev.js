@@ -133,7 +133,15 @@ class BittyJs extends HTMLElement {
     if (typeof content === "string") {
       this.conn._element[key] = content;
     } else if (content instanceof Element) {
+      this.conn._element[key] = content.outerHTML;
     } else if (content instanceof DocumentFragment) {
+      this.conn._element[key] = content.firstChild.outerHTML;
+      if (content.childElementCount > 1) {
+        details.level = "warn";
+        details.messages.push(
+          "Warning: A document fragment with more than one child element was used to create an element with .createElement. Only the first element was used. The rest were ignored",
+        );
+      }
     } else {
       details.level = "error";
       details.ok = false;

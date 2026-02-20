@@ -1063,6 +1063,10 @@ class BittyJs extends HTMLElement {
     this.dispatchEvent(ev);
   }
 
+  _setCSS(key, value) {
+    document.documentElement.style.setProperty(key, value);
+  }
+
   _setLogLevel(level) {
     if (this.getLogLevelIndex(level) === -1) {
       this.#_logLevel = "warn";
@@ -1248,6 +1252,7 @@ class BittyJs extends HTMLElement {
     this.conn.saveElement = this._saveElement.bind(this);
     this.conn.saveJSON = this._saveJSON.bind(this);
     this.conn.send = this._send.bind(this);
+    this.conn.setCSS = this._setCSS.bind(this);
     this.conn.setLogLevel = this._setLogLevel.bind(this);
     this.conn.sleep = this._sleep.bind(this);
     this.conn.trigger = this._trigger.bind(this);

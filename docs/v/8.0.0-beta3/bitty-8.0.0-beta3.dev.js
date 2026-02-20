@@ -604,6 +604,75 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async _fetchSVG(key, url, fallback = null, options = {}) {
+    const storageKey = `bittySVG_${key}`;
+    const details = {
+      level: "info",
+      key: "fetchSVG",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    try {
+      const fetchOptions = options.fetchOptions !== undefined
+        ? options.fetchOptions
+        : {};
+      let response = await fetch(url, fetchOptions);
+      if (response.ok === true) {
+        const text = await response.text();
+        if (this.conn._svg[key] !== undefined) {
+          details.level = "warn";
+          details.messages.push(
+            `Warning: fetch of ${url} overwrote existing SVG with key '${key}'`,
+          );
+        }
+        this.conn._svg[key] = text;
+      } else {
+        if (typeof fallback === "string") {
+          this.conn._svg[key] = fallback;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
+        } else if (content instanceof SVGSVGElement) {
+          this.conn._svg[key] = content.outerHTML;
+          details.level = "warn";
+          details.messages.push(
+            `Used fallback for '${key}' because fetching '${url}' failed.`,
+          );
+          details.extraInfo = response;
+        } else {
+          details.level = "error";
+          details.ok = false;
+          details.messages.push(
+            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+          );
+          details.extraInfo = response;
+        }
+      }
+    } catch (error) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
+      );
+    }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn._svg[key] }),
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
+  }
+
   _getLogLevel() {
     return this.#_logLevel;
   }
@@ -1468,6 +1537,7 @@ class BittyJs extends HTMLElement {
     this.conn.fetchElement = this._fetchElement.bind(this);
     this.conn.fetchFragment = this._fetchFragment.bind(this);
     this.conn.fetchJSON = this._fetchJSON.bind(this);
+    this.conn.fetchSVG = this._fetchSVG.bind(this);
     this.conn.getLogLevel = this._getLogLevel.bind(this);
     this.conn.loadElement = this._loadElement.bind(this);
     this.conn.loadFragment = this._loadFragment.bind(this);

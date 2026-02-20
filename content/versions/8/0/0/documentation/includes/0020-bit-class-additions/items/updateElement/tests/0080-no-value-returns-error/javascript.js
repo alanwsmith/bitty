@@ -1,10 +1,10 @@
 window.ClassC95B6 = class {
-  #key = "fragment_signal_C95B6";
+  #key = "element_signal_C95B6";
 
   test_signal_C95B6(_, el) {
-    const result = this.updateFragment(this.#key);
+    const result = this.updateElement(this.#key);
     if (result.ok === false && result.level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -13,11 +13,8 @@ window.ClassC95B6 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_C95B6");
-  }
-
-  given_signal_C95B6(_, __) {
     this.setLogLevel("none");
+    this.createElement(this.#key, `<div></div>`);
     this.trigger("test_signal_C95B6");
   }
 };

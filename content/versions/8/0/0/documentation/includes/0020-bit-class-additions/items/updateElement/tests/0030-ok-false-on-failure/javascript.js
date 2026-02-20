@@ -1,12 +1,12 @@
 window.ClassBDBD6 = class {
-  #key = "fragment_signal_BDBD6";
+  #key = "element_signal_BDBD6";
 
   test_signal_BDBD6(_, el) {
-    const result = this.updateFragment(this.#key, {
+    const result = this.updateElement(this.#key, {
       key: "not a string, element, or document fragment",
     });
     if (result.ok === false && result.level === "error") {
-      //el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -15,11 +15,8 @@ window.ClassBDBD6 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_BDBD6");
-  }
-
-  given_signal_BDBD6(_, __) {
     this.setLogLevel("none");
+    this.createElement(this.#key, `<div></div>`);
     this.trigger("test_signal_BDBD6");
   }
 };

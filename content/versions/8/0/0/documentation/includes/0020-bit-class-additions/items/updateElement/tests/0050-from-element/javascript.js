@@ -1,9 +1,9 @@
 window.Class45896 = class {
-  #key = "fragment_signal_45896";
+  #key = "element_signal_45896";
 
-  test_signal_45896(element, el) {
-    this.updateFragment(this.#key, element);
-    //    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  test_signal_45896(newElement, el) {
+    this.updateElement(this.#key, newElement);
+    el.replaceWith(this.renderElement(this.#key));
   }
 
   /////////////////////////////////////////////////
@@ -11,11 +11,10 @@ window.Class45896 = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_45896");
-  }
-
-  given_signal_45896(_, __) {
+    this.setLogLevel("none");
+    this.createElement(this.#key, `<div class="test">bug</div>`);
     const element = document.createElement("div");
+    element.classList.add("test");
     element.innerHTML = "ok";
     this.send(element, "test_signal_45896");
   }

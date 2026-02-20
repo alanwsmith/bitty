@@ -1,10 +1,10 @@
 window.$CLASS_NAME = class {
-  #key = "fragment_$SIGNAL_NAME";
+  #key = "element_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.updateFragment(this.#key);
+    const result = this.updateElement(this.#key);
     if (result.ok === false && result.level === "error") {
-      //      el.innerHTML = "ok";
+      el.innerHTML = "ok";
     }
   }
 
@@ -13,11 +13,8 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_$SIGNAL_NAME");
-  }
-
-  given_$SIGNAL_NAME(_, __) {
     this.setLogLevel("none");
+    this.createElement(this.#key, `<div></div>`);
     this.trigger("test_$SIGNAL_NAME");
   }
 };

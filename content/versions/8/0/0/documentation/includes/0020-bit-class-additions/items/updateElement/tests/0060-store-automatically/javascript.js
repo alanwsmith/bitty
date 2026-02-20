@@ -1,9 +1,9 @@
 window.Class6291C = class {
-  #key = "fragment_signal_6291C";
+  #key = "element_signal_6291C";
 
   test_signal_6291C(element, el) {
-    const result = this.loadFragment(this.#key);
-    //    el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+    this.loadElement(this.#key);
+    el.replaceWith(this.renderElement(this.#key));
   }
 
   /////////////////////////////////////////////////
@@ -11,13 +11,11 @@ window.Class6291C = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    this.trigger("given_signal_6291C");
-  }
-
-  given_signal_6291C(_, __) {
+    this.setLogLevel("none");
     this.removeFragment(this.#key);
-    this.updateFragment(this.#key, `<div>ok</div>`);
-    delete this._fragment[this.#key];
+    this.createElement(this.#key, `<div class="test">bug</div>`);
+    this.updateElement(this.#key, `<div class="test">ok</div>`);
+    delete this._element[this.#key];
     this.trigger("test_signal_6291C");
   }
 };

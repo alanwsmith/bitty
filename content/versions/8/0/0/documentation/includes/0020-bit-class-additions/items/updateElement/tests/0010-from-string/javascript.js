@@ -1,5 +1,5 @@
 window.ClassB814D = class {
-  #key = "fragment_signal_B814D";
+  #key = "element_signal_B814D";
 
   test_signal_B814D(_, el) {
     this.updateElement(this.#key, `<div class="test">ok</div>`);

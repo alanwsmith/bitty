@@ -1,5 +1,5 @@
 window.$CLASS_NAME = class {
-  #key = "fragment_$SIGNAL_NAME";
+  #key = "element_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
     this.updateElement(this.#key, `<div class="test">ok</div>`);

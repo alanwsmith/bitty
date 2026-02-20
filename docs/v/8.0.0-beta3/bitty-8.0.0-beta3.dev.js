@@ -273,6 +273,8 @@ class BittyJs extends HTMLElement {
       details.messages.push(
         `Stored string as SVG with key ${key}.`,
       );
+    } else if (content instanceof SVGSVGElement) {
+      this.conn._svg[key] = content.outerHTML;
     } else {
       details.level = "error";
       details.ok = false;

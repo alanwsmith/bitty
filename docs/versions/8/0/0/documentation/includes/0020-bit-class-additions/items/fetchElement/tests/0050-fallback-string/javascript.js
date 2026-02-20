@@ -11,8 +11,8 @@ window.ClassBB20D = class {
   /////////////////////////////////////////////////
 
   run_signal_BB20D(_, __) {
-    const fallback = `<div class="manual-test">ok</div>`;
     const url = "/intentionally-missing-file.html";
+    const fallback = `<div class="manual-test">ok</div>`;
     this.send(
       { url: url, fallback: fallback },
       "test_signal_BB20D",

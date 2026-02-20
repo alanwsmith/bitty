@@ -11,8 +11,8 @@ window.$CLASS_NAME = class {
   /////////////////////////////////////////////////
 
   run_$SIGNAL_NAME(_, __) {
-    const fallback = `<div class="manual-test">ok</div>`;
     const url = "/intentionally-missing-file.html";
+    const fallback = `<div class="manual-test">ok</div>`;
     this.send(
       { url: url, fallback: fallback },
       "test_$SIGNAL_NAME",

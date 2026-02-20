@@ -1434,6 +1434,31 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
+  updateEvent(ev) {
+    // NOTE These are current set to target.
+    // They need to be set to use the sending
+    // element if it's different from the
+    // target.
+    ev.prop = function (key, closest = true) {
+      return ev.target.dataset[key];
+    };
+    ev.propAsFloat = function (key, closest = true) {
+      return parseFloat(ev.target.dataset[key]);
+    };
+    ev.propAsInt = function (key, closest = true) {
+      return parseInt(ev.target.dataset[key], 10);
+    };
+    ev.value = function (key, closest = true) {
+      return ev.target.value;
+    };
+    ev.valueAsFloat = function (key, closest = true) {
+      return parseFloat(ev.target.value);
+    };
+    ev.valueAsInt = function (key, closest = true) {
+      return parseInt(ev.target.value, 10);
+    };
+  }
+
   /** internal */
   async processEvent(ev) {
     let inputSignalString;
@@ -1442,6 +1467,7 @@ class BittyJs extends HTMLElement {
       ev = ev.bittyPayload.content;
     } else {
       inputSignalString = ev.target.dataset.send;
+      this.updateEvent(ev);
     }
     for (let rawSignalString of splitSignalString(inputSignalString)) {
       const signalParts = rawSignalString.split(":");

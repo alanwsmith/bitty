@@ -2,18 +2,17 @@ window.$CLASS_NAME = class {
   #key = "json_$SIGNAL_NAME";
 
   test_$SIGNAL_NAME(_, el) {
-    const result = this.loadJSON(this.#key);
-    if (result.ok === true) {
-      el.innerHTML = this.json[this.#key].status;
-    }
+    this.loadJSON(this.#key);
+    el.innerHTML = this.json[this.#key].status;
   }
 
   /////////////////////////////////////////////////
   // Test Setup
   /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.createJSON(this.#key, { status: "ok" });
+  async bittyReady() {
+    const url = "/[@ file.parent @]/payloads/valid-json.json";
+    await this.fetchJSON(this.#key, url);
     delete this.json[this.#key];
     this.trigger("test_$SIGNAL_NAME");
   }

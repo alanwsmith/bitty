@@ -614,7 +614,17 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  async _fetchJSON(key, url, options = {}) {
+  async _fetchJSON(key, url, fallback = null, options = {}) {
+    const storageKey = `bittyJSON_${key}`;
+    // TODO: Update this methods so everything
+    // uses `details`
+    const details = {
+      level: "info",
+      key: "fetchJSON",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -630,12 +640,8 @@ class BittyJs extends HTMLElement {
           );
         } else {
           this.conn.json[key] = json;
-          return this.conn.addLog(
-            "info",
-            "fetchJSON",
-            true,
+          details.messages.push(
             `fetched JSON from '${url}' and stored in key '${key}'`,
-            null,
           );
         }
       } else {
@@ -663,6 +669,19 @@ class BittyJs extends HTMLElement {
         error.toString(),
       );
     }
+    if (details.ok === true) {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.conn.json[key] }),
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
   }
 
   async _fetchSVG(key, url, fallback = null, options = {}) {
@@ -1691,6 +1710,9 @@ class BittyJs extends HTMLElement {
   loadJSONBridge(key, fallback = null) {
     const storageKey = `bittyJSON_${key}`;
     const storage = localStorage.getItem(storageKey);
+    // TODO: Update so details has everything
+    // for the log then update everything in the
+    // method to use it.
     const details = { level: "info", extraText: "" };
     if (this.conn.json[key] !== undefined) {
       details.level = "warn";

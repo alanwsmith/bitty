@@ -5,7 +5,6 @@ window.Class6CF16 = class {
     this.createElement(this.#key, `<div class="test">ok</div>`);
     delete this._element[this.#key];
     this.loadElement(this.#key);
-    console.log(this._element[this.#key]);
     el.replaceWith(this.renderElement(this.#key));
   }
 

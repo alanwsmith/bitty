@@ -130,6 +130,12 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
+    if (key !== null && this.conn._element[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: createElement overwrite an existing element with key '${key}'`,
+      );
+    }
     if (typeof content === "string") {
       this.conn._element[key] = content;
     } else if (content instanceof Element) {

@@ -1,7 +1,7 @@
-window.ClassB1C55 = class {
-  #key = "svg_signal_B1C55";
+window.Class15988 = class {
+  #key = "svg_signal_15988";
 
-  test_signal_B1C55(_, el) {
+  test_signal_15988(_, el) {
     const replacementEl = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "text",
@@ -11,16 +11,16 @@ window.ClassB1C55 = class {
     replacementEl.setAttribute("font-size", "20");
     replacementEl.setAttribute("text-anchor", "middle");
     replacementEl.setAttribute("fill", "white");
-    replacementEl.text = "ok";
+    replacementEl.textContent = "ok";
     const subs = {
-      "TARGET_B1C55": replacementEl,
+      "TARGET_15988": replacementEl,
     };
     const svg = this.renderSVG(this.#key, subs);
-    el.innerHTML = svg.querySelector("text").innerHTML;
-    this.send(svg, "view_signal_B1C55");
+    el.innerHTML = svg.querySelector("text").textContent;
+    this.send(svg, "view_signal_15988");
   }
 
-  view_signal_B1C55(svg, el) {
+  view_signal_15988(svg, el) {
     el.replaceWith(svg);
   }
 
@@ -32,10 +32,10 @@ window.ClassB1C55 = class {
     const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
   <rect width="100%" height="100%" fill="green" />
-  TARGET_B1C55
+  TARGET_15988
 </svg>`;
     this.setLogLevel("none");
     this.createSVG(this.#key, input);
-    this.trigger("test_signal_B1C55");
+    this.trigger("test_signal_15988");
   }
 };

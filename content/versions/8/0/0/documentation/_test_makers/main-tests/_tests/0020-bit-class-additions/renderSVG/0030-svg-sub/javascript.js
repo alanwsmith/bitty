@@ -11,12 +11,12 @@ window.$CLASS_NAME = class {
     replacementEl.setAttribute("font-size", "20");
     replacementEl.setAttribute("text-anchor", "middle");
     replacementEl.setAttribute("fill", "white");
-    replacementEl.text = "ok";
+    replacementEl.textContent = "ok";
     const subs = {
       "TARGET_$HASH": replacementEl,
     };
     const svg = this.renderSVG(this.#key, subs);
-    el.innerHTML = svg.querySelector("text").innerHTML;
+    el.innerHTML = svg.querySelector("text").textContent;
     this.send(svg, "view_$SIGNAL_NAME");
   }
 

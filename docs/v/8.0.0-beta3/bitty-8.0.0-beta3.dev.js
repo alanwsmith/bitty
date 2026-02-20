@@ -1311,21 +1311,12 @@ class BittyJs extends HTMLElement {
         if (typeof subs[needle][0] === "string") {
           content = content.replaceAll(needle, subs[needle].join(""));
         } else if (
-          subs[needle][0] instanceof Element
+          subs[needle][0] instanceof SVGElement
         ) {
           content = content.replaceAll(
             needle,
-            subs[needle].map((el) => el.outerHTML).join(""),
-          );
-        } else if (
-          subs[needle][0] instanceof DocumentFragment
-        ) {
-          content = content.replaceAll(
-            needle,
-            subs[needle].map((fragment) => {
-              return [...fragment.children].map((el) => {
-                return el.outerHTML;
-              }).join("");
+            subs[needle].map((item) => {
+              return item.outerHTML;
             }).join(""),
           );
         }

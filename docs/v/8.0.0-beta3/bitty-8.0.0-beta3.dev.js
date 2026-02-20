@@ -122,13 +122,34 @@ class BittyJs extends HTMLElement {
   }
 
   _createElement(key, content = null, options = {}) {
-    console.log(key);
-    this.conn._element[key] = content;
+    const storageKey = `bittyFragment_${key}`;
+    const details = {
+      level: "info",
+      key: "createElement",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    if (typeof content === "string") {
+      this.conn._element[key] = content;
+    } else if (content instanceof Element) {
+    } else if (content instanceof DocumentFragment) {
+    } else {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Tried to create an element for key '${key}' from something other than a string, element, or document fragment which is not supported.`,
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      details.extraInfo,
+    );
   }
 
-  // this is temporary to make testing addElement
-  // easier until tests are written for
-  // this method specifically.
   _createFragment(key, content = null, options = {}) {
     const storageKey = `bittyFragment_${key}`;
     const details = {
@@ -194,55 +215,55 @@ class BittyJs extends HTMLElement {
       details.messages.join(" "),
       details.extraInfo,
     );
-
-    // TODO: Remove all the comments below
-    // when all fragments stuff have been moved
-    // to string storage.
-
-    // if (this.conn.fragment[key] !== undefined) {
-    //   details.level = "warn";
-    //   details.messages.push(
-    //     `Warning. createFragment overwrite an exsiting fragment with key '${key}'`,
-    //   );
-    // }
-
-    // if (typeof content === "string") {
-    //   const template = document.createElement("template");
-    //   template.innerHTML = content;
-    //   this.conn.fragment[key] = template.content;
-    //   details.messages.push(`Added fragment with key '${key}'`);
-    // } else if (
-    //   content instanceof DocumentFragment
-    // ) {
-    //   this.conn.fragment[key] = content;
-    //   details.messages.push(`Added fragment with key '${key}'`);
-    // } else if (
-    //   content instanceof Element
-    // ) {
-    //   const fragment = document.createDocumentFragment();
-    //   fragment.appendChild(content);
-    //   this.conn.fragment[key] = fragment;
-    //   details.messages.push(`Added fragment with key '${key}'`);
-    // } else {
-    //   details.level = "error";
-    //   details.ok = false;
-    //   details.messages.push(
-    //     `Could not add fragment for key '${key}'. The 'content' argument must be a String, Element, or Document Fragment.`,
-    //   );
-    // }
-
-    // if (details.ok === true) {
-    //   const storageKey = `bittyFragment_${key}`;
-    //   localStorage.setItem(
-    //     storageKey,
-    //     JSON.stringify({
-    //       data: [...this.conn.fragment[key].children].map((el) => {
-    //         return el.outerHTML;
-    //       }).join(""),
-    //     }),
-    //   );
-    // }
   }
+
+  // TODO: Remove all the comments below
+  // when all fragments stuff have been moved
+  // to string storage.
+
+  // if (this.conn.fragment[key] !== undefined) {
+  //   details.level = "warn";
+  //   details.messages.push(
+  //     `Warning. createFragment overwrite an exsiting fragment with key '${key}'`,
+  //   );
+  // }
+
+  // if (typeof content === "string") {
+  //   const template = document.createElement("template");
+  //   template.innerHTML = content;
+  //   this.conn.fragment[key] = template.content;
+  //   details.messages.push(`Added fragment with key '${key}'`);
+  // } else if (
+  //   content instanceof DocumentFragment
+  // ) {
+  //   this.conn.fragment[key] = content;
+  //   details.messages.push(`Added fragment with key '${key}'`);
+  // } else if (
+  //   content instanceof Element
+  // ) {
+  //   const fragment = document.createDocumentFragment();
+  //   fragment.appendChild(content);
+  //   this.conn.fragment[key] = fragment;
+  //   details.messages.push(`Added fragment with key '${key}'`);
+  // } else {
+  //   details.level = "error";
+  //   details.ok = false;
+  //   details.messages.push(
+  //     `Could not add fragment for key '${key}'. The 'content' argument must be a String, Element, or Document Fragment.`,
+  //   );
+  // }
+
+  // if (details.ok === true) {
+  //   const storageKey = `bittyFragment_${key}`;
+  //   localStorage.setItem(
+  //     storageKey,
+  //     JSON.stringify({
+  //       data: [...this.conn.fragment[key].children].map((el) => {
+  //         return el.outerHTML;
+  //       }).join(""),
+  //     }),
+  //   );
+  // }
 
   async _fetchElement(key, url, options = {}) {
     let response = await fetch(url, options);

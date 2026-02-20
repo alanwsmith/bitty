@@ -1,16 +1,15 @@
 window.$CLASS_NAME = class {
-  #key = "el_$SIGNAL_NAME";
+  #key = "svg_$SIGNAL_NAME";
 
   async test_$SIGNAL_NAME(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element.xml";
+    const url = "/[@ file.parent @]/payloads/valid-svg.svg";
     const options = {
       method: "POST",
     };
-    // await this.fetchJSON("data_$SIGNAL_NAME", this.#url, options);
+    // await this.fetchSVG(key, url, fallback, options);
     //
     // NOTE: Confirming options must be done manually.
     // This test is set to always pass as a result.
-    //    el.innerHTML = "ok";
   }
 
   /////////////////////////////////////////////////

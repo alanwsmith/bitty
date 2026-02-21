@@ -1539,7 +1539,6 @@ class BittyJs extends HTMLElement {
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
-      console.log("receivers");
       for (const receiver of receivers) {
         this.updateReceiverV2(ev, sender, receiver);
         if (doAwait === true) {
@@ -1549,7 +1548,6 @@ class BittyJs extends HTMLElement {
         }
       }
     } else {
-      console.log("no recievers");
       if (doAwait === true) {
         await this.conn[signal](ev, null);
       } else {
@@ -1558,14 +1556,66 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async processBittyTriggerSignal(ev, rawSignal) {
+    const signalParts = rawSignal.split(":");
+    signalParts.reverse();
+    const signal = signalParts[0];
+    const doAwait = signalParts[1] === "await" ? true : false;
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        this.updateReceiverForBittySignal(receiver);
+        if (doAwait === true) {
+          await this.conn[signal](null, receiver);
+        } else {
+          this.conn[signal](null, receiver);
+        }
+      }
+    } else {
+      if (doAwait === true) {
+        await this.conn[signal](null, null);
+      } else {
+        this.conn[signal](null, null);
+      }
+    }
+  }
+
   updateReceiverV2(ev, sender, receiver) {
     receiver.isSender = () => receiver.isSameNode(sender);
     receiver.isTarget = () => receiver.isSameNode(ev.target);
+    this.updateReceiverData(receiver);
+  }
+
+  updateReceiverForBittySignal(receiver) {
+    receiver.isSender = () => false;
+    receiver.isTarget = () => false;
+    this.updateReceiverData(receiver);
+  }
+
+  updateReceiverData(receiver) {
+    receiver.getData = (key) => {};
+    receiver.getDataAsFloat = (key) => {};
+    receiver.getDataAsInt = (key) => {};
+    receiver.getValue = () => {};
+    receiver.getValueAsFloat = (key) => {};
+    receiver.getValueAsInt = (key) => {};
+    receiver.setData = (key, value) => {};
   }
 
   async processEvent(ev) {
     let senders = [];
-    if (ev.type !== "bittytargetevent" && ev.type !== "bittysendevent") {
+    if (ev.type === "bittytriggerevent") {
+      const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
+      for (const signal of signals) {
+        if (typeof this.conn[signal] === "function") {
+          await this.processBittyTriggerSignal(ev, signal);
+        }
+      }
+    } else if (ev.type === "bittysendevent") {
+      //      console.log(ev);
+    } else {
       senders = findSenders(ev.target);
       for (const sender of senders) {
         const signals = splitSignalString(sender.dataset.send);
@@ -1575,13 +1625,7 @@ class BittyJs extends HTMLElement {
           }
         }
       }
-    } else {
-      this.processBittyEvent(ev);
     }
-  }
-
-  processBittyEvent(ev) {
-    const bittyEvent = ev.bittyPayload.content;
   }
 
   // TODO: Deprecate in favoer of processEvent
@@ -1589,7 +1633,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   async processEvent_Previous(ev) {
     let senders = [];
-    if (ev.type !== "bittytargetevent" && ev.type !== "bittysendevent") {
+    if (ev.type !== "bittytriggerevent" && ev.type !== "bittysendevent") {
       senders = findSenders(ev.target);
       for (const sender of senders) {
         const signals = splitSignalString(sender.dataset.send);

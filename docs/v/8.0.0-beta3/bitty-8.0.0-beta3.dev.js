@@ -1137,49 +1137,28 @@ class BittyJs extends HTMLElement {
         });
       },
     );
-    if (this.dataset.listeners !== undefined) {
-      this.dataset.listeners.trim().split(/\s+/m).forEach((listener) => {
-        window.addEventListener(listener, (ev) => {
-          if (ev.target.dataset.send) {
-            this.processEventBridge.call(this, ev);
-          }
-        });
+    ["click", "input"].forEach((listener) => {
+      window.addEventListener(listener, (ev) => {
+        const sendingElement = ev.target.closest("[data-send]");
+        if (
+          ev.target.dataset.send && ev.target.dataset.listeners === undefined
+        ) {
+          this.processEventBridge.call(this, ev);
+        }
       });
-    } else {
-      ["click", "input"].forEach((listener) => {
-        window.addEventListener(listener, (ev) => {
-          if (
-            ev.target.dataset.send && ev.target.dataset.listeners === undefined
-          ) {
-            this.processEventBridge.call(this, ev);
-          }
-        });
-      });
-    }
+    });
     const customListeners = [
       ...new Set(
         [...document.querySelectorAll("[data-listeners]")]
           .map((el) => {
             return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
-              return signal.trim();
+              window.addEventListener(signal.trim(), (ev) => {
+                this.processEventBridge.call(this, ev);
+              });
             });
           }),
       ),
     ];
-    customListeners.flat().forEach((listener) => {
-      window.addEventListener(listener, (ev) => {
-        if (
-          ev.target.dataset.send !== undefined &&
-          ev.target.dataset.listeners !== undefined
-        ) {
-          if (
-            splitSignalString(ev.target.dataset.listeners).includes(listener)
-          ) {
-            this.processEventBridge.call(this, ev);
-          }
-        }
-      });
-    });
   }
 
   // TODO: Deprecate and remove in favor of
@@ -1544,6 +1523,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   async processEvent(ev) {
     let inputSignalString;
+    let listeners = [];
     if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
       inputSignalString = ev.bittyPayload.target.dataset.send;
       ev = ev.bittyPayload.content;
@@ -1551,71 +1531,99 @@ class BittyJs extends HTMLElement {
       inputSignalString = ev.target.dataset.send;
       this.updateEvent(ev);
     }
-    for (let rawSignalString of splitSignalString(inputSignalString)) {
-      const signalParts = rawSignalString.split(":");
-      signalParts.reverse();
-      const signal = signalParts[0];
-      const doAwait = signalParts[1] === "await" ? true : false;
-      // TODO: Refactor all the below stuff to make
-      // it easier to reason about.
-      if (typeof this.conn[signal] === "function") {
-        const receivers = document.querySelectorAll(
-          `[data-receive~='${signal}']`,
-        );
-        if (doAwait === true) {
-          if (receivers.length === 0) {
-            await this.conn[signal](ev, null);
-          } else {
-            for (const receiver of receivers) {
-              this.updateElement(receiver);
-              if (ev === null) {
-                receiver.isSender = () => {
-                  return false;
-                };
-                receiver.isTarget = () => {
-                  return false;
-                };
-              } else {
-                if (receiver.isSameNode(ev.sender)) {
+
+    let keepGoing = false;
+    if (inputSignalString !== undefined) {
+      inputSignalString.trim().split(/\s+/m).map((signal) => {
+        if (typeof this.conn[signal] === "function") {
+          keepGoing = true;
+        }
+      });
+    }
+
+    if (
+      keepGoing === true &&
+      ev !== null &&
+      ev.target !== undefined && ev.target.dataset !== undefined &&
+      ev.target.dataset.listeners !== undefined
+    ) {
+      listeners = ev.target.dataset.listeners.trim().split(/\s+/m).filter(
+        (listener) => {
+          return listener !== "";
+        },
+      );
+      if (listeners.length > 0) {
+        keepGoing = listeners.includes(ev.type);
+      }
+    }
+
+    if (keepGoing === true) {
+      for (let rawSignalString of splitSignalString(inputSignalString)) {
+        const signalParts = rawSignalString.split(":");
+        signalParts.reverse();
+        const signal = signalParts[0];
+        const doAwait = signalParts[1] === "await" ? true : false;
+        // TODO: Refactor all the below stuff to make
+        // it easier to reason about.
+        if (typeof this.conn[signal] === "function") {
+          const receivers = document.querySelectorAll(
+            `[data-receive~='${signal}']`,
+          );
+          if (doAwait === true) {
+            if (receivers.length === 0) {
+              await this.conn[signal](ev, null);
+            } else {
+              for (const receiver of receivers) {
+                this.updateElement(receiver);
+                if (ev === null) {
                   receiver.isSender = () => {
-                    return true;
+                    return false;
                   };
-                }
-                if (receiver.isSameNode(ev.target)) {
                   receiver.isTarget = () => {
-                    return true;
+                    return false;
                   };
+                } else {
+                  if (receiver.isSameNode(ev.sender)) {
+                    receiver.isSender = () => {
+                      return true;
+                    };
+                  }
+                  if (receiver.isSameNode(ev.target)) {
+                    receiver.isTarget = () => {
+                      return true;
+                    };
+                  }
                 }
+                await this.conn[signal](ev, receiver);
               }
-              await this.conn[signal](ev, receiver);
             }
-          }
-        } else {
-          if (receivers.length === 0) {
-            this.conn[signal](ev, null);
           } else {
-            for (const receiver of receivers) {
-              this.updateElement(receiver);
-              if (ev === null) {
-                receiver.isSender = () => {
-                  return false;
-                };
-                receiver.isTarget = () => {
-                  return false;
-                };
-              } else {
-                if (receiver.isSameNode(ev.sender)) {
+            if (receivers.length === 0) {
+              this.conn[signal](ev, null);
+            } else {
+              for (const receiver of receivers) {
+                this.updateElement(receiver);
+                if (ev === null) {
                   receiver.isSender = () => {
-                    return true;
+                    return false;
                   };
-                }
-                if (receiver.isSameNode(ev.target)) {
                   receiver.isTarget = () => {
-                    return true;
+                    return false;
                   };
+                } else {
+                  if (receiver.isSameNode(ev.sender)) {
+                    receiver.isSender = () => {
+                      return true;
+                    };
+                  }
+                  if (receiver.isSameNode(ev.target)) {
+                    receiver.isTarget = () => {
+                      return true;
+                    };
+                  }
                 }
+                this.conn[signal](ev, receiver);
               }
-              this.conn[signal](ev, receiver);
             }
           }
         }

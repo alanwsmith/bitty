@@ -1503,6 +1503,19 @@ class BittyJs extends HTMLElement {
     };
   }
 
+  updateElement(el) {
+    el.copy = async function () {
+      if (el.value) {
+        try {
+          await navigator.clipboard.writeText(el.value);
+        } catch (error) {
+          // TODO: Switch this to logging an error.
+          console.error("Could not copy text to clipboard");
+        }
+      }
+    };
+  }
+
   /** internal */
   async processEvent(ev) {
     let inputSignalString;
@@ -1527,6 +1540,7 @@ class BittyJs extends HTMLElement {
             await this.conn[signal](ev, null);
           } else {
             for (const receiver of receivers) {
+              this.updateElement(receiver);
               await this.conn[signal](ev, receiver);
             }
           }
@@ -1535,6 +1549,7 @@ class BittyJs extends HTMLElement {
             this.conn[signal](ev, null);
           } else {
             for (const receiver of receivers) {
+              this.updateElement(receiver);
               this.conn[signal](ev, receiver);
             }
           }

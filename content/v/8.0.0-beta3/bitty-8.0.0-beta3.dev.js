@@ -1143,30 +1143,50 @@ class BittyJs extends HTMLElement {
   addEventListeners() {
     // TODO: Consolidate this.
     // Internal bitty listeners
-    ["bittysendevent", "bittytriggerevent"].forEach(
-      (listener) => {
-        window.addEventListener(listener, (ev) => {
-          this.processEventBridge.call(this, ev);
+
+    let listenerArray = [
+      "click",
+      "input",
+      "bittysendevent",
+      "bittytriggerevent",
+    ];
+    [...document.querySelectorAll("[data-listeners]")].forEach(
+      (el) => {
+        splitSignalString(el.dataset.listeners).forEach((listener) => {
+          listenerArray.push(listener);
         });
       },
     );
-    ["click", "input"].forEach((listener) => {
+    [...new Set(listenerArray)].forEach((listener) => {
       window.addEventListener(listener, (ev) => {
         this.processEventBridge.call(this, ev);
       });
     });
-    const customListeners = [
-      ...new Set(
-        [...document.querySelectorAll("[data-listeners]")]
-          .map((el) => {
-            return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
-              window.addEventListener(signal.trim(), (ev) => {
-                this.processEventBridge.call(this, ev);
-              });
-            });
-          }),
-      ),
-    ];
+
+    // ["bittysendevent", "bittytriggerevent"].forEach(
+    //   (listener) => {
+    //     window.addEventListener(listener, (ev) => {
+    //       this.processEventBridge.call(this, ev);
+    //     });
+    //   },
+    // );
+    // ["click", "input"].forEach((listener) => {
+    //   window.addEventListener(listener, (ev) => {
+    //     this.processEventBridge.call(this, ev);
+    //   });
+    // });
+    // const customListeners = [
+    //   ...new Set(
+    //     [...document.querySelectorAll("[data-listeners]")]
+    //       .map((el) => {
+    //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
+    //           window.addEventListener(signal.trim(), (ev) => {
+    //             this.processEventBridge.call(this, ev);
+    //           });
+    //         });
+    //       }),
+    //   ),
+    // ];
   }
 
   // TODO: Deprecate and remove in favor of
@@ -1546,6 +1566,7 @@ class BittyJs extends HTMLElement {
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
+        // console.log(`${rawSignal} - ${receiver}`);
         this.updateReceiverV2(ev, sender, receiver);
         if (doAwait === true) {
           await this.conn[signal](ev, receiver);
@@ -1658,7 +1679,14 @@ class BittyJs extends HTMLElement {
         const signals = splitSignalString(sender.dataset.send);
         for (const signal of signals) {
           if (typeof this.conn[signal] === "function") {
-            await this.processSignal(ev, sender, signal);
+            if (sender.dataset.listeners !== undefined) {
+              const listeners = splitSignalString(sender.dataset.listeners);
+              if (listeners.includes(ev.type)) {
+                await this.processSignal(ev, sender, signal);
+              }
+            } else {
+              await this.processSignal(ev, sender, signal);
+            }
           }
         }
       }

@@ -1,6 +1,8 @@
 window.$CLASS_NAME = class {
   test_$SIGNAL_NAME(_, el) {
-    el.innerHTML = el.prop("needle");
+    if (el.propAsFloat("needle") === 8.2) {
+      el.innerHTML = "ok";
+    }
   }
 
   /////////////////////////////////////////////////

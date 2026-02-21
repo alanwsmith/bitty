@@ -1,6 +1,6 @@
 window.Class3444A = class {
-  test_signal_3444A(ev, el) {
-    el.innerHTML = ev.prop("needle");
+  test_signal_3444A(_, el) {
+    el.innerHTML = el.prop("needle");
   }
 
   /////////////////////////////////////////////////
@@ -8,6 +8,6 @@ window.Class3444A = class {
   /////////////////////////////////////////////////
 
   bittyReady() {
-    document.querySelector("#el-3444A").click();
+    this.trigger("test_signal_3444A");
   }
 };

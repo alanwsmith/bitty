@@ -1472,6 +1472,7 @@ class BittyJs extends HTMLElement {
     ev.valueAsInt = function (key) {
       return parseInt(ev.sender.value, 10);
     };
+
     //////////////////////////////////////////
     ev.targetCopy = async function () {
       if (ev.target.value) {
@@ -1513,6 +1514,25 @@ class BittyJs extends HTMLElement {
           console.error("Could not copy text to clipboard");
         }
       }
+    };
+
+    el.prop = function (key, closest = true) {
+      return el.dataset[key];
+    };
+    el.propAsFloat = function (key, closest = true) {
+      return parseFloat(el.dataset[key]);
+    };
+    el.propAsInt = function (key, closest = true) {
+      return parseInt(el.dataset[key], 10);
+    };
+    el.value = function (key) {
+      return el.value;
+    };
+    el.valueAsFloat = function (key) {
+      return parseFloat(el.value);
+    };
+    el.valueAsInt = function (key) {
+      return parseInt(el.value, 10);
     };
   }
 

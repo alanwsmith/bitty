@@ -1444,7 +1444,7 @@ class BittyJs extends HTMLElement {
     // element if it's different from the
     // target.
     ev.copy = async function () {
-      if (ev.target.value) {
+      if (ev.sender.value) {
         try {
           await navigator.clipboard.writeText(ev.target.value);
         } catch (error) {
@@ -1455,22 +1455,33 @@ class BittyJs extends HTMLElement {
     };
 
     ev.prop = function (key, closest = true) {
-      return ev.target.dataset[key];
+      return ev.sender.dataset[key];
     };
     ev.propAsFloat = function (key, closest = true) {
-      return parseFloat(ev.target.dataset[key]);
+      return parseFloat(ev.sender.dataset[key]);
     };
     ev.propAsInt = function (key, closest = true) {
-      return parseInt(ev.target.dataset[key], 10);
+      return parseInt(ev.sender.dataset[key], 10);
     };
     ev.value = function (key) {
-      return ev.target.value;
+      return ev.sender.value;
     };
     ev.valueAsFloat = function (key) {
-      return parseFloat(ev.target.value);
+      return parseFloat(ev.sender.value);
     };
     ev.valueAsInt = function (key) {
-      return parseInt(ev.target.value, 10);
+      return parseInt(ev.sender.value, 10);
+    };
+    //////////////////////////////////////////
+    ev.targetCopy = async function () {
+      if (ev.target.value) {
+        try {
+          await navigator.clipboard.writeText(ev.target.value);
+        } catch (error) {
+          // TODO: Switch this to logging an error.
+          console.error("Could not copy text to clipboard");
+        }
+      }
     };
     ev.targetProp = function (key, closest = true) {
       return ev.target.dataset[key];

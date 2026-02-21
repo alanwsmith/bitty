@@ -1472,6 +1472,9 @@ class BittyJs extends HTMLElement {
     ev.getValueAsInt = function (key) {
       return parseInt(ev.sender.value, 10);
     };
+    ev.setData = function (key, value) {
+      ev.sender.dataset[key] = value;
+    };
 
     //////////////////////////////////////////
     ev.copyTargetText = async function () {
@@ -1501,6 +1504,9 @@ class BittyJs extends HTMLElement {
     };
     ev.getTargetValueAsInt = function (key) {
       return parseInt(ev.target.value, 10);
+    };
+    ev.setTargetData = function (key, value) {
+      ev.target.dataset[key] = value;
     };
   }
 

@@ -1139,12 +1139,8 @@ class BittyJs extends HTMLElement {
     );
     ["click", "input"].forEach((listener) => {
       window.addEventListener(listener, (ev) => {
-        const sendingElement = ev.target.closest("[data-send]");
-        if (
-          ev.target.dataset.send && ev.target.dataset.listeners === undefined
-        ) {
-          this.processEventBridge.call(this, ev);
-        }
+        // const sendingElement = ev.target.closest("[data-send]");
+        this.processEventBridge.call(this, ev);
       });
     });
     const customListeners = [
@@ -1522,6 +1518,8 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async processEvent(ev) {
+    // TODO: Refactor this set of filters
+    // for determining which events trigger.
     let inputSignalString;
     let listeners = [];
     if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
@@ -1533,10 +1531,12 @@ class BittyJs extends HTMLElement {
     }
 
     let keepGoing = false;
+    let hasValidSender = false;
     if (inputSignalString !== undefined) {
       inputSignalString.trim().split(/\s+/m).map((signal) => {
         if (typeof this.conn[signal] === "function") {
           keepGoing = true;
+          hasValidSender = true;
         }
       });
     }

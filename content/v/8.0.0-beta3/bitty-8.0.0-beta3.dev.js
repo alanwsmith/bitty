@@ -1505,7 +1505,7 @@ class BittyJs extends HTMLElement {
   }
 
   updateElement(el) {
-    el.copy = async function () {
+    el.copyText = async function () {
       if (el.value) {
         try {
           await navigator.clipboard.writeText(el.value);
@@ -1515,23 +1515,22 @@ class BittyJs extends HTMLElement {
         }
       }
     };
-
-    el.prop = function (key, closest = true) {
+    el.getData = function (key, closest = true) {
       return el.dataset[key];
     };
-    el.propAsFloat = function (key, closest = true) {
+    el.getDataAsFloat = function (key, closest = true) {
       return parseFloat(el.dataset[key]);
     };
-    el.propAsInt = function (key, closest = true) {
+    el.getDataAsInt = function (key, closest = true) {
       return parseInt(el.dataset[key], 10);
     };
-    el.value = function (key) {
+    el.getValue = function (key) {
       return el.value;
     };
-    el.valueAsFloat = function (key) {
+    el.getValueAsFloat = function (key) {
       return parseFloat(el.value);
     };
-    el.valueAsInt = function (key) {
+    el.getValueAsInt = function (key) {
       return parseInt(el.value, 10);
     };
   }

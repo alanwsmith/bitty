@@ -1520,19 +1520,22 @@ class BittyJs extends HTMLElement {
   async processEvent(ev) {
     // TODO: Refactor this set of filters
     // for determining which events trigger.
-    let inputSignalString;
+    let inputSignalString = null;
     let listeners = [];
     if (ev.type === "bittytriggerevent" || ev.type === "bittysendevent") {
       inputSignalString = ev.bittyPayload.target.dataset.send;
       ev = ev.bittyPayload.content;
     } else {
-      inputSignalString = ev.target.dataset.send;
-      this.updateEvent(ev);
+      ev.sender = ev.target.closest("[data-send]");
+      if (ev.sender !== null) {
+        inputSignalString = ev.sender.dataset.send;
+        this.updateEvent(ev);
+      }
     }
 
     let keepGoing = false;
     let hasValidSender = false;
-    if (inputSignalString !== undefined) {
+    if (inputSignalString !== null) {
       inputSignalString.trim().split(/\s+/m).map((signal) => {
         if (typeof this.conn[signal] === "function") {
           keepGoing = true;

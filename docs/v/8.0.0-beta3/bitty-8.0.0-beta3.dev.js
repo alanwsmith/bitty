@@ -1438,7 +1438,6 @@ class BittyJs extends HTMLElement {
     // different from the target it's reflected
     // in the sender property.
     ev.sender = ev.target;
-
     // NOTE These are current set to target.
     // They need to be set to use the sending
     // element if it's different from the
@@ -1453,7 +1452,6 @@ class BittyJs extends HTMLElement {
         }
       }
     };
-
     ev.getData = function (key, closest = true) {
       return ev.sender.dataset[key];
     };
@@ -1475,7 +1473,6 @@ class BittyJs extends HTMLElement {
     ev.setData = function (key, value) {
       ev.sender.dataset[key] = value;
     };
-
     //////////////////////////////////////////
     ev.copyTargetText = async function () {
       if (ev.target.value) {
@@ -1538,6 +1535,9 @@ class BittyJs extends HTMLElement {
     };
     el.getValueAsInt = function (key) {
       return parseInt(el.value, 10);
+    };
+    el.setData = function (key, value) {
+      el.dataset[key] = value;
     };
   }
 

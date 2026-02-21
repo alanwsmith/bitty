@@ -1443,7 +1443,7 @@ class BittyJs extends HTMLElement {
     // They need to be set to use the sending
     // element if it's different from the
     // target.
-    ev.copy = async function () {
+    ev.copyText = async function () {
       if (ev.sender.value) {
         try {
           await navigator.clipboard.writeText(ev.target.value);
@@ -1454,27 +1454,27 @@ class BittyJs extends HTMLElement {
       }
     };
 
-    ev.prop = function (key, closest = true) {
+    ev.getData = function (key, closest = true) {
       return ev.sender.dataset[key];
     };
-    ev.propAsFloat = function (key, closest = true) {
+    ev.getDataAsFloat = function (key, closest = true) {
       return parseFloat(ev.sender.dataset[key]);
     };
-    ev.propAsInt = function (key, closest = true) {
+    ev.getDataAsInt = function (key, closest = true) {
       return parseInt(ev.sender.dataset[key], 10);
     };
-    ev.value = function (key) {
+    ev.getValue = function (key) {
       return ev.sender.value;
     };
-    ev.valueAsFloat = function (key) {
+    ev.getValueAsFloat = function (key) {
       return parseFloat(ev.sender.value);
     };
-    ev.valueAsInt = function (key) {
+    ev.getValueAsInt = function (key) {
       return parseInt(ev.sender.value, 10);
     };
 
     //////////////////////////////////////////
-    ev.targetCopy = async function () {
+    ev.copyTargetText = async function () {
       if (ev.target.value) {
         try {
           await navigator.clipboard.writeText(ev.target.value);
@@ -1484,22 +1484,22 @@ class BittyJs extends HTMLElement {
         }
       }
     };
-    ev.targetProp = function (key, closest = true) {
+    ev.getTargetData = function (key, closest = true) {
       return ev.target.dataset[key];
     };
-    ev.targetPropAsFloat = function (key, closest = true) {
+    ev.getTargetDataAsFloat = function (key, closest = true) {
       return parseFloat(ev.target.dataset[key]);
     };
-    ev.targetPropAsInt = function (key, closest = true) {
+    ev.getTargetDataAsInt = function (key, closest = true) {
       return parseInt(ev.target.dataset[key], 10);
     };
-    ev.targetValue = function (key) {
+    ev.getTargetValue = function (key) {
       return ev.target.value;
     };
-    ev.targetValueAsFloat = function (key) {
+    ev.getTargetValueAsFloat = function (key) {
       return parseFloat(ev.target.value);
     };
-    ev.targetValueAsInt = function (key) {
+    ev.getTargetValueAsInt = function (key) {
       return parseInt(ev.target.value, 10);
     };
   }

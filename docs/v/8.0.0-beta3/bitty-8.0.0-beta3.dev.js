@@ -9,6 +9,18 @@ function splitSignalString(input) {
     .map((l) => l.trim());
 }
 
+/** internal */
+function findSenders(el) {
+  const senders = [];
+  while (el) {
+    if (el.matches("[data-send]")) {
+      senders.push(el);
+    }
+    el = el.parentElement;
+  }
+  return senders;
+}
+
 class BittyJs extends HTMLElement {
   constructor() {
     super();
@@ -1129,6 +1141,7 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addEventListeners() {
+    // TODO: Consolidate this.
     // Internal bitty listeners
     ["bittysendevent", "bittytriggerevent"].forEach(
       (listener) => {
@@ -1139,7 +1152,6 @@ class BittyJs extends HTMLElement {
     );
     ["click", "input"].forEach((listener) => {
       window.addEventListener(listener, (ev) => {
-        // const sendingElement = ev.target.closest("[data-send]");
         this.processEventBridge.call(this, ev);
       });
     });
@@ -1412,7 +1424,7 @@ class BittyJs extends HTMLElement {
     // TODO: Update so that is the sender is
     // different from the target it's reflected
     // in the sender property.
-    ev.sender = ev.target;
+    //  ev.sender = ev.target;
     // NOTE These are current set to target.
     // They need to be set to use the sending
     // element if it's different from the
@@ -1516,8 +1528,79 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  /** internal */
+  async processSignal(ev, sender, rawSignal) {
+    ev.sender = sender;
+    this.updateEvent(ev);
+    const signalParts = rawSignal.split(":");
+    signalParts.reverse();
+    const signal = signalParts[0];
+    const doAwait = signalParts[1] === "await" ? true : false;
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      console.log("receivers");
+      for (const receiver of receivers) {
+        this.updateReceiverV2(ev, sender, receiver);
+        if (doAwait === true) {
+          await this.conn[signal](ev, receiver);
+        } else {
+          this.conn[signal](ev, receiver);
+        }
+      }
+    } else {
+      console.log("no recievers");
+      if (doAwait === true) {
+        await this.conn[signal](ev, null);
+      } else {
+        this.conn[signal](ev, null);
+      }
+    }
+  }
+
+  updateReceiverV2(ev, sender, receiver) {
+    receiver.isSender = () => receiver.isSameNode(sender);
+    receiver.isTarget = () => receiver.isSameNode(ev.target);
+  }
+
   async processEvent(ev) {
+    let senders = [];
+    if (ev.type !== "bittytargetevent" && ev.type !== "bittysendevent") {
+      senders = findSenders(ev.target);
+      for (const sender of senders) {
+        const signals = splitSignalString(sender.dataset.send);
+        for (const signal of signals) {
+          if (typeof this.conn[signal] === "function") {
+            await this.processSignal(ev, sender, signal);
+          }
+        }
+      }
+    } else {
+      this.processBittyEvent(ev);
+    }
+  }
+
+  processBittyEvent(ev) {
+    const bittyEvent = ev.bittyPayload.content;
+  }
+
+  // TODO: Deprecate in favoer of processEvent
+  // (without the _Previous on it)
+  /** internal */
+  async processEvent_Previous(ev) {
+    let senders = [];
+    if (ev.type !== "bittytargetevent" && ev.type !== "bittysendevent") {
+      senders = findSenders(ev.target);
+      for (const sender of senders) {
+        const signals = splitSignalString(sender.dataset.send);
+        for (const signal of signals) {
+          if (typeof this.conn[signal] === "function") {
+            await this.processSignal(ev, sender, signal);
+          }
+        }
+      }
+    }
+
     // TODO: Refactor this set of filters
     // for determining which events trigger.
     let inputSignalString = null;

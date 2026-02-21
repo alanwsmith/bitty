@@ -1661,14 +1661,26 @@ class BittyJs extends HTMLElement {
     let senders = [];
     if (ev.type === "bittytriggerevent") {
       const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
-      for (const signal of signals) {
+      for (const rawSignal of signals) {
+        const signalParts = rawSignal.split(":");
+        signalParts.reverse();
+        const signal = signalParts[0];
+        // TODO: send in this doAwait instead of doing
+        // it inside the other method as well.
+        // const doAwait = signalParts[1] === "await" ? true : false;
         if (typeof this.conn[signal] === "function") {
           await this.processBittyTriggerSignal(signal);
         }
       }
     } else if (ev.type === "bittysendevent") {
       const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
-      for (const signal of signals) {
+      for (const rawSignal of signals) {
+        const signalParts = rawSignal.split(":");
+        signalParts.reverse();
+        const signal = signalParts[0];
+        // TODO: send in this doAwait instead of doing
+        // it inside the other method as well.
+        // const doAwait = signalParts[1] === "await" ? true : false;
         if (typeof this.conn[signal] === "function") {
           await this.processBittySendSignal(ev.bittyPayload.content, signal);
         }
@@ -1677,7 +1689,13 @@ class BittyJs extends HTMLElement {
       senders = findSenders(ev.target);
       for (const sender of senders) {
         const signals = splitSignalString(sender.dataset.send);
-        for (const signal of signals) {
+        for (const rawSignal of signals) {
+          const signalParts = rawSignal.split(":");
+          signalParts.reverse();
+          const signal = signalParts[0];
+          // TODO: send in this doAwait instead of doing
+          // it inside the other method as well.
+          // const doAwait = signalParts[1] === "await" ? true : false;
           if (typeof this.conn[signal] === "function") {
             if (sender.dataset.listeners !== undefined) {
               const listeners = splitSignalString(sender.dataset.listeners);

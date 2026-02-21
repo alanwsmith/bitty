@@ -1530,6 +1530,12 @@ class BittyJs extends HTMLElement {
 
   async processSignal(ev, sender, rawSignal) {
     ev.sender = sender;
+    if (ev.sender.dataset.listeners) {
+      const listeners = splitSignalString(ev.sender.dataset.listeners);
+      if (!listeners.includes(ev.type)) {
+        return;
+      }
+    }
     this.updateEvent(ev);
     const signalParts = rawSignal.split(":");
     signalParts.reverse();

@@ -1556,6 +1556,8 @@ class BittyJs extends HTMLElement {
       signalParts.reverse();
       const signal = signalParts[0];
       const doAwait = signalParts[1] === "await" ? true : false;
+      // TODO: Refactor all the below stuff to make
+      // it easier to reason about.
       if (typeof this.conn[signal] === "function") {
         const receivers = document.querySelectorAll(
           `[data-receive~='${signal}']`,
@@ -1566,6 +1568,25 @@ class BittyJs extends HTMLElement {
           } else {
             for (const receiver of receivers) {
               this.updateElement(receiver);
+              if (ev === null) {
+                receiver.isSender = () => {
+                  return false;
+                };
+                receiver.isTarget = () => {
+                  return false;
+                };
+              } else {
+                if (receiver.isSameNode(ev.sender)) {
+                  receiver.isSender = () => {
+                    return true;
+                  };
+                }
+                if (receiver.isSameNode(ev.target)) {
+                  receiver.isTarget = () => {
+                    return true;
+                  };
+                }
+              }
               await this.conn[signal](ev, receiver);
             }
           }
@@ -1575,6 +1596,25 @@ class BittyJs extends HTMLElement {
           } else {
             for (const receiver of receivers) {
               this.updateElement(receiver);
+              if (ev === null) {
+                receiver.isSender = () => {
+                  return false;
+                };
+                receiver.isTarget = () => {
+                  return false;
+                };
+              } else {
+                if (receiver.isSameNode(ev.sender)) {
+                  receiver.isSender = () => {
+                    return true;
+                  };
+                }
+                if (receiver.isSameNode(ev.target)) {
+                  receiver.isTarget = () => {
+                    return true;
+                  };
+                }
+              }
               this.conn[signal](ev, receiver);
             }
           }

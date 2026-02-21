@@ -31,7 +31,6 @@ class BittyJs extends HTMLElement {
   }
 
   async _copy(selector) {
-    console.log(selector);
     const el = document.querySelector(selector);
     const text = el.value !== undefined ? el.value : el.innerHTML;
     try {
@@ -1444,6 +1443,17 @@ class BittyJs extends HTMLElement {
     // They need to be set to use the sending
     // element if it's different from the
     // target.
+    ev.copy = async function () {
+      if (ev.target.value) {
+        try {
+          await navigator.clipboard.writeText(ev.target.value);
+        } catch (error) {
+          // TODO: Switch this to logging an error.
+          console.error("Could not copy text to clipboard");
+        }
+      }
+    };
+
     ev.prop = function (key, closest = true) {
       return ev.target.dataset[key];
     };

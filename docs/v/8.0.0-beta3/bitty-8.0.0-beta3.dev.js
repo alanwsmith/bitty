@@ -1562,7 +1562,33 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async processBittyTriggerSignal(ev, rawSignal) {
+  async processBittySendSignal(payload, rawSignal) {
+    const signalParts = rawSignal.split(":");
+    signalParts.reverse();
+    const signal = signalParts[0];
+    const doAwait = signalParts[1] === "await" ? true : false;
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        this.updateReceiverForBittySignal(receiver);
+        if (doAwait === true) {
+          await this.conn[signal](payload, receiver);
+        } else {
+          this.conn[signal](payload, receiver);
+        }
+      }
+    } else {
+      if (doAwait === true) {
+        await this.conn[signal](payload, null);
+      } else {
+        this.conn[signal](payload, null);
+      }
+    }
+  }
+
+  async processBittyTriggerSignal(rawSignal) {
     const signalParts = rawSignal.split(":");
     signalParts.reverse();
     const signal = signalParts[0];
@@ -1616,11 +1642,16 @@ class BittyJs extends HTMLElement {
       const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
       for (const signal of signals) {
         if (typeof this.conn[signal] === "function") {
-          await this.processBittyTriggerSignal(ev, signal);
+          await this.processBittyTriggerSignal(signal);
         }
       }
     } else if (ev.type === "bittysendevent") {
-      //      console.log(ev);
+      const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
+      for (const signal of signals) {
+        if (typeof this.conn[signal] === "function") {
+          await this.processBittySendSignal(ev.bittyPayload.content, signal);
+        }
+      }
     } else {
       senders = findSenders(ev.target);
       for (const sender of senders) {

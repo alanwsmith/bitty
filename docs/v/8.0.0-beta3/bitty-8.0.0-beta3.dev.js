@@ -41,8 +41,8 @@ class BittyJs extends HTMLElement {
   /** internal */
   async connectedCallback() {
     this.processEventBridge = this.processEvent.bind(this);
-    this.loadWindowClasses();
     await this.loadModuleClasses();
+    this.loadWindowClasses();
     this.addEventListeners();
     // await this.makeConnection();
     // if (this.conn) {
@@ -78,9 +78,9 @@ class BittyJs extends HTMLElement {
       ) {
         if (this.constructor.moduleFiles.includes(connString) === false) {
           this.constructor.moduleFiles.push(connString);
-          const bits = await import(this.dataset.connect.trim());
-          for (const bit of Object.keys(bits)) {
-            const bittyClass = new bits[bit]();
+          const remoteBits = await import(connString);
+          for (const bit of Object.keys(remoteBits)) {
+            const bittyClass = new remoteBits[bit]();
             this.addBitty(bittyClass);
             this.#bits.push(bittyClass);
             bittyClass._runBittyReady();
@@ -107,6 +107,7 @@ class BittyJs extends HTMLElement {
     target.fetchSVG = () => {};
     target.json = {};
     target.loadElement = () => {};
+    target.loadJSON = () => {};
     target.loadSVG = () => {};
     target.send = this._send.bind(target);
     target.setLogLevel = () => {};

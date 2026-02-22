@@ -1,4 +1,0 @@
-class DataConnectExample {
-}
-
-export { DataConnectExample };

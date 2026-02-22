@@ -1707,21 +1707,49 @@ class BittyJs extends HTMLElement {
       for (const signal of signals) {
         for (const bit of this.#bits) {
           if (typeof bit[signal] === "function") {
-            console.log(signal);
+            ev.sender = sender;
+            this.processSignal_V3(bit, ev, signal);
+            // if (sender.dataset.listeners === undefined) {
+            //   if (
+            //     ev.type !== undefined &&
+            //     (ev.type === "click" || ev.type === "input")
+            //   ) {
+            //     this.processSignal_V3(bit, ev, signal);
+            //   }
+            // } else {
+            //   const listeners = splitSignalString(sender.dataset.listeners);
+            //   if (ev.type !== undefined && listeners.includes(ev.type)) {
+            //     console.log(signal);
+            //   }
+            // }
           }
         }
-
-        // if (typeof this.conn[signal] === "function") {
-        //   if (sender.dataset.listeners !== undefined) {
-        //     const listeners = splitSignalString(sender.dataset.listeners);
-        //     if (listeners.includes(ev.type)) {
-        //       this.processSignal(ev, sender, signal);
-        //     }
-        //   } else {
-        //     this.processSignal(ev, sender, signal);
-        //   }
-        // }
       }
+    }
+  }
+
+  async processSignal_V3(bit, ev, signal) {
+    if (ev.sender.dataset.listeners === undefined) {
+      if (["click", "input"].includes(ev.type) === false) {
+        return;
+      }
+    } else {
+      const listeners = splitSignalString(ev.sender.dataset.listeners);
+      if (!listeners.includes(ev.type)) {
+        return;
+      }
+    }
+    this.updateEvent(ev);
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        //this.updateReceiverV2(ev, sender, receiver);
+        bit[signal](ev, receiver);
+      }
+    } else {
+      bit[signal](ev, null);
     }
   }
 

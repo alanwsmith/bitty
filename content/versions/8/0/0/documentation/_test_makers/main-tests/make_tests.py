@@ -173,8 +173,15 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
+    def window_class_content(self):
+        path = os.path.join(self.dir, "window_class.html")
+        content = slurp(path)
+        return content
+        #return f"""Window.Class{self.hash()} = class {{"""
+
     def window_class_output_path(self):
         return os.path.join(self.output_dir(), "window_class.html")
+        # return os.path.join(self.output_dir(), "window_class.html")
 
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:
@@ -187,6 +194,8 @@ class Test():
             _out.write(self.generate_output(self.remote_javascript_content()))
         with open(self.bitty_tag_output_path(), "w") as _out:
             _out.write(self.bitty_tag_content())
+        with open(self.window_class_output_path(), "w") as _out:
+            _out.write(self.window_class_content())
             
 
 

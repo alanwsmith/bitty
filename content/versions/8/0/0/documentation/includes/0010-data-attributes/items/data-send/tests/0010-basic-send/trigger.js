@@ -1,14 +1,5 @@
-[#-
-
-DO NOTE EDIT THIS FILE. 
-
-It's created via:
-
-./content/versions/#/#/#/documentation/_test_makers/main-test/make_test.py
-
--#]
-
-
-
-
+async bittyReady() {
+  await this.sleep(100);
+  document.querySelector("[data-send=signal_ABF58]").click();
+}
 

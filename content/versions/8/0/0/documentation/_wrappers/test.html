@@ -6,11 +6,16 @@
 
 [# START BEHIND_THE_SCENES #]
 
+
 <script>
   [! include window_class_file !]
   [! include javascript_file !]
   [@ "\n" @]
 }
+
+[! include trigger_class_file !]
+  [! include trigger_file !]
+  }
 </script>
 
 [# load the bitty tags #]
@@ -30,10 +35,6 @@
 
 
 
-[! include trigger_class_file !]
-
-  [! include trigger_file !]
-  }
 [# END BEHIND_THE_SCENES #]
 
 
@@ -42,10 +43,7 @@
 
 
 
-<div>JavaScript</div>
-[! filter block_highlight("javascript") !]
-[! include javascript_file !]
-[! endfilter !]
+
 
 
 <div>HTML</div>
@@ -61,12 +59,23 @@
 [! endfilter !]
 [! endif !]
 
+<div>JavaScript</div>
+[! filter block_highlight("javascript") !]
+[! include javascript_file !]
+[! endfilter !]
+
 
 <div>Results</div>
 
 <div class="example-block">
 [!- include html_file -!]
 </div>
+
+  <details><summary>view test trigger</summary>
+[! filter block_highlight("javascript") !]
+[! include trigger_file !]
+[! endfilter !]
+</details>
 
 [! set notes_content !]
 [!- include test_notes_file ignore missing -!]

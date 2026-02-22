@@ -20,7 +20,7 @@ class ContentMover():
             self.html_wrapper = Template(_in.read())
 
     def move_content(self):
-        file_names = ["name.html", "description.html", "notes.html", "bitty_tag.html", "window_class.html", "trigger_class.txt", "trigger.js"]
+        file_names = ["name.html", "description.html", "notes.html", "bitty_tag.html", "window_class.html"]
         for dir in os.walk("_tests"):
             for file in dir[2]:
                 if file in file_names:
@@ -184,6 +184,8 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
+
+
     # These two methods set up the output for making
     # the trigger behind the scenes setup. 
     def trigger_class_content(self):
@@ -192,6 +194,15 @@ class Test():
         return content
     def trigger_class_output_path(self):
         return os.path.join(self.output_dir(), "trigger_class.txt")
+
+    # These two methods set up the output for making
+    # the trigger behind the scenes setup. 
+    def trigger_file_content(self):
+        path = os.path.join(self.dir, "trigger.js")
+        content = slurp(path)
+        return content
+    def trigger_file_output_path(self):
+        return os.path.join(self.output_dir(), "trigger.js")
 
     # This makes the source files in the test director
     # that gets edited. These files are then pulled
@@ -232,6 +243,8 @@ class Test():
             _out.write(self.generate_output(self.remote_javascript_content()))
         with open(self.trigger_class_output_path(), "w") as _out:
             _out.write(self.generate_output(self.trigger_class_content()))
+        with open(self.trigger_file_output_path(), "w") as _out:
+            _out.write(self.generate_output(self.trigger_file_content()))
         with open(self.window_class_source_output_path(), "w") as _out:
             _out.write(self.window_class_source_content())
         with open(self.window_class_output_path(), "w") as _out:

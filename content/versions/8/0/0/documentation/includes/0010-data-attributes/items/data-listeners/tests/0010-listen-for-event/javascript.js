@@ -8,13 +8,3 @@ signal_9CE5F(_, el) {
   el.innerHTML = "ok";
 }
 
- // This test uses a custom event instead of
- // something like mouseover to facilitate
- // automated test output.
-
-
-// TODO: Move this out to it's own file 
-// class TestEventClass9CE5F extends Event {
-//   constructor() {
-//   super("bittylocallistenertest", { bubbles: true });
-// }

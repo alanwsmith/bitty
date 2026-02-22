@@ -1,15 +1,10 @@
-window.Class0E667 = class {
-  test_signal_0E667(ev, el) {
-    if (ev.getTargetDataAsFloat("needle") === 3.4) {
-      el.innerHTML = "ok";
-    }
+test_signal_0E667(ev, el) {
+  if (ev.getTargetDataAsFloat("needle") === 3.4) {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    document.querySelector("#el-0E667").click();
-  }
-};
+bittyReady() {
+  document.querySelector("#el-0E667").click();
+}

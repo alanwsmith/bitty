@@ -1416,7 +1416,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   async makeConnection() {
     if (!this.dataset.connect) {
-      this.conn = new window.BittyClass();
+      // this.conn = new window.BittyClass();
     } else {
       const connString = this.dataset.connect.trim();
       if (window[connString]) {

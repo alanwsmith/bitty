@@ -1,21 +1,16 @@
-window.Class78263 = class {
-  #key = "json_signal_78263";
+#key = "json_signal_78263";
 
-  async test_signal_78263(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-json.json";
-    const result = await this.fetchJSON(this.#key, url);
-    if (result.ok === true && result.level === "warn") {
-      el.innerHTML = "ok";
-    }
+async test_signal_78263(_, el) {
+  const url = "/[@ file.parent @]/payloads/valid-json.json";
+  const result = await this.fetchJSON(this.#key, url);
+  if (result.ok === true && result.level === "warn") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.setLogLevel("none");
-    this.createJSON(this.#key, {});
-    this.trigger("test_signal_78263");
-  }
-};
+bittyReady() {
+  this.setLogLevel("none");
+  this.createJSON(this.#key, {});
+  this.trigger("test_signal_78263");
+}

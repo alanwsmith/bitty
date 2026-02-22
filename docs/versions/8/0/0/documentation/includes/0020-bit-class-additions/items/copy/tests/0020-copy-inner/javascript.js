@@ -1,5 +1,3 @@
-window.Class3611F = class {
-  async signal_3611F(_, __) {
-    await this.copy(".el-3611F");
-  }
-};
+async signal_3611F(_, __) {
+  await this.copy(".el-3611F");
+}

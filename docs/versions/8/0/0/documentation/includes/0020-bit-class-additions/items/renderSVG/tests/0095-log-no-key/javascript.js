@@ -1,21 +1,16 @@
-window.ClassD68A0 = class {
-  #key = "svg_signal_D68A0";
+#key = "svg_signal_D68A0";
 
-  test_signal_D68A0(_, el) {
-    this.logs = [];
-    this.renderSVG(this.#key);
-    if (this.logs[0].ok === false && this.logs[0].level === "error") {
-      el.innerHTML = "ok";
-    }
+test_signal_D68A0(_, el) {
+  this.logs = [];
+  this.renderSVG(this.#key);
+  if (this.logs[0].ok === false && this.logs[0].level === "error") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.setLogLevel("none");
-    this.deleteSVG(this.#key);
-    this.trigger("test_signal_D68A0");
-  }
-};
+bittyReady() {
+  this.setLogLevel("none");
+  this.deleteSVG(this.#key);
+  this.trigger("test_signal_D68A0");
+}

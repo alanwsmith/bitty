@@ -1,23 +1,18 @@
-window.Class4782D = class {
-  #key = "svg_signal_4782D";
+#key = "svg_signal_4782D";
 
-  test_signal_4782D(input, el) {
-    const result = this.createSVG(this.#key, input);
-    if (result.ok === true && result.level === "info") {
-      el.innerHTML = "ok";
-    }
+test_signal_4782D(input, el) {
+  const result = this.createSVG(this.#key, input);
+  if (result.ok === true && result.level === "info") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    const input = `
-<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="green" />
-  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
-</svg>`;
-    this.send(input, "test_signal_4782D");
-  }
-};
+bittyReady() {
+  const input = `
+vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="green" />
+<text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
+svg>`;
+  this.send(input, "test_signal_4782D");
+}

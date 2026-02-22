@@ -5,7 +5,9 @@ async bittyReady() {
 }
 
 
-ndow.$CLASS2_NAME = class {
-$SIGNAL2_NAME(_, el) {
-  el.innerHTML = "ok";
-}
+// TODO: Move this to it's own file so
+// it can work with the display system
+// window.$CLASS2_NAME = class {
+// $SIGNAL2_NAME(_, el) {
+//   el.innerHTML = "ok";
+// }

@@ -1,19 +1,14 @@
-window.ClassDC60C = class {
-  #key = "json_signal_DC60C";
+#key = "json_signal_DC60C";
 
-  test_signal_DC60C(_, el) {
-    this.loadJSON(this.#key);
-    el.innerHTML = this.json[this.#key].status;
-  }
+test_signal_DC60C(_, el) {
+  this.loadJSON(this.#key);
+  el.innerHTML = this.json[this.#key].status;
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  async bittyReady() {
-    const url = "/[@ file.parent @]/payloads/valid-json.json";
-    await this.fetchJSON(this.#key, url);
-    delete this.json[this.#key];
-    this.trigger("test_signal_DC60C");
-  }
-};
+async bittyReady() {
+  const url = "/[@ file.parent @]/payloads/valid-json.json";
+  await this.fetchJSON(this.#key, url);
+  delete this.json[this.#key];
+  this.trigger("test_signal_DC60C");
+}

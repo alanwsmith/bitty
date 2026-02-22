@@ -1604,63 +1604,70 @@ class BittyJs extends HTMLElement {
   //   };
   // }
 
-  async processSignal(ev, sender, signal) {
-    ev.sender = sender;
-    if (ev.sender.dataset.listeners) {
-      const listeners = splitSignalString(ev.sender.dataset.listeners);
-      if (!listeners.includes(ev.type)) {
-        return;
-      }
-    }
-    this.updateEvent(ev);
-    const receivers = document.querySelectorAll(
-      `[data-receive~='${signal}']`,
-    );
-    if (receivers.length > 0) {
-      for (const receiver of receivers) {
-        this.updateReceiverV2(ev, sender, receiver);
-        this.conn[signal](ev, receiver);
-      }
-    } else {
-      this.conn[signal](ev, null);
-    }
-  }
+  // async processSignal(ev, sender, signal) {
+  //   ev.sender = sender;
+  //   if (ev.sender.dataset.listeners) {
+  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
+  //     if (!listeners.includes(ev.type)) {
+  //       return;
+  //     }
+  //   }
+  //   this.updateEvent(ev);
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiverV2(ev, sender, receiver);
+  //       this.conn[signal](ev, receiver);
+  //     }
+  //   } else {
+  //     this.conn[signal](ev, null);
+  //   }
+  // }
 
-  async processBittySendSignal(payload, signal) {
-    const receivers = document.querySelectorAll(
-      `[data-receive~='${signal}']`,
-    );
-    if (receivers.length > 0) {
-      for (const receiver of receivers) {
-        this.updateReceiverForBittySignal(receiver);
-        this.conn[signal](payload, receiver);
-      }
-    } else {
-      this.conn[signal](payload, null);
-    }
-  }
+  // async processBittySendSignal(payload, signal) {
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiverForBittySignal(receiver);
+  //       this.conn[signal](payload, receiver);
+  //     }
+  //   } else {
+  //     this.conn[signal](payload, null);
+  //   }
+  // }
 
-  async processBittyTriggerSignal(signal) {
-    const receivers = document.querySelectorAll(
-      `[data-receive~='${signal}']`,
-    );
-    if (receivers.length > 0) {
-      for (const receiver of receivers) {
-        this.updateReceiverForBittySignal(receiver);
-        this.conn[signal](null, receiver);
-      }
-    } else {
-      this.conn[signal](null, null);
-    }
-  }
+  // async processBittyTriggerSignal(signal) {
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiverForBittySignal(receiver);
+  //       this.conn[signal](null, receiver);
+  //     }
+  //   } else {
+  //     this.conn[signal](null, null);
+  //   }
+  // }
 
-  updateReceiverV2(ev, sender, receiver) {
-    receiver.isSender = () => receiver.isSameNode(sender);
+  // updateReceiverV2(ev, sender, receiver) {
+  //   receiver.isSender = () => receiver.isSameNode(sender);
+  //   receiver.isTarget = () => receiver.isSameNode(ev.target);
+  //   this.updateReceiverData(receiver);
+  // }
+
+  updateReceiver_V3(ev, receiver) {
+    receiver.isSender = () => receiver.isSameNode(ev.sender);
     receiver.isTarget = () => receiver.isSameNode(ev.target);
     this.updateReceiverData(receiver);
   }
 
   updateReceiverForBittySignal(receiver) {
+    // TODO: Add test for docs
     receiver.isSender = () => false;
     receiver.isTarget = () => false;
     this.updateReceiverData(receiver);
@@ -1678,12 +1685,15 @@ class BittyJs extends HTMLElement {
       }
     };
     receiver.getData = function (key, closest = true) {
+      // TODO: Handle closest
       return receiver.dataset[key];
     };
     receiver.getDataAsFloat = function (key, closest = true) {
+      // TODO: Handle closest
       return parseFloat(receiver.dataset[key]);
     };
     receiver.getDataAsInt = function (key, closest = true) {
+      // TODO: Handle closest
       return parseInt(receiver.dataset[key], 10);
     };
     receiver.getValue = function (key) {
@@ -1709,19 +1719,6 @@ class BittyJs extends HTMLElement {
           if (typeof bit[signal] === "function") {
             ev.sender = sender;
             this.processSignal_V3(bit, ev, signal);
-            // if (sender.dataset.listeners === undefined) {
-            //   if (
-            //     ev.type !== undefined &&
-            //     (ev.type === "click" || ev.type === "input")
-            //   ) {
-            //     this.processSignal_V3(bit, ev, signal);
-            //   }
-            // } else {
-            //   const listeners = splitSignalString(sender.dataset.listeners);
-            //   if (ev.type !== undefined && listeners.includes(ev.type)) {
-            //     console.log(signal);
-            //   }
-            // }
           }
         }
       }
@@ -1745,7 +1742,7 @@ class BittyJs extends HTMLElement {
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
-        //this.updateReceiverV2(ev, sender, receiver);
+        this.updateReceiver_V3(ev, receiver);
         bit[signal](ev, receiver);
       }
     } else {

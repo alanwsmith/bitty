@@ -1,7 +1,6 @@
 class DetailsOpener {
   bittyReady() {
     this.loadJSON(this.key(), { openItems: [] });
-    console.log(this.json[this.key()]);
     this.trigger("checkSize initPage");
   }
 

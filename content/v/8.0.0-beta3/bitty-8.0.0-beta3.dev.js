@@ -41,9 +41,9 @@ class BittyJs extends HTMLElement {
   /** internal */
   async connectedCallback() {
     this.processEventBridge = this.processEvent.bind(this);
+    this.addEventListeners();
     this.loadModuleClasses();
     this.loadWindowClasses();
-    this.addEventListeners();
     // await this.makeConnection();
     // if (this.conn) {
     //   this.createBridges();
@@ -91,6 +91,7 @@ class BittyJs extends HTMLElement {
   }
 
   addBitty(target) {
+    target.api = this;
     target.logs = [];
     target.json = {};
     target._svg = {};
@@ -115,6 +116,7 @@ class BittyJs extends HTMLElement {
     target.loadElement = () => {};
     target.loadJSON = this._loadJSON.bind(target);
     target.loadSVG = () => {};
+    target.renderElement = () => {};
     target.send = this._send.bind(target);
     target.setLogLevel = () => {};
     target.sleep = this._sleep.bind(target);
@@ -1792,14 +1794,27 @@ class BittyJs extends HTMLElement {
   }
 
   async processEvent(ev) {
-    const senders = findSenders(ev.target);
-    for (const sender of senders) {
-      const signals = splitSignalString(sender.dataset.send);
+    if (ev.type === "bittytriggerevent") {
+      const signals = splitSignalString(ev.signals);
       for (const signal of signals) {
         for (const bit of this.#bits) {
           if (typeof bit[signal] === "function") {
-            ev.sender = sender;
-            this.processSignal_V3(bit, ev, signal);
+            this.processTriggerSignal_V3(bit, signal);
+          }
+        }
+      }
+    } else if (ev.type === "bittysendevent") {
+      console.log("TODO: bittysendevent");
+    } else {
+      const senders = findSenders(ev.target);
+      for (const sender of senders) {
+        const signals = splitSignalString(sender.dataset.send);
+        for (const signal of signals) {
+          for (const bit of this.#bits) {
+            if (typeof bit[signal] === "function") {
+              ev.sender = sender;
+              this.processSignal_V3(bit, ev, signal);
+            }
           }
         }
       }
@@ -1828,6 +1843,20 @@ class BittyJs extends HTMLElement {
       }
     } else {
       bit[signal](ev, null);
+    }
+  }
+
+  processTriggerSignal_V3(bit, signal) {
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        //this.updateReceiver_V3(null, receiver);
+        bit[signal](null, receiver);
+      }
+    } else {
+      bit[signal](null, null);
     }
   }
 
@@ -1919,8 +1948,8 @@ class BittyJs extends HTMLElement {
   }
 
   _trigger(signal) {
-    // const ev = new BittyTriggerEvent(signal);
-    // this.dispatchEvent(ev);
+    const ev = new BittyTriggerEvent(signal);
+    this.api.dispatchEvent(ev);
   }
 }
 
@@ -1957,13 +1986,20 @@ class BittySendEvent extends Event {
 }
 
 /** internal */
-class BittyTriggerEvent extends Event {
+class BittyTriggerEvent_Original extends Event {
   constructor(signals) {
     super("bittytriggerevent", { bubbles: true });
     this.bittyPayload = {
       content: null,
       target: { dataset: { send: signals } },
     };
+  }
+}
+
+class BittyTriggerEvent extends Event {
+  constructor(signals) {
+    super("bittytriggerevent", { bubbles: true });
+    this.signals = signals;
   }
 }
 

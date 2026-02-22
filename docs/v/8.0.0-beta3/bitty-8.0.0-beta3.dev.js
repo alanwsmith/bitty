@@ -1508,39 +1508,39 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  updateElement(el) {
-    el.copyText = async function () {
-      if (el.value) {
-        try {
-          await navigator.clipboard.writeText(el.value);
-        } catch (error) {
-          // TODO: Switch this to logging an error.
-          console.error("Could not copy text to clipboard");
-        }
-      }
-    };
-    el.getData = function (key, closest = true) {
-      return el.dataset[key];
-    };
-    el.getDataAsFloat = function (key, closest = true) {
-      return parseFloat(el.dataset[key]);
-    };
-    el.getDataAsInt = function (key, closest = true) {
-      return parseInt(el.dataset[key], 10);
-    };
-    el.getValue = function (key) {
-      return el.value;
-    };
-    el.getValueAsFloat = function (key) {
-      return parseFloat(el.value);
-    };
-    el.getValueAsInt = function (key) {
-      return parseInt(el.value, 10);
-    };
-    el.setData = function (key, value) {
-      el.dataset[key] = value;
-    };
-  }
+  // updateElement(el) {
+  //   el.copyText = async function () {
+  //     if (el.value) {
+  //       try {
+  //         await navigator.clipboard.writeText(el.value);
+  //       } catch (error) {
+  //         // TODO: Switch this to logging an error.
+  //         console.error("Could not copy text to clipboard");
+  //       }
+  //     }
+  //   };
+  //   el.getData = function (key, closest = true) {
+  //     return el.dataset[key];
+  //   };
+  //   el.getDataAsFloat = function (key, closest = true) {
+  //     return parseFloat(el.dataset[key]);
+  //   };
+  //   el.getDataAsInt = function (key, closest = true) {
+  //     return parseInt(el.dataset[key], 10);
+  //   };
+  //   el.getValue = function (key) {
+  //     return el.value;
+  //   };
+  //   el.getValueAsFloat = function (key) {
+  //     return parseFloat(el.value);
+  //   };
+  //   el.getValueAsInt = function (key) {
+  //     return parseInt(el.value, 10);
+  //   };
+  //   el.setData = function (key, value) {
+  //     el.dataset[key] = value;
+  //   };
+  // }
 
   async processSignal(ev, sender, signal) {
     ev.sender = sender;
@@ -1605,13 +1605,37 @@ class BittyJs extends HTMLElement {
   }
 
   updateReceiverData(receiver) {
-    receiver.getData = (key) => {};
-    receiver.getDataAsFloat = (key) => {};
-    receiver.getDataAsInt = (key) => {};
-    receiver.getValue = () => {};
-    receiver.getValueAsFloat = (key) => {};
-    receiver.getValueAsInt = (key) => {};
-    receiver.setData = (key, value) => {};
+    receiver.copyText = async function () {
+      if (receiver.value) {
+        try {
+          await navigator.clipboard.writeText(receiver.value);
+        } catch (error) {
+          // TODO: Switch this to logging an error.
+          console.error("Could not copy text to clipboard");
+        }
+      }
+    };
+    receiver.getData = function (key, closest = true) {
+      return receiver.dataset[key];
+    };
+    receiver.getDataAsFloat = function (key, closest = true) {
+      return parseFloat(receiver.dataset[key]);
+    };
+    receiver.getDataAsInt = function (key, closest = true) {
+      return parseInt(receiver.dataset[key], 10);
+    };
+    receiver.getValue = function (key) {
+      return receiver.value;
+    };
+    receiver.getValueAsFloat = function (key) {
+      return parseFloat(receiver.value);
+    };
+    receiver.getValueAsInt = function (key) {
+      return parseInt(receiver.value, 10);
+    };
+    receiver.setData = function (key, value) {
+      receiver.dataset[key] = value;
+    };
   }
 
   async processEvent(ev) {

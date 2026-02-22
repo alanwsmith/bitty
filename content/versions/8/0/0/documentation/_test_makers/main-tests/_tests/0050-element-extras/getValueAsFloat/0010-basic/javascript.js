@@ -1,5 +1,12 @@
 window.$CLASS_NAME = class {
-  test_$SIGNAL_NAME(_, el) {
+  bittyReady() {
+    document
+      .querySelector("[data-receive=$SIGNAL_NAME]")
+      .value = "47.28";
+    this.trigger("$SIGNAL_NAME");
+  }
+
+  $SIGNAL_NAME(_, el) {
     if (el.getValueAsFloat() === 47.28) {
       this.trigger("verify_$SIGNAL_NAME");
     }
@@ -7,13 +14,5 @@ window.$CLASS_NAME = class {
 
   verify_$SIGNAL_NAME(_, el) {
     el.innerHTML = "ok";
-  }
-
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
-
-  bittyReady() {
-    this.trigger("test_$SIGNAL_NAME");
   }
 };

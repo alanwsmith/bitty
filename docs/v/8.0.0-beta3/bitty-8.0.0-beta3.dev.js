@@ -1548,7 +1548,7 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  async processSignal(ev, sender, rawSignal) {
+  async processSignal(ev, sender, signal) {
     ev.sender = sender;
     if (ev.sender.dataset.listeners) {
       const listeners = splitSignalString(ev.sender.dataset.listeners);
@@ -1557,81 +1557,44 @@ class BittyJs extends HTMLElement {
       }
     }
     this.updateEvent(ev);
-    const signalParts = rawSignal.split(":");
-    signalParts.reverse();
-    const signal = signalParts[0];
-    const doAwait = signalParts[1] === "await" ? true : false;
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
-        // console.log(`${rawSignal} - ${receiver}`);
         this.updateReceiverV2(ev, sender, receiver);
-        if (doAwait === true) {
-          await this.conn[signal](ev, receiver);
-        } else {
-          this.conn[signal](ev, receiver);
-        }
+        this.conn[signal](ev, receiver);
       }
     } else {
-      if (doAwait === true) {
-        await this.conn[signal](ev, null);
-      } else {
-        this.conn[signal](ev, null);
-      }
+      this.conn[signal](ev, null);
     }
   }
 
-  async processBittySendSignal(payload, rawSignal) {
-    const signalParts = rawSignal.split(":");
-    signalParts.reverse();
-    const signal = signalParts[0];
-    const doAwait = signalParts[1] === "await" ? true : false;
+  async processBittySendSignal(payload, signal) {
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
         this.updateReceiverForBittySignal(receiver);
-        if (doAwait === true) {
-          await this.conn[signal](payload, receiver);
-        } else {
-          this.conn[signal](payload, receiver);
-        }
+        this.conn[signal](payload, receiver);
       }
     } else {
-      if (doAwait === true) {
-        await this.conn[signal](payload, null);
-      } else {
-        this.conn[signal](payload, null);
-      }
+      this.conn[signal](payload, null);
     }
   }
 
-  async processBittyTriggerSignal(rawSignal) {
-    const signalParts = rawSignal.split(":");
-    signalParts.reverse();
-    const signal = signalParts[0];
-    const doAwait = signalParts[1] === "await" ? true : false;
+  async processBittyTriggerSignal(signal) {
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
         this.updateReceiverForBittySignal(receiver);
-        if (doAwait === true) {
-          await this.conn[signal](null, receiver);
-        } else {
-          this.conn[signal](null, receiver);
-        }
+        this.conn[signal](null, receiver);
       }
     } else {
-      if (doAwait === true) {
-        await this.conn[signal](null, null);
-      } else {
-        this.conn[signal](null, null);
-      }
+      this.conn[signal](null, null);
     }
   }
 
@@ -1682,10 +1645,10 @@ class BittyJs extends HTMLElement {
             if (sender.dataset.listeners !== undefined) {
               const listeners = splitSignalString(sender.dataset.listeners);
               if (listeners.includes(ev.type)) {
-                await this.processSignal(ev, sender, signal);
+                this.processSignal(ev, sender, signal);
               }
             } else {
-              await this.processSignal(ev, sender, signal);
+              this.processSignal(ev, sender, signal);
             }
           }
         }
@@ -1704,7 +1667,7 @@ class BittyJs extends HTMLElement {
         const signals = splitSignalString(sender.dataset.send);
         for (const signal of signals) {
           if (typeof this.conn[signal] === "function") {
-            await this.processSignal(ev, sender, signal);
+            this.processSignal(ev, sender, signal);
           }
         }
       }
@@ -1829,6 +1792,8 @@ class BittyJs extends HTMLElement {
   /** internal */
   async runBittyReady() {
     // TODO: Add tests for sync and async runs.
+    // TODO: Note in docs that bittyReady will
+    // be run with await if its async.
     if (typeof this.conn.bittyReady === "function") {
       if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
         await this.conn.bittyReady();

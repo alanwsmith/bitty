@@ -59,14 +59,23 @@ class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
 
-    def bitty_tag_output_path(self):
-        return os.path.join(self.output_dir(), "bitty_tag.html")
-
     def bitty_tag_content(self):
         path = os.path.join(self.dir, "bitty_tag.html")
         content = slurp(path)
         return content
         #return f"""<bitty-8-0 data-connect="Class{self.hash()}"></bitty-8-0>"""
+
+    def bitty_tag_output_path(self):
+        return os.path.join(self.output_dir(), "bitty_tag.html")
+
+    def extra_html_content(self):
+        path = os.path.join(self.dir, "extra_html.html")
+        content = slurp(path)
+        return content
+        #return f"""<bitty-8-0 data-connect="Class{self.hash()}"></bitty-8-0>"""
+
+    def extra_html_output_path(self):
+        return os.path.join(self.output_dir(), "extra_html.html")
 
     def class_name(self):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
@@ -184,6 +193,10 @@ class Test():
         # return os.path.join(self.dir, "window_class.html")
 
     def write_files(self):
+        with open(self.bitty_tag_output_path(), "w") as _out:
+            _out.write(self.bitty_tag_content())
+        with open(self.extra_html_output_path(), "w") as _out:
+            _out.write(self.generate_output(self.extra_html_content()))
         with open(self.html_output_path(), "w") as _out:
             _out.write(self.generate_output(self.html_content()))
         with open(self.javascript_output_path(), "w") as _out:
@@ -192,12 +205,8 @@ class Test():
             _out.write(self.generate_output(self.name_content()))
         with open(self.remote_javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.remote_javascript_content()))
-        with open(self.bitty_tag_output_path(), "w") as _out:
-            _out.write(self.bitty_tag_content())
         with open(self.window_class_output_path(), "w") as _out:
             _out.write(self.window_class_content())
-            
-
 
 
 

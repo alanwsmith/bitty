@@ -15,7 +15,24 @@
 
 [# load the bitty tags #]
 [! include bitty_tag_file !]
+
+
+[! set extra_html -!]
+[!- include extra_html_file ignore missing -!]
+[! endset !]
+[@ extra_html @]
 [# END BEHIND_THE_SCENES #]
+
+
+
+
+
+
+
+<div>JavaScript</div>
+[! filter block_highlight("javascript") !]
+[! include javascript_file !]
+[! endfilter !]
 
 
 
@@ -25,10 +42,12 @@
 [! endfilter !]
 
 
-<div>JavaScript</div>
-[! filter block_highlight("javascript") !]
-[! include javascript_file !]
+[! if extra_html != "" !]
+<div>Extra HTML</div>
+[! filter block_highlight("html") !]
+[@ extra_html @]
 [! endfilter !]
+[! endif !]
 
 
 <div>Results</div>

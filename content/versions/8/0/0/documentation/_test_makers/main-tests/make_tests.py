@@ -20,7 +20,7 @@ class ContentMover():
             self.html_wrapper = Template(_in.read())
 
     def move_content(self):
-        file_names = ["name.html", "description.html", "notes.html", "bitty_tag.html", "window_class.html"]
+        file_names = ["name.html", "description.html", "notes.html", "bitty_tag.html", "window_class.html", "trigger_class.txt", "trigger.js"]
         for dir in os.walk("_tests"):
             for file in dir[2]:
                 if file in file_names:
@@ -184,15 +184,27 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
-    def window_class_source_content(self):
-        # This makes the source files in the test director
-        # that gets edited. These files are then pulled
-        # in by `window_class_content()` and 
-        # `window_class_output_path()`. It's hard coded
-        # to set the variable properly that are then
-        # pulled in with the string via minijinja
-        return f"""window.BittyClasses.Class{self.hash()} = class {{"""
+    # These two methods set up the output for making
+    # the trigger behind the scenes setup. 
+    def trigger_class_content(self):
+        path = os.path.join(self.dir, "trigger_class.txt")
+        content = slurp(path)
+        return content
+    def trigger_class_output_path(self):
+        return os.path.join(self.output_dir(), "trigger_class.txt")
 
+    # This makes the source files in the test director
+    # that gets edited. These files are then pulled
+    # in by `window_class_content()` and 
+    # `window_class_output_path()`. It's hard coded
+    # to set the variable properly that are then
+    # pulled in with the string via minijinja
+    def window_class_source_content(self):
+        output = f"""window.BittyClasses.Class{self.hash()} = class {{"""
+        # My auto-formatter gets thrown by the `{{` without a 
+        # closing `}}`. The next is simply to reset it. 
+        _fix_formatter = "}}"
+        return output
     def window_class_source_output_path(self):
         return os.path.join(self.dir, "window_class.html")
 
@@ -218,12 +230,12 @@ class Test():
             _out.write(self.generate_output(self.name_content()))
         with open(self.remote_javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.remote_javascript_content()))
+        with open(self.trigger_class_output_path(), "w") as _out:
+            _out.write(self.generate_output(self.trigger_class_content()))
         with open(self.window_class_source_output_path(), "w") as _out:
             _out.write(self.window_class_source_content())
         with open(self.window_class_output_path(), "w") as _out:
             _out.write(self.window_class_content())
-
-
 
 
 

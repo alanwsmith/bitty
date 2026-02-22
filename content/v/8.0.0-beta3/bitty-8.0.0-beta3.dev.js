@@ -1422,7 +1422,6 @@ class BittyJs extends HTMLElement {
     } else {
       const connString = this.dataset.connect.trim();
       if (window[connString]) {
-        console.log(connString);
         this.conn = new window[connString]();
       } else {
         // TODO: Handle `http...` URLS

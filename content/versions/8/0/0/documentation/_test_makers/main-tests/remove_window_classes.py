@@ -24,6 +24,24 @@ class Fixer():
                     output_lines = []
                     first_removed = False
                     for line in lines:
+                        if line.strip() == "};" and first_removed == False:
+                            first_removed = True
+                            continue
+                            pass
+                        if line.strip() == "window.$CLASS_NAME = class {":
+                            continue
+                            pass
+                        if line.strip() == '/////////////////////////////////////////////////':
+                            # trying to fix formatter
+                            continue
+                            pass
+                        if line.strip() == '// Test Setup':
+                            # trying to fix formatter
+                            continue
+                            pass
+                        line = line[2:]
+
+
                         output_lines.append(line)
                     output_lines.reverse()
                     with open (output_path, "w") as _out:

@@ -1,19 +1,14 @@
-window.Class73040 = class {
-  #key = "el_signal_73040";
+#key = "el_signal_73040";
 
-  test_signal_73040(_, el) {
-    const result = this.createElement(this.#key);
-    if (result.level === "error") {
-      el.innerHTML = "ok";
-    }
+test_signal_73040(_, el) {
+  const result = this.createElement(this.#key);
+  if (result.level === "error") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_signal_73040");
-  }
-};
+bittyReady() {
+  this.setLogLevel("none");
+  this.trigger("test_signal_73040");
+}

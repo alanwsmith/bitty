@@ -1,25 +1,20 @@
-window.Class88717 = class {
-  #key = "fragment_signal_88717";
+#key = "fragment_signal_88717";
 
-  test_signal_88717(_, el) {
-    this.logs = [];
-    this.renderFragment(this.#key);
-    if (this.logs[0].ok === false && this.logs[0].level === "error") {
-      el.innerHTML = "ok";
-    }
+test_signal_88717(_, el) {
+  this.logs = [];
+  this.renderFragment(this.#key);
+  if (this.logs[0].ok === false && this.logs[0].level === "error") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("given_signal_88717");
-  }
+bittyReady() {
+  this.trigger("given_signal_88717");
+}
 
-  given_signal_88717(_, __) {
-    this.setLogLevel("none");
-    this.deleteFragment(this.#key);
-    this.trigger("test_signal_88717");
-  }
-};
+given_signal_88717(_, __) {
+  this.setLogLevel("none");
+  this.deleteFragment(this.#key);
+  this.trigger("test_signal_88717");
+}

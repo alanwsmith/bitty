@@ -1,9 +1,7 @@
-window.ClassABF58 = class {
-  bittyReady() {
-    document.querySelector("[data-send=signal_ABF58]").click();
-  }
+bittyReady() {
+  document.querySelector("[data-send=signal_ABF58]").click();
+}
 
-  signal_ABF58(_, el) {
-    el.innerHTML = "ok";
-  }
-};
+signal_ABF58(_, el) {
+  el.innerHTML = "ok";
+}

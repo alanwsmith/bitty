@@ -1,19 +1,14 @@
-window.Class0938C = class {
-  #key = "el_signal_0938C";
+#key = "el_signal_0938C";
 
-  async test_signal_0938C(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-element.xml";
-    const result = await this.fetchElement(this.#key, url);
-    if (result.ok === true) {
-      el.innerHTML = "ok";
-    }
+async test_signal_0938C(_, el) {
+  const url = "/[@ file.parent @]/payloads/valid-element.xml";
+  const result = await this.fetchElement(this.#key, url);
+  if (result.ok === true) {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("test_signal_0938C");
-  }
-};
+bittyReady() {
+  this.trigger("test_signal_0938C");
+}

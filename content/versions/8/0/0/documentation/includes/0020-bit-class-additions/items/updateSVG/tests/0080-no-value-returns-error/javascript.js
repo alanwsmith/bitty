@@ -1,26 +1,21 @@
-window.Class15A58 = class {
-  #key = "svg_signal_15A58";
+#key = "svg_signal_15A58";
 
-  test_signal_15A58(_, el) {
-    const result = this.updateSVG(this.#key);
-    if (result.ok === false && result.level === "error") {
-      el.innerHTML = "ok";
-    }
+test_signal_15A58(_, el) {
+  const result = this.updateSVG(this.#key);
+  if (result.ok === false && result.level === "error") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.setLogLevel("none");
-    this.deleteSVG(this.#key);
-    const input = `
-<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="green" />
-  <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">bug</text>
-</svg>`;
-    this.createSVG(this.#key, input);
-    this.trigger("test_signal_15A58");
-  }
-};
+bittyReady() {
+  this.setLogLevel("none");
+  this.deleteSVG(this.#key);
+  const input = `
+vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="green" />
+<text x="30" y="24" font-size="20" text-anchor="middle" fill="white">bug</text>
+svg>`;
+  this.createSVG(this.#key, input);
+  this.trigger("test_signal_15A58");
+}

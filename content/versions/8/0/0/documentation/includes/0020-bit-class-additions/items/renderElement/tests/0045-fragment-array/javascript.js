@@ -1,32 +1,27 @@
-window.Class81AA3 = class {
-  #key = "el_signal_81AA3";
+#key = "el_signal_81AA3";
 
-  test_signal_81AA3(_, el) {
-    const subs = {
-      "TARGET_81AA3": [
-        this.renderFragment(`replacement1_81AA3`),
-        this.renderFragment(`replacement2_81AA3`),
-      ],
-    };
-    el.replaceWith(
-      this.renderElement(this.#key, subs),
-    );
-  }
+test_signal_81AA3(_, el) {
+  const subs = {
+    "TARGET_81AA3": [
+      this.renderFragment(`replacement1_81AA3`),
+      this.renderFragment(`replacement2_81AA3`),
+    ],
+  };
+  el.replaceWith(
+    this.renderElement(this.#key, subs),
+  );
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.createElement(this.#key, `<div>TARGET_81AA3</div>`);
-    this.createFragment(
-      `replacement1_81AA3`,
-      `<div class="test">ok</div><div class="test">ok</div>`,
-    );
-    this.createFragment(
-      `replacement2_81AA3`,
-      `<div class="test">ok</div><div class="test">ok</div>`,
-    );
-    this.trigger("test_signal_81AA3");
-  }
-};
+bittyReady() {
+  this.createElement(this.#key, `<div>TARGET_81AA3</div>`);
+  this.createFragment(
+    `replacement1_81AA3`,
+    `<div class="test">ok</div><div class="test">ok</div>`,
+  );
+  this.createFragment(
+    `replacement2_81AA3`,
+    `<div class="test">ok</div><div class="test">ok</div>`,
+  );
+  this.trigger("test_signal_81AA3");
+}

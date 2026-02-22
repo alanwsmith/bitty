@@ -1,21 +1,16 @@
-window.ClassA6A28 = class {
-  #key = "svg_signal_A6A28";
+#key = "svg_signal_A6A28";
 
-  test_signal_A6A28(input, el) {
-    const result = this.createSVG(this.#key, {
-      key: "not a string or svg",
-    });
-    if (result.ok === false && result.level === "error") {
-      el.innerHTML = "ok";
-    }
+test_signal_A6A28(input, el) {
+  const result = this.createSVG(this.#key, {
+    key: "not a string or svg",
+  });
+  if (result.ok === false && result.level === "error") {
+    el.innerHTML = "ok";
   }
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.setLogLevel("none");
-    this.trigger("test_signal_A6A28");
-  }
-};
+bittyReady() {
+  this.setLogLevel("none");
+  this.trigger("test_signal_A6A28");
+}

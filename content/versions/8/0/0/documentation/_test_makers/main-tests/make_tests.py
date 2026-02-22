@@ -20,7 +20,7 @@ class ContentMover():
             self.html_wrapper = Template(_in.read())
 
     def move_content(self):
-        file_names = ["name.html", "description.html", "notes.html"]
+        file_names = ["name.html", "description.html", "notes.html", "bitty_tag.html", "window_class.html"]
         for dir in os.walk("_tests"):
             for file in dir[2]:
                 if file in file_names:
@@ -63,7 +63,10 @@ class Test():
         return os.path.join(self.output_dir(), "bitty_tag.html")
 
     def bitty_tag_content(self):
-        return f"""<bitty-8-0 data-connect="Class{self.hash()}"></bitty-8-0>"""
+        path = os.path.join(self.dir, "bitty_tag.html")
+        content = slurp(path)
+        return content
+        #return f"""<bitty-8-0 data-connect="Class{self.hash()}"></bitty-8-0>"""
 
     def class_name(self):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
@@ -185,8 +188,6 @@ class Test():
         with open(self.bitty_tag_output_path(), "w") as _out:
             _out.write(self.bitty_tag_content())
             
-        # print(self.bitty_tag_content())
-        # print(self.window_class_output_path())
 
 
 

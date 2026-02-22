@@ -1,23 +1,18 @@
-window.Class74651 = class {
-  #key = "svg_signal_74651";
+#key = "svg_signal_74651";
 
-  async test_signal_74651(_, el) {
-    const url = "/[@ file.parent @]/payloads/valid-svg.svg";
-    await this.fetchSVG(this.#key, url);
-    const svg = this.renderSVG(this.#key);
-    el.innerHTML = svg.querySelector("text").innerHTML;
-    this.send(svg, "view_signal_74651");
-  }
+async test_signal_74651(_, el) {
+  const url = "/[@ file.parent @]/payloads/valid-svg.svg";
+  await this.fetchSVG(this.#key, url);
+  const svg = this.renderSVG(this.#key);
+  el.innerHTML = svg.querySelector("text").innerHTML;
+  this.send(svg, "view_signal_74651");
+}
 
-  view_signal_74651(svg, el) {
-    el.replaceWith(svg);
-  }
+view_signal_74651(svg, el) {
+  el.replaceWith(svg);
+}
 
-  /////////////////////////////////////////////////
-  // Test Setup
-  /////////////////////////////////////////////////
 
-  bittyReady() {
-    this.trigger("test_signal_74651");
-  }
-};
+bittyReady() {
+  this.trigger("test_signal_74651");
+}

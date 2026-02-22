@@ -1,4 +1,4 @@
 signal_ABF58(_, el) {
-  el.innerHTML = "passed";
+  el.innerHTML = "test passed";
 }
 

@@ -1,4 +1,4 @@
 $SIGNAL_NAME(_, el) {
-  el.innerHTML = "passed";
+  el.innerHTML = "test passed";
 }
 

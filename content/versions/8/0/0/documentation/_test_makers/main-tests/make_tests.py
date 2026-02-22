@@ -177,11 +177,11 @@ class Test():
         path = os.path.join(self.dir, "window_class.html")
         content = slurp(path)
         return content
-        #return f"""Window.Class{self.hash()} = class {{"""
+        # return f"""window.Class{self.hash()} = class {{"""
 
     def window_class_output_path(self):
         return os.path.join(self.output_dir(), "window_class.html")
-        # return os.path.join(self.output_dir(), "window_class.html")
+        # return os.path.join(self.dir, "window_class.html")
 
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:

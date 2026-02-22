@@ -1416,13 +1416,13 @@ class BittyJs extends HTMLElement {
   /** internal */
   async makeConnection() {
     if (!this.dataset.connect) {
-      console.log("HERE1");
       // TODO: Throw error if there's no connect
       // TODO: Remove docs for window.BittyClass();
       // as it's no longer a thing.
     } else {
       const connString = this.dataset.connect.trim();
       if (window[connString]) {
+        console.log(connString);
         this.conn = new window[connString]();
       } else {
         // TODO: Handle `http...` URLS

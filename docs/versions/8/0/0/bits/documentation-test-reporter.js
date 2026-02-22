@@ -35,7 +35,7 @@ export default class {
     } else {
       el.dataset.testStatus = "ok";
       testEls.forEach((testEl) => {
-        if (testEl.innerHTML.trim() !== "ok") {
+        if (testEl.innerHTML.trim() !== "test passed") {
           el.dataset.testStatus = "bug";
         }
       });

@@ -4,10 +4,15 @@
     [! include name_file !]  <span class="faded-default-color">[[@ test_dir_name @]]</span>
   </summary>
 
+[# load the bitty tags #]
+[! include bitty_tag_file !]
+
+
 <div>HTML</div>
 [! filter block_highlight("html") !]
 [! include html_file !]
 [! endfilter !]
+
 
 <div>JavaScript</div>
 [! filter block_highlight("html") !]
@@ -28,12 +33,10 @@
 [!- include test_notes_file ignore missing -!]
 [! endset !]
 
-  [! if notes_content|trim != "" !]
+[! if notes_content|trim != "" !]
 <div>Notes</div>
-  [@ notes_content|safe @]
-  [! endif !]
-
-
+[@ notes_content|safe @]
+[! endif !]
 
 </details>
 

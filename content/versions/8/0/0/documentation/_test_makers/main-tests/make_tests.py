@@ -41,6 +41,7 @@ class ContentMover():
                             with open(output_path, "w") as _out:
                                 _out.write(output)
 
+
     def move_other_files(self):
         file_names = ["payload.txt", "payload.html", "payload.json", "payload.svg"]
         for dir in os.walk("_tests"):
@@ -58,6 +59,12 @@ class Test():
     def __init__(self, dirItem):
         self.dir = dirItem[0]
 
+    def bitty_tag_output_path(self):
+        return os.path.join(self.output_dir(), "bitty_tag.html")
+
+    def bitty_tag_content(self):
+        return f"""<bitty-8-0 data-connect="Class{self.hash()}"></bitty-8-0>"""
+
     def class_name(self):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
         path_parts = self.dir.split("/")
@@ -73,7 +80,6 @@ class Test():
                 ]
             )
         return f"Class_{str(uuid.uuid5(namespace, input))[:5]}"
-
 
     def generate_output(self, input):
         path_parts = self.dir.split("/")
@@ -164,6 +170,8 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
+    def window_class_output_path(self):
+        return os.path.join(self.output_dir(), "window_class.html")
 
     def write_files(self):
         with open(self.html_output_path(), "w") as _out:
@@ -174,6 +182,13 @@ class Test():
             _out.write(self.generate_output(self.name_content()))
         with open(self.remote_javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.remote_javascript_content()))
+        with open(self.bitty_tag_output_path(), "w") as _out:
+            _out.write(self.bitty_tag_content())
+            
+        # print(self.bitty_tag_content())
+        # print(self.window_class_output_path())
+
+
 
 
 class TestMaker():

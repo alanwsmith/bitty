@@ -1,6 +1,6 @@
 window.$CLASS_NAME = class {
   bittyReady() {
-    document.querySelector("#$CLICK_CLASS").click();
+    document.querySelector("[data-send=$SIGNAL_NAME]").click();
   }
 
   $SIGNAL_NAME(_, el) {

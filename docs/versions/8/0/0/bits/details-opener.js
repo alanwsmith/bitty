@@ -1,7 +1,7 @@
 class DetailsOpener {
   bittyReady() {
-    console.log("DetailsOpener - HERE1");
     this.loadJSON(this.key(), { openItems: [] });
+    console.log(this.json[this.key()]);
     this.trigger("checkSize initPage");
   }
 

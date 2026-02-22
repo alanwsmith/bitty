@@ -91,9 +91,15 @@ class BittyJs extends HTMLElement {
   }
 
   addBitty(target) {
+    target.logs = [];
+    target.json = {};
+    target._svg = {};
+    target._elemnet = {};
+    target._fragment = {};
     target._element = () => {};
     target._runBittyReady = this._runBittyReady.bind(target);
     target._svg = () => {};
+    target.addLog = this._addLog.bind(target);
     target.createElement = () => {};
     target.createFragment = () => {};
     target.createJSON = () => {};
@@ -107,7 +113,7 @@ class BittyJs extends HTMLElement {
     target.fetchSVG = () => {};
     target.json = {};
     target.loadElement = () => {};
-    target.loadJSON = () => {};
+    target.loadJSON = this._loadJSON.bind(target);
     target.loadSVG = () => {};
     target.send = this._send.bind(target);
     target.setLogLevel = () => {};
@@ -1322,8 +1328,20 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _addLog(details) {
+    this.logs.push(details);
+    // TODO: set up to use `this.getLogLevel()`
+    // to determine what to output.
+    if (details.level === "error") {
+      console.error(details);
+    } else if (details.level === "warn") {
+      console.warn(details);
+    }
+    return details;
+  }
+
   // TODO: Add stacktrace
-  _addLog(level, type, ok, message, extraInfo = null) {
+  _addLog_Original(level, type, ok, message, extraInfo = null) {
     const log = new BittyLog(level, type, ok, message, extraInfo);
     this.conn.logs.push(log);
     //    console.log(`${level} - ${this.#_logLevel}`);
@@ -1420,8 +1438,49 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  // TODO: throw error if parsing fails
   _loadJSON(key, fallback = null) {
+    const details = {
+      level: "info",
+      key: "loadJSON",
+      ok: true,
+      messages: [],
+      moreDetails: null,
+    };
+    const keyAlreadyExists = this.json[key] === undefined ? false : true;
+    try {
+      const storageKey = `bittyJSON_${key}`;
+      const storage = localStorage.getItem(storageKey);
+      if (storage !== null) {
+        const json = JSON.parse(storage).data;
+        this.json[key] = json;
+        details.messages.push(`Loaded json from storage with key: ${key}`);
+      } else if (typeof fallback === "string") {
+        this.json[key] = JSON.parse(fallback);
+        localStorage.setItem(key, `{ "data": ${fallback} }`);
+        details.messages.push(`Loaded json from fallback with key: ${key}`);
+      } else if (typeof fallback === "object") {
+        localStorage.setItem(key, JSON.stringify({ data: fallback }));
+        this.json[key] = fallback;
+        details.messages.push(`Loaded json from fallback with key: ${key}`);
+      } else {
+        details.level = "error", details.ok = false;
+        details.messages.push(
+          `Could not load JSON from either storage or fallbak with key: ${key}`,
+        );
+      }
+    } catch (loadingError) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        "Could not load JSON. See 'moreDetails' for additional information",
+      );
+      details.moreInfo = loadingError;
+    }
+    return this.addLog(details);
+  }
+
+  // TODO: throw error if parsing fails
+  _loadJSON_Original(key, fallback = null) {
     const storageKey = `bittyJSON_${key}`;
     const storage = localStorage.getItem(storageKey);
     // TODO: Update so details has everything

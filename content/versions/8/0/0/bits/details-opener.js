@@ -1,5 +1,6 @@
-export default class {
+class DetailsOpener {
   bittyReady() {
+    console.log("DetailsOpener - HERE1");
     this.loadJSON(this.key(), { openItems: [] });
     this.trigger("checkSize initPage");
   }
@@ -35,3 +36,5 @@ export default class {
     this.saveJSON(this.key());
   }
 }
+
+export { DetailsOpener };

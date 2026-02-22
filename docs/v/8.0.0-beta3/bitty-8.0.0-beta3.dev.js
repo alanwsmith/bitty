@@ -22,8 +22,9 @@ function findSenders(el) {
 }
 
 class BittyJs extends HTMLElement {
-  static loadedPageClasses = false;
   static addedEventListeners = false;
+  static loadedPageClasses = false;
+  static moduleFiles = [];
 
   constructor() {
     super();
@@ -40,7 +41,8 @@ class BittyJs extends HTMLElement {
   /** internal */
   async connectedCallback() {
     this.processEventBridge = this.processEvent.bind(this);
-    await this.loadWindowClasses();
+    this.loadWindowClasses();
+    await this.loadModuleClasses();
     this.addEventListeners();
     // await this.makeConnection();
     // if (this.conn) {
@@ -60,6 +62,29 @@ class BittyJs extends HTMLElement {
           this.addBitty(bittyClass);
           this.#bits.push(bittyClass);
           bittyClass._runBittyReady();
+        }
+      }
+    }
+  }
+
+  async loadModuleClasses() {
+    if (this.dataset.connect) {
+      const connString = this.dataset.connect.trim();
+      if (
+        // TODO: Add tests to verify each path prefix
+        connString.substring(0, 4) === "http" ||
+        connString.substring(0, 1) === "/" ||
+        connString.substring(0, 1) === "."
+      ) {
+        if (this.constructor.moduleFiles.includes(connString) === false) {
+          this.constructor.moduleFiles.push(connString);
+          const bits = await import(this.dataset.connect.trim());
+          for (const bit of Object.keys(bits)) {
+            const bittyClass = new bits[bit]();
+            this.addBitty(bittyClass);
+            this.#bits.push(bittyClass);
+            bittyClass._runBittyReady();
+          }
         }
       }
     }

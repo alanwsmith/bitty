@@ -1,0 +1,4 @@
+class DataConnectExample {
+}
+
+export { DataConnectExample };

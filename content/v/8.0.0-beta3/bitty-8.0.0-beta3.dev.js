@@ -41,7 +41,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   async connectedCallback() {
     this.processEventBridge = this.processEvent.bind(this);
-    await this.loadModuleClasses();
+    this.loadModuleClasses();
     this.loadWindowClasses();
     this.addEventListeners();
     // await this.makeConnection();
@@ -83,7 +83,7 @@ class BittyJs extends HTMLElement {
             const bittyClass = new remoteBits[bit]();
             this.addBitty(bittyClass);
             this.#bits.push(bittyClass);
-            bittyClass._runBittyReady();
+            await bittyClass._runBittyReady();
           }
         }
       }
@@ -119,11 +119,7 @@ class BittyJs extends HTMLElement {
 
   async _runBittyReady() {
     if (typeof this.bittyReady === "function") {
-      if (this.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
-        await this.bittyReady();
-      } else {
-        this.bittyReady();
-      }
+      this.bittyReady();
     }
   }
 

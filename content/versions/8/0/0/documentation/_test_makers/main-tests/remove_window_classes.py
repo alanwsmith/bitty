@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+# THIS IS A ONE SHOT FOR MOVING Window.ClassXXX
+# out of the main script files so they
+# don't display in the docs. Saving
+# it for reference, but you should not 
+# need to run it again. 
+
 import os
 
 from pathlib import Path 
@@ -53,9 +59,12 @@ class Fixer():
 
 
 if __name__ == "__main__":
-    fixer = Fixer()
-    fixer.remove_classes()
-
+    pass
+    # this is turned off since this script
+    # is a oneshot. 
+    #
+    # fixer = Fixer()
+    # fixer.remove_classes()
 
 
 

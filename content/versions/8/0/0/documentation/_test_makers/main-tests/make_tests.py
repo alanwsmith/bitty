@@ -53,6 +53,8 @@ class ContentMover():
                     output_dir = os.path.dirname(output_path)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
                     copy2(input_path, output_path)
+                else:
+                    pass
 
 
 class Test():
@@ -182,20 +184,20 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
-    # This makes the source files in the test director
-    # that gets edited. These files are then pulled
-    # in by `window_class_content()` and 
-    # `window_class_output_path()`. It's hard coded
-    # to set the variable properly that are then
-    # pulled in with the string via minijinja
     def window_class_source_content(self):
+        # This makes the source files in the test director
+        # that gets edited. These files are then pulled
+        # in by `window_class_content()` and 
+        # `window_class_output_path()`. It's hard coded
+        # to set the variable properly that are then
+        # pulled in with the string via minijinja
         return f"""window.BittyClasses.Class{self.hash()} = class {{"""
 
     def window_class_source_output_path(self):
         return os.path.join(self.dir, "window_class.html")
 
-    # This is what copies the window_class_course_content()
     def window_class_content(self):
+        # This is what copies the window_class_course_content()
         path = os.path.join(self.dir, "window_class.html")
         content = slurp(path)
         return content
@@ -220,6 +222,8 @@ class Test():
             _out.write(self.window_class_source_content())
         with open(self.window_class_output_path(), "w") as _out:
             _out.write(self.window_class_content())
+
+
 
 
 

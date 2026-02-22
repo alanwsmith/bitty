@@ -182,15 +182,26 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
+    # This makes the source files in the test director
+    # that gets edited. These files are then pulled
+    # in by `window_class_content()` and 
+    # `window_class_output_path()`. It's hard coded
+    # to set the variable properly that are then
+    # pulled in with the string via minijinja
+    def window_class_source_content(self):
+        return f"""window.BittyClasses.Class{self.hash()} = class {{"""
+
+    def window_class_source_output_path(self):
+        return os.path.join(self.dir, "window_class.html")
+
+    # This is what copies the window_class_course_content()
     def window_class_content(self):
         path = os.path.join(self.dir, "window_class.html")
         content = slurp(path)
         return content
-        # return f"""window.Class{self.hash()} = class {{"""
 
     def window_class_output_path(self):
         return os.path.join(self.output_dir(), "window_class.html")
-        # return os.path.join(self.dir, "window_class.html")
 
     def write_files(self):
         with open(self.bitty_tag_output_path(), "w") as _out:
@@ -205,6 +216,8 @@ class Test():
             _out.write(self.generate_output(self.name_content()))
         with open(self.remote_javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.remote_javascript_content()))
+        with open(self.window_class_source_output_path(), "w") as _out:
+            _out.write(self.window_class_source_content())
         with open(self.window_class_output_path(), "w") as _out:
             _out.write(self.window_class_content())
 

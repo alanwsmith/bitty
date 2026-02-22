@@ -22,6 +22,9 @@ function findSenders(el) {
 }
 
 class BittyJs extends HTMLElement {
+  static loadedPageClasses = false;
+  static addedEventListeners = false;
+
   constructor() {
     super();
   }
@@ -32,13 +35,69 @@ class BittyJs extends HTMLElement {
   #_logLevel = "warn";
 
   /** internal */
+  #bits = [];
+
+  /** internal */
   async connectedCallback() {
-    await this.makeConnection();
-    if (this.conn) {
-      this.createBridges();
-      this.addEventListeners();
-      this.ingestScriptTags(document);
-      await this.runBittyReady();
+    this.processEventBridge = this.processEvent.bind(this);
+    await this.loadWindowClasses();
+    this.addEventListeners();
+    // await this.makeConnection();
+    // if (this.conn) {
+    //   this.createBridges();
+    //   this.addEventListeners();
+    //   this.ingestScriptTags(document);
+    //   await this.runBittyReady();
+    // }
+  }
+
+  loadWindowClasses() {
+    if (this.constructor.loadedPageClasses === false) {
+      this.constructor.loadedPageClasses = true;
+      if (window.BittyClasses) {
+        for (const bittyClassKey of Object.keys(window.BittyClasses)) {
+          const bittyClass = new window.BittyClasses[bittyClassKey]();
+          this.addBitty(bittyClass);
+          this.#bits.push(bittyClass);
+          bittyClass._runBittyReady();
+        }
+      }
+    }
+  }
+
+  addBitty(target) {
+    target._element = () => {};
+    target._runBittyReady = this._runBittyReady.bind(target);
+    target._svg = () => {};
+    target.createElement = () => {};
+    target.createFragment = () => {};
+    target.createJSON = () => {};
+    target.createSVG = () => {};
+    target.deleteElement = () => {};
+    target.deleteFragment = () => {};
+    target.deleteJSON = () => {};
+    target.deleteSVG = () => {};
+    target.fetchElement = () => {};
+    target.fetchJSON = () => {};
+    target.fetchSVG = () => {};
+    target.json = {};
+    target.loadElement = () => {};
+    target.loadSVG = () => {};
+    target.send = this._send.bind(target);
+    target.setLogLevel = () => {};
+    target.sleep = this._sleep.bind(target);
+    target.trigger = this._trigger.bind(target);
+    target.updateElement = () => {};
+    target.updateSVG = () => {};
+  }
+
+  async _runBittyReady() {
+    if (typeof this.bittyReady === "function") {
+      if (this.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+        await this.bittyReady();
+      } else {
+        this.bittyReady();
+      }
     }
   }
 
@@ -1105,8 +1164,8 @@ class BittyJs extends HTMLElement {
   }
 
   _send(payload, signal) {
-    const ev = new BittySendEvent(payload, signal);
-    this.dispatchEvent(ev);
+    // const ev = new BittySendEvent(payload, signal);
+    // this.dispatchEvent(ev);
   }
 
   _setCSS(key, value) {
@@ -1141,53 +1200,54 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   addEventListeners() {
-    // TODO: Consolidate this.
-    // Internal bitty listeners
-
-    let listenerArray = [
-      "click",
-      "input",
-      "bittysendevent",
-      "bittytriggerevent",
-    ];
-    [...document.querySelectorAll("[data-listeners]")].forEach(
-      (el) => {
-        splitSignalString(el.dataset.listeners).forEach((listener) => {
-          listenerArray.push(listener);
+    if (this.constructor.addedEventListeners === false) {
+      this.constructor.addedEventListeners = true;
+      let listenerArray = [
+        "click",
+        "input",
+        "bittysendevent",
+        "bittytriggerevent",
+      ];
+      [...document.querySelectorAll("[data-listeners]")].forEach(
+        (el) => {
+          splitSignalString(el.dataset.listeners).forEach((listener) => {
+            listenerArray.push(listener);
+          });
+        },
+      );
+      [...new Set(listenerArray)].forEach((listener) => {
+        window.addEventListener(listener, (ev) => {
+          this.processEventBridge.call(this, ev);
         });
-      },
-    );
-    [...new Set(listenerArray)].forEach((listener) => {
-      window.addEventListener(listener, (ev) => {
-        this.processEventBridge.call(this, ev);
       });
-    });
-
-    // ["bittysendevent", "bittytriggerevent"].forEach(
-    //   (listener) => {
-    //     window.addEventListener(listener, (ev) => {
-    //       this.processEventBridge.call(this, ev);
-    //     });
-    //   },
-    // );
-    // ["click", "input"].forEach((listener) => {
-    //   window.addEventListener(listener, (ev) => {
-    //     this.processEventBridge.call(this, ev);
-    //   });
-    // });
-    // const customListeners = [
-    //   ...new Set(
-    //     [...document.querySelectorAll("[data-listeners]")]
-    //       .map((el) => {
-    //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
-    //           window.addEventListener(signal.trim(), (ev) => {
-    //             this.processEventBridge.call(this, ev);
-    //           });
-    //         });
-    //       }),
-    //   ),
-    // ];
+    }
   }
+
+  // ["bittysendevent", "bittytriggerevent"].forEach(
+  //   (listener) => {
+  //     window.addEventListener(listener, (ev) => {
+  //       this.processEventBridge.call(this, ev);
+  //     });
+  //   },
+  // );
+  // ["click", "input"].forEach((listener) => {
+  //   window.addEventListener(listener, (ev) => {
+  //     this.processEventBridge.call(this, ev);
+  //   });
+  // });
+  // const customListeners = [
+  //   ...new Set(
+  //     [...document.querySelectorAll("[data-listeners]")]
+  //       .map((el) => {
+  //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
+  //           window.addEventListener(signal.trim(), (ev) => {
+  //             this.processEventBridge.call(this, ev);
+  //           });
+  //         });
+  //       }),
+  //   ),
+  // ];
+  //
 
   // TODO: Deprecate and remove in favor of
   // _createJSON(key, data)
@@ -1641,6 +1701,31 @@ class BittyJs extends HTMLElement {
   }
 
   async processEvent(ev) {
+    const senders = findSenders(ev.target);
+    for (const sender of senders) {
+      const signals = splitSignalString(sender.dataset.send);
+      for (const signal of signals) {
+        for (const bit of this.#bits) {
+          if (typeof bit[signal] === "function") {
+            console.log(signal);
+          }
+        }
+
+        // if (typeof this.conn[signal] === "function") {
+        //   if (sender.dataset.listeners !== undefined) {
+        //     const listeners = splitSignalString(sender.dataset.listeners);
+        //     if (listeners.includes(ev.type)) {
+        //       this.processSignal(ev, sender, signal);
+        //     }
+        //   } else {
+        //     this.processSignal(ev, sender, signal);
+        //   }
+        // }
+      }
+    }
+  }
+
+  async processEvent_original(ev) {
     let senders = [];
     if (ev.type === "bittytriggerevent") {
       const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
@@ -1728,8 +1813,8 @@ class BittyJs extends HTMLElement {
   }
 
   _trigger(signal) {
-    const ev = new BittyTriggerEvent(signal);
-    this.dispatchEvent(ev);
+    // const ev = new BittyTriggerEvent(signal);
+    // this.dispatchEvent(ev);
   }
 }
 

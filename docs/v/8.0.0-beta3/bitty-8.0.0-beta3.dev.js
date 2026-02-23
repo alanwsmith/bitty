@@ -131,6 +131,7 @@ class BittyJs extends HTMLElement {
     target.addListeners = this._addListeners.bind(target);
     target.addListeners();
     target.processEvent = this._processEvent.bind(target);
+    target.processTrigger = this._processTrigger.bind(target);
   }
 
   async _runBittyReady() {
@@ -1826,88 +1827,143 @@ class BittyJs extends HTMLElement {
   }
 
   async _processEvent(ev) {
-    console.log(`IN: _processEvent - ${ev.type}`);
-  }
-
-  async _processEvent_holding(ev) {
-    console.log(ev.type);
     if (ev.type === "bittytriggerevent") {
       const signals = splitSignalString(ev.signals);
-      console.log(`SIGNALS: ${signals}`);
       for (const signal of signals) {
-        for (const bit of this.#bits) {
-          // console.log(`FUNCTION: ${typeof bit[signal]}`);
-          // console.log(bit);
-
-          if (typeof bit[signal] === "function") {
-            console.log(`IN: processsEvent - ${signal}`);
-            this.processTriggerSignal_V3(bit, signal);
-          }
-        }
-      }
-    } else if (ev.type === "bittysendevent") {
-      //console.log("TODO: bittysendevent");
-    } else {
-      const senders = findSenders(ev.target);
-      for (const sender of senders) {
-        const signals = splitSignalString(sender.dataset.send);
-        for (const signal of signals) {
-          for (const bit of this.#bits) {
-            if (typeof bit[signal] === "function") {
-              //console.log(`FUNCTION: ${typeof bit[signal]}`);
-              ev.sender = sender;
-              this.processSignal_V3(bit, ev, signal);
-            }
+        if (signal === "checkSize") {
+          if (this[signal] !== undefined) {
+            this.processTrigger(signal);
           }
         }
       }
     }
   }
 
-  async processSignal_V3(bit, ev, signal) {
-    console.log(`IN processSignal_V3: ${signal}`);
-    if (ev.sender.dataset.listeners === undefined) {
-      if (
-        ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
-          ev.type,
-        ) === false
-      ) {
-        return;
-      }
-    } else {
-      const listeners = splitSignalString(ev.sender.dataset.listeners);
-      if (!listeners.includes(ev.type)) {
-        return;
-      }
-    }
-    this.updateEvent(ev);
-    const receivers = document.querySelectorAll(
-      `[data-receive~='${signal}']`,
-    );
-    if (receivers.length > 0) {
-      for (const receiver of receivers) {
-        this.updateReceiver_V3(ev, receiver);
-        bit[signal](ev, receiver);
-      }
-    } else {
-      bit[signal](ev, null);
-    }
-  }
-
-  processTriggerSignal_V3(bit, signal) {
-    console.log(`IN procesTriggerSignal_V3: ${signal}`);
+  _processTrigger(signal) {
+    console.log(`IN procesSignal_V4: ${signal}`);
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
         //this.updateReceiver_V3(null, receiver);
-        bit[signal](null, receiver);
+        //bit[signal](null, receiver);
+        console.log("processTrigger_V4: reciever");
       }
     } else {
-      bit[signal](null, null);
+      console.log("processTrigger_V4: bare");
+      //bit[signal](null, null);
     }
   }
+
+  // async processSignal_V4(bit, ev, signal) {
+  //   console.log(`IN processSignal_V3: ${signal}`);
+  //   if (ev.sender.dataset.listeners === undefined) {
+  //     if (
+  //       ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
+  //         ev.type,
+  //       ) === false
+  //     ) {
+  //       return;
+  //     }
+  //   } else {
+  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
+  //     if (!listeners.includes(ev.type)) {
+  //       return;
+  //     }
+  //   }
+  //   this.updateEvent(ev);
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiver_V3(ev, receiver);
+  //       bit[signal](ev, receiver);
+  //     }
+  //   } else {
+  //     bit[signal](ev, null);
+  //   }
+  // }
+
+  //async _processEvent_holding(ev) {
+  //  console.log(ev.type);
+  //  if (ev.type === "bittytriggerevent") {
+  //    const signals = splitSignalString(ev.signals);
+  //    console.log(`SIGNALS: ${signals}`);
+  //    for (const signal of signals) {
+  //      for (const bit of this.#bits) {
+  //        // console.log(`FUNCTION: ${typeof bit[signal]}`);
+  //        // console.log(bit);
+  //        if (typeof bit[signal] === "function") {
+  //          console.log(`IN: processsEvent - ${signal}`);
+  //          this.processTriggerSignal_V3(bit, signal);
+  //        }
+  //      }
+  //    }
+  //  } else if (ev.type === "bittysendevent") {
+  //    //console.log("TODO: bittysendevent");
+  //  } else {
+  //    const senders = findSenders(ev.target);
+  //    for (const sender of senders) {
+  //      const signals = splitSignalString(sender.dataset.send);
+  //      for (const signal of signals) {
+  //        for (const bit of this.#bits) {
+  //          if (typeof bit[signal] === "function") {
+  //            //console.log(`FUNCTION: ${typeof bit[signal]}`);
+  //            ev.sender = sender;
+  //            this.processSignal_V3(bit, ev, signal);
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
+
+  // async processSignal_V3(bit, ev, signal) {
+  //   console.log(`IN processSignal_V3: ${signal}`);
+  //   if (ev.sender.dataset.listeners === undefined) {
+  //     if (
+  //       ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
+  //         ev.type,
+  //       ) === false
+  //     ) {
+  //       return;
+  //     }
+  //   } else {
+  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
+  //     if (!listeners.includes(ev.type)) {
+  //       return;
+  //     }
+  //   }
+  //   this.updateEvent(ev);
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiver_V3(ev, receiver);
+  //       bit[signal](ev, receiver);
+  //     }
+  //   } else {
+  //     bit[signal](ev, null);
+  //   }
+  // }
+
+  //processTriggerSignal_V3(bit, signal) {
+  //  console.log(`IN procesTriggerSignal_V3: ${signal}`);
+  //  const receivers = document.querySelectorAll(
+  //    `[data-receive~='${signal}']`,
+  //  );
+  //  if (receivers.length > 0) {
+  //    for (const receiver of receivers) {
+  //      //this.updateReceiver_V3(null, receiver);
+  //      bit[signal](null, receiver);
+  //    }
+  //  } else {
+  //    bit[signal](null, null);
+  //  }
+  //}
 
   async processEvent_original(ev) {
     let senders = [];

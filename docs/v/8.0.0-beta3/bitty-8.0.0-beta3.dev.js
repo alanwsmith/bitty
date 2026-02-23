@@ -1385,13 +1385,16 @@ class BittyJs extends HTMLElement {
   }
 
   _setLocalLogLevel(levels, level) {
-    // TODO: Handle setting `global`
-    const levelIndex = levels.indexOf(level.toLowerCase());
-    if (levelIndex >= 0) {
-      this._localLogLevelIndex = levelIndex;
+    if (level === "global") {
+      delete this._localLogLevelIndex;
     } else {
-      // TODO: Add log saying an invalid level was attempted.
-      this._localLogLevelIndex = 2;
+      const levelIndex = levels.indexOf(level.toLowerCase());
+      if (levelIndex >= 0) {
+        this._localLogLevelIndex = levelIndex;
+      } else {
+        // TODO: Add log saying an invalid level was attempted.
+        this._localLogLevelIndex = 2;
+      }
     }
 
     // if (

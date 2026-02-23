@@ -1,13 +1,8 @@
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
-  this.trigger("test_$SIGNAL_NAME");
-}
-
-test_$SIGNAL_NAME(_, el) {
-  // this.setLocalLogLevel("none");
-  // this.addLog({ level: "error", ok: false, messages: ["test_$SIGNAL_NAME"]});
-  // el.innerHTML = "ok";
+$SIGNAL_NAME(_, el) {
+  this.setLocalLogLevel("info");
+  if (this.getLocalLogLevel() === "info") {
+    el.innerHTML = "test passed";
+  } else {
+    el.innerHTML = "test failed";
+  }
 }

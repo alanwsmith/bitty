@@ -1623,12 +1623,47 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
-  _updateReceiverV4(ev, el) {
-    el.isSender = () => {
+  _updateReceiverV4(ev, receiver) {
+    receiver.isSender = () => {
       return false;
     };
-    el.isTarget = () => {
+    receiver.isTarget = () => {
       return false;
+    };
+
+    receiver.copyText = async function () {
+      if (receiver.value) {
+        try {
+          await navigator.clipboard.writeText(receiver.value);
+        } catch (error) {
+          // TODO: Switch this to logging an error.
+          console.error("Could not copy text to clipboard");
+        }
+      }
+    };
+    receiver.getData = function (key, closest = true) {
+      // TODO: Handle closest
+      return receiver.dataset[key];
+    };
+    receiver.getDataAsFloat = function (key, closest = true) {
+      // TODO: Handle closest
+      return parseFloat(receiver.dataset[key]);
+    };
+    receiver.getDataAsInt = function (key, closest = true) {
+      // TODO: Handle closest
+      return parseInt(receiver.dataset[key], 10);
+    };
+    receiver.getValue = function (key) {
+      return receiver.value;
+    };
+    receiver.getValueAsFloat = function (key) {
+      return parseFloat(receiver.value);
+    };
+    receiver.getValueAsInt = function (key) {
+      return parseInt(receiver.value, 10);
+    };
+    receiver.setData = function (key, value) {
+      receiver.dataset[key] = value;
     };
   }
 
@@ -1901,13 +1936,12 @@ class BittyJs extends HTMLElement {
   }
 
   _processTrigger(signal) {
-    console.log(`IN procesSignal_V4: ${signal}`);
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
     if (receivers.length > 0) {
       for (const receiver of receivers) {
-        //this.updateReceiver_V3(null, receiver);
+        this.updateReceiverV4(null, receiver);
         this[signal](null, receiver);
       }
     } else {
@@ -1920,7 +1954,7 @@ class BittyJs extends HTMLElement {
       const signals = splitSignalString(ev.signals);
       for (const signal of signals) {
         if (this[signal] !== undefined) {
-          // this.processTrigger(signal);
+          this.processTrigger(signal);
         }
       }
     } else if (ev.type === "bittysendevent") {
@@ -2001,7 +2035,7 @@ class BittyJs extends HTMLElement {
   //}
   //
 
-  // async processSignal_V4(bit, ev, signal) {
+  // async processSignalV4(bit, ev, signal) {
   //   console.log(`IN processSignal_V3: ${signal}`);
   //   if (ev.sender.dataset.listeners === undefined) {
   //     if (

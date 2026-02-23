@@ -59,7 +59,8 @@ class BittyJs extends HTMLElement {
       if (window.BittyClasses) {
         for (const bittyClassKey of Object.keys(window.BittyClasses)) {
           const bittyClass = new window.BittyClasses[bittyClassKey]();
-          this.addBitty(bittyClass);
+          this.addBittyVars(bittyClass);
+          this.addBittyClasses(bittyClass);
           this.#bits.push(bittyClass);
           bittyClass._runBittyReady();
         }
@@ -81,7 +82,8 @@ class BittyJs extends HTMLElement {
           const remoteBits = await import(connString);
           for (const bit of Object.keys(remoteBits)) {
             const bittyClass = new remoteBits[bit]();
-            this.addBitty(bittyClass);
+            this.addBittyVars(bittyClass);
+            this.addBittyClasses(bittyClass);
             this.#bits.push(bittyClass);
             await bittyClass._runBittyReady();
           }
@@ -90,18 +92,11 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  addBitty(target) {
+  addBittyClasses(target) {
     // target.processEvent = this.processEvent.bind(target);
     // target.api = this;
 
-    target.logs = [{ ok: false }, { ok: false }];
-    target._logLevels = ["none", "error", "warn", "info", "debug", "trace"];
-    target._logLevel = 2;
-    target.json = {};
-    target._svg = {};
-    target._elemnet = {};
-    target._fragment = {};
-    target._element = () => {};
+    // target._element = () => {};
     target._runBittyReady = this._runBittyReady.bind(target);
     target._svg = () => {};
     target.addLog = this._addLog.bind(target);
@@ -127,6 +122,7 @@ class BittyJs extends HTMLElement {
     target.deleteSVG = () => {
       return { ok: false };
     };
+    target.error = this._error.bind(target);
     target.fetchElement = () => {
       return { ok: false };
     };
@@ -198,10 +194,14 @@ class BittyJs extends HTMLElement {
     target.addListeners();
   }
 
-  async _runBittyReady() {
-    if (typeof this.bittyReady === "function") {
-      this.bittyReady();
-    }
+  addBittyVars(target) {
+    target.logs = [];
+    target._logLevels = ["none", "error", "warn", "info", "debug", "trace"];
+    target._logLevel = 2;
+    target.json = {};
+    target._svg = {};
+    target._elemnet = {};
+    target._fragment = {};
   }
 
   async _copy(selector) {
@@ -491,6 +491,18 @@ class BittyJs extends HTMLElement {
       details.messages.join(" "),
       details.extraInfo,
     );
+  }
+
+  _error(payload) {
+    if (typeof payload === "string") {
+      this.addLog({
+        level: "warn",
+        ok: true,
+        messages: [payload],
+      });
+    } else {
+      this.addLog(payload);
+    }
   }
 
   async _fetchElement(key, url, fallback = null, options = {}) {
@@ -1310,6 +1322,12 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  async _runBittyReady() {
+    if (typeof this.bittyReady === "function") {
+      this.bittyReady();
+    }
+  }
+
   _saveElement(key) {
     if (this.conn.element[key] === undefined) {
       return this.conn.addLog(
@@ -1353,7 +1371,7 @@ class BittyJs extends HTMLElement {
         ok: false,
         messages: [
           `Tried to set log level to '${level}' which is invalid. Valid options are: ${this._logLevels}.`,
-          `Log leve set to 'warn' as a fallback`,
+          `Log leve set to 'warn' as a fallback.`,
         ],
       });
     }
@@ -1523,19 +1541,27 @@ class BittyJs extends HTMLElement {
     payload.performanceTime = performance.now();
     this.logs.push(payload);
     if (this._logLevel <= 1 && payload.level === "error") {
-      console.error(payload);
+      console.error(
+        `${payload.messages.join("\n")}\n`,
+        payload,
+        new Error("Stack Trace"),
+      );
     }
     if (this._logLevel <= 2 && payload.level === "warn") {
-      console.warn(payload);
+      console.warn(
+        `${payload.messages.join("\n")}\n`,
+        payload,
+        new Error("Stack Trace"),
+      );
     }
     if (this._logLevel <= 3 && payload.level === "info") {
-      console.log(payload);
+      console.log(`${payload.messages.join("\n")}\n`, payload);
     }
     if (this._logLevel <= 4 && payload.level === "debug") {
-      console.log(payload);
+      console.log(`${payload.messages.join("\n")}\n`, payload);
     }
     if (this._logLevel <= 5 && payload.level === "trace") {
-      console.log(payload);
+      console.log(`${payload.messages.join("\n")}\n`, payload);
     }
     return payload;
   }
@@ -2418,11 +2444,15 @@ class BittyJs extends HTMLElement {
   }
 
   _warn(payload) {
-    this.addLog({
-      level: "warn",
-      ok: true,
-      messages: [payload],
-    });
+    if (typeof payload === "string") {
+      this.addLog({
+        level: "warn",
+        ok: true,
+        messages: [payload],
+      });
+    } else {
+      this.addLog(payload);
+    }
   }
 }
 

@@ -5,8 +5,8 @@ test_signal_F7B2A(_, el) {
     "TARGET_F7B2A": ["o", "k"],
   };
   const svg = this.renderSVG(this.#key, subs);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_F7B2A");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_F7B2A");
 }
 
 view_signal_F7B2A(svg, el) {

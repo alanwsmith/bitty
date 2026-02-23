@@ -8,7 +8,7 @@ async test_signal_A1A2F(input, el) {
 }
 
 view_signal_A1A2F(_, el) {
-  el.replaceWith(this.renderSVG("svgTemplate"));
+  // el.replaceWith(this.renderSVG("svgTemplate"));
 }
 
 

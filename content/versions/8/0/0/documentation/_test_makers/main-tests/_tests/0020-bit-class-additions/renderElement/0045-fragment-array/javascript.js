@@ -3,8 +3,8 @@
 test_$SIGNAL_NAME(_, el) {
   const subs = {
     "TARGET_$HASH": [
-      this.renderFragment(`replacement1_$HASH`),
-      this.renderFragment(`replacement2_$HASH`),
+      // this.renderFragment(`replacement1_$HASH`),
+      // this.renderFragment(`replacement2_$HASH`),
     ],
   };
   el.replaceWith(

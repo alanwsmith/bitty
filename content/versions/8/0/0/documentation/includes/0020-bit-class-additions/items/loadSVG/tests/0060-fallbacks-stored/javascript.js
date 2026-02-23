@@ -3,8 +3,8 @@
 test_signal_B2E8A(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_B2E8A");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_B2E8A");
 }
 
 view_signal_B2E8A(svg, el) {

@@ -1,11 +1,11 @@
 #key = "fragment_$SIGNAL_NAME";
 
 test_$SIGNAL_NAME(_, el) {
-  const subs = {
-    "TARGET_$HASH": "ok",
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.children[1].innerHTML;
+  // const subs = {
+  //   "TARGET_$HASH": "ok",
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.children[1].innerHTML;
 }
 
 

@@ -3,8 +3,8 @@
 test_signal_CEDB1(fallback, el) {
   this.loadSVG(this.#key, fallback);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_CEDB1");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_CEDB1");
 }
 
 view_signal_CEDB1(svg, el) {

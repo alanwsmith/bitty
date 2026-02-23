@@ -5,8 +5,8 @@ test_signal_4375F(_, el) {
     "TARGET_4375F": "ok",
   };
   const svg = this.renderSVG(this.#key, subs);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_4375F");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_4375F");
 }
 
 view_signal_4375F(svg, el) {

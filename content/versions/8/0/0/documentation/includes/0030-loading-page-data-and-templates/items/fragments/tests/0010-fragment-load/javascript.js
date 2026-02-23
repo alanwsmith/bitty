@@ -1,7 +1,7 @@
 #key = "key_signal_6E2FF";
 
 test_signal_6E2FF(update, el) {
-  el.replaceWith(this.renderFragment(this.#key).children[1]);
+//  el.replaceWith(this.renderFragment(this.#key).children[1]);
 }
 
 

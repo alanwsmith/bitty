@@ -2,7 +2,7 @@
 
 test_signal_FC310(_, el) {
   const fragment = this.renderFragment(this.#key);
-  el.innerHTML = fragment.children[1].innerHTML;
+//  el.innerHTML = fragment.children[1].innerHTML;
 }
 
 

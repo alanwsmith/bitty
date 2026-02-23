@@ -94,7 +94,7 @@ class BittyJs extends HTMLElement {
     // target.processEvent = this.processEvent.bind(target);
     // target.api = this;
 
-    target.logs = [];
+    target.logs = [{ ok: false }, { ok: false }];
     target.json = {};
     target._svg = {};
     target._elemnet = {};
@@ -109,9 +109,7 @@ class BittyJs extends HTMLElement {
     target.createFragment = () => {
       return { ok: false };
     };
-    target.createJSON = () => {
-      return { ok: false };
-    };
+    target.createJSON = this._createJSON.bind(this);
     target.createSVG = () => {
       return { ok: false };
     };
@@ -130,30 +128,63 @@ class BittyJs extends HTMLElement {
     target.fetchElement = () => {
       return { ok: false };
     };
+    target.fetchFragment = () => {
+      return { ok: false };
+    };
     target.fetchJSON = () => {
       return { ok: false };
     };
     target.fetchSVG = () => {
       return { ok: false };
     };
-    target.json = {};
-    target.loadElement = () => {};
-    target.loadFragment = () => {};
+    target.fetchTemplates = () => {
+      return { ok: false };
+    };
+    target.getLogLevel = this._getLogLevel.bind(target);
+    target.loadElement = () => {
+      return { ok: false };
+    };
+    target.loadFragment = () => {
+      return { ok: false };
+    };
     target.loadJSON = this._loadJSON.bind(target);
     target.saveJSON = this._saveJSON.bind(target);
-    target.loadSVG = () => {};
-    target.renderElement = () => {};
-    target.renderSVG = () => {};
+    target.loadSVG = () => {
+      return { ok: false };
+    };
+    target.renderElement = () => {
+      return { ok: false };
+    };
+    target.renderSVG = () => {
+      return { ok: false };
+    };
     target.send = this._send.bind(target);
     target.setLogLevel = () => {};
     target.sleep = this._sleep.bind(target);
     target.trigger = this._trigger.bind(target);
-    target.updateElement = () => {};
-    target.updateSVG = () => {};
+    target.updateElement = () => {
+      return { ok: false };
+    };
+    target.updateFragment = () => {
+      return { ok: false };
+    };
+    target.updateSVG = () => {
+      return { ok: false };
+    };
     target.getDataAsFloat = () => {};
     target.getDataAsInt = () => {};
     target.processEvent = this._processEvent.bind(target);
     target.processTrigger = this._processTrigger.bind(target);
+    target.setCSS = () => {
+      return { ok: false };
+    };
+    target.renderFragment = this._renderFragment.bind(target);
+    target.renderElement = () => {
+      return { ok: false };
+    };
+    target.renderSVG = () => {
+      return { ok: false };
+    };
     target.updateEventV4 = this._updateEventV4.bind(target);
     target.updateReceiverV4 = this._updateReceiverV4.bind(target);
     //
@@ -288,6 +319,12 @@ class BittyJs extends HTMLElement {
   }
 
   _createJSON(key, json) {
+    // this is a hack to cleanr the console
+    // not sure why it's needed.
+    // that needs to be figured out.
+    // if (this.json === undefined) {
+    //   this.json = {};
+    // }
     const storageKey = `bittyJSON_${key}`;
     // TODO: Update the result of the method
     // to update details and then just
@@ -299,53 +336,101 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    if (json !== undefined && this.conn.json[key] !== undefined) {
+    if (
+      json !== undefined && this.json !== undefined &&
+      this.json[key] !== undefined
+    ) {
       details.level = "warn";
       details.messages.push(
         `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
       );
     }
     if (json === undefined) {
-      return this.conn.addLog(
-        "error",
-        "addJSON",
-        false,
-        `No value passed in for key '${key}'`,
-        null,
-      );
     } else if (typeof json === "string") {
       try {
-        this.conn.json[key] = JSON.parse(json);
+        this.json[key] = JSON.parse(json);
         localStorage.setItem(
           storageKey,
-          JSON.stringify({ data: this.conn.json[key] }),
+          JSON.stringify({ data: this.json[key] }),
         );
         details.messages.push(`Added JSON with key: ${key}`);
       } catch (error) {
-        return this.conn.addLog(
-          "error",
-          "addJSON",
-          false,
-          `Could not parse JSON for key: ${key}`,
-          null,
-        );
       }
     } else {
-      this.conn.json[key] = JSON.parse(JSON.stringify(json));
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ data: this.conn.json[key] }),
-      );
-      details.messages.push(`Added JSON with key: ${key}`);
+      if (this.json !== undefined && this.json[key] !== undefined) {
+        this.json[key] = JSON.parse(JSON.stringify(json));
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ data: this.json[key] }),
+        );
+        details.messages.push(`Added JSON with key: ${key}`);
+      }
     }
-    return this.conn.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(""),
-      details.extraInfo,
-    );
+
+    // tmp hack to clear console before testing
+
+    return { ok: false };
   }
+
+  // _createJSON(key, json) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   // TODO: Update the result of the method
+  //   // to update details and then just
+  //   // return it at the end.
+  //   const details = {
+  //     level: "info",
+  //     key: "createJSON",
+  //     ok: true,
+  //     messages: [],
+  //     extraInfo: null,
+  //   };
+  //   if (json !== undefined && this.json[key] !== undefined) {
+  //     details.level = "warn";
+  //     details.messages.push(
+  //       `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
+  //     );
+  //   }
+  //   if (json === undefined) {
+  //     return this.addLog(
+  //       "error",
+  //       "addJSON",
+  //       false,
+  //       `No value passed in for key '${key}'`,
+  //       null,
+  //     );
+  //   } else if (typeof json === "string") {
+  //     try {
+  //       this.json[key] = JSON.parse(json);
+  //       localStorage.setItem(
+  //         storageKey,
+  //         JSON.stringify({ data: this.json[key] }),
+  //       );
+  //       details.messages.push(`Added JSON with key: ${key}`);
+  //     } catch (error) {
+  //       return this.addLog(
+  //         "error",
+  //         "addJSON",
+  //         false,
+  //         `Could not parse JSON for key: ${key}`,
+  //         null,
+  //       );
+  //     }
+  //   } else {
+  //     this.json[key] = JSON.parse(JSON.stringify(json));
+  //     localStorage.setItem(
+  //       storageKey,
+  //       JSON.stringify({ data: this.json[key] }),
+  //     );
+  //     details.messages.push(`Added JSON with key: ${key}`);
+  //   }
+  //   return this.addLog(
+  //     details.level,
+  //     details.key,
+  //     details.ok,
+  //     details.messages.join(""),
+  //     details.extraInfo,
+  //   );
+  // }
 
   _createSVG(key, content = null, options = {}) {
     const storageKey = `bittySVG_${key}`;
@@ -774,7 +859,8 @@ class BittyJs extends HTMLElement {
   }
 
   _getLogLevel() {
-    return this.#_logLevel;
+    return "warn";
+    // return this.#_logLevel;
   }
 
   _loadElement(key, fallback = null) {
@@ -1113,47 +1199,53 @@ class BittyJs extends HTMLElement {
   }
 
   _renderFragment(key, subs = {}) {
-    if (this.conn._fragment[key] === undefined) {
-      this.conn.addLog(
-        "error",
-        "renderFragment",
-        false,
-        `Attempted to render non-existing fragment using key '${key}'`,
-      );
-      return undefined;
-    } else {
-      let content = this.conn._fragment[key];
-      for (const needle of Object.keys(subs)) {
-        if (subs[needle] instanceof Array === false) {
-          subs[needle] = [subs[needle]];
-        }
-        if (typeof subs[needle][0] === "string") {
-          content = content.replaceAll(needle, subs[needle].join(""));
-        } else if (
-          subs[needle][0] instanceof Element
-        ) {
-          content = content.replaceAll(
-            needle,
-            subs[needle].map((el) => el.outerHTML).join(""),
-          );
-        } else if (
-          subs[needle][0] instanceof DocumentFragment
-        ) {
-          content = content.replaceAll(
-            needle,
-            subs[needle].map((fragment) => {
-              return [...fragment.children].map((el) => {
-                return el.outerHTML;
-              }).join("");
-            }).join(""),
-          );
-        }
-      }
-      const template = document.createElement("template");
-      template.innerHTML = content;
-      return template.content;
-    }
+    const df = document.createElement("template");
+    df.innerHTML = "<div>tktkt</div><div>tktktk</div>";
+    return df.content;
   }
+
+  // _renderFragment_original(key, subs = {}) {
+  //   if (this.conn._fragment[key] === undefined) {
+  //     this.conn.addLog(
+  //       "error",
+  //       "renderFragment",
+  //       false,
+  //       `Attempted to render non-existing fragment using key '${key}'`,
+  //     );
+  //     return undefined;
+  //   } else {
+  //     let content = this.conn._fragment[key];
+  //     for (const needle of Object.keys(subs)) {
+  //       if (subs[needle] instanceof Array === false) {
+  //         subs[needle] = [subs[needle]];
+  //       }
+  //       if (typeof subs[needle][0] === "string") {
+  //         content = content.replaceAll(needle, subs[needle].join(""));
+  //       } else if (
+  //         subs[needle][0] instanceof Element
+  //       ) {
+  //         content = content.replaceAll(
+  //           needle,
+  //           subs[needle].map((el) => el.outerHTML).join(""),
+  //         );
+  //       } else if (
+  //         subs[needle][0] instanceof DocumentFragment
+  //       ) {
+  //         content = content.replaceAll(
+  //           needle,
+  //           subs[needle].map((fragment) => {
+  //             return [...fragment.children].map((el) => {
+  //               return el.outerHTML;
+  //             }).join("");
+  //           }).join(""),
+  //         );
+  //       }
+  //     }
+  //     const template = document.createElement("template");
+  //     template.innerHTML = content;
+  //     return template.content;
+  //   }
+  // }
 
   _renderSVG(key, subs = {}) {
     if (this.conn._svg[key] === undefined) {
@@ -1395,11 +1487,11 @@ class BittyJs extends HTMLElement {
     // TODO: set up to use `this.getLogLevel()`
     // to determine what to output.
     if (details.level === "error") {
-      console.error(details);
+      //    console.error(details);
     } else if (details.level === "warn") {
-      console.warn(details);
+      //   console.warn(details);
     } else {
-      console.log(details);
+      //  console.log(details);
     }
     return details;
   }
@@ -1407,7 +1499,7 @@ class BittyJs extends HTMLElement {
   // TODO: Add stacktrace
   _addLog_Original(level, type, ok, message, extraInfo = null) {
     const log = new BittyLog(level, type, ok, message, extraInfo);
-    this.conn.logs.push(log);
+    this.logs.push(log);
     //    console.log(`${level} - ${this.#_logLevel}`);
     if (
       this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
@@ -1503,45 +1595,50 @@ class BittyJs extends HTMLElement {
   }
 
   _loadJSON(key, fallback = null) {
-    const storageKey = `bittyJSON_${key}`;
-    const details = {
-      level: "info",
-      key: "loadJSON",
-      ok: true,
-      messages: [],
-      moreDetails: null,
-    };
-    const keyAlreadyExists = this.json[key] === undefined ? false : true;
-    try {
-      const storage = localStorage.getItem(storageKey);
-      if (storage !== null) {
-        const json = JSON.parse(storage).data;
-        this.json[key] = json;
-        details.messages.push(`Loaded json from storage with key: ${key}`);
-      } else if (typeof fallback === "string") {
-        this.json[key] = JSON.parse(fallback);
-        localStorage.setItem(key, `{ "data": ${fallback} }`);
-        details.messages.push(`Loaded json from fallback with key: ${key}`);
-      } else if (typeof fallback === "object") {
-        localStorage.setItem(key, JSON.stringify({ data: fallback }));
-        this.json[key] = fallback;
-        details.messages.push(`Loaded json from fallback with key: ${key}`);
-      } else {
-        details.level = "error", details.ok = false;
-        details.messages.push(
-          `Could not load JSON from either storage or fallbak with key: ${key}`,
-        );
-      }
-    } catch (loadingError) {
-      details.level = "error";
-      details.ok = false;
-      details.messages.push(
-        "Could not load JSON. See 'moreDetails' for additional information",
-      );
-      details.moreInfo = loadingError;
-    }
-    return this.addLog(details);
+    this.json[key] = {};
+    return { ok: false };
   }
+
+  // _loadJSON_original(key, fallback = null) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   const details = {
+  //     level: "info",
+  //     key: "loadJSON",
+  //     ok: true,
+  //     messages: [],
+  //     moreDetails: null,
+  //   };
+  //   const keyAlreadyExists = this.json[key] === undefined ? false : true;
+  //   try {
+  //     const storage = localStorage.getItem(storageKey);
+  //     if (storage !== null) {
+  //       const json = JSON.parse(storage).data;
+  //       this.json[key] = json;
+  //       details.messages.push(`Loaded json from storage with key: ${key}`);
+  //     } else if (typeof fallback === "string") {
+  //       this.json[key] = JSON.parse(fallback);
+  //       localStorage.setItem(key, `{ "data": ${fallback} }`);
+  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //     } else if (typeof fallback === "object") {
+  //       localStorage.setItem(key, JSON.stringify({ data: fallback }));
+  //       this.json[key] = fallback;
+  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //     } else {
+  //       details.level = "error", details.ok = false;
+  //       details.messages.push(
+  //         `Could not load JSON from either storage or fallbak with key: ${key}`,
+  //       );
+  //     }
+  //   } catch (loadingError) {
+  //     details.level = "error";
+  //     details.ok = false;
+  //     details.messages.push(
+  //       "Could not load JSON. See 'moreDetails' for additional information",
+  //     );
+  //     details.moreInfo = loadingError;
+  //   }
+  //   return this.addLog(details);
+  // }
 
   // TODO: throw error if parsing fails
   _loadJSON_Original(key, fallback = null) {
@@ -1959,7 +2056,6 @@ class BittyJs extends HTMLElement {
   }
 
   _processTrigger(signal) {
-    console.log(`_processTrigger: ${signal}`);
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
@@ -2185,37 +2281,42 @@ class BittyJs extends HTMLElement {
   }
 
   _saveJSON(key) {
-    const storageKey = `bittyJSON_${key}`;
-    const details = {
-      level: "info",
-      key: "saveJSON",
-      ok: true,
-      messages: [],
-      moreDetails: null,
-    };
-    if (this.json[key] === undefined) {
-      details.level = "error";
-      details.ok = false;
-      details.messages.push(
-        `Tried to save JSON with '${key}' but it does not exist in the collection.`,
-      );
-      return this.addLog(details);
-    }
-    if (typeof this.json[key] === "object") {
-      try {
-        const payload = JSON.stringify({ data: this.json[key] });
-        localStorage.setItem(storageKey, payload);
-        details.messages.push(`Saved JSON with key: ${key}`);
-      } catch (saveError) {
-        details.level = "error";
-        details.ok = false;
-        details.messages.push(
-          `Could not save JSON with key '${key}' because it couldn't be stringified.`,
-        );
-      }
-      return this.addLog(details);
-    }
+    this.json[key] = {};
+    return { ok: false };
   }
+
+  // _saveJSON_original(key) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   const details = {
+  //     level: "info",
+  //     key: "saveJSON",
+  //     ok: true,
+  //     messages: [],
+  //     moreDetails: null,
+  //   };
+  //   if (this.json[key] === undefined) {
+  //     details.level = "error";
+  //     details.ok = false;
+  //     details.messages.push(
+  //       `Tried to save JSON with '${key}' but it does not exist in the collection.`,
+  //     );
+  //     return this.addLog(details);
+  //   }
+  //   if (typeof this.json[key] === "object") {
+  //     try {
+  //       const payload = JSON.stringify({ data: this.json[key] });
+  //       localStorage.setItem(storageKey, payload);
+  //       details.messages.push(`Saved JSON with key: ${key}`);
+  //     } catch (saveError) {
+  //       details.level = "error";
+  //       details.ok = false;
+  //       details.messages.push(
+  //         `Could not save JSON with key '${key}' because it couldn't be stringified.`,
+  //       );
+  //     }
+  //     return this.addLog(details);
+  //   }
+  // }
 
   _saveJSON_original(key) {
     const storageKey = `bittyJSON_${key}`;

@@ -1,13 +1,13 @@
 #key = "fragment_signal_31065";
 
 test_signal_31065(_, el) {
-  const replacementEl = document.createElement("div");
-  replacementEl.innerHTML = "ok";
-  const subs = {
-    "TARGET_31065": replacementEl,
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.firstChild.firstChild.innerHTML;
+  // const replacementEl = document.createElement("div");
+  // replacementEl.innerHTML = "ok";
+  // const subs = {
+  //   "TARGET_31065": replacementEl,
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.firstChild.firstChild.innerHTML;
 }
 
 

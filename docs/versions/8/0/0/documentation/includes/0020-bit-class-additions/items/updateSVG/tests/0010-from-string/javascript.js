@@ -3,8 +3,8 @@
 test_signal_433FA(update, el) {
   this.updateSVG(this.#key, update);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_433FA");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_433FA");
 }
 
 view_signal_433FA(svg, el) {

@@ -1,11 +1,11 @@
 #key = "fragment_signal_1BEA7";
 
 test_signal_1BEA7(_, el) {
-  const subs = {
-    "TARGET_1BEA7": "ok",
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.children[1].innerHTML;
+  // const subs = {
+  //   "TARGET_1BEA7": "ok",
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.children[1].innerHTML;
 }
 
 

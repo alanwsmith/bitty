@@ -1,13 +1,13 @@
 #key = "fragment_signal_F7489";
 
 test_signal_F7489(_, el) {
-  const template = document.createElement("template");
-  template.innerHTML = "<div></div><div>ok</div>";
-  const subs = {
-    "TARGET_F7489": template.content,
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.firstChild.children[1].innerHTML;
+  // const template = document.createElement("template");
+  // template.innerHTML = "<div></div><div>ok</div>";
+  // const subs = {
+  //   "TARGET_F7489": template.content,
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.firstChild.children[1].innerHTML;
 }
 
 

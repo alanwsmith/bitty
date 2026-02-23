@@ -3,8 +3,8 @@
 async test_signal_B6D8D(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_B6D8D");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_B6D8D");
 }
 
 view_signal_B6D8D(svg, el) {

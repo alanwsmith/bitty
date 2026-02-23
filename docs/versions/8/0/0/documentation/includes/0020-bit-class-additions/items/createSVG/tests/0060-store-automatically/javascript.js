@@ -1,10 +1,10 @@
 #key = "svg_signal_D4DA1";
 
 test_signal_D4DA1(_, el) {
-  this.loadSVG(this.#key);
-  const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_D4DA1");
+  // this.loadSVG(this.#key);
+  // const svg = this.renderSVG(this.#key);
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_D4DA1");
 }
 
 view_signal_D4DA1(svg, el) {

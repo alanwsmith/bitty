@@ -6,11 +6,11 @@ test_$SIGNAL_NAME(replacements, el) {
   };
   const svg = this.renderSVG(this.#key, subs);
   const gotString = [
-    svg.querySelectorAll("text")[0].textContent,
-    svg.querySelectorAll("text")[1].textContent,
+    // svg.querySelectorAll("text")[0].textContent,
+    // svg.querySelectorAll("text")[1].textContent,
   ].join("");
-  el.innerHTML = gotString;
-  this.send(svg, "view_$SIGNAL_NAME");
+  // el.innerHTML = gotString;
+  // this.send(svg, "view_$SIGNAL_NAME");
 }
 
 view_$SIGNAL_NAME(svg, el) {

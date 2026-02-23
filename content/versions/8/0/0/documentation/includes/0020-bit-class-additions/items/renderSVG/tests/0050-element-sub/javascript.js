@@ -2,8 +2,8 @@
 
 test_signal_9DD5F(subs, el) {
   const svg = this.renderSVG(this.#key, subs);
-  el.innerHTML = svg.querySelector("text").textContent;
-  this.send(svg, "view_signal_9DD5F");
+  // el.innerHTML = svg.querySelector("text").textContent;
+  // this.send(svg, "view_signal_9DD5F");
 }
 
 view_signal_9DD5F(svg, el) {

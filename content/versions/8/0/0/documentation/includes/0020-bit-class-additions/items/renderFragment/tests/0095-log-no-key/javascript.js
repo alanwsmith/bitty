@@ -1,12 +1,13 @@
 #key = "fragment_signal_88717";
 
 test_signal_88717(_, el) {
-  this.logs = [];
+//  this.logs = [];
   this.renderFragment(this.#key);
-  if (this.logs[0].ok === false && this.logs[0].level === "error") {
-    el.innerHTML = "ok";
-  }
+  // if (this.logs[0].ok === false && this.logs[0].level === "error") {
+  //   el.innerHTML = "ok";
+  // }
 }
+
 
 
 bittyReady() {

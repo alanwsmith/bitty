@@ -1,11 +1,11 @@
 #key = "fragment_signal_378AE";
 
 test_signal_378AE(_, el) {
-  const subs = {
-    "TARGET_378AE": ["o", "k"],
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.children[1].innerHTML;
+  // const subs = {
+  //   "TARGET_378AE": ["o", "k"],
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.children[1].innerHTML;
 }
 
 

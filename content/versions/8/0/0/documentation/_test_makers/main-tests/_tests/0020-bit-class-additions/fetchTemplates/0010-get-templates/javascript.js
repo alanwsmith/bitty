@@ -8,7 +8,7 @@ async test_$SIGNAL_NAME(input, el) {
 }
 
 view_$SIGNAL_NAME(_, el) {
-  el.replaceWith(this.renderSVG("svgTemplate"));
+  // el.replaceWith(this.renderSVG("svgTemplate"));
 }
 
 

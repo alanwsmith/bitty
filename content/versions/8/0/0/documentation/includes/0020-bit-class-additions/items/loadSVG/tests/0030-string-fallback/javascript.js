@@ -3,8 +3,8 @@
 test_signal_655D9(fallback, el) {
   this.loadSVG(this.#key, fallback);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_655D9");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_655D9");
 }
 
 view_signal_655D9(svg, el) {

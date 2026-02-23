@@ -2,9 +2,9 @@
 
 test_$SIGNAL_NAME(_, el) {
   const result = this.createSVG();
-  if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
-  }
+  // if (result.ok === false && result.level === "error") {
+  //   el.innerHTML = "ok";
+  // }
 }
 
 

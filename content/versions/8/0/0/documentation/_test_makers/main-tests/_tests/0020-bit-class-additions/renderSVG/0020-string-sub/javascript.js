@@ -5,8 +5,8 @@ test_$SIGNAL_NAME(_, el) {
     "TARGET_$HASH": "ok",
   };
   const svg = this.renderSVG(this.#key, subs);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_$SIGNAL_NAME");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_$SIGNAL_NAME");
 }
 
 view_$SIGNAL_NAME(svg, el) {

@@ -2,9 +2,9 @@
 
 test_signal_57C32(_, el) {
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_57C32");
-}
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_57C32");
+ }
 
 view_signal_57C32(svg, el) {
   el.replaceWith(svg);

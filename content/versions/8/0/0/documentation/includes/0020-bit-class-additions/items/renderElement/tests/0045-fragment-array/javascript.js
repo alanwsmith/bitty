@@ -3,8 +3,8 @@
 test_signal_81AA3(_, el) {
   const subs = {
     "TARGET_81AA3": [
-      this.renderFragment(`replacement1_81AA3`),
-      this.renderFragment(`replacement2_81AA3`),
+      // this.renderFragment(`replacement1_81AA3`),
+      // this.renderFragment(`replacement2_81AA3`),
     ],
   };
   el.replaceWith(

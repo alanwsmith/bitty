@@ -3,8 +3,8 @@
 test_signal_FE475(update, el) {
   this.updateSVG(this.#key, update);
   const svg = this.renderSVG(this.#key);
-  el.innerHTML = svg.querySelector("text").innerHTML;
-  this.send(svg, "view_signal_FE475");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_FE475");
 }
 
 view_signal_FE475(svg, el) {

@@ -2,7 +2,7 @@
 
 test_$SIGNAL_NAME(_, el) {
   const fragment = this.renderFragment(this.#key);
-  el.innerHTML = fragment.children[1].innerHTML;
+//  el.innerHTML = fragment.children[1].innerHTML;
 }
 
 

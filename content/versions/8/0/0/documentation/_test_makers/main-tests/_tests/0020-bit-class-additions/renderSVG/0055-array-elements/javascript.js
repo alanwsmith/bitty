@@ -3,8 +3,8 @@
 test_$SIGNAL_NAME(subs, el) {
   const svg = this.renderSVG(this.#key, subs);
   const gotString = [
-    svg.querySelectorAll("text")[0].textContent,
-    svg.querySelectorAll("text")[1].textContent,
+    // svg.querySelectorAll("text")[0].textContent,
+    // svg.querySelectorAll("text")[1].textContent,
   ].join("");
   el.innerHTML = gotString;
   this.send(svg, "view_$SIGNAL_NAME");

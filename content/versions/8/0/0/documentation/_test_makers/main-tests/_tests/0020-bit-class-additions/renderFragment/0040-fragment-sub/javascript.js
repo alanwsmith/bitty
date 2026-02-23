@@ -1,13 +1,13 @@
 #key = "fragment_$SIGNAL_NAME";
 
 test_$SIGNAL_NAME(_, el) {
-  const template = document.createElement("template");
-  template.innerHTML = "<div></div><div>ok</div>";
-  const subs = {
-    "TARGET_$HASH": template.content,
-  };
-  const fragment = this.renderFragment(this.#key, subs);
-  el.innerHTML = fragment.firstChild.children[1].innerHTML;
+  // const template = document.createElement("template");
+  // template.innerHTML = "<div></div><div>ok</div>";
+  // const subs = {
+  //   "TARGET_$HASH": template.content,
+  // };
+  // const fragment = this.renderFragment(this.#key, subs);
+  // el.innerHTML = fragment.firstChild.children[1].innerHTML;
 }
 
 

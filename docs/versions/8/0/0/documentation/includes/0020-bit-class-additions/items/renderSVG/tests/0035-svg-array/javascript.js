@@ -6,11 +6,11 @@ test_signal_697E1(replacements, el) {
   };
   const svg = this.renderSVG(this.#key, subs);
   const gotString = [
-    svg.querySelectorAll("text")[0].textContent,
-    svg.querySelectorAll("text")[1].textContent,
+    // svg.querySelectorAll("text")[0].textContent,
+    // svg.querySelectorAll("text")[1].textContent,
   ].join("");
-  el.innerHTML = gotString;
-  this.send(svg, "view_signal_697E1");
+  // el.innerHTML = gotString;
+  // this.send(svg, "view_signal_697E1");
 }
 
 view_signal_697E1(svg, el) {

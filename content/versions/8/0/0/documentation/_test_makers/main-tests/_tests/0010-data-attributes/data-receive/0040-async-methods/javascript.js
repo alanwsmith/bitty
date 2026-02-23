@@ -1,6 +1,3 @@
-bittyReady() {
-  document.querySelector("[data-send=$SIGNAL_NAME]").click();
-}
 
 async $SIGNAL_NAME(_, el) {
   const t1 = performance.now();
@@ -8,6 +5,6 @@ async $SIGNAL_NAME(_, el) {
   const t2 = performance.now();
   const delta = t2 - t1;
   if (delta > 80) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

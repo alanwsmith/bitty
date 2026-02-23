@@ -1,18 +1,13 @@
-#updates = [];
-
-
 signal_CBE64(_, el) {
-  this.#updates.push("bug");
-  el.innerHTML = this.#updates[0];
+  this.message = ["test"];
+  el.innerHTML = "caught button 1";
 }
 
 signal_CBE64_2(_, el) {
-  this.#updates.push("bug");
-  el.innerHTML = this.#updates[1];
+  this.message.push("passed");
+  el.innerHTML = "caught button 2";
 }
 
 signal_CBE64_3(_, el) {
-  if (this.#updates.length === 2) {
-    el.innerHTML = "ok";
-  }
+  el.innerHTML = this.message.join(" ");
 }

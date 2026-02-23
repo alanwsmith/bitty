@@ -1,4 +1,4 @@
 bittyReady() {
-  this.trigger("$SIGNAL_NAME");
+  this.qs("[data-send~=$SIGNAL_NAME]").click();
 }
 

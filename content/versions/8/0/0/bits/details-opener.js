@@ -3,6 +3,7 @@ class DetailsOpener {
     this.loadJSON(this.key(), []);
     this.checkSize();
     this.initPage();
+    this.error("Details opener");
   }
 
   checkSize() {
@@ -23,7 +24,7 @@ class DetailsOpener {
         this.updateDetailsToggle();
       });
     });
-    console.log("Finished init");
+    this.info("Finished initalizing Details Opener");
   }
 
   key() {

@@ -142,10 +142,9 @@ class BittyJs extends HTMLElement {
       return { ok: false };
     };
     target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
-    target.getLocalLogLevel = this._getLocalLogLevel.bind(
+    target.getLocalLogLevel = this.getLocalLogLevel.bind(
+      this,
       target,
-      this.#_logLevels,
-      this.#_globalLogLevelIndex,
     );
     target.info = this._info.bind(target);
     target.loadElement = () => {
@@ -883,11 +882,15 @@ class BittyJs extends HTMLElement {
     return this.#_logLevels[this.#_globalLogLevelIndex];
   }
 
-  _getLocalLogLevel(logLevels, globalLogLevelIndex) {
-    if (this._localLogLevelIndex) {
-      return logLevels[this._localLogLevelIndex];
+  getGlobalLogLevelIndex() {
+    return this.#_globalLogLevelIndex;
+  }
+
+  getLocalLogLevel(target) {
+    if (target._localLogLevelIndex !== undefined) {
+      return this.#_logLevels[target._localLogLevelIndex];
     } else {
-      return logLevels[globalLogLevelIndex];
+      return this.#_logLevels[this.#_globalLogLevelIndex];
     }
   }
 
@@ -1378,25 +1381,34 @@ class BittyJs extends HTMLElement {
       // TODO: Add log saying an invalid level was attempted.
       this.#_globalLogLevelIndex = 2;
     }
+    console.log(`Global Log Level Index is now: ${this.#_globalLogLevelIndex}`);
   }
 
-  _setLocalLogLevel(levels, level = "warn") {
+  _setLocalLogLevel(levels, level) {
     // TODO: Handle setting `global`
-    if (
-      levels.indexOf(level.toLowerCase()) !== -1
-    ) {
-      this._localLogLevel = levels.indexOf(level.toLowerCase());
+    const levelIndex = levels.indexOf(level.toLowerCase());
+    if (levelIndex >= 0) {
+      this._localLogLevelIndex = levelIndex;
     } else {
-      this._localLogLevel = 2;
-      this.addLog({
-        level: "warn",
-        ok: false,
-        messages: [
-          `Tried to set log level to '${level}' which is invalid. Valid options are: ${levels}.`,
-          `Log leve set to 'warn' as a fallback.`,
-        ],
-      });
+      // TODO: Add log saying an invalid level was attempted.
+      this._localLogLevelIndex = 2;
     }
+
+    // if (
+    //   levels.indexOf(level.toLowerCase()) !== -1
+    // ) {
+    //   this._localLogLevelIndex = levels.indexOf(level.toLowerCase());
+    // } else {
+    //   this._localLogLevelIndex = 2;
+    //   this.addLog({
+    //     level: "warn",
+    //     ok: false,
+    //     messages: [
+    //       `Tried to set log level to '${level}' which is invalid. Valid options are: ${levels}.`,
+    //       `Log leve set to 'warn' as a fallback.`,
+    //     ],
+    //   });
+    // }
   }
 
   // _setLocalLogLevel_original(level) {
@@ -1627,78 +1639,6 @@ class BittyJs extends HTMLElement {
 
     return payload;
   }
-
-  // // TODO: Add stacktrace
-  // _addLog_Original(level, type, ok, message, extraInfo = null) {
-  //   const log = new BittyLog(level, type, ok, message, extraInfo);
-  //   this.logs.push(log);
-  //   //    console.log(`${level} - ${this.#_logLevel}`);
-  //   if (
-  //     this.getLocalLogLevelIndex(level) <= this.getLocalLogLevelIndex(this.#_logLevel)
-  //   ) {
-  //     //  console.log(this.getLocalLogLevelIndex(level));
-  //     if (this.getLocalLogLevelIndex(level) === 1) {
-  //       console.error(log);
-  //     } else if (this.getLocalLogLevelIndex(level) === 2) {
-  //       console.warn(log);
-  //     } else {
-  //       console.log(log);
-  //     }
-  //   }
-  //   return log;
-  // }
-
-  // createBridges() {
-  //   this.conn._element = {};
-  //   this.conn._fragment = {};
-  //   this.conn._svg = {};
-  //   this.conn.json = {};
-  //   this.conn.logLevel = 2;
-  //   this.conn.logs = [];
-  //   this.conn.addJSON = this._addJSON.bind(this);
-  //   this.conn.addLog = this._addLog.bind(this);
-  //   this.conn.copy = this._copy.bind(this);
-  //   this.conn.createElement = this._createElement.bind(this);
-  //   this.conn.createFragment = this._createFragment.bind(this);
-  //   this.conn.createJSON = this._createJSON.bind(this);
-  //   this.conn.createSVG = this._createSVG.bind(this);
-  //   this.conn.deleteElement = this._deleteElement.bind(this);
-  //   this.conn.deleteFragment = this._deleteFragment.bind(this);
-  //   this.conn.deleteJSON = this._deleteJSON.bind(this);
-  //   this.conn.deleteSVG = this._deleteSVG.bind(this);
-  //   this.conn.fetchElement = this._fetchElement.bind(this);
-  //   this.conn.fetchFragment = this._fetchFragment.bind(this);
-  //   this.conn.fetchJSON = this._fetchJSON.bind(this);
-  //   this.conn.fetchSVG = this._fetchSVG.bind(this);
-  //   this.conn.fetchTemplates = this._fetchTemplates.bind(this);
-  //   this.conn.getLocalLogLevel = this._getLocalLogLevel.bind(this);
-  //   this.conn.loadElement = this._loadElement.bind(this);
-  //   this.conn.loadFragment = this._loadFragment.bind(this);
-  //   this.conn.loadJSON = this._loadJSON.bind(this);
-  //   this.conn.loadSVG = this._loadSVG.bind(this);
-  //   this.conn.renderElement = this._renderElement.bind(this);
-  //   this.conn.renderFragment = this._renderFragment.bind(this);
-  //   this.conn.renderSVG = this._renderSVG.bind(this);
-  //   this.conn.saveElement = this._saveElement.bind(this);
-  //   this.conn.saveJSON = this._saveJSON.bind(this);
-  //   this.conn.send = this._send.bind(this);
-  //   this.conn.setCSS = this._setCSS.bind(this);
-  //   this.conn.setLocalLogLevel = this._setLocalLogLevel.bind(this);
-  //   this.conn.sleep = this._sleep.bind(this);
-  //   this.conn.trigger = this._trigger.bind(this);
-  //   this.conn.updateElement = this._updateElement.bind(this);
-  //   this.conn.updateFragment = this._updateFragment.bind(this);
-  //   this.conn.updateSVG = this._updateSVG.bind(this);
-  //   this.processEventBridge = this.processEvent.bind(this);
-  // }
-
-  // _getLocalLogLevelIndex(level) {
-  //   return this._logLevels.indexOf(level.toLowerCase());
-  // }
-
-  // getLocalLogLevelIndex_original(level) {
-  //   return this.#_logLevels.indexOf(level.toLowerCase());
-  // }
 
   ingestScriptTags(root) {
     root.querySelectorAll("script").forEach((el) => {

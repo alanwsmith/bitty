@@ -40,8 +40,8 @@ class BittyJs extends HTMLElement {
 
   /** internal */
   async connectedCallback() {
-    this.processEventBridge = this.processEvent.bind(this);
-    this.addEventListeners();
+    // this.processEventBridge = this.processEvent.bind(this);
+    //this.addEventListeners();
     this.loadModuleClasses();
     this.loadWindowClasses();
     // await this.makeConnection();
@@ -91,7 +91,9 @@ class BittyJs extends HTMLElement {
   }
 
   addBitty(target) {
-    target.api = this;
+    // target.processEvent = this.processEvent.bind(target);
+    // target.api = this;
+
     target.logs = [];
     target.json = {};
     target._svg = {};
@@ -121,8 +123,14 @@ class BittyJs extends HTMLElement {
     target.setLogLevel = () => {};
     target.sleep = this._sleep.bind(target);
     target.trigger = this._trigger.bind(target);
+    // target.trigger = (x) => {
+    //   console.log(`PING ${x}`);
+    // };
     target.updateElement = () => {};
     target.updateSVG = () => {};
+    target.addListeners = this._addListeners.bind(target);
+    target.addListeners();
+    target.processEvent = this._processEvent.bind(target);
   }
 
   async _runBittyReady() {
@@ -1228,30 +1236,54 @@ class BittyJs extends HTMLElement {
     return this._createSVG(key, content, { update: true });
   }
 
-  /** internal */
-  addEventListeners() {
-    if (this.constructor.addedEventListeners === false) {
-      this.constructor.addedEventListeners = true;
-      let listenerArray = [
-        "click",
-        "input",
-        "bittysendevent",
-        "bittytriggerevent",
-      ];
-      [...document.querySelectorAll("[data-listeners]")].forEach(
-        (el) => {
-          splitSignalString(el.dataset.listeners).forEach((listener) => {
-            listenerArray.push(listener);
-          });
-        },
-      );
-      [...new Set(listenerArray)].forEach((listener) => {
-        window.addEventListener(listener, (ev) => {
-          this.processEventBridge.call(this, ev);
+  _addListeners() {
+    //  if (this.constructor.addedEventListeners === false) {
+    //    this.constructor.addedEventListeners = true;
+    let listenerArray = [
+      "click",
+      "input",
+      "bittysendevent",
+      "bittytriggerevent",
+    ];
+    [...document.querySelectorAll("[data-listeners]")].forEach(
+      (el) => {
+        splitSignalString(el.dataset.listeners).forEach((listener) => {
+          listenerArray.push(listener);
         });
+      },
+    );
+    [...new Set(listenerArray)].forEach((listener) => {
+      window.addEventListener(listener, (ev) => {
+        this.processEvent.call(this, ev);
       });
-    }
+    });
+    // }
   }
+
+  // /** internal */
+  // addEventListeners_Original() {
+  //   if (this.constructor.addedEventListeners === false) {
+  //     this.constructor.addedEventListeners = true;
+  //     let listenerArray = [
+  //       "click",
+  //       "input",
+  //       "bittysendevent",
+  //       "bittytriggerevent",
+  //     ];
+  //     [...document.querySelectorAll("[data-listeners]")].forEach(
+  //       (el) => {
+  //         splitSignalString(el.dataset.listeners).forEach((listener) => {
+  //           listenerArray.push(listener);
+  //         });
+  //       },
+  //     );
+  //     [...new Set(listenerArray)].forEach((listener) => {
+  //       window.addEventListener(listener, (ev) => {
+  //         this.processEventBridge.call(this, ev);
+  //       });
+  //     });
+  //   }
+  // }
 
   // ["bittysendevent", "bittytriggerevent"].forEach(
   //   (listener) => {
@@ -1362,49 +1394,49 @@ class BittyJs extends HTMLElement {
     return log;
   }
 
-  createBridges() {
-    this.conn._element = {};
-    this.conn._fragment = {};
-    this.conn._svg = {};
-    this.conn.json = {};
-    this.conn.logLevel = 2;
-    this.conn.logs = [];
-    this.conn.addJSON = this._addJSON.bind(this);
-    this.conn.addLog = this._addLog.bind(this);
-    this.conn.copy = this._copy.bind(this);
-    this.conn.createElement = this._createElement.bind(this);
-    this.conn.createFragment = this._createFragment.bind(this);
-    this.conn.createJSON = this._createJSON.bind(this);
-    this.conn.createSVG = this._createSVG.bind(this);
-    this.conn.deleteElement = this._deleteElement.bind(this);
-    this.conn.deleteFragment = this._deleteFragment.bind(this);
-    this.conn.deleteJSON = this._deleteJSON.bind(this);
-    this.conn.deleteSVG = this._deleteSVG.bind(this);
-    this.conn.fetchElement = this._fetchElement.bind(this);
-    this.conn.fetchFragment = this._fetchFragment.bind(this);
-    this.conn.fetchJSON = this._fetchJSON.bind(this);
-    this.conn.fetchSVG = this._fetchSVG.bind(this);
-    this.conn.fetchTemplates = this._fetchTemplates.bind(this);
-    this.conn.getLogLevel = this._getLogLevel.bind(this);
-    this.conn.loadElement = this._loadElement.bind(this);
-    this.conn.loadFragment = this._loadFragment.bind(this);
-    this.conn.loadJSON = this._loadJSON.bind(this);
-    this.conn.loadSVG = this._loadSVG.bind(this);
-    this.conn.renderElement = this._renderElement.bind(this);
-    this.conn.renderFragment = this._renderFragment.bind(this);
-    this.conn.renderSVG = this._renderSVG.bind(this);
-    this.conn.saveElement = this._saveElement.bind(this);
-    this.conn.saveJSON = this._saveJSON.bind(this);
-    this.conn.send = this._send.bind(this);
-    this.conn.setCSS = this._setCSS.bind(this);
-    this.conn.setLogLevel = this._setLogLevel.bind(this);
-    this.conn.sleep = this._sleep.bind(this);
-    this.conn.trigger = this._trigger.bind(this);
-    this.conn.updateElement = this._updateElement.bind(this);
-    this.conn.updateFragment = this._updateFragment.bind(this);
-    this.conn.updateSVG = this._updateSVG.bind(this);
-    this.processEventBridge = this.processEvent.bind(this);
-  }
+  // createBridges() {
+  //   this.conn._element = {};
+  //   this.conn._fragment = {};
+  //   this.conn._svg = {};
+  //   this.conn.json = {};
+  //   this.conn.logLevel = 2;
+  //   this.conn.logs = [];
+  //   this.conn.addJSON = this._addJSON.bind(this);
+  //   this.conn.addLog = this._addLog.bind(this);
+  //   this.conn.copy = this._copy.bind(this);
+  //   this.conn.createElement = this._createElement.bind(this);
+  //   this.conn.createFragment = this._createFragment.bind(this);
+  //   this.conn.createJSON = this._createJSON.bind(this);
+  //   this.conn.createSVG = this._createSVG.bind(this);
+  //   this.conn.deleteElement = this._deleteElement.bind(this);
+  //   this.conn.deleteFragment = this._deleteFragment.bind(this);
+  //   this.conn.deleteJSON = this._deleteJSON.bind(this);
+  //   this.conn.deleteSVG = this._deleteSVG.bind(this);
+  //   this.conn.fetchElement = this._fetchElement.bind(this);
+  //   this.conn.fetchFragment = this._fetchFragment.bind(this);
+  //   this.conn.fetchJSON = this._fetchJSON.bind(this);
+  //   this.conn.fetchSVG = this._fetchSVG.bind(this);
+  //   this.conn.fetchTemplates = this._fetchTemplates.bind(this);
+  //   this.conn.getLogLevel = this._getLogLevel.bind(this);
+  //   this.conn.loadElement = this._loadElement.bind(this);
+  //   this.conn.loadFragment = this._loadFragment.bind(this);
+  //   this.conn.loadJSON = this._loadJSON.bind(this);
+  //   this.conn.loadSVG = this._loadSVG.bind(this);
+  //   this.conn.renderElement = this._renderElement.bind(this);
+  //   this.conn.renderFragment = this._renderFragment.bind(this);
+  //   this.conn.renderSVG = this._renderSVG.bind(this);
+  //   this.conn.saveElement = this._saveElement.bind(this);
+  //   this.conn.saveJSON = this._saveJSON.bind(this);
+  //   this.conn.send = this._send.bind(this);
+  //   this.conn.setCSS = this._setCSS.bind(this);
+  //   this.conn.setLogLevel = this._setLogLevel.bind(this);
+  //   this.conn.sleep = this._sleep.bind(this);
+  //   this.conn.trigger = this._trigger.bind(this);
+  //   this.conn.updateElement = this._updateElement.bind(this);
+  //   this.conn.updateFragment = this._updateFragment.bind(this);
+  //   this.conn.updateSVG = this._updateSVG.bind(this);
+  //   this.processEventBridge = this.processEvent.bind(this);
+  // }
 
   getLogLevelIndex(level) {
     return this.#_logLevels.indexOf(level.toLowerCase());
@@ -1793,18 +1825,28 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  async processEvent(ev) {
+  async _processEvent(ev) {
+    console.log(`IN: _processEvent - ${ev.type}`);
+  }
+
+  async _processEvent_holding(ev) {
+    console.log(ev.type);
     if (ev.type === "bittytriggerevent") {
       const signals = splitSignalString(ev.signals);
+      console.log(`SIGNALS: ${signals}`);
       for (const signal of signals) {
         for (const bit of this.#bits) {
+          // console.log(`FUNCTION: ${typeof bit[signal]}`);
+          // console.log(bit);
+
           if (typeof bit[signal] === "function") {
+            console.log(`IN: processsEvent - ${signal}`);
             this.processTriggerSignal_V3(bit, signal);
           }
         }
       }
     } else if (ev.type === "bittysendevent") {
-      console.log("TODO: bittysendevent");
+      //console.log("TODO: bittysendevent");
     } else {
       const senders = findSenders(ev.target);
       for (const sender of senders) {
@@ -1812,6 +1854,7 @@ class BittyJs extends HTMLElement {
         for (const signal of signals) {
           for (const bit of this.#bits) {
             if (typeof bit[signal] === "function") {
+              //console.log(`FUNCTION: ${typeof bit[signal]}`);
               ev.sender = sender;
               this.processSignal_V3(bit, ev, signal);
             }
@@ -1822,8 +1865,13 @@ class BittyJs extends HTMLElement {
   }
 
   async processSignal_V3(bit, ev, signal) {
+    console.log(`IN processSignal_V3: ${signal}`);
     if (ev.sender.dataset.listeners === undefined) {
-      if (["click", "input"].includes(ev.type) === false) {
+      if (
+        ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
+          ev.type,
+        ) === false
+      ) {
         return;
       }
     } else {
@@ -1847,6 +1895,7 @@ class BittyJs extends HTMLElement {
   }
 
   processTriggerSignal_V3(bit, signal) {
+    console.log(`IN procesTriggerSignal_V3: ${signal}`);
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
@@ -1947,9 +1996,10 @@ class BittyJs extends HTMLElement {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  _trigger(signal) {
-    const ev = new BittyTriggerEvent(signal);
-    this.api.dispatchEvent(ev);
+  _trigger(signals) {
+    // console.log(`in _trigger: ${signals}`);
+    const ev = new BittyTriggerEvent(signals);
+    dispatchEvent(ev);
   }
 }
 
@@ -1998,6 +2048,7 @@ class BittyTriggerEvent_Original extends Event {
 
 class BittyTriggerEvent extends Event {
   constructor(signals) {
+    //console.log(`In BittyTriggerEvent: ${signals}`);
     super("bittytriggerevent", { bubbles: true });
     this.signals = signals;
   }

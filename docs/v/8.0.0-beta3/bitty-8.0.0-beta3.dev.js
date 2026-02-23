@@ -159,6 +159,7 @@ class BittyJs extends HTMLElement {
     target.send = this._send.bind(target);
     target.setLogLevel = this._setLogLevel.bind(target);
     target.sleep = this._sleep.bind(target);
+    target.timestamp = this._timestamp.bind(target);
     target.trigger = this._trigger.bind(target);
     target.updateElement = () => {
       return { ok: false };
@@ -1542,26 +1543,51 @@ class BittyJs extends HTMLElement {
     this.logs.push(payload);
     if (this._logLevel <= 1 && payload.level === "error") {
       console.error(
-        `${payload.messages.join("\n")}\n`,
+        `${this.timestamp(payload.timestamp)} - ${
+          payload.messages.join("\n")
+        }\n`,
         payload,
         new Error("Stack Trace"),
       );
     }
     if (this._logLevel <= 2 && payload.level === "warn") {
       console.warn(
-        `${payload.messages.join("\n")}\n`,
+        `${this.timestamp(payload.timestamp)} - ${
+          payload.messages.join("\n")
+        }\n`,
         payload,
         new Error("Stack Trace"),
       );
     }
     if (this._logLevel <= 3 && payload.level === "info") {
-      console.log(`${payload.messages.join("\n")}\n`, payload);
+      // TODO: Set up so you can add a `trace` flag and have it show a stack
+      // trace and dump the object with the `info` level.
+      // (The other levels already do both show a trace.)
+      console.log(
+        `${this.timestamp(payload.timestamp)} - ${
+          payload.messages.join("\n")
+        }\n`,
+        // payload,
+        // new Error("Stack Trace"),
+      );
     }
     if (this._logLevel <= 4 && payload.level === "debug") {
-      console.log(`${payload.messages.join("\n")}\n`, payload);
+      console.log(
+        `${this.timestamp(payload.timestamp)} - ${
+          payload.messages.join("\n")
+        }\n`,
+        payload,
+        new Error("Stack Trace"),
+      );
     }
     if (this._logLevel <= 5 && payload.level === "trace") {
-      console.log(`${payload.messages.join("\n")}\n`, payload);
+      console.log(
+        `${this.timestamp(payload.timestamp)} - ${
+          payload.messages.join("\n")
+        }\n`,
+        payload,
+        new Error("Stack Trace"),
+      );
     }
     return payload;
   }
@@ -2435,6 +2461,25 @@ class BittyJs extends HTMLElement {
 
   async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  _timestamp(datetime) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}`;
   }
 
   _trigger(signals) {

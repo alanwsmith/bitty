@@ -184,6 +184,14 @@ class Test():
             )
         return f"signal_{str(uuid.uuid5(namespace, input))[:5]}"
 
+    # This creates the trigger class files. 
+    def trigger_class_create_content(self):
+        output = f"""window.BittyClasses.Class{self.hash()}_Trigger = class {{""" + "\n"
+        formatter_fix = "}}" # keep the neovim formatter for freaking out. 
+        return output
+
+    def trigger_class_create_output_path(self):
+        return os.path.join(self.dir, "trigger_class.txt")
 
 
     # These two methods set up the output for making
@@ -241,6 +249,8 @@ class Test():
             _out.write(self.generate_output(self.name_content()))
         with open(self.remote_javascript_output_path(), "w") as _out:
             _out.write(self.generate_output(self.remote_javascript_content()))
+        with open(self.trigger_class_create_output_path(), "w") as _out:
+            _out.write(self.trigger_class_create_content())
         with open(self.trigger_class_output_path(), "w") as _out:
             _out.write(self.generate_output(self.trigger_class_content()))
         with open(self.trigger_file_output_path(), "w") as _out:

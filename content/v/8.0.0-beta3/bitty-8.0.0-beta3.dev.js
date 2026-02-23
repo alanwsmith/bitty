@@ -31,12 +31,13 @@ class BittyJs extends HTMLElement {
   }
 
   /** internal */
+  #bits = [];
+  /** internal */
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
   /** internal */
   #_logLevel = "warn";
-
   /** internal */
-  #bits = [];
+  #_logs = [];
 
   /** internal */
   async connectedCallback() {
@@ -106,7 +107,7 @@ class BittyJs extends HTMLElement {
     target.createFragment = () => {
       return { ok: false };
     };
-    target.createJSON = this._createJSON.bind(this);
+    target.createJSON = this._createJSON.bind(target);
     target.createSVG = () => {
       return { ok: false };
     };
@@ -326,16 +327,7 @@ class BittyJs extends HTMLElement {
   }
 
   _createJSON(key, json) {
-    // this is a hack to cleanr the console
-    // not sure why it's needed.
-    // that needs to be figured out.
-    // if (this.json === undefined) {
-    //   this.json = {};
-    // }
     const storageKey = `bittyJSON_${key}`;
-    // TODO: Update the result of the method
-    // to update details and then just
-    // return it at the end.
     const details = {
       level: "info",
       key: "createJSON",
@@ -343,40 +335,42 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-    if (
-      json !== undefined && this.json !== undefined &&
-      this.json[key] !== undefined
-    ) {
-      details.level = "warn";
-      details.messages.push(
-        `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
-      );
-    }
-    if (json === undefined) {
-    } else if (typeof json === "string") {
-      try {
-        this.json[key] = JSON.parse(json);
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.json[key] }),
-        );
-        details.messages.push(`Added JSON with key: ${key}`);
-      } catch (error) {
-      }
-    } else {
-      if (this.json !== undefined && this.json[key] !== undefined) {
-        this.json[key] = JSON.parse(JSON.stringify(json));
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.json[key] }),
-        );
-        details.messages.push(`Added JSON with key: ${key}`);
-      }
-    }
 
-    // tmp hack to clear console before testing
+    this.json[key] = json;
+    localStorage.setItem(storageKey, JSON.stringify({ data: json }));
 
-    return { ok: false };
+    // if (
+    //   json !== undefined && this.json !== undefined &&
+    //   this.json[key] !== undefined
+    // ) {
+    //   details.level = "warn";
+    //   details.messages.push(
+    //     `createJSON found an existin JSON with key '${key}'.`,
+    //   );
+    // }
+    // if (json === undefined) {
+    // } else if (typeof json === "string") {
+    //   try {
+    //     this.json[key] = JSON.parse(json);
+    //     localStorage.setItem(
+    //       storageKey,
+    //       JSON.stringify({ data: this.json[key] }),
+    //     );
+    //     details.messages.push(`Added JSON with key: ${key}`);
+    //   } catch (error) {
+    //   }
+    // } else {
+    //   if (this.json !== undefined && this.json[key] !== undefined) {
+    //     this.json[key] = JSON.parse(JSON.stringify(json));
+    //     localStorage.setItem(
+    //       storageKey,
+    //       JSON.stringify({ data: this.json[key] }),
+    //     );
+    //     details.messages.push(`Added JSON with key: ${key}`);
+    //   }
+    // }
+
+    return this.addLog(details);
   }
 
   // _createJSON(key, json) {
@@ -497,7 +491,7 @@ class BittyJs extends HTMLElement {
   _error(payload) {
     if (typeof payload === "string") {
       this.addLog({
-        level: "warn",
+        level: "error",
         ok: true,
         messages: [payload],
       });
@@ -1360,9 +1354,9 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
-  _setLogLevel(level) {
+  _setLogLevel(level = "warn") {
     if (
-      this._logLevels.indexOf(level.toLowerCase()) !== undefined
+      this._logLevels.indexOf(level.toLowerCase()) !== -1
     ) {
       this._logLevel = this._logLevels.indexOf(level.toLowerCase());
     } else {
@@ -1479,58 +1473,63 @@ class BittyJs extends HTMLElement {
   // ];
   //
 
-  // TODO: Deprecate and remove in favor of
-  // _createJSON(key, data)
-  _addJSON(key, json) {
-    const storageKey = `bittyJSON_${key}`;
-    if (json === undefined) {
-      return this.conn.addLog(
-        "error",
-        "addJSON",
-        false,
-        `No value passed in for key '${key}'`,
-        null,
-      );
-    } else if (typeof json === "string") {
-      try {
-        this.conn.json[key] = JSON.parse(json);
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.conn.json[key] }),
-        );
-        return this.conn.addLog(
-          "info",
-          "addJSON",
-          true,
-          `Added JSON with key: ${key}`,
-          null,
-        );
-      } catch (error) {
-        return this.conn.addLog(
-          "error",
-          "addJSON",
-          false,
-          `Could not parse JSON for key: ${key}`,
-          null,
-        );
-      }
-    } else {
-      this.conn.json[key] = JSON.parse(JSON.stringify(json));
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ data: this.conn.json[key] }),
-      );
-      return this.conn.addLog(
-        "info",
-        "addJSON",
-        true,
-        `Added JSON with key: ${key}`,
-        null,
-      );
-    }
-  }
+  // // TODO: Deprecate and remove in favor of
+  // // _createJSON(key, data)
+  // _addJSON(key, json) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   if (json === undefined) {
+  //     return this.conn.addLog(
+  //       "error",
+  //       "addJSON",
+  //       false,
+  //       `No value passed in for key '${key}'`,
+  //       null,
+  //     );
+  //   } else if (typeof json === "string") {
+  //     try {
+  //       this.conn.json[key] = JSON.parse(json);
+  //       localStorage.setItem(
+  //         storageKey,
+  //         JSON.stringify({ data: this.conn.json[key] }),
+  //       );
+  //       return this.conn.addLog(
+  //         "info",
+  //         "addJSON",
+  //         true,
+  //         `Added JSON with key: ${key}`,
+  //         null,
+  //       );
+  //     } catch (error) {
+  //       return this.conn.addLog(
+  //         "error",
+  //         "addJSON",
+  //         false,
+  //         `Could not parse JSON for key: ${key}`,
+  //         null,
+  //       );
+  //     }
+  //   } else {
+  //     this.conn.json[key] = JSON.parse(JSON.stringify(json));
+  //     localStorage.setItem(
+  //       storageKey,
+  //       JSON.stringify({ data: this.conn.json[key] }),
+  //     );
+  //     return this.conn.addLog(
+  //       "info",
+  //       "addJSON",
+  //       true,
+  //       `Added JSON with key: ${key}`,
+  //       null,
+  //     );
+  //   }
+  // }
 
   _addLog(payload) {
+    // TODO: Push logs to static class property
+    // TODO: Add the name of the bit that
+    // create the log entry to the logs.
+    // TODO: Accept an array of strings.
+    // TODO: Create a function to flush the logs.
     if (typeof payload === "string") {
       payload = {
         level: "info",
@@ -1541,7 +1540,7 @@ class BittyJs extends HTMLElement {
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
     this.logs.push(payload);
-    if (this._logLevel <= 1 && payload.level === "error") {
+    if (this._logLevel >= 1 && payload.level === "error") {
       console.error(
         `${this.timestamp(payload.timestamp)} - ${
           payload.messages.join("\n")
@@ -1550,7 +1549,7 @@ class BittyJs extends HTMLElement {
         new Error("Stack Trace"),
       );
     }
-    if (this._logLevel <= 2 && payload.level === "warn") {
+    if (this._logLevel >= 2 && payload.level === "warn") {
       console.warn(
         `${this.timestamp(payload.timestamp)} - ${
           payload.messages.join("\n")
@@ -1559,7 +1558,7 @@ class BittyJs extends HTMLElement {
         new Error("Stack Trace"),
       );
     }
-    if (this._logLevel <= 3 && payload.level === "info") {
+    if (this._logLevel >= 3 && payload.level === "info") {
       // TODO: Set up so you can add a `trace` flag and have it show a stack
       // trace and dump the object with the `info` level.
       // (The other levels already do both show a trace.)
@@ -1571,7 +1570,7 @@ class BittyJs extends HTMLElement {
         // new Error("Stack Trace"),
       );
     }
-    if (this._logLevel <= 4 && payload.level === "debug") {
+    if (this._logLevel >= 4 && payload.level === "debug") {
       console.log(
         `${this.timestamp(payload.timestamp)} - ${
           payload.messages.join("\n")
@@ -1580,7 +1579,7 @@ class BittyJs extends HTMLElement {
         new Error("Stack Trace"),
       );
     }
-    if (this._logLevel <= 5 && payload.level === "trace") {
+    if (this._logLevel >= 5 && payload.level === "trace") {
       console.log(
         `${this.timestamp(payload.timestamp)} - ${
           payload.messages.join("\n")
@@ -1694,9 +1693,49 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  _loadJSON(key, fallback = null) {
-    this.json[key] = {};
-    return { ok: false };
+  _loadJSON(key, fallback) {
+    const storageKey = `bittyJSON_${key}`;
+    const details = {
+      level: "info",
+      key: "loadJSON",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    const keyAlreadyExists = this.json[key] === undefined ? false : true;
+    try {
+      const storage = localStorage.getItem(storageKey);
+      if (storage !== null) {
+        const json = JSON.parse(storage).data;
+        this.json[key] = json;
+        details.messages.push(`Loaded json from storage with key: ${key}`);
+      } else if (typeof fallback === "string") {
+        this.json[key] = JSON.parse(fallback);
+        localStorage.setItem(key, `{ "data": ${fallback} }`);
+        details.messages.push(
+          `Loaded json from fallback string with key: ${key}`,
+        );
+      } else if (typeof fallback === "object") {
+        localStorage.setItem(key, JSON.stringify({ data: fallback }));
+        this.json[key] = fallback;
+        details.messages.push(
+          `Loaded json from fallback object with key: ${key}`,
+        );
+      } else {
+        details.level = "error", details.ok = false;
+        details.messages.push(
+          `Could not load JSON from either storage or fallbak with key: ${key}`,
+        );
+      }
+    } catch (loadingError) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        "Could not load JSON. See 'moreDetails' for additional information",
+      );
+      details.moreInfo = loadingError;
+    }
+    return this.addLog(details);
   }
 
   // _loadJSON_original(key, fallback = null) {

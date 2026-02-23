@@ -1,9 +1,9 @@
 class DetailsOpener {
   async bittyReady() {
+    this.setLogLevel("info");
     this.loadJSON(this.key(), []);
     this.checkSize();
     this.initPage();
-    // this.error("Details opener");
   }
 
   checkSize() {

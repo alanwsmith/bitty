@@ -2428,8 +2428,36 @@ class BittyJs extends HTMLElement {
   }
 
   _saveJSON(key) {
-    this.json[key] = {};
-    return { ok: false };
+    const storageKey = `bittyJSON_${key}`;
+    const details = {
+      level: "info",
+      key: "saveJSON",
+      ok: true,
+      messages: [],
+      moreDetails: null,
+    };
+    if (this.json[key] === undefined) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Tried to save JSON with '${key}' but it does not exist in the collection.`,
+      );
+      return this.addLog(details);
+    }
+    if (typeof this.json[key] === "object") {
+      try {
+        const payload = JSON.stringify({ data: this.json[key] });
+        localStorage.setItem(storageKey, payload);
+        details.messages.push(`Saved JSON with key: ${key}`);
+      } catch (saveError) {
+        details.level = "error";
+        details.ok = false;
+        details.messages.push(
+          `Could not save JSON with key '${key}' because it couldn't be stringified.`,
+        );
+      }
+      return this.addLog(details);
+    }
   }
 
   // _saveJSON_original(key) {

@@ -339,39 +339,39 @@ class BittyJs extends HTMLElement {
     this.json[key] = json;
     localStorage.setItem(storageKey, JSON.stringify({ data: json }));
 
-    // if (
-    //   json !== undefined && this.json !== undefined &&
-    //   this.json[key] !== undefined
-    // ) {
-    //   details.level = "warn";
-    //   details.messages.push(
-    //     `createJSON found an existin JSON with key '${key}'.`,
-    //   );
-    // }
-    // if (json === undefined) {
-    // } else if (typeof json === "string") {
-    //   try {
-    //     this.json[key] = JSON.parse(json);
-    //     localStorage.setItem(
-    //       storageKey,
-    //       JSON.stringify({ data: this.json[key] }),
-    //     );
-    //     details.messages.push(`Added JSON with key: ${key}`);
-    //   } catch (error) {
-    //   }
-    // } else {
-    //   if (this.json !== undefined && this.json[key] !== undefined) {
-    //     this.json[key] = JSON.parse(JSON.stringify(json));
-    //     localStorage.setItem(
-    //       storageKey,
-    //       JSON.stringify({ data: this.json[key] }),
-    //     );
-    //     details.messages.push(`Added JSON with key: ${key}`);
-    //   }
-    // }
-
     return this.addLog(details);
   }
+
+  // if (
+  //   json !== undefined && this.json !== undefined &&
+  //   this.json[key] !== undefined
+  // ) {
+  //   details.level = "warn";
+  //   details.messages.push(
+  //     `createJSON found an existin JSON with key '${key}'.`,
+  //   );
+  // }
+  // if (json === undefined) {
+  // } else if (typeof json === "string") {
+  //   try {
+  //     this.json[key] = JSON.parse(json);
+  //     localStorage.setItem(
+  //       storageKey,
+  //       JSON.stringify({ data: this.json[key] }),
+  //     );
+  //     details.messages.push(`Added JSON with key: ${key}`);
+  //   } catch (error) {
+  //   }
+  // } else {
+  //   if (this.json !== undefined && this.json[key] !== undefined) {
+  //     this.json[key] = JSON.parse(JSON.stringify(json));
+  //     localStorage.setItem(
+  //       storageKey,
+  //       JSON.stringify({ data: this.json[key] }),
+  //     );
+  //     details.messages.push(`Added JSON with key: ${key}`);
+  //   }
+  // }
 
   // _createJSON(key, json) {
   //   const storageKey = `bittyJSON_${key}`;
@@ -1525,6 +1525,14 @@ class BittyJs extends HTMLElement {
   // }
 
   _addLog(payload) {
+    // Things to consider:
+    // TODO: Have a `this.setGlobalLogLevel()` which is
+    // the base for everything. Classes use it
+    // by default. Then they can be updated
+    // individually with `this.setLocalLogLevel()`.
+    // The `this.setLocalLogLevel()` should
+    // also accept a `default` key which returns
+    // it to the value from the global log level.
     // TODO: Push logs to static class property
     // TODO: Add the name of the bit that
     // create the log entry to the logs.

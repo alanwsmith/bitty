@@ -1,16 +1,11 @@
-#key = "json_$SIGNAL_NAME";
-
-test_$SIGNAL_NAME(_, el) {
-  // this.createJSON(this.#key, { status: "bug" });
-  // this.json[this.#key].status = "ok";
-  // this.saveJSON(this.#key);
-  // const result = this.saveJSON(this.#key);
-  // if (result.ok === true) {
-  //   el.innerHTML = "ok";
-  // }
+$SIGNAL_NAME(_, el) {
+  this.key = "data_$HASH";
+  this.createJSON(this.key, { status: "bug" });
+  this.json[this.key].status = "ok";
+  this.saveJSON(this.key);
+  const result = this.saveJSON(this.key);
+  if (result.ok === true) {
+    el.innerHTML = "test passed";
+  }
 }
 
-
-bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
-}

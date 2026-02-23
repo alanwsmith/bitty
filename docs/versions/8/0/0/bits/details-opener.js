@@ -1,6 +1,5 @@
 class DetailsOpener {
   async bittyReady() {
-    this.setLogLevel("info");
     this.loadJSON(this.key(), []);
     this.checkSize();
     this.initPage();
@@ -24,7 +23,7 @@ class DetailsOpener {
         this.updateDetailsToggle();
       });
     });
-    this.info("Finished initalizing Details Opener");
+    this.info("Initialized Details Opener");
   }
 
   key() {

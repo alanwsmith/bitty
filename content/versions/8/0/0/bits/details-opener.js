@@ -1,17 +1,16 @@
 class DetailsOpener {
   async bittyReady() {
-    await this.sleep(2500);
-    this.loadJSON(this.key(), { openItems: [] });
-    this.trigger("checkSize initPage");
+    this.loadJSON(this.key(), []);
+    this.checkSize();
+    this.initPage();
   }
 
   checkSize() {
-    console.log("OPENER HERE5");
     if (
-      this.json[this.key()].openItems.length !==
+      this.json[this.key()].length !==
         document.querySelectorAll("details").length
     ) {
-      this.json[this.key()].openItems = [];
+      this.json[this.key()] = [];
     }
   }
 
@@ -21,16 +20,17 @@ class DetailsOpener {
         detailsEl.open = true;
       }
       detailsEl.addEventListener("toggle", (ev) => {
-        this.update();
+        this.updateDetailsToggle();
       });
     });
+    console.log("Finished init");
   }
 
   key() {
-    return `details-${window.location.pathname}`;
+    return `details-opener-${window.location.pathname}`;
   }
 
-  update() {
+  updateDetailsToggle() {
     document.querySelectorAll("details").forEach((detailsEl, index) => {
       this.json[this.key()][index] = detailsEl.open;
     });

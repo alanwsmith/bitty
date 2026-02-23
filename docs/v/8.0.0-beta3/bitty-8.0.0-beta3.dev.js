@@ -103,22 +103,44 @@ class BittyJs extends HTMLElement {
     target._runBittyReady = this._runBittyReady.bind(target);
     target._svg = () => {};
     target.addLog = this._addLog.bind(target);
-    target.createElement = () => {};
-    target.createFragment = () => {};
-    target.createJSON = () => {};
-    target.createSVG = () => {};
-    target.deleteElement = () => {};
-    target.deleteFragment = () => {};
-    target.deleteJSON = () => {};
-    target.deleteSVG = () => {};
-    target.fetchElement = () => {};
-    target.fetchJSON = () => {};
-    target.fetchSVG = () => {};
+    target.createElement = () => {
+      return { ok: false };
+    };
+    target.createFragment = () => {
+      return { ok: false };
+    };
+    target.createJSON = () => {
+      return { ok: false };
+    };
+    target.createSVG = () => {
+      return { ok: false };
+    };
+    target.deleteElement = () => {
+      return { ok: false };
+    };
+    target.deleteFragment = () => {
+      return { ok: false };
+    };
+    target.deleteJSON = () => {
+      return { ok: false };
+    };
+    target.deleteSVG = () => {
+      return { ok: false };
+    };
+    target.fetchElement = () => {
+      return { ok: false };
+    };
+    target.fetchJSON = () => {
+      return { ok: false };
+    };
+    target.fetchSVG = () => {
+      return { ok: false };
+    };
     target.json = {};
     target.loadElement = () => {};
     target.loadFragment = () => {};
     target.loadJSON = this._loadJSON.bind(target);
-    target.saveJSON = () => {};
+    target.saveJSON = this._saveJSON.bind(target);
     target.loadSVG = () => {};
     target.renderElement = () => {};
     target.renderSVG = () => {};
@@ -1376,6 +1398,8 @@ class BittyJs extends HTMLElement {
       console.error(details);
     } else if (details.level === "warn") {
       console.warn(details);
+    } else {
+      console.log(details);
     }
     return details;
   }
@@ -1479,6 +1503,7 @@ class BittyJs extends HTMLElement {
   }
 
   _loadJSON(key, fallback = null) {
+    const storageKey = `bittyJSON_${key}`;
     const details = {
       level: "info",
       key: "loadJSON",
@@ -1488,7 +1513,6 @@ class BittyJs extends HTMLElement {
     };
     const keyAlreadyExists = this.json[key] === undefined ? false : true;
     try {
-      const storageKey = `bittyJSON_${key}`;
       const storage = localStorage.getItem(storageKey);
       if (storage !== null) {
         const json = JSON.parse(storage).data;
@@ -1630,7 +1654,6 @@ class BittyJs extends HTMLElement {
     receiver.isTarget = () => {
       return false;
     };
-
     receiver.copyText = async function () {
       if (receiver.value) {
         try {
@@ -1936,6 +1959,7 @@ class BittyJs extends HTMLElement {
   }
 
   _processTrigger(signal) {
+    console.log(`_processTrigger: ${signal}`);
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
     );
@@ -2161,6 +2185,39 @@ class BittyJs extends HTMLElement {
   }
 
   _saveJSON(key) {
+    const storageKey = `bittyJSON_${key}`;
+    const details = {
+      level: "info",
+      key: "saveJSON",
+      ok: true,
+      messages: [],
+      moreDetails: null,
+    };
+    if (this.json[key] === undefined) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Tried to save JSON with '${key}' but it does not exist in the collection.`,
+      );
+      return this.addLog(details);
+    }
+    if (typeof this.json[key] === "object") {
+      try {
+        const payload = JSON.stringify({ data: this.json[key] });
+        localStorage.setItem(storageKey, payload);
+        details.messages.push(`Saved JSON with key: ${key}`);
+      } catch (saveError) {
+        details.level = "error";
+        details.ok = false;
+        details.messages.push(
+          `Could not save JSON with key '${key}' because it couldn't be stringified.`,
+        );
+      }
+      return this.addLog(details);
+    }
+  }
+
+  _saveJSON_original(key) {
     const storageKey = `bittyJSON_${key}`;
     if (this.conn.json[key] !== undefined) {
       if (typeof this.conn.json[key] === "object") {

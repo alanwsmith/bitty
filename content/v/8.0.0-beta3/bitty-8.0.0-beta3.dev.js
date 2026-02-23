@@ -1424,7 +1424,6 @@ class BittyJs extends HTMLElement {
       // TODO: Add log saying an invalid level was attempted.
       this.#_globalLogLevelIndex = 2;
     }
-    console.log(`Global Log Level Index is now: ${this.#_globalLogLevelIndex}`);
   }
 
   _setLocalLogLevel(levels, level) {

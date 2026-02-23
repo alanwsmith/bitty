@@ -35,7 +35,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
   /** internal */
-  #_globalLogLevel = "warn";
+  #_globalLogLevelIndex = 2;
   /** internal */
   #_logs = [];
 
@@ -142,7 +142,11 @@ class BittyJs extends HTMLElement {
       return { ok: false };
     };
     target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
-    target.getLocalLogLevel = this._getLocalLogLevel.bind(target);
+    target.getLocalLogLevel = this._getLocalLogLevel.bind(
+      target,
+      this.#_logLevels,
+      this.#_globalLogLevelIndex,
+    );
     target.info = this._info.bind(target);
     target.loadElement = () => {
       return { ok: false };
@@ -162,7 +166,10 @@ class BittyJs extends HTMLElement {
     };
     target.send = this._send.bind(target);
     target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
-    target.setLocalLogLevel = this._setLocalLogLevel.bind(target);
+    target.setLocalLogLevel = this._setLocalLogLevel.bind(
+      target,
+      this.#_logLevels,
+    );
     target.sleep = this._sleep.bind(target);
     target.timestamp = this._timestamp.bind(target);
     target.trigger = this._trigger.bind(target);
@@ -202,8 +209,6 @@ class BittyJs extends HTMLElement {
 
   addBittyVars(target) {
     target.logs = [];
-    target._logLevels = ["none", "error", "warn", "info", "debug", "trace"];
-    target._logLevel = 2;
     target.json = {};
     target._svg = {};
     target._elemnet = {};
@@ -875,11 +880,15 @@ class BittyJs extends HTMLElement {
   }
 
   getGlobalLogLevel() {
-    return this.#_globalLogLevel;
+    return this.#_logLevels[this.#_globalLogLevelIndex];
   }
 
-  _getLocalLogLevel() {
-    return this._logLevels[this._logLevel];
+  _getLocalLogLevel(logLevels, globalLogLevelIndex) {
+    if (this._localLogLevelIndex) {
+      return logLevels[this._localLogLevelIndex];
+    } else {
+      return logLevels[globalLogLevelIndex];
+    }
   }
 
   _info(payload) {
@@ -1362,27 +1371,28 @@ class BittyJs extends HTMLElement {
   }
 
   setGlobalLogLevel(level) {
-    if (this.#_logLevels.includes(level.toLowerCase())) {
-      this.#_globalLogLevel = level;
+    const levelIndex = this.#_logLevels.indexOf(level.toLowerCase());
+    if (levelIndex >= 0) {
+      this.#_globalLogLevelIndex = levelIndex;
     } else {
-      // TODO: Add warning here that invalid log level was
-      // attempted.
-      this.#_globalLogLevel = "warn";
+      // TODO: Add log saying an invalid level was attempted.
+      this.#_globalLogLevelIndex = 2;
     }
   }
 
-  _setLocalLogLevel(level = "warn") {
+  _setLocalLogLevel(levels, level = "warn") {
+    // TODO: Handle setting `global`
     if (
-      this._logLevels.indexOf(level.toLowerCase()) !== -1
+      levels.indexOf(level.toLowerCase()) !== -1
     ) {
-      this._logLevel = this._logLevels.indexOf(level.toLowerCase());
+      this._localLogLevel = levels.indexOf(level.toLowerCase());
     } else {
-      this._logLevel = 2;
+      this._localLogLevel = 2;
       this.addLog({
         level: "warn",
         ok: false,
         messages: [
-          `Tried to set log level to '${level}' which is invalid. Valid options are: ${this._logLevels}.`,
+          `Tried to set log level to '${level}' which is invalid. Valid options are: ${levels}.`,
           `Log leve set to 'warn' as a fallback.`,
         ],
       });
@@ -1614,6 +1624,7 @@ class BittyJs extends HTMLElement {
         new Error("Stack Trace"),
       );
     }
+
     return payload;
   }
 

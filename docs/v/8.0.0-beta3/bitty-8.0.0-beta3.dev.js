@@ -116,22 +116,27 @@ class BittyJs extends HTMLElement {
     target.fetchSVG = () => {};
     target.json = {};
     target.loadElement = () => {};
+    target.loadFragment = () => {};
     target.loadJSON = this._loadJSON.bind(target);
+    target.saveJSON = () => {};
     target.loadSVG = () => {};
     target.renderElement = () => {};
+    target.renderSVG = () => {};
     target.send = this._send.bind(target);
     target.setLogLevel = () => {};
     target.sleep = this._sleep.bind(target);
     target.trigger = this._trigger.bind(target);
-    // target.trigger = (x) => {
-    //   console.log(`PING ${x}`);
-    // };
     target.updateElement = () => {};
     target.updateSVG = () => {};
-    target.addListeners = this._addListeners.bind(target);
-    target.addListeners();
+    target.getDataAsFloat = () => {};
+    target.getDataAsInt = () => {};
     target.processEvent = this._processEvent.bind(target);
     target.processTrigger = this._processTrigger.bind(target);
+    target.updateEventV4 = this._updateEventV4.bind(target);
+    target.updateReceiverV4 = this._updateReceiverV4.bind(target);
+    //
+    target.addListeners = this._addListeners.bind(target);
+    target.addListeners();
   }
 
   async _runBittyReady() {
@@ -1618,15 +1623,16 @@ class BittyJs extends HTMLElement {
     // TODO: Log error if no connection is made
   }
 
-  updateEvent(ev) {
-    // TODO: Update so that is the sender is
-    // different from the target it's reflected
-    // in the sender property.
-    //  ev.sender = ev.target;
-    // NOTE These are current set to target.
-    // They need to be set to use the sending
-    // element if it's different from the
-    // target.
+  _updateReceiverV4(ev, el) {
+    el.isSender = () => {
+      return false;
+    };
+    el.isTarget = () => {
+      return false;
+    };
+  }
+
+  _updateEventV4(ev) {
     ev.copyText = async function () {
       if (ev.sender.value) {
         try {
@@ -1685,6 +1691,74 @@ class BittyJs extends HTMLElement {
       return parseInt(ev.target.value, 10);
     };
   }
+
+  // updateEvent_original(ev) {
+  //   // TODO: Update so that is the sender is
+  //   // different from the target it's reflected
+  //   // in the sender property.
+  //   //  ev.sender = ev.target;
+  //   // NOTE These are current set to target.
+  //   // They need to be set to use the sending
+  //   // element if it's different from the
+  //   // target.
+  //   ev.copyText = async function () {
+  //     if (ev.sender.value) {
+  //       try {
+  //         await navigator.clipboard.writeText(ev.target.value);
+  //       } catch (error) {
+  //         // TODO: Switch this to logging an error.
+  //         console.error("Could not copy text to clipboard");
+  //       }
+  //     }
+  //   };
+  //   ev.getData = function (key, closest = true) {
+  //     return ev.sender.dataset[key];
+  //   };
+  //   ev.getDataAsFloat = function (key, closest = true) {
+  //     return parseFloat(ev.sender.dataset[key]);
+  //   };
+  //   ev.getDataAsInt = function (key, closest = true) {
+  //     return parseInt(ev.sender.dataset[key], 10);
+  //   };
+  //   ev.getValue = function (key) {
+  //     return ev.sender.value;
+  //   };
+  //   ev.getValueAsFloat = function (key) {
+  //     return parseFloat(ev.sender.value);
+  //   };
+  //   ev.getValueAsInt = function (key) {
+  //     return parseInt(ev.sender.value, 10);
+  //   };
+  //   //////////////////////////////////////////
+  //   ev.copyTargetText = async function () {
+  //     if (ev.target.value) {
+  //       try {
+  //         await navigator.clipboard.writeText(ev.target.value);
+  //       } catch (error) {
+  //         // TODO: Switch this to logging an error.
+  //         console.error("Could not copy text to clipboard");
+  //       }
+  //     }
+  //   };
+  //   ev.getTargetData = function (key, closest = true) {
+  //     return ev.target.dataset[key];
+  //   };
+  //   ev.getTargetDataAsFloat = function (key, closest = true) {
+  //     return parseFloat(ev.target.dataset[key]);
+  //   };
+  //   ev.getTargetDataAsInt = function (key, closest = true) {
+  //     return parseInt(ev.target.dataset[key], 10);
+  //   };
+  //   ev.getTargetValue = function (key) {
+  //     return ev.target.value;
+  //   };
+  //   ev.getTargetValueAsFloat = function (key) {
+  //     return parseFloat(ev.target.value);
+  //   };
+  //   ev.getTargetValueAsInt = function (key) {
+  //     return parseInt(ev.target.value, 10);
+  //   };
+  // }
 
   // updateElement(el) {
   //   el.copyText = async function () {
@@ -1826,19 +1900,6 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  async _processEvent(ev) {
-    if (ev.type === "bittytriggerevent") {
-      const signals = splitSignalString(ev.signals);
-      for (const signal of signals) {
-        if (signal === "checkSize") {
-          if (this[signal] !== undefined) {
-            this.processTrigger(signal);
-          }
-        }
-      }
-    }
-  }
-
   _processTrigger(signal) {
     console.log(`IN procesSignal_V4: ${signal}`);
     const receivers = document.querySelectorAll(
@@ -1847,44 +1908,63 @@ class BittyJs extends HTMLElement {
     if (receivers.length > 0) {
       for (const receiver of receivers) {
         //this.updateReceiver_V3(null, receiver);
-        //bit[signal](null, receiver);
-        console.log("processTrigger_V4: reciever");
+        this[signal](null, receiver);
       }
     } else {
-      console.log("processTrigger_V4: bare");
-      //bit[signal](null, null);
+      this[signal](null, null);
     }
   }
 
-  // async processSignal_V4(bit, ev, signal) {
-  //   console.log(`IN processSignal_V3: ${signal}`);
-  //   if (ev.sender.dataset.listeners === undefined) {
-  //     if (
-  //       ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
-  //         ev.type,
-  //       ) === false
-  //     ) {
-  //       return;
-  //     }
-  //   } else {
-  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
-  //     if (!listeners.includes(ev.type)) {
-  //       return;
-  //     }
-  //   }
-  //   this.updateEvent(ev);
-  //   const receivers = document.querySelectorAll(
-  //     `[data-receive~='${signal}']`,
-  //   );
-  //   if (receivers.length > 0) {
-  //     for (const receiver of receivers) {
-  //       this.updateReceiver_V3(ev, receiver);
-  //       bit[signal](ev, receiver);
-  //     }
-  //   } else {
-  //     bit[signal](ev, null);
-  //   }
-  // }
+  async _processEvent(ev) {
+    if (ev.type === "bittytriggerevent") {
+      const signals = splitSignalString(ev.signals);
+      for (const signal of signals) {
+        if (this[signal] !== undefined) {
+          // this.processTrigger(signal);
+        }
+      }
+    } else if (ev.type === "bittysendevent") {
+    } else {
+      const senders = findSenders(ev.target);
+      for (const sender of senders) {
+        const signals = splitSignalString(sender.dataset.send);
+        for (const signal of signals) {
+          if (this[signal] !== undefined) {
+            ev.sender = sender;
+            if (ev.sender.dataset.listeners === undefined) {
+              if (
+                ["click", "input", "bittytriggerevent", "bittysendevent"]
+                  .includes(
+                    ev.type,
+                  ) === false
+              ) {
+                return;
+              }
+            } else {
+              const listeners = splitSignalString(ev.sender.dataset.listeners);
+              if (!listeners.includes(ev.type)) {
+                return;
+              }
+            }
+            this.updateEventV4(ev);
+            const receivers = document.querySelectorAll(
+              `[data-receive~='${signal}']`,
+            );
+            if (receivers.length > 0) {
+              for (const receiver of receivers) {
+                this.updateReceiverV4(ev, receiver);
+                this[signal](ev, receiver);
+              }
+            } else {
+              this[signal](ev, null);
+            }
+          }
+        }
+      }
+      // ev.sender = sender;
+      // this.processSignal_V3(bit, ev, signal);
+    }
+  }
 
   //async _processEvent_holding(ev) {
   //  console.log(ev.type);
@@ -1919,6 +1999,37 @@ class BittyJs extends HTMLElement {
   //    }
   //  }
   //}
+  //
+
+  // async processSignal_V4(bit, ev, signal) {
+  //   console.log(`IN processSignal_V3: ${signal}`);
+  //   if (ev.sender.dataset.listeners === undefined) {
+  //     if (
+  //       ["click", "input", "bittytriggerevent", "bittysendevent"].includes(
+  //         ev.type,
+  //       ) === false
+  //     ) {
+  //       return;
+  //     }
+  //   } else {
+  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
+  //     if (!listeners.includes(ev.type)) {
+  //       return;
+  //     }
+  //   }
+  //   this.updateEvent(ev);
+  //   const receivers = document.querySelectorAll(
+  //     `[data-receive~='${signal}']`,
+  //   );
+  //   if (receivers.length > 0) {
+  //     for (const receiver of receivers) {
+  //       this.updateReceiver_V3(ev, receiver);
+  //       bit[signal](ev, receiver);
+  //     }
+  //   } else {
+  //     bit[signal](ev, null);
+  //   }
+  // }
 
   // async processSignal_V3(bit, ev, signal) {
   //   console.log(`IN processSignal_V3: ${signal}`);

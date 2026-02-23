@@ -1,13 +1,8 @@
 class DetailsOpener {
   async bittyReady() {
-    console.log("OPENERE HERE1");
     await this.sleep(2500);
-    console.log("OPENERE HERE2");
     this.loadJSON(this.key(), { openItems: [] });
-    console.log("OPENERE HERE3");
     this.trigger("checkSize initPage");
-    this.trigger("checkSize");
-    console.log("OPENERE HERE4");
   }
 
   checkSize() {

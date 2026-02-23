@@ -1361,9 +1361,9 @@ class BittyJs extends HTMLElement {
 
   _setLogLevel(level) {
     if (
-      this._logLevels.indexOf[level.toLowerCase()] !== undefined
+      this._logLevels.indexOf(level.toLowerCase()) !== undefined
     ) {
-      this._logLevel = this._logLevels.indexOf[level.toLowerCase()];
+      this._logLevel = this._logLevels.indexOf(level.toLowerCase());
     } else {
       this._logLevel = 2;
       this.addLog({

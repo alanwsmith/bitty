@@ -1,16 +1,8 @@
-bittyReady() {
-  this.trigger("given_signal_43632");
-}
-
-given_signal_43632(_, __) {
+async signal_43632(_, el) {
   this.t1 = performance.now();
-  this.trigger("test_signal_43632");
-}
-
-async test_signal_43632(_, el) {
-  await this.sleep(50);
+  await this.sleep(100);
   this.t2 = performance.now();
-  if (this.t2 - this.t1 > 45) {
-    el.innerHTML = "ok";
+  if (this.t2 - this.t1 > 90) {
+    el.innerHTML = "test passed";
   }
 }

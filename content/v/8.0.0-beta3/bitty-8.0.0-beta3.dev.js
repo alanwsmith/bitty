@@ -54,6 +54,140 @@ class BittyJs extends HTMLElement {
     // }
   }
 
+  // Things to consider:
+  // TODO: Have a `this.setGlobalLogLevel()` which is
+  // the base for everything. Classes use it
+  // by default. Then they can be updated
+  // individually with `this.setLocalLogLevel()`.
+  // The `this.setLocalLogLevel()` should
+  // also accept a `default` key which returns
+  // it to the value from the global log level.
+  // TODO: Push logs to static class property
+  // TODO: Add the name of the bit that
+  // create the log entry to the logs.
+  // TODO: Accept an array of strings.
+  // TODO: Create a function to flush the logs.
+
+  addLog(target, payload) {
+    payload.bitClass = target.bitClass;
+    payload.timestamp = new Date();
+    payload.performanceTime = performance.now();
+    this.#_logs.push(payload);
+
+    // console.log(payload.level, target.getLocalLogLevel());
+
+    const checkIndex = this.#_logLevels.indexOf(payload.level);
+
+    if (
+      this.#_globalLogLevelIndex >= checkIndex ||
+      target._localLogLevelIndex >= checkIndex
+    ) {
+      if (checkIndex === 1) {
+        console.error(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          }`,
+          "\n",
+          payload,
+          "\n",
+          new Error("Stack Trace"),
+        );
+      } else if (
+        checkIndex === 2
+      ) {
+        console.warn(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          }`,
+          "\n",
+          payload,
+        );
+      }
+    } else if (
+      checkIndex >= 3
+    ) {
+      console.log(
+        `[${this.timestamp(payload.timestamp)}] ${payload.messages.join("\n")}`,
+      );
+    }
+    // } else if (
+    //   this.#_globalLogLevelIndex >= checkIndex || target._localLogLevelIndex >= checkIndex
+    // ) {
+    //   console.error(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     payload,
+    //     new Error("Stack Trace"),
+    //   );
+    // }
+
+    //console.log(target.bitClass);
+    // console.log(payload);
+
+    // if (typeof payload === "string") {
+    //   payload = {
+    //     level: "info",
+    //     ok: true,
+    //     messages: [payload],
+    //   };
+    // }
+    // payload.bitClass = this.bitClass;
+    // payload.timestamp = new Date();
+    // payload.performanceTime = performance.now();
+    // this.logs.push(payload);
+    // if (this._logLevel >= 1 && payload.level === "error") {
+    //   console.error(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     payload,
+    //     new Error("Stack Trace"),
+    //   );
+    // }
+    // if (this._logLevel >= 2 && payload.level === "warn") {
+    //   console.warn(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     payload,
+    //     new Error("Stack Trace"),
+    //   );
+    // }
+    // if (this._logLevel >= 3 && payload.level === "info") {
+    //   // TODO: Set up so you can add a `trace` flag and have it show a stack
+    //   // trace and dump the object with the `info` level.
+    //   // (The other levels already do both show a trace.)
+    //   console.log(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     // payload,
+    //     // new Error("Stack Trace"),
+    //   );
+    // }
+    // if (this._logLevel >= 4 && payload.level === "debug") {
+    //   console.log(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     payload,
+    //     new Error("Stack Trace"),
+    //   );
+    // }
+    // if (this._logLevel >= 5 && payload.level === "trace") {
+    //   console.log(
+    //     `${this.timestamp(payload.timestamp)} - ${
+    //       payload.messages.join("\n")
+    //     }\n`,
+    //     payload,
+    //     new Error("Stack Trace"),
+    //   );
+    // }
+
+    return payload;
+  }
+
   loadWindowClasses() {
     if (this.constructor.loadedPageClasses === false) {
       this.constructor.loadedPageClasses = true;
@@ -102,7 +236,9 @@ class BittyJs extends HTMLElement {
     // target._element = () => {};
     target._runBittyReady = this._runBittyReady.bind(target);
     target._svg = () => {};
-    target.addLog = this._addLog.bind(target);
+    // TODO: Rename `target.addLog()` to `target._addLog()`
+    // since it should be considered private.
+    target.addLog = this.addLog.bind(this, target);
     target.createElement = () => {
       return { ok: false };
     };
@@ -170,7 +306,6 @@ class BittyJs extends HTMLElement {
       this.#_logLevels,
     );
     target.sleep = this._sleep.bind(target);
-    target.timestamp = this._timestamp.bind(target);
     target.trigger = this._trigger.bind(target);
     target.updateElement = () => {
       return { ok: false };
@@ -1566,83 +1701,6 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-  _addLog(payload) {
-    // Things to consider:
-    // TODO: Have a `this.setGlobalLogLevel()` which is
-    // the base for everything. Classes use it
-    // by default. Then they can be updated
-    // individually with `this.setLocalLogLevel()`.
-    // The `this.setLocalLogLevel()` should
-    // also accept a `default` key which returns
-    // it to the value from the global log level.
-    // TODO: Push logs to static class property
-    // TODO: Add the name of the bit that
-    // create the log entry to the logs.
-    // TODO: Accept an array of strings.
-    // TODO: Create a function to flush the logs.
-    if (typeof payload === "string") {
-      payload = {
-        level: "info",
-        ok: true,
-        messages: [payload],
-      };
-    }
-    payload.bitClass = this.bitClass;
-    payload.timestamp = new Date();
-    payload.performanceTime = performance.now();
-    this.logs.push(payload);
-    if (this._logLevel >= 1 && payload.level === "error") {
-      console.error(
-        `${this.timestamp(payload.timestamp)} - ${
-          payload.messages.join("\n")
-        }\n`,
-        payload,
-        new Error("Stack Trace"),
-      );
-    }
-    if (this._logLevel >= 2 && payload.level === "warn") {
-      console.warn(
-        `${this.timestamp(payload.timestamp)} - ${
-          payload.messages.join("\n")
-        }\n`,
-        payload,
-        new Error("Stack Trace"),
-      );
-    }
-    if (this._logLevel >= 3 && payload.level === "info") {
-      // TODO: Set up so you can add a `trace` flag and have it show a stack
-      // trace and dump the object with the `info` level.
-      // (The other levels already do both show a trace.)
-      console.log(
-        `${this.timestamp(payload.timestamp)} - ${
-          payload.messages.join("\n")
-        }\n`,
-        // payload,
-        // new Error("Stack Trace"),
-      );
-    }
-    if (this._logLevel >= 4 && payload.level === "debug") {
-      console.log(
-        `${this.timestamp(payload.timestamp)} - ${
-          payload.messages.join("\n")
-        }\n`,
-        payload,
-        new Error("Stack Trace"),
-      );
-    }
-    if (this._logLevel >= 5 && payload.level === "trace") {
-      console.log(
-        `${this.timestamp(payload.timestamp)} - ${
-          payload.messages.join("\n")
-        }\n`,
-        payload,
-        new Error("Stack Trace"),
-      );
-    }
-
-    return payload;
-  }
-
   ingestScriptTags(root) {
     root.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {
@@ -2510,7 +2568,7 @@ class BittyJs extends HTMLElement {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  _timestamp(datetime) {
+  timestamp(datetime) {
     const parts = {};
     new Intl.DateTimeFormat(undefined, {
       year: "numeric",

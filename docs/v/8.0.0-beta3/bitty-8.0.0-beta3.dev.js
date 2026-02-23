@@ -54,30 +54,12 @@ class BittyJs extends HTMLElement {
     // }
   }
 
-  // Things to consider:
-  // TODO: Have a `this.setGlobalLogLevel()` which is
-  // the base for everything. Classes use it
-  // by default. Then they can be updated
-  // individually with `this.setLocalLogLevel()`.
-  // The `this.setLocalLogLevel()` should
-  // also accept a `default` key which returns
-  // it to the value from the global log level.
-  // TODO: Push logs to static class property
-  // TODO: Add the name of the bit that
-  // create the log entry to the logs.
-  // TODO: Accept an array of strings.
-  // TODO: Create a function to flush the logs.
-
   addLog(target, payload) {
     payload.bitClass = target.bitClass;
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
     this.#_logs.push(payload);
-
-    // console.log(payload.level, target.getLocalLogLevel());
-
     const checkIndex = this.#_logLevels.indexOf(payload.level);
-
     if (
       this.#_globalLogLevelIndex >= checkIndex ||
       target._localLogLevelIndex >= checkIndex
@@ -86,105 +68,26 @@ class BittyJs extends HTMLElement {
         console.error(
           `[${this.timestamp(payload.timestamp)}] ${
             payload.messages.join("\n")
-          }`,
+          } [Source: ${payload.bitClass}]`,
           "\n",
           payload,
           "\n",
           new Error("Stack Trace"),
         );
-      } else if (
-        checkIndex === 2
-      ) {
+      } else if (checkIndex === 2) {
         console.warn(
           `[${this.timestamp(payload.timestamp)}] ${
             payload.messages.join("\n")
-          }`,
-          "\n",
-          payload,
+          } [Source: ${payload.bitClass}]`,
+        );
+      } else {
+        console.log(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
         );
       }
-    } else if (
-      checkIndex >= 3
-    ) {
-      console.log(
-        `[${this.timestamp(payload.timestamp)}] ${payload.messages.join("\n")}`,
-      );
     }
-    // } else if (
-    //   this.#_globalLogLevelIndex >= checkIndex || target._localLogLevelIndex >= checkIndex
-    // ) {
-    //   console.error(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     payload,
-    //     new Error("Stack Trace"),
-    //   );
-    // }
-
-    //console.log(target.bitClass);
-    // console.log(payload);
-
-    // if (typeof payload === "string") {
-    //   payload = {
-    //     level: "info",
-    //     ok: true,
-    //     messages: [payload],
-    //   };
-    // }
-    // payload.bitClass = this.bitClass;
-    // payload.timestamp = new Date();
-    // payload.performanceTime = performance.now();
-    // this.logs.push(payload);
-    // if (this._logLevel >= 1 && payload.level === "error") {
-    //   console.error(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     payload,
-    //     new Error("Stack Trace"),
-    //   );
-    // }
-    // if (this._logLevel >= 2 && payload.level === "warn") {
-    //   console.warn(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     payload,
-    //     new Error("Stack Trace"),
-    //   );
-    // }
-    // if (this._logLevel >= 3 && payload.level === "info") {
-    //   // TODO: Set up so you can add a `trace` flag and have it show a stack
-    //   // trace and dump the object with the `info` level.
-    //   // (The other levels already do both show a trace.)
-    //   console.log(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     // payload,
-    //     // new Error("Stack Trace"),
-    //   );
-    // }
-    // if (this._logLevel >= 4 && payload.level === "debug") {
-    //   console.log(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     payload,
-    //     new Error("Stack Trace"),
-    //   );
-    // }
-    // if (this._logLevel >= 5 && payload.level === "trace") {
-    //   console.log(
-    //     `${this.timestamp(payload.timestamp)} - ${
-    //       payload.messages.join("\n")
-    //     }\n`,
-    //     payload,
-    //     new Error("Stack Trace"),
-    //   );
-    // }
-
     return payload;
   }
 
@@ -342,11 +245,16 @@ class BittyJs extends HTMLElement {
   }
 
   addBittyVars(target) {
-    target.logs = [];
-    target.json = {};
+    target._localLogLevelIndex = 2;
     target._svg = {};
     target._elemnet = {};
     target._fragment = {};
+    target.json = {};
+    // TODO: Deprecate and remove target.logs.
+    // Everything will use the logs on the
+    // bitty component from its static
+    // property.
+    target.logs = [];
   }
 
   async _copy(selector) {
@@ -1521,7 +1429,7 @@ class BittyJs extends HTMLElement {
 
   _setLocalLogLevel(levels, level) {
     if (level === "global") {
-      delete this._localLogLevelIndex;
+      this._localLogLevelIndex = -1;
     } else {
       const levelIndex = levels.indexOf(level.toLowerCase());
       if (levelIndex >= 0) {
@@ -1531,37 +1439,7 @@ class BittyJs extends HTMLElement {
         this._localLogLevelIndex = 2;
       }
     }
-
-    // if (
-    //   levels.indexOf(level.toLowerCase()) !== -1
-    // ) {
-    //   this._localLogLevelIndex = levels.indexOf(level.toLowerCase());
-    // } else {
-    //   this._localLogLevelIndex = 2;
-    //   this.addLog({
-    //     level: "warn",
-    //     ok: false,
-    //     messages: [
-    //       `Tried to set log level to '${level}' which is invalid. Valid options are: ${levels}.`,
-    //       `Log leve set to 'warn' as a fallback.`,
-    //     ],
-    //   });
-    // }
   }
-
-  // _setLocalLogLevel_original(level) {
-  //   //   if (this._getLocalLogLevelIndex(level) === -1) {
-  //   //     this.#_logLevel = "warn";
-  //   //     this.conn.addLog(
-  //   //       "warn",
-  //   //       "setLocalLogLevel",
-  //   //       false,
-  //   //       `Attempted to setLocalLogLevel(level) to an invalid level: '${level}'. Resetting log level to 'warn'`,
-  //   //     );
-  //   //   } else {
-  //   //     this.#_logLevel = level;
-  //   //   }
-  // }
 
   _updateElement(key, content) {
     return this._createElement(key, content, { update: true });

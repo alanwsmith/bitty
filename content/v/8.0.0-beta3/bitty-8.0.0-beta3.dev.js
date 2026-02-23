@@ -187,6 +187,8 @@ class BittyJs extends HTMLElement {
     };
     target.updateEventV4 = this._updateEventV4.bind(target);
     target.updateReceiverV4 = this._updateReceiverV4.bind(target);
+    target.qs = this._qs.bind(target);
+    target.qsa = this._qsa.bind(target);
     //
     target.addListeners = this._addListeners.bind(target);
     target.addListeners();
@@ -2264,6 +2266,14 @@ class BittyJs extends HTMLElement {
         }
       }
     }
+  }
+
+  _qs(selector) {
+    return document.querySelector(selector);
+  }
+
+  _qsa(selector) {
+    return document.querySelectorAll(selector);
   }
 
   /** internal */

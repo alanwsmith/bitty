@@ -1,10 +1,5 @@
 #updates = [];
 
-bittyReady() {
-  this.trigger(
-    `signal_CBE64 signal_CBE64_2 signal_CBE64_3`,
-  );
-}
 
 signal_CBE64(_, el) {
   this.#updates.push("bug");

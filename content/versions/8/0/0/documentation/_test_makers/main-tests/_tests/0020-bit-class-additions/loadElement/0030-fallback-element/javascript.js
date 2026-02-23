@@ -10,7 +10,7 @@ test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
   this.trigger("test_$SIGNAL_NAME");
 }

@@ -7,7 +7,7 @@ test_signal_9D350(_, el) {
 
 
 bittyReady() {
-  // this.setLogLevel("none");
+  // this.setLocalLogLevel("none");
   // this.deleteElement(this.#key);
   // this.loadElement(this.#key, `<div class="test">ok</div>`);
   // delete this._element[this.#key];

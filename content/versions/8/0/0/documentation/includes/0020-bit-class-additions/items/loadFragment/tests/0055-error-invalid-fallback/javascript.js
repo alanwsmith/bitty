@@ -15,6 +15,6 @@ bittyReady() {
 }
 
 given_signal_99F17(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_99F17");
 }

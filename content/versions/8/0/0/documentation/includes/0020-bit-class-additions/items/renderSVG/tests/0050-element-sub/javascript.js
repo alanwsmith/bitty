@@ -23,7 +23,7 @@ TARGET_9DD5F
   const subs = {
     "TARGET_9DD5F": template.content.firstChild,
   };
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(subs, "test_signal_9DD5F");
 }

@@ -10,7 +10,7 @@ async test_signal_97CD8(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div>first</div>`);
   this.trigger("test_signal_97CD8");
 }

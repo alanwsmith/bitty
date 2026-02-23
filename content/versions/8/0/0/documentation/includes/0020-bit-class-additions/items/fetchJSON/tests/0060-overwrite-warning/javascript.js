@@ -10,7 +10,7 @@ async test_signal_78263(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createJSON(this.#key, {});
   this.trigger("test_signal_78263");
 }

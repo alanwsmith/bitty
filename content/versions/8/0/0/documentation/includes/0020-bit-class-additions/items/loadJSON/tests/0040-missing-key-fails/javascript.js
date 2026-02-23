@@ -3,7 +3,7 @@ bittyReady() {
 }
 
 given_signal_194AD(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   localStorage.removeItem("missing_key_signal_194AD");
   this.trigger("test_signal_194AD");
 }

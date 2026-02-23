@@ -7,7 +7,7 @@ test_signal_B86EE(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
   this.trigger("test_signal_B86EE");
 }

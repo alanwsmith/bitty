@@ -30,7 +30,7 @@ TARGET_15988
   const subs = {
     "TARGET_15988": replacementEl,
   };
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(subs, "test_signal_15988");
 }

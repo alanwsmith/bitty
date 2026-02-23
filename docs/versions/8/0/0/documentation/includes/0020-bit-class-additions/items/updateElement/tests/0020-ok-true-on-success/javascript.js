@@ -9,7 +9,7 @@ test_signal_D4BFF(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div class="test">bug</div>`);
   this.trigger("test_signal_D4BFF");
 }

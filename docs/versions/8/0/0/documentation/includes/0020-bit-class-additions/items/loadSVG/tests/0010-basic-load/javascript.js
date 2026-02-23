@@ -22,7 +22,7 @@ given_signal_2D8D5(_, __) {
 <rect width="100%" height="100%" fill="green" />
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
   this.trigger("test_signal_2D8D5");

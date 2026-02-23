@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_signal_D027C(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
   this.loadFragment(this.#key, "<div>ok</div>");
   delete this._fragment[this.#key];

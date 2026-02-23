@@ -7,7 +7,7 @@ test_signal_45896(newElement, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div class="test">bug</div>`);
   const element = document.createElement("div");
   element.classList.add("test");

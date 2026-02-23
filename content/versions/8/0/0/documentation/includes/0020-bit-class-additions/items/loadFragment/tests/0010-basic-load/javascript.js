@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_signal_5D60F(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div>ok</div>");
   delete this._fragment[this.#key];
   this.trigger("test_signal_5D60F");

@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
   const newElement = document.createElement("div");
   newElement.innerHTML = "ok";

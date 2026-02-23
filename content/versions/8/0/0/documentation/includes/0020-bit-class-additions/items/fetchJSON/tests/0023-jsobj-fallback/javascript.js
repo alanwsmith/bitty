@@ -11,6 +11,6 @@ async test_signal_BE359(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_BE359");
 }

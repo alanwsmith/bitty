@@ -13,7 +13,7 @@ bittyReady() {
 }
 
 given_signal_B0E93(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
   this.trigger("test_signal_B0E93");
 }

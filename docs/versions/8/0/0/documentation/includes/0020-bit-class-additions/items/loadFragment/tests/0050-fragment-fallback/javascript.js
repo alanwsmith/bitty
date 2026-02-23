@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_signal_119D0(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
   const fallbackFragment = document.createDocumentFragment();
   const fallbackElement1 = document.createElement("div");

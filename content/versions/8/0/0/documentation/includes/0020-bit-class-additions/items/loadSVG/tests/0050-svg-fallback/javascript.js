@@ -25,7 +25,7 @@ given_signal_CEDB1(_, __) {
   const template = document.createElement("template");
   template.innerHTML = input;
   const fallback = template.content.querySelector("svg");
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
   this.send(fallback, "test_signal_CEDB1");
 }

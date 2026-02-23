@@ -13,7 +13,7 @@ bittyReady() {
 }
 
 given_signal_F9E7D(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div></div>");
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
   this.send(url, "test_signal_F9E7D");

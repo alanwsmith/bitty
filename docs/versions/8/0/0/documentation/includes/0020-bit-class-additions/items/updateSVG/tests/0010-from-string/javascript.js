@@ -13,7 +13,7 @@ view_signal_433FA(svg, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">

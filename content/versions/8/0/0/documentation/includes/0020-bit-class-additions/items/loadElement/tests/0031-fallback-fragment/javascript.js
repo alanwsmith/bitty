@@ -9,7 +9,7 @@ test_signal_BC589(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
   this.trigger("test_signal_BC589");
 }

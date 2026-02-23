@@ -3,7 +3,7 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createJSON(
     "json_$SIGNAL_NAME",
     { status: "ok" },

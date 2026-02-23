@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div><div>ok</div>`);
   this.trigger("test_$SIGNAL_NAME");
 }

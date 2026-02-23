@@ -13,6 +13,6 @@ bittyReady() {
 }
 
 given_signal_FE03B(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_FE03B");
 }

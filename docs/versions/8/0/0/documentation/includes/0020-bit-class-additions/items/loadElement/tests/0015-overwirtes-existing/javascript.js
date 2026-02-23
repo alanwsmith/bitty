@@ -10,7 +10,7 @@ test_signal_FFDD5(_, el) {
 
 bittyReady() {
   this.deleteElement(this.#key);
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div>ok</div>`);
   this.trigger("test_signal_FFDD5");
 }

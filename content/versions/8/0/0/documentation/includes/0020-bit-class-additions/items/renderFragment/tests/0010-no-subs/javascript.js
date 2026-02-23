@@ -11,7 +11,7 @@ bittyReady() {
 }
 
 given_signal_FC310(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div><div>ok</div>`);
   this.trigger("test_signal_FC310");
 }

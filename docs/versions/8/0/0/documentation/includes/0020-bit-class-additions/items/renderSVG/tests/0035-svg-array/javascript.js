@@ -45,7 +45,7 @@ TARGET_697E1
   replacementEl2.setAttribute("fill", "white");
   replacementEl2.textContent = "k";
   const replacements = [replacementEl, replacementEl2];
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(replacements, "test_signal_697E1");
 }

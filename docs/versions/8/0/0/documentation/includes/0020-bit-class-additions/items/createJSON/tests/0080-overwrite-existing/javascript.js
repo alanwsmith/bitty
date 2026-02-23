@@ -9,7 +9,7 @@ test_signal_B76EB(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteJSON(this.#key);
   this.createJSON(this.#key, { status: "bug" });
   this.trigger("test_signal_B76EB");

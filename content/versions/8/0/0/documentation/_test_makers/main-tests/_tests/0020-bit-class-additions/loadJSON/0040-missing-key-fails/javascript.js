@@ -3,7 +3,7 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   localStorage.removeItem("missing_key_$SIGNAL_NAME");
   this.trigger("test_$SIGNAL_NAME");
 }

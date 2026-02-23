@@ -7,7 +7,7 @@ given_signal_94188(_, __) {
 }
 
 test_signal_94188(_, el) {
-  // this.setLogLevel("none");
+  // this.setLocalLogLevel("none");
   // this.addLog({ level: "error", ok: false, messages: ["test_signal_94188"]});
   // el.innerHTML = "ok";
 }

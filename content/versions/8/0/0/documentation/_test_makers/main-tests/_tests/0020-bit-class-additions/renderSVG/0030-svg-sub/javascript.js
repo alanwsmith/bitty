@@ -30,7 +30,7 @@ TARGET_$HASH
   const subs = {
     "TARGET_$HASH": replacementEl,
   };
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(subs, "test_$SIGNAL_NAME");
 }

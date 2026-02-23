@@ -15,7 +15,7 @@ bittyReady() {
 }
 
 given_signal_88717(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
   this.trigger("test_signal_88717");
 }

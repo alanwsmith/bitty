@@ -17,7 +17,7 @@ bittyReady() {
 <rect width="100%" height="100%" fill="green" />
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.trigger("test_signal_57C32");
 }

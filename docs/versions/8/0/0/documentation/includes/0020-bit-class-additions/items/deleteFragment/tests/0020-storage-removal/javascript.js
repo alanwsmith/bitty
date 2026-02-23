@@ -14,7 +14,7 @@ bittyReady() {
 }
 
 given_signal_E279E(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div></div>");
   this.trigger("test_signal_E279E");
 }

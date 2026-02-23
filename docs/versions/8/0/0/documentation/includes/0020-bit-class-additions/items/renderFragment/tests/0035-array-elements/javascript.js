@@ -22,7 +22,7 @@ bittyReady() {
 }
 
 given_signal_A86C1(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div>TARGET_A86C1</div>`);
   this.trigger("test_signal_A86C1");
 }

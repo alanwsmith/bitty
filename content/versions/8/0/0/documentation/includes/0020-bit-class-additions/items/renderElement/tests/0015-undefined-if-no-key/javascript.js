@@ -5,7 +5,7 @@ bittyReady() {
 }
 
 given_signal_30B5D(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_30B5D");
 }
 

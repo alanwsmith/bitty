@@ -7,7 +7,7 @@ test_signal_B814D(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div class="test">bug</div>`);
   this.trigger("test_signal_B814D");
 }

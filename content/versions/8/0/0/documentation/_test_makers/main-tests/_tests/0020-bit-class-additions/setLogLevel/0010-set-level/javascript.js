@@ -7,7 +7,7 @@ given_$SIGNAL_NAME(_, __) {
 }
 
 test_$SIGNAL_NAME(_, el) {
-  // this.setLogLevel("none");
+  // this.setLocalLogLevel("none");
   // this.addLog({ level: "error", ok: false, messages: ["test_$SIGNAL_NAME"]});
   // el.innerHTML = "ok";
 }

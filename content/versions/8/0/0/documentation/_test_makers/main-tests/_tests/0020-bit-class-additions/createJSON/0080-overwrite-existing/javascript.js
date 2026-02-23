@@ -9,7 +9,7 @@ test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteJSON(this.#key);
   this.createJSON(this.#key, { status: "bug" });
   this.trigger("test_$SIGNAL_NAME");

@@ -13,7 +13,7 @@ bittyReady() {
 }
 
 given_signal_DB540(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
   this.trigger("test_signal_DB540");
 }

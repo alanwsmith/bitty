@@ -9,7 +9,7 @@ test_signal_A473A(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
   this.trigger("test_signal_A473A");
 }

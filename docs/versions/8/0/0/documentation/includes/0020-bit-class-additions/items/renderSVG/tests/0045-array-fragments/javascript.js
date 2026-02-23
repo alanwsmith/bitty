@@ -34,7 +34,7 @@ TARGET_0EB22
   const subs = {
     "TARGET_0EB22": replacementArray,
   };
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(subs, "test_signal_0EB22");
 }

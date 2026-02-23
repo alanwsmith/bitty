@@ -5,7 +5,7 @@ bittyReady() {
 }
 
 given_signal_94D78(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteElement("el_signal_94D78");
   this.trigger("test_signal_94D78");
 }

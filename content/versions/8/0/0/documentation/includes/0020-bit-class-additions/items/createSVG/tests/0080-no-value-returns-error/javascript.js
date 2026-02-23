@@ -9,6 +9,6 @@ test_signal_B7C32(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_B7C32");
 }

@@ -16,7 +16,7 @@ bittyReady() {
 }
 
 given_signal_F7489(_, __) {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div>TARGET_F7489</div>`);
   this.trigger("test_signal_F7489");
 }

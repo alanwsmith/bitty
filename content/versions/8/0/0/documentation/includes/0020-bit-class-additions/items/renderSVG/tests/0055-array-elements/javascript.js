@@ -34,7 +34,7 @@ TARGET_C5BF2
   const subs = {
     "TARGET_C5BF2": replacementArray,
   };
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   this.send(subs, "test_signal_C5BF2");
 }

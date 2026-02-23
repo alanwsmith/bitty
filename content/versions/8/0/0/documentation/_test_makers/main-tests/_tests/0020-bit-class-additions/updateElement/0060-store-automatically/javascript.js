@@ -7,7 +7,7 @@ test_$SIGNAL_NAME(element, el) {
 
 
 bittyReady() {
-  // this.setLogLevel("none");
+  // this.setLocalLogLevel("none");
   // this.deleteFragment(this.#key);
   // this.createElement(this.#key, `<div class="test">bug</div>`);
   // this.updateElement(this.#key, `<div class="test">ok</div>`);

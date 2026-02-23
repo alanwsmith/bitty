@@ -11,6 +11,6 @@ test_signal_4C991(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_4C991");
 }

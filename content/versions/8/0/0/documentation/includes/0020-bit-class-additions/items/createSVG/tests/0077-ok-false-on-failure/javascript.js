@@ -11,6 +11,6 @@ test_signal_A6A28(input, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_A6A28");
 }

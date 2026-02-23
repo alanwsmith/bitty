@@ -10,6 +10,6 @@ test_signal_2B80D(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_signal_2B80D");
 }

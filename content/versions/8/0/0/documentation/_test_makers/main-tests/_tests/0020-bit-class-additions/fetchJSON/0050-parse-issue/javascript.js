@@ -10,6 +10,6 @@ async test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.trigger("test_$SIGNAL_NAME");
 }

@@ -10,7 +10,7 @@ test_signal_31037(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
   this.trigger("test_signal_31037");
 }

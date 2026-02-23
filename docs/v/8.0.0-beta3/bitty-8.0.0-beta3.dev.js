@@ -35,7 +35,7 @@ class BittyJs extends HTMLElement {
   /** internal */
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
   /** internal */
-  #_logLevel = "warn";
+  #_globalLogLevel = "warn";
   /** internal */
   #_logs = [];
 
@@ -158,7 +158,9 @@ class BittyJs extends HTMLElement {
       return { ok: false };
     };
     target.send = this._send.bind(target);
-    target.setLogLevel = this._setLogLevel.bind(target);
+    target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
+    target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
+    target.setLocalLogLevel = this._setLocalLogLevel.bind(target);
     target.sleep = this._sleep.bind(target);
     target.timestamp = this._timestamp.bind(target);
     target.trigger = this._trigger.bind(target);
@@ -338,7 +340,6 @@ class BittyJs extends HTMLElement {
 
     this.json[key] = json;
     localStorage.setItem(storageKey, JSON.stringify({ data: json }));
-
     return this.addLog(details);
   }
 
@@ -871,6 +872,10 @@ class BittyJs extends HTMLElement {
     );
   }
 
+  getGlobalLogLevel() {
+    return this.#_globalLogLevel;
+  }
+
   _getLogLevel() {
     return this._logLevels[this._logLevel];
   }
@@ -1354,7 +1359,17 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
-  _setLogLevel(level = "warn") {
+  setGlobalLogLevel(level) {
+    if (this.#_logLevels.includes(level.toLowerCase())) {
+      this.#_globalLogLevel = level;
+    } else {
+      // TODO: Add warning here that invalid log level was
+      // attempted.
+      this.#_globalLogLevel = "warn";
+    }
+  }
+
+  _setLocalLogLevel(level = "warn") {
     if (
       this._logLevels.indexOf(level.toLowerCase()) !== -1
     ) {
@@ -1372,14 +1387,14 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // _setLogLevel_original(level) {
+  // _setLocalLogLevel_original(level) {
   //   //   if (this._getLogLevelIndex(level) === -1) {
   //   //     this.#_logLevel = "warn";
   //   //     this.conn.addLog(
   //   //       "warn",
-  //   //       "setLogLevel",
+  //   //       "setLocalLogLevel",
   //   //       false,
-  //   //       `Attempted to setLogLevel(level) to an invalid level: '${level}'. Resetting log level to 'warn'`,
+  //   //       `Attempted to setLocalLogLevel(level) to an invalid level: '${level}'. Resetting log level to 'warn'`,
   //   //     );
   //   //   } else {
   //   //     this.#_logLevel = level;
@@ -1599,25 +1614,25 @@ class BittyJs extends HTMLElement {
     return payload;
   }
 
-  // TODO: Add stacktrace
-  _addLog_Original(level, type, ok, message, extraInfo = null) {
-    const log = new BittyLog(level, type, ok, message, extraInfo);
-    this.logs.push(log);
-    //    console.log(`${level} - ${this.#_logLevel}`);
-    if (
-      this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
-    ) {
-      //  console.log(this.getLogLevelIndex(level));
-      if (this.getLogLevelIndex(level) === 1) {
-        console.error(log);
-      } else if (this.getLogLevelIndex(level) === 2) {
-        console.warn(log);
-      } else {
-        console.log(log);
-      }
-    }
-    return log;
-  }
+  // // TODO: Add stacktrace
+  // _addLog_Original(level, type, ok, message, extraInfo = null) {
+  //   const log = new BittyLog(level, type, ok, message, extraInfo);
+  //   this.logs.push(log);
+  //   //    console.log(`${level} - ${this.#_logLevel}`);
+  //   if (
+  //     this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
+  //   ) {
+  //     //  console.log(this.getLogLevelIndex(level));
+  //     if (this.getLogLevelIndex(level) === 1) {
+  //       console.error(log);
+  //     } else if (this.getLogLevelIndex(level) === 2) {
+  //       console.warn(log);
+  //     } else {
+  //       console.log(log);
+  //     }
+  //   }
+  //   return log;
+  // }
 
   // createBridges() {
   //   this.conn._element = {};
@@ -1654,7 +1669,7 @@ class BittyJs extends HTMLElement {
   //   this.conn.saveJSON = this._saveJSON.bind(this);
   //   this.conn.send = this._send.bind(this);
   //   this.conn.setCSS = this._setCSS.bind(this);
-  //   this.conn.setLogLevel = this._setLogLevel.bind(this);
+  //   this.conn.setLocalLogLevel = this._setLocalLogLevel.bind(this);
   //   this.conn.sleep = this._sleep.bind(this);
   //   this.conn.trigger = this._trigger.bind(this);
   //   this.conn.updateElement = this._updateElement.bind(this);

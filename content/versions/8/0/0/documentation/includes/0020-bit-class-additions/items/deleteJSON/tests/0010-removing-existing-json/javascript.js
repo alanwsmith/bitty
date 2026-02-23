@@ -9,7 +9,7 @@ test_signal_69E87(_, el) {
 
 
 bittyReady() {
-  this.setLogLevel("none");
+  this.setLocalLogLevel("none");
   this.createJSON(this.#key, `{}`);
   this.trigger("test_signal_69E87");
 }

@@ -60,6 +60,7 @@ class BittyJs extends HTMLElement {
       if (window.BittyClasses) {
         for (const bittyClassKey of Object.keys(window.BittyClasses)) {
           const bittyClass = new window.BittyClasses[bittyClassKey]();
+          bittyClass.bitClass = bittyClassKey;
           this.addBittyVars(bittyClass);
           this.addBittyClasses(bittyClass);
           this.#bits.push(bittyClass);
@@ -83,6 +84,7 @@ class BittyJs extends HTMLElement {
           const remoteBits = await import(connString);
           for (const bit of Object.keys(remoteBits)) {
             const bittyClass = new remoteBits[bit]();
+            bittyClass.bitClass = bit;
             this.addBittyVars(bittyClass);
             this.addBittyClasses(bittyClass);
             this.#bits.push(bittyClass);
@@ -139,7 +141,8 @@ class BittyJs extends HTMLElement {
     target.fetchTemplates = () => {
       return { ok: false };
     };
-    target.getLogLevel = this._getLogLevel.bind(target);
+    target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
+    target.getLocalLogLevel = this._getLocalLogLevel.bind(target);
     target.info = this._info.bind(target);
     target.loadElement = () => {
       return { ok: false };
@@ -159,7 +162,6 @@ class BittyJs extends HTMLElement {
     };
     target.send = this._send.bind(target);
     target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
-    target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
     target.setLocalLogLevel = this._setLocalLogLevel.bind(target);
     target.sleep = this._sleep.bind(target);
     target.timestamp = this._timestamp.bind(target);
@@ -876,7 +878,7 @@ class BittyJs extends HTMLElement {
     return this.#_globalLogLevel;
   }
 
-  _getLogLevel() {
+  _getLocalLogLevel() {
     return this._logLevels[this._logLevel];
   }
 
@@ -1388,7 +1390,7 @@ class BittyJs extends HTMLElement {
   }
 
   // _setLocalLogLevel_original(level) {
-  //   //   if (this._getLogLevelIndex(level) === -1) {
+  //   //   if (this._getLocalLogLevelIndex(level) === -1) {
   //   //     this.#_logLevel = "warn";
   //   //     this.conn.addLog(
   //   //       "warn",
@@ -1560,6 +1562,7 @@ class BittyJs extends HTMLElement {
         messages: [payload],
       };
     }
+    payload.bitClass = this.bitClass;
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
     this.logs.push(payload);
@@ -1620,12 +1623,12 @@ class BittyJs extends HTMLElement {
   //   this.logs.push(log);
   //   //    console.log(`${level} - ${this.#_logLevel}`);
   //   if (
-  //     this.getLogLevelIndex(level) <= this.getLogLevelIndex(this.#_logLevel)
+  //     this.getLocalLogLevelIndex(level) <= this.getLocalLogLevelIndex(this.#_logLevel)
   //   ) {
-  //     //  console.log(this.getLogLevelIndex(level));
-  //     if (this.getLogLevelIndex(level) === 1) {
+  //     //  console.log(this.getLocalLogLevelIndex(level));
+  //     if (this.getLocalLogLevelIndex(level) === 1) {
   //       console.error(log);
-  //     } else if (this.getLogLevelIndex(level) === 2) {
+  //     } else if (this.getLocalLogLevelIndex(level) === 2) {
   //       console.warn(log);
   //     } else {
   //       console.log(log);
@@ -1657,7 +1660,7 @@ class BittyJs extends HTMLElement {
   //   this.conn.fetchJSON = this._fetchJSON.bind(this);
   //   this.conn.fetchSVG = this._fetchSVG.bind(this);
   //   this.conn.fetchTemplates = this._fetchTemplates.bind(this);
-  //   this.conn.getLogLevel = this._getLogLevel.bind(this);
+  //   this.conn.getLocalLogLevel = this._getLocalLogLevel.bind(this);
   //   this.conn.loadElement = this._loadElement.bind(this);
   //   this.conn.loadFragment = this._loadFragment.bind(this);
   //   this.conn.loadJSON = this._loadJSON.bind(this);
@@ -1678,11 +1681,11 @@ class BittyJs extends HTMLElement {
   //   this.processEventBridge = this.processEvent.bind(this);
   // }
 
-  // _getLogLevelIndex(level) {
+  // _getLocalLogLevelIndex(level) {
   //   return this._logLevels.indexOf(level.toLowerCase());
   // }
 
-  // getLogLevelIndex_original(level) {
+  // getLocalLogLevelIndex_original(level) {
   //   return this.#_logLevels.indexOf(level.toLowerCase());
   // }
 

@@ -1180,7 +1180,7 @@ class BittyJs extends HTMLElement {
       text: [],
     };
     const storage = localStorage.getItem(storageKey);
-    if (key !== null && this._svg[key] !== undefined) {
+    if (this._svg[key] !== undefined) {
       details.level = "warn";
       details.text.push(
         `Warning: loadSVG() replaced an existing from: ${key}`,
@@ -1203,8 +1203,10 @@ class BittyJs extends HTMLElement {
     } else if (storage !== null) {
       this._svg[key] = JSON.parse(storage).data;
     } else if (typeof fallback === "string") {
+      localStorage.setItem(key, `{ "data": ${fallback} }`);
       this._svg[key] = fallback;
     } else if (fallback instanceof SVGSVGElement) {
+      localStorage.setItem(key, JSON.stringify({ data: fallback }));
       this._svg[key] = fallback.outerHTML;
     } else {
       details.level = "error";
@@ -1869,9 +1871,6 @@ class BittyJs extends HTMLElement {
     } else {
       const senders = findSenders(ev.target);
       for (const sender of senders) {
-        if (ev.type.substring(0, 1) === "b") {
-          console.log(ev.type);
-        }
         const signals = splitSignalString(sender.dataset.send);
         for (const signal of signals) {
           if (this[signal] !== undefined) {

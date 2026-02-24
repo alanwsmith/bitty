@@ -1,19 +1,8 @@
-
-
-$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {  
+  this.setLocalLogLevel("none");
+  this.deleteSVG("el_$HASH");
   const result = this.loadSVG("el_$HASH");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
-  this.setLocalLogLevel("none");
-  this.deleteSVG("el_$HASH");
-  this.trigger("$SIGNAL_NAME");
 }

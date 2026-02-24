@@ -90,11 +90,11 @@ class BittyJs extends HTMLElement {
   }
 
   addLog(target = { _localLogLevelIndex: 0, bitClass: "bitty" }, payload) {
+    payload.bitClass = target.bitClass;
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
     payload.levelIndex = this.#_logLevels.indexOf(payload.level);
     this.#_logs.push(payload);
-
     if (
       this.#_globalLogLevelIndex >= payload.levelIndex ||
       target._localLogLevelIndex >= payload.levelIndex
@@ -293,16 +293,13 @@ class BittyJs extends HTMLElement {
 
   _createJSON(key, json) {
     const storageKey = `bittyJSON_${key}`;
-    // TODO: Update the result of the method
-    // to update details and then just
-    // return it at the end.
     const details = {
       level: "info",
       from: "createJSON",
       ok: true,
       text: [],
     };
-    if (json !== undefined && this.json[key] !== undefined) {
+    if (this.json[key] !== undefined) {
       details.level = "warn";
       details.text.push(
         `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
@@ -973,11 +970,10 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._fragment[key] }),
       );
     }
-    // console.log(details);
     return this._addLog(details);
   }
 
-  _loadJSON(key, fallback) {
+  _loadJSON(key, fallback = null) {
     const storageKey = `bittyJSON_${key}`;
     const details = {
       level: "info",
@@ -985,7 +981,12 @@ class BittyJs extends HTMLElement {
       ok: true,
       text: [],
     };
-    const keyAlreadyExists = this.json[key] === undefined ? false : true;
+    if (this.json[key] !== undefined) {
+      details.level = "warn";
+      details.text.push(
+        `Loading JSON '${key}' from storage overwrote an exsting JSON`,
+      );
+    }
     try {
       const storage = localStorage.getItem(storageKey);
       if (storage !== null) {
@@ -998,7 +999,7 @@ class BittyJs extends HTMLElement {
         details.text.push(
           `Loaded json from fallback string with from: ${key}`,
         );
-      } else if (typeof fallback === "object") {
+      } else if (fallback !== null && typeof fallback === "object") {
         localStorage.setItem(key, JSON.stringify({ data: fallback }));
         this.json[key] = fallback;
         details.text.push(
@@ -1014,7 +1015,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        "Could not load JSON. See 'moreDetails' for additional information",
+        "Could not load JSON. See 'moreInfo' for additional information.",
       );
       details.moreInfo = loadingError;
     }
@@ -1028,7 +1029,7 @@ class BittyJs extends HTMLElement {
   //     from: "loadJSON",
   //     ok: true,
   //     text: [],
-  //     moreDetails: null,
+  //     moreInfo: null,
   //   };
   //   const keyAlreadyExists = this.json[key] === undefined ? false : true;
   //   try {
@@ -1055,7 +1056,7 @@ class BittyJs extends HTMLElement {
   //     details.level = "error";
   //     details.ok = false;
   //     details.text.push(
-  //       "Could not load JSON. See 'moreDetails' for additional information",
+  //       "Could not load JSON. See 'moreInfo' for additional information",
   //     );
   //     details.moreInfo = loadingError;
   //   }
@@ -2111,7 +2112,7 @@ class BittyJs extends HTMLElement {
       from: "saveJSON",
       ok: true,
       text: [],
-      moreDetails: null,
+      moreInfo: null,
     };
     if (this.json[key] === undefined) {
       details.level = "error";
@@ -2144,7 +2145,7 @@ class BittyJs extends HTMLElement {
   //     from: "saveJSON",
   //     ok: true,
   //     text: [],
-  //     moreDetails: null,
+  //     moreInfo: null,
   //   };
   //   if (this.json[key] === undefined) {
   //     details.level = "error";

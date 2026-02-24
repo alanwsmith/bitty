@@ -1,14 +1,5 @@
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
-  this.setLocalLogLevel("none");
-  localStorage.removeItem("missing_key_$SIGNAL_NAME");
-  this.trigger("$SIGNAL_NAME");
-}
-
 $SIGNAL_NAME(_, el) {
+  this.setLocalLogLevel("none");
   const result = this.loadJSON("missing_key_$SIGNAL_NAME");
   if (result.ok === false) {
     el.innerHTML = "test passed";

@@ -1,14 +1,7 @@
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
+$SIGNAL_NAME(_, el) {
   const fallback = `{ "status": "test passed" }`;
   const result = this.loadJSON("data_$SIGNAL_NAME", fallback);
-  this.trigger("$SIGNAL_NAME");
-}
-
-$SIGNAL_NAME(_, el) {
+  delete this.json.data_$SIGNAL_NAME;
   const storage = localStorage.getItem("data_$SIGNAL_NAME");
   el.innerHTML = JSON.parse(storage).data.status;
 }

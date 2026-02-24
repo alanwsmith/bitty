@@ -863,36 +863,6 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  _loadTemplates(root) {
-    root.querySelectorAll("script").forEach((el) => {
-      if (el.type === "application/json" && el.dataset.key !== undefined) {
-        try {
-          this.json[el.dataset.key] = JSON.parse(el.text.trim());
-        } catch (error) {
-          return this._addLog(
-            "error",
-            "ingestJSON",
-            false,
-            `Failed to parse JSON from a script tag.`,
-            error,
-          );
-        }
-      }
-      if (el.type === "text/html" && el.dataset.key !== undefined) {
-        const template = document.createElement("template");
-        template.innerHTML = el.text.trim();
-        if (template.content.childElementCount > 1) {
-          this.createFragment(el.dataset.key, el.text.trim());
-        } else {
-          this.createElement(el.dataset.key, el.text.trim());
-        }
-      }
-      if (el.type === "image/svg" && el.dataset.key !== undefined) {
-        this.createSVG(el.dataset.key, el.text.trim());
-      }
-    });
-  }
-
   _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;
     const details = {
@@ -1243,6 +1213,36 @@ class BittyJs extends HTMLElement {
       );
     }
     return this._addLog(details);
+  }
+
+  _loadTemplates(root) {
+    root.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.dataset.key !== undefined) {
+        try {
+          this.json[el.dataset.key] = JSON.parse(el.text.trim());
+        } catch (error) {
+          return this._addLog(
+            "error",
+            "ingestJSON",
+            false,
+            `Failed to parse JSON from a script tag.`,
+            error,
+          );
+        }
+      }
+      if (el.type === "text/html" && el.dataset.key !== undefined) {
+        const template = document.createElement("template");
+        template.innerHTML = el.text.trim();
+        if (template.content.childElementCount > 1) {
+          this.createFragment(el.dataset.key, el.text.trim());
+        } else {
+          this.createElement(el.dataset.key, el.text.trim());
+        }
+      }
+      if (el.type === "image/svg" && el.dataset.key !== undefined) {
+        this.createSVG(el.dataset.key, el.text.trim());
+      }
+    });
   }
 
   loadWindowClasses() {

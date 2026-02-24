@@ -1,4 +1,5 @@
 $SIGNAL_NAME(_, el) {
-  this.flushLogs();
-  el.innerHTML = `Logs in the global array: ` + this.logs().length;
+  if (this.logs() instanceof Array) {
+    el.innerHTML = "test passed";
+  }
 }

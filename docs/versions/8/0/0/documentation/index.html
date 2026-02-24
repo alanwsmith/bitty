@@ -13392,7 +13392,7 @@ window.BittyClasses.ClassB2E8A_Trigger = class {async bittyReady() {
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
   <summary>
     <span class="section-status"></span>
-    <strong>warn(string)
+    <strong>log(string)
 
 
 </strong> 
@@ -13412,7 +13412,7 @@ to the console during initial load.</li>
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-Create a 'warn' log entry from a string. 
+Create a 'info' log entry from a string. 
 
 
   <span class="faded-default-color">[0010-log-log]</span>
@@ -13431,7 +13431,9 @@ signal_A3401(_, el) {
 
 }
 
-window.BittyClasses.ClassA3401_Trigger = class {  
+window.BittyClasses.ClassA3401_Trigger = class {// This is tested manually to avoid
+// noise in the console on initial
+// page load.   
 
   }
 </script>
@@ -13461,7 +13463,9 @@ window.BittyClasses.ClassA3401_Trigger = class {
 
 
 <div>Test Trigger</div>
-<pre class="code-block"><code></code></pre>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> This is tested manually to avoid
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> noise in the console on initial
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> page load.</span></span></code></pre>
 <div>Results</div>
 
 <div class="example-block"><button data-send="signal_A3401">Test A3401</button>
@@ -13499,8 +13503,7 @@ window.BittyClasses.ClassA3401_Trigger = class {
 <details class="default-flow test-wrapper" data-receive="testStatus">
   <summary>
     <span class="test-status"></span>
-View logs
-
+`this.logs()` is an array of all the logs from every bit on the page. 
 
   <span class="faded-default-color">[0010-view-logs]</span>
   </summary>
@@ -13511,13 +13514,17 @@ View logs
 window.BittyClasses.Class29A17 = class {
 
 signal_29A17(_, el) {
-  this.flushLogs();
-  el.innerHTML = `Logs in the global array: ` + this.logs().length;
+  if (this.logs() instanceof Array) {
+    el.innerHTML = "test passed";
+  }
 }  
 
 }
 
-window.BittyClasses.Class29A17_Trigger = class {  
+window.BittyClasses.Class29A17_Trigger = class {async bittyReady() {
+  this.sleep(100);
+  this.qs("[data-send~=signal_29A17]").click();
+}  
 
   }
 </script>
@@ -13539,14 +13546,18 @@ window.BittyClasses.Class29A17_Trigger = class {
 
 <div>JavaScript</div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signal_29A17</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">flushLogs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>Logs in the global array: <span class="punctuation definition string template end js">`</span></span> <span class="keyword operator arithmetic js">+</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">logs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta property object js">length</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">logs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator js">instanceof</span> <span class="support class builtin js">Array</span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test passed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 
 
 
 <div>Test Trigger</div>
-<pre class="code-block"><code></code></pre>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="variable other readwrite js">async</span> <span class="meta function-call js"><span class="variable function js">bittyReady</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">sleep</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="constant numeric js">100</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">qs</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>[data-send~=signal_29A17]<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="support function dom js">click</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 <div>Results</div>
 
 <div class="example-block"><button data-send="signal_29A17">Test 29A17</button>

@@ -1,4 +1,4 @@
-#key = "svg_signal_D68A0";
+
 
 signal_D68A0(_, el) {
   // this.logs = [];

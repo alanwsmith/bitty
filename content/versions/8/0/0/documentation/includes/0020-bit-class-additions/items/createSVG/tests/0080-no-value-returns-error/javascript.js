@@ -1,14 +1,10 @@
-#key = "svg_signal_B7C32";
+
 
 signal_B7C32(_, el) {
-  const result = this.createSVG("el_B7C32");
-  // if (result.ok === false && result.level === "error") {
-  //   el.innerHTML = "test passed";
-  // }
-}
-
-
-bittyReady() {
+  this.setGlobalLogLevel("none");
   this.setLocalLogLevel("none");
-  this.trigger("signal_B7C32");
+  const result = this.createSVG("el_B7C32");
+  if (result.ok === false && result.level === "error") {
+    el.innerHTML = "test passed";
+  }
 }

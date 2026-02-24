@@ -1,4 +1,4 @@
-#key = "svg_signal_E589E";
+
 
 async signal_E589E(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";

@@ -1,4 +1,4 @@
-#key = "svg_signal_34AC4";
+
 
 signal_34AC4(update, el) {
   const result = this.updateSVG("el_34AC4", update);

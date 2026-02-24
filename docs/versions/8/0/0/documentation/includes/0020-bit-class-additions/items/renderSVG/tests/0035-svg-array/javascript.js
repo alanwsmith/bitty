@@ -1,4 +1,4 @@
-#key = "svg_signal_697E1";
+
 
 signal_697E1(replacements, el) {
   const subs = {

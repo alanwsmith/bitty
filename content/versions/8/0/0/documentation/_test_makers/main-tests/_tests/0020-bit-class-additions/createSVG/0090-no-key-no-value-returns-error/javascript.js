@@ -1,14 +1,9 @@
-#key = "svg_$SIGNAL_NAME";
-
 $SIGNAL_NAME(_, el) {
-  const result = this.createSVG();
-  // if (result.ok === false && result.level === "error") {
-  //   el.innerHTML = "test passed";
-  // }
-}
-
-
-bittyReady() {
+  this.setGlobalLogLevel("none");
   this.setLocalLogLevel("none");
-  this.trigger("$SIGNAL_NAME");
+  const result = this.createSVG();
+  if (result.ok === false && result.level === "error") {
+    el.innerHTML = "test passed";
+  }
 }
+

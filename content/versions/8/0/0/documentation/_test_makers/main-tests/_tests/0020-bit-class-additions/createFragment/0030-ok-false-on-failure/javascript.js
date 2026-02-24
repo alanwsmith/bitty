@@ -1,4 +1,6 @@
 $SIGNAL_NAME(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.createFragment("el_$HASH", {
     key: "not a string, element, or document fragment",
   });

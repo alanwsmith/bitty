@@ -1,4 +1,4 @@
-#key = "svg_signal_B6D8D";
+
 
 async signal_B6D8D(_, el) {
   this.loadSVG("el_B6D8D");

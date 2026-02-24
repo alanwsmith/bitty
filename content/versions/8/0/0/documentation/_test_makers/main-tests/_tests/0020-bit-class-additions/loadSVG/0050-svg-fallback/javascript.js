@@ -1,4 +1,4 @@
-#key = "svg_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(fallback, el) {
   this.loadSVG("el_$HASH", fallback);

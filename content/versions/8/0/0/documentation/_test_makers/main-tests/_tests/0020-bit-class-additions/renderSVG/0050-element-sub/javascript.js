@@ -1,4 +1,4 @@
-#key = "svg_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(subs, el) {
   const svg = this.renderSVG("el_$HASH", subs);

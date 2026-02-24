@@ -1,8 +1,8 @@
 #key = "json_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  this.loadJSON("el_$HASH");
-  el.innerHTML = this.json["el_$HASH"].status;
+  // this.loadJSON("el_$HASH");
+  // el.innerHTML = this.json["el_$HASH"].status;
 }
 
 

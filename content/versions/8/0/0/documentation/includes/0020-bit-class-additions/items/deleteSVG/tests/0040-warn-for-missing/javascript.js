@@ -1,4 +1,4 @@
-#key = "svg_signal_A473A";
+
 
 signal_A473A(_, el) {
   const result = this.deleteSVG("el_A473A");

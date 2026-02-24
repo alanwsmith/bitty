@@ -1,4 +1,4 @@
-#key = "svg_signal_01959";
+
 
 signal_01959(_, el) {
   const fragment = this.renderSVG("el_01959");

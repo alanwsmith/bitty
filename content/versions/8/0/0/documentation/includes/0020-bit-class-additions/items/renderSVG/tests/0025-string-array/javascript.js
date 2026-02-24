@@ -1,4 +1,4 @@
-#key = "svg_signal_F7B2A";
+
 
 signal_F7B2A(_, el) {
   const subs = {

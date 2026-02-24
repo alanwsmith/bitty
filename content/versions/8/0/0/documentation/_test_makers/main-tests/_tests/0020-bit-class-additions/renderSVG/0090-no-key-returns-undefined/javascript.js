@@ -1,4 +1,4 @@
-#key = "svg_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
   const fragment = this.renderSVG("el_$HASH");

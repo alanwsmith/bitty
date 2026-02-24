@@ -1,4 +1,4 @@
-#key = "svg_signal_1D251";
+
 
 signal_1D251(_, el) {
   this.deleteSVG("el_1D251");

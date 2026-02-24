@@ -1,4 +1,4 @@
-#key = "svg_signal_B2E8A";
+
 
 signal_B2E8A(_, el) {
   this.loadSVG("el_B2E8A");

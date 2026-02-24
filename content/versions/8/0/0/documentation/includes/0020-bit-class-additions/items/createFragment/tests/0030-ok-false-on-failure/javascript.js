@@ -1,4 +1,6 @@
 signal_C8DB8(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.createFragment("el_C8DB8", {
     key: "not a string, element, or document fragment",
   });

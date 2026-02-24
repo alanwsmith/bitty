@@ -1,4 +1,4 @@
-#key = "svg_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(update, el) {
   this.updateSVG("el_$HASH", update);

@@ -1,4 +1,4 @@
-#key = "svg_signal_CEDB1";
+
 
 signal_CEDB1(fallback, el) {
   this.loadSVG("el_CEDB1", fallback);

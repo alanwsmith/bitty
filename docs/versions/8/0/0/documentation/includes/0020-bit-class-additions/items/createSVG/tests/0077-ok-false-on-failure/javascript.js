@@ -1,6 +1,6 @@
-#key = "svg_signal_A6A28";
-
 signal_A6A28(input, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.createSVG("el_A6A28", {
     key: "not a string or svg",
   });
@@ -9,8 +9,3 @@ signal_A6A28(input, el) {
   }
 }
 
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("signal_A6A28");
-}

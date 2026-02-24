@@ -1,4 +1,4 @@
-#key = "svg_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
   this.deleteSVG("el_$HASH");

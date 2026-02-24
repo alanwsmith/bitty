@@ -1,4 +1,4 @@
-#key = "svg_signal_DECD9";
+
 
 signal_DECD9(_, el) {
   const result = this.updateSVG();

@@ -1,4 +1,4 @@
-#key = "svg_signal_DC5B2";
+
 
 signal_DC5B2(subs, el) {
   const svg = this.renderSVG("el_DC5B2", subs);

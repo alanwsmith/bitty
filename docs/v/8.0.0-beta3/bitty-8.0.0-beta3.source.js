@@ -21,8 +21,6 @@ class BittyJs extends HTMLElement {
   }
 
   addBittyClasses(target) {
-    target._runBittyReady = this._runBittyReady.bind(target);
-    target._svg = () => {};
     // TODO: Rename `target.addLog()` to `target._addLog()`
     // since it should be considered private.
     target.addLog = this.addLog.bind(this, target);
@@ -30,9 +28,7 @@ class BittyJs extends HTMLElement {
     target.createElement = this._createElement.bind(target);
     target.createFragment = this._createFragment.bind(target);
     target.createJSON = this._createJSON.bind(target);
-    target.createSVG = () => {
-      return { ok: false };
-    };
+    target.createSVG = this._createSVG.bind(target);
     target.deleteElement = this._deleteElement.bind(target);
     target.deleteFragment = this._deleteFragment.bind(target);
     target.deleteJSON = () => {
@@ -68,19 +64,7 @@ class BittyJs extends HTMLElement {
     target.loadElement = this._loadElement.bind(target);
     target.loadFragment = this._loadFragment.bind(target);
     target.loadJSON = this._loadJSON.bind(target);
-    target.loadSVG = () => {
-      return { ok: false };
-    };
-    target.renderElement = this._renderElement.bind(target);
-    target.renderSVG = () => {
-      return { ok: false };
-    };
-    target.send = this._send.bind(target);
-    target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
-    target.setLocalLogLevel = this._setLocalLogLevel.bind(
-      target,
-      this.#_logLevels,
-    );
+    target.loadSVG = this._loadSVG.bind(target);
     target.sleep = this._sleep.bind(target);
     target.trigger = this._trigger.bind(target);
     target.updateElement = () => {
@@ -89,21 +73,21 @@ class BittyJs extends HTMLElement {
     target.updateFragment = () => {
       return { ok: false };
     };
-    target.updateSVG = () => {
-      return { ok: false };
-    };
-    //target.processBittySignal = this._processBittySignal.bind(target);
+    target.updateSVG = this._updateSVG.bind(target);
     target.processEvent = this._processEvent.bind(target);
     target.processSignal = this._processSignal.bind(target);
-    // TODO: Deprecate processTrigger in favor of
-    // target.processBittySignal
-    // target.processTrigger = this._processTrigger.bind(target);
-    target.saveJSON = this._saveJSON.bind(target);
-    target.setCSS = () => {
-      return { ok: false };
-    };
+    target.renderElement = this._renderElement.bind(target);
     target.renderFragment = this._renderFragment.bind(target);
-    target.renderSVG = () => {
+    target.renderSVG = this._renderSVG.bind(target);
+    target._runBittyReady = this._runBittyReady.bind(target);
+    target.saveJSON = this._saveJSON.bind(target);
+    target.send = this._send.bind(target);
+    target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
+    target.setLocalLogLevel = this._setLocalLogLevel.bind(
+      target,
+      this.#_logLevels,
+    );
+    target.setCSS = () => {
       return { ok: false };
     };
     target.updateEventV4 = this._updateEventV4.bind(target);
@@ -1330,13 +1314,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._svg[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      "loadSVG",
-      details.ok,
-      details.messages.join(" "),
-      null,
-    );
+    return this.addLog(details);
   }
 
   loadWindowClasses() {
@@ -1440,12 +1418,10 @@ class BittyJs extends HTMLElement {
 
   _renderSVG(key, subs = {}) {
     if (this._svg[key] === undefined) {
-      this.addLog(
-        "error",
-        "renderSVG",
-        false,
-        `Attempted to render non-existing SVG using key '${key}'`,
-      );
+      console.log("TODO: update _renderSVG with log message");
+      // this.addLog(
+      //   `Attempted to render non-existing SVG using key '${key}'`,
+      // );
       return undefined;
     } else {
       let content = this._svg[key];
@@ -1519,8 +1495,8 @@ class BittyJs extends HTMLElement {
   }
 
   _send(payload, signal) {
-    // const ev = new bittysend(payload, signal);
-    // this.dispatchEvent(ev);
+    const ev = new BittySend(payload, signal);
+    dispatchEvent(ev);
   }
 
   _setCSS(key, value) {
@@ -1889,6 +1865,12 @@ class BittyJs extends HTMLElement {
         }
       }
     } else if (ev.type === "bittysend") {
+      const signals = splitSignalString(ev.bitty.signals);
+      for (const signal of signals) {
+        if (this[signal] !== undefined) {
+          this.processSignal(ev, signal);
+        }
+      }
     } else {
       const senders = findSenders(ev.target);
       for (const sender of senders) {
@@ -2257,7 +2239,7 @@ class BittyJs extends HTMLElement {
   }
 
   _trigger(signals) {
-    const ev = new bittytrigger(signals);
+    const ev = new BittyTrigger(signals);
     dispatchEvent(ev);
   }
 
@@ -2274,7 +2256,17 @@ class BittyJs extends HTMLElement {
   }
 }
 
-class bittytrigger extends Event {
+class BittySend extends Event {
+  constructor(payload, signals) {
+    super("bittytrigger", { bubbles: true });
+    this.bitty = {
+      payload: payload,
+      signals: signals,
+    };
+  }
+}
+
+class BittyTrigger extends Event {
   constructor(signals) {
     super("bittytrigger", { bubbles: true });
     this.bitty = { signals: signals };

@@ -1,4 +1,4 @@
-#key = "svg_signal_8F8DD";
+
 
 signal_8F8DD(_, el) {
   const result = this.loadSVG("el_8F8DD");

@@ -1,4 +1,4 @@
-#key = "svg_signal_655D9";
+
 
 signal_655D9(fallback, el) {
   this.loadSVG("el_655D9", fallback);

@@ -1,4 +1,4 @@
-#key = "svg_signal_FE475";
+
 
 signal_FE475(update, el) {
   this.updateSVG("el_FE475", update);

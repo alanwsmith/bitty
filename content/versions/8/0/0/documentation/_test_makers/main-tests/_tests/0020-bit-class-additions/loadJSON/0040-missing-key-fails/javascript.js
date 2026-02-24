@@ -11,6 +11,6 @@ given_$SIGNAL_NAME(_, __) {
 $SIGNAL_NAME(_, el) {
   const result = this.loadJSON("missing_key_$SIGNAL_NAME");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

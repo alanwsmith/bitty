@@ -3,7 +3,7 @@
 $SIGNAL_NAME(update, el) {
   const result = this.updateSVG("el_$HASH", update);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_$SIGNAL_NAME");
 }

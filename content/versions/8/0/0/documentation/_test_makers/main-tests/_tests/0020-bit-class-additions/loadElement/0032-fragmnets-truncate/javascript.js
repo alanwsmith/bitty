@@ -5,7 +5,7 @@ $SIGNAL_NAME(_, el) {
   template.innerHTML = `<div></div><div></div>`;
   const result = this.loadElement("el_$HASH", template.content);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

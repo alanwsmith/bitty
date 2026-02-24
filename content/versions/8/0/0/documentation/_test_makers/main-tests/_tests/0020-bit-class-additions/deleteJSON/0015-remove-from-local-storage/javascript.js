@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
   this.deleteJSON("el_$HASH");
   const result = this.loadJSON("el_$HASH");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

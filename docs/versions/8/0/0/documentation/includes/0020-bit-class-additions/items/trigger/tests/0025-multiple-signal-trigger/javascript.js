@@ -5,13 +5,13 @@ bittyReady() {
 }
 
 signal_B5F0B(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }
 
 signal_B5F0B_2(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }
 
 signal_B5F0B_3(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

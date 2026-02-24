@@ -16,6 +16,6 @@ $SIGNAL2_NAME(_, el) {
 
 $SIGNAL3_NAME(_, el) {
   if (el.innerHTML === `alfa-bravo`) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

@@ -3,5 +3,5 @@ bittyReady() {
 }
 
 signal_BD30E(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

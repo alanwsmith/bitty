@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   const result = this.updateFragment("el_$HASH", `<div></div>`);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

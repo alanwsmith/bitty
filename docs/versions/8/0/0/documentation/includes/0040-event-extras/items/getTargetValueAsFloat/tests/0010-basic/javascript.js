@@ -1,6 +1,6 @@
 signal_9DFEC(ev, el) {
   if (ev.getTargetValueAsFloat("needle") === 7.8) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

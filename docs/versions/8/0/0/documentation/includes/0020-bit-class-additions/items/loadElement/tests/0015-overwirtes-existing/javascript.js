@@ -3,7 +3,7 @@
 signal_FFDD5(_, el) {
   const result = this.loadElement("el_FFDD5");
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

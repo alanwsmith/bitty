@@ -5,7 +5,7 @@ signal_BEA93(_, el) {
 }
 
 verify_signal_BEA93(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }
 
 

@@ -15,6 +15,6 @@ $SIGNAL2_NAME(payload, el) {
 
 $SIGNAL3_NAME(payload, el) {
   if (payload.status === "ok" && el.innerHTML === "alfa-ok-bravo-ok") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

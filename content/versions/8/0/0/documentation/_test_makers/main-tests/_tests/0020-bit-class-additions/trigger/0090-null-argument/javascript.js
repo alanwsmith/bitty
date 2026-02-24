@@ -4,6 +4,6 @@ bittyReady() {
 
 $SIGNAL_NAME(ev, el) {
   if (ev === null) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

@@ -317,41 +317,37 @@ class BittyJs extends HTMLElement {
       extraInfo: null,
     };
 
-    this.json[key] = json;
-    localStorage.setItem(storageKey, JSON.stringify({ data: json }));
-    return this.addLog(details);
+    if (
+      json !== undefined && this.json !== undefined &&
+      this.json[key] !== undefined
+    ) {
+      details.level = "warn";
+      details.messages.push(
+        `createJSON found an existin JSON with key '${key}'.`,
+      );
+    }
+    if (json === undefined) {
+    } else if (typeof json === "string") {
+      try {
+        this.json[key] = JSON.parse(json);
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ data: this.json[key] }),
+        );
+        details.messages.push(`Added JSON with key: ${key}`);
+      } catch (error) {
+      }
+    } else {
+      if (this.json !== undefined && this.json[key] !== undefined) {
+        this.json[key] = JSON.parse(JSON.stringify(json));
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ data: this.json[key] }),
+        );
+        details.messages.push(`Added JSON with key: ${key}`);
+      }
+    }
   }
-
-  // if (
-  //   json !== undefined && this.json !== undefined &&
-  //   this.json[key] !== undefined
-  // ) {
-  //   details.level = "warn";
-  //   details.messages.push(
-  //     `createJSON found an existin JSON with key '${key}'.`,
-  //   );
-  // }
-  // if (json === undefined) {
-  // } else if (typeof json === "string") {
-  //   try {
-  //     this.json[key] = JSON.parse(json);
-  //     localStorage.setItem(
-  //       storageKey,
-  //       JSON.stringify({ data: this.json[key] }),
-  //     );
-  //     details.messages.push(`Added JSON with key: ${key}`);
-  //   } catch (error) {
-  //   }
-  // } else {
-  //   if (this.json !== undefined && this.json[key] !== undefined) {
-  //     this.json[key] = JSON.parse(JSON.stringify(json));
-  //     localStorage.setItem(
-  //       storageKey,
-  //       JSON.stringify({ data: this.json[key] }),
-  //     );
-  //     details.messages.push(`Added JSON with key: ${key}`);
-  //   }
-  // }
 
   // _createJSON(key, json) {
   //   const storageKey = `bittyJSON_${key}`;

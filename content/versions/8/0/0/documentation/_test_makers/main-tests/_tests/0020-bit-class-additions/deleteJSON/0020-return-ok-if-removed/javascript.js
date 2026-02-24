@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   const result = this.deleteJSON("el_$HASH");
   if (result.ok === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

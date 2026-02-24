@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   // const result = this.loadElement("el_$HASH");
   // if (result.ok === true && result.level === "info") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

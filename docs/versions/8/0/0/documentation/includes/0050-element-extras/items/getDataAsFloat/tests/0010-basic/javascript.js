@@ -1,6 +1,6 @@
 signal_53E81(_, el) {
   if (el.getDataAsFloat("needle") === 8.2) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

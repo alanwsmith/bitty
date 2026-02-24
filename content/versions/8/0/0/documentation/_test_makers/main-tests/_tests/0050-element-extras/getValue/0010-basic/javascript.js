@@ -5,7 +5,7 @@ $SIGNAL_NAME(_, el) {
 }
 
 verify_$SIGNAL_NAME(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }
 
 

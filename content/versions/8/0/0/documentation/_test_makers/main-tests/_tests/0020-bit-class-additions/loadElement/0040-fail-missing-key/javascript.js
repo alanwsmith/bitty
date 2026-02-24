@@ -13,6 +13,6 @@ given_$SIGNAL_NAME(_, __) {
 $SIGNAL_NAME(_, el) {
   const result = this.loadElement("el_$SIGNAL_NAME");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

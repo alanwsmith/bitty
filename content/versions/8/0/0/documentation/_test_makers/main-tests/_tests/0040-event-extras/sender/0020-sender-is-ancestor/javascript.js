@@ -4,6 +4,6 @@ bittyReady() {
 
 $SIGNAL_NAME(ev, el) {
   if (ev.sender.dataset.needle === "value_$HASH") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

@@ -15,6 +15,6 @@ $SIGNAL_NAME(_, el) {
     this.renderElement("el_$HASH") === undefined &&
     this.logs[0].level === "error"
   ) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

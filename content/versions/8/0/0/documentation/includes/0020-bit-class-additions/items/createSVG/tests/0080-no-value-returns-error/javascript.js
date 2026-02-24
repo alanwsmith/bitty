@@ -3,7 +3,7 @@
 signal_B7C32(_, el) {
   const result = this.createSVG("el_B7C32");
   // if (result.ok === false && result.level === "error") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

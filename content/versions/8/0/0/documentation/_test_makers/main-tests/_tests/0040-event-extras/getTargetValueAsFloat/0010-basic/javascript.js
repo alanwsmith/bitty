@@ -1,6 +1,6 @@
 $SIGNAL_NAME(ev, el) {
   if (ev.getTargetValueAsFloat("needle") === 7.8) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

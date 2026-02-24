@@ -12,6 +12,6 @@ verify_$SIGNAL_NAME(_, el) {
     .style
     .getPropertyValue("--$STYLE_NAME");
   if (gotValue === "crimson") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

@@ -4,18 +4,18 @@ bittyReady() {
 
 $SIGNAL_NAME(ev, el) {
   if (ev.sender.dataset.needle === "value_$HASH") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 
 $SIGNAL2_NAME(ev, el) {
   if (ev.sender.dataset.needle === "value_$HASH-2") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 
 $SIGNAL3_NAME(ev, el) {
   if (ev.sender.dataset.needle === "value_$HASH-3") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

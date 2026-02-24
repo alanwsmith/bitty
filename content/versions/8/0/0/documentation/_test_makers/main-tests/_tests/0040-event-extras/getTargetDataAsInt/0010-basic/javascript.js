@@ -1,6 +1,6 @@
 $SIGNAL_NAME(ev, el) {
   if (ev.getTargetDataAsInt("needle") === 4) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

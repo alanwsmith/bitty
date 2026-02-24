@@ -1,6 +1,6 @@
 $SIGNAL_NAME(ev, el) {
   if (ev.getValueAsFloat() === 2.2) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

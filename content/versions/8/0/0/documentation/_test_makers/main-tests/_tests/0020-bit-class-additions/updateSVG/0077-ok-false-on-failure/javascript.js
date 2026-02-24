@@ -5,7 +5,7 @@ $SIGNAL_NAME(_, el) {
     misc: "not a valid input for an svg",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

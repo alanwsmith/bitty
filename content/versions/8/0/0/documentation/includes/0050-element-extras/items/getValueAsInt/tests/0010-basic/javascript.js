@@ -12,5 +12,5 @@ signal_05EDE(_, el) {
 }
 
 verify_signal_05EDE(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

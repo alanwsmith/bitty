@@ -5,7 +5,7 @@ $SIGNAL_NAME(_, el) {
     key: "not a string, element, or document fragment",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

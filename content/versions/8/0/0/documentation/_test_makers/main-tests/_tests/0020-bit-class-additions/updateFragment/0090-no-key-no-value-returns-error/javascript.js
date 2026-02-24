@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   const result = this.updateFragment();
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

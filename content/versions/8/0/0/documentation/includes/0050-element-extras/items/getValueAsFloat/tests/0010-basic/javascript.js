@@ -12,5 +12,5 @@ signal_C502D(_, el) {
 }
 
 verify_signal_C502D(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

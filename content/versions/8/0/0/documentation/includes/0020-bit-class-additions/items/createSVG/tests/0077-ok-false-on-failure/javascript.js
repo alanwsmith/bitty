@@ -5,7 +5,7 @@ signal_A6A28(input, el) {
     key: "not a string or svg",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

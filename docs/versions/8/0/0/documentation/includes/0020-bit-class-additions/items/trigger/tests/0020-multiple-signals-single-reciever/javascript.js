@@ -16,6 +16,6 @@ signal_86215_2(_, el) {
 
 signal_86215_3(_, el) {
   if (el.innerHTML === `alfa-bravo`) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

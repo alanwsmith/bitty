@@ -4,6 +4,6 @@ bittyReady() {
 
 signal_88E0C(ev, el) {
   if (ev === null) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

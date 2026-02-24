@@ -13,6 +13,6 @@ run_signal_A1F39(_, x) {
 
 verify_signal_A1F39(_, el) {
   if (this.#gotNull === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

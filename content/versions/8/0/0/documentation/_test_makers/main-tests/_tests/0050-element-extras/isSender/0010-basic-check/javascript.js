@@ -1,6 +1,6 @@
 $SIGNAL_NAME(_, el) {
   if (el.isSender() === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

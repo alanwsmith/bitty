@@ -3,5 +3,5 @@ bittyReady() {
 }
 
 signal_C7BB1(_, el) {
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

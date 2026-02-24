@@ -13,6 +13,6 @@ given_signal_94D78(_, __) {
 signal_94D78(_, el) {
   const result = this.loadElement("el_signal_94D78");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

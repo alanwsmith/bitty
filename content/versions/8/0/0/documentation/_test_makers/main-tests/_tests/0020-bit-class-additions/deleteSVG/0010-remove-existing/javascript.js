@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   this.deleteSVG("el_$HASH");
   if (this.renderSVG("el_$HASH") === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

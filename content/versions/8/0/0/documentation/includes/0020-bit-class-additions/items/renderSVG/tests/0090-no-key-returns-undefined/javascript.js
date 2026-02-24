@@ -3,7 +3,7 @@
 signal_01959(_, el) {
   const fragment = this.renderSVG("el_01959");
   if (fragment === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -5,7 +5,7 @@ async $SIGNAL_NAME(_, el) {
   const fallback = JSON.parse(`{ "status": "ok" }`);
   const result = await this.fetchJSON("el_$HASH", url, fallback);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

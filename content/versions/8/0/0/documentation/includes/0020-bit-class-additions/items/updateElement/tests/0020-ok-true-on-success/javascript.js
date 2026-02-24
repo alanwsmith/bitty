@@ -3,7 +3,7 @@
 signal_D4BFF(_, el) {
   const result = this.updateElement("el_D4BFF", `<div></div>`);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

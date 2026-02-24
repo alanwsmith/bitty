@@ -3,7 +3,7 @@
 signal_226E6(_, el) {
   const result = this.createSVG();
   // if (result.ok === false && result.level === "error") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

@@ -15,6 +15,6 @@ $SIGNAL_NAME(_, x) {
 
 verify_$SIGNAL_NAME(_, el) {
   if (this.#gotSignal === true && this.#gotNull === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

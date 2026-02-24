@@ -15,6 +15,6 @@ signal_9C35B(_, x) {
 
 verify_signal_9C35B(_, el) {
   if (this.#gotSignal === true && this.#gotNull === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

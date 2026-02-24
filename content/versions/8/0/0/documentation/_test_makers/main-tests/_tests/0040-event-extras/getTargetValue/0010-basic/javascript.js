@@ -1,6 +1,6 @@
 $SIGNAL_NAME(ev, el) {
   if (ev.getTargetValue("needle") === "value_$HASH") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

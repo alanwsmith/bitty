@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   const fragment = this.renderFragment("el_$HASH");
   if (fragment === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

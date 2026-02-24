@@ -3,7 +3,7 @@
 signal_E0312(_, el) {
   const result = this.updateElement();
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

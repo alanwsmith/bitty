@@ -4,7 +4,7 @@ async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   const result = await this.fetchSVG("el_$HASH", url);
   if (result.level === "warn" && result.ok === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_$SIGNAL_NAME");
 }

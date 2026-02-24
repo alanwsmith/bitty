@@ -4,6 +4,6 @@ bittyReady() {
 
 signal_F1196(ev, el) {
   if (ev.sender.dataset.needle === "value_F1196") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

@@ -3,7 +3,7 @@
 signal_7EF03(_, el) {
   const result = this.loadFragment("el_7EF03");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
 //  this.logs = [];
   this.renderFragment("el_$HASH");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

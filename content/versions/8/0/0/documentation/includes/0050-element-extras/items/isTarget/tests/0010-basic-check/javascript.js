@@ -1,6 +1,6 @@
 signal_45333(_, el) {
   if (el.isTarget() === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

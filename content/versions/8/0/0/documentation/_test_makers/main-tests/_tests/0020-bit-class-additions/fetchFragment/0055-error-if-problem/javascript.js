@@ -3,7 +3,7 @@
 async $SIGNAL_NAME(url, el) {
   const result = await this.fetchFragment("el_$HASH", url);
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

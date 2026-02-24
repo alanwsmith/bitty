@@ -3,7 +3,7 @@
 signal_FACB7(input, el) {
   const result = this.createSVG("el_FACB7", input);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -4,7 +4,7 @@ async signal_B1D68(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   const result = await this.fetchSVG("el_B1D68", url);
   if (result.level === "warn" && result.ok === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_signal_B1D68");
 }

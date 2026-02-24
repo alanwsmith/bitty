@@ -15,5 +15,5 @@ async $SIGNAL_NAME(_, el) {
   //
   // NOTE: Confirming options must be done manually.
   // This test is set to always pass as a result.
-  el.innerHTML = "ok";
+  el.innerHTML = "test passed";
 }

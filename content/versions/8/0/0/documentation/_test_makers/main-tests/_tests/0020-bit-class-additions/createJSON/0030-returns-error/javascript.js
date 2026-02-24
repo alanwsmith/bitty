@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
   // const invalidJSON = "this is not valid JSON";
   // const result = this.createJSON("el_$HASH", invalidJSON);
   // if (result.ok === false) {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
   this.deleteFragment("el_$HASH");
   const result = this.loadFragment("el_$HASH");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

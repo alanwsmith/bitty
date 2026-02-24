@@ -4,7 +4,7 @@ signal_D68A0(_, el) {
   // this.logs = [];
   // this.renderSVG("el_D68A0");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

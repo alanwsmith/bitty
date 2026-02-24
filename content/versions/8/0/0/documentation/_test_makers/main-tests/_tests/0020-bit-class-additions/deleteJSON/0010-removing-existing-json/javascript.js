@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   this.deleteJSON("el_$HASH");
   if (this.json["el_$HASH"] === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

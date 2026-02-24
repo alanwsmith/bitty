@@ -1,6 +1,6 @@
 signal_E685E(ev, el) {
   if (ev.getTargetValue("needle") === "value_E685E") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

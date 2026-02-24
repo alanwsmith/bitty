@@ -4,7 +4,7 @@ async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   const result = await this.fetchJSON("el_$HASH", url);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

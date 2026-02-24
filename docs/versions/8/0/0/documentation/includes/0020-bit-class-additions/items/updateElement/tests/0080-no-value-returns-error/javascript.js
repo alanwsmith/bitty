@@ -3,7 +3,7 @@
 signal_C95B6(_, el) {
   const result = this.updateElement("el_C95B6");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

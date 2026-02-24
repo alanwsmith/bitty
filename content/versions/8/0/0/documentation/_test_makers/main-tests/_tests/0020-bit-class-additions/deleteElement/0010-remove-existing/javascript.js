@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   this.deleteElement("el_$HASH");
   if (this.renderElement("el_$HASH") === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

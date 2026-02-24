@@ -5,7 +5,7 @@ signal_99F17(_, el) {
     misc: "objects are not valid fallbacks",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

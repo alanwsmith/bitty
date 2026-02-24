@@ -21,7 +21,6 @@ class BittyJs extends HTMLElement {
   }
 
   addBittyClasses(target, self) {
-    //    console.log(Object.getOwnPropertyNames(BittyJS.prototype));
     Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter((method) =>
       method.substring(0, 1) === "_"
     ).forEach((method) => {
@@ -38,74 +37,6 @@ class BittyJs extends HTMLElement {
       target,
       this.#_logLevels,
     );
-    // // TODO: Rename `target.addLog()` to `target._addLog()`
-    // // since it should be considered private.
-    // target.addLog = this._addLog.bind(this, target);
-    // target.addSignalListener = this._addSignalListener.bind(target);
-    // target.createElement = this._createElement.bind(target);
-    // target.createFragment = this._createFragment.bind(target);
-    // target.createJSON = this._createJSON.bind(target);
-    // target.createSVG = this._createSVG.bind(target);
-    // target.debug = this._debug.bind(target);
-    // target.deleteElement = this._deleteElement.bind(target);
-    // target.deleteFragment = this._deleteFragment.bind(target);
-    // target.deleteJSON = () => {
-    //   return { ok: false };
-    // };
-    // target.deleteSVG = () => {
-    //   return { ok: false };
-    // };
-    // target.error = this._error.bind(target);
-    // target.fetchElement = this._fetchElement.bind(target);
-    // target.fetchFragment = this._fetchFragment.bind(target);
-    // target.fetchJSON = this._fetchJSON.bind(target);
-    // target.fetchSVG = this._fetchSVG.bind(target);
-    // target.fetchTemplates = this._fetchTemplates.bind(target);
-    // target.getDataAsFloat = () => {};
-    // target.getDataAsInt = () => {};
-    // target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
-    // target.getLocalLogLevel = this.getLocalLogLevel.bind(
-    //   this,
-    //   target,
-    // );
-    // target.info = this._info.bind(target);
-    // target.ingestScriptTags = this._ingestScriptTags.bind(target);
-    // target.loadElement = this._loadElement.bind(target);
-    // target.loadFragment = this._loadFragment.bind(target);
-    // target.loadJSON = this._loadJSON.bind(target);
-    // target.loadSVG = this._loadSVG.bind(target);
-    // target.sleep = this._sleep.bind(target);
-    // target.trigger = this._trigger.bind(target);
-    // target.updateElement = () => {
-    //   return { ok: false };
-    // };
-    // target.updateFragment = () => {
-    //   return { ok: false };
-    // };
-    // target.updateSVG = this._updateSVG.bind(target);
-    // target.processEvent = this._processEvent.bind(target);
-    // target.processSignal = this._processSignal.bind(target);
-    // target.renderElement = this._renderElement.bind(target);
-    // target.renderFragment = this._renderFragment.bind(target);
-    // target.renderSVG = this._renderSVG.bind(target);
-    // target._runBittyReady = this._runBittyReady.bind(target);
-    // target.saveJSON = this._saveJSON.bind(target);
-    // target.send = this._send.bind(target);
-    // target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
-    // target.setLocalLogLevel = this._setLocalLogLevel.bind(
-    //   target,
-    //   this.#_logLevels,
-    // );
-    // target.setCSS = () => {
-    //   return { ok: false };
-    // };
-    // target.updateEventV4 = this._updateEventV4.bind(target);
-    // target.updateReceiverV4 = this._updateReceiverV4.bind(target);
-    // target.qs = this._qs.bind(target);
-    // target.qsa = this._qsa.bind(target);
-    // target.warn = this._warn.bind(target);
-
-    //
   }
 
   addBittyListeners(target) {
@@ -114,17 +45,12 @@ class BittyJs extends HTMLElement {
   }
 
   addBittyVars(target) {
-    target._localLogLevelIndex = 2;
-    target._svg = {};
     target._element = {};
     target._fragment = {};
-    target.json = {};
-    // TODO: Deprecate and remove `target.logs`.
-    // Everything will use the logs on the
-    // bitty component from its static
-    // property.
-    target.logs = [];
+    target._localLogLevelIndex = 2;
     target._signalListeners = {};
+    target._svg = {};
+    target.json = {};
   }
 
   _addSignalListener(type, signals) {

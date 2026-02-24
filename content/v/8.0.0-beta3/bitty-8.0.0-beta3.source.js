@@ -482,7 +482,8 @@ class BittyJs extends HTMLElement {
   }
 
   _deleteSVG(key) {
-    const storageKey = `bittyJSON_${key}`;
+    const storageKey = `bittySVG_${key}`;
+    localStorage.removeItem(storageKey);
     const details = {
       level: "info",
       from: "deleteSVG",
@@ -495,7 +496,6 @@ class BittyJs extends HTMLElement {
         `JSON with key '${key}' already does not exist.`,
       );
     } else {
-      localStorage.removeItem(storageKey);
       delete this._svg[key];
       details.text.push(
         `Removed JSON with from: ${key}`,

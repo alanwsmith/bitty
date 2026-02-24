@@ -13,7 +13,7 @@ function splitSignalString(input) {
 function findSenders(el) {
   const senders = [];
   while (el) {
-    if (el.matches("[data-send]")) {
+    if (el.dataset !== undefined && el.dataset.send !== undefined) {
       senders.push(el);
     }
     el = el.parentElement;
@@ -1469,6 +1469,8 @@ class BittyJs extends HTMLElement {
       },
     );
     [...new Set(listenerArray)].forEach((listener) => {
+      // TODO: Add this when this.debug() is set up.
+      // this.debug(`Added listener for '${listener}' event.`);
       window.addEventListener(listener, (ev) => {
         this.processEvent.call(this, ev);
       });
@@ -2124,8 +2126,21 @@ class BittyJs extends HTMLElement {
   }
 
   async _processEvent(ev) {
+    // First, handle events that don't have
+    // a `ev.target` (i.e. aren't attached
+    // to an element). All those
+    // events must use `ev.bitty.signals`
+    // to defined the signals to send.
+    if (ev.bitty && ev.bitty.signals) {
+      // temporary filter out bitty trigger and send
+      // events
+      if (ev.type !== "bittytriggerevent") {
+        console.log(ev.bitty.signals);
+      }
+    }
+
     if (ev.type === "bittytriggerevent") {
-      const signals = splitSignalString(ev.signals);
+      const signals = splitSignalString(ev.bitty.signals);
       for (const signal of signals) {
         if (this[signal] !== undefined) {
           this.processTrigger(signal);
@@ -2135,6 +2150,9 @@ class BittyJs extends HTMLElement {
     } else {
       const senders = findSenders(ev.target);
       for (const sender of senders) {
+        if (ev.type.substring(0, 1) === "b") {
+          console.log(ev.type);
+        }
         const signals = splitSignalString(sender.dataset.send);
         for (const signal of signals) {
           if (this[signal] !== undefined) {
@@ -2150,7 +2168,7 @@ class BittyJs extends HTMLElement {
               }
             } else {
               const listeners = splitSignalString(ev.sender.dataset.listeners);
-              if (!listeners.includes(ev.type)) {
+              if (listeners.includes(ev.type) === false) {
                 return;
               }
             }
@@ -2168,6 +2186,8 @@ class BittyJs extends HTMLElement {
             }
           }
         }
+
+        //
       }
       // ev.sender = sender;
       // this.processSignal_V3(bit, ev, signal);
@@ -2505,7 +2525,7 @@ class BittyLog {
 }
 
 /** internal */
-class BittySendEvent extends Event {
+class BittySendEvent_Original extends Event {
   constructor(payload, signals) {
     super("bittysendevent", { bubbles: true });
     this.bittyPayload = {
@@ -2530,7 +2550,7 @@ class BittyTriggerEvent extends Event {
   constructor(signals) {
     //console.log(`In BittyTriggerEvent: ${signals}`);
     super("bittytriggerevent", { bubbles: true });
-    this.signals = signals;
+    this.bitty = { signals: signals };
   }
 }
 

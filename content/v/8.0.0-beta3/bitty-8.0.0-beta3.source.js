@@ -937,7 +937,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `No storage found for '${key}' and not fallback provided.`,
+        `No storage found for '${key}' and no fallback provided.`,
       );
     } else if (storage !== null) {
       this._element[key] = JSON.parse(storage).data;
@@ -996,7 +996,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `No storage found for '${key}' and not fallback provided.`,
+        `No storage found for '${key}' and no fallback provided.`,
       );
     } else if (storage !== null) {
       this._fragment[key] = JSON.parse(storage).data;
@@ -1238,7 +1238,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `No storage found for '${key}' and not fallback provided.`,
+        `No storage found for '${key}' and no fallback provided.`,
       );
     } else if (storage !== null) {
       this._svg[key] = JSON.parse(storage).data;

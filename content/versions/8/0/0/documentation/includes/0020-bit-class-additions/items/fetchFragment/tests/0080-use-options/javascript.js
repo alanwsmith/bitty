@@ -1,19 +1,11 @@
-
-
-async signal_6F792(url, el) {
-  // const options = {
-  //   fetchOptions: {
-  //     headers: {
-  //       "x-bitty-test": "key_signal_6F792",
-  //     },
-  //   },
-  // };
-  // await this.fetchFragment("el_6F792", url, null, options);
-  // el.innerHTML = this.renderFragment("el_6F792").children[1].innerHTML;
-}
-
-
-bittyReady() {
-  // const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-  // this.send(url, "signal_6F792");
+async signal_6F792(_, el) {
+  const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
+  const fallback = null;
+  const options = {
+    headers: {
+      "x-bitty-test": "key_signal_6F792",
+    },
+  };
+  await this.fetchFragment("el_6F792", url, fallback, options);
+  el.replaceWith(this.renderFragment("el_6F792"));
 }

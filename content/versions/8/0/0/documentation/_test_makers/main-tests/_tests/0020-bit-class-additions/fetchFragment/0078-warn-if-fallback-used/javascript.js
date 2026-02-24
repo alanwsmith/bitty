@@ -1,25 +1,13 @@
-
-
-async $SIGNAL_NAME(payload, el) {
+async $SIGNAL_NAME(_, el) {  
+  this.setLocalLogLevel("none");
+  const template = document.createElement("template");
+  template.innerHTML = "<div>ok</div>";
+  const fallback = template.content;
+  const url = "/intentionally-missing-file.html";
   const result = await this.fetchFragment(
-    "el_$HASH",
-    payload.url,
-    payload.fallback,
+    "el_$HASH", url, fallback,
   );
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "test passed";
-  } else {
-    el.innerHTML = "bug";
-  }
-}
-
-
-run_$SIGNAL_NAME(_, __) {
-  const fallbackTemplate = document.createElement("template");
-  fallbackTemplate.innerHTML = "<div>ok</div>";
-  const url = "/intentionally-missing-file.html";
-  this.send(
-    { url: url, fallback: fallbackTemplate.content },
-    "$SIGNAL_NAME",
-  );
+  } 
 }

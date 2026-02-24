@@ -1,4 +1,2 @@
-async bittyReady() {
-  this.sleep(100);
-  this.qs("[data-send~=signal_F3B99]").click();
-}
+// Test manually to avoid noise in the console
+// during initial load.

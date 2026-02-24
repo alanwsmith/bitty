@@ -1,23 +1,16 @@
-
-
 async $SIGNAL_NAME(_, el) {
-  const url = "https://www.example.com";
+  const url = "https://www.example.com/";
+  const fallback = null;
   const options = {
-    fetchOptions: {
-      method: "POST",
-    },
+    method: "POST",
+    body: JSON.stringify({ key: "value" }),
   };
-  // The server this site uses doesn't accept
-  // POST Requests. This is the line that
-  // would make one:
+  // The server running this side does not accept
+  // post requests. This shows how to make
+  // one, but it's not tested here. 
   //
-  // await this.fetchFragment(key, url, null, options);
-  //
-  // Since the server would reject it, it's
-  // not tested here.
-}
-
-
-bittyReady() {
-  this.trigger("$SIGNAL_NAME");
+  //////////////////////////////////////////////////////////////////////
+  // Example call:
+  // await this.fetchFragment("fragment_$HASH", url, fallback, options);
+  //////////////////////////////////////////////////////////////////////
 }

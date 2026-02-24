@@ -1,8 +1,8 @@
 async $SIGNAL_NAME(_, el) {
+  this.setLocalLogLevel("none");
   const fallback = document.createElement("template");
   fallback.innerHTML = `<div class="test">test passed</div>`;
   const url = "/intentionally-missing-file.html";
   await this.fetchFragment("el_$HASH", url, fallback.content);
-  console.log(this.renderFragment("el_$HASH"));
   el.replaceWith(this.renderFragment("el_$HASH"));
 }

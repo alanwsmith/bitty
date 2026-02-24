@@ -1,1 +1,4 @@
-// This example test is run manually.
+async bittyReady() {
+  this.sleep(100);
+  this.qs("[data-send~=signal_6F792]").click();
+}

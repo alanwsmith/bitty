@@ -1,1 +1,1 @@
-// This example test is run manually.
+// Not tested here.

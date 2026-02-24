@@ -29,6 +29,7 @@ class BittyJs extends HTMLElement {
     target.createFragment = this._createFragment.bind(target);
     target.createJSON = this._createJSON.bind(target);
     target.createSVG = this._createSVG.bind(target);
+    target.debug = this._debug.bind(target);
     target.deleteElement = this._deleteElement.bind(target);
     target.deleteFragment = this._deleteFragment.bind(target);
     target.deleteJSON = () => {
@@ -437,6 +438,19 @@ class BittyJs extends HTMLElement {
       );
     }
     return this.addLog(details);
+  }
+
+  _debug(payload) {
+    if (typeof payload === "string") {
+      this.addLog({
+        level: "debug",
+        from: "debug",
+        ok: true,
+        text: [payload],
+      });
+    } else {
+      this.addLog(payload);
+    }
   }
 
   _deleteElement(key) {
@@ -2229,6 +2243,7 @@ class BittyJs extends HTMLElement {
     if (typeof payload === "string") {
       this.addLog({
         level: "warn",
+        from: "warn",
         ok: true,
         text: [payload],
       });

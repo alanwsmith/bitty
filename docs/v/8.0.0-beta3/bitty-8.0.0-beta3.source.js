@@ -20,10 +20,7 @@ class BittyJs extends HTMLElement {
     this.loadWindowClasses();
   }
 
-
   _addListeners() {
-    //  if (this.constructor.addedEventListeners === false) {
-    //    this.constructor.addedEventListeners = true;
     let listenerArray = [
       "click",
       "input",
@@ -97,7 +94,6 @@ class BittyJs extends HTMLElement {
   //   ),
   // ];
   //
-
 
   addLog(target, payload) {
     payload.bitClass = target.bitClass;
@@ -542,7 +538,6 @@ class BittyJs extends HTMLElement {
     );
   }
 
-
   _deleteElement(key) {
     const storageKey = `bittyElement_${key}`;
     if (
@@ -568,7 +563,6 @@ class BittyJs extends HTMLElement {
       );
     }
   }
-
 
   _deleteFragment(key) {
     const storageKey = `bittyFragment_${key}`;
@@ -625,7 +619,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   _deleteSVG(key) {
     const storageKey = `bittySVG_${key}`;
     if (
@@ -651,7 +644,6 @@ class BittyJs extends HTMLElement {
       );
     }
   }
-
 
   _error(payload) {
     if (typeof payload === "string") {
@@ -1058,9 +1050,6 @@ class BittyJs extends HTMLElement {
     );
   }
 
-
-
-
   ingestScriptTags(root) {
     root.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {
@@ -1090,8 +1079,6 @@ class BittyJs extends HTMLElement {
       }
     });
   }
-
-
 
   _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;
@@ -1218,8 +1205,6 @@ class BittyJs extends HTMLElement {
       null,
     );
   }
-
-
 
   _loadJSON(key, fallback) {
     const storageKey = `bittyJSON_${key}`;
@@ -1382,8 +1367,6 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-
-
   async loadModuleClasses() {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
@@ -1408,7 +1391,6 @@ class BittyJs extends HTMLElement {
       }
     }
   }
-
 
   _loadSVG(key, fallback = null) {
     const storageKey = `bittySVG_${key}`;
@@ -1481,36 +1463,6 @@ class BittyJs extends HTMLElement {
       }
     }
   }
-
-
-  async makeConnection() {
-    if (!this.dataset.connect) {
-      // TODO: Throw error if there's no connect
-      // TODO: Remove docs for window.BittyClass();
-      // as it's no longer a thing.
-    } else {
-      const connString = this.dataset.connect.trim();
-      if (window[connString]) {
-        this.conn = new window[connString]();
-      } else {
-        // TODO: Handle `http...` URLS
-        // TODO: Handle `./...` URLS
-        const connParts = connString.split(":");
-        if (connParts[0].substring(0, 1) === "/") {
-          const windowURL = new URL(window.location.href);
-          const moduleURL = new URL(connParts[0], windowURL.origin).toString();
-          const mod = await import(moduleURL);
-          if (connParts[1] !== undefined) {
-            this.conn = new mod[connParts[1]]();
-          } else {
-            this.conn = new mod.default();
-          }
-        }
-      }
-    }
-    // TODO: Log error if no connection is made
-  }
-
 
   _renderElement(key, subs = {}) {
     if (this.conn._element[key] === undefined) {
@@ -1728,9 +1680,6 @@ class BittyJs extends HTMLElement {
   _updateSVG(key, content) {
     return this._createSVG(key, content, { update: true });
   }
-
-
-
 
   _updateReceiverV4(ev, receiver) {
     receiver.isSender = () => {
@@ -2112,7 +2061,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   _processTrigger(signal) {
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,
@@ -2126,8 +2074,6 @@ class BittyJs extends HTMLElement {
       this[signal](null, null);
     }
   }
-
-
 
   //async _processEvent_holding(ev) {
   //  console.log(ev.type);
@@ -2163,10 +2109,6 @@ class BittyJs extends HTMLElement {
   //  }
   //}
   //
-
-
-
-
 
   // async processSignalV4(bit, ev, signal) {
   //   console.log(`IN processSignal_V3: ${signal}`);
@@ -2442,7 +2384,6 @@ class BittyJs extends HTMLElement {
   }
 }
 
-
 class BittyTriggerEvent extends Event {
   constructor(signals) {
     //console.log(`In BittyTriggerEvent: ${signals}`);
@@ -2450,7 +2391,6 @@ class BittyTriggerEvent extends Event {
     this.bitty = { signals: signals };
   }
 }
-
 
 function splitSignalString(input) {
   return input

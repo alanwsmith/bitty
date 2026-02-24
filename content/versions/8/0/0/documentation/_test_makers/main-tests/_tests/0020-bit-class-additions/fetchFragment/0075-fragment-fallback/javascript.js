@@ -1,17 +1,8 @@
-
-
-async $SIGNAL_NAME(payload, el) {
-  await this.fetchFragment("el_$HASH", payload.url, payload.fallback);
-  el.innerHTML = this.renderFragment("el_$HASH").children[0].innerHTML;
-}
-
-
-run_$SIGNAL_NAME(_, __) {
-  const fallbackTemplate = document.createElement("template");
-  fallbackTemplate.innerHTML = "<div>ok</div>";
+async $SIGNAL_NAME(_, el) {
+  const fallback = document.createElement("template");
+  fallback.innerHTML = `<div class="test">test passed</div>`;
   const url = "/intentionally-missing-file.html";
-  this.send(
-    { url: url, fallback: fallbackTemplate.content },
-    "$SIGNAL_NAME",
-  );
+  await this.fetchFragment("el_$HASH", url, fallback.content);
+  console.log(this.renderFragment("el_$HASH"));
+  el.replaceWith(this.renderFragment("el_$HASH"));
 }

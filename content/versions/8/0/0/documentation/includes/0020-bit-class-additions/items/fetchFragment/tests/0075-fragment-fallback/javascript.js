@@ -1,17 +1,8 @@
-
-
-async signal_80552(payload, el) {
-  await this.fetchFragment("el_80552", payload.url, payload.fallback);
-  el.innerHTML = this.renderFragment("el_80552").children[0].innerHTML;
-}
-
-
-run_signal_80552(_, __) {
-  const fallbackTemplate = document.createElement("template");
-  fallbackTemplate.innerHTML = "<div>ok</div>";
+async signal_80552(_, el) {
+  const fallback = document.createElement("template");
+  fallback.innerHTML = `<div class="test">test passed</div>`;
   const url = "/intentionally-missing-file.html";
-  this.send(
-    { url: url, fallback: fallbackTemplate.content },
-    "signal_80552",
-  );
+  await this.fetchFragment("el_80552", url, fallback.content);
+  console.log(this.renderFragment("el_80552"));
+  el.replaceWith(this.renderFragment("el_80552"));
 }

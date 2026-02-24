@@ -575,7 +575,7 @@ class BittyJs extends HTMLElement {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+            `Fetching returned status ${response.status}.`,
           );
           details.extraInfo = response;
         }

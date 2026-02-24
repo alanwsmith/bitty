@@ -1,16 +1,6 @@
-
-
-async signal_F3B99(payload, el) {
-  await this.fetchFragment("el_F3B99", payload.url, payload.fallback);
-  el.innerHTML = this.renderFragment("el_F3B99").children[1].innerHTML;
-}
-
-
-run_signal_F3B99(_, __) {
-  const fallback = "<div></div><div>ok</div>";
+async signal_F3B99(_, el) {
+  const fallback = "<div></div><div>test passed</div>";
   const url = "/intentionally-missing-file.html";
-  this.send(
-    { url: url, fallback: fallback },
-    "signal_F3B99",
-  );
+  await this.fetchFragment("el_F3B99", url, fallback);
+  el.innerHTML = this.renderFragment("el_F3B99").children[1].innerHTML;
 }

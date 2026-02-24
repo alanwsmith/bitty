@@ -1,14 +1,7 @@
-
-
-async $SIGNAL_NAME(url, el) {
+async $SIGNAL_NAME(_, el) {
+  const url = "/non-exising-page.html";
   const result = await this.fetchFragment("el_$HASH", url);
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "test passed";
   }
-}
-
-
-run_$SIGNAL_NAME(_, __) {
-  const url = "/non-exising-page.html";
-  this.send(url, "$SIGNAL_NAME");
 }

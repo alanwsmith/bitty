@@ -1,20 +1,6 @@
 
 
 signal_F7B2A(_, el) {
-  const subs = {
-    "TARGET_F7B2A": ["o", "k"],
-  };
-  const svg = this.renderSVG("el_F7B2A", subs);
-  // el.innerHTML = svg.querySelector("text").innerHTML;
-  // this.send(svg, "view_signal_F7B2A");
-}
-
-view_signal_F7B2A(svg, el) {
-  el.replaceWith(svg);
-}
-
-
-bittyReady() {
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
@@ -22,5 +8,14 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG("el_F7B2A", input);
-  this.trigger("signal_F7B2A");
+  const subs = {
+    "TARGET_F7B2A": ["test ", "passed"],
+  };
+  const svg = this.renderSVG("el_F7B2A", subs);
+  el.innerHTML = svg.querySelector("text").innerHTML;
+  this.send(svg, "view_signal_F7B2A");
+}
+
+view_signal_F7B2A(svg, el) {
+  el.replaceWith(svg);
 }

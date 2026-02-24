@@ -6,10 +6,10 @@ TARGET_C5BF2
 </svg>`;
   const template = document.createElement("template");
   template.innerHTML =
-    `<text x="24" y="24" font-size="20" text-anchor="middle" fill="white">o</text>`;
+    `<text x="24" y="24" font-size="20" text-anchor="middle" fill="white">test </text>`;
   const template2 = document.createElement("template");
   template2.innerHTML =
-    `<text x="36" y="24" font-size="20" text-anchor="middle" fill="white">k</text>`;
+    `<text x="36" y="24" font-size="20" text-anchor="middle" fill="white">passed</text>`;
   const replacementArray = [
     template.content.firstChild,
     template2.content.firstChild,

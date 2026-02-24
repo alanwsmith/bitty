@@ -1,20 +1,6 @@
 
 
 $SIGNAL_NAME(_, el) {
-  const subs = {
-    "TARGET_$HASH": ["o", "k"],
-  };
-  const svg = this.renderSVG("el_$HASH", subs);
-  // el.innerHTML = svg.querySelector("text").innerHTML;
-  // this.send(svg, "view_$SIGNAL_NAME");
-}
-
-view_$SIGNAL_NAME(svg, el) {
-  el.replaceWith(svg);
-}
-
-
-bittyReady() {
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
@@ -22,5 +8,14 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG("el_$HASH", input);
-  this.trigger("$SIGNAL_NAME");
+  const subs = {
+    "TARGET_$HASH": ["test ", "passed"],
+  };
+  const svg = this.renderSVG("el_$HASH", subs);
+  el.innerHTML = svg.querySelector("text").innerHTML;
+  this.send(svg, "view_$SIGNAL_NAME");
+}
+
+view_$SIGNAL_NAME(svg, el) {
+  el.replaceWith(svg);
 }

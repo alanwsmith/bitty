@@ -3,7 +3,7 @@
 signal_DECD9(_, el) {
   const result = this.updateSVG();
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

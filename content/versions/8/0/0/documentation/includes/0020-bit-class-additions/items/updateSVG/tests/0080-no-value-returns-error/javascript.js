@@ -3,7 +3,7 @@
 signal_15A58(_, el) {
   const result = this.updateSVG("el_15A58");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

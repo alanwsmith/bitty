@@ -2,7 +2,7 @@
 
 $SIGNAL_NAME(_, el) {
   // const subs = {
-  //   "TARGET_$HASH": "ok",
+  //   "TARGET_$HASH": "test passed",
   // };
   // const fragment = this.renderFragment("el_$HASH", subs);
   // el.innerHTML = fragment.children[1].innerHTML;

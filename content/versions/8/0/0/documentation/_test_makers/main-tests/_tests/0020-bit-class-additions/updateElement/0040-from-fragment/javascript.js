@@ -12,7 +12,7 @@ bittyReady() {
   const fragment = document.createDocumentFragment();
   const element = document.createElement("div");
   element.classList.add("test");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   fragment.appendChild(element);
   this.send(fragment, "$SIGNAL_NAME");
 }

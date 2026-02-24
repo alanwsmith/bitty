@@ -3,7 +3,7 @@
 signal_CB6CF(_, el) {
   this.deleteSVG("el_CB6CF");
   if (this.renderSVG("el_CB6CF") === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

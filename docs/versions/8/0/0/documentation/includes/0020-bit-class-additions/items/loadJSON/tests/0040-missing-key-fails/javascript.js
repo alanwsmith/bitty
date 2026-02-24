@@ -11,6 +11,6 @@ given_signal_194AD(_, __) {
 signal_194AD(_, el) {
   const result = this.loadJSON("missing_key_signal_194AD");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

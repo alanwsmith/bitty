@@ -8,7 +8,7 @@ given_$SIGNAL_NAME(_, __) {
 }
 
 $SIGNAL_NAME(_, el) {
-  const result = this.loadJSON("data_$SIGNAL_NAME", `{ "status": "ok" }`);
+  const result = this.loadJSON("data_$SIGNAL_NAME", `{ "status": "test passed" }`);
   if (result.ok === true) {
     el.innerHTML = this.json["data_$SIGNAL_NAME"].status;
   }

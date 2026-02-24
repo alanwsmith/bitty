@@ -15,6 +15,6 @@ signal_20C90_2(payload, el) {
 
 signal_20C90_3(payload, el) {
   if (payload.status === "ok" && el.innerHTML === "alfa-ok-bravo-ok") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

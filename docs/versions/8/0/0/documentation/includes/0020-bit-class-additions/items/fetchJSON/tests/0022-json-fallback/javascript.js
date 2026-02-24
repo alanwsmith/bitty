@@ -5,7 +5,7 @@ async signal_A1342(_, el) {
   const fallback = JSON.parse(`{ "status": "ok" }`);
   const result = await this.fetchJSON("el_A1342", url, fallback);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

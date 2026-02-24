@@ -3,7 +3,7 @@
 signal_DB540(_, el) {
   const result = this.loadSVG("el_DB540");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

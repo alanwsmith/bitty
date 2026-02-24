@@ -1,5 +1,5 @@
 $SIGNAL_NAME(_, el) {
-  el.setData("updated", "ok");
+  el.setData("updated", "test passed");
   this.trigger("verify_$SIGNAL_NAME");
 }
 

@@ -316,7 +316,6 @@ class BittyJs extends HTMLElement {
       messages: [],
       extraInfo: null,
     };
-
     if (
       json !== undefined && this.json !== undefined &&
       this.json[key] !== undefined

@@ -3,7 +3,7 @@
 signal_AF25A(_, el) {
   const result = this.deleteJSON("el_AF25A");
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

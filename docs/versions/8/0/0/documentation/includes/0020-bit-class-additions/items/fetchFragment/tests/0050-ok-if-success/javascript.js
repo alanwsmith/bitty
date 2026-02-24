@@ -3,7 +3,7 @@
 async signal_BE8EB(url, el) {
   const result = await this.fetchFragment("el_BE8EB", url);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -5,7 +5,7 @@ async signal_BE359(_, el) {
   const fallback = { status: "ok" };
   const result = await this.fetchJSON("el_BE359", url, fallback);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

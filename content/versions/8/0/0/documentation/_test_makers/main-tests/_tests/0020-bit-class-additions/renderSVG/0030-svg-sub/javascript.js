@@ -26,7 +26,7 @@ TARGET_$HASH
   replacementEl.setAttribute("font-size", "20");
   replacementEl.setAttribute("text-anchor", "middle");
   replacementEl.setAttribute("fill", "white");
-  replacementEl.textContent = "ok";
+  replacementEl.textContent = "test passed";
   const subs = {
     "TARGET_$HASH": replacementEl,
   };

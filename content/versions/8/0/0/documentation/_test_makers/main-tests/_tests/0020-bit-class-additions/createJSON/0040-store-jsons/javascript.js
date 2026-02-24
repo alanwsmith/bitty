@@ -10,7 +10,7 @@ bittyReady() {
   this.setGlobalLogLevel("none");
   this.setLocalLogLevel("none");
   this.deleteJSON("el_$HASH");
-  this.createJSON("el_$HASH", { status: "ok" });
+  this.createJSON("el_$HASH", { status: "test passed" });
   // delete this.json["el_$HASH"];
   // this.trigger("$SIGNAL_NAME");
 }

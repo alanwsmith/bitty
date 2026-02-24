@@ -8,7 +8,7 @@ given_$SIGNAL_NAME(_, __) {
 }
 
 $SIGNAL_NAME(_, el) {
-  const fallback = JSON.parse(`{ "status": "ok" }`);
+  const fallback = JSON.parse(`{ "status": "test passed" }`);
   const result = this.loadJSON("data_$SIGNAL_NAME", fallback);
   if (result.ok === true) {
     el.innerHTML = this.json["data_$SIGNAL_NAME"].status;

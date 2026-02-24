@@ -3,7 +3,7 @@
 signal_34AC4(update, el) {
   const result = this.updateSVG("el_34AC4", update);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_signal_34AC4");
 }

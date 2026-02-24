@@ -3,7 +3,7 @@
 signal_B0E93(_, el) {
   const result = this.deleteFragment("el_B0E93");
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

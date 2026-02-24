@@ -4,7 +4,7 @@ signal_CE7A8(_, el) {
   this.deleteJSON("el_CE7A8");
   const result = this.loadJSON("el_CE7A8");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

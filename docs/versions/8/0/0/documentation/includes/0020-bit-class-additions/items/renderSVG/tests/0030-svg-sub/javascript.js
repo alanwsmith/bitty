@@ -26,7 +26,7 @@ TARGET_15988
   replacementEl.setAttribute("font-size", "20");
   replacementEl.setAttribute("text-anchor", "middle");
   replacementEl.setAttribute("fill", "white");
-  replacementEl.textContent = "ok";
+  replacementEl.textContent = "test passed";
   const subs = {
     "TARGET_15988": replacementEl,
   };

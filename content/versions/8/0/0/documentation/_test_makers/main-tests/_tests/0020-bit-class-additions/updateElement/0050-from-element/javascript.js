@@ -11,6 +11,6 @@ bittyReady() {
   this.createElement("el_$HASH", `<div class="test">bug</div>`);
   const element = document.createElement("div");
   element.classList.add("test");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   this.send(element, "$SIGNAL_NAME");
 }

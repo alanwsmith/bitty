@@ -3,7 +3,7 @@
 signal_8F8DD(_, el) {
   const result = this.loadSVG("el_8F8DD");
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_signal_8F8DD");
 }

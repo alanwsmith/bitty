@@ -14,6 +14,6 @@ given_signal_5A3FB(_, __) {
   this.setLocalLogLevel("none");
   this.deleteFragment("el_5A3FB");
   const newElement = document.createElement("div");
-  newElement.innerHTML = "ok";
+  newElement.innerHTML = "test passed";
   this.send(newElement, "signal_5A3FB");
 }

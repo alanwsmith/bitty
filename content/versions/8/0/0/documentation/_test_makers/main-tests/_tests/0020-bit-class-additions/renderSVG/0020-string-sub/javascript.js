@@ -2,7 +2,7 @@
 
 $SIGNAL_NAME(_, el) {
   const subs = {
-    "TARGET_$HASH": "ok",
+    "TARGET_$HASH": "test passed",
   };
   const svg = this.renderSVG("el_$HASH", subs);
   // el.innerHTML = svg.querySelector("text").innerHTML;

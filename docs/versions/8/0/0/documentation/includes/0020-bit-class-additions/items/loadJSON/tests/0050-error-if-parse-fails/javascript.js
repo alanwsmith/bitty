@@ -10,6 +10,6 @@ given_signal_F4560(_, __) {
 signal_F4560(_, el) {
   const result = this.loadJSON("missing_key_signal_F4560", "invalid json");
   if (result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

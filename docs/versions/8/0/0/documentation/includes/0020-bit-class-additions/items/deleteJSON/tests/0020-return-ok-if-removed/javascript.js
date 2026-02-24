@@ -3,7 +3,7 @@
 signal_97846(_, el) {
   const result = this.deleteJSON("el_97846");
   if (result.ok === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -3,7 +3,7 @@
 signal_CA48A(_, el) {
   const result = this.updateFragment("el_CA48A", `<div></div>`);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

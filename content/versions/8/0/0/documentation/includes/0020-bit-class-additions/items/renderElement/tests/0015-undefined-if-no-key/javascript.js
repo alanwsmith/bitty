@@ -15,6 +15,6 @@ signal_30B5D(_, el) {
     this.renderElement("el_30B5D") === undefined &&
     this.logs[0].level === "error"
   ) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

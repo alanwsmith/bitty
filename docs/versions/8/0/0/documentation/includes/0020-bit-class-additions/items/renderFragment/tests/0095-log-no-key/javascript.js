@@ -4,7 +4,7 @@ signal_88717(_, el) {
 //  this.logs = [];
   this.renderFragment("el_88717");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

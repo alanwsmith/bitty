@@ -3,7 +3,7 @@
 signal_FAB09(_, el) {
   const result = this.updateFragment("el_FAB09", `<div>x</div><div>ok</div>`);
   if (result.ok === true && result.level === "info") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

@@ -3,7 +3,7 @@
 signal_31037(_, el) {
   const newEl = document.createElement("div");
   newEl.classList.add("test");
-  newEl.innerHTML = "ok";
+  newEl.innerHTML = "test passed";
   this.loadElement("el_31037", newEl);
   el.replaceWith(this.renderElement("el_31037"));
 }

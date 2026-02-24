@@ -5,7 +5,7 @@ signal_609BD(_, el) {
     misc: "objects are not valid fallbacks",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

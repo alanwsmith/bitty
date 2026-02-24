@@ -3,7 +3,7 @@
 signal_AD946(_, el) {
   const fragment = this.renderFragment("el_AD946");
   if (fragment === undefined) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

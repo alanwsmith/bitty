@@ -4,7 +4,7 @@ signal_1D251(_, el) {
   this.deleteSVG("el_1D251");
   const result = this.loadSVG("el_1D251");
   if (result.level === "error" && result.ok === false) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

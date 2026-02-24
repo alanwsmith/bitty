@@ -6,7 +6,7 @@ given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
   this.createJSON(
     "json_$SIGNAL_NAME",
-    { status: "ok" },
+    { status: "test passed" },
   );
   this.trigger("$SIGNAL_NAME");
 }

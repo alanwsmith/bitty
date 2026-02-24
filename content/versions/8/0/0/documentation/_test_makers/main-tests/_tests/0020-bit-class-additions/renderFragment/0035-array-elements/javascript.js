@@ -2,9 +2,9 @@
 
 $SIGNAL_NAME(_, el) {
   // const replacementEl = document.createElement("div");
-  // replacementEl.innerHTML = "ok";
+  // replacementEl.innerHTML = "test passed";
   // const replacementEl2 = document.createElement("div");
-  // replacementEl2.innerHTML = "ok";
+  // replacementEl2.innerHTML = "test passed";
   // const replacementArray = [
   //   replacementEl,
   //   replacementEl2,

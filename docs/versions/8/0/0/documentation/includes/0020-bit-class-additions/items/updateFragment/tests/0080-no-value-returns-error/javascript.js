@@ -3,7 +3,7 @@
 signal_00B0F(_, el) {
   const result = this.updateFragment("el_00B0F");
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

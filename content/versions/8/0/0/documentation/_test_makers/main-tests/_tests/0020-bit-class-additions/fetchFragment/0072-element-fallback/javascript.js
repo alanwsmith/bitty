@@ -8,7 +8,7 @@ async $SIGNAL_NAME(payload, el) {
 
 run_$SIGNAL_NAME(_, __) {
   const fallbackElement = document.createElement("div");
-  fallbackElement.innerHTML = "ok";
+  fallbackElement.innerHTML = "test passed";
   const url = "/intentionally-missing-file.html";
   this.send(
     { url: url, fallback: fallbackElement },

@@ -2,7 +2,7 @@
 
 signal_4375F(_, el) {
   const subs = {
-    "TARGET_4375F": "ok",
+    "TARGET_4375F": "test passed",
   };
   const svg = this.renderSVG("el_4375F", subs);
   // el.innerHTML = svg.querySelector("text").innerHTML;

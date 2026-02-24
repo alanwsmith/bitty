@@ -3,7 +3,7 @@
 $SIGNAL_NAME(_, el) {
   const replacementEl = document.createElement("div");
   replacementEl.classList.add("test");
-  replacementEl.innerHTML = "ok";
+  replacementEl.innerHTML = "test passed";
   const subs = {
     "TARGET_$HASH": replacementEl,
   };

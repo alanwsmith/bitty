@@ -1,5 +1,5 @@
 signal_CE33E(_, el) {
-  el.setData("updated", "ok");
+  el.setData("updated", "test passed");
   this.trigger("verify_signal_CE33E");
 }
 

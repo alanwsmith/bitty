@@ -3,7 +3,7 @@
 async signal_F9E7D(url, el) {
   const result = await this.fetchFragment("el_F9E7D", url);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

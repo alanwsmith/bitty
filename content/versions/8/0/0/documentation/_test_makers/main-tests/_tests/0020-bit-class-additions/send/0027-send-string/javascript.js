@@ -1,5 +1,5 @@
 bittyReady() {
-  this.send("ok", "$SIGNAL_NAME");
+  this.send("test passed", "$SIGNAL_NAME");
 }
 
 $SIGNAL_NAME(payload, el) {

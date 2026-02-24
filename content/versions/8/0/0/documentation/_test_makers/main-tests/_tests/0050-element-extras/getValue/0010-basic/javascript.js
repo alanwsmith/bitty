@@ -1,5 +1,5 @@
 $SIGNAL_NAME(_, el) {
-  if (el.getValue() === "ok") {
+  if (el.getValue() === "test passed") {
     this.trigger("verify_$SIGNAL_NAME");
   }
 }

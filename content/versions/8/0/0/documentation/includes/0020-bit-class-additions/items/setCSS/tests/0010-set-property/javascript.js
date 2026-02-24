@@ -12,6 +12,6 @@ verify_signal_E01A5(_, el) {
     .style
     .getPropertyValue("--el-E01A5");
   if (gotValue === "crimson") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }

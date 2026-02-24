@@ -1,5 +1,5 @@
 signal_BEA93(_, el) {
-  if (el.getValue() === "ok") {
+  if (el.getValue() === "test passed") {
     this.trigger("verify_signal_BEA93");
   }
 }

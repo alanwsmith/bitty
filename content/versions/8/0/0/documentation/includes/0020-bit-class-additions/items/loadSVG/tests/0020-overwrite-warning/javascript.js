@@ -3,7 +3,7 @@
 signal_2AB87(_, el) {
   const result = this.loadSVG("el_2AB87");
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
   this.trigger("view_signal_2AB87");
 }

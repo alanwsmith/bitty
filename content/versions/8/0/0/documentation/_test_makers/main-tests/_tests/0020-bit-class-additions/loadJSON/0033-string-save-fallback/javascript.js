@@ -3,7 +3,7 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  const fallback = `{ "status": "ok" }`;
+  const fallback = `{ "status": "test passed" }`;
   const result = this.loadJSON("data_$SIGNAL_NAME", fallback);
   this.trigger("$SIGNAL_NAME");
 }

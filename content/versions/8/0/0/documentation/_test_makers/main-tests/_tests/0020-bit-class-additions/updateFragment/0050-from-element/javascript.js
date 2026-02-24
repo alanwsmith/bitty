@@ -12,6 +12,6 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   const element = document.createElement("div");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   this.send(element, "$SIGNAL_NAME");
 }

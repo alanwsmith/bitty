@@ -4,7 +4,7 @@ signal_2B80D(_, el) {
   // const invalidJSON = "this is not valid JSON";
   // const result = this.createJSON("el_2B80D", invalidJSON);
   // if (result.ok === false) {
-  //   el.innerHTML = "ok";
+  //   el.innerHTML = "test passed";
   // }
 }
 

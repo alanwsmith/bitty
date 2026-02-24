@@ -3,7 +3,7 @@
 async signal_C7878(url, el) {
   const result = await this.fetchFragment("el_C7878", url);
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

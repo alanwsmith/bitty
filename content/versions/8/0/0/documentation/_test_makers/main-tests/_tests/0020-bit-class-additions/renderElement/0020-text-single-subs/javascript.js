@@ -2,7 +2,7 @@
 
 $SIGNAL_NAME(_, el) {
   const subs = {
-    "TARGET_$HASH": "ok",
+    "TARGET_$HASH": "test passed",
   };
   el.replaceWith(
     this.renderElement("el_$HASH", subs),

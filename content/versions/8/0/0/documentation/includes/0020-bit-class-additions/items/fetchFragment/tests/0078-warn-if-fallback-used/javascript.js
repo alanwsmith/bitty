@@ -7,7 +7,7 @@ async signal_EEB5B(payload, el) {
     payload.fallback,
   );
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   } else {
     el.innerHTML = "bug";
   }

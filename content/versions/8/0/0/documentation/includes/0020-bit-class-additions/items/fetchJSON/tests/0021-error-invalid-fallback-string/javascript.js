@@ -5,7 +5,7 @@ async signal_8E522(_, el) {
   const fallback = `invalid json`;
   const result = await this.fetchJSON("el_8E522", url, fallback);
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 

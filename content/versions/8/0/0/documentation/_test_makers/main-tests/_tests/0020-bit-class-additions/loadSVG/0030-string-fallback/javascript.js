@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(fallback, el) {
+$SIGNAL_NAME(fallback, el) {
   this.loadSVG(this.#key, fallback);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -24,5 +24,5 @@ given_$SIGNAL_NAME(_, __) {
 </svg>`;
   this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
-  this.send(fallback, "test_$SIGNAL_NAME");
+  this.send(fallback, "$SIGNAL_NAME");
 }

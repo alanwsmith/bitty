@@ -1,4 +1,4 @@
-test_signal_EB8D8(ev, el) {
+signal_EB8D8(ev, el) {
   if (ev.getValueAsFloat() === 2.2) {
     el.innerHTML = "ok";
   }

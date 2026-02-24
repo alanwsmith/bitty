@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   if (el.getDataAsFloat("needle") === 8.2) {
     el.innerHTML = "ok";
   }
@@ -6,5 +6,5 @@ test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

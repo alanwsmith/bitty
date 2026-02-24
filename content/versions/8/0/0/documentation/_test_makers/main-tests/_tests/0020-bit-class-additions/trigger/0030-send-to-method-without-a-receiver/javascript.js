@@ -2,10 +2,10 @@
 #gotNull = false;
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }
 
-test_$SIGNAL_NAME(_, x) {
+$SIGNAL_NAME(_, x) {
   this.#gotSignal = true;
   if (x === null) {
     this.#gotNull = true;

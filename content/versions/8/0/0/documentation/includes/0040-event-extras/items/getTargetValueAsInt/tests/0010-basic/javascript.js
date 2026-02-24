@@ -1,4 +1,4 @@
-test_signal_0CF9A(ev, el) {
+signal_0CF9A(ev, el) {
   if (ev.getTargetValueAsInt("needle") === 9) {
     el.innerHTML = "ok";
   }

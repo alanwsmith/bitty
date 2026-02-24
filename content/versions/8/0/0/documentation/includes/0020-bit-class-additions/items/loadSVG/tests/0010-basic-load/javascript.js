@@ -1,6 +1,6 @@
 #key = "svg_signal_2D8D5";
 
-test_signal_2D8D5(_, el) {
+signal_2D8D5(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -25,5 +25,5 @@ given_signal_2D8D5(_, __) {
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
-  this.trigger("test_signal_2D8D5");
+  this.trigger("signal_2D8D5");
 }

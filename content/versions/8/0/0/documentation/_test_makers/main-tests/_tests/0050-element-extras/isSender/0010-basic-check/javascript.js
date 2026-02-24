@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   if (el.isSender() === true) {
     el.innerHTML = "ok";
   }

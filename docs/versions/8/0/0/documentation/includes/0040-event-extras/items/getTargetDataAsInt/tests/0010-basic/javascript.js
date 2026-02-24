@@ -1,4 +1,4 @@
-test_signal_727C1(ev, el) {
+signal_727C1(ev, el) {
   if (ev.getTargetDataAsInt("needle") === 4) {
     el.innerHTML = "ok";
   }

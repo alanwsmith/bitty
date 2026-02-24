@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(replacements, el) {
+$SIGNAL_NAME(replacements, el) {
   const subs = {
     "TARGET_$HASH": replacements,
   };
@@ -47,5 +47,5 @@ TARGET_$HASH
   const replacements = [replacementEl, replacementEl2];
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(replacements, "test_$SIGNAL_NAME");
+  this.send(replacements, "$SIGNAL_NAME");
 }

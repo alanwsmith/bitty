@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(fragment, el) {
+$SIGNAL_NAME(fragment, el) {
   this.updateFragment(this.#key, fragment);
   el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
 }
@@ -15,5 +15,5 @@ given_$SIGNAL_NAME(_, __) {
   const element = document.createElement("div");
   element.innerHTML = "ok";
   fragment.appendChild(element);
-  this.send(fragment, "test_$SIGNAL_NAME");
+  this.send(fragment, "$SIGNAL_NAME");
 }

@@ -1,6 +1,6 @@
 #key = "json_signal_8E522";
 
-async test_signal_8E522(_, el) {
+async signal_8E522(_, el) {
   const url = "/[@ file.parent @]/payloads/invalid-json.xjson";
   const fallback = `invalid json`;
   const result = await this.fetchJSON(this.#key, url, fallback);
@@ -12,5 +12,5 @@ async test_signal_8E522(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_8E522");
+  this.trigger("signal_8E522");
 }

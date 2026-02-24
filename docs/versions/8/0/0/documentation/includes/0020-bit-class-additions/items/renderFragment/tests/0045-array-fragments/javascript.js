@@ -1,6 +1,6 @@
 #key = "fragment_signal_C24F9";
 
-test_signal_C24F9(_, el) {
+signal_C24F9(_, el) {
   // const template = document.createElement("template");
   // template.innerHTML = "<div></div><div></div>";
   // const template2 = document.createElement("template");
@@ -24,5 +24,5 @@ bittyReady() {
 given_signal_C24F9(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div>TARGET_C24F9</div>`);
-  this.trigger("test_signal_C24F9");
+  this.trigger("signal_C24F9");
 }

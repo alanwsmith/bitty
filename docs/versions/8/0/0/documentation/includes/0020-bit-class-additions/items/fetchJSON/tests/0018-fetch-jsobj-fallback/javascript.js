@@ -1,6 +1,6 @@
 #key = "json_signal_C0D64";
 
-async test_signal_C0D64(_, el) {
+async signal_C0D64(_, el) {
   const url = "/intentionally-missing-file.json";
   const fallback = { "status": "ok" };
   const result = await this.fetchJSON(this.#key, url, fallback);

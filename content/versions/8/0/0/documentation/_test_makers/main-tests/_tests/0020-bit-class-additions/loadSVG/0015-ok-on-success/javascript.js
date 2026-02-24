@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.loadSVG(this.#key);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
@@ -27,5 +27,5 @@ given_$SIGNAL_NAME(_, __) {
   this.deleteSVG(this.#key);
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

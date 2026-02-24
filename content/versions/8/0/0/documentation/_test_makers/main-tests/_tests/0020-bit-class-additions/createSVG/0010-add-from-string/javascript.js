@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(input, el) {
+$SIGNAL_NAME(input, el) {
   this.createSVG(this.#key, input);
   const svg = this.renderSVG(this.#key);
   el.innerHTML = svg.querySelector("text").innerHTML;
@@ -18,5 +18,5 @@ bittyReady() {
       <rect width="100%" height="100%" fill="green" />
       <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
     </svg>`;
-  this.send(input, "test_$SIGNAL_NAME");
+  this.send(input, "$SIGNAL_NAME");
 }

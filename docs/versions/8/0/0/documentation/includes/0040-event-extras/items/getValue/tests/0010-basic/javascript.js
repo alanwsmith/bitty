@@ -1,4 +1,4 @@
-test_signal_BC630(ev, el) {
+signal_BC630(ev, el) {
   if (ev.getValue() === "value_BC630") {
     el.innerHTML = "ok";
   }

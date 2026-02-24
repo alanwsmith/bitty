@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -16,5 +16,5 @@ async bittyReady() {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   await this.fetchSVG(this.#key, url);
   delete this._svg[this.#key];
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

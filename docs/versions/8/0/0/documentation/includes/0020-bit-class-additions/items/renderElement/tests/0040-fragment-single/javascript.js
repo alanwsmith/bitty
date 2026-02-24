@@ -1,6 +1,6 @@
 #key = "el_signal_00B6E";
 
-test_signal_00B6E(_, el) {
+signal_00B6E(_, el) {
   const subs = {
     "TARGET_00B6E": this.renderFragment(`replacement_00B6E`),
   };
@@ -16,5 +16,5 @@ bittyReady() {
     `replacement_00B6E`,
     `<div class="test">ok</div><div class="test">ok</div>`,
   );
-  this.trigger("test_signal_00B6E");
+  this.trigger("signal_00B6E");
 }

@@ -1,6 +1,6 @@
 #key = "svg_signal_2EB3B";
 
-test_signal_2EB3B(_, el) {
+signal_2EB3B(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").textContent;
@@ -27,5 +27,5 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.updateSVG(this.#key, update);
-  this.trigger("test_signal_2EB3B");
+  this.trigger("signal_2EB3B");
 }

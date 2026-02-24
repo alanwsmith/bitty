@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "https://www.example.com";
   const options = {
     fetchOptions: {
@@ -19,5 +19,5 @@ async test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

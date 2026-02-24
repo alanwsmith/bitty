@@ -1,6 +1,6 @@
 #key = "fragment_signal_88717";
 
-test_signal_88717(_, el) {
+signal_88717(_, el) {
 //  this.logs = [];
   this.renderFragment(this.#key);
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
@@ -17,5 +17,5 @@ bittyReady() {
 given_signal_88717(_, __) {
   this.setLocalLogLevel("none");
   this.deleteFragment(this.#key);
-  this.trigger("test_signal_88717");
+  this.trigger("signal_88717");
 }

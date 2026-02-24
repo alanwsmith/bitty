@@ -1,6 +1,6 @@
 #key = "el_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
   const result = await this.fetchElement(this.#key, url);
   if (
@@ -13,5 +13,5 @@ async test_$SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

@@ -1,4 +1,4 @@
-test_signal_CE356(_, el) {
+signal_CE356(_, el) {
   if (el.isSender() === true) {
     el.innerHTML = "ok";
   }

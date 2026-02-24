@@ -1,6 +1,6 @@
 #key = "fragment_signal_378AE";
 
-test_signal_378AE(_, el) {
+signal_378AE(_, el) {
   // const subs = {
   //   "TARGET_378AE": ["o", "k"],
   // };
@@ -16,5 +16,5 @@ bittyReady() {
 given_signal_378AE(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div><div>TARGET_378AE</div>`);
-  this.trigger("test_signal_378AE");
+  this.trigger("signal_378AE");
 }

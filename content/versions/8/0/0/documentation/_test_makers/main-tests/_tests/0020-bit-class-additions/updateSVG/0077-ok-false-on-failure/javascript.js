@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.updateSVG(this.#key, {
     misc: "not a valid input for an svg",
   });
@@ -19,5 +19,5 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">bug</text>
 </svg>`;
   this.createSVG(this.#key, input);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

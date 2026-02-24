@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(ev, el) {
+$SIGNAL_NAME(ev, el) {
   el.innerHTML = ev.getTargetData("needle");
 }
 

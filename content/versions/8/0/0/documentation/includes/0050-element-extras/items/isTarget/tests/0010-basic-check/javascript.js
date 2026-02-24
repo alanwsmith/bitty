@@ -1,4 +1,4 @@
-test_signal_45333(_, el) {
+signal_45333(_, el) {
   if (el.isTarget() === true) {
     el.innerHTML = "ok";
   }

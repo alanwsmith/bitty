@@ -1,4 +1,4 @@
-test_signal_2500D(ev, el) {
+signal_2500D(ev, el) {
   el.innerHTML = ev.getTargetData("needle");
 }
 

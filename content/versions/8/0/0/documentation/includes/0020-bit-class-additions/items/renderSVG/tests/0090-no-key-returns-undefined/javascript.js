@@ -1,6 +1,6 @@
 #key = "svg_signal_01959";
 
-test_signal_01959(_, el) {
+signal_01959(_, el) {
   const fragment = this.renderSVG(this.#key);
   if (fragment === undefined) {
     el.innerHTML = "ok";
@@ -11,5 +11,5 @@ test_signal_01959(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
-  this.trigger("test_signal_01959");
+  this.trigger("signal_01959");
 }

@@ -6,10 +6,10 @@ bittyReady() {
 
 given_signal_30B5D(_, __) {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_30B5D");
+  this.trigger("signal_30B5D");
 }
 
-test_signal_30B5D(_, el) {
+signal_30B5D(_, el) {
   this.logs = [];
   if (
     this.renderElement(this.#key) === undefined &&

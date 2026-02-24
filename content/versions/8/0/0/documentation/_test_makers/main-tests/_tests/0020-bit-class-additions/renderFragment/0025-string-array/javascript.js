@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   // const subs = {
   //   "TARGET_$HASH": ["o", "k"],
   // };
@@ -16,5 +16,5 @@ bittyReady() {
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div><div>TARGET_$HASH</div>`);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

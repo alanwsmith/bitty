@@ -3,10 +3,10 @@ bittyReady() {
 }
 
 given_$SIGNAL_NAME(_, __) {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   const result = await this.fetchJSON("data_$SIGNAL_NAME", url);
   if (result.ok === true) {

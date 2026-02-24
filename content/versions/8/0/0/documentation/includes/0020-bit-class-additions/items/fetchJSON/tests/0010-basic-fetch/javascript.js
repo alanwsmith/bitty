@@ -1,6 +1,6 @@
 #key = "json_signal_125F4";
 
-async test_signal_125F4(_, el) {
+async signal_125F4(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   await this.fetchJSON(this.#key, url);
 //  el.innerHTML = this.json[this.#key].status;
@@ -8,5 +8,5 @@ async test_signal_125F4(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_125F4");
+  this.trigger("signal_125F4");
 }

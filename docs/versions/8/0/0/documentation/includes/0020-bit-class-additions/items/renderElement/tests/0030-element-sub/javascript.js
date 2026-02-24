@@ -1,6 +1,6 @@
 #key = "el_signal_AB8CB";
 
-test_signal_AB8CB(_, el) {
+signal_AB8CB(_, el) {
   const replacementEl = document.createElement("div");
   replacementEl.classList.add("test");
   replacementEl.innerHTML = "ok";
@@ -15,5 +15,5 @@ test_signal_AB8CB(_, el) {
 
 bittyReady() {
   this.createElement(this.#key, `<div>TARGET_AB8CB</div>`);
-  this.trigger("test_signal_AB8CB");
+  this.trigger("signal_AB8CB");
 }

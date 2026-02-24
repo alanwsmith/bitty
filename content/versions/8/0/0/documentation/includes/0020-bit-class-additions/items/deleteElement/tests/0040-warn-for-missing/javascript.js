@@ -1,6 +1,6 @@
 #key = "el_signal_06635";
 
-test_signal_06635(_, el) {
+signal_06635(_, el) {
   const result = this.deleteElement(this.#key);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
@@ -11,5 +11,5 @@ test_signal_06635(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
-  this.trigger("test_signal_06635");
+  this.trigger("signal_06635");
 }

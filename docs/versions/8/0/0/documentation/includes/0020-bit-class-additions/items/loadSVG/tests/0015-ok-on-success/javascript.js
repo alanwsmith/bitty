@@ -1,6 +1,6 @@
 #key = "svg_signal_8F8DD";
 
-test_signal_8F8DD(_, el) {
+signal_8F8DD(_, el) {
   const result = this.loadSVG(this.#key);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
@@ -27,5 +27,5 @@ given_signal_8F8DD(_, __) {
   this.deleteSVG(this.#key);
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
-  this.trigger("test_signal_8F8DD");
+  this.trigger("signal_8F8DD");
 }

@@ -1,6 +1,6 @@
 #key = "key_signal_1521B";
 
-test_signal_1521B(input, el) {
+signal_1521B(input, el) {
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_1521B");
@@ -12,5 +12,5 @@ view_signal_1521B(svg, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_1521B");
+  this.trigger("signal_1521B");
 }

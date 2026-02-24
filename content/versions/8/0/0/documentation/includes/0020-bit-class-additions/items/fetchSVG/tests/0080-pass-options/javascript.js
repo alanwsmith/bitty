@@ -1,6 +1,6 @@
 #key = "svg_signal_D3610";
 
-async test_signal_D3610(_, el) {
+async signal_D3610(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   const options = {
     headers: {
@@ -15,5 +15,5 @@ async test_signal_D3610(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_D3610");
+  this.trigger("signal_D3610");
 }

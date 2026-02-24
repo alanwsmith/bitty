@@ -1,6 +1,6 @@
 #key = "el_signal_7572B";
 
-async test_signal_7572B(_, el) {
+async signal_7572B(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";
   const options = {
     headers: {
@@ -15,5 +15,5 @@ async test_signal_7572B(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_7572B");
+  this.trigger("signal_7572B");
 }

@@ -8,10 +8,10 @@ given_$SIGNAL_NAME(_, __) {
     "json_$SIGNAL_NAME",
     { status: "ok" },
   );
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.loadJSON("json_$SIGNAL_NAME");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = this.json["json_$SIGNAL_NAME"].status;

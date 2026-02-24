@@ -1,6 +1,6 @@
 #key = "element_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(newElement, el) {
+$SIGNAL_NAME(newElement, el) {
   this.updateElement(this.#key, newElement);
   el.replaceWith(this.renderElement(this.#key));
 }
@@ -12,5 +12,5 @@ bittyReady() {
   const element = document.createElement("div");
   element.classList.add("test");
   element.innerHTML = "ok";
-  this.send(element, "test_$SIGNAL_NAME");
+  this.send(element, "$SIGNAL_NAME");
 }

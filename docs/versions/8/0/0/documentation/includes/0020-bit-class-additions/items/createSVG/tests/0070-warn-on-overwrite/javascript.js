@@ -1,6 +1,6 @@
 #key = "svg_signal_FACB7";
 
-test_signal_FACB7(input, el) {
+signal_FACB7(input, el) {
   const result = this.createSVG(this.#key, input);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
@@ -16,5 +16,5 @@ vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(input, "test_signal_FACB7");
+  this.send(input, "signal_FACB7");
 }

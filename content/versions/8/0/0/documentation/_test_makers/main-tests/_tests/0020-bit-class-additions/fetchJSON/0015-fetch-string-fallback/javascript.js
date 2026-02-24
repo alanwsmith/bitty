@@ -1,6 +1,6 @@
 #key = "json_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "/intentionally-missing-file.json";
   const fallback = `{ "status": "ok" }`;
   const result = await this.fetchJSON(this.#key, url, fallback);

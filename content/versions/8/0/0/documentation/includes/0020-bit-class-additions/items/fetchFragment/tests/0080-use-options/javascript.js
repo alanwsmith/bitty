@@ -1,6 +1,6 @@
 #key = "fragment_signal_6F792";
 
-async test_signal_6F792(url, el) {
+async signal_6F792(url, el) {
   const options = {
     fetchOptions: {
       headers: {
@@ -15,5 +15,5 @@ async test_signal_6F792(url, el) {
 
 bittyReady() {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-  this.send(url, "test_signal_6F792");
+  this.send(url, "signal_6F792");
 }

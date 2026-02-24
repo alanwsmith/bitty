@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(element, el) {
+$SIGNAL_NAME(element, el) {
   this.updateFragment(this.#key, element);
   el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
 }
@@ -13,5 +13,5 @@ bittyReady() {
 given_$SIGNAL_NAME(_, __) {
   const element = document.createElement("div");
   element.innerHTML = "ok";
-  this.send(element, "test_$SIGNAL_NAME");
+  this.send(element, "$SIGNAL_NAME");
 }

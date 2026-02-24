@@ -1,6 +1,6 @@
 #key = "svg_signal_0EB22";
 
-test_signal_0EB22(subs, el) {
+signal_0EB22(subs, el) {
   const svg = this.renderSVG(this.#key, subs);
   const gotString = [
     // svg.querySelectorAll("text")[0].textContent,
@@ -36,5 +36,5 @@ TARGET_0EB22
   };
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(subs, "test_signal_0EB22");
+  this.send(subs, "signal_0EB22");
 }

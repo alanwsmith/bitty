@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const subs = {
     "TARGET_$HASH": ["o", "k"],
   };
@@ -22,5 +22,5 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

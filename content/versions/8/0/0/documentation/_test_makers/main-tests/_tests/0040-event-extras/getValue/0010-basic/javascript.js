@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(ev, el) {
+$SIGNAL_NAME(ev, el) {
   if (ev.getValue() === "value_$HASH") {
     el.innerHTML = "ok";
   }

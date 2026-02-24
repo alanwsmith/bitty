@@ -1,6 +1,6 @@
 #key = "json_signal_C2FB6";
 
-test_signal_C2FB6(_, el) {
+signal_C2FB6(_, el) {
   // const jsObject = { "status": "ok" };
   // this.createJSON(this.#key, jsObject);
   // el.innerHTML = this.json[this.#key].status;
@@ -8,5 +8,5 @@ test_signal_C2FB6(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_C2FB6");
+  this.trigger("signal_C2FB6");
 }

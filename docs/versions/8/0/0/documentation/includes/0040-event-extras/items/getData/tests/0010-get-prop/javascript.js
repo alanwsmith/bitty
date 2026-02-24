@@ -1,4 +1,4 @@
-test_signal_290C3(ev, el) {
+signal_290C3(ev, el) {
   el.innerHTML = ev.getData("needle");
 }
 

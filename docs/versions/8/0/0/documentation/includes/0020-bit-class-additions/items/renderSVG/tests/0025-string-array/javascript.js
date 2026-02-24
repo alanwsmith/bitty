@@ -1,6 +1,6 @@
 #key = "svg_signal_F7B2A";
 
-test_signal_F7B2A(_, el) {
+signal_F7B2A(_, el) {
   const subs = {
     "TARGET_F7B2A": ["o", "k"],
   };
@@ -22,5 +22,5 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_F7B2A");
+  this.trigger("signal_F7B2A");
 }

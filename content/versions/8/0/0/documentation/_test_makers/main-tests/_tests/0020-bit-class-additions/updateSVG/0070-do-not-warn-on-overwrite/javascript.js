@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(update, el) {
+$SIGNAL_NAME(update, el) {
   const result = this.updateSVG(this.#key, update);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
@@ -27,5 +27,5 @@ bittyReady() {
 <rect width="100%" height="100%" fill="green" />
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
-  this.send(update, "test_$SIGNAL_NAME");
+  this.send(update, "$SIGNAL_NAME");
 }

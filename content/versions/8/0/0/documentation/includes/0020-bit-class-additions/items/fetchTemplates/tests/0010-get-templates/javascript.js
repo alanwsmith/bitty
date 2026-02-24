@@ -1,6 +1,6 @@
 #key = "key_signal_A1A2F";
 
-async test_signal_A1A2F(input, el) {
+async signal_A1A2F(input, el) {
   const url = "/[@ file.parent @]/payloads/valid-templates/";
   await this.fetchTemplates(url);
   el.replaceWith(this.renderElement("elementTemplate"));
@@ -13,5 +13,5 @@ view_signal_A1A2F(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_A1A2F");
+  this.trigger("signal_A1A2F");
 }

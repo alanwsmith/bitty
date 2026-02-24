@@ -1,6 +1,6 @@
 #key = "svg_signal_CEDB1";
 
-test_signal_CEDB1(fallback, el) {
+signal_CEDB1(fallback, el) {
   this.loadSVG(this.#key, fallback);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -27,5 +27,5 @@ given_signal_CEDB1(_, __) {
   const fallback = template.content.querySelector("svg");
   this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
-  this.send(fallback, "test_signal_CEDB1");
+  this.send(fallback, "signal_CEDB1");
 }

@@ -1,6 +1,6 @@
 #key = "element_signal_BDBD6";
 
-test_signal_BDBD6(_, el) {
+signal_BDBD6(_, el) {
   const result = this.updateElement(this.#key, {
     key: "not a string, element, or document fragment",
   });
@@ -13,5 +13,5 @@ test_signal_BDBD6(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div></div>`);
-  this.trigger("test_signal_BDBD6");
+  this.trigger("signal_BDBD6");
 }

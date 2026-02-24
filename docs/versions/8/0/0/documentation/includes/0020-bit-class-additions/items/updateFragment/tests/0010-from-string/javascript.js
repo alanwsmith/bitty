@@ -1,6 +1,6 @@
 #key = "fragment_signal_5A45F";
 
-test_signal_5A45F(_, el) {
+signal_5A45F(_, el) {
   this.updateFragment(this.#key, `<div>x</div><div>ok</div>`);
   el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
 }
@@ -11,5 +11,5 @@ bittyReady() {
 }
 
 given_signal_5A45F(_, __) {
-  this.trigger("test_signal_5A45F");
+  this.trigger("signal_5A45F");
 }

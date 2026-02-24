@@ -1,6 +1,6 @@
 #key = "el_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const template = document.createElement("template");
   template.innerHTML = `<div class="test">ok</div>`;
   this.loadElement(this.#key, template.content);
@@ -11,5 +11,5 @@ test_$SIGNAL_NAME(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

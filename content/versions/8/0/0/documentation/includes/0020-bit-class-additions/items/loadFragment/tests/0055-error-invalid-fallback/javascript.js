@@ -1,6 +1,6 @@
 #key = "fragment_signal_99F17";
 
-test_signal_99F17(_, el) {
+signal_99F17(_, el) {
   const result = this.loadFragment(this.#key, {
     misc: "objects are not valid fallbacks",
   });
@@ -16,5 +16,5 @@ bittyReady() {
 
 given_signal_99F17(_, __) {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_99F17");
+  this.trigger("signal_99F17");
 }

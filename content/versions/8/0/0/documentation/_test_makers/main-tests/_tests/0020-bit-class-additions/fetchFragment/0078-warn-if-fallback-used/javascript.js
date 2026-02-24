@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(payload, el) {
+async $SIGNAL_NAME(payload, el) {
   const result = await this.fetchFragment(
     this.#key,
     payload.url,
@@ -20,6 +20,6 @@ run_$SIGNAL_NAME(_, __) {
   const url = "/intentionally-missing-file.html";
   this.send(
     { url: url, fallback: fallbackTemplate.content },
-    "test_$SIGNAL_NAME",
+    "$SIGNAL_NAME",
   );
 }

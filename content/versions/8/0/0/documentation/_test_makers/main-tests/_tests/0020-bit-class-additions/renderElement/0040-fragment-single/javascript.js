@@ -1,6 +1,6 @@
 #key = "el_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const subs = {
     "TARGET_$HASH": this.renderFragment(`replacement_$HASH`),
   };
@@ -16,5 +16,5 @@ bittyReady() {
     `replacement_$HASH`,
     `<div class="test">ok</div><div class="test">ok</div>`,
   );
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

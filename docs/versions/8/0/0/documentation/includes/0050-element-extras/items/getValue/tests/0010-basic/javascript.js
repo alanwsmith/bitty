@@ -1,4 +1,4 @@
-test_signal_BEA93(_, el) {
+signal_BEA93(_, el) {
   if (el.getValue() === "ok") {
     this.trigger("verify_signal_BEA93");
   }
@@ -10,5 +10,5 @@ verify_signal_BEA93(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_BEA93");
+  this.trigger("signal_BEA93");
 }

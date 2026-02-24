@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   const result = await this.fetchSVG(this.#key, url);
   if (result.ok === true) {
@@ -15,5 +15,5 @@ view_$SIGNAL_NAME(svg, el) {
 
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

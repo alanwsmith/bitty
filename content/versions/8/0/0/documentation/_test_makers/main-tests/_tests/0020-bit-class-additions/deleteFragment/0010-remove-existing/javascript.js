@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   this.deleteFragment(this.#key);
   if (this._fragment[this.#key] === undefined) {
     el.innerHTML = "ok";
@@ -15,5 +15,5 @@ bittyReady() {
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div></div>");
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

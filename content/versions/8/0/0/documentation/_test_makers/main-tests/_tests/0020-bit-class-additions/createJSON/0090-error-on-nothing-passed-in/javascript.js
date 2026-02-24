@@ -1,6 +1,6 @@
 #key = "json_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.createJSON(this.#key);
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
@@ -10,5 +10,5 @@ test_$SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

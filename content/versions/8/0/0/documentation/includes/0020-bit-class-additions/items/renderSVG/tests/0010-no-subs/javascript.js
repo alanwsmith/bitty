@@ -1,6 +1,6 @@
 #key = "svg_signal_57C32";
 
-test_signal_57C32(_, el) {
+signal_57C32(_, el) {
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_57C32");
@@ -19,5 +19,5 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_57C32");
+  this.trigger("signal_57C32");
 }

@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(fallbackFragment, el) {
+$SIGNAL_NAME(fallbackFragment, el) {
   this.loadFragment(this.#key, fallbackFragment);
   el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
 }
@@ -19,5 +19,5 @@ given_$SIGNAL_NAME(_, __) {
   fallbackElement2.innerHTML = "ok";
   fallbackFragment.appendChild(fallbackElement1);
   fallbackFragment.appendChild(fallbackElement2);
-  this.send(fallbackFragment, "test_$SIGNAL_NAME");
+  this.send(fallbackFragment, "$SIGNAL_NAME");
 }

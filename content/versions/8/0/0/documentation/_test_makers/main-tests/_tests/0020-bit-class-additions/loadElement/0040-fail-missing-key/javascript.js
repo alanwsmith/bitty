@@ -7,10 +7,10 @@ bittyReady() {
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
   this.deleteElement("el_$SIGNAL_NAME");
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.loadElement("el_$SIGNAL_NAME");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";

@@ -1,6 +1,6 @@
 #key = "element_signal_A83DA";
 
-async test_signal_A83DA(payload, el) {
+async signal_A83DA(payload, el) {
   await this.fetchElement(this.#key, payload.url, payload.fallback);
   el.replaceWith(this.renderElement(this.#key));
 }
@@ -13,6 +13,6 @@ run_signal_A83DA(_, __) {
   fallback.classList.add("manual-test");
   this.send(
     { url: url, fallback: fallback },
-    "test_signal_A83DA",
+    "signal_A83DA",
   );
 }

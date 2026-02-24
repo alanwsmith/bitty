@@ -1,6 +1,6 @@
 #key = "svg_signal_74651";
 
-async test_signal_74651(_, el) {
+async signal_74651(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   await this.fetchSVG(this.#key, url);
   const svg = this.renderSVG(this.#key);
@@ -14,5 +14,5 @@ view_signal_74651(svg, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_74651");
+  this.trigger("signal_74651");
 }

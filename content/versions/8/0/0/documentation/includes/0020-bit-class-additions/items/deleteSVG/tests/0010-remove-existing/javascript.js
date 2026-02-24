@@ -1,6 +1,6 @@
 #key = "svg_signal_CB6CF";
 
-test_signal_CB6CF(_, el) {
+signal_CB6CF(_, el) {
   this.deleteSVG(this.#key);
   if (this.renderSVG(this.#key) === undefined) {
     el.innerHTML = "ok";
@@ -16,5 +16,5 @@ vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_CB6CF");
+  this.trigger("signal_CB6CF");
 }

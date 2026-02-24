@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   if (el.getValue() === "ok") {
     this.trigger("verify_$SIGNAL_NAME");
   }
@@ -10,5 +10,5 @@ verify_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

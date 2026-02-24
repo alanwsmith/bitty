@@ -1,3 +1,3 @@
-async test_signal_C4991(_, el) {
+async signal_C4991(_, el) {
   await el.copyText();
 }

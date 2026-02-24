@@ -1,6 +1,6 @@
 #key = "fragment_signal_CA48A";
 
-test_signal_CA48A(_, el) {
+signal_CA48A(_, el) {
   const result = this.updateFragment(this.#key, `<div></div>`);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
@@ -15,5 +15,5 @@ bittyReady() {
 given_signal_CA48A(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div>`);
-  this.trigger("test_signal_CA48A");
+  this.trigger("signal_CA48A");
 }

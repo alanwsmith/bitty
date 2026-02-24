@@ -1,6 +1,6 @@
 #key = "el_signal_299D6";
 
-test_signal_299D6(_, el) {
+signal_299D6(_, el) {
   const result = this.deleteElement(this.#key);
   if (result.ok === true) {
     el.innerHTML = "ok";
@@ -11,5 +11,5 @@ test_signal_299D6(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div>ok</div>`);
-  this.trigger("test_signal_299D6");
+  this.trigger("signal_299D6");
 }

@@ -1,6 +1,6 @@
 #key = "fragment_signal_C09FC";
 
-test_signal_C09FC(_, el) {
+signal_C09FC(_, el) {
   const result = this.updateFragment(this.#key, {
     key: "not a string, element, or document fragment",
   });
@@ -16,5 +16,5 @@ bittyReady() {
 
 given_signal_C09FC(_, __) {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_C09FC");
+  this.trigger("signal_C09FC");
 }

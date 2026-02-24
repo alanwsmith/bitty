@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(ev, el) {
+$SIGNAL_NAME(ev, el) {
   if (ev.getTargetDataAsInt("needle") === 4) {
     el.innerHTML = "ok";
   }

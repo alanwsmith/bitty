@@ -1,6 +1,6 @@
 #key = "fragment_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(fallbackFragment, el) {
+$SIGNAL_NAME(fallbackFragment, el) {
   this.loadFragment(this.#key);
   el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
 }
@@ -15,5 +15,5 @@ given_$SIGNAL_NAME(_, __) {
   this.deleteFragment(this.#key);
   this.loadFragment(this.#key, "<div>ok</div>");
   delete this._fragment[this.#key];
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

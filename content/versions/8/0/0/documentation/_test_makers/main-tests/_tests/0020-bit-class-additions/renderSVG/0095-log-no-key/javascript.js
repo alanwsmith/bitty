@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   // this.logs = [];
   // this.renderSVG(this.#key);
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
@@ -12,5 +12,5 @@ test_$SIGNAL_NAME(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.deleteSVG(this.#key);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

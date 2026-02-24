@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   this.loadSVG(this.#key);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -25,5 +25,5 @@ given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

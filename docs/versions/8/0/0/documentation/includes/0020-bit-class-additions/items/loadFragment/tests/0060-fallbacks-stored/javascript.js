@@ -1,6 +1,6 @@
 #key = "fragment_signal_D027C";
 
-test_signal_D027C(fallbackFragment, el) {
+signal_D027C(fallbackFragment, el) {
   this.loadFragment(this.#key);
   el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
 }
@@ -15,5 +15,5 @@ given_signal_D027C(_, __) {
   this.deleteFragment(this.#key);
   this.loadFragment(this.#key, "<div>ok</div>");
   delete this._fragment[this.#key];
-  this.trigger("test_signal_D027C");
+  this.trigger("signal_D027C");
 }

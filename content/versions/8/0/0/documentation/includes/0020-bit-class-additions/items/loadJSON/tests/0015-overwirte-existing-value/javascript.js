@@ -8,10 +8,10 @@ given_signal_92D8A(_, __) {
     "json_signal_92D8A",
     { status: "ok" },
   );
-  this.trigger("test_signal_92D8A");
+  this.trigger("signal_92D8A");
 }
 
-test_signal_92D8A(_, el) {
+signal_92D8A(_, el) {
   const result = this.loadJSON("json_signal_92D8A");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = this.json["json_signal_92D8A"].status;

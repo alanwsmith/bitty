@@ -1,6 +1,6 @@
 #key = "fragment_signal_31065";
 
-test_signal_31065(_, el) {
+signal_31065(_, el) {
   // const replacementEl = document.createElement("div");
   // replacementEl.innerHTML = "ok";
   // const subs = {
@@ -18,5 +18,5 @@ bittyReady() {
 given_signal_31065(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div>TARGET_31065</div>`);
-  this.trigger("test_signal_31065");
+  this.trigger("signal_31065");
 }

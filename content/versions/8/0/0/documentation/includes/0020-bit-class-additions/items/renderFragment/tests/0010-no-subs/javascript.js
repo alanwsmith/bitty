@@ -1,6 +1,6 @@
 #key = "fragment_signal_FC310";
 
-test_signal_FC310(_, el) {
+signal_FC310(_, el) {
   const fragment = this.renderFragment(this.#key);
 //  el.innerHTML = fragment.children[1].innerHTML;
 }
@@ -13,5 +13,5 @@ bittyReady() {
 given_signal_FC310(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, `<div></div><div>ok</div>`);
-  this.trigger("test_signal_FC310");
+  this.trigger("signal_FC310");
 }

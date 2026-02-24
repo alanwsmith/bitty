@@ -1,6 +1,6 @@
 #key = "element_signal_E0312";
 
-test_signal_E0312(_, el) {
+signal_E0312(_, el) {
   const result = this.updateElement();
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
@@ -11,5 +11,5 @@ test_signal_E0312(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div></div>`);
-  this.trigger("test_signal_E0312");
+  this.trigger("signal_E0312");
 }

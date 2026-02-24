@@ -1,6 +1,6 @@
 #key = "fragment_signal_E279E";
 
-test_signal_E279E(_, el) {
+signal_E279E(_, el) {
   this.deleteFragment(this.#key);
   const result = this.loadFragment(this.#key);
   if (result.ok === false) {
@@ -16,5 +16,5 @@ bittyReady() {
 given_signal_E279E(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div></div>");
-  this.trigger("test_signal_E279E");
+  this.trigger("signal_E279E");
 }

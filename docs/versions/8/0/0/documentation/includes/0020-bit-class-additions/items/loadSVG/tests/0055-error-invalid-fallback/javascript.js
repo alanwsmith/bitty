@@ -1,6 +1,6 @@
 #key = "svg_signal_609BD";
 
-test_signal_609BD(_, el) {
+signal_609BD(_, el) {
   const result = this.loadSVG(this.#key, {
     misc: "objects are not valid fallbacks",
   });
@@ -12,5 +12,5 @@ test_signal_609BD(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_609BD");
+  this.trigger("signal_609BD");
 }

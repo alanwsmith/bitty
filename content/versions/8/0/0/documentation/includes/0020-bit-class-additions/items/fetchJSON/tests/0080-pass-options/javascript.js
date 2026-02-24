@@ -3,10 +3,10 @@ bittyReady() {
 }
 
 given_signal_8C969(_, __) {
-  this.trigger("test_signal_8C969");
+  this.trigger("signal_8C969");
 }
 
-async test_signal_8C969(_, el) {
+async signal_8C969(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   const options = {
     headers: {

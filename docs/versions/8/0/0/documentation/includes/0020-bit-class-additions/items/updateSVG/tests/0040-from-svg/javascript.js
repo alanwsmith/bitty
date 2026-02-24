@@ -1,6 +1,6 @@
 #key = "svg_signal_FE475";
 
-test_signal_FE475(update, el) {
+signal_FE475(update, el) {
   this.updateSVG(this.#key, update);
   const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -28,5 +28,5 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   const update = template.content.querySelector("svg");
-  this.send(update, "test_signal_FE475");
+  this.send(update, "signal_FE475");
 }

@@ -1,6 +1,6 @@
 #key = "svg_signal_4375F";
 
-test_signal_4375F(_, el) {
+signal_4375F(_, el) {
   const subs = {
     "TARGET_4375F": "ok",
   };
@@ -22,5 +22,5 @@ bittyReady() {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_4375F");
+  this.trigger("signal_4375F");
 }

@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-async test_$SIGNAL_NAME(_, el) {
+async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
   const options = {
     method: "POST",
@@ -13,5 +13,5 @@ async test_$SIGNAL_NAME(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

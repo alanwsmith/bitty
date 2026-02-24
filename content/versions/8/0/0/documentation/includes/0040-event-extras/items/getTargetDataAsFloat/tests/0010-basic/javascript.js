@@ -1,4 +1,4 @@
-test_signal_0E667(ev, el) {
+signal_0E667(ev, el) {
   if (ev.getTargetDataAsFloat("needle") === 3.4) {
     el.innerHTML = "ok";
   }

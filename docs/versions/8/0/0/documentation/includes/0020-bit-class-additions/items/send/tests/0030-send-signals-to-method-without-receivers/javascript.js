@@ -2,10 +2,10 @@
 #_status;
 
 bittyReady() {
-  this.send({ status: "ok" }, "test_signal_1EF08");
+  this.send({ status: "ok" }, "signal_1EF08");
 }
 
-test_signal_1EF08(payload, x) {
+signal_1EF08(payload, x) {
   this.#_status = payload.status;
   if (x === null) {
     this.#_elIsNull = true;

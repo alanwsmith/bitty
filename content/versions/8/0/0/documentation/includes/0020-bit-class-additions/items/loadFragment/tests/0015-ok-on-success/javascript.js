@@ -1,6 +1,6 @@
 #key = "fragment_signal_697D1";
 
-test_signal_697D1(_, el) {
+signal_697D1(_, el) {
   const result = this.loadFragment(this.#key);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
@@ -17,5 +17,5 @@ given_signal_697D1(_, __) {
   this.deleteFragment(this.#key);
   this.createFragment(this.#key, `<div>ok</div>`);
   delete this._fragment[this.#key];
-  this.trigger("test_signal_697D1");
+  this.trigger("signal_697D1");
 }

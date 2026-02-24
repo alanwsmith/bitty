@@ -1,4 +1,4 @@
-test_$SIGNAL_NAME(ev, el) {
+$SIGNAL_NAME(ev, el) {
   if (ev.getTargetValueAsFloat("needle") === 7.8) {
     el.innerHTML = "ok";
   }

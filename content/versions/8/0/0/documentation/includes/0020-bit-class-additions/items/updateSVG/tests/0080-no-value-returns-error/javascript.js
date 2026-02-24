@@ -1,6 +1,6 @@
 #key = "svg_signal_15A58";
 
-test_signal_15A58(_, el) {
+signal_15A58(_, el) {
   const result = this.updateSVG(this.#key);
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
@@ -17,5 +17,5 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">bug</text>
 </svg>`;
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_15A58");
+  this.trigger("signal_15A58");
 }

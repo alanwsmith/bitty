@@ -1,6 +1,6 @@
 #key = "fragment_signal_5A3FB";
 
-test_signal_5A3FB(newElement, el) {
+signal_5A3FB(newElement, el) {
   this.loadFragment(this.#key, newElement);
   el.innerHTML = this.renderFragment(this.#key).children[0].innerHTML;
 }
@@ -15,5 +15,5 @@ given_signal_5A3FB(_, __) {
   this.deleteFragment(this.#key);
   const newElement = document.createElement("div");
   newElement.innerHTML = "ok";
-  this.send(newElement, "test_signal_5A3FB");
+  this.send(newElement, "signal_5A3FB");
 }

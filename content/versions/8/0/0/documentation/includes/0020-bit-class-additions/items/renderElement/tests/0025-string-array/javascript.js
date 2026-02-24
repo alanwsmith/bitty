@@ -1,6 +1,6 @@
 #key = "el_signal_317AA";
 
-test_signal_317AA(_, el) {
+signal_317AA(_, el) {
   const subs = {
     "TARGET_317AA": ["o", "k"],
   };
@@ -12,5 +12,5 @@ test_signal_317AA(_, el) {
 
 bittyReady() {
   this.createElement(this.#key, `<div class="test">TARGET_317AA</div>`);
-  this.trigger("test_signal_317AA");
+  this.trigger("signal_317AA");
 }

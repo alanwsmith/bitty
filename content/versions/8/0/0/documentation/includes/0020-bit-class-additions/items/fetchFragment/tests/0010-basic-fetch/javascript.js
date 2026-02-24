@@ -1,6 +1,6 @@
 #key = "fragment_signal_E47B8";
 
-async test_signal_E47B8(url, el) {
+async signal_E47B8(url, el) {
   await this.fetchFragment(this.#key, url);
   el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
 }
@@ -12,5 +12,5 @@ bittyReady() {
 
 given_signal_E47B8(_, __) {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-  this.send(url, "test_signal_E47B8");
+  this.send(url, "signal_E47B8");
 }

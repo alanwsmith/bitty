@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(input, el) {
+$SIGNAL_NAME(input, el) {
   const result = this.createSVG(this.#key, input);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
@@ -16,5 +16,5 @@ vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(input, "test_$SIGNAL_NAME");
+  this.send(input, "$SIGNAL_NAME");
 }

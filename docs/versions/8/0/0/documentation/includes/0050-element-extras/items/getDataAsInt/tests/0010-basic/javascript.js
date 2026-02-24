@@ -1,4 +1,4 @@
-test_signal_3BBCF(_, el) {
+signal_3BBCF(_, el) {
   if (el.getDataAsInt("needle") === 3030) {
     el.innerHTML = "ok";
   }
@@ -6,5 +6,5 @@ test_signal_3BBCF(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_3BBCF");
+  this.trigger("signal_3BBCF");
 }

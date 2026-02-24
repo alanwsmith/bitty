@@ -1,6 +1,6 @@
 #key = "svg_signal_DC5B2";
 
-test_signal_DC5B2(subs, el) {
+signal_DC5B2(subs, el) {
   const svg = this.renderSVG(this.#key, subs);
   // el.innerHTML = svg.querySelector("text").textContent;
   // this.send(svg, "view_signal_DC5B2");
@@ -25,5 +25,5 @@ TARGET_DC5B2
   };
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(subs, "test_signal_DC5B2");
+  this.send(subs, "signal_DC5B2");
 }

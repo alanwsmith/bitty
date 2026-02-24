@@ -1,6 +1,6 @@
 #key = "fragment_signal_0CCFB";
 
-test_signal_0CCFB(_, el) {
+signal_0CCFB(_, el) {
   this.loadFragment(this.#key);
   el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
 }
@@ -14,5 +14,5 @@ async given_signal_0CCFB(_, __) {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
   await this.fetchFragment(this.#key, url);
   delete this._fragment[this.#key];
-  this.trigger("test_signal_0CCFB");
+  this.trigger("signal_0CCFB");
 }

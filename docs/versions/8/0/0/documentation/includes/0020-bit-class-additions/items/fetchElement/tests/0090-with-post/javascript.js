@@ -1,6 +1,6 @@
 #key = "el_signal_6B398";
 
-async test_signal_6B398(_, el) {
+async signal_6B398(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";
   const options = {
     method: "POST",
@@ -13,5 +13,5 @@ async test_signal_6B398(_, el) {
 
 
 bittyReady() {
-  this.trigger("test_signal_6B398");
+  this.trigger("signal_6B398");
 }

@@ -1,6 +1,6 @@
 #key = "fragment_signal_5D60F";
 
-test_signal_5D60F(_, el) {
+signal_5D60F(_, el) {
   this.loadFragment(this.#key);
   el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
 }
@@ -14,5 +14,5 @@ given_signal_5D60F(_, __) {
   this.setLocalLogLevel("none");
   this.createFragment(this.#key, "<div>ok</div>");
   delete this._fragment[this.#key];
-  this.trigger("test_signal_5D60F");
+  this.trigger("signal_5D60F");
 }

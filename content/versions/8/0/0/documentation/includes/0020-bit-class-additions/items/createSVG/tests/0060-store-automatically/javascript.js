@@ -1,6 +1,6 @@
 #key = "svg_signal_D4DA1";
 
-test_signal_D4DA1(_, el) {
+signal_D4DA1(_, el) {
   // this.loadSVG(this.#key);
   // const svg = this.renderSVG(this.#key);
   // el.innerHTML = svg.querySelector("text").innerHTML;
@@ -22,5 +22,5 @@ bittyReady() {
   this.deleteSVG(this.#key);
   this.createSVG(this.#key, input);
   delete this._svg[this.#key];
-  this.trigger("test_signal_D4DA1");
+  this.trigger("signal_D4DA1");
 }

@@ -1,6 +1,6 @@
 #key = "svg_signal_226E6";
 
-test_signal_226E6(_, el) {
+signal_226E6(_, el) {
   const result = this.createSVG();
   // if (result.ok === false && result.level === "error") {
   //   el.innerHTML = "ok";
@@ -10,5 +10,5 @@ test_signal_226E6(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.trigger("test_signal_226E6");
+  this.trigger("signal_226E6");
 }

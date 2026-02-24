@@ -1,6 +1,6 @@
 #key = "element_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const result = this.updateElement(this.#key, {
     key: "not a string, element, or document fragment",
   });
@@ -13,5 +13,5 @@ test_$SIGNAL_NAME(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.createElement(this.#key, `<div></div>`);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

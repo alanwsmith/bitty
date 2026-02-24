@@ -3,10 +3,10 @@ bittyReady() {
 }
 
 given_signal_BDA65(_, __) {
-  this.trigger("test_signal_BDA65");
+  this.trigger("signal_BDA65");
 }
 
-async test_signal_BDA65(_, el) {
+async signal_BDA65(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   const options = {
     method: "POST",

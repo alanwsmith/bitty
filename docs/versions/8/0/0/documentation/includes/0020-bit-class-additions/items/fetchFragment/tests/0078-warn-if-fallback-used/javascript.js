@@ -1,6 +1,6 @@
 #key = "fragment_signal_EEB5B";
 
-async test_signal_EEB5B(payload, el) {
+async signal_EEB5B(payload, el) {
   const result = await this.fetchFragment(
     this.#key,
     payload.url,
@@ -20,6 +20,6 @@ run_signal_EEB5B(_, __) {
   const url = "/intentionally-missing-file.html";
   this.send(
     { url: url, fallback: fallbackTemplate.content },
-    "test_signal_EEB5B",
+    "signal_EEB5B",
   );
 }

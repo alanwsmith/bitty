@@ -1,6 +1,6 @@
 #key = "svg_$SIGNAL_NAME";
 
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   this.deleteSVG(this.#key);
   const result = this.loadSVG(this.#key);
   if (result.level === "error" && result.ok === false) {
@@ -17,5 +17,5 @@ vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_$SIGNAL_NAME");
+  this.trigger("$SIGNAL_NAME");
 }

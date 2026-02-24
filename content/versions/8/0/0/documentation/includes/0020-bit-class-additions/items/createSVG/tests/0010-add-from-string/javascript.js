@@ -1,6 +1,6 @@
 #key = "svg_signal_58C94";
 
-test_signal_58C94(input, el) {
+signal_58C94(input, el) {
   this.createSVG(this.#key, input);
   const svg = this.renderSVG(this.#key);
   el.innerHTML = svg.querySelector("text").innerHTML;
@@ -18,5 +18,5 @@ bittyReady() {
       <rect width="100%" height="100%" fill="green" />
       <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
     </svg>`;
-  this.send(input, "test_signal_58C94");
+  this.send(input, "signal_58C94");
 }

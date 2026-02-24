@@ -1,6 +1,6 @@
 #key = "el_signal_31037";
 
-test_signal_31037(_, el) {
+signal_31037(_, el) {
   const newEl = document.createElement("div");
   newEl.classList.add("test");
   newEl.innerHTML = "ok";
@@ -12,5 +12,5 @@ test_signal_31037(_, el) {
 bittyReady() {
   this.setLocalLogLevel("none");
   this.deleteElement(this.#key);
-  this.trigger("test_signal_31037");
+  this.trigger("signal_31037");
 }

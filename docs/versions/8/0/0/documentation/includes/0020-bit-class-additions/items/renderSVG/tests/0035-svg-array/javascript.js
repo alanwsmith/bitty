@@ -1,6 +1,6 @@
 #key = "svg_signal_697E1";
 
-test_signal_697E1(replacements, el) {
+signal_697E1(replacements, el) {
   const subs = {
     "TARGET_697E1": replacements,
   };
@@ -47,5 +47,5 @@ TARGET_697E1
   const replacements = [replacementEl, replacementEl2];
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.send(replacements, "test_signal_697E1");
+  this.send(replacements, "signal_697E1");
 }

@@ -1,6 +1,6 @@
 #key = "svg_signal_2AB87";
 
-test_signal_2AB87(_, el) {
+signal_2AB87(_, el) {
   const result = this.loadSVG(this.#key);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
@@ -25,5 +25,5 @@ given_signal_2AB87(_, __) {
 </svg>`;
   this.setLocalLogLevel("none");
   this.createSVG(this.#key, input);
-  this.trigger("test_signal_2AB87");
+  this.trigger("signal_2AB87");
 }

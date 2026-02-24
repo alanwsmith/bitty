@@ -38,21 +38,11 @@ class BittyJs extends HTMLElement {
       return { ok: false };
     };
     target.error = this._error.bind(target);
-    target.fetchElement = () => {
-      return { ok: false };
-    };
-    target.fetchFragment = () => {
-      return { ok: false };
-    };
-    target.fetchJSON = () => {
-      return { ok: false };
-    };
-    target.fetchSVG = () => {
-      return { ok: false };
-    };
-    target.fetchTemplates = () => {
-      return { ok: false };
-    };
+    target.fetchElement = this._fetchElement.bind(target);
+    target.fetchFragment = this._fetchFragment.bind(target);
+    target.fetchJSON = this._fetchJSON.bind(target);
+    target.fetchSVG = this._fetchSVG.bind(target);
+    target.fetchTemplates = this._fetchTemplates.bind(target);
     target.getDataAsFloat = () => {};
     target.getDataAsInt = () => {};
     target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
@@ -61,6 +51,7 @@ class BittyJs extends HTMLElement {
       target,
     );
     target.info = this._info.bind(target);
+    target.ingestScriptTags = this._ingestScriptTags.bind(target);
     target.loadElement = this._loadElement.bind(target);
     target.loadFragment = this._loadFragment.bind(target);
     target.loadJSON = this._loadJSON.bind(target);
@@ -170,6 +161,23 @@ class BittyJs extends HTMLElement {
         console.warn(
           `[${this.timestamp(payload.timestamp)}] ${
             payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+        );
+      } else if (checkIndex === 3) {
+        console.info(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+        );
+      } else if (checkIndex === 4) {
+        console.debug(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+        );
+      } else if (checkIndex === 5) {
+        console.trace(
+          `[${this.timestamp(payload.timestamp)}] $.messages.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else {
@@ -432,29 +440,30 @@ class BittyJs extends HTMLElement {
   }
 
   _deleteElement(key) {
-    // const storageKey = `bittyElement_${key}`;
-    // if (
-    //   localStorage.getItem(storageKey) === null &&
-    //   this._element[key] === undefined
-    // ) {
-    //   return this.addLog(
-    //     "warn",
-    //     "deleteElement",
-    //     true,
-    //     `No existing element with '${key}' available to remove.`,
-    //     null,
-    //   );
-    // } else {
-    //   localStorage.removeItem(storageKey);
-    //   delete this._element[key];
-    //   return this.addLog(
-    //     "info",
-    //     "deleteElement",
-    //     true,
-    //     `Removed element with key '${key}'`,
-    //     null,
-    //   );
-    // }
+    const storageKey = `bittyElement_${key}`;
+    const details = {
+      level: "info",
+      key: "deleteElement",
+      ok: true,
+      messages: [],
+    };
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this._element[key] === undefined
+    ) {
+      details.level = "warn";
+      details.messages.push(
+        `No existing element with '${key}' available to remove.`,
+      );
+      return this.addLog(details);
+    } else {
+      localStorage.removeItem(storageKey);
+      delete this._element[key];
+      details.messages.push(
+        `Removed element with key '${key}'`,
+      );
+      return this.addLog(details);
+    }
   }
 
   _deleteFragment(key) {
@@ -621,13 +630,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._element[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   async _fetchFragment(key, url, fallback = null, options = {}) {
@@ -699,25 +702,16 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._fragment[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   async _fetchJSON(key, url, fallback = null, options = {}) {
     const storageKey = `bittyJSON_${key}`;
-    // TODO: Update this methods so everything
-    // uses `details`
     const details = {
       level: "info",
       key: "fetchJSON",
       ok: true,
       messages: [],
-      extraInfo: null,
     };
     let response = await fetch(url, options);
     try {
@@ -726,12 +720,9 @@ class BittyJs extends HTMLElement {
           const json = await response.json();
           if (this.json[key] !== undefined) {
             this.json[key] = json;
-            return this.addLog(
-              "warn",
-              "fetchJSON",
-              true,
+            details.level = "warn";
+            details.messages.push(
               `Overwrote existing key '${key}' with JSON fetched from '${url}'`,
-              null,
             );
           } else {
             this.json[key] = json;
@@ -772,29 +763,22 @@ class BittyJs extends HTMLElement {
             details.messages(`Could not parse fallback for key '${key}'.`);
           }
         } else {
-          return this.addLog(
-            "error",
-            "fetchJSON",
-            false,
+          details.level = "error";
+          details.ok = false;
+          details.extraInfo = response;
+          details.messages.push(
             `Error fetching JSON from '${url}' for key '${key}'`,
-            {
-              redirect: response.redirect,
-              status: response.status,
-              statusText: response.statusText,
-              type: response.type,
-              url: response.url,
-            },
           );
+          return this.addLog(details);
         }
       }
     } catch (error) {
-      return this.addLog(
-        "error",
-        "fetchJSON",
-        false,
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
         `Error fetching JSON from '${url}' for key '${key}'`,
-        error.toString(),
       );
+      details.extraInfo = error;
     }
     if (details.ok === true) {
       localStorage.setItem(
@@ -802,13 +786,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this.json[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   async _fetchSVG(key, url, fallback = null, options = {}) {
@@ -871,13 +849,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._svg[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   async _fetchTemplates(url, options = {}) {
@@ -906,13 +878,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       // todo
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   getGlobalLogLevel() {
@@ -937,7 +903,7 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  ingestScriptTags(root) {
+  _ingestScriptTags(root) {
     root.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {
         try {
@@ -1335,14 +1301,20 @@ class BittyJs extends HTMLElement {
   }
 
   _renderElement(key, subs = {}) {
+    const details = {
+      level: "info",
+      from: "renderElement",
+      ok: true,
+      messages: [],
+    };
+
     if (this._element[key] === undefined) {
-      console.log("TODO: update _renderElement here");
-      // this.addLog(
-      //   "error",
-      //   "renderElement",
-      //   false,
-      //   `Attempted to render non-existing element using key '${key}'`,
-      // );
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Attempted to render non-existing element using key '${key}'`,
+      );
+      this.addLog(details);
       return undefined;
     } else {
       let content = this._element[key];
@@ -1417,11 +1389,18 @@ class BittyJs extends HTMLElement {
   }
 
   _renderSVG(key, subs = {}) {
+    const details = {
+      level: "info",
+      key: "renderSVG",
+      ok: true,
+      messages: [],
+    };
     if (this._svg[key] === undefined) {
-      console.log("TODO: update _renderSVG with log message");
-      // this.addLog(
-      //   `Attempted to render non-existing SVG using key '${key}'`,
-      // );
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `Attempted to render non-existing SVG using key '${key}'`,
+      );
       return undefined;
     } else {
       let content = this._svg[key];
@@ -1474,24 +1453,27 @@ class BittyJs extends HTMLElement {
 
   _saveElement(key) {
     if (this.element[key] === undefined) {
-      return this.addLog(
-        "error",
-        "saveElement",
-        false,
-        `Tried to save an element with key '${key}', but it does not exist.`,
-      );
+      console.log("TODO: Add log for _saveElement having no key");
+      // return this.addLog(
+      //   "error",
+      //   "saveElement",
+      //   false,
+      //   `Tried to save an element with key '${key}', but it does not exist.`,
+      // );
     }
     const storageKey = `bittyElement_${key}`;
     const payload = JSON.stringify({
       data: this.element[key].outerHTML,
     });
     localStorage.setItem(storageKey, payload);
-    return this.addLog(
-      "info",
-      "saveElement",
-      true,
-      `Saved element with key '${key}'`,
-    );
+
+    // TODO: Return valid log entry
+    // return this.addLog(
+    //   "info",
+    //   "saveElement",
+    //   true,
+    //   `Saved element with key '${key}'`,
+    // );
   }
 
   _send(payload, signal) {
@@ -1528,15 +1510,15 @@ class BittyJs extends HTMLElement {
   }
 
   _updateElement(key, content) {
-    return this._createElement(key, content, { update: true });
+    return this.createElement(key, content, { update: true });
   }
 
   _updateFragment(key, content) {
-    return this._createFragment(key, content, { update: true });
+    return this.createFragment(key, content, { update: true });
   }
 
   _updateSVG(key, content) {
-    return this._createSVG(key, content, { update: true });
+    return this.createSVG(key, content, { update: true });
   }
 
   _updateReceiverV4(ev, receiver) {

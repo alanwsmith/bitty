@@ -1,21 +1,4 @@
-
-
-signal_C5BF2(subs, el) {
-  const svg = this.renderSVG("el_C5BF2", subs);
-  const gotString = [
-    // svg.querySelectorAll("text")[0].textContent,
-    // svg.querySelectorAll("text")[1].textContent,
-  ].join("");
-  el.innerHTML = gotString;
-  this.send(svg, "view_signal_C5BF2");
-}
-
-view_signal_C5BF2(svg, el) {
-  el.replaceWith(svg);
-}
-
-
-bittyReady() {
+signal_C5BF2(_, el) {
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
@@ -36,5 +19,15 @@ TARGET_C5BF2
   };
   this.setLocalLogLevel("none");
   this.createSVG("el_C5BF2", input);
-  this.send(subs, "signal_C5BF2");
+  const svg = this.renderSVG("el_C5BF2", subs);
+  const gotString = [
+    svg.querySelectorAll("text")[0].textContent,
+    svg.querySelectorAll("text")[1].textContent,
+  ].join("");
+  el.innerHTML = gotString;
+  this.send(svg, "view_signal_C5BF2");
+}
+
+view_signal_C5BF2(svg, el) {
+  el.replaceWith(svg);
 }

@@ -1,5 +1,3 @@
-#key = "key_$SIGNAL_NAME";
-
 async $SIGNAL_NAME(input, el) {
   const url = "/[@ file.parent @]/payloads/valid-templates/";
   await this.fetchTemplates(url);
@@ -8,10 +6,5 @@ async $SIGNAL_NAME(input, el) {
 }
 
 view_$SIGNAL_NAME(_, el) {
-  // el.replaceWith(this.renderSVG("svgTemplate"));
-}
-
-
-bittyReady() {
-  this.trigger("$SIGNAL_NAME");
+  el.replaceWith(this.renderSVG("svgTemplate"));
 }

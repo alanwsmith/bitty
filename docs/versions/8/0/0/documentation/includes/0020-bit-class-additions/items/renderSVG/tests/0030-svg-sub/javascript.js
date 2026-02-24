@@ -1,17 +1,4 @@
-
-
-signal_15988(subs, el) {
-  const svg = this.renderSVG("el_15988", subs);
-  // el.innerHTML = svg.querySelector("text").textContent;
-  // this.send(svg, "view_signal_15988");
-}
-
-view_signal_15988(svg, el) {
-  el.replaceWith(svg);
-}
-
-
-bittyReady() {
+signal_15988(_, el) {
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
@@ -32,5 +19,12 @@ TARGET_15988
   };
   this.setLocalLogLevel("none");
   this.createSVG("el_15988", input);
-  this.send(subs, "signal_15988");
+  const svg = this.renderSVG("el_15988", subs);
+  el.innerHTML = svg.querySelector("text").textContent;
+  this.send(svg, "view_signal_15988");
 }
+
+view_signal_15988(svg, el) {
+  el.replaceWith(svg);
+}
+

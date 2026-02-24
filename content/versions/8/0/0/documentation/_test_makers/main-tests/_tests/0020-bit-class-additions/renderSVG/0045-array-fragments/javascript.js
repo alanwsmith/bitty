@@ -1,21 +1,4 @@
-
-
-$SIGNAL_NAME(subs, el) {
-  const svg = this.renderSVG("el_$HASH", subs);
-  const gotString = [
-    // svg.querySelectorAll("text")[0].textContent,
-    // svg.querySelectorAll("text")[1].textContent,
-  ].join("");
-  el.innerHTML = gotString;
-  this.send(svg, "view_$SIGNAL_NAME");
-}
-
-view_$SIGNAL_NAME(svg, el) {
-  el.replaceWith(svg);
-}
-
-
-bittyReady() {
+$SIGNAL_NAME(_, el) {
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
@@ -23,10 +6,10 @@ TARGET_$HASH
 </svg>`;
   const template = document.createElement("template");
   template.innerHTML =
-    `<text x="24" y="24" font-size="20" text-anchor="middle" fill="white">o</text>`;
+    `<text x="24" y="24" font-size="20" text-anchor="middle" fill="white">test </text>`;
   const template2 = document.createElement("template");
   template2.innerHTML =
-    `<text x="36" y="24" font-size="20" text-anchor="middle" fill="white">k</text>`;
+    `<text x="36" y="24" font-size="20" text-anchor="middle" fill="white">passed</text>`;
   const replacementArray = [
     template.content,
     template2.content,
@@ -36,5 +19,15 @@ TARGET_$HASH
   };
   this.setLocalLogLevel("none");
   this.createSVG("el_$HASH", input);
-  this.send(subs, "$SIGNAL_NAME");
+  const svg = this.renderSVG("el_$HASH", subs);
+  const gotString = [
+    svg.querySelectorAll("text")[0].textContent,
+    svg.querySelectorAll("text")[1].textContent,
+  ].join("");
+  el.innerHTML = gotString;
+  this.send(svg, "view_$SIGNAL_NAME");
+}
+
+view_$SIGNAL_NAME(svg, el) {
+  el.replaceWith(svg);
 }

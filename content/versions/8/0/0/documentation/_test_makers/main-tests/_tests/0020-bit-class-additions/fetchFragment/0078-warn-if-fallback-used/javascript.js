@@ -1,5 +1,4 @@
 async $SIGNAL_NAME(_, el) {  
-  this.setLocalLogLevel("none");
   const template = document.createElement("template");
   template.innerHTML = "<div>ok</div>";
   const fallback = template.content;

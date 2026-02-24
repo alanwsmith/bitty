@@ -544,14 +544,14 @@ class BittyJs extends HTMLElement {
           this._element[key] = fallback;
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Element '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof Element) {
           this._element[key] = fallback.outerHTML;
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Element '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof DocumentFragment) {
@@ -560,14 +560,14 @@ class BittyJs extends HTMLElement {
           }).join("");
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Element '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching returned status ${response.status}.`,
+            `Fetching Element at '${url}' failed with status ${response.status}.`,
           );
           details.extraInfo = response;
         }
@@ -576,7 +576,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
+        `An unidentified error occurred while tyring to fetch Element from '${url}' for key '${key}'`,
       );
     }
     if (details.ok === true) {
@@ -612,14 +612,14 @@ class BittyJs extends HTMLElement {
           this._fragment[key] = fallback;
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Fragment '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof Element) {
           this._fragment[key] = fallback.outerHTML;
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Fragment '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof DocumentFragment) {
@@ -628,14 +628,14 @@ class BittyJs extends HTMLElement {
           }).join("");
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for Fragment '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching returned status ${response.status}.`,
+            `Fetching Fragment at '${url}' returned status ${response.status}.`,
           );
           details.extraInfo = response;
         }
@@ -644,7 +644,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
+        `An unidentified error occurred while tyring to fetch Fragment at '${url}' for key '${key}'`,
       );
     }
     if (details.ok === true) {
@@ -678,14 +678,14 @@ class BittyJs extends HTMLElement {
           } else {
             this.json[key] = json;
             details.text.push(
-              `fetched JSON from '${url}' and stored in key '${key}'`,
+              `Fetched JSON from '${url}' and stored in key '${key}'`,
             );
           }
         } catch (parseError) {
           if (fallback !== null) {
             details.level = "warn";
             details.text.push(
-              `Warning: Could not parse JSON from URL ${url}`,
+              `Warning: Could not parse JSON from '${url}'`,
             );
             if (typeof fallback === "string") {
               this.json[key] = JSON.parse(fallback);
@@ -695,7 +695,9 @@ class BittyJs extends HTMLElement {
           } else {
             details.level = "error";
             details.ok = false;
-            details.text(`Could not parse fallback for key '${key}'.`);
+            details.text(
+              `Could not parse fallback JSON for key '${key}' that was used because '${url}' fetch failed.`,
+            );
           }
         }
       } else {
@@ -711,14 +713,16 @@ class BittyJs extends HTMLElement {
           } else {
             details.level = "error";
             details.ok = false;
-            details.text(`Could not parse fallback for key '${key}'.`);
+            details.text(
+              `Could not parse fallback JSON for key '${key}' that was used because '${url}' fetch failed.`,
+            );
           }
         } else {
           details.level = "error";
           details.ok = false;
           details.extraInfo = response;
           details.text.push(
-            `Error fetching JSON from '${url}' for key '${key}'`,
+            `Fetching JSON at '${url}' failed with status ${response.status}.`,
           );
           return this._addLog(details);
         }
@@ -727,7 +731,7 @@ class BittyJs extends HTMLElement {
       details.level = "error";
       details.ok = false;
       details.text.push(
-        `Error fetching JSON from '${url}' for key '${key}'`,
+        `Fetching JSON at '${url}' failed with status ${response.status}.`,
       );
       details.extraInfo = error;
     }
@@ -755,7 +759,7 @@ class BittyJs extends HTMLElement {
         if (this._svg[key] !== undefined) {
           details.level = "warn";
           details.text.push(
-            `Warning: fetch of ${url} overwrote existing SVG with key '${key}'`,
+            `Warning: Fetch of ${url} overwrote existing SVG with key '${key}'`,
           );
         }
         this._svg[key] = text;
@@ -764,7 +768,7 @@ class BittyJs extends HTMLElement {
           this._svg[key] = fallback;
           details.level = "warn";
           details.text.push(
-            `Used fallback for '${key}' because fetching '${url}' failed.`,
+            `Used fallback for SVG '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (content instanceof SVGSVGElement) {
@@ -778,7 +782,7 @@ class BittyJs extends HTMLElement {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching SVG returned status ${response.status}. See 'extraInfo' for details.`,
+            `Fetching SVG at '${url}' failed with status ${response.status}.`,
           );
           details.extraInfo = response;
         }

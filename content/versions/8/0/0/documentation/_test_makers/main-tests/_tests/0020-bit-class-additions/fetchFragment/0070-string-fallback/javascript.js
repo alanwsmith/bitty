@@ -1,5 +1,4 @@
 async $SIGNAL_NAME(_, el) {
-  this.setLocalLogLevel("none");
   const fallback = "<div></div><div>test passed</div>";
   const url = "/intentionally-missing-file.html";
   await this.fetchFragment("el_$HASH", url, fallback);

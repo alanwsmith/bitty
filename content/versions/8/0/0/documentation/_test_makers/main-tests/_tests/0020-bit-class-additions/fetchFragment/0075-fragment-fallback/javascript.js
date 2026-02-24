@@ -1,5 +1,4 @@
 async $SIGNAL_NAME(_, el) {
-  this.setLocalLogLevel("none");
   const fallback = document.createElement("template");
   fallback.innerHTML = `<div class="test">test passed</div>`;
   const url = "/intentionally-missing-file.html";

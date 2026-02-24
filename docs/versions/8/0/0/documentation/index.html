@@ -14095,6 +14095,82 @@ window.BittyClasses.ClassB2E8A_Trigger = class {
   <details class="default-flow section-wrapper" data-receive="sectionStatus">
   <summary>
     <span class="section-status"></span>
+    <strong>logs()
+
+
+</strong> 
+  </summary>
+      <div class="header heading-color font-weight-900">Description</div>
+      <div><ul>
+  <li>Logs for all bits are stored in a global logs array.</li>
+  <li>The array is read only from inside individual bits</li>
+  <li>Accessing the logs is done through `this.logs()`</li>
+</ul>
+
+
+
+</div>
+
+      <div class="header heading-color font-weight-900">Examples</div>
+<details class="default-flow test-wrapper" data-receive="testStatus">
+  <summary>
+    <span class="test-status"></span>
+View logs
+
+
+  <span class="faded-default-color">[0010-view-logs]</span>
+  </summary>
+
+
+
+<script>
+window.BittyClasses.Class29A17 = class {
+
+  
+
+}
+
+window.BittyClasses.Class29A17_Trigger = class {  
+
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div>HTML</div>
+<pre class="code-block"><code></code></pre>
+
+<div>JavaScript</div>
+<pre class="code-block"><code></code></pre>
+
+
+
+<div>Test Trigger</div>
+<pre class="code-block"><code></code></pre>
+<div>Results</div>
+
+<div class="example-block"></div>
+
+
+
+
+</details>
+
+      
+  </details>
+
+  <details class="default-flow section-wrapper" data-receive="sectionStatus">
+  <summary>
+    <span class="section-status"></span>
     <strong>renderElement(key, substitutions = {})
 <span class="faded-default-color">[Done]</span>
 
@@ -24769,6 +24845,24 @@ window.BittyClasses.ClassCE33E_Trigger = class {
       
   </details>
 
+
+<h3>Logs</h3>
+<pre data-receive="showLogs"></pre>
+
+<script>
+window.BittyClasses.ShowLogs = class {
+  bittyReady() {
+    this.trigger("showLogs");
+  }
+
+  showLogs(_, el) {
+    el.innerHTML = this.logs()
+      .filter((log) => log.levelIndex <= 2)
+      .map((log) => `${log.timestamp} - ${log.from}\n${log.text.join("\n")}`).join("\n");
+  }
+}
+
+</script>
 
 
     </main>

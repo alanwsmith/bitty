@@ -32,6 +32,7 @@ class BittyJs extends HTMLElement {
       this,
       target,
     );
+    target.logs = this.logs.bind(this);
     target.setGlobalLogLevel = this.setGlobalLogLevel.bind(this);
     target.setLocalLogLevel = this._setLocalLogLevel.bind(
       target,
@@ -75,10 +76,14 @@ class BittyJs extends HTMLElement {
       },
     );
     [...new Set(listenerArray)].forEach((listener) => {
-      // TODO: Add this when this.debug() is set up.
-      // this.debug(`Added listener for '${listener}' event.`);
       window.addEventListener(listener, (ev) => {
         this.processEvent.call(this, ev);
+      });
+      this._addLog({
+        level: "debug",
+        from: "_addListeners",
+        ok: true,
+        text: [`Added '${listener}' event listener`],
       });
     });
   }
@@ -87,11 +92,11 @@ class BittyJs extends HTMLElement {
     payload.bitClass = target.bitClass;
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
+    payload.levelIndex = this.#_logLevels.indexOf(payload.level);
     this.#_logs.push(payload);
-    const checkIndex = this.#_logLevels.indexOf(payload.level);
     if (
-      this.#_globalLogLevelIndex >= checkIndex ||
-      target._localLogLevelIndex >= checkIndex
+      this.#_globalLogLevelIndex >= payload.levelIndex ||
+      target._localLogLevelIndex >= payload.levelIndex
     ) {
       if (checkIndex === 1) {
         console.error(
@@ -123,7 +128,8 @@ class BittyJs extends HTMLElement {
         );
       } else if (checkIndex === 5) {
         console.trace(
-          `[${this.timestamp(payload.timestamp)}] $.messages.join("\n")
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.texet.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else {
@@ -1254,6 +1260,10 @@ class BittyJs extends HTMLElement {
         }
       }
     }
+  }
+
+  logs() {
+    return this.#_logs;
   }
 
   _renderElement(key, subs = {}) {

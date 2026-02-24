@@ -33,5 +33,23 @@ Document Fragment. If that happens an error is triggered.
 [! endfor !]
 
 
+<h3>Logs</h3>
+<pre data-receive="showLogs"></pre>
+
+<script>
+window.BittyClasses.ShowLogs = class {
+  bittyReady() {
+    this.trigger("showLogs");
+  }
+
+  showLogs(_, el) {
+    el.innerHTML = this.logs()
+      .filter((log) => log.levelIndex <= 2)
+      .map((log) => `${log.timestamp} - ${log.from}\n${log.text.join("\n")}`).join("\n");
+  }
+}
+
+</script>
+
 
 [! endblock !]

@@ -1,17 +1,16 @@
-
-
 async signal_E589E(_, el) {
-  const url = "/[@ file.parent @]/payloads/valid-svg.svg";
+  const url = "https://www.example.com/";
+  const fallback = null;
   const options = {
     method: "POST",
+    body: JSON.stringify({ key: "value" }),
   };
-  // await this.fetchSVG(key, url, fallback, options);
+  // The server running this side does not accept
+  // post requests. This shows how to make
+  // one, but it's not tested here. 
   //
-  // NOTE: Confirming options must be done manually.
-  // This test is set to always pass as a result.
-}
-
-
-bittyReady() {
-  this.trigger("signal_E589E");
+  //////////////////////////////////////////////////////////////////////
+  // Example call:
+  // await this.fetchSVG("svg_E589E", url, fallback, options);
+  //////////////////////////////////////////////////////////////////////
 }

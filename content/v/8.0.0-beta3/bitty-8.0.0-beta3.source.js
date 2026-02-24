@@ -817,7 +817,7 @@ class BittyJs extends HTMLElement {
           const text = await response.text();
           const template = document.createElement("template");
           template.innerHTML = text;
-          this.ingestScriptTags(template.content);
+          this.loadTemplates(template.content);
         } catch (e2) {
           // todo
         }
@@ -863,7 +863,7 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  _ingestScriptTags(root) {
+  _loadTemplates(root) {
     root.querySelectorAll("script").forEach((el) => {
       if (el.type === "application/json" && el.dataset.key !== undefined) {
         try {
@@ -1185,6 +1185,7 @@ class BittyJs extends HTMLElement {
             this.addBittyVars(bittyClass);
             this.addBittyClasses(bittyClass);
             this.addBittyListeners(bittyClass);
+            bittyClass.loadTemplates(document.body);
             this.#bits.push(bittyClass);
             await bittyClass._runBittyReady();
           }
@@ -1254,6 +1255,7 @@ class BittyJs extends HTMLElement {
           this.addBittyVars(bittyClass);
           this.addBittyClasses(bittyClass);
           this.addBittyListeners(bittyClass);
+          bittyClass.loadTemplates(document.body);
           this.#bits.push(bittyClass);
           bittyClass._runBittyReady();
         }

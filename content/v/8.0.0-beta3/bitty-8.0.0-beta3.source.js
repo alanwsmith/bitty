@@ -81,9 +81,7 @@ class BittyJs extends HTMLElement {
     target.loadSVG = () => {
       return { ok: false };
     };
-    target.renderElement = () => {
-      return { ok: false };
-    };
+    target.renderElement = this._renderElement.bind(target);
     target.renderSVG = () => {
       return { ok: false };
     };
@@ -115,9 +113,6 @@ class BittyJs extends HTMLElement {
       return { ok: false };
     };
     target.renderFragment = this._renderFragment.bind(target);
-    target.renderElement = () => {
-      return { ok: false };
-    };
     target.renderSVG = () => {
       return { ok: false };
     };
@@ -1413,6 +1408,7 @@ class BittyJs extends HTMLElement {
 
   _renderElement(key, subs = {}) {
     if (this._element[key] === undefined) {
+      console.log("TODO: update _renderElement here");
       this.addLog(
         "error",
         "renderElement",

@@ -1,17 +1,6 @@
-#key = "fragment_signal_69369";
-
-test_signal_69369(element, el) {
-  this.createFragment(this.#key, element);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_69369");
-}
-
-given_signal_69369(_, __) {
+signal_69369(_, el) {
   const element = document.createElement("div");
-  element.innerHTML = "ok";
-  this.send(element, "test_signal_69369");
+  element.innerHTML = "test passed";
+  this.createFragment("el_69369", element);
+  el.innerHTML = this.renderFragment("el_69369").firstChild.innerHTML;
 }

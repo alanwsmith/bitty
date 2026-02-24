@@ -28,19 +28,13 @@ class BittyJs extends HTMLElement {
     target.addLog = this.addLog.bind(this, target);
     target.addSignalListener = this._addSignalListener.bind(target);
     target.createElement = this._createElement.bind(target);
-    target.createFragment = () => {
-      return { ok: false };
-    };
+    target.createFragment = this._createFragment.bind(target);
     target.createJSON = this._createJSON.bind(target);
     target.createSVG = () => {
       return { ok: false };
     };
-    target.deleteElement = () => {
-      return { ok: false };
-    };
-    target.deleteFragment = () => {
-      return { ok: false };
-    };
+    target.deleteElement = this._deleteElement.bind(target);
+    target.deleteFragment = this._deleteFragment.bind(target);
     target.deleteJSON = () => {
       return { ok: false };
     };
@@ -72,9 +66,7 @@ class BittyJs extends HTMLElement {
     );
     target.info = this._info.bind(target);
     target.loadElement = this._loadElement.bind(target);
-    target.loadFragment = () => {
-      return { ok: false };
-    };
+    target.loadFragment = this._loadFragment.bind(target);
     target.loadJSON = this._loadJSON.bind(target);
     target.loadSVG = () => {
       return { ok: false };
@@ -519,13 +511,7 @@ class BittyJs extends HTMLElement {
         `Fragment with key '${key}' was removed`,
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      null,
-    );
+    return this.addLog(details);
   }
 
   _deleteJSON(key) {
@@ -1122,13 +1108,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._fragment[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      "loadFragment",
-      details.ok,
-      details.messages.join(" "),
-      null,
-    );
+    return this.addLog(details);
   }
 
   _loadJSON(key, fallback) {
@@ -1436,53 +1416,42 @@ class BittyJs extends HTMLElement {
   }
 
   _renderFragment(key, subs = {}) {
-    const df = document.createElement("template");
-    df.innerHTML = "<div>tktkt</div><div>tktktk</div>";
-    return df.content;
+    if (this._fragment[key] === undefined) {
+      console.log("TODO: Log missing key for renderFragment");
+      return undefined;
+    } else {
+      let content = this._fragment[key];
+      for (const needle of Object.keys(subs)) {
+        if (subs[needle] instanceof Array === false) {
+          subs[needle] = [subs[needle]];
+        }
+        if (typeof subs[needle][0] === "string") {
+          content = content.replaceAll(needle, subs[needle].join(""));
+        } else if (
+          subs[needle][0] instanceof Element
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((el) => el.outerHTML).join(""),
+          );
+        } else if (
+          subs[needle][0] instanceof DocumentFragment
+        ) {
+          content = content.replaceAll(
+            needle,
+            subs[needle].map((fragment) => {
+              return [...fragment.children].map((el) => {
+                return el.outerHTML;
+              }).join("");
+            }).join(""),
+          );
+        }
+      }
+      const template = document.createElement("template");
+      template.innerHTML = content;
+      return template.content;
+    }
   }
-
-  // _renderFragment_original(key, subs = {}) {
-  //   if (this._fragment[key] === undefined) {
-  //     this.addLog(
-  //       "error",
-  //       "renderFragment",
-  //       false,
-  //       `Attempted to render non-existing fragment using key '${key}'`,
-  //     );
-  //     return undefined;
-  //   } else {
-  //     let content = this._fragment[key];
-  //     for (const needle of Object.keys(subs)) {
-  //       if (subs[needle] instanceof Array === false) {
-  //         subs[needle] = [subs[needle]];
-  //       }
-  //       if (typeof subs[needle][0] === "string") {
-  //         content = content.replaceAll(needle, subs[needle].join(""));
-  //       } else if (
-  //         subs[needle][0] instanceof Element
-  //       ) {
-  //         content = content.replaceAll(
-  //           needle,
-  //           subs[needle].map((el) => el.outerHTML).join(""),
-  //         );
-  //       } else if (
-  //         subs[needle][0] instanceof DocumentFragment
-  //       ) {
-  //         content = content.replaceAll(
-  //           needle,
-  //           subs[needle].map((fragment) => {
-  //             return [...fragment.children].map((el) => {
-  //               return el.outerHTML;
-  //             }).join("");
-  //           }).join(""),
-  //         );
-  //       }
-  //     }
-  //     const template = document.createElement("template");
-  //     template.innerHTML = content;
-  //     return template.content;
-  //   }
-  // }
 
   _renderSVG(key, subs = {}) {
     if (this._svg[key] === undefined) {

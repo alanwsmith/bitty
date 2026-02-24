@@ -1,18 +1,8 @@
-#key = "fragment_signal_FE03B";
-
-test_signal_FE03B(_, el) {
+signal_FE03B(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.createFragment();
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_FE03B");
-}
-
-given_signal_FE03B(_, __) {
-  this.setLocalLogLevel("none");
-  this.trigger("test_signal_FE03B");
 }

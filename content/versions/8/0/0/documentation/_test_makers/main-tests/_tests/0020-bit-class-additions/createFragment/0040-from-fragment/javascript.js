@@ -1,19 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
-
-test_$SIGNAL_NAME(fragment, el) {
-  this.createFragment(this.#key, fragment);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
+$SIGNAL_NAME(_, el) {
   const fragment = document.createDocumentFragment();
   const element = document.createElement("div");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   fragment.appendChild(element);
-  this.send(fragment, "test_$SIGNAL_NAME");
+  this.createFragment("el_$HASH", fragment);
+  el.innerHTML = this.renderFragment("el_$HASH").firstChild.innerHTML;
 }

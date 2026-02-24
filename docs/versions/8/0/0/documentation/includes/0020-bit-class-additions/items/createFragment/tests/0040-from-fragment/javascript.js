@@ -1,19 +1,8 @@
-#key = "fragment_signal_A0EAB";
-
-test_signal_A0EAB(fragment, el) {
-  this.createFragment(this.#key, fragment);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_A0EAB");
-}
-
-given_signal_A0EAB(_, __) {
+signal_A0EAB(_, el) {
   const fragment = document.createDocumentFragment();
   const element = document.createElement("div");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   fragment.appendChild(element);
-  this.send(fragment, "test_signal_A0EAB");
+  this.createFragment("el_A0EAB", fragment);
+  el.innerHTML = this.renderFragment("el_A0EAB").firstChild.innerHTML;
 }

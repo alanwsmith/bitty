@@ -1,19 +1,10 @@
-#key = "fragment_signal_3D5CF";
-
-test_signal_3D5CF(_, el) {
-  const result = this.createFragment(this.#key, `<div></div>`);
+signal_3D5CF(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
+  this.createFragment("el_3D5CF", `<div></div>`);
+  const result = this.createFragment("el_3D5CF", `<div></div>`);
   if (result.ok === true && result.level === "warn") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 
-
-bittyReady() {
-  this.trigger("given_signal_3D5CF");
-}
-
-given_signal_3D5CF(_, __) {
-  this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div></div>`);
-  this.trigger("test_signal_3D5CF");
-}

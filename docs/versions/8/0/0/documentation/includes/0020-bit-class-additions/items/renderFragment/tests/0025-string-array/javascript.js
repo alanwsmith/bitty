@@ -1,20 +1,7 @@
-
-
 signal_378AE(_, el) {
-  // const subs = {
-  //   "TARGET_378AE": ["o", "k"],
-  // };
-  // const fragment = this.renderFragment("el_378AE", subs);
-  // el.innerHTML = fragment.children[1].innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_378AE");
-}
-
-given_signal_378AE(_, __) {
-  this.setLocalLogLevel("none");
-  this.createFragment("el_378AE", `<div></div><div>TARGET_378AE</div>`);
-  this.trigger("signal_378AE");
+  this.createFragment("fragment_378AE", `<div></div><div class="test">TARGET_378AE</div>`);
+  const subs = {
+    "TARGET_378AE": ["test ", "passed"],
+  };
+ el.replaceWith(this.renderFragment("fragment_378AE", subs));
 }

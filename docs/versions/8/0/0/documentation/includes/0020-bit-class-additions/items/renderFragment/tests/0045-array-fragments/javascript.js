@@ -1,28 +1,15 @@
-
-
 signal_C24F9(_, el) {
-  // const template = document.createElement("template");
-  // template.innerHTML = "<div></div><div></div>";
-  // const template2 = document.createElement("template");
-  // template2.innerHTML = "<div></div><div>ok</div>";
-  // const replacementArray = [
-  //   template.content,
-  //   template2.content,
-  // ];
-  // const subs = {
-  //   "TARGET_C24F9": replacementArray,
-  // };
-  // const fragment = this.renderFragment("el_C24F9", subs);
-  // el.innerHTML = fragment.firstChild.children[3].innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_C24F9");
-}
-
-given_signal_C24F9(_, __) {
-  this.setLocalLogLevel("none");
-  this.createFragment("el_C24F9", `<div>TARGET_C24F9</div>`);
-  this.trigger("signal_C24F9");
+  this.createFragment("fragment_C24F9", `<div>TARGET_C24F9</div>`);
+  const template = document.createElement("template");
+  template.innerHTML = `<div class="test">test passed</div><div class="test">test passed</div>`;
+  const template2 = document.createElement("template");
+  template2.innerHTML = `<div class="test">test passed</div><div class="test">test passed</div>`;
+  const replacementArray = [
+    template.content,
+    template2.content,
+  ];
+  const subs = {
+    "TARGET_C24F9": replacementArray,
+  };
+ el.replaceWith(this.renderFragment("fragment_C24F9", subs));
 }

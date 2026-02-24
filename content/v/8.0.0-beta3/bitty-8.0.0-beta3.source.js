@@ -20,123 +20,7 @@ class BittyJs extends HTMLElement {
     this.loadWindowClasses();
   }
 
-  _addListeners() {
-    let listenerArray = [
-      "click",
-      "input",
-      "bittysendevent",
-      "bittytriggerevent",
-    ];
-    [...document.querySelectorAll("[data-listeners]")].forEach(
-      (el) => {
-        splitSignalString(el.dataset.listeners).forEach((listener) => {
-          listenerArray.push(listener);
-        });
-      },
-    );
-    [...new Set(listenerArray)].forEach((listener) => {
-      // TODO: Add this when this.debug() is set up.
-      // this.debug(`Added listener for '${listener}' event.`);
-      window.addEventListener(listener, (ev) => {
-        this.processEvent.call(this, ev);
-      });
-    });
-    // }
-  }
-
-  // /** internal */
-  // addEventListeners_Original() {
-  //   if (this.constructor.addedEventListeners === false) {
-  //     this.constructor.addedEventListeners = true;
-  //     let listenerArray = [
-  //       "click",
-  //       "input",
-  //       "bittysendevent",
-  //       "bittytriggerevent",
-  //     ];
-  //     [...document.querySelectorAll("[data-listeners]")].forEach(
-  //       (el) => {
-  //         splitSignalString(el.dataset.listeners).forEach((listener) => {
-  //           listenerArray.push(listener);
-  //         });
-  //       },
-  //     );
-  //     [...new Set(listenerArray)].forEach((listener) => {
-  //       window.addEventListener(listener, (ev) => {
-  //         this.processEventBridge.call(this, ev);
-  //       });
-  //     });
-  //   }
-  // }
-
-  // ["bittysendevent", "bittytriggerevent"].forEach(
-  //   (listener) => {
-  //     window.addEventListener(listener, (ev) => {
-  //       this.processEventBridge.call(this, ev);
-  //     });
-  //   },
-  // );
-  // ["click", "input"].forEach((listener) => {
-  //   window.addEventListener(listener, (ev) => {
-  //     this.processEventBridge.call(this, ev);
-  //   });
-  // });
-  // const customListeners = [
-  //   ...new Set(
-  //     [...document.querySelectorAll("[data-listeners]")]
-  //       .map((el) => {
-  //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
-  //           window.addEventListener(signal.trim(), (ev) => {
-  //             this.processEventBridge.call(this, ev);
-  //           });
-  //         });
-  //       }),
-  //   ),
-  // ];
-  //
-
-  addLog(target, payload) {
-    payload.bitClass = target.bitClass;
-    payload.timestamp = new Date();
-    payload.performanceTime = performance.now();
-    this.#_logs.push(payload);
-    const checkIndex = this.#_logLevels.indexOf(payload.level);
-    if (
-      this.#_globalLogLevelIndex >= checkIndex ||
-      target._localLogLevelIndex >= checkIndex
-    ) {
-      if (checkIndex === 1) {
-        console.error(
-          `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
-          } [Source: ${payload.bitClass}]`,
-          "\n",
-          payload,
-          "\n",
-          new Error("Stack Trace"),
-        );
-      } else if (checkIndex === 2) {
-        console.warn(
-          `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
-          } [Source: ${payload.bitClass}]`,
-        );
-      } else {
-        console.log(
-          `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
-          } [Source: ${payload.bitClass}]`,
-        );
-      }
-    }
-    return payload;
-  }
-
   addBittyClasses(target) {
-    // target.processEvent = this.processEvent.bind(target);
-    // target.api = this;
-
-    // target._element = () => {};
     target._runBittyReady = this._runBittyReady.bind(target);
     target._svg = () => {};
     // TODO: Rename `target.addLog()` to `target._addLog()`
@@ -180,6 +64,8 @@ class BittyJs extends HTMLElement {
     target.fetchTemplates = () => {
       return { ok: false };
     };
+    target.getDataAsFloat = () => {};
+    target.getDataAsInt = () => {};
     target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
     target.getLocalLogLevel = this.getLocalLogLevel.bind(
       this,
@@ -219,9 +105,10 @@ class BittyJs extends HTMLElement {
     target.updateSVG = () => {
       return { ok: false };
     };
-    target.getDataAsFloat = () => {};
-    target.getDataAsInt = () => {};
+    target.processBittySignal = this._processBittySignal.bind(target);
     target.processEvent = this._processEvent.bind(target);
+    // TODO: Deprecate processTrigger in favor of
+    // target.processBittySignal
     target.processTrigger = this._processTrigger.bind(target);
     target.saveJSON = this._saveJSON.bind(target);
     target.setCSS = () => {
@@ -239,7 +126,9 @@ class BittyJs extends HTMLElement {
     target.qs = this._qs.bind(target);
     target.qsa = this._qsa.bind(target);
     target.warn = this._warn.bind(target);
-    //
+  }
+
+  addBittyListeners(target) {
     target.addListeners = this._addListeners.bind(target);
     target.addListeners();
   }
@@ -250,11 +139,71 @@ class BittyJs extends HTMLElement {
     target._elemnet = {};
     target._fragment = {};
     target.json = {};
-    // TODO: Deprecate and remove target.logs.
+    // TODO: Deprecate and remove `target.logs`.
     // Everything will use the logs on the
     // bitty component from its static
     // property.
     target.logs = [];
+  }
+
+  _addListeners() {
+    let listenerArray = [
+      "click",
+      "input",
+      "bittysendevent",
+      "bittytriggerevent",
+    ];
+    [...document.querySelectorAll("[data-listeners]")].forEach(
+      (el) => {
+        splitSignalString(el.dataset.listeners).forEach((listener) => {
+          listenerArray.push(listener);
+        });
+      },
+    );
+    [...new Set(listenerArray)].forEach((listener) => {
+      // TODO: Add this when this.debug() is set up.
+      // this.debug(`Added listener for '${listener}' event.`);
+      window.addEventListener(listener, (ev) => {
+        this.processEvent.call(this, ev);
+      });
+    });
+  }
+
+  addLog(target, payload) {
+    payload.bitClass = target.bitClass;
+    payload.timestamp = new Date();
+    payload.performanceTime = performance.now();
+    this.#_logs.push(payload);
+    const checkIndex = this.#_logLevels.indexOf(payload.level);
+    if (
+      this.#_globalLogLevelIndex >= checkIndex ||
+      target._localLogLevelIndex >= checkIndex
+    ) {
+      if (checkIndex === 1) {
+        console.error(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+          "\n",
+          payload,
+          "\n",
+          new Error("Stack Trace"),
+        );
+      } else if (checkIndex === 2) {
+        console.warn(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+        );
+      } else {
+        console.log(
+          `[${this.timestamp(payload.timestamp)}] ${
+            payload.messages.join("\n")
+          } [Source: ${payload.bitClass}]`,
+        );
+      }
+    }
+    return payload;
   }
 
   async _copy(selector) {
@@ -1384,6 +1333,7 @@ class BittyJs extends HTMLElement {
             bittyClass.bitClass = bit;
             this.addBittyVars(bittyClass);
             this.addBittyClasses(bittyClass);
+            this.addBittyListeners(bittyClass);
             this.#bits.push(bittyClass);
             await bittyClass._runBittyReady();
           }
@@ -1457,6 +1407,7 @@ class BittyJs extends HTMLElement {
           bittyClass.bitClass = bittyClassKey;
           this.addBittyVars(bittyClass);
           this.addBittyClasses(bittyClass);
+          this.addBittyListeners(bittyClass);
           this.#bits.push(bittyClass);
           bittyClass._runBittyReady();
         }
@@ -1993,16 +1944,27 @@ class BittyJs extends HTMLElement {
   }
 
   async _processEvent(ev) {
-    // First, handle events that don't have
-    // a `ev.target` (i.e. aren't attached
-    // to an element). All those
-    // events must use `ev.bitty.signals`
-    // to defined the signals to send.
+    // TODO: potentially set up so that if
+    // an event comes in that doesn't have
+    // an event that can be used to find
+    // a sender and doesn't have a `ev.bitty`
+    // payload that it just triggers a signal
+    // with whatever the value of `ev.type`
+    // is. (Window resize events might be
+    // something to look at, but I know
+    // I've seen some somewhere if that's
+    // not it.)
+
     if (ev.bitty && ev.bitty.signals) {
       // temporary filter out bitty trigger and send
       // events
       if (ev.type !== "bittytriggerevent") {
-        console.log(ev.bitty.signals);
+        const signals = splitSignalString(ev.bitty.signals);
+        for (const signal of signals) {
+          if (this[signal] !== undefined) {
+            this.processBittySignal(ev, signal);
+          }
+        }
       }
     }
 
@@ -2053,14 +2015,30 @@ class BittyJs extends HTMLElement {
             }
           }
         }
-
-        //
       }
-      // ev.sender = sender;
-      // this.processSignal_V3(bit, ev, signal);
     }
   }
 
+  _processBittySignal(ev, signal) {
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        // TODO: Split updateRecieverV4 out so you can go piece
+        // by piece a little more (e.g. with
+        // figureing out if the element is
+        // the target or sender.
+        this.updateReceiverV4(null, receiver);
+        this[signal](ev, receiver);
+      }
+    } else {
+      this[signal](ev, null);
+    }
+  }
+
+  // TODO: Deprecate _processTrigger in favor
+  // of _processBittySignal.
   _processTrigger(signal) {
     const receivers = document.querySelectorAll(
       `[data-receive~='${signal}']`,

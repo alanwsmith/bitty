@@ -2,7 +2,7 @@
 
 signal_3ECFF(_, el) {
   const subs = {
-    "TARGET_3ECFF": "ok",
+    "TARGET_3ECFF": "test passed",
   };
   el.replaceWith(
     this.renderElement("el_3ECFF", subs),

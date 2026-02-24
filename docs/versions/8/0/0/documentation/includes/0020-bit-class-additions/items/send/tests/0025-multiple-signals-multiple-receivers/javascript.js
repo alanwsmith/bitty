@@ -1,6 +1,6 @@
 bittyReady() {
   this.send(
-    { status: "ok" },
+    { status: "test passed" },
     `signal_CE3AE signal_CE3AE_2 signal_CE3AE_3`,
   );
 }

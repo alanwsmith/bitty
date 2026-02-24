@@ -1,5 +1,5 @@
 bittyReady() {
-  this.send({ status: "ok" }, "signal_DFC26");
+  this.send({ status: "test passed" }, "signal_DFC26");
 }
 
 signal_DFC26(payload, el) {

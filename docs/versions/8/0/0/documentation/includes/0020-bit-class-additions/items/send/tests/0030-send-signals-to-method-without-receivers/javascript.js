@@ -2,7 +2,7 @@
 #_status;
 
 bittyReady() {
-  this.send({ status: "ok" }, "signal_1EF08");
+  this.send({ status: "test passed" }, "signal_1EF08");
 }
 
 signal_1EF08(payload, x) {

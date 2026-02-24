@@ -2,7 +2,7 @@
 
 signal_31065(_, el) {
   // const replacementEl = document.createElement("div");
-  // replacementEl.innerHTML = "ok";
+  // replacementEl.innerHTML = "test passed";
   // const subs = {
   //   "TARGET_31065": replacementEl,
   // };

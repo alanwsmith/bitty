@@ -3,7 +3,7 @@
 signal_AB8CB(_, el) {
   const replacementEl = document.createElement("div");
   replacementEl.classList.add("test");
-  replacementEl.innerHTML = "ok";
+  replacementEl.innerHTML = "test passed";
   const subs = {
     "TARGET_AB8CB": replacementEl,
   };

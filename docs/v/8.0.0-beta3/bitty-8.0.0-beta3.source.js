@@ -307,52 +307,8 @@ class BittyJs extends HTMLElement {
     return this.addLog(details);
   }
 
-  _createJSON(key, json) {
-    const storageKey = `bittyJSON_${key}`;
-    const details = {
-      level: "info",
-      key: "createJSON",
-      ok: true,
-      messages: [],
-      extraInfo: null,
-    };
-    if (
-      json !== undefined && this.json !== undefined &&
-      this.json[key] !== undefined
-    ) {
-      details.level = "warn";
-      details.messages.push(
-        `createJSON found an existin JSON with key '${key}'.`,
-      );
-    }
-    if (json === undefined) {
-    } else if (typeof json === "string") {
-      try {
-        this.json[key] = JSON.parse(json);
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.json[key] }),
-        );
-        details.messages.push(`Added JSON with key: ${key}`);
-      } catch (error) {
-      }
-    } else {
-      if (this.json !== undefined && this.json[key] !== undefined) {
-        this.json[key] = JSON.parse(JSON.stringify(json));
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify({ data: this.json[key] }),
-        );
-        details.messages.push(`Added JSON with key: ${key}`);
-      }
-    }
-  }
-
   // _createJSON(key, json) {
   //   const storageKey = `bittyJSON_${key}`;
-  //   // TODO: Update the result of the method
-  //   // to update details and then just
-  //   // return it at the end.
   //   const details = {
   //     level: "info",
   //     key: "createJSON",
@@ -360,20 +316,16 @@ class BittyJs extends HTMLElement {
   //     messages: [],
   //     extraInfo: null,
   //   };
-  //   if (json !== undefined && this.json[key] !== undefined) {
+  //   if (
+  //     json !== undefined && this.json !== undefined &&
+  //     this.json[key] !== undefined
+  //   ) {
   //     details.level = "warn";
   //     details.messages.push(
-  //       `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
+  //       `createJSON found an existin JSON with key '${key}'.`,
   //     );
   //   }
   //   if (json === undefined) {
-  //     return this.addLog(
-  //       "error",
-  //       "addJSON",
-  //       false,
-  //       `No value passed in for key '${key}'`,
-  //       null,
-  //     );
   //   } else if (typeof json === "string") {
   //     try {
   //       this.json[key] = JSON.parse(json);
@@ -383,30 +335,68 @@ class BittyJs extends HTMLElement {
   //       );
   //       details.messages.push(`Added JSON with key: ${key}`);
   //     } catch (error) {
-  //       return this.addLog(
-  //         "error",
-  //         "addJSON",
-  //         false,
-  //         `Could not parse JSON for key: ${key}`,
-  //         null,
-  //       );
   //     }
   //   } else {
-  //     this.json[key] = JSON.parse(JSON.stringify(json));
-  //     localStorage.setItem(
-  //       storageKey,
-  //       JSON.stringify({ data: this.json[key] }),
-  //     );
-  //     details.messages.push(`Added JSON with key: ${key}`);
+  //     if (this.json !== undefined && this.json[key] !== undefined) {
+  //       this.json[key] = JSON.parse(JSON.stringify(json));
+  //       localStorage.setItem(
+  //         storageKey,
+  //         JSON.stringify({ data: this.json[key] }),
+  //       );
+  //       details.messages.push(`Added JSON with key: ${key}`);
+  //     }
   //   }
-  //   return this.addLog(
-  //     details.level,
-  //     details.key,
-  //     details.ok,
-  //     details.messages.join(""),
-  //     details.extraInfo,
-  //   );
   // }
+
+  _createJSON(key, json) {
+    const storageKey = `bittyJSON_${key}`;
+    // TODO: Update the result of the method
+    // to update details and then just
+    // return it at the end.
+    const details = {
+      level: "info",
+      key: "createJSON",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    if (json !== undefined && this.json[key] !== undefined) {
+      details.level = "warn";
+      details.messages.push(
+        `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
+      );
+    }
+    if (json === undefined) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        `No value passed in for key '${key}'`,
+      );
+    } else if (typeof json === "string") {
+      try {
+        this.json[key] = JSON.parse(json);
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ data: this.json[key] }),
+        );
+        details.messages.push(`Added JSON with key: ${key}`);
+      } catch (error) {
+        details.level = "error";
+        details.ok = false;
+        details.messages.push(
+          `Could not parse JSON for key: ${key}`,
+        );
+      }
+    } else {
+      this.json[key] = JSON.parse(JSON.stringify(json));
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ data: this.json[key] }),
+      );
+      details.messages.push(`Added JSON with key: ${key}`);
+    }
+    return this.addLog(details);
+  }
 
   _createSVG(key, content = null, options = {}) {
     const storageKey = `bittySVG_${key}`;

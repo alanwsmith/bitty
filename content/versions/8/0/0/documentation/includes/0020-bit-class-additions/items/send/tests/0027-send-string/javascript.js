@@ -1,5 +1,5 @@
 bittyReady() {
-  this.send("ok", "signal_31AF8");
+  this.send("test passed", "signal_31AF8");
 }
 
 signal_31AF8(payload, el) {

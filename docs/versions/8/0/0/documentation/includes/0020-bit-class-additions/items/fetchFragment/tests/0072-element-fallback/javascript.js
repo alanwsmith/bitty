@@ -8,7 +8,7 @@ async signal_11320(payload, el) {
 
 run_signal_11320(_, __) {
   const fallbackElement = document.createElement("div");
-  fallbackElement.innerHTML = "ok";
+  fallbackElement.innerHTML = "test passed";
   const url = "/intentionally-missing-file.html";
   this.send(
     { url: url, fallback: fallbackElement },

@@ -13,7 +13,7 @@ bittyReady() {
 given_signal_E5126(_, __) {
   const fragment = document.createDocumentFragment();
   const element = document.createElement("div");
-  element.innerHTML = "ok";
+  element.innerHTML = "test passed";
   fragment.appendChild(element);
   this.send(fragment, "signal_E5126");
 }

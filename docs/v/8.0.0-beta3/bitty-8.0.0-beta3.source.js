@@ -173,7 +173,6 @@ class BittyJs extends HTMLElement {
   }
 
   addLog(target, payload) {
-    console.log(target.bitClass);
     payload.bitClass = target.bitClass;
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
@@ -315,13 +314,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._fragment[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   _createJSON(key, json) {

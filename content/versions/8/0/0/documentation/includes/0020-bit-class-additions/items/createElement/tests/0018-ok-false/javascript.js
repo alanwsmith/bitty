@@ -1,16 +1,8 @@
-#key = "el_signal_2C3F3";
-
-test_signal_2C3F3(_, el) {
-  const result = this.createElement(this.#key, {
+signal_2C3F3(_, el) {
+  const result = this.createElement("el_2C3F3", {
     misc: "invalid payload",
   });
   if (result.ok === false && result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("test_signal_2C3F3");
 }

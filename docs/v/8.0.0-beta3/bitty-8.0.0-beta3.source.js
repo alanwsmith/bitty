@@ -1,26 +1,6 @@
 const version = [8, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-/** internal */
-function splitSignalString(input) {
-  return input
-    .trim()
-    .split(/\s+/m)
-    .map((l) => l.trim());
-}
-
-/** internal */
-function findSenders(el) {
-  const senders = [];
-  while (el) {
-    if (el.dataset !== undefined && el.dataset.send !== undefined) {
-      senders.push(el);
-    }
-    el = el.parentElement;
-  }
-  return senders;
-}
-
 class BittyJs extends HTMLElement {
   static addedEventListeners = false;
   static loadedPageClasses = false;
@@ -30,29 +10,94 @@ class BittyJs extends HTMLElement {
     super();
   }
 
-  /** internal */
   #bits = [];
-  /** internal */
   #_logLevels = ["none", "error", "warn", "info", "debug", "trace"];
-  /** internal */
   #_globalLogLevelIndex = 2;
-  /** internal */
   #_logs = [];
 
-  /** internal */
   async connectedCallback() {
-    // this.processEventBridge = this.processEvent.bind(this);
-    //this.addEventListeners();
     this.loadModuleClasses();
     this.loadWindowClasses();
-    // await this.makeConnection();
-    // if (this.conn) {
-    //   this.createBridges();
-    //   this.addEventListeners();
-    //   this.ingestScriptTags(document);
-    //   await this.runBittyReady();
+  }
+
+
+  _addListeners() {
+    //  if (this.constructor.addedEventListeners === false) {
+    //    this.constructor.addedEventListeners = true;
+    let listenerArray = [
+      "click",
+      "input",
+      "bittysendevent",
+      "bittytriggerevent",
+    ];
+    [...document.querySelectorAll("[data-listeners]")].forEach(
+      (el) => {
+        splitSignalString(el.dataset.listeners).forEach((listener) => {
+          listenerArray.push(listener);
+        });
+      },
+    );
+    [...new Set(listenerArray)].forEach((listener) => {
+      // TODO: Add this when this.debug() is set up.
+      // this.debug(`Added listener for '${listener}' event.`);
+      window.addEventListener(listener, (ev) => {
+        this.processEvent.call(this, ev);
+      });
+    });
     // }
   }
+
+  // /** internal */
+  // addEventListeners_Original() {
+  //   if (this.constructor.addedEventListeners === false) {
+  //     this.constructor.addedEventListeners = true;
+  //     let listenerArray = [
+  //       "click",
+  //       "input",
+  //       "bittysendevent",
+  //       "bittytriggerevent",
+  //     ];
+  //     [...document.querySelectorAll("[data-listeners]")].forEach(
+  //       (el) => {
+  //         splitSignalString(el.dataset.listeners).forEach((listener) => {
+  //           listenerArray.push(listener);
+  //         });
+  //       },
+  //     );
+  //     [...new Set(listenerArray)].forEach((listener) => {
+  //       window.addEventListener(listener, (ev) => {
+  //         this.processEventBridge.call(this, ev);
+  //       });
+  //     });
+  //   }
+  // }
+
+  // ["bittysendevent", "bittytriggerevent"].forEach(
+  //   (listener) => {
+  //     window.addEventListener(listener, (ev) => {
+  //       this.processEventBridge.call(this, ev);
+  //     });
+  //   },
+  // );
+  // ["click", "input"].forEach((listener) => {
+  //   window.addEventListener(listener, (ev) => {
+  //     this.processEventBridge.call(this, ev);
+  //   });
+  // });
+  // const customListeners = [
+  //   ...new Set(
+  //     [...document.querySelectorAll("[data-listeners]")]
+  //       .map((el) => {
+  //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
+  //           window.addEventListener(signal.trim(), (ev) => {
+  //             this.processEventBridge.call(this, ev);
+  //           });
+  //         });
+  //       }),
+  //   ),
+  // ];
+  //
+
 
   addLog(target, payload) {
     payload.bitClass = target.bitClass;
@@ -89,47 +134,6 @@ class BittyJs extends HTMLElement {
       }
     }
     return payload;
-  }
-
-  loadWindowClasses() {
-    if (this.constructor.loadedPageClasses === false) {
-      this.constructor.loadedPageClasses = true;
-      if (window.BittyClasses) {
-        for (const bittyClassKey of Object.keys(window.BittyClasses)) {
-          const bittyClass = new window.BittyClasses[bittyClassKey]();
-          bittyClass.bitClass = bittyClassKey;
-          this.addBittyVars(bittyClass);
-          this.addBittyClasses(bittyClass);
-          this.#bits.push(bittyClass);
-          bittyClass._runBittyReady();
-        }
-      }
-    }
-  }
-
-  async loadModuleClasses() {
-    if (this.dataset.connect) {
-      const connString = this.dataset.connect.trim();
-      if (
-        // TODO: Add tests to verify each path prefix
-        connString.substring(0, 4) === "http" ||
-        connString.substring(0, 1) === "/" ||
-        connString.substring(0, 1) === "."
-      ) {
-        if (this.constructor.moduleFiles.includes(connString) === false) {
-          this.constructor.moduleFiles.push(connString);
-          const remoteBits = await import(connString);
-          for (const bit of Object.keys(remoteBits)) {
-            const bittyClass = new remoteBits[bit]();
-            bittyClass.bitClass = bit;
-            this.addBittyVars(bittyClass);
-            this.addBittyClasses(bittyClass);
-            this.#bits.push(bittyClass);
-            await bittyClass._runBittyReady();
-          }
-        }
-      }
-    }
   }
 
   addBittyClasses(target) {
@@ -538,6 +542,117 @@ class BittyJs extends HTMLElement {
     );
   }
 
+
+  _deleteElement(key) {
+    const storageKey = `bittyElement_${key}`;
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn._element[key] === undefined
+    ) {
+      return this.conn.addLog(
+        "warn",
+        "deleteElement",
+        true,
+        `No existing element with '${key}' available to remove.`,
+        null,
+      );
+    } else {
+      localStorage.removeItem(storageKey);
+      delete this.conn._element[key];
+      return this.conn.addLog(
+        "info",
+        "deleteElement",
+        true,
+        `Removed element with key '${key}'`,
+        null,
+      );
+    }
+  }
+
+
+  _deleteFragment(key) {
+    const storageKey = `bittyFragment_${key}`;
+    const details = {
+      level: "info",
+      ok: true,
+      key: "removeFragment",
+      messages: [],
+    };
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn._fragment[key] === undefined
+    ) {
+      details.level = "warn",
+        details.messages.push(
+          `No fragment with key '${key}' exists. Nothing to remove.`,
+        );
+    } else {
+      delete this.conn._fragment[key];
+      localStorage.removeItem(storageKey);
+      details.messages.push(
+        `Fragment with key '${key}' was removed`,
+      );
+    }
+    return this.conn.addLog(
+      details.level,
+      details.key,
+      details.ok,
+      details.messages.join(" "),
+      null,
+    );
+  }
+
+  _deleteJSON(key) {
+    const storageKey = `bittyJSON_${key}`;
+    localStorage.removeItem(storageKey);
+    if (this.conn.json[key] === undefined) {
+      return this.conn.addLog(
+        "warn",
+        "deleteJSON",
+        true,
+        `JSON with key '${key}' already does not exist.`,
+        null,
+      );
+    } else {
+      delete this.conn.json[key];
+      return this.conn.addLog(
+        "info",
+        "deleteJSON",
+        true,
+        `Removed JSON with key: ${key}`,
+        null,
+      );
+    }
+  }
+
+
+  _deleteSVG(key) {
+    const storageKey = `bittySVG_${key}`;
+    if (
+      localStorage.getItem(storageKey) === null &&
+      this.conn._svg[key] === undefined
+    ) {
+      return this.conn.addLog(
+        "warn",
+        "deleteSVG",
+        true,
+        `No existing SVG with '${key}' available to remove.`,
+        null,
+      );
+    } else {
+      localStorage.removeItem(storageKey);
+      delete this.conn._svg[key];
+      return this.conn.addLog(
+        "info",
+        "deleteSVG",
+        true,
+        `Removed SVG with key '${key}'`,
+        null,
+      );
+    }
+  }
+
+
   _error(payload) {
     if (typeof payload === "string") {
       this.addLog({
@@ -943,6 +1058,41 @@ class BittyJs extends HTMLElement {
     );
   }
 
+
+
+
+  ingestScriptTags(root) {
+    root.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.dataset.key !== undefined) {
+        try {
+          this.conn.json[el.dataset.key] = JSON.parse(el.text.trim());
+        } catch (error) {
+          return this.conn.addLog(
+            "error",
+            "ingestJSON",
+            false,
+            `Failed to parse JSON from a script tag.`,
+            error,
+          );
+        }
+      }
+      if (el.type === "text/html" && el.dataset.key !== undefined) {
+        const template = document.createElement("template");
+        template.innerHTML = el.text.trim();
+        if (template.content.childElementCount > 1) {
+          this.conn.createFragment(el.dataset.key, el.text.trim());
+        } else {
+          this.conn.createElement(el.dataset.key, el.text.trim());
+        }
+      }
+      if (el.type === "image/svg" && el.dataset.key !== undefined) {
+        this.conn.createSVG(el.dataset.key, el.text.trim());
+      }
+    });
+  }
+
+
+
   _loadElement(key, fallback = null) {
     const storageKey = `bittyElement_${key}`;
     const details = {
@@ -1069,6 +1219,197 @@ class BittyJs extends HTMLElement {
     );
   }
 
+
+
+  _loadJSON(key, fallback) {
+    const storageKey = `bittyJSON_${key}`;
+    const details = {
+      level: "info",
+      key: "loadJSON",
+      ok: true,
+      messages: [],
+      extraInfo: null,
+    };
+    const keyAlreadyExists = this.json[key] === undefined ? false : true;
+    try {
+      const storage = localStorage.getItem(storageKey);
+      if (storage !== null) {
+        const json = JSON.parse(storage).data;
+        this.json[key] = json;
+        details.messages.push(`Loaded json from storage with key: ${key}`);
+      } else if (typeof fallback === "string") {
+        this.json[key] = JSON.parse(fallback);
+        localStorage.setItem(key, `{ "data": ${fallback} }`);
+        details.messages.push(
+          `Loaded json from fallback string with key: ${key}`,
+        );
+      } else if (typeof fallback === "object") {
+        localStorage.setItem(key, JSON.stringify({ data: fallback }));
+        this.json[key] = fallback;
+        details.messages.push(
+          `Loaded json from fallback object with key: ${key}`,
+        );
+      } else {
+        details.level = "error", details.ok = false;
+        details.messages.push(
+          `Could not load JSON from either storage or fallbak with key: ${key}`,
+        );
+      }
+    } catch (loadingError) {
+      details.level = "error";
+      details.ok = false;
+      details.messages.push(
+        "Could not load JSON. See 'moreDetails' for additional information",
+      );
+      details.moreInfo = loadingError;
+    }
+    return this.addLog(details);
+  }
+
+  // _loadJSON_original(key, fallback = null) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   const details = {
+  //     level: "info",
+  //     key: "loadJSON",
+  //     ok: true,
+  //     messages: [],
+  //     moreDetails: null,
+  //   };
+  //   const keyAlreadyExists = this.json[key] === undefined ? false : true;
+  //   try {
+  //     const storage = localStorage.getItem(storageKey);
+  //     if (storage !== null) {
+  //       const json = JSON.parse(storage).data;
+  //       this.json[key] = json;
+  //       details.messages.push(`Loaded json from storage with key: ${key}`);
+  //     } else if (typeof fallback === "string") {
+  //       this.json[key] = JSON.parse(fallback);
+  //       localStorage.setItem(key, `{ "data": ${fallback} }`);
+  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //     } else if (typeof fallback === "object") {
+  //       localStorage.setItem(key, JSON.stringify({ data: fallback }));
+  //       this.json[key] = fallback;
+  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //     } else {
+  //       details.level = "error", details.ok = false;
+  //       details.messages.push(
+  //         `Could not load JSON from either storage or fallbak with key: ${key}`,
+  //       );
+  //     }
+  //   } catch (loadingError) {
+  //     details.level = "error";
+  //     details.ok = false;
+  //     details.messages.push(
+  //       "Could not load JSON. See 'moreDetails' for additional information",
+  //     );
+  //     details.moreInfo = loadingError;
+  //   }
+  //   return this.addLog(details);
+  // }
+
+  // // TODO: throw error if parsing fails
+  // _loadJSON_Original(key, fallback = null) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   const storage = localStorage.getItem(storageKey);
+  //   // TODO: Update so details has everything
+  //   // for the log then update everything in the
+  //   // method to use it.
+  //   const details = { level: "info", extraText: "" };
+  //   if (this.conn.json[key] !== undefined) {
+  //     details.level = "warn";
+  //     details.extraText = " Warning - overwrote exsiting key";
+  //   }
+  //   try {
+  //     if (storage !== null) {
+  //       const json = JSON.parse(storage);
+  //       if (json.data === undefined) {
+  //         return this.conn.addLog(
+  //           "error",
+  //           "loadJSON",
+  //           false,
+  //           `Attempted to load storage without a top level 'data' in key: ${key}${details.extraText}`,
+  //           null,
+  //         );
+  //       } else {
+  //         this.conn.json[key] = JSON.parse(storage).data;
+  //         return this.conn.addLog(
+  //           details.level,
+  //           "loadJSON",
+  //           true,
+  //           `Loaded JSON for key: ${key}${details.extraText}`,
+  //           null,
+  //         );
+  //       }
+  //     }
+  //     if (fallback !== null) {
+  //       if (typeof fallback === "string") {
+  //         this.conn.json[key] = JSON.parse(fallback);
+  //         localStorage.setItem(key, `{ "data": ${fallback} }`);
+  //         return this.conn.addLog(
+  //           details.level,
+  //           "loadJSON",
+  //           true,
+  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
+  //           null,
+  //         );
+  //       } else if (typeof fallback === "object") {
+  //         this.conn.json[key] = fallback;
+  //         localStorage.setItem(key, JSON.stringify({ data: fallback }));
+  //         return this.conn.addLog(
+  //           details.level,
+  //           "loadJSON",
+  //           true,
+  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
+  //           null,
+  //         );
+  //       }
+  //     }
+  //     return this.conn.addLog(
+  //       "error",
+  //       "loadJSON",
+  //       false,
+  //       `No JSON in storage or fallback for key: ${key}${details.extraText}`,
+  //       null,
+  //     );
+  //   } catch (error) {
+  //     return this.conn.addLog(
+  //       "error",
+  //       "loadJSON",
+  //       false,
+  //       `Could not parse fallback JSON for key: ${key}${details.extraText}`,
+  //       null,
+  //     );
+  //   }
+  // }
+
+
+
+  async loadModuleClasses() {
+    if (this.dataset.connect) {
+      const connString = this.dataset.connect.trim();
+      if (
+        // TODO: Add tests to verify each path prefix
+        connString.substring(0, 4) === "http" ||
+        connString.substring(0, 1) === "/" ||
+        connString.substring(0, 1) === "."
+      ) {
+        if (this.constructor.moduleFiles.includes(connString) === false) {
+          this.constructor.moduleFiles.push(connString);
+          const remoteBits = await import(connString);
+          for (const bit of Object.keys(remoteBits)) {
+            const bittyClass = new remoteBits[bit]();
+            bittyClass.bitClass = bit;
+            this.addBittyVars(bittyClass);
+            this.addBittyClasses(bittyClass);
+            this.#bits.push(bittyClass);
+            await bittyClass._runBittyReady();
+          }
+        }
+      }
+    }
+  }
+
+
   _loadSVG(key, fallback = null) {
     const storageKey = `bittySVG_${key}`;
     const details = {
@@ -1125,115 +1466,51 @@ class BittyJs extends HTMLElement {
     );
   }
 
-  _deleteElement(key) {
-    const storageKey = `bittyElement_${key}`;
-    if (
-      localStorage.getItem(storageKey) === null &&
-      this.conn._element[key] === undefined
-    ) {
-      return this.conn.addLog(
-        "warn",
-        "deleteElement",
-        true,
-        `No existing element with '${key}' available to remove.`,
-        null,
-      );
-    } else {
-      localStorage.removeItem(storageKey);
-      delete this.conn._element[key];
-      return this.conn.addLog(
-        "info",
-        "deleteElement",
-        true,
-        `Removed element with key '${key}'`,
-        null,
-      );
+  loadWindowClasses() {
+    if (this.constructor.loadedPageClasses === false) {
+      this.constructor.loadedPageClasses = true;
+      if (window.BittyClasses) {
+        for (const bittyClassKey of Object.keys(window.BittyClasses)) {
+          const bittyClass = new window.BittyClasses[bittyClassKey]();
+          bittyClass.bitClass = bittyClassKey;
+          this.addBittyVars(bittyClass);
+          this.addBittyClasses(bittyClass);
+          this.#bits.push(bittyClass);
+          bittyClass._runBittyReady();
+        }
+      }
     }
   }
 
-  _deleteSVG(key) {
-    const storageKey = `bittySVG_${key}`;
-    if (
-      localStorage.getItem(storageKey) === null &&
-      this.conn._svg[key] === undefined
-    ) {
-      return this.conn.addLog(
-        "warn",
-        "deleteSVG",
-        true,
-        `No existing SVG with '${key}' available to remove.`,
-        null,
-      );
+
+  async makeConnection() {
+    if (!this.dataset.connect) {
+      // TODO: Throw error if there's no connect
+      // TODO: Remove docs for window.BittyClass();
+      // as it's no longer a thing.
     } else {
-      localStorage.removeItem(storageKey);
-      delete this.conn._svg[key];
-      return this.conn.addLog(
-        "info",
-        "deleteSVG",
-        true,
-        `Removed SVG with key '${key}'`,
-        null,
-      );
+      const connString = this.dataset.connect.trim();
+      if (window[connString]) {
+        this.conn = new window[connString]();
+      } else {
+        // TODO: Handle `http...` URLS
+        // TODO: Handle `./...` URLS
+        const connParts = connString.split(":");
+        if (connParts[0].substring(0, 1) === "/") {
+          const windowURL = new URL(window.location.href);
+          const moduleURL = new URL(connParts[0], windowURL.origin).toString();
+          const mod = await import(moduleURL);
+          if (connParts[1] !== undefined) {
+            this.conn = new mod[connParts[1]]();
+          } else {
+            this.conn = new mod.default();
+          }
+        }
+      }
     }
+    // TODO: Log error if no connection is made
   }
 
-  // This is just a stub to help
-  // make loadFragment tests.
-  // TODO: Cover this with tests.
-  _deleteFragment(key) {
-    const storageKey = `bittyFragment_${key}`;
-    const details = {
-      level: "info",
-      ok: true,
-      key: "removeFragment",
-      messages: [],
-    };
-    if (
-      localStorage.getItem(storageKey) === null &&
-      this.conn._fragment[key] === undefined
-    ) {
-      details.level = "warn",
-        details.messages.push(
-          `No fragment with key '${key}' exists. Nothing to remove.`,
-        );
-    } else {
-      delete this.conn._fragment[key];
-      localStorage.removeItem(storageKey);
-      details.messages.push(
-        `Fragment with key '${key}' was removed`,
-      );
-    }
-    return this.conn.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      null,
-    );
-  }
-
-  _deleteJSON(key) {
-    const storageKey = `bittyJSON_${key}`;
-    localStorage.removeItem(storageKey);
-    if (this.conn.json[key] === undefined) {
-      return this.conn.addLog(
-        "warn",
-        "deleteJSON",
-        true,
-        `JSON with key '${key}' already does not exist.`,
-        null,
-      );
-    } else {
-      delete this.conn.json[key];
-      return this.conn.addLog(
-        "info",
-        "deleteJSON",
-        true,
-        `Removed JSON with key: ${key}`,
-        null,
-      );
-    }
-  }
 
   _renderElement(key, subs = {}) {
     if (this.conn._element[key] === undefined) {
@@ -1452,353 +1729,8 @@ class BittyJs extends HTMLElement {
     return this._createSVG(key, content, { update: true });
   }
 
-  _addListeners() {
-    //  if (this.constructor.addedEventListeners === false) {
-    //    this.constructor.addedEventListeners = true;
-    let listenerArray = [
-      "click",
-      "input",
-      "bittysendevent",
-      "bittytriggerevent",
-    ];
-    [...document.querySelectorAll("[data-listeners]")].forEach(
-      (el) => {
-        splitSignalString(el.dataset.listeners).forEach((listener) => {
-          listenerArray.push(listener);
-        });
-      },
-    );
-    [...new Set(listenerArray)].forEach((listener) => {
-      // TODO: Add this when this.debug() is set up.
-      // this.debug(`Added listener for '${listener}' event.`);
-      window.addEventListener(listener, (ev) => {
-        this.processEvent.call(this, ev);
-      });
-    });
-    // }
-  }
 
-  // /** internal */
-  // addEventListeners_Original() {
-  //   if (this.constructor.addedEventListeners === false) {
-  //     this.constructor.addedEventListeners = true;
-  //     let listenerArray = [
-  //       "click",
-  //       "input",
-  //       "bittysendevent",
-  //       "bittytriggerevent",
-  //     ];
-  //     [...document.querySelectorAll("[data-listeners]")].forEach(
-  //       (el) => {
-  //         splitSignalString(el.dataset.listeners).forEach((listener) => {
-  //           listenerArray.push(listener);
-  //         });
-  //       },
-  //     );
-  //     [...new Set(listenerArray)].forEach((listener) => {
-  //       window.addEventListener(listener, (ev) => {
-  //         this.processEventBridge.call(this, ev);
-  //       });
-  //     });
-  //   }
-  // }
 
-  // ["bittysendevent", "bittytriggerevent"].forEach(
-  //   (listener) => {
-  //     window.addEventListener(listener, (ev) => {
-  //       this.processEventBridge.call(this, ev);
-  //     });
-  //   },
-  // );
-  // ["click", "input"].forEach((listener) => {
-  //   window.addEventListener(listener, (ev) => {
-  //     this.processEventBridge.call(this, ev);
-  //   });
-  // });
-  // const customListeners = [
-  //   ...new Set(
-  //     [...document.querySelectorAll("[data-listeners]")]
-  //       .map((el) => {
-  //         return el.dataset.listeners.trim().split(/\s+/m).map((signal) => {
-  //           window.addEventListener(signal.trim(), (ev) => {
-  //             this.processEventBridge.call(this, ev);
-  //           });
-  //         });
-  //       }),
-  //   ),
-  // ];
-  //
-
-  // // TODO: Deprecate and remove in favor of
-  // // _createJSON(key, data)
-  // _addJSON(key, json) {
-  //   const storageKey = `bittyJSON_${key}`;
-  //   if (json === undefined) {
-  //     return this.conn.addLog(
-  //       "error",
-  //       "addJSON",
-  //       false,
-  //       `No value passed in for key '${key}'`,
-  //       null,
-  //     );
-  //   } else if (typeof json === "string") {
-  //     try {
-  //       this.conn.json[key] = JSON.parse(json);
-  //       localStorage.setItem(
-  //         storageKey,
-  //         JSON.stringify({ data: this.conn.json[key] }),
-  //       );
-  //       return this.conn.addLog(
-  //         "info",
-  //         "addJSON",
-  //         true,
-  //         `Added JSON with key: ${key}`,
-  //         null,
-  //       );
-  //     } catch (error) {
-  //       return this.conn.addLog(
-  //         "error",
-  //         "addJSON",
-  //         false,
-  //         `Could not parse JSON for key: ${key}`,
-  //         null,
-  //       );
-  //     }
-  //   } else {
-  //     this.conn.json[key] = JSON.parse(JSON.stringify(json));
-  //     localStorage.setItem(
-  //       storageKey,
-  //       JSON.stringify({ data: this.conn.json[key] }),
-  //     );
-  //     return this.conn.addLog(
-  //       "info",
-  //       "addJSON",
-  //       true,
-  //       `Added JSON with key: ${key}`,
-  //       null,
-  //     );
-  //   }
-  // }
-
-  ingestScriptTags(root) {
-    root.querySelectorAll("script").forEach((el) => {
-      if (el.type === "application/json" && el.dataset.key !== undefined) {
-        try {
-          this.conn.json[el.dataset.key] = JSON.parse(el.text.trim());
-        } catch (error) {
-          return this.conn.addLog(
-            "error",
-            "ingestJSON",
-            false,
-            `Failed to parse JSON from a script tag.`,
-            error,
-          );
-        }
-      }
-      if (el.type === "text/html" && el.dataset.key !== undefined) {
-        const template = document.createElement("template");
-        template.innerHTML = el.text.trim();
-        if (template.content.childElementCount > 1) {
-          this.conn.createFragment(el.dataset.key, el.text.trim());
-        } else {
-          this.conn.createElement(el.dataset.key, el.text.trim());
-        }
-      }
-      if (el.type === "image/svg" && el.dataset.key !== undefined) {
-        this.conn.createSVG(el.dataset.key, el.text.trim());
-      }
-    });
-  }
-
-  _loadJSON(key, fallback) {
-    const storageKey = `bittyJSON_${key}`;
-    const details = {
-      level: "info",
-      key: "loadJSON",
-      ok: true,
-      messages: [],
-      extraInfo: null,
-    };
-    const keyAlreadyExists = this.json[key] === undefined ? false : true;
-    try {
-      const storage = localStorage.getItem(storageKey);
-      if (storage !== null) {
-        const json = JSON.parse(storage).data;
-        this.json[key] = json;
-        details.messages.push(`Loaded json from storage with key: ${key}`);
-      } else if (typeof fallback === "string") {
-        this.json[key] = JSON.parse(fallback);
-        localStorage.setItem(key, `{ "data": ${fallback} }`);
-        details.messages.push(
-          `Loaded json from fallback string with key: ${key}`,
-        );
-      } else if (typeof fallback === "object") {
-        localStorage.setItem(key, JSON.stringify({ data: fallback }));
-        this.json[key] = fallback;
-        details.messages.push(
-          `Loaded json from fallback object with key: ${key}`,
-        );
-      } else {
-        details.level = "error", details.ok = false;
-        details.messages.push(
-          `Could not load JSON from either storage or fallbak with key: ${key}`,
-        );
-      }
-    } catch (loadingError) {
-      details.level = "error";
-      details.ok = false;
-      details.messages.push(
-        "Could not load JSON. See 'moreDetails' for additional information",
-      );
-      details.moreInfo = loadingError;
-    }
-    return this.addLog(details);
-  }
-
-  // _loadJSON_original(key, fallback = null) {
-  //   const storageKey = `bittyJSON_${key}`;
-  //   const details = {
-  //     level: "info",
-  //     key: "loadJSON",
-  //     ok: true,
-  //     messages: [],
-  //     moreDetails: null,
-  //   };
-  //   const keyAlreadyExists = this.json[key] === undefined ? false : true;
-  //   try {
-  //     const storage = localStorage.getItem(storageKey);
-  //     if (storage !== null) {
-  //       const json = JSON.parse(storage).data;
-  //       this.json[key] = json;
-  //       details.messages.push(`Loaded json from storage with key: ${key}`);
-  //     } else if (typeof fallback === "string") {
-  //       this.json[key] = JSON.parse(fallback);
-  //       localStorage.setItem(key, `{ "data": ${fallback} }`);
-  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
-  //     } else if (typeof fallback === "object") {
-  //       localStorage.setItem(key, JSON.stringify({ data: fallback }));
-  //       this.json[key] = fallback;
-  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
-  //     } else {
-  //       details.level = "error", details.ok = false;
-  //       details.messages.push(
-  //         `Could not load JSON from either storage or fallbak with key: ${key}`,
-  //       );
-  //     }
-  //   } catch (loadingError) {
-  //     details.level = "error";
-  //     details.ok = false;
-  //     details.messages.push(
-  //       "Could not load JSON. See 'moreDetails' for additional information",
-  //     );
-  //     details.moreInfo = loadingError;
-  //   }
-  //   return this.addLog(details);
-  // }
-
-  // // TODO: throw error if parsing fails
-  // _loadJSON_Original(key, fallback = null) {
-  //   const storageKey = `bittyJSON_${key}`;
-  //   const storage = localStorage.getItem(storageKey);
-  //   // TODO: Update so details has everything
-  //   // for the log then update everything in the
-  //   // method to use it.
-  //   const details = { level: "info", extraText: "" };
-  //   if (this.conn.json[key] !== undefined) {
-  //     details.level = "warn";
-  //     details.extraText = " Warning - overwrote exsiting key";
-  //   }
-  //   try {
-  //     if (storage !== null) {
-  //       const json = JSON.parse(storage);
-  //       if (json.data === undefined) {
-  //         return this.conn.addLog(
-  //           "error",
-  //           "loadJSON",
-  //           false,
-  //           `Attempted to load storage without a top level 'data' in key: ${key}${details.extraText}`,
-  //           null,
-  //         );
-  //       } else {
-  //         this.conn.json[key] = JSON.parse(storage).data;
-  //         return this.conn.addLog(
-  //           details.level,
-  //           "loadJSON",
-  //           true,
-  //           `Loaded JSON for key: ${key}${details.extraText}`,
-  //           null,
-  //         );
-  //       }
-  //     }
-  //     if (fallback !== null) {
-  //       if (typeof fallback === "string") {
-  //         this.conn.json[key] = JSON.parse(fallback);
-  //         localStorage.setItem(key, `{ "data": ${fallback} }`);
-  //         return this.conn.addLog(
-  //           details.level,
-  //           "loadJSON",
-  //           true,
-  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
-  //           null,
-  //         );
-  //       } else if (typeof fallback === "object") {
-  //         this.conn.json[key] = fallback;
-  //         localStorage.setItem(key, JSON.stringify({ data: fallback }));
-  //         return this.conn.addLog(
-  //           details.level,
-  //           "loadJSON",
-  //           true,
-  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
-  //           null,
-  //         );
-  //       }
-  //     }
-  //     return this.conn.addLog(
-  //       "error",
-  //       "loadJSON",
-  //       false,
-  //       `No JSON in storage or fallback for key: ${key}${details.extraText}`,
-  //       null,
-  //     );
-  //   } catch (error) {
-  //     return this.conn.addLog(
-  //       "error",
-  //       "loadJSON",
-  //       false,
-  //       `Could not parse fallback JSON for key: ${key}${details.extraText}`,
-  //       null,
-  //     );
-  //   }
-  // }
-
-  /** internal */
-  async makeConnection() {
-    if (!this.dataset.connect) {
-      // TODO: Throw error if there's no connect
-      // TODO: Remove docs for window.BittyClass();
-      // as it's no longer a thing.
-    } else {
-      const connString = this.dataset.connect.trim();
-      if (window[connString]) {
-        this.conn = new window[connString]();
-      } else {
-        // TODO: Handle `http...` URLS
-        // TODO: Handle `./...` URLS
-        const connParts = connString.split(":");
-        if (connParts[0].substring(0, 1) === "/") {
-          const windowURL = new URL(window.location.href);
-          const moduleURL = new URL(connParts[0], windowURL.origin).toString();
-          const mod = await import(moduleURL);
-          if (connParts[1] !== undefined) {
-            this.conn = new mod[connParts[1]]();
-          } else {
-            this.conn = new mod.default();
-          }
-        }
-      }
-    }
-    // TODO: Log error if no connection is made
-  }
 
   _updateReceiverV4(ev, receiver) {
     receiver.isSender = () => {
@@ -2111,20 +2043,6 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  _processTrigger(signal) {
-    const receivers = document.querySelectorAll(
-      `[data-receive~='${signal}']`,
-    );
-    if (receivers.length > 0) {
-      for (const receiver of receivers) {
-        this.updateReceiverV4(null, receiver);
-        this[signal](null, receiver);
-      }
-    } else {
-      this[signal](null, null);
-    }
-  }
-
   async _processEvent(ev) {
     // First, handle events that don't have
     // a `ev.target` (i.e. aren't attached
@@ -2194,6 +2112,23 @@ class BittyJs extends HTMLElement {
     }
   }
 
+
+  _processTrigger(signal) {
+    const receivers = document.querySelectorAll(
+      `[data-receive~='${signal}']`,
+    );
+    if (receivers.length > 0) {
+      for (const receiver of receivers) {
+        this.updateReceiverV4(null, receiver);
+        this[signal](null, receiver);
+      }
+    } else {
+      this[signal](null, null);
+    }
+  }
+
+
+
   //async _processEvent_holding(ev) {
   //  console.log(ev.type);
   //  if (ev.type === "bittytriggerevent") {
@@ -2228,6 +2163,10 @@ class BittyJs extends HTMLElement {
   //  }
   //}
   //
+
+
+
+
 
   // async processSignalV4(bit, ev, signal) {
   //   console.log(`IN processSignal_V3: ${signal}`);
@@ -2304,41 +2243,41 @@ class BittyJs extends HTMLElement {
   //  }
   //}
 
-  async processEvent_original(ev) {
-    let senders = [];
-    if (ev.type === "bittytriggerevent") {
-      const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
-      for (const signal of signals) {
-        if (typeof this.conn[signal] === "function") {
-          this.processBittyTriggerSignal(signal);
-        }
-      }
-    } else if (ev.type === "bittysendevent") {
-      const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
-      for (const signal of signals) {
-        if (typeof this.conn[signal] === "function") {
-          this.processBittySendSignal(ev.bittyPayload.content, signal);
-        }
-      }
-    } else {
-      senders = findSenders(ev.target);
-      for (const sender of senders) {
-        const signals = splitSignalString(sender.dataset.send);
-        for (const signal of signals) {
-          if (typeof this.conn[signal] === "function") {
-            if (sender.dataset.listeners !== undefined) {
-              const listeners = splitSignalString(sender.dataset.listeners);
-              if (listeners.includes(ev.type)) {
-                this.processSignal(ev, sender, signal);
-              }
-            } else {
-              this.processSignal(ev, sender, signal);
-            }
-          }
-        }
-      }
-    }
-  }
+  // async processEvent_original(ev) {
+  //   let senders = [];
+  //   if (ev.type === "bittytriggerevent") {
+  //     const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
+  //     for (const signal of signals) {
+  //       if (typeof this.conn[signal] === "function") {
+  //         this.processBittyTriggerSignal(signal);
+  //       }
+  //     }
+  //   } else if (ev.type === "bittysendevent") {
+  //     const signals = splitSignalString(ev.bittyPayload.target.dataset.send);
+  //     for (const signal of signals) {
+  //       if (typeof this.conn[signal] === "function") {
+  //         this.processBittySendSignal(ev.bittyPayload.content, signal);
+  //       }
+  //     }
+  //   } else {
+  //     senders = findSenders(ev.target);
+  //     for (const sender of senders) {
+  //       const signals = splitSignalString(sender.dataset.send);
+  //       for (const signal of signals) {
+  //         if (typeof this.conn[signal] === "function") {
+  //           if (sender.dataset.listeners !== undefined) {
+  //             const listeners = splitSignalString(sender.dataset.listeners);
+  //             if (listeners.includes(ev.type)) {
+  //               this.processSignal(ev, sender, signal);
+  //             }
+  //           } else {
+  //             this.processSignal(ev, sender, signal);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   _qs(selector) {
     return document.querySelector(selector);
@@ -2428,38 +2367,38 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-  _saveJSON_original(key) {
-    const storageKey = `bittyJSON_${key}`;
-    if (this.conn.json[key] !== undefined) {
-      if (typeof this.conn.json[key] === "object") {
-        const payload = JSON.stringify({ data: this.conn.json[key] });
-        localStorage.setItem(storageKey, payload);
-        return this.conn.addLog(
-          "info",
-          "savejson",
-          true,
-          `Saved JSON for key: ${key}`,
-          null,
-        );
-      } else {
-        return this.conn.addLog(
-          "error",
-          "savejson",
-          false,
-          `Tried to saveJSON on something that's not an object: ${key}`,
-          null,
-        );
-      }
-    } else {
-      return this.conn.addLog(
-        "error",
-        "savejson",
-        false,
-        `No JSON available to save with key: ${key}`,
-        null,
-      );
-    }
-  }
+  // _saveJSON_original(key) {
+  //   const storageKey = `bittyJSON_${key}`;
+  //   if (this.conn.json[key] !== undefined) {
+  //     if (typeof this.conn.json[key] === "object") {
+  //       const payload = JSON.stringify({ data: this.conn.json[key] });
+  //       localStorage.setItem(storageKey, payload);
+  //       return this.conn.addLog(
+  //         "info",
+  //         "savejson",
+  //         true,
+  //         `Saved JSON for key: ${key}`,
+  //         null,
+  //       );
+  //     } else {
+  //       return this.conn.addLog(
+  //         "error",
+  //         "savejson",
+  //         false,
+  //         `Tried to saveJSON on something that's not an object: ${key}`,
+  //         null,
+  //       );
+  //     }
+  //   } else {
+  //     return this.conn.addLog(
+  //       "error",
+  //       "savejson",
+  //       false,
+  //       `No JSON available to save with key: ${key}`,
+  //       null,
+  //     );
+  //   }
+  // }
 
   async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -2503,48 +2442,6 @@ class BittyJs extends HTMLElement {
   }
 }
 
-// Used both for logging and for
-// returned responses from methods
-/** internal */
-class BittyLog {
-  constructor(
-    level = "error",
-    type = "unknown",
-    ok = null,
-    message = null,
-    extraInfo = null,
-  ) {
-    this.level = level;
-    this.type = type;
-    this.ok = ok;
-    this.message = message;
-    this.extraInfo = extraInfo;
-    this.timestamp = new Date();
-    this.performanceTime = performance.now();
-  }
-}
-
-/** internal */
-class BittySendEvent_Original extends Event {
-  constructor(payload, signals) {
-    super("bittysendevent", { bubbles: true });
-    this.bittyPayload = {
-      content: payload,
-      target: { dataset: { send: signals } },
-    };
-  }
-}
-
-/** internal */
-class BittyTriggerEvent_Original extends Event {
-  constructor(signals) {
-    super("bittytriggerevent", { bubbles: true });
-    this.bittyPayload = {
-      content: null,
-      target: { dataset: { send: signals } },
-    };
-  }
-}
 
 class BittyTriggerEvent extends Event {
   constructor(signals) {
@@ -2552,6 +2449,25 @@ class BittyTriggerEvent extends Event {
     super("bittytriggerevent", { bubbles: true });
     this.bitty = { signals: signals };
   }
+}
+
+
+function splitSignalString(input) {
+  return input
+    .trim()
+    .split(/\s+/m)
+    .map((l) => l.trim());
+}
+
+function findSenders(el) {
+  const senders = [];
+  while (el) {
+    if (el.dataset !== undefined && el.dataset.send !== undefined) {
+      senders.push(el);
+    }
+    el = el.parentElement;
+  }
+  return senders;
 }
 
 customElements.define(tagName, BittyJs);

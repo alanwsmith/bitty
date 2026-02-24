@@ -10556,7 +10556,9 @@ window.BittyClasses.Class25CD5 = class {
 
 signal_25CD5(_, el) {
   this.flushLogs();
-  el.innerHTML = this.logs().map((log) => log.text).join("");
+  el.innerHTML = this.logs().map((log) => {
+    return `[${this.localTimestamp(log.timestamp)}] ${log.text}`;
+  }).join("");
 }  
 
 }
@@ -10587,7 +10589,9 @@ window.BittyClasses.Class25CD5_Trigger = class {// This example test flushes the
 <div>JavaScript</div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signal_25CD5</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">flushLogs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">logs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">map</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">log</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="variable other object js">log</span><span class="punctuation accessor js">.</span><span class="meta property object js">text</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">join</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span><span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">logs</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">map</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="meta function declaration js"><span class="punctuation section group begin js">(</span><span class="variable parameter function js">log</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span><span class="storage type function arrow js">=&gt;</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="keyword control flow js">return</span> <span class="string template js"><span class="punctuation definition string template begin js">`</span>[</span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTimestamp</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">log</span><span class="punctuation accessor js">.</span><span class="meta property object js">timestamp</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js">] </span><span class="meta template expression js"><span class="punctuation definition template-expression begin js">${</span></span><span class="meta template expression js"><span class="source js embedded expression"><span class="variable other object js">log</span><span class="punctuation accessor js">.</span><span class="meta property object js">text</span></span><span class="punctuation definition template-expression end js">}</span></span><span class="string template js"><span class="punctuation definition string template end js">`</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">join</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span><span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 
 
@@ -10654,16 +10658,14 @@ window.BittyClasses.Class11A34 = class {
 
 signal_11A34(_, el) {
   this.setGlobalLogLevel("trace");
-  if (this.getGlobalLogLevel() === "trace")  {
-    el.innerHTML = "test passed";
-  } else {
-    el.innerHTML = "test failed";
-  }
+  el.innerHTML = this.getGlobalLogLevel();
 }  
 
 }
 
-window.BittyClasses.Class11A34_Trigger = class {  
+window.BittyClasses.Class11A34_Trigger = class {// This example test is run manually
+// to avoid adding noise to the console
+// on initial page load.  
 
   }
 </script>
@@ -10686,17 +10688,15 @@ window.BittyClasses.Class11A34_Trigger = class {
 <div>JavaScript</div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signal_11A34</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setGlobalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getGlobalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span>  <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test passed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test failed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getGlobalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 
 
 
 <div>Test Trigger</div>
-<pre class="code-block"><code></code></pre>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> This example test is run manually
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> to avoid adding noise to the console
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> on initial page load.</span></span></code></pre>
 <div>Results</div>
 
 <div class="example-block"><button data-send="signal_11A34">Test 11A34</button>
@@ -10738,10 +10738,8 @@ window.BittyClasses.ClassED724 = class {
 
 signal_ED724(_, el) {
   this.setLocalLogLevel("trace");
-  if (this.getLocalLogLevel() === "trace")  {
+  if(this.getLocalLogLevel() === "trace") {
     el.innerHTML = "test passed";
-  } else {
-    el.innerHTML = "test failed";
   }
 }  
 
@@ -10775,10 +10773,8 @@ window.BittyClasses.ClassED724_Trigger = class {async bittyReady() {
 <div>JavaScript</div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signal_ED724</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setLocalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getLocalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span>  <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getLocalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test passed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test failed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 
@@ -10816,16 +10812,14 @@ window.BittyClasses.ClassF7CAA = class {
 
 signal_F7CAA(_, el) {
   this.setGlobalLogLevel("trace");
-  if (this.getLocalLogLevel() === "trace")  {
-    el.innerHTML = "test passed";
-  } else {
-    el.innerHTML = "test failed";
-  }
+  el.innerHTML = this.getLocalLogLevel();
 }  
 
 }
 
-window.BittyClasses.ClassF7CAA_Trigger = class {  
+window.BittyClasses.ClassF7CAA_Trigger = class {// This example test is run manually
+// to avoid adding noise to the console
+// on initial page load.  
 
   }
 </script>
@@ -10848,17 +10842,15 @@ window.BittyClasses.ClassF7CAA_Trigger = class {
 <div>JavaScript</div>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta function-call js"><span class="variable function js">signal_F7CAA</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">_</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>  <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">setGlobalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getLocalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>trace<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span>  <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test passed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span> <span class="meta conditional js"><span class="keyword control conditional js">else</span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>test failed<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable language this js">this</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">getLocalLogLevel</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre>
 
 
 
 <div>Test Trigger</div>
-<pre class="code-block"><code></code></pre>
+<pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> This example test is run manually
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> to avoid adding noise to the console
+<span class="line-marker"></span></span><span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> on initial page load.</span></span></code></pre>
 <div>Results</div>
 
 <div class="example-block"><button data-send="signal_F7CAA">Test F7CAA</button>

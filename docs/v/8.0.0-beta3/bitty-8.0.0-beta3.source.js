@@ -453,6 +453,11 @@ class BittyJs extends HTMLElement {
 
   _deleteJSON(key) {
     const storageKey = `bittyJSON_${key}`;
+    // Reminder: localStorage.removeItem()
+    // needs to be done outside
+    // of the check for the this.json[key] becasue
+    // those can be erased manually.
+    localStorage.removeItem(storageKey);
     const details = {
       level: "info",
       from: "deleteJSON",
@@ -465,7 +470,6 @@ class BittyJs extends HTMLElement {
         `JSON with key '${key}' already does not exist.`,
       );
     } else {
-      localStorage.removeItem(storageKey);
       delete this.json[key];
       details.text.push(
         `Removed JSON with from: ${key}`,
@@ -993,20 +997,22 @@ class BittyJs extends HTMLElement {
         const json = JSON.parse(storage).data;
         this.json[key] = json;
         details.text.push(`Loaded json from storage with from: ${key}`);
-      } else if (typeof fallback === "string") {
+      } else if (fallback !== null && typeof fallback === "string") {
         this.json[key] = JSON.parse(fallback);
         localStorage.setItem(key, `{ "data": ${fallback} }`);
         details.text.push(
           `Loaded json from fallback string with from: ${key}`,
         );
       } else if (fallback !== null && typeof fallback === "object") {
-        localStorage.setItem(key, JSON.stringify({ data: fallback }));
+        const storagePayload = JSON.stringify({ data: fallback });
+        localStorage.setItem(storageKey, JSON.stringify({ data: fallback }));
         this.json[key] = fallback;
         details.text.push(
           `Loaded json from fallback object with from: ${key}`,
         );
       } else {
-        details.level = "error", details.ok = false;
+        details.level = "error";
+        details.ok = false;
         details.text.push(
           `Could not load JSON from either storage or fallbak with from: ${key}`,
         );

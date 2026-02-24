@@ -150,7 +150,7 @@ class BittyJs extends HTMLElement {
       if (checkIndex === 1) {
         console.error(
           `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
+            payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
           "\n",
           payload,
@@ -160,19 +160,19 @@ class BittyJs extends HTMLElement {
       } else if (checkIndex === 2) {
         console.warn(
           `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
+            payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 3) {
         console.info(
           `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
+            payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 4) {
         console.debug(
           `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
+            payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 5) {
@@ -183,7 +183,7 @@ class BittyJs extends HTMLElement {
       } else {
         console.log(
           `[${this.timestamp(payload.timestamp)}] ${
-            payload.messages.join("\n")
+            payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       }
@@ -206,15 +206,15 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
-      key: "createElement",
+      from: "createElement",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     if (options.update === undefined || options.update === false) {
       if (key !== null && this._element[key] !== undefined) {
         details.level = "warn";
-        details.messages.push(
+        details.text.push(
           `Warning: createElement overwrite an existing element with key '${key}'`,
         );
       }
@@ -227,14 +227,14 @@ class BittyJs extends HTMLElement {
       this._element[key] = content.firstChild.outerHTML;
       if (content.childElementCount > 1) {
         details.level = "warn";
-        details.messages.push(
+        details.text.push(
           "Warning: A document fragment with more than one child element was used to create an element with .createElement. Only the first element was used. The rest were ignored",
         );
       }
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Tried to create an element for key '${key}' from something other than a string, element, or document fragment which is not supported.`,
       );
     }
@@ -251,9 +251,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
-      key: "createFragment",
+      from: "createFragment",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     if (
@@ -261,19 +261,19 @@ class BittyJs extends HTMLElement {
     ) {
       if (options.update === undefined || options.update === false) {
         details.level = "warn";
-        details.messages.push(`Warning overwriting an existing key: '${key}'`);
+        details.text.push(`Warning overwriting an existing from: '${key}'`);
       }
     }
     if (key === null) {
       details.ok = false;
       details.level = "error";
-      details.messages.push(
+      details.text.push(
         `this.createFragment(key, content) was called without 'key' and 'content' arguments.`,
       );
     } else if (content === null) {
       details.ok = false;
       details.level = "error";
-      details.messages.push(
+      details.text.push(
         `this.createFragment(key, content) was called without either a 'content' argument.`,
       );
     } else if (typeof content === "string") {
@@ -286,7 +286,7 @@ class BittyJs extends HTMLElement {
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Attempted to make a frament for key '${key}' out of something other than a String, Element, or Document Fragment`,
       );
     }
@@ -303,9 +303,9 @@ class BittyJs extends HTMLElement {
   //   const storageKey = `bittyJSON_${key}`;
   //   const details = {
   //     level: "info",
-  //     key: "createJSON",
+  //     from: "createJSON",
   //     ok: true,
-  //     messages: [],
+  //     text: [],
   //     extraInfo: null,
   //   };
   //   if (
@@ -313,7 +313,7 @@ class BittyJs extends HTMLElement {
   //     this.json[key] !== undefined
   //   ) {
   //     details.level = "warn";
-  //     details.messages.push(
+  //     details.text.push(
   //       `createJSON found an existin JSON with key '${key}'.`,
   //     );
   //   }
@@ -325,7 +325,7 @@ class BittyJs extends HTMLElement {
   //         storageKey,
   //         JSON.stringify({ data: this.json[key] }),
   //       );
-  //       details.messages.push(`Added JSON with key: ${key}`);
+  //       details.text.push(`Added JSON with from: ${key}`);
   //     } catch (error) {
   //     }
   //   } else {
@@ -335,7 +335,7 @@ class BittyJs extends HTMLElement {
   //         storageKey,
   //         JSON.stringify({ data: this.json[key] }),
   //       );
-  //       details.messages.push(`Added JSON with key: ${key}`);
+  //       details.text.push(`Added JSON with from: ${key}`);
   //     }
   //   }
   // }
@@ -347,21 +347,21 @@ class BittyJs extends HTMLElement {
     // return it at the end.
     const details = {
       level: "info",
-      key: "createJSON",
+      from: "createJSON",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     if (json !== undefined && this.json[key] !== undefined) {
       details.level = "warn";
-      details.messages.push(
+      details.text.push(
         `Warning: createJSON overwrote an existing JSON with key '${key}'.`,
       );
     }
     if (json === undefined) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No value passed in for key '${key}'`,
       );
     } else if (typeof json === "string") {
@@ -371,12 +371,12 @@ class BittyJs extends HTMLElement {
           storageKey,
           JSON.stringify({ data: this.json[key] }),
         );
-        details.messages.push(`Added JSON with key: ${key}`);
+        details.text.push(`Added JSON with from: ${key}`);
       } catch (error) {
         details.level = "error";
         details.ok = false;
-        details.messages.push(
-          `Could not parse JSON for key: ${key}`,
+        details.text.push(
+          `Could not parse JSON for from: ${key}`,
         );
       }
     } else {
@@ -385,7 +385,7 @@ class BittyJs extends HTMLElement {
         storageKey,
         JSON.stringify({ data: this.json[key] }),
       );
-      details.messages.push(`Added JSON with key: ${key}`);
+      details.text.push(`Added JSON with from: ${key}`);
     }
     return this.addLog(details);
   }
@@ -394,9 +394,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittySVG_${key}`;
     const details = {
       level: "info",
-      key: "createSVG",
+      from: "createSVG",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     if (
@@ -404,19 +404,19 @@ class BittyJs extends HTMLElement {
     ) {
       if (options.update === undefined || options.update === false) {
         details.level = "warn";
-        details.messages.push(`Warning overwriting an existing key: '${key}'`);
+        details.text.push(`Warning overwriting an existing from: '${key}'`);
       }
     }
     if (key === null) {
       details.ok = false;
       details.level = "error";
-      details.messages.push(
+      details.text.push(
         `this.createSVG(key, content) was called without 'key' and 'content' arguments.`,
       );
     } else if (content === null) {
       details.ok = false;
       details.level = "error";
-      details.messages.push(
+      details.text.push(
         `this.createSVG(key, content) was called without either a 'content' argument.`,
       );
     } else if (typeof content === "string") {
@@ -426,7 +426,7 @@ class BittyJs extends HTMLElement {
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Attempted to make a frament for key '${key}' out of something other than a String or an SVG.`,
       );
     }
@@ -443,23 +443,23 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
-      key: "deleteElement",
+      from: "deleteElement",
       ok: true,
-      messages: [],
+      text: [],
     };
     if (
       localStorage.getItem(storageKey) === null &&
       this._element[key] === undefined
     ) {
       details.level = "warn";
-      details.messages.push(
+      details.text.push(
         `No existing element with '${key}' available to remove.`,
       );
       return this.addLog(details);
     } else {
       localStorage.removeItem(storageKey);
       delete this._element[key];
-      details.messages.push(
+      details.text.push(
         `Removed element with key '${key}'`,
       );
       return this.addLog(details);
@@ -471,21 +471,21 @@ class BittyJs extends HTMLElement {
     const details = {
       level: "info",
       ok: true,
-      key: "removeFragment",
-      messages: [],
+      from: "removeFragment",
+      text: [],
     };
     if (
       localStorage.getItem(storageKey) === null &&
       this._fragment[key] === undefined
     ) {
       details.level = "warn",
-        details.messages.push(
+        details.text.push(
           `No fragment with key '${key}' exists. Nothing to remove.`,
         );
     } else {
       delete this._fragment[key];
       localStorage.removeItem(storageKey);
-      details.messages.push(
+      details.text.push(
         `Fragment with key '${key}' was removed`,
       );
     }
@@ -509,7 +509,7 @@ class BittyJs extends HTMLElement {
         "info",
         "deleteJSON",
         true,
-        `Removed JSON with key: ${key}`,
+        `Removed JSON with from: ${key}`,
         null,
       );
     }
@@ -557,9 +557,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
-      key: "fetchElement",
+      from: "fetchElement",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     try {
@@ -571,7 +571,7 @@ class BittyJs extends HTMLElement {
         const text = await response.text();
         if (this._element[key] !== undefined) {
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Warning: fetch of ${url} overwrote existing element with key '${key}'`,
           );
         }
@@ -579,7 +579,7 @@ class BittyJs extends HTMLElement {
         template.innerHTML = text;
         if (template.content.childElementCount > 1) {
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Warning: The got a document fragment with more than one element from ${url} while creating element with key ${key}. Only the first element was used. The others were dropped`,
           );
         }
@@ -588,14 +588,14 @@ class BittyJs extends HTMLElement {
         if (typeof fallback === "string") {
           this._element[key] = fallback;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof Element) {
           this._element[key] = fallback.outerHTML;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
@@ -604,14 +604,14 @@ class BittyJs extends HTMLElement {
             return el.outerHTML;
           }).join("");
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;
-          details.messages.push(
+          details.text.push(
             `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
           );
           details.extraInfo = response;
@@ -620,7 +620,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
       );
     }
@@ -637,9 +637,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
-      key: "fetchFragment",
+      from: "fetchFragment",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     try {
@@ -651,7 +651,7 @@ class BittyJs extends HTMLElement {
         const text = await response.text();
         if (this._fragment[key] !== undefined) {
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Warning: fetch of ${url} overwrote existing fragment with key '${key}'`,
           );
         }
@@ -660,14 +660,14 @@ class BittyJs extends HTMLElement {
         if (typeof fallback === "string") {
           this._fragment[key] = fallback;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (fallback instanceof Element) {
           this._fragment[key] = fallback.outerHTML;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
@@ -676,14 +676,14 @@ class BittyJs extends HTMLElement {
             return el.outerHTML;
           }).join("");
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;
-          details.messages.push(
+          details.text.push(
             `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
           );
           details.extraInfo = response;
@@ -692,7 +692,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
       );
     }
@@ -709,9 +709,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyJSON_${key}`;
     const details = {
       level: "info",
-      key: "fetchJSON",
+      from: "fetchJSON",
       ok: true,
-      messages: [],
+      text: [],
     };
     let response = await fetch(url, options);
     try {
@@ -721,19 +721,19 @@ class BittyJs extends HTMLElement {
           if (this.json[key] !== undefined) {
             this.json[key] = json;
             details.level = "warn";
-            details.messages.push(
+            details.text.push(
               `Overwrote existing key '${key}' with JSON fetched from '${url}'`,
             );
           } else {
             this.json[key] = json;
-            details.messages.push(
+            details.text.push(
               `fetched JSON from '${url}' and stored in key '${key}'`,
             );
           }
         } catch (parseError) {
           if (fallback !== null) {
             details.level = "warn";
-            details.messages.push(
+            details.text.push(
               `Warning: Could not parse JSON from URL ${url}`,
             );
             if (typeof fallback === "string") {
@@ -744,13 +744,13 @@ class BittyJs extends HTMLElement {
           } else {
             details.level = "error";
             details.ok = false;
-            details.messages(`Could not parse fallback for key '${key}'.`);
+            details.text(`Could not parse fallback for key '${key}'.`);
           }
         }
       } else {
         if (fallback !== null) {
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Warning: Could not parse JSON from URL ${url}`,
           );
           if (typeof fallback === "string") {
@@ -760,13 +760,13 @@ class BittyJs extends HTMLElement {
           } else {
             details.level = "error";
             details.ok = false;
-            details.messages(`Could not parse fallback for key '${key}'.`);
+            details.text(`Could not parse fallback for key '${key}'.`);
           }
         } else {
           details.level = "error";
           details.ok = false;
           details.extraInfo = response;
-          details.messages.push(
+          details.text.push(
             `Error fetching JSON from '${url}' for key '${key}'`,
           );
           return this.addLog(details);
@@ -775,7 +775,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Error fetching JSON from '${url}' for key '${key}'`,
       );
       details.extraInfo = error;
@@ -793,9 +793,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittySVG_${key}`;
     const details = {
       level: "info",
-      key: "fetchSVG",
+      from: "fetchSVG",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     try {
@@ -807,7 +807,7 @@ class BittyJs extends HTMLElement {
         const text = await response.text();
         if (this._svg[key] !== undefined) {
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Warning: fetch of ${url} overwrote existing SVG with key '${key}'`,
           );
         }
@@ -816,21 +816,21 @@ class BittyJs extends HTMLElement {
         if (typeof fallback === "string") {
           this._svg[key] = fallback;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else if (content instanceof SVGSVGElement) {
           this._svg[key] = content.outerHTML;
           details.level = "warn";
-          details.messages.push(
+          details.text.push(
             `Used fallback for '${key}' because fetching '${url}' failed.`,
           );
           details.extraInfo = response;
         } else {
           details.level = "error";
           details.ok = false;
-          details.messages.push(
+          details.text.push(
             `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
           );
           details.extraInfo = response;
@@ -839,7 +839,7 @@ class BittyJs extends HTMLElement {
     } catch (error) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `An unidentified error occurred while tyring to fetch ${url} for key '${key}'`,
       );
     }
@@ -855,9 +855,9 @@ class BittyJs extends HTMLElement {
   async _fetchTemplates(url, options = {}) {
     const details = {
       level: "info",
-      key: "fetchTemplates",
+      from: "fetchTemplates",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     try {
@@ -937,22 +937,22 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyElement_${key}`;
     const details = {
       level: "info",
-      key: "loadElement",
+      from: "loadElement",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     const storage = localStorage.getItem(storageKey);
     if (key !== null && this._element[key] !== undefined) {
       details.level = "warn";
-      details.messages.push(
-        `Warning: loadElement() replaced an existing key: ${key}`,
+      details.text.push(
+        `Warning: loadElement() replaced an existing from: ${key}`,
       );
     }
     if (key === null) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No key provided for 'this.loadElement(key [,fallback])'`,
       );
     } else if (
@@ -960,7 +960,7 @@ class BittyJs extends HTMLElement {
     ) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No storage found for '${key}' and not fallback provided.`,
       );
     } else if (storage !== null) {
@@ -973,14 +973,14 @@ class BittyJs extends HTMLElement {
       this._element[key] = fallback.firstChild.outerHTML;
       if (fallback.children.length > 1) {
         details.level = "warn";
-        details.messages.push(
+        details.text.push(
           `Warning. The fallback documnet fragment used to loadElement with key '${key}' contained more than one element at its root. The first one was used. The rest were dropped.`,
         );
       }
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `loadElement() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
       );
     }
@@ -998,19 +998,19 @@ class BittyJs extends HTMLElement {
     const details = {
       level: "info",
       ok: true,
-      messages: [],
+      text: [],
     };
     const storage = localStorage.getItem(storageKey);
     if (key !== null && this._fragment[key] !== undefined) {
       details.level = "warn";
-      details.messages.push(
-        `Warning: loadFragment() replaced an existing key: ${key}`,
+      details.text.push(
+        `Warning: loadFragment() replaced an existing from: ${key}`,
       );
     }
     if (key === null) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No key provided for 'this.loadFragment(key [,fallback])'`,
       );
     } else if (
@@ -1018,7 +1018,7 @@ class BittyJs extends HTMLElement {
     ) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No storage found for '${key}' and not fallback provided.`,
       );
     } else if (storage !== null) {
@@ -1033,7 +1033,7 @@ class BittyJs extends HTMLElement {
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `loadFragment() attempted to use an invalid fallback for key '${key}'. Valid values must be a String, Element, or DocumentFragment.`,
       );
     }
@@ -1050,9 +1050,9 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyJSON_${key}`;
     const details = {
       level: "info",
-      key: "loadJSON",
+      from: "loadJSON",
       ok: true,
-      messages: [],
+      text: [],
       extraInfo: null,
     };
     const keyAlreadyExists = this.json[key] === undefined ? false : true;
@@ -1061,29 +1061,29 @@ class BittyJs extends HTMLElement {
       if (storage !== null) {
         const json = JSON.parse(storage).data;
         this.json[key] = json;
-        details.messages.push(`Loaded json from storage with key: ${key}`);
+        details.text.push(`Loaded json from storage with from: ${key}`);
       } else if (typeof fallback === "string") {
         this.json[key] = JSON.parse(fallback);
         localStorage.setItem(key, `{ "data": ${fallback} }`);
-        details.messages.push(
-          `Loaded json from fallback string with key: ${key}`,
+        details.text.push(
+          `Loaded json from fallback string with from: ${key}`,
         );
       } else if (typeof fallback === "object") {
         localStorage.setItem(key, JSON.stringify({ data: fallback }));
         this.json[key] = fallback;
-        details.messages.push(
-          `Loaded json from fallback object with key: ${key}`,
+        details.text.push(
+          `Loaded json from fallback object with from: ${key}`,
         );
       } else {
         details.level = "error", details.ok = false;
-        details.messages.push(
-          `Could not load JSON from either storage or fallbak with key: ${key}`,
+        details.text.push(
+          `Could not load JSON from either storage or fallbak with from: ${key}`,
         );
       }
     } catch (loadingError) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         "Could not load JSON. See 'moreDetails' for additional information",
       );
       details.moreInfo = loadingError;
@@ -1095,9 +1095,9 @@ class BittyJs extends HTMLElement {
   //   const storageKey = `bittyJSON_${key}`;
   //   const details = {
   //     level: "info",
-  //     key: "loadJSON",
+  //     from: "loadJSON",
   //     ok: true,
-  //     messages: [],
+  //     text: [],
   //     moreDetails: null,
   //   };
   //   const keyAlreadyExists = this.json[key] === undefined ? false : true;
@@ -1106,25 +1106,25 @@ class BittyJs extends HTMLElement {
   //     if (storage !== null) {
   //       const json = JSON.parse(storage).data;
   //       this.json[key] = json;
-  //       details.messages.push(`Loaded json from storage with key: ${key}`);
+  //       details.text.push(`Loaded json from storage with from: ${key}`);
   //     } else if (typeof fallback === "string") {
   //       this.json[key] = JSON.parse(fallback);
   //       localStorage.setItem(key, `{ "data": ${fallback} }`);
-  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //       details.text.push(`Loaded json from fallback with from: ${key}`);
   //     } else if (typeof fallback === "object") {
   //       localStorage.setItem(key, JSON.stringify({ data: fallback }));
   //       this.json[key] = fallback;
-  //       details.messages.push(`Loaded json from fallback with key: ${key}`);
+  //       details.text.push(`Loaded json from fallback with from: ${key}`);
   //     } else {
   //       details.level = "error", details.ok = false;
-  //       details.messages.push(
-  //         `Could not load JSON from either storage or fallbak with key: ${key}`,
+  //       details.text.push(
+  //         `Could not load JSON from either storage or fallbak with from: ${key}`,
   //       );
   //     }
   //   } catch (loadingError) {
   //     details.level = "error";
   //     details.ok = false;
-  //     details.messages.push(
+  //     details.text.push(
   //       "Could not load JSON. See 'moreDetails' for additional information",
   //     );
   //     details.moreInfo = loadingError;
@@ -1152,7 +1152,7 @@ class BittyJs extends HTMLElement {
   //           "error",
   //           "loadJSON",
   //           false,
-  //           `Attempted to load storage without a top level 'data' in key: ${key}${details.extraText}`,
+  //           `Attempted to load storage without a top level 'data' in from: ${key}${details.extraText}`,
   //           null,
   //         );
   //       } else {
@@ -1161,7 +1161,7 @@ class BittyJs extends HTMLElement {
   //           details.level,
   //           "loadJSON",
   //           true,
-  //           `Loaded JSON for key: ${key}${details.extraText}`,
+  //           `Loaded JSON for from: ${key}${details.extraText}`,
   //           null,
   //         );
   //       }
@@ -1174,7 +1174,7 @@ class BittyJs extends HTMLElement {
   //           details.level,
   //           "loadJSON",
   //           true,
-  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
+  //           `Loaded fallback JSON for from: ${key}${details.extraText}`,
   //           null,
   //         );
   //       } else if (typeof fallback === "object") {
@@ -1184,7 +1184,7 @@ class BittyJs extends HTMLElement {
   //           details.level,
   //           "loadJSON",
   //           true,
-  //           `Loaded fallback JSON for key: ${key}${details.extraText}`,
+  //           `Loaded fallback JSON for from: ${key}${details.extraText}`,
   //           null,
   //         );
   //       }
@@ -1193,7 +1193,7 @@ class BittyJs extends HTMLElement {
   //       "error",
   //       "loadJSON",
   //       false,
-  //       `No JSON in storage or fallback for key: ${key}${details.extraText}`,
+  //       `No JSON in storage or fallback for from: ${key}${details.extraText}`,
   //       null,
   //     );
   //   } catch (error) {
@@ -1201,7 +1201,7 @@ class BittyJs extends HTMLElement {
   //       "error",
   //       "loadJSON",
   //       false,
-  //       `Could not parse fallback JSON for key: ${key}${details.extraText}`,
+  //       `Could not parse fallback JSON for from: ${key}${details.extraText}`,
   //       null,
   //     );
   //   }
@@ -1238,19 +1238,19 @@ class BittyJs extends HTMLElement {
     const details = {
       level: "info",
       ok: true,
-      messages: [],
+      text: [],
     };
     const storage = localStorage.getItem(storageKey);
     if (key !== null && this._svg[key] !== undefined) {
       details.level = "warn";
-      details.messages.push(
-        `Warning: loadSVG() replaced an existing key: ${key}`,
+      details.text.push(
+        `Warning: loadSVG() replaced an existing from: ${key}`,
       );
     }
     if (key === null) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No key provided for 'this.loadSVG(key [,fallback])'`,
       );
     } else if (
@@ -1258,7 +1258,7 @@ class BittyJs extends HTMLElement {
     ) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `No storage found for '${key}' and not fallback provided.`,
       );
     } else if (storage !== null) {
@@ -1270,7 +1270,7 @@ class BittyJs extends HTMLElement {
     } else {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `loadSVG() attempted to use an invalid fallback for key '${key}'. Valid values must be a String or an SVG.`,
       );
     }
@@ -1305,13 +1305,13 @@ class BittyJs extends HTMLElement {
       level: "info",
       from: "renderElement",
       ok: true,
-      messages: [],
+      text: [],
     };
 
     if (this._element[key] === undefined) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Attempted to render non-existing element using key '${key}'`,
       );
       this.addLog(details);
@@ -1391,14 +1391,14 @@ class BittyJs extends HTMLElement {
   _renderSVG(key, subs = {}) {
     const details = {
       level: "info",
-      key: "renderSVG",
+      from: "renderSVG",
       ok: true,
-      messages: [],
+      text: [],
     };
     if (this._svg[key] === undefined) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Attempted to render non-existing SVG using key '${key}'`,
       );
       return undefined;
@@ -2102,15 +2102,15 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyJSON_${key}`;
     const details = {
       level: "info",
-      key: "saveJSON",
+      from: "saveJSON",
       ok: true,
-      messages: [],
+      text: [],
       moreDetails: null,
     };
     if (this.json[key] === undefined) {
       details.level = "error";
       details.ok = false;
-      details.messages.push(
+      details.text.push(
         `Tried to save JSON with '${key}' but it does not exist in the collection.`,
       );
       return this.addLog(details);
@@ -2119,11 +2119,11 @@ class BittyJs extends HTMLElement {
       try {
         const payload = JSON.stringify({ data: this.json[key] });
         localStorage.setItem(storageKey, payload);
-        details.messages.push(`Saved JSON with key: ${key}`);
+        details.text.push(`Saved JSON with from: ${key}`);
       } catch (saveError) {
         details.level = "error";
         details.ok = false;
-        details.messages.push(
+        details.text.push(
           `Could not save JSON with key '${key}' because it couldn't be stringified.`,
         );
       }
@@ -2135,15 +2135,15 @@ class BittyJs extends HTMLElement {
   //   const storageKey = `bittyJSON_${key}`;
   //   const details = {
   //     level: "info",
-  //     key: "saveJSON",
+  //     from: "saveJSON",
   //     ok: true,
-  //     messages: [],
+  //     text: [],
   //     moreDetails: null,
   //   };
   //   if (this.json[key] === undefined) {
   //     details.level = "error";
   //     details.ok = false;
-  //     details.messages.push(
+  //     details.text.push(
   //       `Tried to save JSON with '${key}' but it does not exist in the collection.`,
   //     );
   //     return this.addLog(details);
@@ -2152,11 +2152,11 @@ class BittyJs extends HTMLElement {
   //     try {
   //       const payload = JSON.stringify({ data: this.json[key] });
   //       localStorage.setItem(storageKey, payload);
-  //       details.messages.push(`Saved JSON with key: ${key}`);
+  //       details.text.push(`Saved JSON with from: ${key}`);
   //     } catch (saveError) {
   //       details.level = "error";
   //       details.ok = false;
-  //       details.messages.push(
+  //       details.text.push(
   //         `Could not save JSON with key '${key}' because it couldn't be stringified.`,
   //       );
   //     }
@@ -2174,7 +2174,7 @@ class BittyJs extends HTMLElement {
   //         "info",
   //         "savejson",
   //         true,
-  //         `Saved JSON for key: ${key}`,
+  //         `Saved JSON for from: ${key}`,
   //         null,
   //       );
   //     } else {
@@ -2191,7 +2191,7 @@ class BittyJs extends HTMLElement {
   //       "error",
   //       "savejson",
   //       false,
-  //       `No JSON available to save with key: ${key}`,
+  //       `No JSON available to save with from: ${key}`,
   //       null,
   //     );
   //   }
@@ -2230,7 +2230,7 @@ class BittyJs extends HTMLElement {
       this.addLog({
         level: "warn",
         ok: true,
-        messages: [payload],
+        text: [payload],
       });
     } else {
       this.addLog(payload);

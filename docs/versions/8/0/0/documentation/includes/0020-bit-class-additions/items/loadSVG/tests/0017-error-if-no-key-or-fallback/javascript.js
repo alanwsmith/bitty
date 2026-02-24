@@ -1,7 +1,7 @@
 #key = "svg_signal_DB540";
 
 signal_DB540(_, el) {
-  const result = this.loadSVG(this.#key);
+  const result = this.loadSVG("el_DB540");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }
@@ -14,6 +14,6 @@ bittyReady() {
 
 given_signal_DB540(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_DB540");
   this.trigger("signal_DB540");
 }

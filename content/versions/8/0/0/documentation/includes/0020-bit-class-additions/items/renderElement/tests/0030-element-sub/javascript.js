@@ -8,12 +8,12 @@ signal_AB8CB(_, el) {
     "TARGET_AB8CB": replacementEl,
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_AB8CB", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_AB8CB</div>`);
+  this.createElement("el_AB8CB", `<div>TARGET_AB8CB</div>`);
   this.trigger("signal_AB8CB");
 }

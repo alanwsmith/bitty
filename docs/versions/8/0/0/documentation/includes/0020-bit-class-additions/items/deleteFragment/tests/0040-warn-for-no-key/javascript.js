@@ -1,7 +1,7 @@
 
 
 signal_B0E93(_, el) {
-  const result = this.deleteFragment(this.#key);
+  const result = this.deleteFragment("el_B0E93");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -14,6 +14,6 @@ bittyReady() {
 
 given_signal_B0E93(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
+  this.deleteFragment("el_B0E93");
   this.trigger("signal_B0E93");
 }

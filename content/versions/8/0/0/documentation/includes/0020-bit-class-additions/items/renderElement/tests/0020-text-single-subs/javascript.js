@@ -5,12 +5,12 @@ signal_3ECFF(_, el) {
     "TARGET_3ECFF": "ok",
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_3ECFF", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div class="test">TARGET_3ECFF</div>`);
+  this.createElement("el_3ECFF", `<div class="test">TARGET_3ECFF</div>`);
   this.trigger("signal_3ECFF");
 }

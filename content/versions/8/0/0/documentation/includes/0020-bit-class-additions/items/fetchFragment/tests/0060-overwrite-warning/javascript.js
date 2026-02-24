@@ -1,7 +1,7 @@
 
 
 async signal_F9E7D(url, el) {
-  const result = await this.fetchFragment(this.#key, url);
+  const result = await this.fetchFragment("el_F9E7D", url);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -14,7 +14,7 @@ bittyReady() {
 
 given_signal_F9E7D(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, "<div></div>");
+  this.createFragment("el_F9E7D", "<div></div>");
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
   this.send(url, "signal_F9E7D");
 }

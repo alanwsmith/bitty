@@ -8,13 +8,13 @@ signal_F7F0A(_, el) {
     ],
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_F7F0A", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_F7F0A</div>`);
+  this.createElement("el_F7F0A", `<div>TARGET_F7F0A</div>`);
   this.createElement(`replace1_F7F0A`, `<div class="test">ok</div>`);
   this.createElement(`replace2_F7F0A`, `<div class="test">ok</div>`);
   this.trigger("signal_F7F0A");

@@ -1,8 +1,8 @@
 
 
 signal_5A45F(_, el) {
-  this.updateFragment(this.#key, `<div>x</div><div>ok</div>`);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  this.updateFragment("el_5A45F", `<div>x</div><div>ok</div>`);
+  el.innerHTML = this.renderFragment("el_5A45F").children[1].innerHTML;
 }
 
 

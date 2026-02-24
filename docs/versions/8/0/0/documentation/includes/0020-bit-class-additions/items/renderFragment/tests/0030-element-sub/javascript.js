@@ -6,7 +6,7 @@ signal_31065(_, el) {
   // const subs = {
   //   "TARGET_31065": replacementEl,
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_31065", subs);
   // el.innerHTML = fragment.firstChild.firstChild.innerHTML;
 }
 
@@ -17,6 +17,6 @@ bittyReady() {
 
 given_signal_31065(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div>TARGET_31065</div>`);
+  this.createFragment("el_31065", `<div>TARGET_31065</div>`);
   this.trigger("signal_31065");
 }

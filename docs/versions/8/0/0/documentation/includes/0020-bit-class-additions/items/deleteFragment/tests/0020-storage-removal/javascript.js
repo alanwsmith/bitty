@@ -1,8 +1,8 @@
 
 
 signal_E279E(_, el) {
-  this.deleteFragment(this.#key);
-  const result = this.loadFragment(this.#key);
+  this.deleteFragment("el_E279E");
+  const result = this.loadFragment("el_E279E");
   if (result.ok === false) {
     el.innerHTML = "ok";
   }
@@ -15,6 +15,6 @@ bittyReady() {
 
 given_signal_E279E(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, "<div></div>");
+  this.createFragment("el_E279E", "<div></div>");
   this.trigger("signal_E279E");
 }

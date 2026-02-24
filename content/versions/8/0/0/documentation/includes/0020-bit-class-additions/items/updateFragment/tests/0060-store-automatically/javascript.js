@@ -1,8 +1,8 @@
 
 
 signal_3BC5E(element, el) {
-  const result = this.loadFragment(this.#key);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  const result = this.loadFragment("el_3BC5E");
+  el.innerHTML = this.renderFragment("el_3BC5E").firstChild.innerHTML;
 }
 
 
@@ -11,8 +11,8 @@ bittyReady() {
 }
 
 given_signal_3BC5E(_, __) {
-  this.deleteFragment(this.#key);
-  this.updateFragment(this.#key, `<div>ok</div>`);
-  delete this._fragment[this.#key];
+  this.deleteFragment("el_3BC5E");
+  this.updateFragment("el_3BC5E", `<div>ok</div>`);
+  delete this._fragment["el_3BC5E"];
   this.trigger("signal_3BC5E");
 }

@@ -12,7 +12,7 @@ given_signal_30B5D(_, __) {
 signal_30B5D(_, el) {
   this.logs = [];
   if (
-    this.renderElement(this.#key) === undefined &&
+    this.renderElement("el_30B5D") === undefined &&
     this.logs[0].level === "error"
   ) {
     el.innerHTML = "ok";

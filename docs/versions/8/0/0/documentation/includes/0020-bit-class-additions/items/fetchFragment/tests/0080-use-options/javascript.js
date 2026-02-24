@@ -8,8 +8,8 @@ async signal_6F792(url, el) {
       },
     },
   };
-  await this.fetchFragment(this.#key, url, null, options);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  await this.fetchFragment("el_6F792", url, null, options);
+  el.innerHTML = this.renderFragment("el_6F792").children[1].innerHTML;
 }
 
 

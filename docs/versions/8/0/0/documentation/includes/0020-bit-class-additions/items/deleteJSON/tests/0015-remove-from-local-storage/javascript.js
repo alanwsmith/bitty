@@ -1,8 +1,8 @@
 #key = "json_signal_CE7A8";
 
 signal_CE7A8(_, el) {
-  this.deleteJSON(this.#key);
-  const result = this.loadJSON(this.#key);
+  this.deleteJSON("el_CE7A8");
+  const result = this.loadJSON("el_CE7A8");
   if (result.ok === false) {
     el.innerHTML = "ok";
   }
@@ -11,6 +11,6 @@ signal_CE7A8(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createJSON(this.#key, `{}`);
+  this.createJSON("el_CE7A8", `{}`);
   this.trigger("signal_CE7A8");
 }

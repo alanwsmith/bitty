@@ -6,7 +6,7 @@ signal_F7489(_, el) {
   // const subs = {
   //   "TARGET_F7489": template.content,
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_F7489", subs);
   // el.innerHTML = fragment.firstChild.children[1].innerHTML;
 }
 
@@ -17,6 +17,6 @@ bittyReady() {
 
 given_signal_F7489(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div>TARGET_F7489</div>`);
+  this.createFragment("el_F7489", `<div>TARGET_F7489</div>`);
   this.trigger("signal_F7489");
 }

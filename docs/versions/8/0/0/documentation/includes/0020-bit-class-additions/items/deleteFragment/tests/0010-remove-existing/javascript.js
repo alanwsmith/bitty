@@ -1,8 +1,8 @@
 
 
 signal_108CD(_, el) {
-  this.deleteFragment(this.#key);
-  if (this._fragment[this.#key] === undefined) {
+  this.deleteFragment("el_108CD");
+  if (this._fragment["el_108CD"] === undefined) {
     el.innerHTML = "ok";
   }
 }
@@ -14,6 +14,6 @@ bittyReady() {
 
 given_signal_108CD(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, "<div></div>");
+  this.createFragment("el_108CD", "<div></div>");
   this.trigger("signal_108CD");
 }

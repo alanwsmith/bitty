@@ -1,7 +1,7 @@
 #key = "svg_signal_2AB87";
 
 signal_2AB87(_, el) {
-  const result = this.loadSVG(this.#key);
+  const result = this.loadSVG("el_2AB87");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -9,7 +9,7 @@ signal_2AB87(_, el) {
 }
 
 view_signal_2AB87(svg, el) {
-  el.replaceWith(this.renderSVG(this.#key));
+  el.replaceWith(this.renderSVG("el_2AB87"));
 }
 
 
@@ -24,6 +24,6 @@ given_signal_2AB87(_, __) {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_2AB87", input);
   this.trigger("signal_2AB87");
 }

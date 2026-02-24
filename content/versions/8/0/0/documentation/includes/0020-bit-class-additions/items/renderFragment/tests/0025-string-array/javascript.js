@@ -4,7 +4,7 @@ signal_378AE(_, el) {
   // const subs = {
   //   "TARGET_378AE": ["o", "k"],
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_378AE", subs);
   // el.innerHTML = fragment.children[1].innerHTML;
 }
 
@@ -15,6 +15,6 @@ bittyReady() {
 
 given_signal_378AE(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div></div><div>TARGET_378AE</div>`);
+  this.createFragment("el_378AE", `<div></div><div>TARGET_378AE</div>`);
   this.trigger("signal_378AE");
 }

@@ -1,8 +1,8 @@
 #key = "svg_signal_2D8D5";
 
 signal_2D8D5(_, el) {
-  this.loadSVG(this.#key);
-  const svg = this.renderSVG(this.#key);
+  this.loadSVG("el_2D8D5");
+  const svg = this.renderSVG("el_2D8D5");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_2D8D5");
 }
@@ -23,7 +23,7 @@ given_signal_2D8D5(_, __) {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
-  delete this._svg[this.#key];
+  this.createSVG("el_2D8D5", input);
+  delete this._svg["el_2D8D5"];
   this.trigger("signal_2D8D5");
 }

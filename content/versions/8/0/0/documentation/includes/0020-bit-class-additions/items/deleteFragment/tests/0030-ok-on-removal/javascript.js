@@ -1,7 +1,7 @@
 
 
 signal_53DF8(_, el) {
-  const result = this.deleteFragment(this.#key);
+  const result = this.deleteFragment("el_53DF8");
   if (result.ok === true) {
     el.innerHTML = "ok";
   }
@@ -14,6 +14,6 @@ bittyReady() {
 
 given_signal_53DF8(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, "<div></div>");
+  this.createFragment("el_53DF8", "<div></div>");
   this.trigger("signal_53DF8");
 }

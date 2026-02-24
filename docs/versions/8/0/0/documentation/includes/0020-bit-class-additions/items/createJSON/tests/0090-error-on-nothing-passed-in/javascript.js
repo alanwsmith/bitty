@@ -1,7 +1,7 @@
 #key = "json_signal_45CAA";
 
 signal_45CAA(_, el) {
-  const result = this.createJSON(this.#key);
+  const result = this.createJSON("el_45CAA");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }

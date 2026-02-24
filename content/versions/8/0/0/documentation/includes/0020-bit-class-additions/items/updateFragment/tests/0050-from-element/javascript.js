@@ -1,8 +1,8 @@
 
 
 signal_B50E1(element, el) {
-  this.updateFragment(this.#key, element);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  this.updateFragment("el_B50E1", element);
+  el.innerHTML = this.renderFragment("el_B50E1").firstChild.innerHTML;
 }
 
 

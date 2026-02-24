@@ -1,7 +1,7 @@
 
 
 signal_C09FC(_, el) {
-  const result = this.updateFragment(this.#key, {
+  const result = this.updateFragment("el_C09FC", {
     key: "not a string, element, or document fragment",
   });
   if (result.ok === false && result.level === "error") {

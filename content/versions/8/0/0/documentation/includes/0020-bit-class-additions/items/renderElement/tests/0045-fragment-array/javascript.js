@@ -8,13 +8,13 @@ signal_81AA3(_, el) {
     ],
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_81AA3", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_81AA3</div>`);
+  this.createElement("el_81AA3", `<div>TARGET_81AA3</div>`);
   this.createFragment(
     `replacement1_81AA3`,
     `<div class="test">ok</div><div class="test">ok</div>`,

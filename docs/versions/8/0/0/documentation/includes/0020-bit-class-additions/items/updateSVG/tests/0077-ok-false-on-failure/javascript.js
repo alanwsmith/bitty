@@ -1,7 +1,7 @@
 #key = "svg_signal_00957";
 
 signal_00957(_, el) {
-  const result = this.updateSVG(this.#key, {
+  const result = this.updateSVG("el_00957", {
     misc: "not a valid input for an svg",
   });
   if (result.ok === false && result.level === "error") {
@@ -12,12 +12,12 @@ signal_00957(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_00957");
   const input = `
 <svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="green" />
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">bug</text>
 </svg>`;
-  this.createSVG(this.#key, input);
+  this.createSVG("el_00957", input);
   this.trigger("signal_00957");
 }

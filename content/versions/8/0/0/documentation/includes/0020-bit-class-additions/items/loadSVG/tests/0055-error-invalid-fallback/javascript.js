@@ -1,7 +1,7 @@
 #key = "svg_signal_609BD";
 
 signal_609BD(_, el) {
-  const result = this.loadSVG(this.#key, {
+  const result = this.loadSVG("el_609BD", {
     misc: "objects are not valid fallbacks",
   });
   if (result.ok === false && result.level === "error") {

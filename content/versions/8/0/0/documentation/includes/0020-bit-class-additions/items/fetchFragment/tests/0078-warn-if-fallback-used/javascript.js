@@ -2,7 +2,7 @@
 
 async signal_EEB5B(payload, el) {
   const result = await this.fetchFragment(
-    this.#key,
+    "el_EEB5B",
     payload.url,
     payload.fallback,
   );

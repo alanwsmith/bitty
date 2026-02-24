@@ -1,8 +1,8 @@
 #key = "svg_signal_B2E8A";
 
 signal_B2E8A(_, el) {
-  this.loadSVG(this.#key);
-  const svg = this.renderSVG(this.#key);
+  this.loadSVG("el_B2E8A");
+  const svg = this.renderSVG("el_B2E8A");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_B2E8A");
 }
@@ -19,8 +19,8 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
-  this.loadSVG(this.#key, input);
-  delete this._svg[this.#key];
+  this.deleteSVG("el_B2E8A");
+  this.loadSVG("el_B2E8A", input);
+  delete this._svg["el_B2E8A"];
   this.trigger("signal_B2E8A");
 }

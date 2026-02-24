@@ -12,7 +12,7 @@ signal_A86C1(_, el) {
   // const subs = {
   //   "TARGET_A86C1": replacementArray,
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_A86C1", subs);
   // el.innerHTML = fragment.firstChild.children[1].innerHTML;
 }
 
@@ -23,6 +23,6 @@ bittyReady() {
 
 given_signal_A86C1(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div>TARGET_A86C1</div>`);
+  this.createFragment("el_A86C1", `<div>TARGET_A86C1</div>`);
   this.trigger("signal_A86C1");
 }

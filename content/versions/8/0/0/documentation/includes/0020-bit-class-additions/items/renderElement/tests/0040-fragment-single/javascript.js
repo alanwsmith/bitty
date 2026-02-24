@@ -5,13 +5,13 @@ signal_00B6E(_, el) {
     "TARGET_00B6E": this.renderFragment(`replacement_00B6E`),
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_00B6E", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_00B6E</div>`);
+  this.createElement("el_00B6E", `<div>TARGET_00B6E</div>`);
   this.createFragment(
     `replacement_00B6E`,
     `<div class="test">ok</div><div class="test">ok</div>`,

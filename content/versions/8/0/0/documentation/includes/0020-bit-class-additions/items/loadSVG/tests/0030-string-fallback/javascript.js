@@ -1,8 +1,8 @@
 #key = "svg_signal_655D9";
 
 signal_655D9(fallback, el) {
-  this.loadSVG(this.#key, fallback);
-  const svg = this.renderSVG(this.#key);
+  this.loadSVG("el_655D9", fallback);
+  const svg = this.renderSVG("el_655D9");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_655D9");
 }
@@ -23,6 +23,6 @@ given_signal_655D9(_, __) {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_655D9");
   this.send(fallback, "signal_655D9");
 }

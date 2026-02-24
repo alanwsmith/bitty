@@ -1,8 +1,8 @@
 
 
 async signal_E47B8(url, el) {
-  await this.fetchFragment(this.#key, url);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  await this.fetchFragment("el_E47B8", url);
+  el.innerHTML = this.renderFragment("el_E47B8").children[1].innerHTML;
 }
 
 

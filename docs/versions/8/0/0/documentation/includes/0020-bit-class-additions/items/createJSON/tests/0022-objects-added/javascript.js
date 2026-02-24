@@ -2,8 +2,8 @@
 
 signal_C2FB6(_, el) {
   // const jsObject = { "status": "ok" };
-  // this.createJSON(this.#key, jsObject);
-  // el.innerHTML = this.json[this.#key].status;
+  // this.createJSON("el_C2FB6", jsObject);
+  // el.innerHTML = this.json["el_C2FB6"].status;
 }
 
 

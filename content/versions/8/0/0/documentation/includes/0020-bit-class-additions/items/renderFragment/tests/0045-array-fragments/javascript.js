@@ -12,7 +12,7 @@ signal_C24F9(_, el) {
   // const subs = {
   //   "TARGET_C24F9": replacementArray,
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_C24F9", subs);
   // el.innerHTML = fragment.firstChild.children[3].innerHTML;
 }
 
@@ -23,6 +23,6 @@ bittyReady() {
 
 given_signal_C24F9(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div>TARGET_C24F9</div>`);
+  this.createFragment("el_C24F9", `<div>TARGET_C24F9</div>`);
   this.trigger("signal_C24F9");
 }

@@ -45,7 +45,7 @@ window.BittyClasses.ShowLogs = class {
   showLogs(_, el) {
     el.innerHTML = this.logs()
       .filter((log) => log.levelIndex <= 2)
-      .map((log) => `${log.timestamp} - ${log.from}\n${log.text.join("\n")}`).join("\n");
+      .map((log) => `[${this.localTimestampMs(log.timestamp)}] ${log.level.toUpperCase()}: ${log.from}\n${log.text.join("\n")}`).join("\n");
   }
 }
 

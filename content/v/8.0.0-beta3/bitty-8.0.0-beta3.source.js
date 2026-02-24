@@ -100,7 +100,7 @@ class BittyJs extends HTMLElement {
     ) {
       if (checkIndex === 1) {
         console.error(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
           "\n",
@@ -110,31 +110,31 @@ class BittyJs extends HTMLElement {
         );
       } else if (checkIndex === 2) {
         console.warn(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 3) {
         console.info(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 4) {
         console.debug(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else if (checkIndex === 5) {
         console.trace(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.texet.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
       } else {
         console.log(
-          `[${this.timestamp(payload.timestamp)}] ${
+          `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
@@ -1199,6 +1199,7 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittySVG_${key}`;
     const details = {
       level: "info",
+      from: "loadSVG",
       ok: true,
       text: [],
     };
@@ -2167,7 +2168,26 @@ class BittyJs extends HTMLElement {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  timestamp(datetime) {
+  _localTimestamp(datetime) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}`;
+  }
+
+  _localTimestampMs(datetime) {
     const parts = {};
     new Intl.DateTimeFormat(undefined, {
       year: "numeric",

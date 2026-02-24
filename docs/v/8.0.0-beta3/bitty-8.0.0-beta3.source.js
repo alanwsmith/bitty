@@ -94,11 +94,12 @@ class BittyJs extends HTMLElement {
     payload.performanceTime = performance.now();
     payload.levelIndex = this.#_logLevels.indexOf(payload.level);
     this.#_logs.push(payload);
+
     if (
       this.#_globalLogLevelIndex >= payload.levelIndex ||
       target._localLogLevelIndex >= payload.levelIndex
     ) {
-      if (checkIndex === 1) {
+      if (payload.levelIndex === 1) {
         console.error(
           `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
@@ -108,25 +109,25 @@ class BittyJs extends HTMLElement {
           "\n",
           new Error("Stack Trace"),
         );
-      } else if (checkIndex === 2) {
+      } else if (payload.levelIndex === 2) {
         console.warn(
           `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
-      } else if (checkIndex === 3) {
+      } else if (payload.levelIndex === 3) {
         console.info(
           `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
-      } else if (checkIndex === 4) {
+      } else if (payload.levelIndex === 4) {
         console.debug(
           `[${this._localTimestamp(payload.timestamp)}] ${
             payload.text.join("\n")
           } [Source: ${payload.bitClass}]`,
         );
-      } else if (checkIndex === 5) {
+      } else if (payload.levelIndex === 5) {
         console.trace(
           `[${this._localTimestamp(payload.timestamp)}] ${
             payload.texet.join("\n")
@@ -972,6 +973,7 @@ class BittyJs extends HTMLElement {
     const storageKey = `bittyFragment_${key}`;
     const details = {
       level: "info",
+      from: "loadFragment",
       ok: true,
       text: [],
     };
@@ -1018,6 +1020,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._fragment[key] }),
       );
     }
+    // console.log(details);
     return this._addLog(details);
   }
 

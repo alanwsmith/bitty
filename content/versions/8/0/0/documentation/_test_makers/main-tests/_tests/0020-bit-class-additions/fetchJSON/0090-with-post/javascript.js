@@ -1,19 +1,16 @@
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
-  this.trigger("$SIGNAL_NAME");
-}
-
 async $SIGNAL_NAME(_, el) {
-  const url = "/[@ file.parent @]/payloads/valid-json.json";
+  const url = "https://www.example.com/";
+  const fallback = null;
   const options = {
     method: "POST",
+    body: JSON.stringify({ key: "value" }),
   };
-  // await this.fetchJSON("data_$SIGNAL_NAME", this.#url, options);
+  // The server running this side does not accept
+  // post requests. This shows how to make
+  // one, but it's not tested here. 
   //
-  // NOTE: Confirming options must be done manually.
-  // This test is set to always pass as a result.
-  el.innerHTML = "test passed";
+  //////////////////////////////////////////////////////////////////////
+  // Example call:
+  // await this.fetchJSONt("data_$HASH", url, fallback, options);
+  //////////////////////////////////////////////////////////////////////
 }

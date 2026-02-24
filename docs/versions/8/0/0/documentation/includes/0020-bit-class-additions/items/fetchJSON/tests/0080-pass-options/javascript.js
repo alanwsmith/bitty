@@ -1,11 +1,3 @@
-bittyReady() {
-  this.trigger("given_signal_8C969");
-}
-
-given_signal_8C969(_, __) {
-  this.trigger("signal_8C969");
-}
-
 async signal_8C969(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
   const options = {
@@ -13,9 +5,6 @@ async signal_8C969(_, el) {
       "x-bitty-test": "data_signal_8C969",
     },
   };
-  // await this.fetchJSON("data_signal_8C969", this.#url, options);
-  //
-  // NOTE: Confirming options must be done manually.
-  // This test is set to always pass as a result.
-  el.innerHTML = "test passed";
+  await this.fetchJSON("data_signal_8C969", url, options);
+  el.innerHTML = this.json["data_signal_8C969"].status;
 }

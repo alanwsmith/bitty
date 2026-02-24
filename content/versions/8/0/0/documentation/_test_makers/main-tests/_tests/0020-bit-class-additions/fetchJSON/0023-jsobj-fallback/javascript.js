@@ -1,5 +1,3 @@
-#key = "json_$SIGNAL_NAME";
-
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/invalid-json.xjson";
   const fallback = { status: "test passed" };
@@ -7,10 +5,4 @@ async $SIGNAL_NAME(_, el) {
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("$SIGNAL_NAME");
 }

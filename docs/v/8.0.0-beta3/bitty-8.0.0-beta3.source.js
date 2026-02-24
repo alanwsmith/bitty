@@ -1956,6 +1956,7 @@ class BittyJs extends HTMLElement {
     // not it.)
 
     if (ev.bitty && ev.bitty.signals) {
+      console.log(ev);
       // temporary filter out bitty trigger and send
       // events
       if (ev.type !== "bittytriggerevent") {

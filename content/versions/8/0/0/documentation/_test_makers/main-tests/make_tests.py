@@ -237,6 +237,7 @@ class Test():
         return os.path.join(self.output_dir(), "window_class.html")
 
     def write_files(self):
+        print(self.bitty_tag_output_path())
         with open(self.bitty_tag_output_path(), "w") as _out:
             _out.write(self.bitty_tag_content())
         with open(self.extra_html_output_path(), "w") as _out:

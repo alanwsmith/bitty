@@ -162,7 +162,6 @@ class BittyJs extends HTMLElement {
       from: "createElement",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     if (options.update === undefined || options.update === false) {
       if (key !== null && this._element[key] !== undefined) {
@@ -207,7 +206,6 @@ class BittyJs extends HTMLElement {
       from: "createFragment",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     if (
       key !== null & this._fragment[key] !== undefined
@@ -303,7 +301,6 @@ class BittyJs extends HTMLElement {
       from: "createJSON",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     if (json !== undefined && this.json[key] !== undefined) {
       details.level = "warn";
@@ -350,7 +347,6 @@ class BittyJs extends HTMLElement {
       from: "createSVG",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     if (
       key !== null & this._svg[key] !== undefined
@@ -523,13 +519,9 @@ class BittyJs extends HTMLElement {
       from: "fetchElement",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     try {
-      const fetchOptions = options.fetchOptions !== undefined
-        ? options.fetchOptions
-        : {};
-      let response = await fetch(url, fetchOptions);
+      let response = await fetch(url, options);
       if (response.ok === true) {
         const text = await response.text();
         if (this._element[key] !== undefined) {
@@ -603,13 +595,9 @@ class BittyJs extends HTMLElement {
       from: "fetchFragment",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     try {
-      const fetchOptions = options.fetchOptions !== undefined
-        ? options.fetchOptions
-        : {};
-      let response = await fetch(url, fetchOptions);
+      let response = await fetch(url, options);
       if (response.ok === true) {
         const text = await response.text();
         if (this._fragment[key] !== undefined) {
@@ -647,7 +635,7 @@ class BittyJs extends HTMLElement {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+            `Fetching returned status ${response.status}.`,
           );
           details.extraInfo = response;
         }
@@ -759,13 +747,9 @@ class BittyJs extends HTMLElement {
       from: "fetchSVG",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     try {
-      const fetchOptions = options.fetchOptions !== undefined
-        ? options.fetchOptions
-        : {};
-      let response = await fetch(url, fetchOptions);
+      let response = await fetch(url, options);
       if (response.ok === true) {
         const text = await response.text();
         if (this._svg[key] !== undefined) {
@@ -794,7 +778,7 @@ class BittyJs extends HTMLElement {
           details.level = "error";
           details.ok = false;
           details.text.push(
-            `Fetching returned status ${response.status}. See 'extraInfo' for details.`,
+            `Fetching SVG returned status ${response.status}. See 'extraInfo' for details.`,
           );
           details.extraInfo = response;
         }
@@ -821,13 +805,9 @@ class BittyJs extends HTMLElement {
       from: "fetchTemplates",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     try {
-      const fetchOptions = options.fetchOptions !== undefined
-        ? options.fetchOptions
-        : {};
-      let response = await fetch(url, fetchOptions);
+      let response = await fetch(url, options);
       if (response.ok === true) {
         try {
           const text = await response.text();
@@ -916,7 +896,6 @@ class BittyJs extends HTMLElement {
       from: "loadElement",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     const storage = localStorage.getItem(storageKey);
     if (key !== null && this._element[key] !== undefined) {
@@ -1031,7 +1010,6 @@ class BittyJs extends HTMLElement {
       from: "loadJSON",
       ok: true,
       text: [],
-      extraInfo: null,
     };
     const keyAlreadyExists = this.json[key] === undefined ? false : true;
     try {

@@ -1,14 +1,7 @@
-#key = "el_$SIGNAL_NAME";
-
-test_$SIGNAL_NAME(_, el) {
-  const result = this.createElement(this.#key);
+$SIGNAL_NAME(_, el) {
+  const result = this.createElement("el_$HASH");
   if (result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("test_$SIGNAL_NAME");
-}

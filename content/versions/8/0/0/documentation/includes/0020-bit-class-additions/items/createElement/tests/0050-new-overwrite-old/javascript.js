@@ -1,15 +1,9 @@
-#key = "el_signal_374D9";
-
-test_signal_374D9(_, el) {
-  const result = this.createElement(this.#key, "<div>ok</div>");
-  if (result.level === "warn" && result.ok === true) {
-    el.innerHTML = "ok";
-  }
-}
-
-
-bittyReady() {
+signal_374D9(_, el) {
+  this.setGlobalLogLevel("none");
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, "<div>bug</div>");
-  this.trigger("test_signal_374D9");
+  this.createElement("el_374D9", "<div></div>");
+  const result = this.createElement("el_374D9", "<div></div>");
+  if (result.level === "warn" && result.ok === true) {
+    el.innerHTML = "test passed";
+  }
 }

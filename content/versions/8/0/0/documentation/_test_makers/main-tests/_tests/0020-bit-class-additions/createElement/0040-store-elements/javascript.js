@@ -1,14 +1,7 @@
-#key = "el_$SIGNAL_NAME";
-
-test_$SIGNAL_NAME(_, el) {
-  // this.createElement(this.#key, `<div class="test">ok</div>`);
-  // delete this._element[this.#key];
-  // this.loadElement(this.#key);
-  // el.replaceWith(this.renderElement(this.#key));
+$SIGNAL_NAME(_, el) {
+  this.createElement("el_$HASH", `<div class="test">test passed</div>`);
+  delete this._element["el_$HASH"];
+  this.loadElement("el_$HASH");
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
-
-bittyReady() {
-  // this.setLocalLogLevel("none");
-  // this.trigger("test_$SIGNAL_NAME");
-}

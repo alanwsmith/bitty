@@ -71,9 +71,7 @@ class BittyJs extends HTMLElement {
       target,
     );
     target.info = this._info.bind(target);
-    target.loadElement = () => {
-      return { ok: false };
-    };
+    target.loadElement = this._loadElement.bind(target);
     target.loadFragment = () => {
       return { ok: false };
     };
@@ -1071,13 +1069,7 @@ class BittyJs extends HTMLElement {
         JSON.stringify({ data: this._element[key] }),
       );
     }
-    return this.addLog(
-      details.level,
-      details.key,
-      details.ok,
-      details.messages.join(" "),
-      details.extraInfo,
-    );
+    return this.addLog(details);
   }
 
   _loadFragment(key, fallback = null) {
@@ -1402,12 +1394,12 @@ class BittyJs extends HTMLElement {
   _renderElement(key, subs = {}) {
     if (this._element[key] === undefined) {
       console.log("TODO: update _renderElement here");
-      this.addLog(
-        "error",
-        "renderElement",
-        false,
-        `Attempted to render non-existing element using key '${key}'`,
-      );
+      // this.addLog(
+      //   "error",
+      //   "renderElement",
+      //   false,
+      //   `Attempted to render non-existing element using key '${key}'`,
+      // );
       return undefined;
     } else {
       let content = this._element[key];

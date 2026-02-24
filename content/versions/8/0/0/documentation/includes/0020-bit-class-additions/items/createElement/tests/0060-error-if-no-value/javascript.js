@@ -1,14 +1,7 @@
-#key = "el_signal_73040";
-
-test_signal_73040(_, el) {
-  const result = this.createElement(this.#key);
+signal_73040(_, el) {
+  const result = this.createElement("el_73040");
   if (result.level === "error") {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
 }
 
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("test_signal_73040");
-}

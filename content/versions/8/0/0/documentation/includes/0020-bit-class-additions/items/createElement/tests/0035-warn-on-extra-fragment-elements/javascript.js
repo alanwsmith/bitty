@@ -1,16 +1,10 @@
-#key = "el_signal_4C991";
-
-test_signal_4C991(_, el) {
+signal_4C991(_, el) {
+  this.setLocalLogLevel("none");
+  this.setGlobalLogLevel("none");
   const template = document.createElement("template");
   template.innerHTML = `<div></div><div></div>`;
-  const result = this.createElement(this.#key, template.content);
+  const result = this.createElement("el_4C991", template.content);
   if (result.level === "warn" && result.ok === true) {
-    el.innerHTML = "ok";
+    el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.setLocalLogLevel("none");
-  this.trigger("test_signal_4C991");
 }

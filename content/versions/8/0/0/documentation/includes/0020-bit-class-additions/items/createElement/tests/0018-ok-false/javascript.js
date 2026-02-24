@@ -1,4 +1,6 @@
 signal_2C3F3(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.createElement("el_2C3F3", {
     misc: "invalid payload",
   });

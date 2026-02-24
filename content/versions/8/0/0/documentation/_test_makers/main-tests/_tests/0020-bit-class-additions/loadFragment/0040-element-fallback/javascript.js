@@ -1,19 +1,6 @@
-
-
-$SIGNAL_NAME(newElement, el) {
-  this.loadFragment("el_$HASH", newElement);
-  el.innerHTML = this.renderFragment("el_$HASH").children[0].innerHTML;
-}
-
-
-bittyReady() {
-  this.trigger("given_$SIGNAL_NAME");
-}
-
-given_$SIGNAL_NAME(_, __) {
-  this.setLocalLogLevel("none");
-  this.deleteFragment("el_$HASH");
+$SIGNAL_NAME(_, el) {
   const newElement = document.createElement("div");
   newElement.innerHTML = "test passed";
-  this.send(newElement, "$SIGNAL_NAME");
+  this.loadFragment("el_$HASH", newElement);
+  el.innerHTML = this.renderFragment("el_$HASH").children[0].innerHTML;
 }

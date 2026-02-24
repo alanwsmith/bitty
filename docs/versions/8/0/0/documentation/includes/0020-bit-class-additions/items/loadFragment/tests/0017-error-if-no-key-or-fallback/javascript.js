@@ -1,19 +1,8 @@
-
-
 signal_7EF03(_, el) {
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
   const result = this.loadFragment("el_7EF03");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "test passed";
   }
-}
-
-
-bittyReady() {
-  this.trigger("given_signal_7EF03");
-}
-
-given_signal_7EF03(_, __) {
-  this.setLocalLogLevel("none");
-  this.deleteFragment("el_7EF03");
-  this.trigger("signal_7EF03");
 }

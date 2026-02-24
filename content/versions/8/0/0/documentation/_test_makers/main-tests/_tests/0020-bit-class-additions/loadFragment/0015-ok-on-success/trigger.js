@@ -1,0 +1,9 @@
+async bittyReady() {
+  this.sleep(100);
+  this.setGlobalLogLevel("none");
+  this.setLocalLogLevel("none");
+  this.deleteFragment("el_$HASH");
+  this.createFragment("el_$HASH", `<div>test passed</div>`);
+  delete this._fragment["el_$HASH"];
+  this.qs("[data-send~=$SIGNAL_NAME]").click();
+}

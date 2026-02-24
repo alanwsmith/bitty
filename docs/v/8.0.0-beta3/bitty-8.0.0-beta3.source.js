@@ -27,6 +27,7 @@ class BittyJs extends HTMLElement {
       target[method.substring(1)] = this[method].bind(target);
     });
     target._addLog = this.addLog.bind(this, target);
+    target.flushLogs = this.flushLogs.bind(this);
     target.getGlobalLogLevel = this.getGlobalLogLevel.bind(this);
     target.getLocalLogLevel = this.getLocalLogLevel.bind(
       this,
@@ -88,8 +89,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  addLog(target, payload) {
-    payload.bitClass = target.bitClass;
+  addLog(target = { _localLogLevelIndex: 0, bitClass: "bitty" }, payload) {
     payload.timestamp = new Date();
     payload.performanceTime = performance.now();
     payload.levelIndex = this.#_logLevels.indexOf(payload.level);
@@ -843,6 +843,19 @@ class BittyJs extends HTMLElement {
     return this._addLog(details);
   }
 
+  flushLogs() {
+    this.#_logs = [];
+    this.addLog(
+      undefined,
+      {
+        level: "debug",
+        from: "flushLogs",
+        ok: true,
+        text: ["Flushed logs array."],
+      },
+    );
+  }
+
   getGlobalLogLevel() {
     return this.#_logLevels[this.#_globalLogLevelIndex];
   }
@@ -1261,6 +1274,45 @@ class BittyJs extends HTMLElement {
         }
       }
     }
+  }
+
+  _localTimestamp(datetime) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}`;
+  }
+
+  _localTimestampMs(datetime) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 3,
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}.${parts.fractionalSecond}}`;
   }
 
   logs() {
@@ -2166,44 +2218,6 @@ class BittyJs extends HTMLElement {
 
   async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  _localTimestamp(datetime) {
-    const parts = {};
-    new Intl.DateTimeFormat(undefined, {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    })
-      .formatToParts(datetime)
-      .filter((part) => part.type !== "literal")
-      .forEach((part) => parts[part.type] = part.value);
-    const date = [parts.year, parts.month, parts.day].join("-");
-    const time = [parts.hour, parts.minute, parts.second].join(":");
-    return `${date}T${time}`;
-  }
-
-  _localTimestampMs(datetime) {
-    const parts = {};
-    new Intl.DateTimeFormat(undefined, {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    })
-      .formatToParts(datetime)
-      .filter((part) => part.type !== "literal")
-      .forEach((part) => parts[part.type] = part.value);
-    const date = [parts.year, parts.month, parts.day].join("-");
-    const time = [parts.hour, parts.minute, parts.second].join(":");
-    return `${date}T${time}`;
   }
 
   _trigger(signals) {

@@ -1,14 +1,8 @@
-#key = "el_$SIGNAL_NAME";
-
-test_$SIGNAL_NAME(_, el) {
+$SIGNAL_NAME(_, el) {
   const newEl = document.createElement("div");
   newEl.classList.add("test");
-  newEl.innerHTML = "ok";
-  this.createElement(this.#key, newEl);
-  el.replaceWith(this.renderElement(this.#key));
+  newEl.innerHTML = "test passed";
+  this.createElement("el_$HASH", newEl);
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
-
-bittyReady() {
-  this.trigger("test_$SIGNAL_NAME");
-}

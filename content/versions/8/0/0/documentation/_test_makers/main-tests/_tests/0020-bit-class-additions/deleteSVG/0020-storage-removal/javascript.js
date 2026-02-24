@@ -1,8 +1,8 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  this.deleteSVG(this.#key);
-  const result = this.loadSVG(this.#key);
+  this.deleteSVG("el_$HASH");
+  const result = this.loadSVG("el_$HASH");
   if (result.level === "error" && result.ok === false) {
     el.innerHTML = "ok";
   }
@@ -16,6 +16,6 @@ vg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_$HASH", input);
   this.trigger("$SIGNAL_NAME");
 }

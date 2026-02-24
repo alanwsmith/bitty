@@ -1,7 +1,7 @@
 #key = "svg_signal_4782D";
 
 signal_4782D(input, el) {
-  const result = this.createSVG(this.#key, input);
+  const result = this.createSVG("el_4782D", input);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
   }

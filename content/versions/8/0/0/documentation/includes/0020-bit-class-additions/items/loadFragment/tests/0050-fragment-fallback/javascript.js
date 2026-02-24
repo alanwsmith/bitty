@@ -1,8 +1,8 @@
-#key = "fragment_signal_119D0";
+
 
 signal_119D0(fallbackFragment, el) {
-  this.loadFragment(this.#key, fallbackFragment);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  this.loadFragment("el_119D0", fallbackFragment);
+  el.innerHTML = this.renderFragment("el_119D0").children[1].innerHTML;
 }
 
 
@@ -12,7 +12,7 @@ bittyReady() {
 
 given_signal_119D0(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
+  this.deleteFragment("el_119D0");
   const fallbackFragment = document.createDocumentFragment();
   const fallbackElement1 = document.createElement("div");
   const fallbackElement2 = document.createElement("div");

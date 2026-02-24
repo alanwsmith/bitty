@@ -4,7 +4,7 @@ signal_697E1(replacements, el) {
   const subs = {
     "TARGET_697E1": replacements,
   };
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_697E1", subs);
   const gotString = [
     // svg.querySelectorAll("text")[0].textContent,
     // svg.querySelectorAll("text")[1].textContent,
@@ -46,6 +46,6 @@ TARGET_697E1
   replacementEl2.textContent = "k";
   const replacements = [replacementEl, replacementEl2];
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_697E1", input);
   this.send(replacements, "signal_697E1");
 }

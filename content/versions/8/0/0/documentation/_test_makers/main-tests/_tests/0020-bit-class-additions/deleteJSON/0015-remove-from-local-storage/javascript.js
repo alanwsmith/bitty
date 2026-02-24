@@ -1,8 +1,8 @@
 #key = "json_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  this.deleteJSON(this.#key);
-  const result = this.loadJSON(this.#key);
+  this.deleteJSON("el_$HASH");
+  const result = this.loadJSON("el_$HASH");
   if (result.ok === false) {
     el.innerHTML = "ok";
   }
@@ -11,6 +11,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createJSON(this.#key, `{}`);
+  this.createJSON("el_$HASH", `{}`);
   this.trigger("$SIGNAL_NAME");
 }

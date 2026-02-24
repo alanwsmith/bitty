@@ -1,7 +1,7 @@
 #key = "svg_signal_0EB22";
 
 signal_0EB22(subs, el) {
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_0EB22", subs);
   const gotString = [
     // svg.querySelectorAll("text")[0].textContent,
     // svg.querySelectorAll("text")[1].textContent,
@@ -35,6 +35,6 @@ TARGET_0EB22
     "TARGET_0EB22": replacementArray,
   };
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_0EB22", input);
   this.send(subs, "signal_0EB22");
 }

@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const fragment = this.renderSVG(this.#key);
+  const fragment = this.renderSVG("el_$HASH");
   if (fragment === undefined) {
     el.innerHTML = "ok";
   }
@@ -10,6 +10,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_$HASH");
   this.trigger("$SIGNAL_NAME");
 }

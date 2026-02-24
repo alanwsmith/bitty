@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(fallbackFragment, el) {
-  this.loadFragment(this.#key);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  this.loadFragment("el_$HASH");
+  el.innerHTML = this.renderFragment("el_$HASH").firstChild.innerHTML;
 }
 
 
@@ -12,8 +12,8 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
-  this.loadFragment(this.#key, "<div>ok</div>");
-  delete this._fragment[this.#key];
+  this.deleteFragment("el_$HASH");
+  this.loadFragment("el_$HASH", "<div>ok</div>");
+  delete this._fragment["el_$HASH"];
   this.trigger("$SIGNAL_NAME");
 }

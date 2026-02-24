@@ -1,4 +1,4 @@
-#key = "fragment_signal_F9E7D";
+
 
 async signal_F9E7D(url, el) {
   const result = await this.fetchFragment(this.#key, url);

@@ -1,8 +1,8 @@
 #key = "element_$SIGNAL_NAME";
 
 async $SIGNAL_NAME(payload, el) {
-  await this.fetchElement(this.#key, payload.url, payload.fallback);
-  el.replaceWith(this.renderElement(this.#key));
+  await this.fetchElement("el_$HASH", payload.url, payload.fallback);
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
 

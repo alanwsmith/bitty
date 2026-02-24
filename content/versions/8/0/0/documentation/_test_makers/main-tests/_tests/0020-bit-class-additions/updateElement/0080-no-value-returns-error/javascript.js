@@ -1,7 +1,7 @@
 #key = "element_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.updateElement(this.#key);
+  const result = this.updateElement("el_$HASH");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }
@@ -10,6 +10,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, `<div></div>`);
+  this.createElement("el_$HASH", `<div></div>`);
   this.trigger("$SIGNAL_NAME");
 }

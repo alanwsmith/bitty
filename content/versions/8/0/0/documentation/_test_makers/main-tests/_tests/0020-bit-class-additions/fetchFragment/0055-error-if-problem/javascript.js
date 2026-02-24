@@ -1,7 +1,7 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 async $SIGNAL_NAME(url, el) {
-  const result = await this.fetchFragment(this.#key, url);
+  const result = await this.fetchFragment("el_$HASH", url);
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }

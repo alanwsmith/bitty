@@ -1,7 +1,7 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  const fragment = this.renderFragment(this.#key);
+  const fragment = this.renderFragment("el_$HASH");
 //  el.innerHTML = fragment.children[1].innerHTML;
 }
 
@@ -12,6 +12,6 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div></div><div>ok</div>`);
+  this.createFragment("el_$HASH", `<div></div><div>ok</div>`);
   this.trigger("$SIGNAL_NAME");
 }

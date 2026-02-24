@@ -1,4 +1,4 @@
-#key = "fragment_signal_0CCFB";
+
 
 signal_0CCFB(_, el) {
   this.loadFragment(this.#key);

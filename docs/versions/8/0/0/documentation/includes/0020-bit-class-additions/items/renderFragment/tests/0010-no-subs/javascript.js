@@ -1,4 +1,4 @@
-#key = "fragment_signal_FC310";
+
 
 signal_FC310(_, el) {
   const fragment = this.renderFragment(this.#key);

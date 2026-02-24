@@ -1,4 +1,4 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
   // const replacementEl = document.createElement("div");
@@ -6,7 +6,7 @@ $SIGNAL_NAME(_, el) {
   // const subs = {
   //   "TARGET_$HASH": replacementEl,
   // };
-  // const fragment = this.renderFragment(this.#key, subs);
+  // const fragment = this.renderFragment("el_$HASH", subs);
   // el.innerHTML = fragment.firstChild.firstChild.innerHTML;
 }
 
@@ -17,6 +17,6 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div>TARGET_$HASH</div>`);
+  this.createFragment("el_$HASH", `<div>TARGET_$HASH</div>`);
   this.trigger("$SIGNAL_NAME");
 }

@@ -1,8 +1,8 @@
 #key = "svg_signal_D4DA1";
 
 signal_D4DA1(_, el) {
-  // this.loadSVG(this.#key);
-  // const svg = this.renderSVG(this.#key);
+  // this.loadSVG("el_D4DA1");
+  // const svg = this.renderSVG("el_D4DA1");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_D4DA1");
 }
@@ -19,8 +19,8 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
-  this.createSVG(this.#key, input);
-  delete this._svg[this.#key];
+  this.deleteSVG("el_D4DA1");
+  this.createSVG("el_D4DA1", input);
+  delete this._svg["el_D4DA1"];
   this.trigger("signal_D4DA1");
 }

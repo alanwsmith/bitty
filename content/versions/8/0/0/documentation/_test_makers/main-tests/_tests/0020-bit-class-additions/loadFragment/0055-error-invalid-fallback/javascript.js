@@ -1,7 +1,7 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  const result = this.loadFragment(this.#key, {
+  const result = this.loadFragment("el_$HASH", {
     misc: "objects are not valid fallbacks",
   });
   if (result.ok === false && result.level === "error") {

@@ -4,7 +4,7 @@ signal_4375F(_, el) {
   const subs = {
     "TARGET_4375F": "ok",
   };
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_4375F", subs);
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_4375F");
 }
@@ -21,6 +21,6 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_4375F</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_4375F", input);
   this.trigger("signal_4375F");
 }

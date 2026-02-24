@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
   const subs = {
     "TARGET_$HASH": ["o", "k"],
   };
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_$HASH", subs);
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_$SIGNAL_NAME");
 }
@@ -21,6 +21,6 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_$HASH</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_$HASH", input);
   this.trigger("$SIGNAL_NAME");
 }

@@ -2,7 +2,7 @@
 
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-svg.svg";
-  const result = await this.fetchSVG(this.#key, url);
+  const result = await this.fetchSVG("el_$HASH", url);
   if (result.ok === true) {
     el.innerHTML = "ok";
   }
@@ -10,7 +10,7 @@ async $SIGNAL_NAME(_, el) {
 }
 
 view_$SIGNAL_NAME(svg, el) {
-  el.replaceWith(this.renderSVG(this.#key));
+  el.replaceWith(this.renderSVG("el_$HASH"));
 }
 
 

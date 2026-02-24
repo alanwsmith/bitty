@@ -2,7 +2,7 @@
 
 async signal_0938C(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";
-  const result = await this.fetchElement(this.#key, url);
+  const result = await this.fetchElement("el_0938C", url);
   if (result.ok === true) {
     el.innerHTML = "ok";
   }

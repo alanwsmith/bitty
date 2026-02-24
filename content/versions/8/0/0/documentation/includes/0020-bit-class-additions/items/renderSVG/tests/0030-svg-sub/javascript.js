@@ -1,7 +1,7 @@
 #key = "svg_signal_15988";
 
 signal_15988(subs, el) {
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_15988", subs);
   // el.innerHTML = svg.querySelector("text").textContent;
   // this.send(svg, "view_signal_15988");
 }
@@ -31,6 +31,6 @@ TARGET_15988
     "TARGET_15988": replacementEl,
   };
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_15988", input);
   this.send(subs, "signal_15988");
 }

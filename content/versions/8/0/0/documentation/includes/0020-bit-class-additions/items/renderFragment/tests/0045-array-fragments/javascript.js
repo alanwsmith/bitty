@@ -1,4 +1,4 @@
-#key = "fragment_signal_C24F9";
+
 
 signal_C24F9(_, el) {
   // const template = document.createElement("template");

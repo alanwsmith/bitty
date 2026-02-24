@@ -1,4 +1,4 @@
-#key = "fragment_signal_6F768";
+
 
 signal_6F768(_, el) {
   const result = this.updateFragment();

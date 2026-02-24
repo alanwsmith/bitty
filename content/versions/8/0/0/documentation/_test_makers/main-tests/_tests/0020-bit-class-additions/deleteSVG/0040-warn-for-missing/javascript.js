@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.deleteSVG(this.#key);
+  const result = this.deleteSVG("el_$HASH");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -10,6 +10,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_$HASH");
   this.trigger("$SIGNAL_NAME");
 }

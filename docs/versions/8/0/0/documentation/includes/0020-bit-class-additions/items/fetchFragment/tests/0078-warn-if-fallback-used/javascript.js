@@ -1,4 +1,4 @@
-#key = "fragment_signal_EEB5B";
+
 
 async signal_EEB5B(payload, el) {
   const result = await this.fetchFragment(

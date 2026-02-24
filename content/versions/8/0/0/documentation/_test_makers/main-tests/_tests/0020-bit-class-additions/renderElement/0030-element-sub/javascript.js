@@ -8,12 +8,12 @@ $SIGNAL_NAME(_, el) {
     "TARGET_$HASH": replacementEl,
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_$HASH", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_$HASH</div>`);
+  this.createElement("el_$HASH", `<div>TARGET_$HASH</div>`);
   this.trigger("$SIGNAL_NAME");
 }

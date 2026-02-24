@@ -1,14 +1,14 @@
 #key = "element_$SIGNAL_NAME";
 
 $SIGNAL_NAME(newElement, el) {
-  this.updateElement(this.#key, newElement);
-  el.replaceWith(this.renderElement(this.#key));
+  this.updateElement("el_$HASH", newElement);
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, `<div class="test">bug</div>`);
+  this.createElement("el_$HASH", `<div class="test">bug</div>`);
   const element = document.createElement("div");
   element.classList.add("test");
   element.innerHTML = "ok";

@@ -1,4 +1,4 @@
-#key = "fragment_signal_B0E93";
+
 
 signal_B0E93(_, el) {
   const result = this.deleteFragment(this.#key);

@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  this.loadFragment(this.#key);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  this.loadFragment("el_$HASH");
+  el.innerHTML = this.renderFragment("el_$HASH").children[1].innerHTML;
 }
 
 
@@ -12,7 +12,7 @@ bittyReady() {
 
 async given_$SIGNAL_NAME(_, __) {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-  await this.fetchFragment(this.#key, url);
-  delete this._fragment[this.#key];
+  await this.fetchFragment("el_$HASH", url);
+  delete this._fragment["el_$HASH"];
   this.trigger("$SIGNAL_NAME");
 }

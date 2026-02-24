@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.createSVG(this.#key);
+  const result = this.createSVG("el_$HASH");
   // if (result.ok === false && result.level === "error") {
   //   el.innerHTML = "ok";
   // }

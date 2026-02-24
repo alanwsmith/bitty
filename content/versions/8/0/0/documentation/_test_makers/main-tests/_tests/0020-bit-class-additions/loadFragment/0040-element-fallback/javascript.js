@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(newElement, el) {
-  this.loadFragment(this.#key, newElement);
-  el.innerHTML = this.renderFragment(this.#key).children[0].innerHTML;
+  this.loadFragment("el_$HASH", newElement);
+  el.innerHTML = this.renderFragment("el_$HASH").children[0].innerHTML;
 }
 
 
@@ -12,7 +12,7 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
+  this.deleteFragment("el_$HASH");
   const newElement = document.createElement("div");
   newElement.innerHTML = "ok";
   this.send(newElement, "$SIGNAL_NAME");

@@ -4,13 +4,13 @@ signal_31037(_, el) {
   const newEl = document.createElement("div");
   newEl.classList.add("test");
   newEl.innerHTML = "ok";
-  this.loadElement(this.#key, newEl);
-  el.replaceWith(this.renderElement(this.#key));
+  this.loadElement("el_31037", newEl);
+  el.replaceWith(this.renderElement("el_31037"));
 }
 
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteElement(this.#key);
+  this.deleteElement("el_31037");
   this.trigger("signal_31037");
 }

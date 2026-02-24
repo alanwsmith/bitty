@@ -1,8 +1,8 @@
-#key = "fragment_signal_5D60F";
+
 
 signal_5D60F(_, el) {
-  this.loadFragment(this.#key);
-  el.innerHTML = this.renderFragment(this.#key).firstChild.innerHTML;
+  this.loadFragment("el_5D60F");
+  el.innerHTML = this.renderFragment("el_5D60F").firstChild.innerHTML;
 }
 
 
@@ -12,7 +12,7 @@ bittyReady() {
 
 given_signal_5D60F(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, "<div>ok</div>");
-  delete this._fragment[this.#key];
+  this.createFragment("el_5D60F", "<div>ok</div>");
+  delete this._fragment["el_5D60F"];
   this.trigger("signal_5D60F");
 }

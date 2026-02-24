@@ -1,4 +1,4 @@
-#key = "fragment_signal_CA48A";
+
 
 signal_CA48A(_, el) {
   const result = this.updateFragment(this.#key, `<div></div>`);

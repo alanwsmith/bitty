@@ -3,13 +3,13 @@
 $SIGNAL_NAME(_, el) {
   const template = document.createElement("template");
   template.innerHTML = `<div class="test">ok</div>`;
-  this.loadElement(this.#key, template.content);
-  el.replaceWith(this.renderElement(this.#key));
+  this.loadElement("el_$HASH", template.content);
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteElement(this.#key);
+  this.deleteElement("el_$HASH");
   this.trigger("$SIGNAL_NAME");
 }

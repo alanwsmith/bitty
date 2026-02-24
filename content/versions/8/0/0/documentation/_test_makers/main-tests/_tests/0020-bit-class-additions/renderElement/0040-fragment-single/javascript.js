@@ -5,13 +5,13 @@ $SIGNAL_NAME(_, el) {
     "TARGET_$HASH": this.renderFragment(`replacement_$HASH`),
   };
   el.replaceWith(
-    this.renderElement(this.#key, subs),
+    this.renderElement("el_$HASH", subs),
   );
 }
 
 
 bittyReady() {
-  this.createElement(this.#key, `<div>TARGET_$HASH</div>`);
+  this.createElement("el_$HASH", `<div>TARGET_$HASH</div>`);
   this.createFragment(
     `replacement_$HASH`,
     `<div class="test">ok</div><div class="test">ok</div>`,

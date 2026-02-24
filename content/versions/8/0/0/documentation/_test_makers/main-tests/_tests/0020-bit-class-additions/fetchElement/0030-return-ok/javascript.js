@@ -2,7 +2,7 @@
 
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";
-  const result = await this.fetchElement(this.#key, url);
+  const result = await this.fetchElement("el_$HASH", url);
   if (result.ok === true) {
     el.innerHTML = "ok";
   }

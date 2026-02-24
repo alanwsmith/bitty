@@ -1,8 +1,8 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(fallback, el) {
-  this.loadSVG(this.#key, fallback);
-  const svg = this.renderSVG(this.#key);
+  this.loadSVG("el_$HASH", fallback);
+  const svg = this.renderSVG("el_$HASH");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_$SIGNAL_NAME");
 }
@@ -23,6 +23,6 @@ given_$SIGNAL_NAME(_, __) {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_$HASH");
   this.send(fallback, "$SIGNAL_NAME");
 }

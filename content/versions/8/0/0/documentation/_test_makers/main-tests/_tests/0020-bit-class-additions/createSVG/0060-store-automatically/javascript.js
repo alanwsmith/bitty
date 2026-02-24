@@ -1,8 +1,8 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  // this.loadSVG(this.#key);
-  // const svg = this.renderSVG(this.#key);
+  // this.loadSVG("el_$HASH");
+  // const svg = this.renderSVG("el_$HASH");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_$SIGNAL_NAME");
 }
@@ -19,8 +19,8 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
-  this.createSVG(this.#key, input);
-  delete this._svg[this.#key];
+  this.deleteSVG("el_$HASH");
+  this.createSVG("el_$HASH", input);
+  delete this._svg["el_$HASH"];
   this.trigger("$SIGNAL_NAME");
 }

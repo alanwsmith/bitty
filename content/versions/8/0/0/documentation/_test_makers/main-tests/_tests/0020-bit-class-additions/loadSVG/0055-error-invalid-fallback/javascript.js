@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.loadSVG(this.#key, {
+  const result = this.loadSVG("el_$HASH", {
     misc: "objects are not valid fallbacks",
   });
   if (result.ok === false && result.level === "error") {

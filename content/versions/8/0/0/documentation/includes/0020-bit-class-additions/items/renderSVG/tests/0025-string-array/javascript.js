@@ -4,7 +4,7 @@ signal_F7B2A(_, el) {
   const subs = {
     "TARGET_F7B2A": ["o", "k"],
   };
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_F7B2A", subs);
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_signal_F7B2A");
 }
@@ -21,6 +21,6 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_F7B2A</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_F7B2A", input);
   this.trigger("signal_F7B2A");
 }

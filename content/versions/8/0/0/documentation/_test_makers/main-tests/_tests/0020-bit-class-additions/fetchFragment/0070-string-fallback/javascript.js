@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 async $SIGNAL_NAME(payload, el) {
-  await this.fetchFragment(this.#key, payload.url, payload.fallback);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  await this.fetchFragment("el_$HASH", payload.url, payload.fallback);
+  el.innerHTML = this.renderFragment("el_$HASH").children[1].innerHTML;
 }
 
 

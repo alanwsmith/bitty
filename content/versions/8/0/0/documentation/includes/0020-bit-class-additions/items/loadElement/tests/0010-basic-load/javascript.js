@@ -1,15 +1,15 @@
 #key = "el_signal_23191";
 
 signal_23191(_, el) {
-  // this.loadElement(this.#key);
-  // el.replaceWith(this.renderElement(this.#key));
+  // this.loadElement("el_23191");
+  // el.replaceWith(this.renderElement("el_23191"));
 }
 
 
 bittyReady() {
   // this.setLocalLogLevel("none");
-  // this.deleteElement(this.#key);
-  // this.createElement(this.#key, `<div class="test">ok</div>`);
-  // delete this._element[this.#key];
+  // this.deleteElement("el_23191");
+  // this.createElement("el_23191", `<div class="test">ok</div>`);
+  // delete this._element["el_23191"];
   // this.trigger("signal_23191");
 }

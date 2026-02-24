@@ -1,4 +1,4 @@
-#key = "fragment_signal_11320";
+
 
 async signal_11320(payload, el) {
   await this.fetchFragment(this.#key, payload.url, payload.fallback);

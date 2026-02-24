@@ -1,8 +1,8 @@
 #key = "svg_signal_5112B";
 
 signal_5112B(input, el) {
-  this.createSVG(this.#key, input);
-  const svg = this.renderSVG(this.#key);
+  this.createSVG("el_5112B", input);
+  const svg = this.renderSVG("el_5112B");
   el.innerHTML = svg.querySelector("text").innerHTML;
   this.send(svg, "view_signal_5112B");
 }

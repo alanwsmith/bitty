@@ -1,7 +1,7 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  const result = this.updateFragment(this.#key);
+  const result = this.updateFragment("el_$HASH");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }

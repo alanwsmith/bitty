@@ -10,6 +10,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, `<div></div>`);
+  this.createElement("el_$HASH", `<div></div>`);
   this.trigger("$SIGNAL_NAME");
 }

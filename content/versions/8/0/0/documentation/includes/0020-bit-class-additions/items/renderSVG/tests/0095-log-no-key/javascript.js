@@ -2,7 +2,7 @@
 
 signal_D68A0(_, el) {
   // this.logs = [];
-  // this.renderSVG(this.#key);
+  // this.renderSVG("el_D68A0");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
   //   el.innerHTML = "ok";
   // }
@@ -11,6 +11,6 @@ signal_D68A0(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_D68A0");
   this.trigger("signal_D68A0");
 }

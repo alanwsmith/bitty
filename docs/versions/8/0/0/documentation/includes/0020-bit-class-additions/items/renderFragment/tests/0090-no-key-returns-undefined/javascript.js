@@ -1,4 +1,4 @@
-#key = "fragment_signal_AD946";
+
 
 signal_AD946(_, el) {
   const fragment = this.renderFragment(this.#key);

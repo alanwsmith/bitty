@@ -1,4 +1,4 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 async $SIGNAL_NAME(_, el) {
   const url = "https://www.example.com";

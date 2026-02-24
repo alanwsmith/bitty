@@ -1,8 +1,8 @@
 #key = "el_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  this.deleteElement(this.#key);
-  if (this.renderElement(this.#key) === undefined) {
+  this.deleteElement("el_$HASH");
+  if (this.renderElement("el_$HASH") === undefined) {
     el.innerHTML = "ok";
   }
 }
@@ -10,6 +10,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, `<div>ok</div>`);
+  this.createElement("el_$HASH", `<div>ok</div>`);
   this.trigger("$SIGNAL_NAME");
 }

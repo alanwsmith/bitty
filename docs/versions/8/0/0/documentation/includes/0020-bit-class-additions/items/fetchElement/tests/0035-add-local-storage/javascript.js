@@ -1,14 +1,14 @@
 #key = "el_signal_92749";
 
 async signal_92749(_, el) {
-  // this.loadElement(this.#key);
-  // el.replaceWith(this.renderElement(this.#key));
+  // this.loadElement("el_92749");
+  // el.replaceWith(this.renderElement("el_92749"));
 }
 
 
 async bittyReady() {
   // const url = "/[@ file.parent @]/payloads/valid-element.xml";
-  // await this.fetchElement(this.#key, url);
-  // delete this._element[this.#key];
+  // await this.fetchElement("el_92749", url);
+  // delete this._element["el_92749"];
   // this.trigger("signal_92749");
 }

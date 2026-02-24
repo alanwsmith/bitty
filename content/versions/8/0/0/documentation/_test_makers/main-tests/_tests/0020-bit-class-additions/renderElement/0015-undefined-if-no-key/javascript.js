@@ -12,7 +12,7 @@ given_$SIGNAL_NAME(_, __) {
 $SIGNAL_NAME(_, el) {
   this.logs = [];
   if (
-    this.renderElement(this.#key) === undefined &&
+    this.renderElement("el_$HASH") === undefined &&
     this.logs[0].level === "error"
   ) {
     el.innerHTML = "ok";

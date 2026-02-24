@@ -2,11 +2,11 @@
 
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-fragment.xml";
-  const result = await this.fetchElement(this.#key, url);
+  const result = await this.fetchElement("el_$HASH", url);
   if (
     result.level === "warn"
   ) {
-    el.replaceWith(this.renderElement(this.#key));
+    el.replaceWith(this.renderElement("el_$HASH"));
   }
 }
 

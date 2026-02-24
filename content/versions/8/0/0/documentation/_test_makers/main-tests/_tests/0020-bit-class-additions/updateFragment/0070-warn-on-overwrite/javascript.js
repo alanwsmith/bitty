@@ -1,7 +1,7 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  const result = this.updateFragment(this.#key, `<div></div>`);
+  const result = this.updateFragment("el_$HASH", `<div></div>`);
   if (result.ok === true && result.level === "info") {
     el.innerHTML = "ok";
   }
@@ -14,6 +14,6 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.createFragment(this.#key, `<div></div>`);
+  this.createFragment("el_$HASH", `<div></div>`);
   this.trigger("$SIGNAL_NAME");
 }

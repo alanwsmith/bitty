@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 async $SIGNAL_NAME(payload, el) {
   const result = await this.fetchFragment(
-    this.#key,
+    "el_$HASH",
     payload.url,
     payload.fallback,
   );

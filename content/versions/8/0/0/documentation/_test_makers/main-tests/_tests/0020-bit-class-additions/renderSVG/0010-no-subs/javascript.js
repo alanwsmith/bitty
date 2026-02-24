@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const svg = this.renderSVG(this.#key);
+  const svg = this.renderSVG("el_$HASH");
   // el.innerHTML = svg.querySelector("text").innerHTML;
   // this.send(svg, "view_$SIGNAL_NAME");
  }
@@ -18,6 +18,6 @@ bittyReady() {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_$HASH", input);
   this.trigger("$SIGNAL_NAME");
 }

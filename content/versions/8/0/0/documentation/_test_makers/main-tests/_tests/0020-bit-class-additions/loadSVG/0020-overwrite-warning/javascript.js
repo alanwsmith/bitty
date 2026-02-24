@@ -1,7 +1,7 @@
 #key = "svg_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.loadSVG(this.#key);
+  const result = this.loadSVG("el_$HASH");
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -9,7 +9,7 @@ $SIGNAL_NAME(_, el) {
 }
 
 view_$SIGNAL_NAME(svg, el) {
-  el.replaceWith(this.renderSVG(this.#key));
+  el.replaceWith(this.renderSVG("el_$HASH"));
 }
 
 
@@ -24,6 +24,6 @@ given_$SIGNAL_NAME(_, __) {
 <text x="30" y="24" font-size="20" text-anchor="middle" fill="white">ok</text>
 </svg>`;
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_$HASH", input);
   this.trigger("$SIGNAL_NAME");
 }

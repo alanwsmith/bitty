@@ -1,8 +1,8 @@
-#key = "fragment_signal_5A3FB";
+
 
 signal_5A3FB(newElement, el) {
-  this.loadFragment(this.#key, newElement);
-  el.innerHTML = this.renderFragment(this.#key).children[0].innerHTML;
+  this.loadFragment("el_5A3FB", newElement);
+  el.innerHTML = this.renderFragment("el_5A3FB").children[0].innerHTML;
 }
 
 
@@ -12,7 +12,7 @@ bittyReady() {
 
 given_signal_5A3FB(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
+  this.deleteFragment("el_5A3FB");
   const newElement = document.createElement("div");
   newElement.innerHTML = "ok";
   this.send(newElement, "signal_5A3FB");

@@ -1,7 +1,7 @@
 #key = "key_$SIGNAL_NAME";
 
 $SIGNAL_NAME(update, el) {
-//  el.replaceWith(this.renderFragment(this.#key).children[1]);
+//  el.replaceWith(this.renderFragment("el_$HASH").children[1]);
 }
 
 

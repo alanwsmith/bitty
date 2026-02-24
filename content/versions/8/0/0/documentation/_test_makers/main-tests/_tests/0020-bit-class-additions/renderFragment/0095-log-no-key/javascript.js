@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
 //  this.logs = [];
-  this.renderFragment(this.#key);
+  this.renderFragment("el_$HASH");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
   //   el.innerHTML = "ok";
   // }
@@ -16,6 +16,6 @@ bittyReady() {
 
 given_$SIGNAL_NAME(_, __) {
   this.setLocalLogLevel("none");
-  this.deleteFragment(this.#key);
+  this.deleteFragment("el_$HASH");
   this.trigger("$SIGNAL_NAME");
 }

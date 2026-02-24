@@ -1,8 +1,8 @@
-#key = "fragment_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
-  this.updateFragment(this.#key, `<div>x</div><div>ok</div>`);
-  el.innerHTML = this.renderFragment(this.#key).children[1].innerHTML;
+  this.updateFragment("el_$HASH", `<div>x</div><div>ok</div>`);
+  el.innerHTML = this.renderFragment("el_$HASH").children[1].innerHTML;
 }
 
 

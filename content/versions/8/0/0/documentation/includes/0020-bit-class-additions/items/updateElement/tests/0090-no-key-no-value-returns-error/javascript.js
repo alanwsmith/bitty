@@ -10,6 +10,6 @@ signal_E0312(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createElement(this.#key, `<div></div>`);
+  this.createElement("el_E0312", `<div></div>`);
   this.trigger("signal_E0312");
 }

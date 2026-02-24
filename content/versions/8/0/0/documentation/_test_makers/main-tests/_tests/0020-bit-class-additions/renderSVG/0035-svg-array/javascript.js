@@ -4,7 +4,7 @@ $SIGNAL_NAME(replacements, el) {
   const subs = {
     "TARGET_$HASH": replacements,
   };
-  const svg = this.renderSVG(this.#key, subs);
+  const svg = this.renderSVG("el_$HASH", subs);
   const gotString = [
     // svg.querySelectorAll("text")[0].textContent,
     // svg.querySelectorAll("text")[1].textContent,
@@ -46,6 +46,6 @@ TARGET_$HASH
   replacementEl2.textContent = "k";
   const replacements = [replacementEl, replacementEl2];
   this.setLocalLogLevel("none");
-  this.createSVG(this.#key, input);
+  this.createSVG("el_$HASH", input);
   this.send(replacements, "$SIGNAL_NAME");
 }

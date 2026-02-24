@@ -3,7 +3,7 @@
 signal_77D07(_, el) {
   const template = document.createElement("template");
   template.innerHTML = `<div></div><div></div>`;
-  const result = this.loadElement(this.#key, template.content);
+  const result = this.loadElement("el_77D07", template.content);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -12,6 +12,6 @@ signal_77D07(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteElement(this.#key);
+  this.deleteElement("el_77D07");
   this.trigger("signal_77D07");
 }

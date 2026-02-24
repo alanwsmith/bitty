@@ -1,4 +1,4 @@
-#key = "fragment_signal_BC346";
+
 
 async signal_BC346(_, el) {
   const url = "https://www.example.com";

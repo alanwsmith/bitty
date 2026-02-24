@@ -2,7 +2,7 @@
 
 $SIGNAL_NAME(_, el) {
   // this.logs = [];
-  // this.renderSVG(this.#key);
+  // this.renderSVG("el_$HASH");
   // if (this.logs[0].ok === false && this.logs[0].level === "error") {
   //   el.innerHTML = "ok";
   // }
@@ -11,6 +11,6 @@ $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.deleteSVG(this.#key);
+  this.deleteSVG("el_$HASH");
   this.trigger("$SIGNAL_NAME");
 }

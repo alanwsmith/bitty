@@ -1,8 +1,8 @@
 #key = "element_signal_F5B52";
 
 async signal_F5B52(payload, el) {
-  await this.fetchElement(this.#key, payload.url, payload.fallback);
-  el.replaceWith(this.renderElement(this.#key));
+  await this.fetchElement("el_F5B52", payload.url, payload.fallback);
+  el.replaceWith(this.renderElement("el_F5B52"));
 }
 
 

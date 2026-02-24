@@ -2,7 +2,7 @@
 
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-json.json";
-  const result = await this.fetchJSON(this.#key, url);
+  const result = await this.fetchJSON("el_$HASH", url);
   if (result.ok === true && result.level === "warn") {
     el.innerHTML = "ok";
   }
@@ -11,6 +11,6 @@ async $SIGNAL_NAME(_, el) {
 
 bittyReady() {
   this.setLocalLogLevel("none");
-  this.createJSON(this.#key, {});
+  this.createJSON("el_$HASH", {});
   this.trigger("$SIGNAL_NAME");
 }

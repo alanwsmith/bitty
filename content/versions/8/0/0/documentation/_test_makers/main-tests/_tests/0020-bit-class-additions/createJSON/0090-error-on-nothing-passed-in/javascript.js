@@ -1,7 +1,7 @@
 #key = "json_$SIGNAL_NAME";
 
 $SIGNAL_NAME(_, el) {
-  const result = this.createJSON(this.#key);
+  const result = this.createJSON("el_$HASH");
   if (result.ok === false && result.level === "error") {
     el.innerHTML = "ok";
   }

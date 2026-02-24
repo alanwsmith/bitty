@@ -1,4 +1,4 @@
-#key = "fragment_signal_3BC5E";
+
 
 signal_3BC5E(element, el) {
   const result = this.loadFragment(this.#key);

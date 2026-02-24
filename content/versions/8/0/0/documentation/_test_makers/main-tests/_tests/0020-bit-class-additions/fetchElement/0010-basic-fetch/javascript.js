@@ -2,8 +2,8 @@
 
 async $SIGNAL_NAME(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";
-  await this.fetchElement(this.#key, url);
-  el.replaceWith(this.renderElement(this.#key));
+  await this.fetchElement("el_$HASH", url);
+  el.replaceWith(this.renderElement("el_$HASH"));
 }
 
 

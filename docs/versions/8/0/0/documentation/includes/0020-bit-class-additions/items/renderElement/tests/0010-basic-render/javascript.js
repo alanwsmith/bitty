@@ -1,4 +1,4 @@
-#key = "el_signal_3EB4D";
+
 
 signal_3EB4D(_, el) {
   el.replaceWith(this.renderElement("el_3EB4D"));

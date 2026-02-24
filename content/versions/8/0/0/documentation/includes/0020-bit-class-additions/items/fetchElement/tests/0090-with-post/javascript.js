@@ -1,4 +1,4 @@
-#key = "el_signal_6B398";
+
 
 async signal_6B398(_, el) {
   const url = "/[@ file.parent @]/payloads/valid-element.xml";

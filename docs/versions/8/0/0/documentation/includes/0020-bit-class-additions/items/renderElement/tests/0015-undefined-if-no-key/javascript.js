@@ -1,4 +1,4 @@
-#key = "el_signal_30B5D";
+
 
 bittyReady() {
   this.trigger("given_signal_30B5D");

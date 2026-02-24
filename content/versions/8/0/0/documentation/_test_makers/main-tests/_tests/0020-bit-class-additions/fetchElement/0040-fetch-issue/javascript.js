@@ -1,4 +1,4 @@
-#key = "el_$SIGNAL_NAME";
+
 
 async $SIGNAL_NAME(_, el) {
   const url = "/intentionally-missing-file.html";

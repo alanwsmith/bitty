@@ -1,4 +1,4 @@
-#key = "el_signal_EFEFA";
+
 
 async signal_EFEFA(_, el) {
   const url = "/intentionally-missing-file.html";

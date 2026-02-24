@@ -1,4 +1,4 @@
-#key = "el_signal_AB8CB";
+
 
 signal_AB8CB(_, el) {
   const replacementEl = document.createElement("div");

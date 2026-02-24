@@ -1,4 +1,4 @@
-#key = "el_signal_00B6E";
+
 
 signal_00B6E(_, el) {
   const subs = {

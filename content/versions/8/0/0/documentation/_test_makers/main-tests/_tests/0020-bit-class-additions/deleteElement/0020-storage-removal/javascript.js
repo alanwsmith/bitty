@@ -1,4 +1,4 @@
-#key = "el_$SIGNAL_NAME";
+
 
 $SIGNAL_NAME(_, el) {
   this.deleteElement("el_$HASH");

@@ -14,9 +14,25 @@
     vars.patch_version, vars.tag_version, ".source.js"
     ]|join("") 
 !]
-[!- set vars.documentation_dir = [vars.version_dir, "/documentation"]|join("") !]
-[!- set vars.documentation_sections_dir = [vars.documentation_dir, "/sections"]|join("") !]
-[!- set vars.documentation_wrappers_dir = [vars.documentation_dir, "/_wrappers"]|join("") !]
+[!- set vars.docs_dir = [vars.version_dir, "/documentation"]|join("") !]
+[!- set vars.docs_sections_dir = [vars.docs_dir, "/sections"]|join("") !]
+[!- set vars.docs_wrappers_dir = [vars.docs_dir, "/_wrappers"]|join("") !]
 [!- set vars.styles_dir = [vars.version_dir, "/styles"]|join("") !]
 [!- set vars.version_string = [vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
+
+
+[! macro get_content(folder, key) !]
+    [! set default_content !]
+        [! include [folder, "/_", key]|join("") !]
+    [! endset !]
+    [! set custom_content !]
+        [! include [folder, "/", key]|join("") ignore missing !]
+    [! endset !]
+    [! if custom_content == "" !]
+        [@ default_content @]
+    [! else !]
+        [@ custom_content @]
+    [! endif !]
+[! endmacro !]
+
 

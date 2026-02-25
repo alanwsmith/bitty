@@ -1,41 +1,42 @@
-class DetailsOpener {
-  async bittyReady() {
-    this.loadJSON(this.key(), []);
-    this.checkSize();
-    this.initPage();
-  }
+// class DetailsOpener {
 
-  checkSize() {
-    if (
-      this.json[this.key()].length !==
-        document.querySelectorAll("details").length
-    ) {
-      this.json[this.key()] = [];
-    }
-  }
+//   async bittyReady() {
+//     this.loadJSON(this.key(), []);
+//     this.checkSize();
+//     this.initPage();
+//   }
 
-  initPage() {
-    document.querySelectorAll("details").forEach((detailsEl, index) => {
-      if (this.json[this.key()][index]) {
-        detailsEl.open = true;
-      }
-      detailsEl.addEventListener("toggle", (ev) => {
-        this.updateDetailsToggle();
-      });
-    });
-    this.info("Initialized Details Opener");
-  }
+//   checkSize() {
+//     if (
+//       this.json[this.key()].length !==
+//         document.querySelectorAll("details").length
+//     ) {
+//       this.json[this.key()] = [];
+//     }
+//   }
 
-  key() {
-    return `details-opener-${window.location.pathname}`;
-  }
+//   initPage() {
+//     document.querySelectorAll("details").forEach((detailsEl, index) => {
+//       if (this.json[this.key()][index]) {
+//         detailsEl.open = true;
+//       }
+//       detailsEl.addEventListener("toggle", (ev) => {
+//         this.updateDetailsToggle();
+//       });
+//     });
+//     this.info("Initialized Details Opener");
+//   }
 
-  updateDetailsToggle() {
-    document.querySelectorAll("details").forEach((detailsEl, index) => {
-      this.json[this.key()][index] = detailsEl.open;
-    });
-    this.saveJSON(this.key());
-  }
-}
+//   key() {
+//     return `details-opener-${window.location.pathname}`;
+//   }
 
-export { DetailsOpener };
+//   updateDetailsToggle() {
+//     document.querySelectorAll("details").forEach((detailsEl, index) => {
+//       this.json[this.key()][index] = detailsEl.open;
+//     });
+//     this.saveJSON(this.key());
+//   }
+// }
+
+// export { DetailsOpener };

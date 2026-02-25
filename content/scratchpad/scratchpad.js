@@ -1,14 +1,13 @@
-export default class {
-  showTemplateSignal(_, __) {
-    this.api.trigger("showTemplate");
-  }
+export const bitty = {};
 
-  showTemplate(_, el) {
-    const subs = [
-      ["Alfa", "PING"],
-    ];
-    el.replaceChildren(
-      this.api.elementFromTemplate("scratchpadTemplate", subs),
-    );
-  }
+export function bar() {
+  return "x";
+}
+
+export function foo() {
+  console.log(`this is foo: and ${bitty.ping2()}`);
+}
+
+export function test1(ev, sender, el) {
+  el.innerHTML = `got test - ${bitty.ping2()}`;
 }

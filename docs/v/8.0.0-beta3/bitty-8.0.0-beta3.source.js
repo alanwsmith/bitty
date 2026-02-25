@@ -1865,7 +1865,7 @@ class BittyJs extends HTMLElement {
       const signals = splitSignalString(ev.bitty.signals);
       for (const signal of signals) {
         if (this[signal] !== undefined) {
-          this.processSignal(ev, signal);
+          this.processSignal(ev.bitty.payload, signal);
         }
       }
     } else {
@@ -2234,7 +2234,7 @@ class BittyJs extends HTMLElement {
 
 class BittySend extends Event {
   constructor(payload, signals) {
-    super("bittytrigger", { bubbles: true });
+    super("bittysend", { bubbles: true });
     this.bitty = {
       payload: payload,
       signals: signals,

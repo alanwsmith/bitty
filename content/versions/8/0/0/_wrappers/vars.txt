@@ -1,15 +1,22 @@
-[! set d = namespace() !]
-[! set d.major_version = json.config.versions.current.major|string !]
-[! set d.minor_version = json.config.versions.current.minor|string !]
-[! set d.patch_version = json.config.versions.current.patch|string !]
-[! set d.version_string = d.major_version + "/" + d.minor_version + "/" + d.patch_version !]
-[! set d.version_dir = "versions/" + d.major_version + "/" + d.minor_version + "/" + d.patch_version !]
-[! set d.styles_dir = d.version_dir + "/styles" !]
-[! set d.documentation_dir = d.version_dir + "/documentation" !]
-[! set d.documentation_includes_dir = d.documentation_dir + "/includes" !]
-[! set d.documentation_wrappers_dir = d.documentation_dir + "/_wrappers" !]
-[! set d.bitty_tag = "bitty-" + d.major_version + "-" + d.minor_version !]
-[! set d.bits_dir = d.version_dir + "/bits" !]
+[!- set vars = namespace() !]
+[!- set vars.major_version = json.config.versions.current.major|string !]
+[!- set vars.minor_version = json.config.versions.current.minor|string !]
+[!- set vars.patch_version = json.config.versions.current.patch|string !]
+[!- set vars.tag_version = json.config.versions.current.tag !]
 
-[! set d.bitty_script_path = "/v/8.0.0-beta4/bitty-8.0.0-beta4.source.js" !]
+[!- set vars.version_dir = ["versions/", vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
+
+[!- set vars.bitty_tag = ["bitty-", vars.major_version, "-", vars.minor_version]|join("") !]
+[!- set vars.bits_dir = [vars.version_dir, "/bits"]|join("") !]
+[!- set vars.bitty_script_path =  [
+    "/v/", vars.major_version, ".", vars.minor_version, ".", vars.patch_version,
+    vars.tag_version, "/", "bitty-", vars.major_version, ".", vars.minor_version, ".",
+    vars.patch_version, vars.tag_version, ".source.js"
+    ]|join("") 
+!]
+[!- set vars.documentation_dir = [vars.version_dir, "/documentation"]|join("") !]
+[!- set vars.documentation_sections_dir = [vars.documentation_dir, "/sections"]|join("") !]
+[!- set vars.documentation_wrappers_dir = [vars.documentation_dir, "/_wrappers"]|join("") !]
+[!- set vars.styles_dir = [vars.version_dir, "/styles"]|join("") !]
+[!- set vars.version_string = [vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
 

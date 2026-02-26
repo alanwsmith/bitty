@@ -13,6 +13,10 @@ class BittyJs extends HTMLElement {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
+      incoming.bitty.sleep = async (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      };
+      incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
       this.constructor.bits.push(incoming);
       console.log(Object.keys(incoming));
       incoming["run_signal_e9fca"](null, null, null);
@@ -22,19 +26,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // incoming.bitty.ping2 = () => {
-  //   return "FROM PING";
-  // };
-
-  // incoming["bitty"].ping2 = () => {
-  //   return "THIS IS X";
-  // };
-  // incoming["foo"]();
-
   findSenders(el) {
     const senders = [];
     while (el) {
-      if (el.dataset !== undefined && el.dataset.send !== undefined) {
+      if (el.dataset !== undefined && el.dataset.s !== undefined) {
         senders.push(el);
       }
       el = el.parentElement;
@@ -42,34 +37,56 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-  splitSignalString(input) {
-    return input
-      .trim()
-      .split(/\s+/m)
-      .map((l) => l.trim());
+  _localTimestamp(datetime = new Date()) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}`;
   }
 
   processEvent(ev) {
+    // console.log(ev.type);
     const senders = this.findSenders(ev.target);
     for (const sender of senders) {
-      const signals = this.splitSignalString(sender.dataset.send);
+      const signals = this.splitSignalString(sender.dataset.s);
       for (const signal of signals) {
+        // console.log(signal);
         this.constructor.bits.forEach((bit) => {
-          if (typeof bit[ev.target.dataset.send] === "function") {
+          if (typeof bit[sender.dataset.s] === "function") {
             const receivers = document.querySelectorAll(
-              `[data-receive~='${signal}']`,
+              `[data-r~='${signal}']`,
             );
+            console.log(receivers);
             if (receivers.length > 0) {
               for (const receiver of receivers) {
-                bit[ev.target.dataset.send](ev, sender, receiver);
+                bit[sender.dataset.s](ev, sender, receiver);
               }
             } else {
-              bit[ev.target.dataset.send](ev, sender, null);
+              bit[sender.dataset.s](ev, sender, null);
             }
           }
         });
       }
     }
+  }
+
+  splitSignalString(input) {
+    return input
+      .trim()
+      .split(/\s+/m)
+      .map((l) => l.trim());
   }
 }
 

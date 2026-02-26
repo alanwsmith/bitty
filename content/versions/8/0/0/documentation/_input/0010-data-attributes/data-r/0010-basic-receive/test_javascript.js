@@ -1,10 +1,10 @@
 export const bitty = {};
 
 export function $_SIGNAL_(ev, sender, el) {
-  console.log("HERE2");
+  el.innerHTML = `passed $${bitty.localTimestamp()}`;
 }
 
 export async function run_$_SIGNAL_(ev, sender, el) {
-  console.log("HERE1");
-  $_SIGNAL_(null, null, null);
+  await bitty.sleep(100);
+  document.querySelector(`[data-s~=$_SIGNAL_]`).click();
 }

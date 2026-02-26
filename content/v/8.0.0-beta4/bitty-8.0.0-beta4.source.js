@@ -74,20 +74,21 @@ class BittyJs extends HTMLElement {
 
   __processEvent(ev) {
     // console.log(ev.type);
-
     const senders = this.bitty._findSenders(ev.target);
     for (const sender of senders) {
       const signals = this.bitty._splitSignalString(sender.dataset.s);
       for (const signal of signals) {
         // console.log(signal);
         if (typeof this[signal] === "function") {
-          // console.log(signal);
+          console.log(signal);
           const receivers = document.querySelectorAll(
             `[data-r~='${signal}']`,
           );
           // console.log(receivers);
           if (receivers.length > 0) {
             for (const receiver of receivers) {
+              // console.log(sender);
+              // console.log(receiver);
               this[signal](ev, sender, receiver);
             }
           } else {

@@ -25,6 +25,7 @@ class BittyJs extends HTMLElement {
       incoming.bitty._splitSignalString = this.__splitSignalString.bind(
         incoming,
       );
+      incoming.bitty.trigger = this._trigger.bind(incoming);
       this.constructor.bits.push(incoming);
       window.addEventListener("click", (ev) => {
         incoming.bitty._processEvent(ev);
@@ -101,7 +102,7 @@ class BittyJs extends HTMLElement {
       for (const signal of signals) {
         // console.log(signal);
         if (typeof this[signal] === "function") {
-          console.log(signal);
+          // console.log(signal);
           const receivers = document.querySelectorAll(
             `[data-r~='${signal}']`,
           );
@@ -118,8 +119,6 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-
-    //
   }
 
   // __processEvent(ev) {
@@ -165,9 +164,21 @@ class BittyJs extends HTMLElement {
       .split(/\s+/m)
       .map((l) => l.trim());
   }
+
+  _trigger(signals) {
+    const ev = new BittyTrigger(signals);
+    dispatchEvent(ev);
+  }
 }
 
 customElements.define(tagName, BittyJs);
+
+class BittyTrigger extends Event {
+  constructor(signals) {
+    super("bittytrigger", { bubbles: true });
+    this.bitty = { signals: signals };
+  }
+}
 
 //  addBittyClasses(target, self) {
 //    Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter((method) =>

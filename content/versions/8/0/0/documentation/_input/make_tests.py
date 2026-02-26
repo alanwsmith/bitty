@@ -22,6 +22,7 @@ test_files = [
     "test_javascript.js", 
     "test_name.html", 
     "test_notes.html",
+    "test_status.html",
     "test_trigger_javascript.js",
 ]
 
@@ -151,7 +152,7 @@ class Maker:
 
     def id(self, dir):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
-        return str(uuid.uuid5(namespace, str("".join(dir[0]))))[:5].lower()
+        return str(uuid.uuid5(namespace, str("".join(dir[0]))))[:5].upper()
 
     def parse_dir(self, dir):
         return (dir[0].split("/")[2:], dir[2])

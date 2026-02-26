@@ -1,5 +1,5 @@
 export const bitty = {};
 
-export function signal_b28ce(ev, sender, el) {
-  el.innerHTML = `passed ${bitty.localTimestamp()}`;
+export function signal_B28CE(ev, sender, el) {
+  el.innerHTML = bitty.localTimestamp();
 }

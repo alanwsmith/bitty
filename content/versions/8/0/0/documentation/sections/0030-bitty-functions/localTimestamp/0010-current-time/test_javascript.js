@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export function signal_df095(ev, sender, el) {
+export function signal_DF095(ev, sender, el) {
   const timestamp = bitty.localTimestamp();
-  el.innerHTML = `passed ${timestamp}`;
+  el.innerHTML = timestamp;
 }

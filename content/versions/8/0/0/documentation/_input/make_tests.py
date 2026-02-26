@@ -142,6 +142,8 @@ class Maker:
         data["_SECTIONS_DIR_"] = f"{data["_DOCS_DIR_"]}/sections"
         if len(dir[0]) == 3:
             data["_SIGNAL_"] = f"signal_{self.id(dir)}"
+            data["_SIGNAL2_"] = f"signal_{self.id(dir)}_2"
+            data["_SIGNAL3_"] = f"signal_{self.id(dir)}_3"
             data["_TEST_ID_"] = self.id(dir)
             data["_TEST_DIR_"] = f"{data["_SECTIONS_DIR_"]}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}"
 

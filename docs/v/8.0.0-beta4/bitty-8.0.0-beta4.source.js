@@ -19,7 +19,15 @@ class BittyJs extends HTMLElement {
       incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
       incoming.bitty.qs = this._qs.bind(incoming);
       incoming.bitty.qsa = this._qsa.bind(incoming);
+      incoming.bitty._findSenders = this.__findSenders.bind(incoming);
+      incoming.bitty._processEvent = this.__processEvent.bind(incoming);
+      incoming.bitty._splitSignalString = this.__splitSignalString.bind(
+        incoming,
+      );
       this.constructor.bits.push(incoming);
+      window.addEventListener("click", (ev) => {
+        incoming.bitty._processEvent(ev);
+      });
 
       if (this.dataset.run) {
         const runString = this.dataset.run.trim();
@@ -28,13 +36,13 @@ class BittyJs extends HTMLElement {
 
       // console.log(Object.keys(incoming));
       //incoming["run_signal_e9fca"](null, null, null);
-      window.addEventListener("click", (ev) => {
-        this.processEvent(ev);
-      });
+      // window.addEventListener("click", (ev) => {
+      //   this.processEvent(ev);
+      // });
     }
   }
 
-  findSenders(el) {
+  __findSenders(el) {
     const senders = [];
     while (el) {
       if (el.dataset !== undefined && el.dataset.s !== undefined) {
@@ -64,31 +72,62 @@ class BittyJs extends HTMLElement {
     return `${date}T${time}`;
   }
 
-  processEvent(ev) {
+  __processEvent(ev) {
     // console.log(ev.type);
-    const senders = this.findSenders(ev.target);
+
+    const senders = this.bitty._findSenders(ev.target);
     for (const sender of senders) {
-      const signals = this.splitSignalString(sender.dataset.s);
+      const signals = this.bitty._splitSignalString(sender.dataset.s);
       for (const signal of signals) {
         // console.log(signal);
-        this.constructor.bits.forEach((bit) => {
-          if (typeof bit[sender.dataset.s] === "function") {
-            const receivers = document.querySelectorAll(
-              `[data-r~='${signal}']`,
-            );
-            // console.log(receivers);
-            if (receivers.length > 0) {
-              for (const receiver of receivers) {
-                bit[sender.dataset.s](ev, sender, receiver);
-              }
-            } else {
-              bit[sender.dataset.s](ev, sender, null);
+        if (typeof this[signal] === "function") {
+          // console.log(signal);
+          const receivers = document.querySelectorAll(
+            `[data-r~='${signal}']`,
+          );
+          // console.log(receivers);
+          if (receivers.length > 0) {
+            for (const receiver of receivers) {
+              this[signal](ev, sender, receiver);
             }
+          } else {
+            this[signal](ev, sender, null);
           }
-        });
+        }
       }
     }
+
+    //
   }
+
+  // __processEvent(ev) {
+  //   console.log(ev.type);
+  //   console.log(this);
+  //   // // console.log(ev.type);
+  //   // const senders = this.findSenders(ev.target);
+  //   // for (const sender of senders) {
+  //   //   const signals = this.splitSignalString(sender.dataset.s);
+  //   //   for (const signal of signals) {
+  //   //     // console.log(signal);
+  //   //     this.constructor.bits.forEach((bit) => {
+  //   //       if (typeof bit[sender.dataset.s] === "function") {
+  //   //         // console.log(signal);
+  //   //         const receivers = document.querySelectorAll(
+  //   //           `[data-r~='${signal}']`,
+  //   //         );
+  //   //         // console.log(receivers);
+  //   //         if (receivers.length > 0) {
+  //   //           for (const receiver of receivers) {
+  //   //             bit[sender.dataset.s](ev, sender, receiver);
+  //   //           }
+  //   //         } else {
+  //   //           bit[sender.dataset.s](ev, sender, null);
+  //   //         }
+  //   //       }
+  //   //     });
+  //   //   }
+  //   // }
+  // }
 
   _qs(selector) {
     return document.querySelector(selector);
@@ -98,7 +137,7 @@ class BittyJs extends HTMLElement {
     return document.querySelectorAll(selector);
   }
 
-  splitSignalString(input) {
+  __splitSignalString(input) {
     return input
       .trim()
       .split(/\s+/m)

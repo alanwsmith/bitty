@@ -20,7 +20,7 @@
 
 <li>
 <details open>
-      <summary>[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]</summary>
+      <summary class="section-name">[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]</summary>
 
     <ul>
 [! for itemFolder in folders !]
@@ -32,11 +32,12 @@
 !]
   <li>
 
-      <details open><summary>[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
+      <details open><summary class="item-name">[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
 
-            <div>Description</div>
+            <div class="item-header">Description</div>
       [@- get_content(itemFolder.path_part_strings[7],  "item_description.html") -@]
 
+            <div class="item-header">Examples</div>
 
   <ul>
 [! for testFolder in folders !]
@@ -66,28 +67,33 @@
                   [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
                   </div>
 
-
                   <details>
                     <summary>view test trigger</summary>
-
                     <div>Bitty Tags</div>
                       [!- filter block_highlight("html") -!]
                       [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
                       [!- endfilter -!]
-
                     [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
-
                     <div>JavaScript</div>
                       [!- filter block_highlight("js") -!]
                       [@- get_content(testFolder.path_part_strings[8],  "test_trigger_javascript.js") -@]
                       [!- endfilter -!]
-
                   </details>
             </details>
+          </li>
 
 [! endif !]
 [! endfor !]
   </ul>
+
+            [! set notes_content -!]
+      [@- get_content(itemFolder.path_part_strings[7],  "item_notes.html") -@]
+            [!- endset -!]
+            [!- if notes_content != "" -!]
+            <div class="item-header">Notes</div>
+            [@ notes_content @]
+            [!- endif -!]
+
     </details>
 
       </li>

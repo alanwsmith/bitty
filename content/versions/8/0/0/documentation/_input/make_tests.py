@@ -8,15 +8,15 @@ from pathlib import Path
 from string import Template
 
 item_files = [
-    "_item_description.html", "_item_name.html", "_item_notes.html"
+    "item_description.html", "item_name.html", "item_notes.html"
 ]
 
 section_files = [
-    "_section_name.html", "_section_overview.html"
+    "section_name.html", "section_overview.html"
 ]
 
 test_files = [
-    "_test_description.html", "_test_name.html", "_test_notes.html"
+    "test_description.html", "test_name.html", "test_notes.html"
 ]
 
 def delete_file(file_path):
@@ -64,25 +64,56 @@ class Maker:
         for dir in self.dir_list(self.input_dir):
             if len(dir[0]) == 1:
                 for file in section_files:
-                    input_path = f"{self.templates_dir}/section/{file}"
-                    output_path = f"{self.input_dir}/{dir[0][0]}/{file}"
+                    input_path = f"{self.templates_dir}/section/_{file}"
+                    output_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
                     shutil.copy2(input_path, output_path)
             if len(dir[0]) == 2:
                 for file in item_files:
-                    input_path = f"{self.templates_dir}/section/item/{file}"
-                    output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
+                    input_path = f"{self.templates_dir}/section/item/_{file}"
+                    output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
                     shutil.copy2(input_path, output_path)
             if len(dir[0]) == 3:
                 for file in test_files:
-                    input_path = f"{self.templates_dir}/section/item/test/{file}"
-                    output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
+                    input_path = f"{self.templates_dir}/section/item/test/_{file}"
+                    output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
                     shutil.copy2(input_path, output_path)
+
+    def copy_files(self):
+
+        for dir in self.dir_list(self.input_dir):
+            if len(dir[0]) == 1:
+                for file in section_files:
+                    input_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/_{file}"
+                    output_dir = os.path.dirname(output_path)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(input_path, output_path)
+
+                    input_path2 = f"{self.input_dir}/{dir[0][0]}/{file}"
+                    output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
+                    output_dir2 = os.path.dirname(output_path2)
+                    if os.path.isfile(input_path2) == True:
+                        Path(output_dir2).mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(input_path2, output_path2)
+
+
+
+            # if len(dir[0]) == 2:
+            #     for file in item_files:
+            #         input_path = f"{self.templates_dir}/section/item/_{file}"
+            #         output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
+            #         shutil.copy2(input_path, output_path)
+
+            # if len(dir[0]) == 3:
+            #     for file in test_files:
+            #         input_path = f"{self.templates_dir}/section/item/test/_{file}"
+            #         output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
+            #         shutil.copy2(input_path, output_path)
 
 
 
 
     
-
     
     
 
@@ -215,14 +246,14 @@ class Maker:
     #     return data
 
 
-
 if __name__ == "__main__":
     m = Maker()
     m.stub_files()
+    m.empty_output_folder()
+    m.copy_files()
     # m.stub_sections()
     # m.stub_items()
     # m.stub_tests()
-    # m.empty_output_folder()
     # m.generate_files()
 
 

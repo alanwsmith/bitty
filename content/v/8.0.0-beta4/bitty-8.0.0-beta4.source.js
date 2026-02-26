@@ -9,7 +9,7 @@ class BittyJs extends HTMLElement {
   }
 
   async connectedCallback() {
-    console.log("connecting");
+    //console.log("connecting");
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
@@ -17,9 +17,17 @@ class BittyJs extends HTMLElement {
         return new Promise((resolve) => setTimeout(resolve, ms));
       };
       incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
+      incoming.bitty.qs = this._qs.bind(incoming);
+      incoming.bitty.qsa = this._qsa.bind(incoming);
       this.constructor.bits.push(incoming);
-      console.log(Object.keys(incoming));
-      incoming["run_signal_e9fca"](null, null, null);
+
+      if (this.dataset.run) {
+        const runString = this.dataset.run.trim();
+        incoming[runString](null, null, null);
+      }
+
+      // console.log(Object.keys(incoming));
+      //incoming["run_signal_e9fca"](null, null, null);
       window.addEventListener("click", (ev) => {
         this.processEvent(ev);
       });
@@ -68,7 +76,7 @@ class BittyJs extends HTMLElement {
             const receivers = document.querySelectorAll(
               `[data-r~='${signal}']`,
             );
-            console.log(receivers);
+            // console.log(receivers);
             if (receivers.length > 0) {
               for (const receiver of receivers) {
                 bit[sender.dataset.s](ev, sender, receiver);
@@ -80,6 +88,14 @@ class BittyJs extends HTMLElement {
         });
       }
     }
+  }
+
+  _qs(selector) {
+    return document.querySelector(selector);
+  }
+
+  _qsa(selector) {
+    return document.querySelectorAll(selector);
   }
 
   splitSignalString(input) {

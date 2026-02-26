@@ -16,12 +16,17 @@ section_files = [
 ]
 
 test_files = [
+    "test_bitty_tags.html",
     "test_description.html", 
     "test_html.html", 
     "test_javascript.js", 
     "test_name.html", 
     "test_notes.html",
+    "test_trigger_javascript.js",
 ]
+
+version = ["8", "0", "0", "-beta4"]
+
 
 def delete_file(file_path):
     try:
@@ -57,7 +62,7 @@ class Maker:
                 data = self.get_replacements(dir)
                 for file in section_files:
                     input_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
-                    output_path = f"{self.output_dir}/{dir[0][0]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/{file}"
                     output_dir = os.path.dirname(output_path)
                     input_path2 = f"{self.input_dir}/{dir[0][0]}/{file}"
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
@@ -70,7 +75,6 @@ class Maker:
                             with open(output_path, "w") as _out1:
                                 _out1.write(output)
                     if os.path.isfile(input_path2) == True:
-                        print(input_path2)
                         Path(output_dir2).mkdir(parents=True, exist_ok=True)
                         with open(input_path2) as _in2:
                             template = Template(_in2.read())
@@ -81,7 +85,7 @@ class Maker:
                 data = self.get_replacements(dir)
                 for file in item_files:
                     input_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
-                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
                     output_dir = os.path.dirname(output_path)
                     input_path2 = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
@@ -104,7 +108,7 @@ class Maker:
                 data = self.get_replacements(dir)
                 for file in test_files:
                     input_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
-                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
                     output_dir = os.path.dirname(output_path)
                     input_path2 = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
@@ -133,10 +137,14 @@ class Maker:
 
     def get_replacements(self, dir):
         data = {
+                "_DOCS_DIR_": f"/versions/{version[0]}/{version[1]}/{version[2]}/documentation"
                 }
-        if len(dir) == 2:
+        data["_SECTIONS_DIR_"] = f"{data["_DOCS_DIR_"]}/sections"
+        if len(dir[0]) == 3:
             data["_SIGNAL_"] = f"signal_{self.id(dir)}"
             data["_TEST_ID_"] = self.id(dir)
+            data["_TEST_DIR_"] = f"{data["_SECTIONS_DIR_"]}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}"
+
         return data
 
     def id(self, dir):

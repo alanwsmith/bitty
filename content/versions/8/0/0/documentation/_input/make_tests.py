@@ -17,13 +17,10 @@ section_files = [
 
 test_files = [
     "test_description.html", 
-    "test_extra_html.html", 
     "test_html.html", 
-    "test_id.html", 
     "test_javascript.js", 
     "test_name.html", 
     "test_notes.html",
-    "test_trigger.js", 
 ]
 
 def delete_file(file_path):

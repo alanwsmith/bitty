@@ -1,10 +1,10 @@
 export const bitty = {};
 
-export async function $_SIGNAL_(ev, sender, el) {
-  /*
-  el.replaceWith()
-  if() {
-  }
-  el.innerHTML = "test passed"
-  */
+export function $_SIGNAL_(ev, sender, el) {
+  console.log("HERE2");
+}
+
+export async function run_$_SIGNAL_(ev, sender, el) {
+  console.log("HERE1");
+  $_SIGNAL_(null, null, null);
 }

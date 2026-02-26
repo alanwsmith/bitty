@@ -13,20 +13,23 @@ class BittyJs extends HTMLElement {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
-      // incoming.bitty.ping2 = () => {
-      //   return "FROM PING";
-      // };
       this.constructor.bits.push(incoming);
-      // console.log(Object.keys(incoming));
-      // incoming["bitty"].ping2 = () => {
-      //   return "THIS IS X";
-      // };
-      // incoming["foo"]();
+      console.log(Object.keys(incoming));
+      incoming["run_signal_e9fca"](null, null, null);
       window.addEventListener("click", (ev) => {
         this.processEvent(ev);
       });
     }
   }
+
+  // incoming.bitty.ping2 = () => {
+  //   return "FROM PING";
+  // };
+
+  // incoming["bitty"].ping2 = () => {
+  //   return "THIS IS X";
+  // };
+  // incoming["foo"]();
 
   findSenders(el) {
     const senders = [];

@@ -59,11 +59,12 @@ class Maker:
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
                     output_dir2 = os.path.dirname(output_path2)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
-                    with open(input_path) as _in1:
-                        template = Template(_in1.read())
-                        output = template.substitute(data)
-                        with open(output_path, "w") as _out1:
-                            _out1.write(output)
+                    if os.path.isfile(input_path) == True:
+                        with open(input_path) as _in1:
+                            template = Template(_in1.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out1:
+                                _out1.write(output)
                     if os.path.isfile(input_path2) == True:
                         Path(output_dir2).mkdir(parents=True, exist_ok=True)
                         with open(input_path2) as _in2:
@@ -81,11 +82,12 @@ class Maker:
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
                     output_dir2 = os.path.dirname(output_path2)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
-                    with open(input_path) as _in1:
-                        template = Template(_in1.read())
-                        output = template.substitute(data)
-                        with open(output_path, "w") as _out1:
-                            _out1.write(output)
+                    if os.path.isfile(input_path) == True:
+                        with open(input_path) as _in1:
+                            template = Template(_in1.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out1:
+                                _out1.write(output)
                     if os.path.isfile(input_path2) == True:
                         Path(output_dir2).mkdir(parents=True, exist_ok=True)
                         with open(input_path2) as _in2:
@@ -103,11 +105,12 @@ class Maker:
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
                     output_dir2 = os.path.dirname(output_path2)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
-                    with open(input_path) as _in1:
-                        template = Template(_in1.read())
-                        output = template.substitute(data)
-                        with open(output_path, "w") as _out1:
-                            _out1.write(output)
+                    if os.path.isfile(input_path) == True:
+                        with open(input_path) as _in1:
+                            template = Template(_in1.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out1:
+                                _out1.write(output)
                     if os.path.isfile(input_path2) == True:
                         Path(output_dir2).mkdir(parents=True, exist_ok=True)
                         with open(input_path2) as _in2:
@@ -138,19 +141,26 @@ class Maker:
         for dir in self.dir_list(self.input_dir):
             if len(dir[0]) == 1:
                 for file in section_files:
+                    check_path = f"{self.input_dir}/{dir[0][0]}/{file}"
                     input_path = f"{self.templates_dir}/section/_{file}"
                     output_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
-                    shutil.copy2(input_path, output_path)
+                    if os.path.isfile(check_path) == False:
+                        shutil.copy2(input_path, output_path)
             if len(dir[0]) == 2:
                 for file in item_files:
+                    check_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
                     input_path = f"{self.templates_dir}/section/item/_{file}"
                     output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
-                    shutil.copy2(input_path, output_path)
+                    if os.path.isfile(check_path) == False:
+                        shutil.copy2(input_path, output_path)
             if len(dir[0]) == 3:
                 for file in test_files:
+                    check_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
                     input_path = f"{self.templates_dir}/section/item/test/_{file}"
                     output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
-                    shutil.copy2(input_path, output_path)
+                    if os.path.isfile(check_path) == False:
+                        shutil.copy2(input_path, output_path)
+
 
 
 if __name__ == "__main__":

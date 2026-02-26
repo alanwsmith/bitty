@@ -79,7 +79,6 @@ class Maker:
                     shutil.copy2(input_path, output_path)
 
     def copy_files(self):
-
         for dir in self.dir_list(self.input_dir):
             if len(dir[0]) == 1:
                 for file in section_files:
@@ -88,7 +87,6 @@ class Maker:
                     output_dir = os.path.dirname(output_path)
                     Path(output_dir).mkdir(parents=True, exist_ok=True)
                     shutil.copy2(input_path, output_path)
-
                     input_path2 = f"{self.input_dir}/{dir[0][0]}/{file}"
                     output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
                     output_dir2 = os.path.dirname(output_path2)
@@ -251,9 +249,5 @@ if __name__ == "__main__":
     m.stub_files()
     m.empty_output_folder()
     m.copy_files()
-    # m.stub_sections()
-    # m.stub_items()
-    # m.stub_tests()
-    # m.generate_files()
 
 

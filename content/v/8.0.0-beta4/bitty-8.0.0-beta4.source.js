@@ -17,6 +17,7 @@ class BittyJs extends HTMLElement {
         return new Promise((resolve) => setTimeout(resolve, ms));
       };
       incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
+      incoming.bitty.localTimestampMs = this._localTimestampMs.bind(incoming);
       incoming.bitty.qs = this._qs.bind(incoming);
       incoming.bitty.qsa = this._qsa.bind(incoming);
       incoming.bitty._findSenders = this.__findSenders.bind(incoming);
@@ -70,6 +71,26 @@ class BittyJs extends HTMLElement {
     const date = [parts.year, parts.month, parts.day].join("-");
     const time = [parts.hour, parts.minute, parts.second].join(":");
     return `${date}T${time}`;
+  }
+
+  _localTimestampMs(datetime) {
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 3,
+      hour12: false,
+    })
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    return `${date}T${time}.${parts.fractionalSecond}`;
   }
 
   __processEvent(ev) {

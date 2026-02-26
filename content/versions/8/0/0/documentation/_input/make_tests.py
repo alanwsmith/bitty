@@ -47,11 +47,85 @@ class Maker:
         self.output_dir = "../sections"
         self.templates_dir = "../_templates"
 
+    def copy_files(self):
+        for dir in self.dir_list(self.input_dir):
+            if len(dir[0]) == 1:
+                data = self.get_replacements(dir)
+                for file in section_files:
+                    input_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/_{file}"
+                    output_dir = os.path.dirname(output_path)
+                    input_path2 = f"{self.input_dir}/{dir[0][0]}/{file}"
+                    output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
+                    output_dir2 = os.path.dirname(output_path2)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                    with open(input_path) as _in1:
+                        template = Template(_in1.read())
+                        output = template.substitute(data)
+                        with open(output_path, "w") as _out1:
+                            _out1.write(output)
+                    if os.path.isfile(input_path2) == True:
+                        Path(output_dir2).mkdir(parents=True, exist_ok=True)
+                        with open(input_path2) as _in2:
+                            template = Template(_in2.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out2:
+                                _out2.write(output)
+            if len(dir[0]) == 2:
+                data = self.get_replacements(dir)
+                for file in item_files:
+                    input_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
+                    output_dir = os.path.dirname(output_path)
+                    input_path2 = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
+                    output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{file}"
+                    output_dir2 = os.path.dirname(output_path2)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                    with open(input_path) as _in1:
+                        template = Template(_in1.read())
+                        output = template.substitute(data)
+                        with open(output_path, "w") as _out1:
+                            _out1.write(output)
+                    if os.path.isfile(input_path2) == True:
+                        Path(output_dir2).mkdir(parents=True, exist_ok=True)
+                        with open(input_path2) as _in2:
+                            template = Template(_in2.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out2:
+                                _out2.write(output)
+            if len(dir[0]) == 3:
+                data = self.get_replacements(dir)
+                for file in test_files:
+                    input_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
+                    output_path = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
+                    output_dir = os.path.dirname(output_path)
+                    input_path2 = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
+                    output_path2 = f"{self.output_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/{file}"
+                    output_dir2 = os.path.dirname(output_path2)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                    with open(input_path) as _in1:
+                        template = Template(_in1.read())
+                        output = template.substitute(data)
+                        with open(output_path, "w") as _out1:
+                            _out1.write(output)
+                    if os.path.isfile(input_path2) == True:
+                        Path(output_dir2).mkdir(parents=True, exist_ok=True)
+                        with open(input_path2) as _in2:
+                            template = Template(_in2.read())
+                            output = template.substitute(data)
+                            with open(output_path, "w") as _out2:
+                                _out2.write(output)
+
     def dir_list(self, path):
       return [self.parse_dir(dir) for dir in os.walk(path)]
 
     def empty_output_folder(self):
         empty_folder(self.output_dir)
+
+    def get_replacements(self, dir):
+        data = {
+                }
+        return data
 
     def id(self, dir_parts):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
@@ -77,171 +151,6 @@ class Maker:
                     input_path = f"{self.templates_dir}/section/item/test/_{file}"
                     output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
                     shutil.copy2(input_path, output_path)
-
-    def copy_files(self):
-        for dir in self.dir_list(self.input_dir):
-            if len(dir[0]) == 1:
-                for file in section_files:
-                    input_path = f"{self.input_dir}/{dir[0][0]}/_{file}"
-                    output_path = f"{self.output_dir}/{dir[0][0]}/_{file}"
-                    output_dir = os.path.dirname(output_path)
-                    Path(output_dir).mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(input_path, output_path)
-                    input_path2 = f"{self.input_dir}/{dir[0][0]}/{file}"
-                    output_path2 = f"{self.output_dir}/{dir[0][0]}/{file}"
-                    output_dir2 = os.path.dirname(output_path2)
-                    if os.path.isfile(input_path2) == True:
-                        Path(output_dir2).mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(input_path2, output_path2)
-
-
-
-            # if len(dir[0]) == 2:
-            #     for file in item_files:
-            #         input_path = f"{self.templates_dir}/section/item/_{file}"
-            #         output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/_{file}"
-            #         shutil.copy2(input_path, output_path)
-
-            # if len(dir[0]) == 3:
-            #     for file in test_files:
-            #         input_path = f"{self.templates_dir}/section/item/test/_{file}"
-            #         output_path = f"{self.input_dir}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}/_{file}"
-            #         shutil.copy2(input_path, output_path)
-
-
-
-
-    
-    
-    
-
-    # def copy_section_files(self):
-    #     for dir in self.dir_list():
-    #         if (len(dir) == 1):
-    #             for file_name in section_files:
-    #                 path_key = "/".join(dir)
-    #                 source_path = f"{self.input_dir}/{path_key}/{file_name}"
-    #                 dest_dir = f"{self.output_dir}/{path_key}"
-    #                 dest_path = f"{dest_dir}/{file_name}"
-    #                 Path(dest_dir).mkdir(parents=True, exist_ok=True)
-    #                 shutil.copy2(source_path, dest_path)
-
-            # if (len(dir) == 2):
-            #     for file_name in item_files:
-            #         path_key = "/".join(dir)
-            #         source_path = f"{self.input_dir}/{path_key}/{file_name}"
-            #         dest_dir = f"{self.output_dir}/{path_key}"
-            #         dest_path = f"{dest_dir}/{file_name}"
-            #         Path(dest_dir).mkdir(parents=True, exist_ok=True)
-            #         shutil.copy2(source_path, dest_path)
-
-            # if (len(dir) == 3):
-            #     for file_name in test_files:
-            #         path_key = "/".join(dir)
-            #         source_path = f"{self.input_dir}/{path_key}/{file_name}"
-            #         dest_dir = f"{self.output_dir}/{path_key}"
-            #         dest_path = f"{dest_dir}/{file_name}"
-            #         Path(dest_dir).mkdir(parents=True,exist_ok=True)
-            #         shutil.copy2(source_path, dest_path)
-
-
-                # for section_file in section_files:
-                #     input_alfa = f"{self.input_dir}/{dir_parts[0]}/{section_file}"
-                #     output_alfa = f"{self.output_dir}/{dir_parts[0]}/{section_file}"
-                #     if os.path.isfile(input_alfa):
-                #         make_dir_for_file(output_alfa)
-                #         shutil.copy2(input_alfa, output_alfa)
-                #     bravo_file = section_file.replace("_", "", 1)
-                #     input_bravo = f"{self.input_dir}/{dir_parts[0]}/{bravo_file}"
-                #     output_bravo = f"{self.output_dir}/{dir_parts[0]}/{bravo_file}"
-                #     if os.path.isfile(input_bravo):
-                #         make_dir_for_file(output_bravo)
-                #         shutil.copy2(input_bravo, output_bravo)
-
-    # def dir_list(self):
-    #     items = []
-    #     for dir in os.walk(self.input_dir):
-    #         dir_parts = dir[0].split("/")
-    #         if (len(dir_parts) >= 3):
-    #             items.append(dir_parts[2:])
-    #     return items
-
-    # def dir_list_v2(self):
-    #     return [
-    #             dir for dir in os.walk(self.input_dir) 
-    #             ]
-
-    # def stub_items(self):
-    #     for file_name in item_files:
-    #         with open(f"{self.templates_dir}/sections/section/item/{file_name}") as _in:
-    #             template = Template(_in.read())
-    #             for dir in self.dir_list():
-    #                 if (len(dir) == 2):
-    #                     path_key = "/".join(dir)
-    #                     output_path = f"{self.input_dir}/{path_key}/{file_name}"
-    #                     data = self.replacements(dir)
-    #                     output = template.substitute(data)
-    #                     with open(output_path, "w") as _out:
-    #                         _out.write(output)
-
-        # for file_name in item_files:
-        #     with open(f"{self.templates_dir}/sections/section/item/{file_name}") as _in:
-        #         template = Template(_in.read())
-        #         for dir in self.dir_list():
-        #             output_path = f"{self.input_dir}/{dir[0]}/{dir[1]}/{file_name}"
-        #             data = self.replacements(dir)
-        #             output = template.substitute(data)
-        #             # print(output_path)
-        #             with open(output_path, "w") as _out:
-        #                 _out.write(output)
-
-    # def stub_sections(self):
-    #     for file_name in section_files:
-    #         with open(f"{self.templates_dir}/sections/section/{file_name}") as _in:
-    #             template = Template(_in.read())
-    #             for dir in self.dir_list():
-    #                 if (len(dir) == 1):
-    #                     path_key = "/".join(dir)
-    #                     output_path = f"{self.input_dir}/{path_key}/{file_name}"
-    #                     data = self.replacements(dir)
-    #                     output = template.substitute(data)
-    #                     with open(output_path, "w") as _out:
-    #                         _out.write(output)
-
-    # def stub_tests(self):
-    #     for file_name in test_files:
-    #         with open(f"{self.templates_dir}/sections/section/item/test/{file_name}") as _in:
-    #             template = Template(_in.read())
-    #             for dir in self.dir_list():
-    #                 if (len(dir) == 3):
-    #                     path_key = "/".join(dir)
-    #                     output_path = f"{self.input_dir}/{path_key}/{file_name}"
-    #                     data = self.replacements(dir)
-    #                     output = template.substitute(data)
-    #                     with open(output_path, "w") as _out:
-    #                         _out.write(output)
-
-        # for file_name in test_files:
-        #     with open(f"{self.templates_dir}/sections/section/item/test/{file_name}") as _in:
-        #         template = Template(_in.read())
-        #         for dir in self.dir_list():
-        #             output_path = f"{self.input_dir}/{dir[0]}/{dir[1]}/{dir[2]}/{file_name}"
-        #             data = self.replacements(dir)
-        #             output = template.substitute(data)
-        #             # print(output_path)
-        #             with open(output_path, "w") as _out:
-        #                 _out.write(output)
-
-    # def replacements(self, dir):
-    #     data = {
-    #             "_SECTION_NAME_": dir[0],
-    #             "_TEST_ID_": self.id(dir),
-    #             }
-    #     if len(dir) == 2:
-    #         data["_ITEM_NAME_"] = dir[1],
-    #     if len(dir) == 3:
-    #         data["_TEST_NAME_"] = dir[2],
-    #     return data
 
 
 if __name__ == "__main__":

@@ -8,21 +8,60 @@
 
 [! block main !]
 
-[! for localFolder in folders !]
+<ul>
+[! for sectionFolder in folders !]
 [! if 
-  localFolder.path_part_strings[5] == vars.docs_sections_dir 
-  and
-  localFolder.path_part_strings[6] 
-  and not
-  localFolder.path_part_strings[7] 
+  sectionFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and sectionFolder.path_part_strings[6] 
+  and not sectionFolder.path_part_strings[7] 
 !]
-<details>
-  <summary>[@ get_content(localFolder.path_part_strings[6],  "section_name.html") @]</summary>
-</details>
+
+<li>
+<details open>
+      <summary>[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]</summary>
+
+    <ul>
+[! for itemFolder in folders !]
+[! if 
+  itemFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and sectionFolder.path_parts[6] == itemFolder.path_parts[6] 
+  and itemFolder.path_parts[7]
+  and not itemFolder.path_parts[8]
+!]
+  <li>
+
+          <details open><summary>[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
+
+  <ul>
+[! for testFolder in folders !]
+[! if 
+  testFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and itemFolder.path_parts[6] == testFolder.path_parts[6] 
+  and itemFolder.path_parts[7] == testFolder.path_parts[7]
+  and testFolder.path_parts[8] 
+  and not testFolder.path_parts[9]
+!]
+          <li>
+            <details open>
+              <summary>[@ get_content(testFolder.path_part_strings[8],  "test_name.html") @]</summary>
+            </details>
+
+[! endif !]
+[! endfor !]
+  </ul>
+    </details>
+
+      </li>
+[! endif !]
+[! endfor !]
+    </ul>
+    </details>
+  </li>
 
 [! endif !]
 [! endfor !]
 
+</ul>
 
 
 [#
@@ -38,13 +77,13 @@ Document Fragment. If that happens an error is triggered.
 
 <[@ d.bitty_tag @] data-connect="/[@ d.bits_dir @]/documentation-test-reporter.js"></[@ d.bitty_tag @]>
 
-[! for localFolder in folders !]
+[! for sectionFolder in folders !]
 [! if 
-  localFolder.path_part_strings[5] == d.documentation_includes_dir 
+  sectionFolder.path_part_strings[5] == d.documentation_includes_dir 
   and 
-  localFolder.path_part_strings[6]
+  sectionFolder.path_part_strings[6]
   and not
-  localFolder.path_part_strings[7]
+  sectionFolder.path_part_strings[7]
 !]
 [! include d.documentation_wrappers_dir + "/section.html" !]
 [! endif !]

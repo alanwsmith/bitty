@@ -59,12 +59,30 @@
 
                   <div>JavaScript</div>
                   <div class="faded-default-border default-border-radius default-padding">
+
                   [!- filter block_highlight("js") -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
                   [!- endfilter -!]
                     <div class="xsmall-font-size">
                   [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
                     </div>
+
+                    [!- set second_js_file -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js")|trim() -@]
+                    [!- endset -!]
+
+                    [! if second_js_file != "" !]
+                  [!- filter block_highlight("js") -!]
+                  [@- second_js_file -@]
+                  [!- endfilter -!]
+                    <div class="xsmall-font-size">
+                  [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
+                    </div>
+                    [! endif !]
+
+
+
+
                   </div>
 
                   <div>Result</div>

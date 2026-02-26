@@ -13,40 +13,35 @@ class BittyJs extends HTMLElement {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
-      incoming.bitty.sleep = async (ms) => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      };
-      incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
-      incoming.bitty.localTimestampMs = this._localTimestampMs.bind(incoming);
-      incoming.bitty.qs = this._qs.bind(incoming);
-      incoming.bitty.qsa = this._qsa.bind(incoming);
-      incoming.bitty._findSenders = this.__findSenders.bind(incoming);
-      incoming.bitty._processEvent = this.__processEvent.bind(incoming);
-      incoming.bitty._processBittyTrigger = this.__processBittyTrigger.bind(
-        incoming,
-      );
-      incoming.bitty._splitSignalString = this.__splitSignalString.bind(
-        incoming,
-      );
-      incoming.bitty.trigger = this._trigger.bind(incoming);
-      this.constructor.bits.push(incoming);
-      window.addEventListener("click", (ev) => {
-        incoming.bitty._processEvent(ev);
-      });
-      window.addEventListener("bittytrigger", (ev) => {
-        incoming.bitty._processBittyTrigger(ev);
-      });
-
-      if (this.dataset.run) {
-        const runString = this.dataset.run.trim();
-        incoming[runString](null, null, null);
+      if (incoming.bitty !== undefined) {
+        incoming.bitty.sleep = async (ms) => {
+          return new Promise((resolve) => setTimeout(resolve, ms));
+        };
+        incoming.bitty.localTimestamp = this._localTimestamp.bind(incoming);
+        incoming.bitty.localTimestampMs = this._localTimestampMs.bind(incoming);
+        incoming.bitty.qs = this._qs.bind(incoming);
+        incoming.bitty.qsa = this._qsa.bind(incoming);
+        incoming.bitty._findSenders = this.__findSenders.bind(incoming);
+        incoming.bitty._processEvent = this.__processEvent.bind(incoming);
+        incoming.bitty._processBittyTrigger = this.__processBittyTrigger.bind(
+          incoming,
+        );
+        incoming.bitty._splitSignalString = this.__splitSignalString.bind(
+          incoming,
+        );
+        incoming.bitty.trigger = this._trigger.bind(incoming);
+        this.constructor.bits.push(incoming);
+        window.addEventListener("click", (ev) => {
+          incoming.bitty._processEvent(ev);
+        });
+        window.addEventListener("bittytrigger", (ev) => {
+          incoming.bitty._processBittyTrigger(ev);
+        });
+        if (this.dataset.run) {
+          const runString = this.dataset.run.trim();
+          incoming[runString](null, null, null);
+        }
       }
-
-      // console.log(Object.keys(incoming));
-      //incoming["run_signal_e9fca"](null, null, null);
-      // window.addEventListener("click", (ev) => {
-      //   this.processEvent(ev);
-      // });
     }
   }
 

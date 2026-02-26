@@ -20,12 +20,14 @@ test_files = [
     "test_description.html", 
     "test_html.html", 
     "test_javascript.js", 
+    "test_javascript_2.js", 
     "test_name.html", 
     "test_notes.html",
     "test_status.html",
     "test_trigger_javascript.js",
     "test_verification_javascript.js",
 ]
+
 
 version = ["8", "0", "0", "-beta4"]
 
@@ -147,6 +149,8 @@ class Maker:
             data["_SIGNAL2_"] = f"signal_{self.id(dir)}_2"
             data["_SIGNAL3_"] = f"signal_{self.id(dir)}_3"
             data["_TEST_ID_"] = self.id(dir)
+            data["_TEST2_ID_"] = f"{self.id(dir)}_2"
+            data["_TEST3_ID_"] = f"{self.id(dir)}_3"
             data["_TEST_DIR_"] = f"{data["_SECTIONS_DIR_"]}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}"
 
         return data

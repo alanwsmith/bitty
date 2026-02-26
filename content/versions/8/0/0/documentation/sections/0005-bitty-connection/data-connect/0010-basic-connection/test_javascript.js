@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export function $_SIGNAL_(ev, sender, el) {
+export function signal_B1D0F(ev, sender, el) {
   const updated = bitty.localTimestamp();
   el.innerHTML = updated;
 }

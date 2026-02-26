@@ -1,4 +1,4 @@
-export async function $_SIGNAL_(ev, sender, el) {
+export async function signal_ba435(ev, sender, el) {
   /*
   el.replaceWith()
   if() {

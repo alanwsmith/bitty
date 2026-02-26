@@ -16,7 +16,14 @@ section_files = [
 ]
 
 test_files = [
-    "test_description.html", "test_name.html", "test_notes.html"
+    "test_description.html", 
+    "test_extra_html.html", 
+    "test_html.html", 
+    "test_id.html", 
+    "test_javascript.js", 
+    "test_name.html", 
+    "test_notes.html",
+    "test_trigger.js", 
 ]
 
 def delete_file(file_path):
@@ -128,11 +135,14 @@ class Maker:
     def get_replacements(self, dir):
         data = {
                 }
+        if len(dir) == 2:
+            data["_SIGNAL_"] = f"signal_{self.id(dir)}"
+            data["_TEST_ID_"] = self.id(dir)
         return data
 
-    def id(self, dir_parts):
+    def id(self, dir):
         namespace = uuid.UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
-        return str(uuid.uuid5(namespace, str("".join(dir_parts))))[:5].upper()
+        return str(uuid.uuid5(namespace, str("".join(dir[0]))))[:5].lower()
 
     def parse_dir(self, dir):
         return (dir[0].split("/")[2:], dir[2])

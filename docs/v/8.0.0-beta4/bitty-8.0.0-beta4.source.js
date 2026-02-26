@@ -4,74 +4,29 @@ const tagName = `bitty-${version[0]}-${version[1]}`;
 class BittyJs extends HTMLElement {
   static bits = [];
 
-  // static addedEventListeners = false;
-  // static loadedPageClasses = false;
-  // static moduleFiles = [];
-
   constructor() {
     super();
   }
 
-  //  async _processEvent(ev) {
-  //    if (this._signalListeners[ev.type] !== undefined) {
-  //      for (const signal of splitSignalString(this._signalListeners[ev.type])) {
-  //        if (this[signal] !== undefined) {
-  //          this.processSignal(ev, signal);
-  //        }
-  //      }
-  //    } else if (ev.type === "bittytrigger") {
-  //      const signals = splitSignalString(ev.bitty.signals);
-  //      for (const signal of signals) {
-  //        if (this[signal] !== undefined) {
-  //          this.processSignal(ev, signal);
-  //        }
-  //      }
-  //    } else if (ev.type === "bittysend") {
-  //      const signals = splitSignalString(ev.bitty.signals);
-  //      for (const signal of signals) {
-  //        if (this[signal] !== undefined) {
-  //          this.processSignal(ev.bitty.payload, signal);
-  //        }
-  //      }
-  //    } else {
-  //      const senders = findSenders(ev.target);
-  //      for (const sender of senders) {
-  //        const signals = splitSignalString(sender.dataset.send);
-  //        for (const signal of signals) {
-  //          if (this[signal] !== undefined) {
-  //            ev.sender = sender;
-  //            if (ev.sender.dataset.listeners === undefined) {
-  //              if (
-  //                ["click", "input", "bittytrigger", "bittysend"]
-  //                  .includes(
-  //                    ev.type,
-  //                  ) === false
-  //              ) {
-  //                return;
-  //              }
-  //            } else {
-  //              const listeners = splitSignalString(ev.sender.dataset.listeners);
-  //              if (listeners.includes(ev.type) === false) {
-  //                return;
-  //              }
-  //            }
-  //            this.updateEventV4(ev);
-  //            const receivers = document.querySelectorAll(
-  //              `[data-receive~='${signal}']`,
-  //            );
-  //            if (receivers.length > 0) {
-  //              for (const receiver of receivers) {
-  //                this.updateReceiverV4(ev, receiver);
-  //                this[signal](ev, receiver);
-  //              }
-  //            } else {
-  //              this[signal](ev, null);
-  //            }
-  //          }
-  //        }
-  //      }
-  //    }
-  //  }
+  async connectedCallback() {
+    console.log("connecting");
+    if (this.dataset.connect) {
+      const connString = this.dataset.connect.trim();
+      const incoming = await import(connString);
+      incoming.bitty.ping2 = () => {
+        return "FROM PING";
+      };
+      this.constructor.bits.push(incoming);
+      // console.log(Object.keys(incoming));
+      // incoming["bitty"].ping2 = () => {
+      //   return "THIS IS X";
+      // };
+      // incoming["foo"]();
+      window.addEventListener("click", (ev) => {
+        this.processEvent(ev);
+      });
+    }
+  }
 
   findSenders(el) {
     const senders = [];
@@ -112,71 +67,6 @@ class BittyJs extends HTMLElement {
         });
       }
     }
-  }
-
-  //  // async processSignal(ev, sender, signal) {
-  //  //   ev.sender = sender;
-  //  //   if (ev.sender.dataset.listeners) {
-  //  //     const listeners = splitSignalString(ev.sender.dataset.listeners);
-  //  //     if (!listeners.includes(ev.type)) {
-  //  //       return;
-  //  //     }
-  //  //   }
-  //  //   this.updateEvent(ev);
-  //  //   const receivers = document.querySelectorAll(
-  //  //     `[data-receive~='${signal}']`,
-  //  //   );
-  //  //   if (receivers.length > 0) {
-  //  //     for (const receiver of receivers) {
-  //  //       this.updateReceiverV2(ev, sender, receiver);
-  //  //       this.signal](ev, receiver);
-  //  //     }
-  //  //   } else {
-  //  //     this.signal](ev, null);
-  //  //   }
-  //  // }
-
-  async connectedCallback() {
-    if (this.dataset.connect) {
-      const connString = this.dataset.connect.trim();
-      const incoming = await import(connString);
-      incoming.bitty.ping2 = () => {
-        return "FROM PING";
-      };
-      this.constructor.bits.push(incoming);
-
-      // console.log(Object.keys(incoming));
-      // incoming["bitty"].ping2 = () => {
-      //   return "THIS IS X";
-      // };
-
-      // incoming["foo"]();
-
-      window.addEventListener("click", (ev) => {
-        this.processEvent(ev);
-      });
-
-      //      for (const bit of Object.keys(remoteBits)) {
-      // console.log(bit);
-
-      // if (typeof remoteBits[bit] === "function") {
-      //   if (remoteBits[bit] instanceof Function) {
-      //     console.log(bit);
-      //   }
-      // }
-
-      // const bittyClass = new remoteBits[bit]();
-      // bittyClass.bitClass = bit;
-      // this.addBittyVars(bittyClass);
-      // this.addBittyClasses(bittyClass);
-      // this.addBittyListeners(bittyClass);
-      // bittyClass.loadTemplates(document.body);
-      // this.#bits.push(bittyClass);
-      // await bittyClass._runBittyReady();
-      //      }
-    }
-    // this.loadModuleClasses();
-    // this.loadWindowClasses();
   }
 }
 

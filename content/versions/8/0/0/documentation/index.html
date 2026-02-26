@@ -16,6 +16,7 @@
   and not sectionFolder.path_part_strings[7] 
 !]
 
+
 <li>
 <details open>
       <summary>[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]</summary>
@@ -30,7 +31,7 @@
 !]
   <li>
 
-          <details open><summary>[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
+      <details open><summary>[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
 
   <ul>
 [! for testFolder in folders !]
@@ -44,6 +45,26 @@
           <li>
             <details open>
               <summary>[@ get_content(testFolder.path_part_strings[8],  "test_name.html") @]</summary>
+                  <div>HTML</div>
+                  [!- filter block_highlight("html") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
+                  [!- endfilter -!]
+
+                  <div>JavaScript</div>
+                  [!- filter block_highlight("js") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
+                  [!- endfilter -!]
+
+                  <div>Test Trigger</div>
+                  [!- filter block_highlight("js") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_trigger.js") -@]
+                  [!- endfilter -!]
+
+                  <div>Result</div>
+                  <div>
+                  [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
+                  </div>
+
             </details>
 
 [! endif !]

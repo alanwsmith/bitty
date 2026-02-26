@@ -13,9 +13,9 @@ class BittyJs extends HTMLElement {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
-      incoming.bitty.ping2 = () => {
-        return "FROM PING";
-      };
+      // incoming.bitty.ping2 = () => {
+      //   return "FROM PING";
+      // };
       this.constructor.bits.push(incoming);
       // console.log(Object.keys(incoming));
       // incoming["bitty"].ping2 = () => {

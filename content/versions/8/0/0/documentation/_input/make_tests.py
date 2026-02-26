@@ -73,11 +73,12 @@ class Maker:
                             with open(output_path, "w") as _out1:
                                 _out1.write(output)
                     if os.path.isfile(input_path2) == True:
+                        print(input_path2)
                         Path(output_dir2).mkdir(parents=True, exist_ok=True)
                         with open(input_path2) as _in2:
                             template = Template(_in2.read())
                             output = template.substitute(data)
-                            with open(output_path, "w") as _out2:
+                            with open(output_path2, "w") as _out2:
                                 _out2.write(output)
             if len(dir[0]) == 2:
                 data = self.get_replacements(dir)
@@ -100,7 +101,7 @@ class Maker:
                         with open(input_path2) as _in2:
                             template = Template(_in2.read())
                             output = template.substitute(data)
-                            with open(output_path, "w") as _out2:
+                            with open(output_path2, "w") as _out2:
                                 _out2.write(output)
             if len(dir[0]) == 3:
                 data = self.get_replacements(dir)
@@ -123,8 +124,9 @@ class Maker:
                         with open(input_path2) as _in2:
                             template = Template(_in2.read())
                             output = template.substitute(data)
-                            with open(output_path, "w") as _out2:
+                            with open(output_path2, "w") as _out2:
                                 _out2.write(output)
+
 
     def dir_list(self, path):
       return [self.parse_dir(dir) for dir in os.walk(path)]

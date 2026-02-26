@@ -21,9 +21,9 @@
 [!- set vars.version_string = [vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
 
 
-[! macro get_content(folder, key) -!]
+[! macro get_content(folder, key, bitty_tag = vars.bitty_tag) -!]
     [!- set default_content !]
-        [!- include [folder, "/_", key]|join("") !]
+        [!- include [folder, "/_", key]|join("") ignore missing !]
     [!- endset !]
     [!- set custom_content !]
         [!- include [folder, "/", key]|join("") ignore missing !]

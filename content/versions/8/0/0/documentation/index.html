@@ -63,29 +63,27 @@
                   [!- filter block_highlight("js") -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
                   [!- endfilter -!]
+
                     <div class="xsmall-font-size">
                   [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
                     </div>
 
                     [!- set second_js_file -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js")|trim() -@]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js") -@]
                     [!- endset -!]
 
                     [! if second_js_file != "" !]
                   [!- filter block_highlight("js") -!]
-                  [@- second_js_file -@]
+                  [@- second_js_file|safe -@]
                   [!- endfilter -!]
                     <div class="xsmall-font-size">
                   [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
                     </div>
                     [! endif !]
 
-
-
-
                   </div>
 
-                  <div>Result</div>
+                  <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">
                     <div class="default-flow">
                     [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
@@ -112,6 +110,18 @@
                       [!- endfilter -!]
 
                   </details>
+
+
+                    [!- set notes_content -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_notes.html") -@]
+                    [!- endset -!]
+
+                    [! if notes_content != "" !]
+                  <div class="test-header">Notes</div>
+                    [@- notes_content @]
+                    [! endif !]
+
+
             </details>
           </li>
 

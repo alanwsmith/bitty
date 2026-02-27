@@ -37,6 +37,30 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  async _fetchJSON(url, fallback = null, options = {}) {
+    console.log(url);
+    const details = {
+      status: "ok",
+      error: null,
+      value: null,
+    };
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        try {
+          details.value = await response.json();
+        } catch (parseError) {
+          details.status = "error";
+          details.error = parseError;
+        }
+      }
+    } catch (error) {
+      details.status = "error";
+      details.error = parseError;
+    }
+    return details;
+  }
+
   __findSenders(el) {
     const senders = [];
     while (el) {
@@ -54,43 +78,33 @@ class BittyJs extends HTMLElement {
     return new BittyResult("ok", json, null);
   }
 
-  _localTimestamp(datetime = new Date()) {
-    const parts = {};
-    new Intl.DateTimeFormat(undefined, {
-      year: "numeric",
-      month: "2-digit",
+  _localTimestamp(datetime = new Date(), ms = false) {
+    const options = {
       day: "2-digit",
+      fractionalSecondDigits: 3,
       hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
       hour12: false,
-    })
+      minute: "2-digit",
+      month: "2-digit",
+      second: "2-digit",
+      year: "numeric",
+    };
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, options)
       .formatToParts(datetime)
       .filter((part) => part.type !== "literal")
       .forEach((part) => parts[part.type] = part.value);
     const date = [parts.year, parts.month, parts.day].join("-");
     const time = [parts.hour, parts.minute, parts.second].join(":");
-    return `${date}T${time}`;
+    if (ms === true) {
+      return `${date}T${time}.${parts.fractionalSecond}`;
+    } else {
+      return `${date}T${time}`;
+    }
   }
 
   _localTimestampMs(datetime) {
-    const parts = {};
-    new Intl.DateTimeFormat(undefined, {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      fractionalSecondDigits: 3,
-      hour12: false,
-    })
-      .formatToParts(datetime)
-      .filter((part) => part.type !== "literal")
-      .forEach((part) => parts[part.type] = part.value);
-    const date = [parts.year, parts.month, parts.day].join("-");
-    const time = [parts.hour, parts.minute, parts.second].join(":");
-    return `${date}T${time}.${parts.fractionalSecond}`;
+    return this.bitty.localTimestamp(datetime, true);
   }
 
   __processBittyTrigger(trigger) {

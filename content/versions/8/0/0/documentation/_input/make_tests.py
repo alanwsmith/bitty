@@ -143,6 +143,7 @@ class Maker:
         data = {
                 "_DOCS_DIR_": f"/versions/{version[0]}/{version[1]}/{version[2]}/documentation"
                 }
+        data["_SAMPLES_DIR_"] = f"{data["_DOCS_DIR_"]}/samples"
         data["_SECTIONS_DIR_"] = f"{data["_DOCS_DIR_"]}/sections"
         if len(dir[0]) == 3:
             data["_SIGNAL_"] = f"signal_{self.id(dir)}"
@@ -152,7 +153,6 @@ class Maker:
             data["_TEST2_ID_"] = f"{self.id(dir)}_2"
             data["_TEST3_ID_"] = f"{self.id(dir)}_3"
             data["_TEST_DIR_"] = f"{data["_SECTIONS_DIR_"]}/{dir[0][0]}/{dir[0][1]}/{dir[0][2]}"
-
         return data
 
     def id(self, dir):

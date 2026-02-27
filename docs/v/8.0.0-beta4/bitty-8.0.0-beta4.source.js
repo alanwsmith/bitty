@@ -41,7 +41,8 @@ class BittyJs extends HTMLElement {
         });
         if (this.dataset.run) {
           const runString = this.dataset.run.trim();
-          incoming[runString](null, null, null);
+          incoming.bitty.trigger(runString);
+          //incoming[runString](null, null, null);
         }
       }
     }

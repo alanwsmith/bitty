@@ -61,7 +61,6 @@ class BittyJs extends HTMLElement {
   _loadJSON(key, fallback = null) {
     const storage = localStorage.getItem(key);
     const json = JSON.parse(storage);
-    console.log(json);
     return new BittyResult("ok", json, null);
   }
 

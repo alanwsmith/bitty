@@ -1,0 +1,74 @@
+[!- extends "versions/" + file.folder_parts[1] + "/"  + file.folder_parts[2] + "/"  + file.folder_parts[3] + "/_wrappers/main-wrapper.html" -!] 
+
+[!- block bittyOpenTag -!]
+[!- include wrapper_root + "includes/bitty-open-tags.html" -!]
+[#
+<[@ bitty_tag @] data-connect="/[@ projects_root @]docs-test-runner/script.js BittyDocTestRunner">
+#]
+[!- endblock -!]
+patch_version
+[!- block bittyCloseTag -!]
+[#
+</[@ bitty_tag @]>
+[!- include wrapper_root + "includes/bitty-close-tags.html" -!]
+#]
+[!- endblock -!]
+
+[! block header !]
+<header class="default-wrapper">
+<hgroup class="default-wrapper">
+  <h1>Documentation (version 7.0.0)</h1>
+</hgroup>
+</header>
+[! endblock !]
+
+
+[!- block main -!]
+<main class="default-wrapper default-flow">
+    <div data-init="testResults"></div>
+    <div class="warning-box default-flow">
+        <p>DEPRECATED: This is the documentation for version 7.0.0 which has been deprecated.</p>
+        <p><a href="/">Visit the home page</a> for the latest version.</p>
+    </div>
+
+
+[! for f in files !]
+[! if 
+    f.path_parts[0] == "versions" 
+    and
+    f.path_parts[1] == "7"
+    and
+    f.path_parts[2] == "0" 
+    and
+    f.path_parts[3] == "0"
+    and 
+    f.path_parts[4] == "documentation"
+    and 
+    f.path_parts[5] == "_index_page_parts"
+!]
+[! include f.input_path !]
+[! endif !]
+[! endfor !]
+
+[! for fldr in folders !]
+    [! if 
+        fldr.folder_parts[1] == file.path_parts[1]
+        and
+        fldr.folder_parts[2] == file.path_parts[2]
+        and
+        fldr.folder_parts[3] == file.path_parts[3]
+        and
+        fldr.folder_parts[4] == file.path_parts[4]
+        and
+        fldr.folder_parts[5] == file.path_parts[5]
+        and
+        fldr.folder_parts[6] == "_index_page_parts"
+    !]
+    [! set page_part_path = fldr.parent + "/" + fldr.name + "/index.html" !]
+    [! include page_part_path !]
+    [! endif !]
+[! endfor !]
+</main>
+
+[!- endblock !]
+

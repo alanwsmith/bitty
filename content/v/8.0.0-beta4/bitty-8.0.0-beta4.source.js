@@ -38,7 +38,6 @@ class BittyJs extends HTMLElement {
   }
 
   async _fetchJSON(url, fallback = null, options = {}) {
-    console.log(url);
     const details = {
       status: "ok",
       error: null,
@@ -49,6 +48,37 @@ class BittyJs extends HTMLElement {
       if (response.ok === true) {
         try {
           details.value = await response.json();
+        } catch (parseError) {
+          details.status = "error";
+          details.error = parseError;
+        }
+      }
+    } catch (error) {
+      details.status = "error";
+      details.error = parseError;
+    }
+    return details;
+  }
+
+  async _fetchTemplates(url, fallback = null, options = {}) {
+    const details = {
+      status: "ok",
+      error: null,
+      value: null,
+    };
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        try {
+          const content = await response.text();
+          const container = document.createElement("div");
+          container.innerHTML = content;
+          const templates = container.querySelectorAll(
+            "div > template",
+          );
+          for (const template of templates) {
+            console.log(template);
+          }
         } catch (parseError) {
           details.status = "error";
           details.error = parseError;

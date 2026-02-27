@@ -24,52 +24,22 @@ function getResults(exampleWrapper) {
     exampleStatus.dataset.testStatus = levels[1];
     return 1;
   }
-
-  // const passed = [...results]
-  //   .map((result) => {
-  //     return result.dataset.testStatus;
-  //   })
-  //   .every((
-  //     result,
-  //   ) => result === "ok") === true;
-  // if (passed === true) {
-  //   exampleStatus.innerHTML = "[pass]";
-  //   exampleStatus.dataset.testStatus = "ok";
-  //   return 0;
-  // } else {
-  //   exampleStatus.innerHTML = "[fail]";
-  //   exampleStatus.dataset.testStatus = "issue";
-  //   return 2;
-  // }
-  // } else {
-  // exampleStatus.innerHTML = "[todo]";
-  // exampleStatus.dataset.testStatus = "todo";
-  // return 1;
-  // }
 }
 
 function testItem(itemWrapper) {
   const examples = bitty.qsa(".example-wrapper", itemWrapper);
-
   const results = [...examples].map((exampleWrapper) => {
     return getResults(exampleWrapper);
   });
-
   const itemStatus = bitty.qs(".item-status", itemWrapper);
-
-  if (Math.max(...results) === 0) {
-    itemStatus.innerHTML = "[pass]";
-    itemStatus.dataset.testStatus = "pass";
-  } else if (Math.max(...results) === 1) {
-    itemStatus.innerHTML = "[todo]";
-    itemStatus.dataset.testStatus = "todo";
+  if (results.length === 0) {
+    itemStatus.innerHTML = `[${levels[1]}]`;
+    itemStatus.dataset.testStatus = levels[1];
+  } else {
+    const level = Math.max(...results);
+    itemStatus.innerHTML = `[${levels[level]}]`;
+    itemStatus.dataset.testStatus = levels[level];
   }
-
-  // console.log(results);
-
-  // examples.forEach((exampleWrapper) => {
-  //   getResults(exampleWrapper);
-  // });
 }
 
 function testItems() {

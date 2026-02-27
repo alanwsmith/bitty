@@ -22,6 +22,8 @@ class BittyJs extends HTMLElement {
         incoming.bitty.qs = this._qs.bind(incoming);
         incoming.bitty.qsa = this._qsa.bind(incoming);
         incoming.bitty._findSenders = this.__findSenders.bind(incoming);
+        incoming.bitty.loadJSON = this._loadJSON.bind(incoming);
+        incoming.bitty.saveJSON = this._saveJSON.bind(incoming);
         incoming.bitty._processEvent = this.__processEvent.bind(incoming);
         incoming.bitty._processBittyTrigger = this.__processBittyTrigger.bind(
           incoming,
@@ -55,6 +57,64 @@ class BittyJs extends HTMLElement {
     }
     return senders;
   }
+
+  _loadJSON(key, fallback = null) {
+    const storage = localStorage.getItem(key);
+    const json = JSON.parse(storage);
+    console.log(json);
+    return new BittyResult("ok", json, null);
+  }
+
+  //  _loadJSON(key, fallback = null) {
+  //    const storageKey = `bittyJSON_${key}`;
+  //    const details = {
+  //      level: "info",
+  //      from: "loadJSON",
+  //      ok: true,
+  //      text: [],
+  //    };
+  //    if (this.json[key] !== undefined) {
+  //      details.level = "warn";
+  //      details.text.push(
+  //        `Loading JSON '${key}' from storage overwrote an exsting JSON`,
+  //      );
+  //    }
+  //    try {
+  //      const storage = localStorage.getItem(storageKey);
+  //      if (storage !== null) {
+  //        const json = JSON.parse(storage).data;
+  //        this.json[key] = json;
+  //        details.text.push(`Loaded json from storage with from: ${key}`);
+  //      } else if (fallback !== null && typeof fallback === "string") {
+  //        this.json[key] = JSON.parse(fallback);
+  //        localStorage.setItem(key, `{ "data": ${fallback} }`);
+  //        details.text.push(
+  //          `Loaded json from fallback string with from: ${key}`,
+  //        );
+  //      } else if (fallback !== null && typeof fallback === "object") {
+  //        const storagePayload = JSON.stringify({ data: fallback });
+  //        localStorage.setItem(storageKey, JSON.stringify({ data: fallback }));
+  //        this.json[key] = fallback;
+  //        details.text.push(
+  //          `Loaded json from fallback object with from: ${key}`,
+  //        );
+  //      } else {
+  //        details.level = "error";
+  //        details.ok = false;
+  //        details.text.push(
+  //          `Could not load JSON from either storage or fallbak with from: ${key}`,
+  //        );
+  //      }
+  //    } catch (loadingError) {
+  //      details.level = "error";
+  //      details.ok = false;
+  //      details.text.push(
+  //        "Could not load JSON. See 'moreInfo' for additional information.",
+  //      );
+  //      details.moreInfo = loadingError;
+  //    }
+  //    return this._addLog(details);
+  //  }
 
   _localTimestamp(datetime = new Date()) {
     const parts = {};
@@ -177,6 +237,11 @@ class BittyJs extends HTMLElement {
     return document.querySelectorAll(selector);
   }
 
+  _saveJSON(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+    return new BittyResult("ok", null, null);
+  }
+
   __splitSignalString(input) {
     return input
       .trim()
@@ -191,6 +256,21 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define(tagName, BittyJs);
+
+class BittyError {
+  constructor(messages, payload) {
+    this.messages = messages;
+    this.payload = payload;
+  }
+}
+
+class BittyResult {
+  constructor(status, value, error) {
+    this.status = status;
+    this.value = value;
+    this.error = error;
+  }
+}
 
 class BittyTrigger extends Event {
   constructor(signals) {

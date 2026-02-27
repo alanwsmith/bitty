@@ -17,12 +17,15 @@ function getResults(exampleWrapper) {
         result,
       ) => result === "ok") === true;
     if (passed === true) {
-      exampleStatus.innerHTML = "ok";
+      exampleStatus.innerHTML = "[pass]";
       exampleStatus.dataset.testStatus = "ok";
     } else {
-      exampleStatus.innerHTML = "issue";
+      exampleStatus.innerHTML = "[fail]";
       exampleStatus.dataset.testStatus = "issue";
     }
+  } else {
+    exampleStatus.innerHTML = "[todo]";
+    exampleStatus.dataset.testStatus = "todo";
   }
 }
 

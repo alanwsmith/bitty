@@ -20,7 +20,7 @@
   [! set description_path = base_path + "/description.html" !]
   [! include description_path !]
 
-  <div class="heading">Tests</div>
+  <div class="heading">Examples</div>
 
   [! for folder in folders !]
     [! if folder.parent == examples_path !]
@@ -46,7 +46,10 @@
   #]
 
     <details>
-    <summary>[! include name_path !] <span class="faded-default-color">[[@ folder.name @]]</span></summary>
+    <summary>[! include name_path !] 
+      [#
+      <span class="faded-default-color">[[@ folder.name @]]</span></summary>
+    #]
       <div class="sub-heading">HTML</div>
     [! filter block_highlight("html") !]
     [! include html_content_path !]
@@ -56,6 +59,7 @@
     [! include javascript_content_path !]
     [! endfilter !]
 
+    
       <script>
         [! include javascript_content_path !]
       </script>

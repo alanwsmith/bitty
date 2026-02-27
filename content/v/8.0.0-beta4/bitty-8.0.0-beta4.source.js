@@ -176,12 +176,20 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _qs(selector) {
-    return document.querySelector(selector);
+  _qs(selector, el = null) {
+    if (el === null) {
+      return document.querySelector(selector);
+    } else {
+      return el.querySelector(selector);
+    }
   }
 
-  _qsa(selector) {
-    return document.querySelectorAll(selector);
+  _qsa(selector, el = null) {
+    if (el === null) {
+      return document.querySelectorAll(selector);
+    } else {
+      return el.querySelectorAll(selector);
+    }
   }
 
   _saveJSON(key, data) {

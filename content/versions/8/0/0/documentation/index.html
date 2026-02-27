@@ -9,6 +9,11 @@
 [! block main !]
 [! set bitty_tag = vars.bitty_tag !]
 
+<[@ vars.bitty_tag @] 
+  data-connect="/[@ vars.bits_dir @]/test-runner.js"
+  data-run="runTests"
+></[@ vars.bitty_tag @]>
+
 <ul>
 [! for sectionFolder in folders !]
 [! if 
@@ -20,7 +25,7 @@
 
 <li>
 <details>
-      <summary class="section-name">[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]</summary>
+      <summary class="section-name">[@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]<span class="section-id faded-default-color"> [[@ sectionFolder.path_parts[6] @]]</span></summary>
 
     <ul>
 [! for itemFolder in folders !]
@@ -32,7 +37,7 @@
 !]
   <li>
 
-      <details><summary class="item-name">[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @]</summary>
+          <details class="item-wrapper"><summary class="item-name">[@ get_content(itemFolder.path_part_strings[7], "item_name.html") @] <span class="item-status"></span><span class="faded-default-color">[[@ itemFolder.path_parts[7] @]]</span></summary>
 
             <div class="item-header">Description</div>
       [@- get_content(itemFolder.path_part_strings[7],  "item_description.html") -@]
@@ -50,8 +55,8 @@
 !]
 
           <li>
-            <details>
-              <summary>[@ get_content(testFolder.path_part_strings[8],  "test_name.html") @]</summary>
+            <details class="example-wrapper">
+                  <summary>[@ get_content(testFolder.path_part_strings[8],  "test_name.html") @] <span class="example-status"></span><span class="faded-default-color">[[@ testFolder.path_parts[8] @]]</span></summary>
                   <div>HTML</div>
                   [!- filter block_highlight("html") -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
@@ -94,7 +99,7 @@
                     </div>
 
                   <details>
-                    <summary>view test trigger</summary>
+                    <summary>view example trigger</summary>
                     <div>Bitty Tags</div>
                       [!- filter block_highlight("html") -!]
                       [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]

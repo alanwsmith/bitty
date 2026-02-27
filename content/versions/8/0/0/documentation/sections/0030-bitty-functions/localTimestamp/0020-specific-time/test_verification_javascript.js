@@ -1,10 +1,14 @@
 export const bitty = {};
 
-export async function verify_signal_99CE6(_, __, el) {
-  const checkValue = bitty.qs("[data-r~=signal_99CE6]").innerHTML;
+export async function verify_signal_99CE6(_, __, ___) {
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const match = checkValue.match(pattern);
-  if (match !== null) {
-    el.innerHTML = "ok";
-  }
+  const checkEls = bitty.qsa("[data-r~=signal_99CE6]");
+  checkEls.forEach((checkEl) => {
+    const match = checkEl.innerHTML.match(pattern);
+    if (match !== null) {
+      checkEl.dataset.testStatus = "ok";
+    } else {
+      checkEl.dataset.testStatus = "issue";
+    }
+  });
 }

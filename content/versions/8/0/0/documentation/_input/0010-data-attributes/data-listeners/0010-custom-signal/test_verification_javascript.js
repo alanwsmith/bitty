@@ -1,8 +1,21 @@
 export const bitty = {};
 
 export async function runTest() {
-  bitty.qs("[data-s~=$_SIGNAL_]").click();
   await bitty.sleep(200);
+
+  const event_$_SIGNAL_ = new KeyboardEvent("keydown", {
+    key: "a",
+    bubbles: true,
+    cancelable: true,
+  });
+  bitty.qs("[data-s~=$_SIGNAL_]").dispatchEvent(event_$_SIGNAL_);
+
+  // add to innerHTML as well for the visual update.
+  // It doesn't affect the test. It helps avoid
+  // confusion that would occur if there was
+  // nothing in the div after the test was run.
+  bitty.qs("[data-s~=$_SIGNAL_]").innerHTML = "a";
+
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
   const checkEls = bitty.qsa("[data-r~=$_SIGNAL_]");
   checkEls.forEach((checkEl) => {

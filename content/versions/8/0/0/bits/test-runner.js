@@ -26,6 +26,7 @@ function getResults(exampleWrapper) {
   const exampleStatus = bitty.qs(".example-status", exampleWrapper);
   exampleStatus.innerHTML = `[${levels[level]}]`;
   exampleStatus.dataset.testStatus = levels[level];
+  return level;
 }
 
 function testItem(itemWrapper) {

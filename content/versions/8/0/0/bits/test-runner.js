@@ -1,7 +1,7 @@
 export const bitty = {};
 
 export async function runTests() {
-  await bitty.sleep(700);
+  await bitty.sleep(3000);
   testItems();
 }
 
@@ -11,11 +11,16 @@ function getResults(exampleWrapper) {
   const results = bitty.qsa(".example", exampleWrapper);
   const exampleStatus = bitty.qs(".example-status", exampleWrapper);
   if (results.length > 0) {
-    const level = [...results]
+    let level = [...results]
       .map((result) => {
         return parseInt(result.dataset.testStatus, 10);
       })
-      .reduce((acc, cur) => Math.max(acc, cur), 0);
+      .reduce((acc, cur) => {
+        return Math.max(acc, cur), 0;
+      });
+    if (Number.isNaN(level) === true) {
+      level = 1;
+    }
     exampleStatus.innerHTML = `[${levels[level]}]`;
     exampleStatus.dataset.testStatus = levels[level];
     return level;

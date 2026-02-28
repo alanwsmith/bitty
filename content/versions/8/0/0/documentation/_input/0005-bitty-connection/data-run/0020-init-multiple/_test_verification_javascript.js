@@ -1,8 +1,8 @@
 export const bitty = {};
 
-export async function verify_signal_7B23F(_, __, ___) {
+export async function verify_$_SIGNAL_(_, __, ___) {
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_7B23F]");
+  const checkEls = bitty.qsa("[data-r~=$_SIGNAL_]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

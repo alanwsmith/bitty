@@ -1,6 +1,4 @@
 export const bitty = {};
 
-export async function run_$_SIGNAL_() {
-  await bitty.sleep(500);
-  bitty.trigger("verify_$_SIGNAL_");
-}
+// This example uses data-run to send
+// the initial signal.

@@ -1,7 +1,7 @@
 export const bitty = {};
 
 export async function runTests() {
-  await bitty.sleep(3000);
+  await bitty.sleep(800);
   testItems();
 }
 
@@ -9,26 +9,23 @@ const levels = ["pass", "todo", "fail"];
 
 function getResults(exampleWrapper) {
   const results = bitty.qsa(".example", exampleWrapper);
-  const exampleStatus = bitty.qs(".example-status", exampleWrapper);
+  let level = 1;
   if (results.length > 0) {
-    let level = [...results]
-      .map((result) => {
-        return parseInt(result.dataset.testStatus, 10);
-      })
-      .reduce((acc, cur) => {
-        return Math.max(acc, cur), 0;
-      });
-    if (Number.isNaN(level) === true) {
-      level = 1;
-    }
-    exampleStatus.innerHTML = `[${levels[level]}]`;
-    exampleStatus.dataset.testStatus = levels[level];
-    return level;
-  } else {
-    exampleStatus.innerHTML = `[${levels[1]}]`;
-    exampleStatus.dataset.testStatus = levels[1];
-    return 1;
+    level = 0;
+    [...results].map((result) => {
+      let num = parseInt(result.dataset.testStatus, 10);
+      if (Number.isNaN(num) === true) {
+        return 1;
+      } else {
+        return num;
+      }
+    }).forEach((result) => {
+      level = Math.max(level, result);
+    });
   }
+  const exampleStatus = bitty.qs(".example-status", exampleWrapper);
+  exampleStatus.innerHTML = `[${levels[level]}]`;
+  exampleStatus.dataset.testStatus = levels[level];
 }
 
 function testItem(itemWrapper) {

@@ -11,7 +11,6 @@ const levels = ["pass", "todo", "fail"];
 
 function getResults(exampleWrapper) {
   const results = bitty.qsa("[data-test-status]", exampleWrapper);
-  console.log(results);
   let level = 1;
   if (results.length > 0) {
     level = 0;

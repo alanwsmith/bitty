@@ -1,7 +1,7 @@
 export const bitty = {};
 
-export async function verify_$_SIGNAL_(_, __, ___) {
-  await bitty.sleep(700);
+export async function runTest() {
+  await bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
   const checkEls = bitty.qsa("[data-r~=$_SIGNAL_]");
   checkEls.forEach((checkEl) => {

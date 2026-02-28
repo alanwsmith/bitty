@@ -25,6 +25,7 @@ test_files = [
     "test_notes.html",
     "test_status.html",
     "test_trigger_javascript.js",
+    "test_verification_html.html",
     "test_verification_javascript.js",
 ]
 

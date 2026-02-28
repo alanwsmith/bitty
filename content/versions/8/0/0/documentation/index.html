@@ -67,35 +67,43 @@
                     [@ get_content(testFolder.path_part_strings[8],  "test_name.html") @] 
                     <span class="faded-default-color">[[@ testFolder.path_parts[8] @]]</span>
                   </summary>
+
                   <div>HTML</div>
+                  <div>
                   [!- filter block_highlight("html") -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
                   [!- endfilter -!]
+                  [!- filter block_highlight("html") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+                  [!- endfilter -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+                  </div>
+
+
 
                   <div>JavaScript</div>
-                  <div class="faded-default-border default-border-radius default-padding">
-
-                  [!- filter block_highlight("js") -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
-                  [!- endfilter -!]
-
-                    <div class="xsmall-font-size">
-                  [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
+                  <div class="default-flow">
+                    <div class="faded-default-background-color default-border-radius large-bottom-margin">
+                      [!- filter block_highlight("js") -!]
+                      [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
+                      [!- endfilter -!]
+                      <div class="xsmall-font-size default-inline-padding default-bottom-padding">
+                        [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
+                      </div>
                     </div>
 
                     [!- set second_js_file -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js") -@]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js") -@]
                     [!- endset -!]
 
                     [! if second_js_file != "" !]
-                  [!- filter block_highlight("js") -!]
-                  [@- second_js_file|safe -@]
-                  [!- endfilter -!]
-                    <div class="xsmall-font-size">
-                  [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
-                    </div>
+                      [!- filter block_highlight("js") -!]
+                      [@- second_js_file|safe -@]
+                      [!- endfilter -!]
+                      <div class="xsmall-font-size">
+                        [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
+                      </div>
                     [! endif !]
-
                   </div>
 
                   <div class="test-header">Result</div>
@@ -104,44 +112,36 @@
                     [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
                     </div>
                   </div>
-                    <div>
-                    [@- get_content(testFolder.path_part_strings[8],  "test_status.html") -@]
-                    </div>
-
 
                   <!-- Test Runner for the page -->
                   <div>
                     <button data-s="runTests">Run Tests</button>
                   </div>
 
-
                   <details>
-                    <summary>support</summary>
-                    <div>Bitty Tags</div>
-                      [!- filter block_highlight("html") -!]
-                      [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
-                      [!- endfilter -!]
-                    [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
-                    <div>JavaScript</div>
-                      [!- filter block_highlight("js") -!]
-                      [@- get_content(testFolder.path_part_strings[8],  "test_trigger_javascript.js") -@]
-                      [!- endfilter -!]
+                    <summary>view test</summary>
+                    <div>HTML</div>
+                    [!- filter block_highlight("html") -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
+                    [!- endfilter -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
 
-                      [!- filter block_highlight("js") -!]
-                      [@- get_content(testFolder.path_part_strings[8],  "test_verification_javascript.js") -@]
-                      [!- endfilter -!]
+                    <div>JavaScript</div>
+                    [!- filter block_highlight("js") -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_verification_javascript.js") -@]
+                    [!- endfilter -!]
 
                   </details>
 
 
-                    [!- set notes_content -!]
+                  [!- set notes_content -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_notes.html") -@]
-                    [!- endset -!]
+                  [!- endset -!]
 
-                    [! if notes_content != "" !]
+                  [! if notes_content != "" !]
                   <div class="test-header">Notes</div>
-                    [@- notes_content @]
-                    [! endif !]
+                  [@- notes_content @]
+                  [! endif !]
 
 
             </details>

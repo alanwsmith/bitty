@@ -1,4 +1,6 @@
-export const bitty = {};
+//  DEPRECATED: Remove these _test_trigger_javascript.js files
+//
+//export const bitty = {};
 /*
 
 export async function run_signal_2DB48() {

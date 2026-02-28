@@ -5,4 +5,5 @@ export async function run_$_SIGNAL_() {
   bitty.qs("[data-s~=$_SIGNAL_]").click();
   await bitty.sleep(300);
   bitty.trigger("verify_$_SIGNAL_");
+  bitty.trigger("verify_$_SIGNAL2_");
 }

@@ -1,8 +1,8 @@
 export const bitty = {};
 
 export async function runTest() {
-  await bitty.sleep(200);
   bitty.qs("[data-s~=$_SIGNAL_]").click();
+  await bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
   const checkEls = bitty.qsa("[data-r~=$_SIGNAL_]");
   checkEls.forEach((checkEl) => {

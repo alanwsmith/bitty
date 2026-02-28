@@ -1,4 +1,5 @@
 export const bitty = {};
+/*
 
 export async function run_signal_294BF() {
   await bitty.sleep(200);
@@ -6,3 +7,4 @@ export async function run_signal_294BF() {
   await bitty.sleep(300);
   bitty.trigger("verify_signal_294BF");
 }
+*/

@@ -1,5 +1,25 @@
 export const bitty = {};
 
+export async function runTest() {
+  await bitty.sleep(200);
+  bitty.qs("[data-s~=signal_E9FCA]").click();
+  const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
+  const checkEls = bitty.qsa("[data-r~=signal_E9FCA]");
+  checkEls.forEach((checkEl) => {
+    if (checkEl.innerHTML === "todo") {
+      checkEl.dataset.testStatus = 1;
+    } else {
+      const match = checkEl.innerHTML.match(pattern);
+      if (match !== null) {
+        checkEl.dataset.testStatus = 0;
+      } else {
+        checkEl.dataset.testStatus = 2;
+      }
+    }
+  });
+}
+
+/*
 export async function verify_signal_E9FCA(_, __, ___) {
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
   const checkEls = bitty.qsa("[data-r~=signal_E9FCA]");
@@ -16,3 +36,4 @@ export async function verify_signal_E9FCA(_, __, ___) {
     }
   });
 }
+*/

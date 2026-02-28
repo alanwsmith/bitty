@@ -2,13 +2,16 @@ export const bitty = {};
 
 export async function runTests() {
   await bitty.sleep(800);
+  bitty.trigger("runTest");
+  await bitty.sleep(300);
   testItems();
 }
 
 const levels = ["pass", "todo", "fail"];
 
 function getResults(exampleWrapper) {
-  const results = bitty.qsa(".example", exampleWrapper);
+  const results = bitty.qsa("[data-test-status]", exampleWrapper);
+  console.log(results);
   let level = 1;
   if (results.length > 0) {
     level = 0;

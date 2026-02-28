@@ -1,6 +1,8 @@
 export const bitty = {};
 
-export async function verify_signal_35510(_, __, ___) {
+export async function runTest(_, __, ___) {
+  bitty.qs("[data-s~=signal_35510]").click();
+  bitty.sleep(200);
   const pattern = /won't change on click/;
   const checkEls = bitty.qsa("[data-r~=signal_35510]");
   checkEls.forEach((checkEl) => {

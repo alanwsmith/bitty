@@ -25,7 +25,7 @@ function getResults(exampleWrapper) {
   }
   const exampleStatus = bitty.qs(".example-status", exampleWrapper);
   exampleStatus.innerHTML = `[${levels[level]}]`;
-  exampleStatus.dataset.testStatus = levels[level];
+  exampleStatus.dataset.testStatus = level;
   return level;
 }
 
@@ -37,11 +37,11 @@ function testItem(itemWrapper) {
   const itemStatus = bitty.qs(".item-status", itemWrapper);
   if (results.length === 0) {
     itemStatus.innerHTML = `[${levels[1]}]`;
-    itemStatus.dataset.testStatus = levels[1];
+    itemStatus.dataset.testStatus = 1;
   } else {
     const level = Math.max(...results);
     itemStatus.innerHTML = `[${levels[level]}]`;
-    itemStatus.dataset.testStatus = levels[level];
+    itemStatus.dataset.testStatus = level;
   }
 }
 

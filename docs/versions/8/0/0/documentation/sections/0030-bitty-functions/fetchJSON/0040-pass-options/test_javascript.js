@@ -1,6 +1,11 @@
 export const bitty = {};
 
-export function signal_06F70(ev, sender, el) {
-  el.innerHTML = "todo";
-  // el.innerHTML = bitty.localTimestamp();
+export async function signal_06F70(ev, sender, el) {
+  const options = {
+    method: "GET",
+  };
+  const json = await bitty.fetchJSON("/versions/8/0/0/documentation/samples/valid-json.json", options);
+  if (json.alfa === "bravo") {
+    el.innerHTML = bitty.localTimestamp();
+  }
 }

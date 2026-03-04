@@ -1358,6 +1358,9 @@ listens for any click on the page)</li>
 <li>[] If multiple elements are found the string in the optional <code>separator</code> argument is used to join them.</li>
 <li>[] If a selected element has a <code>.value</code> it's what's used for the text from the element.</li>
 <li>[] If a selected element doesn't have a<code>.value</code>, then its <code>.innerHTML</code> is what's used for the text from the element.</li>
+<li>[] Returns true if there was at least one element and the copy succeeded.</li>
+<li>[] Returns false if the selector didn't match any elements.</li>
+<li>[] Returns false if the copy failed.</li>
 </ul>
 
 <div class="item-header">Examples</div>
@@ -1381,9 +1384,8 @@ listens for any click on the page)</li>
 
             <div class="item-header">Description</div><ul>
 <li>[x] Fetches a JSON from a URL.</li>
-<li>[x] Returns an object with a <code>.value</code> that has the JSON object if the fetch succeeded and the JSON parsed properly.</li>
-<li>[] Returns an object with a <code>.error</code> if the fetch fails.</li>
-<li>[] Returns an object with a <code>.error</code> if the fetch succeeds but the JSON can't be parsed.</li>
+<li>[] Returns the JSON object if the fetch succeeds and the response parses as JSON.</li>
+<li>[] Returns undefined if either the fetch fails or the JSON fails to parse.</li>
 <li>[] Accepts and optional options object which is passed to the fetch call (e.g. for headers).</li>
 </ul>
 
@@ -1411,8 +1413,8 @@ listens for any click on the page)</li>
                       <div class="xsmall-font-size default-inline-padding default-top-padding">&#x2f;versions&#x2f;8&#x2f;0&#x2f;0&#x2f;documentation&#x2f;sections&#x2f;0030-bitty-functions&#x2f;fetchJSON&#x2f;0010-basic-fetch&#x2f;test_javascript.js</div><pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="storage type js">const</span> <span class="variable other readwrite js">bitty</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="variable other readwrite js">async</span> </span><span class="meta function declaration js"><span class="storage type function js">function</span> <span class="entity name function js">signal_7251D</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">sender</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">result</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchJSON</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/samples/valid-json.json<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">result</span><span class="punctuation accessor js">.</span><span class="meta property object js">value</span><span class="punctuation accessor js">.</span><span class="meta property object js">alfa</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">json</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchJSON</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/samples/valid-json.json<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">json</span><span class="punctuation accessor js">.</span><span class="meta property object js">alfa</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
 <span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTimestamp</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
 <span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
@@ -1672,11 +1674,22 @@ listens for any click on the page)</li>
 
           <details class="item-wrapper"><summary class="item-name">
             <span class="item-status status"></span>
-            TKTKTK: Item name 
+            fetchTemplates(url, options = {}) 
             <span class="faded-default-color">[fetchTemplates]</span>
           </summary>
 
-            <div class="item-header">Description</div><div class="item-header">Examples</div>
+            <div class="item-header">Description</div><ul>
+<li>[] Fetches a URL to get templates from.</li>
+<li>[] Each <code>&lt;template&gt;</code> tag at the root of the file is converted into a document fragment.</li>
+<li>[] The collection of document fragments is returned as the <code>.value</code> of a results object.</li>
+<li>[] The <code>id</code> attribute on each <code>&lt;template&gt;</code> is used as the key for the template's document fragment in the object.</li>
+<li>[] <code>&lt;template&gt;</code> elements without an <code>id</code> are ignored.</li>
+<li>[] The result object contains an <code>.error</code> instead of a <code>.value</code> if the URL could not be fetched.</li>
+<li>[] The result object contains an <code>.error</code> instead of a <code>.value</code> if the templates could not be parsed.</li>
+<li>[] Options can be passed to the fetch call with the optional section argument.</li>
+</ul>
+
+<div class="item-header">Examples</div>
 
   <ul>
 
@@ -1703,10 +1716,10 @@ listens for any click on the page)</li>
 <span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">resp</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchTemplates</span><span class="meta group js"><span class="punctuation section group js">(</span>
 <span class="line-marker"></span>    <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/samples/templates/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>  </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="meta function-call method js"><span class="support type object console js">console</span><span class="punctuation accessor js">.</span><span class="support function console js">log</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">resp</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTimestamp</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>wip<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = bitty.localTimestamp();
+<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
 
                   <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">
@@ -1768,9 +1781,10 @@ listens for any click on the page)</li>
 
             <div class="item-header">Description</div><ul>
 <li>[] Loads JSON data from localStorage if it exists.</li>
-<li>[] Returns a BittyResult object with either the content or an error.</li>
 <li>[] Provides for an optional fallback to use if there's nothing in storage with the given key.</li>
-<li>[] If storage value can't be parsed as JSON an error is returned.</li>
+<li>[] Returns undefined if the localStorage doesn't exist and there's no fallback.</li>
+<li>[] Returns undefined if the value in localStorage can't be parsed as JSON.</li>
+<li>[] Returns undefined if there is no localStorage and the value in the fallback can't be parsed as JSON.</li>
 </ul>
 
 <div class="item-header">Examples</div>

@@ -52,26 +52,19 @@ class BittyJs extends HTMLElement {
   }
 
   async _fetchJSON(url, fallback = null, options = {}) {
-    const details = {
-      status: "ok",
-      error: null,
-      value: null,
-    };
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
         try {
-          details.value = await response.json();
+          const json = await response.json();
+          return json;
         } catch (parseError) {
-          details.status = "error";
-          details.error = parseError;
+          console.error(parseError);
         }
       }
     } catch (error) {
-      details.status = "error";
-      details.error = parseError;
+      console.error(error);
     }
-    return details;
   }
 
   async _fetchTemplates(url, fallback = null, options = {}) {

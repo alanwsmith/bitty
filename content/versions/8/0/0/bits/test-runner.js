@@ -1,7 +1,7 @@
 export const bitty = {};
 
 export async function runTests() {
-  // await bitty.sleep(800);
+  await bitty.sleep(800);
   bitty.trigger("runTest");
   await bitty.sleep(200);
   testItems();

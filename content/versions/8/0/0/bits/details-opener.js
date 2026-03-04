@@ -1,24 +1,10 @@
 export const bitty = {};
 
 let data = [];
+let key = `details-opener-${window.location.pathname}`;
 
 export function initDetails() {
-  const result = bitty.loadJSON(key());
-  data = result.status === "ok" ? result.value : [];
-  if (
-    data.length !==
-      document.querySelectorAll("details").length
-  ) {
-    data = [];
-  }
-  openDetails();
-}
-
-function key() {
-  return `details-opener-${window.location.pathname}`;
-}
-
-function openDetails() {
+  data = bitty.loadJSON(key);
   document.querySelectorAll("details").forEach((el, index) => {
     el.open = data[index] ? true : false;
     el.addEventListener("toggle", (_) => {
@@ -31,5 +17,5 @@ function updateData() {
   document.querySelectorAll("details").forEach((el, index) => {
     data[index] = el.open;
   });
-  bitty.saveJSON(key(), data);
+  bitty.saveJSON(key, data);
 }

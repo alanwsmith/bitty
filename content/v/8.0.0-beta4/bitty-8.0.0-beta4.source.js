@@ -235,7 +235,7 @@ class BittyJs extends HTMLElement {
 
   _saveJSON(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
-    return new BittyResult("ok", null, null);
+    return true;
   }
 
   async _sleep(ms) {

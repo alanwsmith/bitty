@@ -1,5 +1,6 @@
 export const bitty = {};
 
 export function signal_A2EB2(ev, sender, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = "todo";
+  // el.innerHTML = bitty.localTimestamp();
 }

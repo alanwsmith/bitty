@@ -61,10 +61,13 @@ class BittyJs extends HTMLElement {
         } catch (parseError) {
           console.error(parseError);
         }
+      } else {
+        console.error(response);
       }
     } catch (error) {
       console.error(error);
     }
+    return undefined;
   }
 
   async _fetchTemplates(url, fallback = null, options = {}) {

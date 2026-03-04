@@ -115,7 +115,7 @@ class BittyJs extends HTMLElement {
   _loadJSON(key, fallback = null) {
     const storage = localStorage.getItem(key);
     const json = JSON.parse(storage);
-    return new BittyResult("ok", json, null);
+    return json;
   }
 
   _localTimestamp(datetime = new Date(), ms = false) {

@@ -4,6 +4,11 @@ export async function runTests() {
   await bitty.sleep(800);
   bitty.trigger("runTest");
   await bitty.sleep(200);
+
+  // Use this to set up if you want to run tests that
+  // throw errors to the console.
+  // bitty.trigger("runTestWithErrors");
+  await bitty.sleep(200);
   testItems();
 }
 

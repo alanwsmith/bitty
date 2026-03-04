@@ -1,5 +1,9 @@
 export const bitty = {};
 
+export function loadSampleDatasignal_F9163() {
+  bitty.saveJSON("F9163", { alfa: "bravo" });
+}
+
 export async function runTest() {
   bitty.qs("[data-s~=signal_F9163]").click();
   await bitty.sleep(200);

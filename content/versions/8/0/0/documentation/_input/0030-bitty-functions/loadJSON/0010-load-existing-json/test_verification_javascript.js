@@ -1,5 +1,9 @@
 export const bitty = {};
 
+export function loadSampleData$_SIGNAL_() {
+  bitty.saveJSON("$_TEST_ID_", { alfa: "bravo" });
+}
+
 export async function runTest() {
   bitty.qs("[data-s~=$_SIGNAL_]").click();
   await bitty.sleep(200);

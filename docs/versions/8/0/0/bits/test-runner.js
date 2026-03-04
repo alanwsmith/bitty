@@ -1,13 +1,12 @@
 export const bitty = {};
 
+let runSolos = false;
+
 export async function runTests() {
   await bitty.sleep(800);
+  // comment/uncomment to pick which tests to run.
   bitty.trigger("runTest");
-  await bitty.sleep(200);
-
-  // Use this to set up if you want to run tests that
-  // throw errors to the console.
-  // bitty.trigger("runTestWithErrors");
+  bitty.trigger("runTestWithErrors");
   await bitty.sleep(200);
   testItems();
 }
@@ -53,8 +52,16 @@ function testItem(itemWrapper) {
 }
 
 function testItems() {
-  const itemWrappers = bitty.qsa(".item-wrapper");
-  itemWrappers.forEach((itemWrapper) => {
-    testItem(itemWrapper);
-  });
+  const soloTests = bitty.qsa("[data-solo]");
+  if (soloTests.length > 0) {
+    for (const soloTest of soloTests) {
+      testItem(soloTest.closest(".item-wrapper"));
+      console.log(soloTest);
+    }
+  } else {
+    const itemWrappers = bitty.qsa(".item-wrapper");
+    itemWrappers.forEach((itemWrapper) => {
+      testItem(itemWrapper);
+    });
+  }
 }

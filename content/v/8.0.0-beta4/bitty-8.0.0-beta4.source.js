@@ -115,7 +115,12 @@ class BittyJs extends HTMLElement {
   _loadJSON(key, fallback = null) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
-      return JSON.parse(storage);
+      try {
+        return JSON.parse(storage);
+      } catch (error) {
+        console.error(error);
+        return undefined;
+      }
     }
     if (fallback !== null) {
       return fallback;

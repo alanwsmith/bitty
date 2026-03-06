@@ -259,7 +259,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _renderHTML(input, subs = {}) {
+  _render(input, subs = {}) {
     const tmpl = document.createElement("div");
     if (typeof input === "string") {
       tmpl.innerHTML = input;
@@ -321,7 +321,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _tee(split, input) {
+  _tee(input, split = false) {
     if (split === true || split === 1) {
       console.log(input);
     }
@@ -331,6 +331,14 @@ class BittyJs extends HTMLElement {
   _trigger(signals) {
     const ev = new BittyTrigger(signals);
     dispatchEvent(ev);
+  }
+
+  _uuid(dashes = true) {
+    if (dashes === false) {
+      return randomUUID().replace("-", "");
+    } else {
+      return randomUUID();
+    }
   }
 }
 

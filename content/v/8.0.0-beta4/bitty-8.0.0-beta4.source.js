@@ -52,6 +52,12 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  // TODO: Set this up to accept an array of
+  // URLs that are tried before the optional fallback
+  //
+  // TODO: Set up to pull <script> tags with
+  // `application/json` and an `id` attribute
+  // into a `bitty.json` object.
   async _fetchJSON(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -71,7 +77,9 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  async _fetchTemplates(url, fallback = null, options = {}) {
+  // TODO: Set this up to accept an array of
+  // URLs that are tried before the optional fallback
+  async _fetchHTML(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -298,6 +306,10 @@ class BittyJs extends HTMLElement {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  _sort(a, b) {
+    return a.toLowerCase().localeCompare(b.toLowerCase());
+  }
+
   __splitSignalString(input) {
     if (input !== undefined) {
       return input
@@ -310,7 +322,7 @@ class BittyJs extends HTMLElement {
   }
 
   _tee(split, input) {
-    if (split === true) {
+    if (split === true || split === 1) {
       console.log(input);
     }
     return input;

@@ -10,7 +10,6 @@ const subs = {
 };
 
 export function signal_A378D(ev, sender, el) {
-  el.dataset.solo = true;
   const output = bitty.renderHTML(input, subs);
   const checkEl = output.firstChild;
   if (checkEl.innerHTML === "UPDATED_signal_A378D") {

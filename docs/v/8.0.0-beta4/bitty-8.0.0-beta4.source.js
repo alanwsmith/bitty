@@ -246,7 +246,11 @@ class BittyJs extends HTMLElement {
     tmpl.append(input);
     let content = [...tmpl.children].map((child) => child.outerHTML).join("");
     for (const key of Object.keys(subs)) {
-      content = content.replace(key, subs[key]);
+      if (subs[key] instanceof Array === true) {
+        content = content.replaceAll(key, subs[key].join(""));
+      } else {
+        content = content.replaceAll(key, subs[key]);
+      }
     }
     const result = document.createElement("template");
     result.innerHTML = content;
@@ -281,14 +285,15 @@ class BittyJs extends HTMLElement {
 
 customElements.define(tagName, BittyJs);
 
-class BittyResult {
-  constructor(status, value = null, error = null, messages = []) {
-    this.status = status;
-    this.value = value;
-    this.error = error;
-    this.messages = error;
-  }
-}
+// DEPRECATED: TODO: Remove
+// class BittyResult {
+//   constructor(status, value = null, error = null, messages = []) {
+//     this.status = status;
+//     this.value = value;
+//     this.error = error;
+//     this.messages = error;
+//   }
+// }
 
 class BittyTrigger extends Event {
   constructor(signals) {

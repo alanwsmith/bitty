@@ -2,17 +2,18 @@ export const bitty = {};
 
 const input = document.createDocumentFragment();
 const newEl = document.createElement("div");
-newEl.innerHTML = "TARGET_$_SIGNAL_";
+newEl.innerHTML = "TARGET_signal_732C8";
 input.appendChild(newEl);
 
 const subs = {
-  "TARGET_$_SIGNAL_": "UPDATED_$_SIGNAL_",
+  "TARGET_signal_732C8": ["UPDATED_", "signal_732C8"],
 };
 
-export function $_SIGNAL_(ev, sender, el) {
+export function signal_732C8(ev, sender, el) {
+  el.dataset.solo = true;
   const output = bitty.renderHTML(input, subs);
   const checkEl = output.firstChild;
-  if (checkEl.innerHTML === "UPDATED_$_SIGNAL_") {
+  if (checkEl.innerHTML === "UPDATED_signal_732C8") {
     el.innerHTML = bitty.localTimestamp();
   }
 }

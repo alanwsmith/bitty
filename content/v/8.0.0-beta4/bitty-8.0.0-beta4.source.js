@@ -256,6 +256,9 @@ class BittyJs extends HTMLElement {
     if (typeof input === "string") {
       tmpl.innerHTML = input;
     } else {
+      // TODO: Test to verify this works with both
+      // elements and document fragments so the
+      // incoming template can be used multiple times.
       tmpl.append(input.cloneNode(true));
     }
     let content = [...tmpl.children].map((child) => child.outerHTML).join("");
@@ -304,6 +307,13 @@ class BittyJs extends HTMLElement {
     } else {
       return [];
     }
+  }
+
+  _tee(split, input) {
+    if (split === true) {
+      console.log(input);
+    }
+    return input;
   }
 
   _trigger(signals) {

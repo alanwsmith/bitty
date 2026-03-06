@@ -246,10 +246,18 @@ class BittyJs extends HTMLElement {
     tmpl.append(input);
     let content = [...tmpl.children].map((child) => child.outerHTML).join("");
     for (const key of Object.keys(subs)) {
-      if (subs[key] instanceof Array === true) {
-        content = content.replaceAll(key, subs[key].join(""));
+      const subsArray = subs[key] instanceof Array === true
+        ? subs[key]
+        : [subs[key]];
+      if (
+        subsArray[0] instanceof Element
+      ) {
+        content = content.replaceAll(
+          key,
+          subsArray.map((el) => el.outerHTML).join(""),
+        );
       } else {
-        content = content.replaceAll(key, subs[key]);
+        content = content.replaceAll(key, subsArray.join(""));
       }
     }
     const result = document.createElement("template");

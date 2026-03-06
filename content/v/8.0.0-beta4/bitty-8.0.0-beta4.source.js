@@ -71,34 +71,32 @@ class BittyJs extends HTMLElement {
   }
 
   async _fetchTemplates(url, fallback = null, options = {}) {
-    const details = {
-      status: "ok",
-      error: null,
-      value: null,
-    };
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
         try {
+          const templates = {};
           const content = await response.text();
           const container = document.createElement("div");
           container.innerHTML = content;
-          const templates = container.querySelectorAll(
+          const input = container.querySelectorAll(
             "div > template",
           );
-          for (const template of templates) {
-            console.log(template);
+          for (const template of input) {
+            if (template.id !== undefined) {
+              templates[template.id] = template.content;
+            }
           }
+          return templates;
         } catch (parseError) {
-          details.status = "error";
-          details.error = parseError;
+          console.log(parseError);
+          return undefined;
         }
       }
     } catch (error) {
-      details.status = "error";
-      details.error = parseError;
+      console.log(error);
+      return undefined;
     }
-    return details;
   }
 
   __findSenders(el) {

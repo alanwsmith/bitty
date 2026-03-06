@@ -56,7 +56,6 @@ function testItems() {
   if (soloTests.length > 0) {
     for (const soloTest of soloTests) {
       testItem(soloTest.closest(".item-wrapper"));
-      console.log(soloTest);
     }
   } else {
     const itemWrappers = bitty.qsa(".item-wrapper");

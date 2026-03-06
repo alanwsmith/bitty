@@ -1611,14 +1611,12 @@ listens for any click on the page)</li>
           </summary>
 
             <div class="item-header">Description</div><ul>
-<li>[] Fetches a URL to get templates from.</li>
-<li>[] Each <code>&lt;template&gt;</code> tag at the root of the file is converted into a document fragment.</li>
-<li>[] The collection of document fragments is returned as the <code>.value</code> of a results object.</li>
-<li>[] The <code>id</code> attribute on each <code>&lt;template&gt;</code> is used as the key for the template's document fragment in the object.</li>
-<li>[] <code>&lt;template&gt;</code> elements without an <code>id</code> are ignored.</li>
-<li>[] The result object contains an <code>.error</code> instead of a <code>.value</code> if the URL could not be fetched.</li>
-<li>[] The result object contains an <code>.error</code> instead of a <code>.value</code> if the templates could not be parsed.</li>
-<li>[] Options can be passed to the fetch call with the optional section argument.</li>
+<li>[x] Fetches a URL to get templates from.</li>
+<li>[x] Each <code>&lt;template&gt;</code> tag at the root of the file is converted into a document fragment.</li>
+<li>[x] The templates are returned as an objects.</li>
+<li>[x] The <code>id</code> attribute on each <code>&lt;template&gt;</code> is used as the key for the template's document fragment in the object.</li>
+<li>[x] <code>&lt;template&gt;</code> elements without an <code>id</code> are ignored.</li>
+<li>[x] Options can be passed to the fetch call with the optional section argument.</li>
 </ul>
 
 <div class="item-header">Examples</div>
@@ -1645,13 +1643,15 @@ listens for any click on the page)</li>
                       <div class="xsmall-font-size default-inline-padding default-top-padding">&#x2f;versions&#x2f;8&#x2f;0&#x2f;0&#x2f;documentation&#x2f;sections&#x2f;0030-bitty-functions&#x2f;fetchTemplates&#x2f;0010-get-templates&#x2f;test_javascript.js</div><pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="storage type js">const</span> <span class="variable other readwrite js">bitty</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="variable other readwrite js">async</span> </span><span class="meta function declaration js"><span class="storage type function js">function</span> <span class="entity name function js">signal_8958C</span><span class="punctuation section group begin js">(</span><span class="variable parameter function js">ev</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">sender</span><span class="punctuation separator parameter function js">,</span> <span class="variable parameter function js">el</span><span class="punctuation section group end js">)</span><span class="meta function declaration js"> </span></span><span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">resp</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchTemplates</span><span class="meta group js"><span class="punctuation section group js">(</span>
-<span class="line-marker"></span>    <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/samples/templates/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
+<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">dataset</span><span class="punctuation accessor js">.</span><span class="meta property object js">solo</span> <span class="keyword operator assignment js">=</span> <span class="constant language boolean true js">true</span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">templates</span> <span class="keyword operator assignment js">=</span> <span class="variable other readwrite js">await</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">fetchTemplates</span><span class="meta group js"><span class="punctuation section group js">(</span>
+<span class="line-marker"></span>    <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>/versions/8/0/0/documentation/samples/valid-templates/index.html<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation separator comma js">,</span>
 <span class="line-marker"></span>  </span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>
-<span class="line-marker"></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>wip<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = bitty.localTimestamp();
-<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">checkEl</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">templates</span><span class="punctuation accessor js">.</span><span class="meta property object js">alfa</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">querySelector</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>div<span class="punctuation definition string end js">&quot;</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">checkEl</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>alfa<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">bitty</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">localTimestamp</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
 
                   <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">
@@ -1692,6 +1692,12 @@ listens for any click on the page)</li>
 
   </ul>
 
+<div class="item-header">Notes</div>
+            <ul>
+<li>The source template file used is <a href="/versions/8/0/0/documentation/samples/valid-templates/index.html">/versions/8/0/0/documentation/samples/valid-templates/index.html</a></li>
+<li>You'll have to view source on the page to see anything since the
+templates don't render by default.</li>
+</ul>
 </details>
 
       </li>

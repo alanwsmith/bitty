@@ -1,10 +1,12 @@
 export const bitty = {};
 
 export async function $_SIGNAL_(ev, sender, el) {
-  const resp = await bitty.fetchTemplates(
-    "$_SAMPLES_DIR_/templates/index.html",
+  el.dataset.solo = true;
+  const templates = await bitty.fetchTemplates(
+    "$_SAMPLES_DIR_/valid-templates/index.html",
   );
-
-  el.innerHTML = "wip";
-  // el.innerHTML = bitty.localTimestamp();
+  const checkEl = templates.alfa.querySelector("div");
+  if (checkEl.innerHTML = "alfa") {
+    el.innerHTML = bitty.localTimestamp();
+  }
 }

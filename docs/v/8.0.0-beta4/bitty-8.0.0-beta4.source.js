@@ -241,6 +241,18 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _renderHTML(input, subs = {}) {
+    const tmpl = document.createElement("div");
+    tmpl.append(input);
+    let content = [...tmpl.children].map((child) => child.outerHTML).join("");
+    for (const key of Object.keys(subs)) {
+      content = content.replace(key, subs[key]);
+    }
+    const result = document.createElement("template");
+    result.innerHTML = content;
+    return result.content;
+  }
+
   _saveJSON(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
     return true;

@@ -15,9 +15,7 @@ const subs = {
 };
 
 export function signal_EE715(ev, sender, el) {
-  el.dataset.solo = true;
   const output = bitty.renderHTML(input, subs);
-  const checkEl = output.firstChild;
   if (output.firstChild.children[1].innerHTML === "signal_EE715") {
     el.innerHTML = bitty.localTimestamp();
   }

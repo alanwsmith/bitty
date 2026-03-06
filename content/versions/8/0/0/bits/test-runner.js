@@ -1,12 +1,10 @@
 export const bitty = {};
 
-let runSolos = false;
-
 export async function runTests() {
   await bitty.sleep(800);
   // comment/uncomment to pick which tests to run.
   bitty.trigger("runTest");
-  // bitty.trigger("runTestWithErrors");
+  bitty.trigger("runTestWithErrors");
   await bitty.sleep(200);
   testItems();
 }

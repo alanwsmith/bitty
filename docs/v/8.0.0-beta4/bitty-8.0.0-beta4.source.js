@@ -243,7 +243,11 @@ class BittyJs extends HTMLElement {
 
   _renderHTML(input, subs = {}) {
     const tmpl = document.createElement("div");
-    tmpl.append(input);
+    if (typeof input === "string") {
+      tmpl.innerHTML = input;
+    } else {
+      tmpl.append(input);
+    }
     let content = [...tmpl.children].map((child) => child.outerHTML).join("");
     for (const key of Object.keys(subs)) {
       const subsArray = subs[key] instanceof Array === true
@@ -255,6 +259,13 @@ class BittyJs extends HTMLElement {
         content = content.replaceAll(
           key,
           subsArray.map((el) => el.outerHTML).join(""),
+        );
+      } else if (subsArray[0] instanceof DocumentFragment) {
+        content = content.replaceAll(
+          key,
+          subsArray.map((fragment) =>
+            [...fragment.children].map((el) => el.outerHTML).join("")
+          ).join(""),
         );
       } else {
         content = content.replaceAll(key, subsArray.join(""));

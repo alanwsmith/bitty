@@ -13,9 +13,7 @@ const subs = {
 };
 
 export function signal_EC949(ev, sender, el) {
-  el.dataset.solo = true;
   const output = bitty.renderHTML(input, subs);
-  console.log(output);
   const checkEl = output.firstChild;
   if (checkEl.firstChild.innerHTML === "UPDATED_signal_EC949") {
     el.innerHTML = bitty.localTimestamp();

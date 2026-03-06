@@ -256,7 +256,7 @@ class BittyJs extends HTMLElement {
     if (typeof input === "string") {
       tmpl.innerHTML = input;
     } else {
-      tmpl.append(input);
+      tmpl.append(input.cloneNode(true));
     }
     let content = [...tmpl.children].map((child) => child.outerHTML).join("");
     for (const key of Object.keys(subs)) {

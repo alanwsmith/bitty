@@ -13,6 +13,7 @@ class BittyJs extends HTMLElement {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
       if (incoming.bitty !== undefined) {
+        this.loadPageTemplates(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         window.addEventListener("click", (ev) => {
@@ -108,6 +109,15 @@ class BittyJs extends HTMLElement {
       el = el.parentElement;
     }
     return senders;
+  }
+
+  loadPageTemplates(target) {
+    target.bitty.templates = {};
+    document.querySelectorAll("template").forEach((template) => {
+      if (template.id !== undefined) {
+        target.bitty.templates[template.id] = template.content;
+      }
+    });
   }
 
   _loadJSON(key, fallback = null) {
@@ -303,16 +313,6 @@ class BittyJs extends HTMLElement {
 }
 
 customElements.define(tagName, BittyJs);
-
-// DEPRECATED: TODO: Remove
-// class BittyResult {
-//   constructor(status, value = null, error = null, messages = []) {
-//     this.status = status;
-//     this.value = value;
-//     this.error = error;
-//     this.messages = error;
-//   }
-// }
 
 class BittyTrigger extends Event {
   constructor(signals) {

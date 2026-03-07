@@ -182,8 +182,21 @@ class BittyJs extends HTMLElement {
     modKeys = [],
     options = { type: "keydown", preventDefault: true },
   ) {
+    // .shiftKey, .ctrlKey, .altKey, .metaKey
+
     window.addEventListener("keydown", (ev) => {
       if (ev.key === key) {
+        console.log(modKeys);
+
+        for (const mod of modKeys) {
+          console.log(mod);
+          console.log(ev[mod]);
+          console.log(key);
+
+          if (ev[mod] === false) {
+            return;
+          }
+        }
         this.bitty._processKeypress(ev, signals);
       }
     });

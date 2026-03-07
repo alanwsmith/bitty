@@ -182,8 +182,6 @@ class BittyJs extends HTMLElement {
     modKeys = [],
     options = { type: "keydown", preventDefault: true },
   ) {
-    // .shiftKey, .ctrlKey, .altKey, .metaKey
-
     for (let i = 0; i < modKeys.length; i += 1) {
       if (this.bitty.modKeyAliases()[modKeys[i].toLowerCase()] !== undefined) {
         modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
@@ -196,14 +194,9 @@ class BittyJs extends HTMLElement {
         return;
       }
     }
-
     window.addEventListener("keydown", (ev) => {
       if (ev.key === key) {
-        console.log(modKeys);
         for (const mod of modKeys) {
-          console.log(mod);
-          console.log(ev[mod]);
-          console.log(key);
           if (ev[mod] === false) {
             return;
           }
@@ -213,8 +206,6 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  // TODO: Figure out what the window key and
-  // the command key should be mapped to.
   _modKeyAliases() {
     return {
       alt: "altKey",

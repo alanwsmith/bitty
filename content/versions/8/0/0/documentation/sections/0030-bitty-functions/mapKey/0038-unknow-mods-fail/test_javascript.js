@@ -2,8 +2,8 @@ export const bitty = {};
 
 export function setKey() {
   /******************************************
-   * This functions is run via the `data-run`
-   * attribute in the <[@ bitty_tag @]> tag.
+   * This function is called when the
+   * test is run.
    ******************************************/
   bitty.mapKey("t", "signal_273EF", ["invalidModKey"]);
 }

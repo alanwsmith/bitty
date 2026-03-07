@@ -1,6 +1,8 @@
 export const bitty = {};
 
-export async function runTest() {
+export async function runTestWithErrors() {
+  bitty.trigger("setKey");
+
   await bitty.sleep(200);
   const event_signal_6E38F = new KeyboardEvent("keydown", {
     key: "t",

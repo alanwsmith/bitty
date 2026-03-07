@@ -52,6 +52,27 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  async _copy(selector) {
+    const el = document.querySelector(selector);
+
+    if (el.value !== undefined) {
+      try {
+        await navigator.clipboard.writeText(el.value);
+      } catch (error) {
+        console.error(`Could not copy .value from ${selector}`);
+        return false;
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(el.value);
+      } catch (error) {
+        console.error(`Could not copy .innerHTML from ${selector}`);
+        return false;
+      }
+    }
+    return true;
+  }
+
   // TODO: Set this up to accept an array of
   // URLs that are tried before the optional fallback
   //

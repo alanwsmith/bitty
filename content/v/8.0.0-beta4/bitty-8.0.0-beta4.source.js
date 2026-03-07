@@ -173,15 +173,21 @@ class BittyJs extends HTMLElement {
     return this.bitty.localTimestamp(datetime, true);
   }
 
-  // TODO: If you send a number it uses that for the
-  // keyCode as opposed to the string which uses the
-  // string.
   _mapKey(
     key,
     signals,
     modKeys = [],
-    options = { type: "keydown", preventDefault: true },
+    options = {},
   ) {
+    if (modKeys === null) {
+      modKeys = [];
+    }
+    if (options.preventDefault === undefined) {
+      options.preventDefault = true;
+    }
+    if (options.listener === undefined) {
+      options.listener = "keydown";
+    }
     for (let i = 0; i < modKeys.length; i += 1) {
       if (this.bitty.modKeyAliases()[modKeys[i].toLowerCase()] !== undefined) {
         modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
@@ -194,16 +200,30 @@ class BittyJs extends HTMLElement {
         return;
       }
     }
-    window.addEventListener("keydown", (ev) => {
-      if (ev.key === key) {
-        for (const mod of modKeys) {
-          if (ev[mod] === false) {
-            return;
+    if (options.preventDefault === true) {
+      window.addEventListener("keydown", (ev) => {
+        if (ev.key === key) {
+          for (const mod of modKeys) {
+            if (ev[mod] === false) {
+              return;
+            }
           }
+          ev.preventDefault();
+          this.bitty._processKeypress(ev, signals);
         }
-        this.bitty._processKeypress(ev, signals);
-      }
-    });
+      });
+    } else {
+      window.addEventListener("keydown", (ev) => {
+        if (ev.key === key) {
+          for (const mod of modKeys) {
+            if (ev[mod] === false) {
+              return;
+            }
+          }
+          this.bitty._processKeypress(ev, signals);
+        }
+      });
+    }
   }
 
   _modKeyAliases() {

@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export function setKey() {
+export function setKey_signal_273EF() {
   /******************************************
    * This function is called when the
    * test is run.

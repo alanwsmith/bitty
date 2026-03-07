@@ -2,10 +2,10 @@ export const bitty = {};
 
 export function setKey_$_SIGNAL_() {
   /******************************************
-   * This function is called when the
-   * test is run.
+   * This functions is run via the `data-run`
+   * attribute in the <[@ bitty_tag @]> tag.
    ******************************************/
-  bitty.mapKey("t", "$_SIGNAL_", ["invalidModKey"]);
+  bitty.mapKey("/", "$_SIGNAL_", [], { preventDefault: false });
 }
 
 export function $_SIGNAL_(_, __, el) {

@@ -78,20 +78,17 @@
                   [!- filter block_highlight("html") -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
                   [!- endfilter -!]
-                  [!- filter block_highlight("html") -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
-                  [!- endfilter -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
                   </div>
-
-
 
                   <div>JavaScript</div>
                   <div class="default-flow">
                     <div class="faded-match-background-color default-border-radius large-bottom-margin">
+
+                      [#
                       <div class="xsmall-font-size default-inline-padding default-top-padding">
                         [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
                       </div>
+                      #]
                       [!- filter block_highlight("js") -!]
                       [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
                       [!- endfilter -!]
@@ -103,9 +100,11 @@
 
                     [! if second_js_file != "" !]
                     <div class="faded-match-background-color default-border-radius large-bottom-margin">
+                      [#
                       <div class="xsmall-font-size default-inline-padding default-top-padding">
                         [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
                       </div>
+                      #]
                       [!- filter block_highlight("js") -!]
                       [@- second_js_file|safe -@]
                       [!- endfilter -!]
@@ -121,18 +120,27 @@
                   </div>
 
                   <details>
-                    <summary>view test</summary>
-                    <div>HTML</div>
+                    <summary>view test harness</summary>
+                    <div>bitty tag for the example</div>
+                  [!- filter block_highlight("html") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+                  [!- endfilter -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+
+                    <div>bitty tag for the test verification</div>
+
                     [!- filter block_highlight("html") -!]
                     [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
                     [!- endfilter -!]
                     [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
 
-                    <div>JavaScript</div>
+                    <div>Verification JavaScript</div>
                     <div class="faded-match-background-color default-border-radius large-bottom-margin">
+                      [#
                       <div class="xsmall-font-size default-inline-padding default-top-padding">
                         [@- ["", testFolder.path_part_strings[8], "test_verification_javascript.js"]|join("/") -@]
                       </div>
+                      #]
                       [!- filter block_highlight("js") -!]
                       [@- get_content(testFolder.path_part_strings[8],  "test_verification_javascript.js") -@]
                       [!- endfilter -!]

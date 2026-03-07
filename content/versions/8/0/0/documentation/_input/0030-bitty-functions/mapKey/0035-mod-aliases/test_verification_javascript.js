@@ -4,7 +4,7 @@ export async function runTest() {
   await bitty.sleep(200);
   const event_signal_6E38F = new KeyboardEvent("keydown", {
     key: "r",
-    altKey: true,
+    ctrlKey: true,
     bubbles: true,
     cancelable: true,
   });

@@ -5,7 +5,7 @@ export function setKey() {
    * This functions is run via the `data-run`
    * attribute in the <[@ bitty_tag @]> tag.
    ******************************************/
-  bitty.mapKey("e", "$_SIGNAL_", ["altKey"]);
+  bitty.mapKey("e", "$_SIGNAL_", ["ctrlKey"]);
 }
 
 export function $_SIGNAL_(_, __, el) {

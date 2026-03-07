@@ -1,7 +1,5 @@
 export const bitty = {};
 
-export function signal_85F23(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = bitty.localTimestamp();
+export function signal_85F23(_, __, ___) {
+  bitty.copy("#text_signal_85F23");
 }

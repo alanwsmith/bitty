@@ -54,7 +54,6 @@ class BittyJs extends HTMLElement {
 
   async _copy(selector) {
     const el = document.querySelector(selector);
-
     if (el.value !== undefined) {
       try {
         await navigator.clipboard.writeText(el.value);
@@ -64,7 +63,7 @@ class BittyJs extends HTMLElement {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(el.value);
+        await navigator.clipboard.writeText(el.innerHTML);
       } catch (error) {
         console.error(`Could not copy .innerHTML from ${selector}`);
         return false;

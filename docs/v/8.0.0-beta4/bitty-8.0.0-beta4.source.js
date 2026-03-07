@@ -184,10 +184,13 @@ class BittyJs extends HTMLElement {
   ) {
     // .shiftKey, .ctrlKey, .altKey, .metaKey
 
+    for (let i = 0; i < modKeys.length; i += 1) {
+      modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
+    }
+
     window.addEventListener("keydown", (ev) => {
       if (ev.key === key) {
         console.log(modKeys);
-
         for (const mod of modKeys) {
           console.log(mod);
           console.log(ev[mod]);
@@ -200,6 +203,21 @@ class BittyJs extends HTMLElement {
         this.bitty._processKeypress(ev, signals);
       }
     });
+  }
+
+  _modKeyAliases() {
+    return {
+      alt: "altKey",
+      altkey: "altKey",
+      ctrl: "ctrlKey",
+      ctrlkey: "ctrlKey",
+      meta: "metaKey",
+      metakey: "metaKey",
+      option: "altKey",
+      optionkey: "altKey",
+      shift: "shiftKey",
+      shiftkey: "shiftKey",
+    };
   }
 
   __processBittyTrigger(trigger) {

@@ -4,7 +4,7 @@ let data = [];
 let key = `details-opener-${window.location.pathname}`;
 
 export function initDetails() {
-  data = bitty.loadJSON(key);
+  data = bitty.loadData(key);
   document.querySelectorAll("details").forEach((el, index) => {
     el.open = data[index] ? true : false;
     el.addEventListener("toggle", (_) => {
@@ -17,5 +17,5 @@ function updateData() {
   document.querySelectorAll("details").forEach((el, index) => {
     data[index] = el.open;
   });
-  bitty.saveJSON(key, data);
+  bitty.saveData(key, data);
 }

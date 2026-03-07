@@ -173,6 +173,22 @@ class BittyJs extends HTMLElement {
     return this.bitty.localTimestamp(datetime, true);
   }
 
+  // TODO: If you send a number it uses that for the
+  // keyCode as opposed to the string which uses the
+  // string.
+  _mapKey(
+    key,
+    signals,
+    modKeys = [],
+    options = { type: "keydown", preventDefault: true },
+  ) {
+    window.addEventListener("keydown", (ev) => {
+      if (ev.key === key) {
+        this.bitty._processKeypress(ev, signals);
+      }
+    });
+  }
+
   __processBittyTrigger(trigger) {
     const signals = this.bitty._splitSignalString(trigger.signals);
     for (const signal of signals) {
@@ -212,6 +228,25 @@ class BittyJs extends HTMLElement {
               this[signal](ev, sender, null);
             }
           }
+        }
+      }
+    }
+  }
+
+  __processKeypress(ev, signalString) {
+    const sender = ev.target;
+    const signals = this.bitty._splitSignalString(signalString);
+    for (const signal of signals) {
+      if (typeof this[signal] === "function") {
+        const receivers = document.querySelectorAll(
+          `[data-r~='${signal}']`,
+        );
+        if (receivers.length > 0) {
+          for (const receiver of receivers) {
+            this[signal](ev, sender, receiver);
+          }
+        } else {
+          this[signal](ev, sender, null);
         }
       }
     }

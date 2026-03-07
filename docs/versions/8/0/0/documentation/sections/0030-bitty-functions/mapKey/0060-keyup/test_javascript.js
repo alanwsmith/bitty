@@ -1,7 +1,13 @@
 export const bitty = {};
 
-export function signal_78314(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = bitty.localTimestamp();
+export function setKey_signal_78314() {
+  /******************************************
+   * This functions is run via the `data-run`
+   * attribute in the <[@ bitty_tag @]> tag.
+   ******************************************/
+  bitty.mapKey("b", "signal_78314", [], { listener: "keyup" });
+}
+
+export function signal_78314(_, __, el) {
+  el.innerHTML = bitty.localTimestamp();
 }

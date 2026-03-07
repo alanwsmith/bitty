@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export function setKey() {
+export function setKey_signal_07868() {
   /******************************************
    * This functions is run via the `data-run`
    * attribute in the <[@ bitty_tag @]> tag.

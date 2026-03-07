@@ -201,7 +201,7 @@ class BittyJs extends HTMLElement {
       }
     }
     if (options.preventDefault === true) {
-      window.addEventListener("keydown", (ev) => {
+      window.addEventListener(options.listener, (ev) => {
         if (ev.key === key) {
           for (const mod of modKeys) {
             if (ev[mod] === false) {
@@ -213,7 +213,7 @@ class BittyJs extends HTMLElement {
         }
       });
     } else {
-      window.addEventListener("keydown", (ev) => {
+      window.addEventListener(options.listener, (ev) => {
         if (ev.key === key) {
           for (const mod of modKeys) {
             if (ev[mod] === false) {

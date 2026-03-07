@@ -205,10 +205,14 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  // TODO: Figure out what the window key and
+  // the command key should be mapped to.
   _modKeyAliases() {
     return {
       alt: "altKey",
       altkey: "altKey",
+      cmd: "metaKey",
+      command: "metaKey",
       ctrl: "ctrlKey",
       ctrlkey: "ctrlKey",
       meta: "metaKey",
@@ -217,6 +221,8 @@ class BittyJs extends HTMLElement {
       optionkey: "altKey",
       shift: "shiftKey",
       shiftkey: "shiftKey",
+      win: "metaKey",
+      windows: "metaKey",
     };
   }
 

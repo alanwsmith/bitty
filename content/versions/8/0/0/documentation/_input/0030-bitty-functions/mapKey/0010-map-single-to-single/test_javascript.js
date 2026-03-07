@@ -9,6 +9,5 @@ export function setKey() {
 }
 
 export function $_SIGNAL_(_, __, el) {
-  el.dataset.solo = true;
   el.innerHTML = bitty.localTimestamp();
 }

@@ -179,6 +179,7 @@ class BittyJs extends HTMLElement {
     modKeys = [],
     options = {},
   ) {
+    const keyCode = typeof key === "string" ? null : key;
     if (modKeys === null) {
       modKeys = [];
     }
@@ -202,7 +203,7 @@ class BittyJs extends HTMLElement {
     }
     if (options.preventDefault === true) {
       window.addEventListener(options.listener, (ev) => {
-        if (ev.key === key) {
+        if (ev.key === key || ev.keyCode === keyCode) {
           for (const mod of modKeys) {
             if (ev[mod] === false) {
               return;
@@ -214,7 +215,7 @@ class BittyJs extends HTMLElement {
       });
     } else {
       window.addEventListener(options.listener, (ev) => {
-        if (ev.key === key) {
+        if (ev.key === key || ev.keyCode === keyCode) {
           for (const mod of modKeys) {
             if (ev[mod] === false) {
               return;

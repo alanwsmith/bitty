@@ -1,9 +1,14 @@
 export const bitty = {};
 
 export async function runTest() {
-  bitty.qs("[data-s~=signal_273EF]").click();
   await bitty.sleep(200);
-  const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
+  const event_signal_6E38F = new KeyboardEvent("keydown", {
+    key: "t",
+    bubbles: true,
+    cancelable: true,
+  });
+  document.dispatchEvent(event_signal_6E38F);
+  const pattern = /there's no output from this example./;
   const checkEls = bitty.qsa("[data-r~=signal_273EF]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {

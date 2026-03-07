@@ -1,7 +1,13 @@
 export const bitty = {};
 
-export function signal_273EF(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = bitty.localTimestamp();
+export function setKey() {
+  /******************************************
+   * This functions is run via the `data-run`
+   * attribute in the <[@ bitty_tag @]> tag.
+   ******************************************/
+  bitty.mapKey("t", "signal_273EF", ["invalidModKey"]);
+}
+
+export function signal_273EF(_, __, el) {
+  el.innerHTML = bitty.localTimestamp();
 }

@@ -185,7 +185,16 @@ class BittyJs extends HTMLElement {
     // .shiftKey, .ctrlKey, .altKey, .metaKey
 
     for (let i = 0; i < modKeys.length; i += 1) {
-      modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
+      if (this.bitty.modKeyAliases()[modKeys[i].toLowerCase()] !== undefined) {
+        modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
+      } else {
+        console.error(
+          `ERROR: Tried to use invalid modifier key '${
+            modKeys[i]
+          }' in mapKey()`,
+        );
+        return;
+      }
     }
 
     window.addEventListener("keydown", (ev) => {
@@ -195,7 +204,6 @@ class BittyJs extends HTMLElement {
           console.log(mod);
           console.log(ev[mod]);
           console.log(key);
-
           if (ev[mod] === false) {
             return;
           }

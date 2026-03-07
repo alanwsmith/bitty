@@ -119,6 +119,16 @@
                     </div>
                   </div>
 
+
+                  [!- set notes_content -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_notes.html") -@]
+                  [!- endset -!]
+                  [! if notes_content != "" !]
+                  <div class="test-header">Notes</div>
+                  [@- notes_content @]
+                  [! endif !]
+
+
                   <details>
                     <summary>view test harness</summary>
                     <div>bitty tag for the example</div>
@@ -126,14 +136,11 @@
                   [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
                   [!- endfilter -!]
                   [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
-
                     <div>bitty tag for the test verification</div>
-
                     [!- filter block_highlight("html") -!]
                     [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
                     [!- endfilter -!]
                     [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
-
                     <div>Verification JavaScript</div>
                     <div class="faded-match-background-color default-border-radius large-bottom-margin">
                       [#
@@ -145,18 +152,7 @@
                       [@- get_content(testFolder.path_part_strings[8],  "test_verification_javascript.js") -@]
                       [!- endfilter -!]
                     </div>
-
                   </details>
-
-
-                  [!- set notes_content -!]
-                  [@- get_content(testFolder.path_part_strings[8],  "test_notes.html") -@]
-                  [!- endset -!]
-
-                  [! if notes_content != "" !]
-                  <div class="test-header">Notes</div>
-                  [@- notes_content @]
-                  [! endif !]
 
 
             </details>

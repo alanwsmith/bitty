@@ -22,6 +22,9 @@ class BittyJs extends HTMLElement {
         window.addEventListener("input", (ev) => {
           incoming.bitty._processEvent(ev);
         });
+        window.addEventListener("bittysend", (ev) => {
+          incoming.bitty._processBittySend(ev);
+        });
         window.addEventListener("bittytrigger", (ev) => {
           incoming.bitty._processBittyTrigger(ev);
         });
@@ -303,6 +306,24 @@ class BittyJs extends HTMLElement {
     };
   }
 
+  __processBittySend(ev) {
+    const signals = this.bitty._splitSignalString(ev.signals);
+    for (const signal of signals) {
+      if (typeof this[signal] === "function") {
+        const receivers = document.querySelectorAll(
+          `[data-r~='${signal}']`,
+        );
+        if (receivers.length > 0) {
+          for (const receiver of receivers) {
+            this[signal](ev.payload, null, receiver);
+          }
+        } else {
+          this[signal](ev.payload, null, null);
+        }
+      }
+    }
+  }
+
   __processBittyTrigger(ev) {
     const signals = this.bitty._splitSignalString(ev.signals);
     for (const signal of signals) {
@@ -495,6 +516,11 @@ class BittyJs extends HTMLElement {
     return true;
   }
 
+  _send(payload, signals) {
+    const ev = new BittySend(payload, signals);
+    dispatchEvent(ev);
+  }
+
   _setCSS(key, value) {
     document.documentElement.style.setProperty(key, value);
   }
@@ -545,6 +571,14 @@ customElements.define(tagName, BittyJs);
 class BittyTrigger extends Event {
   constructor(signals) {
     super("bittytrigger", { bubbles: true });
+    this.signals = signals;
+  }
+}
+
+class BittySend extends Event {
+  constructor(payload, signals) {
+    super("bittysend", { bubbles: true });
+    this.payload = payload;
     this.signals = signals;
   }
 }

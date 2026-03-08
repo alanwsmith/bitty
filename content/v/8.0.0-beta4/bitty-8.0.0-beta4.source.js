@@ -532,9 +532,10 @@ class BittyJs extends HTMLElement {
 
   _uuid(dashes = true) {
     if (dashes === false) {
-      return randomUUID().replace("-", "");
+      const uuid = self.crypto.randomUUID();
+      return uuid.replaceAll("-", "");
     } else {
-      return randomUUID();
+      return self.crypto.randomUUID();
     }
   }
 }

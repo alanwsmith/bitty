@@ -1,14 +1,14 @@
 export const bitty = {};
 
-export function loadSampleDatasignal_FBA10() {
-  bitty.save("FBA10", { alfa: "bravo" });
+export function loadSampleDatasignal_FBA10_alfa() {
+  bitty.save("FBA10_alfa", { alfa: "bravo" });
 }
 
 export async function runTest() {
-  bitty.qs("[data-s~=signal_FBA10]").click();
+  bitty.qs("[data-s~=signal_FBA10_alfa]").click();
   await bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_FBA10]");
+  const checkEls = bitty.qsa("[data-r~=signal_FBA10_alfa]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

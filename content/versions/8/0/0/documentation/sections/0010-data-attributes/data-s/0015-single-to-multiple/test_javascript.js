@@ -1,5 +1,5 @@
 export const bitty = {};
 
-export function signal_294BF(ev, sender, el) {
+export function signal_294BF_alfa(ev, sender, el) {
   el.innerHTML = bitty.time();
 }

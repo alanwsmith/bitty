@@ -3,7 +3,7 @@ export const bitty = {};
 export async function runTest(_, __, ___) {
   bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_7B23F]");
+  const checkEls = bitty.qsa("[data-r~=signal_7B23F_alfa]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;
@@ -16,7 +16,7 @@ export async function runTest(_, __, ___) {
       }
     }
   });
-  const checkEls2 = bitty.qsa("[data-r~=signal_7B23F_2]");
+  const checkEls2 = bitty.qsa("[data-r~=signal_7B23F_bravo]");
   checkEls2.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

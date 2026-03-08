@@ -1,11 +1,11 @@
 export const bitty = {};
 
 export async function runTest() {
-  const testEvent = new TestEvent_signal_376FE();
+  const testEvent = new TestEvent_signal_376FE_alfa();
   dispatchEvent(testEvent);
   await bitty.sleep(100);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_376FE]");
+  const checkEls = bitty.qsa("[data-r~=signal_376FE_alfa]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;
@@ -20,8 +20,8 @@ export async function runTest() {
   });
 }
 
-class TestEvent_signal_376FE extends Event {
+class TestEvent_signal_376FE_alfa extends Event {
   constructor(signals) {
-    super("event_signal_376FE", { bubbles: true });
+    super("event_signal_376FE_alfa", { bubbles: true });
   }
 }

@@ -1,11 +1,11 @@
 export const bitty = {};
 
 export async function runTest() {
-  bitty.qs("[data-s~=signal_9E5B8]").click();
+  bitty.qs("[data-s~=signal_9E5B8_alfa]").click();
   bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
 
-  const checkEls = bitty.qsa("[data-r~=signal_9E5B8_2]");
+  const checkEls = bitty.qsa("[data-r~=signal_9E5B8_bravo]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;
@@ -19,7 +19,7 @@ export async function runTest() {
     }
   });
 
-  const checkEls2 = bitty.qsa("[data-r~=signal_9E5B8_3]");
+  const checkEls2 = bitty.qsa("[data-r~=signal_9E5B8_charlie]");
   checkEls2.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

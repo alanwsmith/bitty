@@ -3,7 +3,7 @@ export const bitty = {};
 export async function runTest() {
   await bitty.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_E34C9]");
+  const checkEls = bitty.qsa("[data-r~=signal_E34C9_alfa]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

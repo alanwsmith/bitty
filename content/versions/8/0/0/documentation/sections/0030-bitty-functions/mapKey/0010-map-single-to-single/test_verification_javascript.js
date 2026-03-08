@@ -9,7 +9,7 @@ export async function runTest() {
   });
   document.dispatchEvent(event_signal_6E38F);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_07868]");
+  const checkEls = bitty.qsa("[data-r~=signal_07868_alfa]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

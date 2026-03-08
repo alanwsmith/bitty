@@ -3,10 +3,10 @@
 //export const bitty = {};
 /*
 
-export async function run_signal_616DA() {
+export async function run_signal_616DA_alfa() {
   await bitty.sleep(200);
-  bitty.qs("[data-s~=signal_616DA]").click();
+  bitty.qs("[data-s~=signal_616DA_alfa]").click();
   await bitty.sleep(300);
-  bitty.trigger("verify_signal_616DA");
+  bitty.trigger("verify_signal_616DA_alfa");
 }
 */

@@ -133,14 +133,10 @@ class BittyJs extends HTMLElement {
       return undefined;
     }
   }
-  async _fetchSVG(url, options = {}) {
-    const svgs = await this.bitty.fetchSVGs(url, options);
-    return svgs;
-  }
 
   // TODO: Set this up to accept an array of
   // URLs that are tried before the optional fallback
-  async _fetchSVGs(url, options = {}) {
+  async _fetchSVG(url, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {

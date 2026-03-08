@@ -303,8 +303,8 @@ class BittyJs extends HTMLElement {
     };
   }
 
-  __processBittyTrigger(trigger) {
-    const signals = this.bitty._splitSignalString(trigger.signals);
+  __processBittyTrigger(ev) {
+    const signals = this.bitty._splitSignalString(ev.signals);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
@@ -312,10 +312,10 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
-            this[signal](null, null, receiver);
+            this[signal](ev, null, receiver);
           }
         } else {
-          this[signal](null, null, null);
+          this[signal](ev, null, null);
         }
       }
     }

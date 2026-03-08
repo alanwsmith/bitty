@@ -5,6 +5,6 @@ export function signal_A9BED(ev, sender, el) {
   const alfa = bitty.qs("#target_alfa_signal_A9BED");
   const bravo = bitty.qs("#target_bravo_signal_A9BED", alfa);
   if (bravo.isSameNode(fromNative)) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

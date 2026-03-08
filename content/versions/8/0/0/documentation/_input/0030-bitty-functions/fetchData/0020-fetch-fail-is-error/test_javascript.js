@@ -8,6 +8,6 @@ export async function $_SIGNAL_(ev, sender, el) {
     "$_SAMPLES_DIR_/intentionally-missing-file.json",
   );
   if (response === undefined) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

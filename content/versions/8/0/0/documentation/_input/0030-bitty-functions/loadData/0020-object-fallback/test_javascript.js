@@ -5,6 +5,6 @@ export function $_SIGNAL_(ev, sender, el) {
     target$_SIGNAL_: true,
   });
   if (json.target$_SIGNAL_ === true) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

@@ -15,6 +15,6 @@ const subs = {
 export function signal_1EDC7(ev, sender, el) {
   const output = bitty.render(input, subs);
   if (output.firstChild.firstChild.innerHTML === "UPDATED_signal_1EDC7") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

@@ -8,6 +8,6 @@ export async function signal_F3507(ev, sender, el) {
     "/versions/8/0/0/documentation/samples/intentionally-missing-file.json",
   );
   if (response === undefined) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

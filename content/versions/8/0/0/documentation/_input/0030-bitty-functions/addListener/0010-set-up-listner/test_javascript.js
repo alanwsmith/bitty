@@ -5,5 +5,5 @@ export function initialize_$_SIGNAL_() {
 }
 
 export function $_SIGNAL_(ev, sender, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

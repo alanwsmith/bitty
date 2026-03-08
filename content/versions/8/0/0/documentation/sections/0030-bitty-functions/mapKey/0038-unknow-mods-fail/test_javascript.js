@@ -9,5 +9,5 @@ export function setKey_signal_273EF() {
 }
 
 export function signal_273EF(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

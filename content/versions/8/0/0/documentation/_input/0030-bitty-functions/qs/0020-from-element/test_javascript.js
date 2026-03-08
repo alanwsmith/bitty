@@ -5,6 +5,6 @@ export function $_SIGNAL_(ev, sender, el) {
   const alfa = bitty.qs("#target_alfa_$_SIGNAL_");
   const bravo = bitty.qs("#target_bravo_$_SIGNAL_", alfa);
   if (bravo.isSameNode(fromNative)) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

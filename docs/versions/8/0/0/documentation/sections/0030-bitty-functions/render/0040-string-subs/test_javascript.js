@@ -13,6 +13,6 @@ export function signal_B1061(ev, sender, el) {
   const output = bitty.render(input, subs);
   const checkEl = output.firstChild;
   if (checkEl.innerHTML === "UPDATED_signal_B1061") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

@@ -9,5 +9,5 @@ export function setKey_$_SIGNAL_() {
 }
 
 export function $_SIGNAL_(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

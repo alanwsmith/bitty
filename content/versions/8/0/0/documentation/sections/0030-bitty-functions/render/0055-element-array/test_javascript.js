@@ -17,6 +17,6 @@ const subs = {
 export function signal_02C95(ev, sender, el) {
   const output = bitty.render(input, subs);
   if (output.firstChild.children[1].innerHTML === "signal_02C95") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

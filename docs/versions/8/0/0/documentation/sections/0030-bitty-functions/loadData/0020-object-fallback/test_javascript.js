@@ -5,6 +5,6 @@ export function signal_FA2FA(ev, sender, el) {
     targetsignal_FA2FA: true,
   });
   if (json.targetsignal_FA2FA === true) {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

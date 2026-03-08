@@ -17,6 +17,6 @@ const subs = {
 export function $_SIGNAL_(ev, sender, el) {
   const output = bitty.render(input, subs);
   if (output.firstChild.children[1].innerHTML === "$_SIGNAL_") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

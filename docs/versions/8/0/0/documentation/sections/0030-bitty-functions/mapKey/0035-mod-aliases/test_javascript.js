@@ -9,5 +9,5 @@ export function setKey() {
 }
 
 export function signal_6B685(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

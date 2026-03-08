@@ -13,6 +13,6 @@ export function signal_1AC47(ev, sender, el) {
   const output = bitty.render(input, subs);
   const checkEl = output.firstChild;
   if (checkEl.innerHTML === "UPDATED_signal_1AC47") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

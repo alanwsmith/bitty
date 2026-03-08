@@ -9,5 +9,5 @@ export function setKey_signal_9EAED() {
 }
 
 export function signal_9EAED(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

@@ -6,6 +6,6 @@ export async function signal_71C04(_, __, el) {
   );
   const checkEl = templates.alfa.querySelector("div");
   if (checkEl.innerHTML = "alfa") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

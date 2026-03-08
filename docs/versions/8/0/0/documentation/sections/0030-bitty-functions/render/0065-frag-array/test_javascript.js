@@ -19,6 +19,6 @@ export function signal_B15F2(ev, sender, el) {
   const output = bitty.render(input, subs);
   const result = output.firstChild.children[1].innerHTML;
   if (result === "signal_B15F2") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

@@ -9,6 +9,6 @@ export function signal_E74C7(ev, sender, el) {
   const output = bitty.render(input);
   const checkEl = output.firstChild;
   if (checkEl.innerHTML === "signal_E74C7") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

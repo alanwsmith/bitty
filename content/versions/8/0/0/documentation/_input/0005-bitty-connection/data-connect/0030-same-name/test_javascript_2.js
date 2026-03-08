@@ -10,5 +10,5 @@ export function $_SIGNAL_(ev, sender, el) {
 }
 
 export function $_SIGNAL3_(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

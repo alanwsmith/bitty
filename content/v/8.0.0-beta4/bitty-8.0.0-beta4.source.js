@@ -205,7 +205,7 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  _localTimestamp(datetime = new Date(), ms = false) {
+  _time(datetime = new Date(), ms = false) {
     const options = {
       day: "2-digit",
       fractionalSecondDigits: 3,
@@ -230,8 +230,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _localTimestampMs(datetime) {
-    return this.bitty.localTimestamp(datetime, true);
+  _timeMs(datetime) {
+    return this.bitty.time(datetime, true);
   }
 
   _mapKey(

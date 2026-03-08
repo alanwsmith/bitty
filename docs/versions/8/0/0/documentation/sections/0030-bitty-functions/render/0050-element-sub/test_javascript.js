@@ -16,6 +16,6 @@ export function signal_F3DE4(ev, sender, el) {
   const output = bitty.render(input, subs);
   const checkEl = output.firstChild;
   if (checkEl.firstChild.innerHTML === "UPDATED_signal_F3DE4") {
-    el.innerHTML = bitty.localTimestamp();
+    el.innerHTML = bitty.time();
   }
 }

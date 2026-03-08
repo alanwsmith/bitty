@@ -10,5 +10,5 @@ export function signal_9E5B8(ev, sender, el) {
 }
 
 export function signal_9E5B8_2(_, __, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

@@ -1,5 +1,5 @@
 export const bitty = {};
 
 export function $_SIGNAL_(ev, sender, el) {
-  el.innerHTML = bitty.localTimestamp();
+  el.innerHTML = bitty.time();
 }

@@ -365,33 +365,7 @@ class BittyJs extends HTMLElement {
     for (const sender of senders) {
       const signals = this.bitty._splitSignalString(sender.dataset.s);
       const listeners = this.bitty._splitSignalString(
-        ev.target.dataset.listeners,
-      );
-      if (listeners.length === 0) {
-        for (const signal of signals) {
-          if (typeof this[signal] === "function") {
-            const receivers = document.querySelectorAll(
-              `[data-r~='${signal}']`,
-            );
-            if (receivers.length > 0) {
-              for (const receiver of receivers) {
-                this[signal](ev, sender, receiver);
-              }
-            } else {
-              this[signal](ev, sender, null);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  __processEvent(ev) {
-    const senders = this.bitty._findSenders(ev.target);
-    for (const sender of senders) {
-      const signals = this.bitty._splitSignalString(sender.dataset.s);
-      const listeners = this.bitty._splitSignalString(
-        ev.target.dataset.listeners,
+        sender.dataset.listeners,
       );
       if (listeners.length === 0) {
         for (const signal of signals) {

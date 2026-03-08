@@ -518,8 +518,8 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _tee(input, split = true) {
-    if (split !== false && split !== 0) {
+  _tee(input, log = true) {
+    if (log !== false && log !== 0) {
       console.log(input);
     }
     return input;

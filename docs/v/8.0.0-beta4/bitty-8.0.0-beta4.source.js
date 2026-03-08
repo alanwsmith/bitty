@@ -84,7 +84,7 @@ class BittyJs extends HTMLElement {
   // TODO: Set up to pull <script> tags with
   // `application/json` and an `id` attribute
   // into a `bitty.json` object.
-  async _fetchData(url, fallback = null, options = {}) {
+  async _fetch(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -189,7 +189,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  _loadData(key, fallback = null) {
+  _load(key, fallback = null) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       try {
@@ -494,7 +494,7 @@ class BittyJs extends HTMLElement {
     return result.content;
   }
 
-  _saveData(key, data) {
+  _save(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
     return true;
   }

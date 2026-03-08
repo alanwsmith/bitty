@@ -1,7 +1,7 @@
 export const bitty = {};
 
 export function loadSampleData$_SIGNAL_() {
-  bitty.saveData("$_TEST_ID_", { alfa: "bravo" });
+  bitty.save("$_TEST_ID_", { alfa: "bravo" });
 }
 
 export async function runTest() {

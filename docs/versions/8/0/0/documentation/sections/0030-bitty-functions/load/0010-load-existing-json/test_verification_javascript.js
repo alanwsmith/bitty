@@ -1,7 +1,7 @@
 export const bitty = {};
 
 export function loadSampleDatasignal_FBA10() {
-  bitty.saveData("FBA10", { alfa: "bravo" });
+  bitty.save("FBA10", { alfa: "bravo" });
 }
 
 export async function runTest() {

@@ -105,7 +105,7 @@ class BittyJs extends HTMLElement {
 
   // TODO: Set this up to accept an array of
   // URLs that are tried before the optional fallback
-  async _fetchHTML(url, fallback = null, options = {}) {
+  async _fetchHTML(url, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -124,12 +124,47 @@ class BittyJs extends HTMLElement {
           }
           return templates;
         } catch (parseError) {
-          console.log(parseError);
+          console.error(parseError);
           return undefined;
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      return undefined;
+    }
+  }
+  async _fetchSVG(url, options = {}) {
+    const svgs = await this.bitty.fetchSVGs(url, options);
+    return svgs;
+  }
+
+  // TODO: Set this up to accept an array of
+  // URLs that are tried before the optional fallback
+  async _fetchSVGs(url, options = {}) {
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        try {
+          const svgs = {};
+          const content = await response.text();
+          const container = document.createElement("div");
+          container.innerHTML = content;
+          const input = container.querySelectorAll(
+            "div > svg",
+          );
+          for (const svg of input) {
+            if (svg.id !== undefined) {
+              svgs[svg.id] = svg;
+            }
+          }
+          return svgs;
+        } catch (parseError) {
+          console.error(parseError);
+          return undefined;
+        }
+      }
+    } catch (error) {
+      console.error(error);
       return undefined;
     }
   }

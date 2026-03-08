@@ -1,7 +1,8 @@
 export const bitty = {};
 
 export function signal_00C0F(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = bitty.localTimestamp();
+  const els = bitty.qsa(".target_signal_00C0F");
+  if (els[2].innerHTML === "charlie signal_00C0F") {
+    el.innerHTML = bitty.localTimestamp();
+  }
 }

@@ -52,6 +52,12 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  _addListener(event, signals) {
+    window.addEventListener(event, (ev) => {
+      this.bitty._processCustomEvent(ev, signals);
+    });
+  }
+
   async _copy(selector) {
     const el = document.querySelector(selector);
     if (el.value !== undefined) {
@@ -279,6 +285,50 @@ class BittyJs extends HTMLElement {
           }
         } else {
           this[signal](null, null, null);
+        }
+      }
+    }
+  }
+
+  __processCustomEvent(ev, signalsString) {
+    const signals = this.bitty._splitSignalString(signalsString);
+    for (const signal of signals) {
+      if (typeof this[signal] === "function") {
+        const receivers = document.querySelectorAll(
+          `[data-r~='${signal}']`,
+        );
+        if (receivers.length > 0) {
+          for (const receiver of receivers) {
+            this[signal](ev, null, receiver);
+          }
+        } else {
+          this[signal](ev, null, null);
+        }
+      }
+    }
+  }
+
+  __processEvent(ev) {
+    const senders = this.bitty._findSenders(ev.target);
+    for (const sender of senders) {
+      const signals = this.bitty._splitSignalString(sender.dataset.s);
+      const listeners = this.bitty._splitSignalString(
+        ev.target.dataset.listeners,
+      );
+      if (listeners.length === 0) {
+        for (const signal of signals) {
+          if (typeof this[signal] === "function") {
+            const receivers = document.querySelectorAll(
+              `[data-r~='${signal}']`,
+            );
+            if (receivers.length > 0) {
+              for (const receiver of receivers) {
+                this[signal](ev, sender, receiver);
+              }
+            } else {
+              this[signal](ev, sender, null);
+            }
+          }
         }
       }
     }

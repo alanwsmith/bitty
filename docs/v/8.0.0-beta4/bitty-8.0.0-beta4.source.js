@@ -499,6 +499,10 @@ class BittyJs extends HTMLElement {
     return true;
   }
 
+  _setCSS(key, value) {
+    document.documentElement.style.setProperty(key, value);
+  }
+
   async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }

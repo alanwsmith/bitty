@@ -5,6 +5,9 @@ export function setKey_$_SIGNAL_() {
    * This function is called when the
    * test is run.
    ******************************************/
+  console.warn(
+    `EXPECTED ERROR $_TEST_ID_: The mapKey() error for test $_TEST_ID_ is expected. It confirms an error is logged to the console when an attempt is made to use an invalid modifier key`,
+  );
   bitty.mapKey("t", "$_SIGNAL_", ["invalidModKey"]);
 }
 

@@ -15,6 +15,7 @@ class BittyJs extends HTMLElement {
       if (incoming.bitty !== undefined) {
         this.loadPageTemplates(incoming);
         this.loadPageData(incoming);
+        this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         window.addEventListener("click", (ev) => {
@@ -200,6 +201,18 @@ class BittyJs extends HTMLElement {
     document.querySelectorAll("template").forEach((template) => {
       if (template.id !== undefined) {
         target.bitty.template[template.id] = template.content;
+      }
+    });
+  }
+
+  loadPageSVGs(target) {
+    target.bitty.svg = {};
+    document.querySelectorAll("template").forEach((template) => {
+      if (template.id !== undefined) {
+        const svg = template.content.querySelector("svg");
+        if (svg) {
+          target.bitty.svg[template.id] = svg;
+        }
       }
     });
   }

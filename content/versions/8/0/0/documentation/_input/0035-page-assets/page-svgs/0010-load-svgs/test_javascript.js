@@ -1,8 +1,8 @@
 export const bitty = {};
 
 export function $_SIGNAL_(ev, sender, el) {
-  const checkValue = bitty.data["data_$_SIGNAL_"].key_$_SIGNAL_;
-  if (checkValue === "value_$_SIGNAL_") {
+  const check = bitty.svg["svg_$_SIGNAL_"].querySelector("text");
+  if (check.innerHTML === "svg") {
     el.innerHTML = bitty.time();
   }
 }

@@ -148,6 +148,7 @@ class Maker:
         data["_SAMPLES_DIR_"] = f"{data["_DOCS_DIR_"]}/samples"
         data["_SECTIONS_DIR_"] = f"{data["_DOCS_DIR_"]}/sections"
         if len(dir[0]) == 3:
+            data["_ID_"] = self.id(dir)
             data["_SIGNAL_"] = f"signal_{self.id(dir)}_alfa"
             data["_SIGNAL2_"] = f"signal_{self.id(dir)}_bravo"
             data["_SIGNAL3_"] = f"signal_{self.id(dir)}_charlie"

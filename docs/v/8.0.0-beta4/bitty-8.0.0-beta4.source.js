@@ -49,6 +49,15 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  __updateEvent(ev) {
+    if (ev.bittyUpdated === true) {
+      return;
+    }
+    ev.prop = (key) => {
+      return ev.target.dataset[key];
+    };
+  }
+
   addBittyClasses(target) {
     Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter((method) =>
       method.substring(0, 1) === "_"
@@ -316,6 +325,10 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  __markEventAsUpdated(ev) {
+    ev.bittyUpdated = true;
+  }
+
   _modKeyAliases() {
     return {
       alt: "altKey",
@@ -390,6 +403,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processEvent(ev) {
+    this.bitty._updateEvent(ev);
     const senders = this.bitty._findSenders(ev.target);
     for (const sender of senders) {
       const signals = this.bitty._splitSignalString(sender.dataset.s);

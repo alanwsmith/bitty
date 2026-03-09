@@ -1,7 +1,12 @@
 export const bitty = {};
 
 export function $_SIGNAL_(_, __, el) {
+  console.log(`--$${el.valAsFloat}--`);
   if (el.valAsFloat === 1.1) {
-    el.innerHTML = bitty.time();
+    bitty.trigger("$_SIGNAL2_");
   }
+}
+
+export function $_SIGNAL2_(_, __, el) {
+  el.innerHTML = bitty.time();
 }

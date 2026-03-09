@@ -114,24 +114,9 @@ class BittyJs extends HTMLElement {
     el.setProp = (key, value) => {
       el.dataset[key] = value;
     };
-    el.val = () => {
-      if (el === undefined) {
-        return undefined;
-      }
-      return el.value;
-    };
-    el.valAsFloat = () => {
-      if (el === undefined) {
-        return undefined;
-      }
-      return parseFloat(el.value);
-    };
-    el.valAsInt = () => {
-      if (el === undefined) {
-        return undefined;
-      }
-      return parseInt(el.value, 10);
-    };
+    el.val = el.value;
+    el.valAsFloat = parseFloat(el.value);
+    el.valAsInt = parseInt(el.value, 10);
     el.bittyUpdated = true;
   }
 

@@ -14,6 +14,7 @@ class BittyJs extends HTMLElement {
       const incoming = await import(connString);
       if (incoming.bitty !== undefined) {
         this.loadPageTemplates(incoming);
+        this.loadPageData(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         window.addEventListener("click", (ev) => {
@@ -177,6 +178,21 @@ class BittyJs extends HTMLElement {
       el = el.parentElement;
     }
     return senders;
+  }
+
+  loadPageData(target) {
+    target.bitty.data = {};
+    document.querySelectorAll("script").forEach((script) => {
+      if (script.type === "application/json" && script.id !== undefined) {
+        try {
+          target.bitty.data[script.id] = JSON.parse(script.innerText);
+        } catch (error) {
+          console.error(
+            `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,
+          );
+        }
+      }
+    });
   }
 
   loadPageTemplates(target) {

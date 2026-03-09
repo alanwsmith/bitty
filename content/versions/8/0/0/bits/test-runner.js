@@ -4,8 +4,8 @@ export async function runTests() {
   await bitty.sleep(800);
   // comment/uncomment to pick which tests to run.
   bitty.trigger("runTest");
-  // bitty.trigger("runTestWithErrors");
-  await bitty.sleep(200);
+  bitty.trigger("runTestWithErrors");
+  await bitty.sleep(2000);
   testItems();
 }
 

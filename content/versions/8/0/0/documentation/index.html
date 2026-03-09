@@ -9,14 +9,21 @@
 [! block main !]
 [! set bitty_tag = vars.bitty_tag !]
 
+[! set runTestsAutomatically = false !]
+[! if runTestsAutomatically == true !]
 <[@ vars.bitty_tag @] 
   data-connect="/[@ vars.bits_dir @]/test-runner.js"
   data-run="runTests"
 ></[@ vars.bitty_tag @]>
+[! else !]
+<[@ vars.bitty_tag @] 
+  data-connect="/[@ vars.bits_dir @]/test-runner.js"
+></[@ vars.bitty_tag @]>
+[! endif !]
 
-<div>
-  <button data-s="runTests">Run Tests</button>
-</div>
+
+
+
 
 <ul>
 [! for sectionFolder in folders !]
@@ -193,51 +200,8 @@
 
 </ul>
 
-
-[#
-<script type="text/html" data-key="parsingHTMLFootnote">
-Browser HTML parsers are very forgiving. They'll try to turn anything you
-throw at them into an element or fragment, even if it's not valid HTML. 
-Bitty doesn't try to circumvent this. Nor does it try to handle
-exceptions that might be thrown as a result. Sending invalid
-HTML in considered undefined behaviour. Bitty does detect 
-if you send an object that's not a String, Element, or 
-Document Fragment. If that happens an error is triggered. 
-</script>
-
-<[@ d.bitty_tag @] data-connect="/[@ d.bits_dir @]/documentation-test-reporter.js"></[@ d.bitty_tag @]>
-
-[! for sectionFolder in folders !]
-[! if 
-  sectionFolder.path_part_strings[5] == d.documentation_includes_dir 
-  and 
-  sectionFolder.path_part_strings[6]
-  and not
-  sectionFolder.path_part_strings[7]
-!]
-[! include d.documentation_wrappers_dir + "/section.html" !]
-[! endif !]
-[! endfor !]
-
-
-<h3>Logs</h3>
-<pre data-receive="showLogs"></pre>
-
-<script>
-window.BittyClasses.ShowLogs = class {
-  bittyReady() {
-    this.trigger("showLogs");
-  }
-
-  showLogs(_, el) {
-    el.innerHTML = this.logs()
-      .filter((log) => log.levelIndex <= 2)
-      .map((log) => `[${this.timeMs(log.timestamp)}] ${log.level.toUpperCase()}: ${log.from}\n${log.text.join("\n")}`).join("\n");
-  }
-}
-
-</script>
-
-#]
+<div>
+  <button data-s="runTests">Run Tests</button>
+</div>
 
 [! endblock !]

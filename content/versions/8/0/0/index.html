@@ -17,16 +17,13 @@
 <h2>getting started</h2>
 <ul>
   <li>
-    <p>bitty is a front-end framework that uses signals.</p>
-  </li>
-  <li>
     <p>
-      it's comes in a component loaded with <code>&ltscript&gt;</code> tag. 
+      bitty is loaded from a <code>&ltscript&gt;</code> tag. 
     </p> 
   </li>
   <li>
     <p>
-      the component uses a <code>data-connect</code> attribute to connect 
+      it uses a <code>data-connect</code> attribute to connect 
       to a JavaScript module. 
     </p>
   </li>
@@ -37,7 +34,7 @@
   </li>
   <li>
     <p>
-      elements <code>data-r</code> attributes receive signals. 
+      elements with <code>data-r</code> attributes receive signals. 
     </p>
 [! filter block_highlight("html") !]
 <script type="module" src="/bitty-v8.0.0.js"></script>
@@ -45,45 +42,36 @@
 [! endfilter !]
   </li>
   <li>
+    <p>the module exports an empty `bitty` object for the connection.</p>
+  </li>
+  <li>
     <p>
-      signals are handled by vanilla functions with the same name.
+      signals are handled by module functions with the same name.
     </p>
 [! filter block_highlight("js") !]
 [! include "v8-bits/timestamp.js" !]
 [! endfilter !]
 </li>
   <li>
-    <p>for example, those blocks produce this:</p>
+    <p>for example, the code above produce this button you can use to get the time:</p>
 <div class="example-block">
 [! include "v8-bits/timestamp.html" !]
 </div>
   </li>
 </ul>
 
-<h2>native elements and events</h2>
+<h2>native events and elements</h2>
 
 <ul>
   <li>
     <p>
-      bitty uses native elements and events.
-    </p>
-  </li>
-  <li>
-    <p>
-      functions receive three arguments when an event triggers a signal. 
+      functions receive three arguments:
     </p>
     <ol>
       <li><p>the event that triggered the signal.</p></li>
       <li><p>the element with the <code>data-s</code> attribute that sent the signal.</p></li>
       <li><p>the element with the <code>data-r</code> attribute receiving the signal.</p></li>
     </ol>
-  </li>
-  <li>
-    <p>
-      The standard names for these arguments used 
-      on this site and in the documentation are <code>ev</code>, 
-      <code>sender</code>, and <code>el</code>.
-    </p>
     <p>
       For example:
     <p>

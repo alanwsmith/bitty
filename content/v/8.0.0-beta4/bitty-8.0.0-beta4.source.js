@@ -77,7 +77,7 @@ class BittyJs extends HTMLElement {
     };
     el.prop = (key) => {
       if (
-        el && el.dataset && el.dataset[key] !== undefined
+        el.dataset && el.dataset[key] !== undefined
       ) {
         return el.dataset[key];
       }
@@ -314,10 +314,15 @@ class BittyJs extends HTMLElement {
   }
 
   __checkTargetSender(ev, sender, el) {
-    if (ev.target && el.isSameNode(ev.target)) {
+    if (sender && el.isSameNode(sender)) {
       el.isSender = true;
     } else {
       el.isSender = false;
+    }
+    if (ev.target && el.isSameNode(ev.target)) {
+      el.isTarget = true;
+    } else {
+      el.isTarget = false;
     }
   }
 

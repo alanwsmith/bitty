@@ -49,6 +49,92 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  __updateElement(el) {
+    // REMINDER: This is only run once for each element to
+    // set up the functions. The `.isSender()` and
+    // `.isTarget()` are updated in a different
+    // function each time the element becomes a receiver.
+    if (el.bittyUpdated === true) {
+      return;
+    }
+    el.copy = async function () {
+      if (el.value) {
+        try {
+          await navigator.clipboard.writeText(el.value);
+        } catch (error) {
+          console.error(`Could not copy .value from el.`);
+          return false;
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(el.innerHTML);
+        } catch (error) {
+          console.error(`Could not copy .innerHTML from el.`);
+          return false;
+        }
+      }
+      return true;
+    };
+    el.prop = (key) => {
+      if (
+        el && el.dataset && el.dataset[key] !== undefined
+      ) {
+        return el.dataset[key];
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return propAncestor.dataset[key];
+      }
+      return undefined;
+    };
+    el.propAsFloat = (key) => {
+      if (
+        el && el.dataset && el.dataset[key] !== undefined
+      ) {
+        return parseFloat(el.dataset[key]);
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseFloat(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
+    el.propAsInt = (key) => {
+      if (
+        el && el.dataset && el.dataset[key] !== undefined
+      ) {
+        return parseInt(el.dataset[key], 10);
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseInt(propAncestor.dataset[key], 10);
+      }
+      return undefined;
+    };
+    el.setProp = (key, value) => {
+      el.dataset[key] = value;
+    };
+    el.val = () => {
+      if (el === undefined) {
+        return undefined;
+      }
+      return el.value;
+    };
+    el.valAsFloat = () => {
+      if (el === undefined) {
+        return undefined;
+      }
+      return parseFloat(el.value);
+    };
+    el.valAsInt = () => {
+      if (el === undefined) {
+        return undefined;
+      }
+      return parseInt(el.value, 10);
+    };
+    el.bittyUpdated = true;
+  }
+
   __updateEvent(ev) {
     if (ev.bittyUpdated === true) {
       return;
@@ -574,6 +660,7 @@ class BittyJs extends HTMLElement {
             );
             if (receivers.length > 0) {
               for (const receiver of receivers) {
+                this.bitty._updateElement(receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {

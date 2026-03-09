@@ -180,10 +180,10 @@ class BittyJs extends HTMLElement {
   }
 
   loadPageTemplates(target) {
-    target.bitty.templates = {};
+    target.bitty.template = {};
     document.querySelectorAll("template").forEach((template) => {
       if (template.id !== undefined) {
-        target.bitty.templates[template.id] = template.content;
+        target.bitty.template[template.id] = template.content;
       }
     });
   }

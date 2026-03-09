@@ -27,7 +27,19 @@
       </hgroup>
 
       <h2>[! include [file.parent, "title.html"]|join("/") !]</h2>
-      [! include [file.parent, "bitty-tag.html"]|join("/") !]
+
+      [! include [[file.parent, "visible-bitty-tag.html"]|join("/"), [file.parent, "bitty-tag.html"]|join("/")] !]
+
+      [!- set visible_bitty_tag -!]
+      [! include [file.parent, "visible-bitty-tag.html"]|join("/") ignore missing !]
+      [!- endset -!]
+
+      [!- if visible_bitty_tag != "" -!]
+      <h3>bitty tag</h3>
+      [!- filter block_highlight("html") -!]
+      [@- visible_bitty_tag -@]
+      [!- endfilter -!]
+      [!- endif -!]
 
       <h3>html</h3>
       [! filter block_highlight("html") !]
@@ -42,7 +54,7 @@
 
 
       <h3>output</h3>
-        <div class="example-block">
+        <div class="example-block-2">
       [! include [file.parent, "html.html"]|join("/") !]
         </div>
 

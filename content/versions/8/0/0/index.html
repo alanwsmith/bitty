@@ -6,28 +6,38 @@
   "_wrappers/main-wrapper.html"
 !]
 
+
 [! block main !]
 
-  <p>bitty</p>
-  <p>a front-end framework for the web</p>
+<div class="xxxlarge-padding xxxlarge-block-margin">
+  <p class="text-align-center xxlarge-font-size font-weight-900">bitty</p>
+  <p class="text-align-center">a front-end framework for the web</p>
+</div>
 
 <h2>getting started</h2>
 <ul>
   <li>
+    <p>bitty is a front-end framework that uses signals.</p>
+  </li>
+  <li>
     <p>
-      bitty is web component loaded via a <code>&ltscript&gt;</code> tag. 
+      it's comes in a component loaded with <code>&ltscript&gt;</code> tag. 
     </p> 
   </li>
   <li>
     <p>
-      it uses a <code>data-connect</code> attribute to connect 
+      the component uses a <code>data-connect</code> attribute to connect 
       to a JavaScript module. 
     </p>
   </li>
   <li>
     <p>
-      elements with <code>data-s</code> and <code>data-r</code> attributes
-      send and receive signals. 
+      elements with <code>data-s</code> attributes send signals.  
+    </p>
+  </li>
+  <li>
+    <p>
+      elements <code>data-r</code> attributes receive signals. 
     </p>
 [! filter block_highlight("html") !]
 <script type="module" src="/bitty-v8.0.0.js"></script>
@@ -36,7 +46,7 @@
   </li>
   <li>
     <p>
-      vanilla functions handle the signals. 
+      signals are handled by vanilla functions with the same name.
     </p>
 [! filter block_highlight("js") !]
 [! include "v8-bits/timestamp.js" !]
@@ -50,17 +60,17 @@
   </li>
 </ul>
 
-<h2>native events and elements</h2>
+<h2>native elements and events</h2>
 
 <ul>
   <li>
     <p>
-      bitty sends native HTML events and elements to functions. 
+      bitty uses native elements and events.
     </p>
   </li>
   <li>
     <p>
-      the three arguments passed to the functions are:
+      functions receive three arguments when an event triggers a signal. 
     </p>
     <ol>
       <li><p>the event that triggered the signal.</p></li>
@@ -72,7 +82,7 @@
     <p>
       The standard names for these arguments used 
       on this site and in the documentation are <code>ev</code>, 
-      <code>sender</code>, and <code>el</code>
+      <code>sender</code>, and <code>el</code>.
     </p>
     <p>
       For example:
@@ -95,8 +105,26 @@
 <ul>
   <li>
     <p>
-      that's all you need to know to get started using bitty.
+      that's all you need to get started.
     </p>
+  </li>
+  <li>
+    <p>
+      check out <a href="/[@ vars.docs_dir @]/">the documentation</a>
+      for a full list of features.
+    </p>
+  </li>
+  <!--
+  <li>
+    <p>
+      walk-throughs are provided in <a href="/[@ vars.tutorials_dir @]/">the tutorials</a>.
+    </p>
+  </li>
+-->
+  <li>
+    <p>
+      there are also <a href="/[@ vars.examples_dir @]/">examples</a>. 
+    <p>
   </li>
 </ul>
 
@@ -104,46 +132,3 @@
 [! endblock !]
 
 
-
-[#
-<h2>events and signals</h2>
-<ul>
-  <li>
-    <p>
-      bitty listens for events and send signals when they happen.
-    </p>
-  </li>
-  <li>
-    <p>
-      elements with <code>data-s</code> attributes sends signals.
-    </p>
-  </li>
-  <li>
-    <p>
-      elements with <code>data-r</code> attributes receive signals.
-    </p>
-  </li>
-  <li>
-    <p>
-      vanilla JavaScript functions whose names matches 
-      the signal provide functionality. 
-    </p>
-  </li>
-  <li>
-    <p>
-      each element with a <code>data-r</code> attribute for a given
-      signal is passed through the function individually. 
-    </p>
-    <p>For example:</p>
-[! filter block_highlight("html") !]
-[! include "v8-bits/timestamp-2.html" !]
-[! endfilter !]
-[! filter block_highlight("js") !]
-[! include "v8-bits/timestamp-2.js" !]
-[! endfilter !]
-    <div class="example-block">
-[! include "v8-bits/timestamp-2.html" !]
-    </div>
-  </li>
-</ul>
-#]

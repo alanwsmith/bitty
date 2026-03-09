@@ -18,17 +18,36 @@
     ></bitty-8-0>
 
     <header class="default-wrapper">
-      <div class="top-nav">
-        <a href="/">bitty</a>
-        <a href="/[@ vars.snippets_dir @]/">snippets</a>
-        <a href="/[@ vars.tutorials_dir @]/">tutorials</a>
-        <a href="/[@ vars.examples_dir @]/">examples</a>
-        <a href="/[@ vars.docs_dir @]/">documentation</a>
-      </div>
+      [! include [vars.wrappers_dir, "includes", "global-nav.html" ]|join("/") !]
     </header>
 
     <main class="default-flow [! block main_wrapper !]default-wrapper[! endblock !]">
-      [! block main !][! endblock !]
+      <hgroup>
+        <h1>snippets</h1>
+      </hgroup>
+
+      <h2>[! include [file.parent, "title.html"]|join("/") !]</h2>
+      [! include [file.parent, "bitty-tag.html"]|join("/") !]
+
+      <h3>html</h3>
+      [! filter block_highlight("html") !]
+      [! include [file.parent, "html.html"]|join("/") !]
+      [! endfilter !]
+
+
+      <h3>javascript</h3>
+      [! filter block_highlight("js") !]
+      [! include [file.parent, "javascript.js"]|join("/") !]
+      [! endfilter !]
+
+
+      <h3>output</h3>
+        <div class="example-block">
+      [! include [file.parent, "html.html"]|join("/") !]
+        </div>
+
+
+      [! block description !][! endblock !]
     </main>
 
 
@@ -47,12 +66,6 @@
     </details>
     </div>
     #]
-    
-    <!--
-    <[@ vars.bitty_tag @] data-connect="/[@ vars.bits_dir @]/details-opener.js"></[@ vars.bitty_tag @]>
-
-
-    <[@ vars.bitty_tag @]></[@ vars.bitty_tag @]>
--->
 </body>
 </html>
+

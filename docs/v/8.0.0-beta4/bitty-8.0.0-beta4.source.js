@@ -414,8 +414,9 @@ class BittyJs extends HTMLElement {
     target.bitty.data = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "application/json" && script.id !== undefined) {
+        console.log("HERE1");
         try {
-          target.bitty.data[script.id] = JSON.parse(script.innerText);
+          target.bitty.data[script.id] = JSON.parse(script.innerHTML);
         } catch (error) {
           console.error(
             `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,

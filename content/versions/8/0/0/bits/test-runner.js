@@ -1,12 +1,23 @@
 export const bitty = {};
 
-export async function runTests() {
+let includeErrorTests = true;
+let testsAreRunning = false;
+
+export async function runTests(_, __, el) {
+  if (testsAreRunning === true) {
+    return;
+  }
+  testsAreRunning = true;
+  el.innerHTML = "started test run";
   await bitty.sleep(800);
-  // comment/uncomment to pick which tests to run.
   bitty.trigger("runTest");
-  bitty.trigger("runTestWithErrors");
+  if (includeErrorTests === true) {
+    bitty.trigger("runTestWithErrors");
+  }
   await bitty.sleep(2000);
   testItems();
+  el.innerHTML = "testing complete";
+  testsAreRunning = false;
 }
 
 const levels = ["pass", "todo", "fail"];

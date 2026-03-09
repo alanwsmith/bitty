@@ -9,6 +9,7 @@
     [! include vars.styles_dir + "/_includes/initial-styles.html" !]
     <script src="/[@ vars.styles_dir @]/styles.js"></script>
     <link rel="stylesheet" href="/[@ vars.styles_dir @]/main.css" />
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/example.css" />
   </head>
   <script type="module" src="[@ vars.bitty_script_path @]"></script>
 <body>
@@ -25,31 +26,45 @@
       <hgroup>
         <h1>examples</h1>
       </hgroup>
+      <div class="example-columns">
+        <div class="example-sidebard">
 
-      <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
+          <ul>
+          [! for example_dir in folders_in_folder(file.path_part_strings[4]) !]
+            <li>
+          [! if example_dir == file.parent !]
+          [! include [example_dir, "name.html"]|join("/") -!]
+          [! else !]
+          <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
+          [! endif !]
+            </li>
+          [! endfor !]
+          </ul>
 
-      [! include [file.parent, "description.html"]|join("/") !]
+        </div>
+        <div class="example-content">
+          <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
+          [! include [file.parent, "description.html"]|join("/") !]
+          <h4>example</h4>
+          <div class="example-block-2">
+          [! include [file.parent, "html.html"]|join("/") !]
+          </div>
+          <h4>html</h4>
+          [!- filter block_highlight("html") -!]
+          [! include [file.parent, "html.html"]|join("/") !]
+          [! endfilter !]
+          <h4>javascript</h4>
+          [!- filter block_highlight("js") -!]
+          [! include [file.parent, "javascript.js"]|join("/") !]
+          [! endfilter !]
+          <h3>bitty tag html</h3>
+          [!- filter block_highlight("html") -!]
+          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+          [!- endfilter -!]
+          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+        </div>
 
-      <h4>example</h4>
-      <div class="example-block-2">
-      [! include [file.parent, "html.html"]|join("/") !]
       </div>
-
-      <h4>html</h4>
-      [!- filter block_highlight("html") -!]
-      [! include [file.parent, "html.html"]|join("/") !]
-      [! endfilter !]
-
-      <h4>javascript</h4>
-      [!- filter block_highlight("js") -!]
-      [! include [file.parent, "javascript.js"]|join("/") !]
-      [! endfilter !]
-
-      <h3>bitty tag html</h3>
-      [!- filter block_highlight("html") -!]
-      [! include [file.parent, "bitty-tag.html"]|join("/") !]
-      [!- endfilter -!]
-      [! include [file.parent, "bitty-tag.html"]|join("/") !]
 
       <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
     </main>

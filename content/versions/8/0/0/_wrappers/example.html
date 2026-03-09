@@ -23,23 +23,47 @@
 
     <main class="default-flow [! block main_wrapper !]default-wrapper[! endblock !]">
       <hgroup>
-        <h1>snippets</h1>
+        <h1>examples</h1>
       </hgroup>
 
-      <h2>[! include [file.parent, "title.html"]|join("/") !]</h2>
+      <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
 
-      [! include [[file.parent, "visible-bitty-tag.html"]|join("/"), [file.parent, "bitty-tag.html"]|join("/")] !]
+      [! include [file.parent, "description.html"]|join("/") !]
+
+      <h4>example</h4>
+      <div class="example-block-2">
+      [! include [file.parent, "html.html"]|join("/") !]
+      </div>
+
+      <h4>html</h4>
+      [!- filter block_highlight("html") -!]
+      [! include [file.parent, "html.html"]|join("/") !]
+      [! endfilter !]
+
+      <h4>javascript</h4>
+      [!- filter block_highlight("js") -!]
+      [! include [file.parent, "javascript.js"]|join("/") !]
+      [! endfilter !]
+
 
       [!- set visible_bitty_tag -!]
       [! include [file.parent, "visible-bitty-tag.html"]|join("/") ignore missing !]
       [!- endset -!]
-
       [!- if visible_bitty_tag != "" -!]
-      <h3>bitty tag</h3>
+      <h3>bitty tag html</h3>
       [!- filter block_highlight("html") -!]
       [@- visible_bitty_tag -@]
       [!- endfilter -!]
       [!- endif -!]
+
+      [! include [[file.parent, "visible-bitty-tag.html"]|join("/"), [file.parent, "invisible-bitty-tag.html"]|join("/")] !]
+
+      <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
+
+      [#
+
+
+
 
       <h3>html</h3>
       [! filter block_highlight("html") !]
@@ -58,10 +82,12 @@
       [! include [file.parent, "html.html"]|join("/") !]
         </div>
 
+      #]
 
       [! block description !][! endblock !]
     </main>
 
 </body>
 </html>
+
 

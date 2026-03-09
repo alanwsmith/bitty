@@ -52,9 +52,20 @@ class BittyJs extends HTMLElement {
   __updateEvent(ev) {
     if (ev.bittyUpdated === true) {
       return;
+    } else {
+      ev.bittyUpdated = true;
     }
     ev.prop = (key) => {
-      return ev.target.dataset[key];
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return ev.target.dataset[key];
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return propAncestor.dataset[key];
+      }
+      return undefined;
     };
   }
 

@@ -1,20 +1,5 @@
 export const bitty = {};
 
-export async function runTest() {
-  bitty.qs("[data-s~=signal_D857D_alfa]").click();
-  await bitty.sleep(200);
-  const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_D857D_alfa]");
-  checkEls.forEach((checkEl) => {
-    if (checkEl.innerHTML === "todo") {
-      checkEl.dataset.testStatus = 1;
-    } else {
-      const match = checkEl.innerHTML.match(pattern);
-      if (match !== null) {
-        checkEl.dataset.testStatus = 0;
-      } else {
-        checkEl.dataset.testStatus = 2;
-      }
-    }
-  });
-}
+// This example must be tested manually since it
+// deals with the copy/paste system of
+// the operating system.

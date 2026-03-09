@@ -53,6 +53,24 @@ class BittyJs extends HTMLElement {
     if (ev.bittyUpdated === true) {
       return;
     }
+    ev.copy = async function () {
+      if (ev.target.value) {
+        try {
+          await navigator.clipboard.writeText(ev.target.value);
+        } catch (error) {
+          console.error(`Could not copy .value from event.`);
+          return false;
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(ev.target.innerHTML);
+        } catch (error) {
+          console.error(`Could not copy .innerHTML from event.`);
+          return false;
+        }
+      }
+      return true;
+    };
     ev.prop = (key) => {
       if (
         ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined

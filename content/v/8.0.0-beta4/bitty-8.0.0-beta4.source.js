@@ -13,6 +13,7 @@ class BittyJs extends HTMLElement {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
       if (incoming.bitty !== undefined) {
+        incoming.bitty._debouncers = {};
         this.loadPageTemplates(incoming);
         this.loadPageData(incoming);
         this.loadPageSVGs(incoming);
@@ -313,6 +314,15 @@ class BittyJs extends HTMLElement {
       }
     }
     return true;
+  }
+
+  _debounce(key, signals, ms, payload = {}) {
+    if (this.bitty._debouncers[key]) {
+      window.clearTimeout(this.bitty._debouncers[key]);
+    }
+    this.bitty._debouncers[key] = setTimeout(() => {
+      this.bitty.send.apply(this, [payload, signals]);
+    }, ms);
   }
 
   // TODO: Set this up to accept an array of

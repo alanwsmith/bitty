@@ -49,11 +49,9 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  __updateEvent(ev) {
+  __updateEvent(ev, sender) {
     if (ev.bittyUpdated === true) {
       return;
-    } else {
-      ev.bittyUpdated = true;
     }
     ev.prop = (key) => {
       if (
@@ -91,6 +89,28 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
+    ev.setProp = (key, value) => {
+      ev.target.dataset[key] = value;
+    };
+    ev.val = () => {
+      if (ev.target === undefined) {
+        return undefined;
+      }
+      return ev.target.value;
+    };
+    ev.valAsFloat = () => {
+      if (ev.target === undefined) {
+        return undefined;
+      }
+      return parseFloat(ev.target.value);
+    };
+    ev.valAsInt = () => {
+      if (ev.target === undefined) {
+        return undefined;
+      }
+      return parseInt(ev.target.value, 10);
+    };
+    ev.bittyUpdated = true;
   }
 
   addBittyClasses(target) {

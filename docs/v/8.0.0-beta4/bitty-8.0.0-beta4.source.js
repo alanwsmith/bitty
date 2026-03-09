@@ -67,6 +67,30 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
+    ev.propAsFloat = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return parseFloat(ev.target.dataset[key]);
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseFloat(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
+    ev.propAsInt = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return parseInt(ev.target.dataset[key], 10);
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseInt(propAncestor.dataset[key], 10);
+      }
+      return undefined;
+    };
   }
 
   addBittyClasses(target) {

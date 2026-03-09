@@ -280,12 +280,15 @@ class BittyJs extends HTMLElement {
   }
 
   __checkTargetSender(ev, sender, el) {
-    if (sender && el.isSameNode(sender)) {
+    if (sender && sender.nodeType !== undefined && sender.isSameNode(el)) {
       el.isSender = true;
     } else {
       el.isSender = false;
     }
-    if (ev && ev.target && el.isSameNode(ev.target)) {
+    if (
+      ev && ev.target && ev.target.nodeType !== undefined &&
+      ev.target.isSameNode(el)
+    ) {
       el.isTarget = true;
     } else {
       el.isTarget = false;
@@ -623,8 +626,9 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.bitty._updateElement(receiver);
-            // TODO: update isSender and isTarget
-            this[signal](ev, null, receiver);
+            this.bitty._checkTargetSender(ev, ev.target, receiver);
+            this.bitty._updateSender(ev.target);
+            this[signal](ev, ev.target, receiver);
           }
         } else {
           this[signal](ev, null, null);

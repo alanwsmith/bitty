@@ -2,23 +2,23 @@ export const bitty = {};
 
 const input = document.createDocumentFragment();
 const newEl = document.createElement("div");
-newEl.innerHTML = "TARGET_signal_B15F2_alfa";
+newEl.innerHTML = "TARGET_signal_B15F2_v1";
 input.appendChild(newEl);
 
 const subFragment1 = document.createElement("template");
 subFragment1.innerHTML = "<div>UPDATED</div>";
 
 const subFragment2 = document.createElement("template");
-subFragment2.innerHTML = "<div>signal_B15F2_alfa</div>";
+subFragment2.innerHTML = "<div>signal_B15F2_v1</div>";
 
 const subs = {
-  "TARGET_signal_B15F2_alfa": [subFragment1.content, subFragment2.content],
+  "TARGET_signal_B15F2_v1": [subFragment1.content, subFragment2.content],
 };
 
-export function signal_B15F2_alfa(ev, sender, el) {
+export function signal_B15F2_v1(ev, sender, el) {
   const output = bitty.render(input, subs);
   const result = output.firstChild.children[1].innerHTML;
-  if (result === "signal_B15F2_alfa") {
+  if (result === "signal_B15F2_v1") {
     el.innerHTML = bitty.time();
   }
 }

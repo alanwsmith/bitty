@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export async function signal_DB9CF_alfa(ev, sender, el) {
+export async function signal_DB9CF_v1(ev, sender, el) {
   const options = {
     method: "GET",
   };

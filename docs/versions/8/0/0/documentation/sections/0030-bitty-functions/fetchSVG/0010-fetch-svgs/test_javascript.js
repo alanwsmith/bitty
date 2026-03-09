@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export async function signal_735BF_alfa(_, __, el) {
+export async function signal_735BF_v1(_, __, el) {
   const svgs = await bitty.fetchSVG(
     "/versions/8/0/0/documentation/samples/multiple-svgs/index.html",
   );

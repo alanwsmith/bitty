@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export async function signal_71C04_alfa(_, __, el) {
+export async function signal_71C04_v1(_, __, el) {
   const templates = await bitty.fetchHTML(
     "/versions/8/0/0/documentation/samples/valid-templates/index.html",
   );

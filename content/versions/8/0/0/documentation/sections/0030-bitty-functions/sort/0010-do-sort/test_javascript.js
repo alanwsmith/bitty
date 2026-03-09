@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export function signal_FBF54_alfa(ev, sender, el) {
+export function signal_FBF54_v1(ev, sender, el) {
   const items = [
     "bravo",
     "Alfa",

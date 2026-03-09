@@ -285,7 +285,7 @@ class BittyJs extends HTMLElement {
     } else {
       el.isSender = false;
     }
-    if (ev.target && el.isSameNode(ev.target)) {
+    if (ev && ev.target && el.isSameNode(ev.target)) {
       el.isTarget = true;
     } else {
       el.isTarget = false;
@@ -414,7 +414,6 @@ class BittyJs extends HTMLElement {
     target.bitty.data = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "application/json" && script.id !== undefined) {
-        console.log("HERE1");
         try {
           target.bitty.data[script.id] = JSON.parse(script.innerHTML);
         } catch (error) {
@@ -570,6 +569,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processBittySend(ev) {
+    this.bitty._updateEvent(ev);
     const signals = this.bitty._splitSignalString(ev.signals);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
@@ -578,6 +578,9 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
+            this.bitty._updateElement(receiver);
+            receiver.isSender = false;
+            receiver.isTarget = false;
             this[signal](ev.payload, null, receiver);
           }
         } else {
@@ -588,6 +591,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processBittyTrigger(ev) {
+    this.bitty._updateEvent(ev);
     const signals = this.bitty._splitSignalString(ev.signals);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
@@ -596,6 +600,9 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
+            this.bitty._updateElement(receiver);
+            receiver.isSender = false;
+            receiver.isTarget = false;
             this[signal](ev, null, receiver);
           }
         } else {
@@ -606,6 +613,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processCustomEvent(ev, signalsString) {
+    this.bitty._updateEvent(ev);
     const signals = this.bitty._splitSignalString(signalsString);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
@@ -614,6 +622,8 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
+            this.bitty._updateElement(receiver);
+            // TODO: update isSender and isTarget
             this[signal](ev, null, receiver);
           }
         } else {
@@ -654,6 +664,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processKeypress(ev, signalString) {
+    this.bitty._updateEvent(ev);
     const sender = ev.target;
     const signals = this.bitty._splitSignalString(signalString);
     for (const signal of signals) {
@@ -663,6 +674,8 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
+            this.bitty._updateElement(receiver);
+            this.bitty._checkTargetSender(ev, sender, receiver);
             this[signal](ev, sender, receiver);
           }
         } else {
@@ -673,6 +686,7 @@ class BittyJs extends HTMLElement {
   }
 
   __processListener(ev) {
+    this.bitty._updateEvent(ev);
     const senders = this.bitty._findSenders(ev.target);
     for (const sender of senders) {
       const signals = this.bitty._splitSignalString(sender.dataset.s);
@@ -687,6 +701,8 @@ class BittyJs extends HTMLElement {
             );
             if (receivers.length > 0) {
               for (const receiver of receivers) {
+                this.bitty._updateElement(receiver);
+                this.bitty._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {

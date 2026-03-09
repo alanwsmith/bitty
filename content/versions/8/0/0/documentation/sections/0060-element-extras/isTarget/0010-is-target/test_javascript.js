@@ -1,11 +1,11 @@
 export const bitty = {};
 
-export function signal_3753F_alfa(_, __, el) {
+export function signal_3753F_v1(_, __, el) {
   if (el.isTarget === true) {
-    bitty.trigger("signal_3753F_bravo");
+    bitty.trigger("signal_3753F_v2");
   }
 }
 
-export function signal_3753F_bravo(_, __, el) {
+export function signal_3753F_v2(_, __, el) {
   el.innerHTML = bitty.time();
 }

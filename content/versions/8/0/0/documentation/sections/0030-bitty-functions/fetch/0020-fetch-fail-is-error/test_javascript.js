@@ -1,6 +1,6 @@
 export const bitty = {};
 
-export async function signal_79EC4_alfa(ev, sender, el) {
+export async function signal_79EC4_v1(ev, sender, el) {
   console.error(
     "NOTE: the 404 missing error for intentionally-missing-file.json is an expected error from testing.",
   );

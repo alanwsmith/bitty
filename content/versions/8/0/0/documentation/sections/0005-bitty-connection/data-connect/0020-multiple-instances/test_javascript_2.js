@@ -1,5 +1,5 @@
 export const bitty = {};
 
-export function signal_A2EB2_bravo(ev, sender, el) {
+export function signal_A2EB2_v2(ev, sender, el) {
   el.innerHTML = bitty.time();
 }

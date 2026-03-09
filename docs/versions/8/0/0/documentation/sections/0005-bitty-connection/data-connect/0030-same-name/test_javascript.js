@@ -1,14 +1,14 @@
 export const bitty = {};
 
-export function signal_9E5B8_alfa(ev, sender, el) {
+export function signal_9E5B8_v1(ev, sender, el) {
   /************************************************
    * This function receives the initial
-   * `signal_9E5B8_alfa` then triggers `signal_9E5B8_bravo`
+   * `signal_9E5B8_v1` then triggers `signal_9E5B8_v2`
    * which is unique to this module.
    ************************************************/
-  bitty.trigger("signal_9E5B8_bravo");
+  bitty.trigger("signal_9E5B8_v2");
 }
 
-export function signal_9E5B8_bravo(_, __, el) {
+export function signal_9E5B8_v2(_, __, el) {
   el.innerHTML = bitty.time();
 }

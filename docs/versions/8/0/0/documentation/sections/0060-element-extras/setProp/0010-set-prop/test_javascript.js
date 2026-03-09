@@ -1,8 +1,8 @@
 export const bitty = {};
 
-export function signal_A090D_alfa(_, __, el) {
-  el.setProp("update", "A090D_alfa");
-  if (el.dataset.update === "A090D_alfa") {
+export function signal_A090D_v1(_, __, el) {
+  el.setProp("update", "A090D_v1");
+  if (el.dataset.update === "A090D_v1") {
     el.innerHTML = bitty.time();
   }
 }

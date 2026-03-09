@@ -313,6 +313,14 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  __checkTargetSender(ev, sender, el) {
+    if (ev.target && el.isSameNode(ev.target)) {
+      el.isSender = true;
+    } else {
+      el.isSender = false;
+    }
+  }
+
   async _copy(selector) {
     const el = document.querySelector(selector);
     if (el.value !== undefined) {
@@ -661,6 +669,7 @@ class BittyJs extends HTMLElement {
             if (receivers.length > 0) {
               for (const receiver of receivers) {
                 this.bitty._updateElement(receiver);
+                this.bitty._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {

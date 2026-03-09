@@ -181,24 +181,15 @@ class BittyJs extends HTMLElement {
     ev.setProp = (key, value) => {
       ev.target.dataset[key] = value;
     };
-    ev.val = () => {
-      if (ev.target === undefined) {
-        return undefined;
-      }
-      return ev.target.value;
-    };
-    ev.valAsFloat = () => {
-      if (ev.target === undefined) {
-        return undefined;
-      }
-      return parseFloat(ev.target.value);
-    };
-    ev.valAsInt = () => {
-      if (ev.target === undefined) {
-        return undefined;
-      }
-      return parseInt(ev.target.value, 10);
-    };
+    if (ev.target === undefined) {
+      ev.val = undefined;
+      ev.valAsFloat = undefined;
+      ev.valAsInt = undefined;
+    } else {
+      ev.val = ev.target.value;
+      ev.valAsFloat = parseFloat(ev.target.value);
+      ev.valAsInt = parseInt(ev.target.value, 10);
+    }
     ev.bittyUpdated = true;
   }
 
@@ -263,25 +254,15 @@ class BittyJs extends HTMLElement {
     sender.setProp = (key, value) => {
       sender.dataset[key] = value;
     };
-    sender.val = () => {
-      if (sender === undefined) {
-        return undefined;
-      }
-      return sender.value;
-    };
-    sender.valAsFloat = () => {
-      if (sender === undefined) {
-        return undefined;
-      }
-      return parseFloat(sender.value);
-    };
-    sender.valAsInt = () => {
-      if (sender === undefined) {
-        return undefined;
-      }
-      return parseInt(sender.value, 10);
-    };
-    sender.bittyUpdated = true;
+    if (sender === undefined) {
+      sender.val = undefined;
+      sender.valAsFloat = undefined;
+      sender.valAsInt = undefined;
+    } else {
+      sender.val = sender.value;
+      sender.valAsFloat = parseFloat(sender.value);
+      sender.valAsInt = parseInt(sender.value, 10);
+    }
   }
 
   addBittyClasses(target) {

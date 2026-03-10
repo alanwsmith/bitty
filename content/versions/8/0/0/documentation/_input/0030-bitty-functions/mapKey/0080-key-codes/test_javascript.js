@@ -1,10 +1,8 @@
-export const b = {};
+export const b = {
+  init: "init_$_TEST_ID_",
+};
 
-export function setKey_$_SIGNAL_() {
-  /******************************************
-   * This functions is run via the `data-run`
-   * attribute in the <[@ bitty_tag @]> tag.
-   ******************************************/
+export function init_$_TEST_ID_() {
   b.mapKey(89, "$_SIGNAL_");
 }
 

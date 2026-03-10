@@ -1,10 +1,8 @@
-export const b = {};
+export const b = {
+  init: "init_9EAED_v1",
+};
 
-export function setKey_signal_9EAED_v1() {
-  /******************************************
-   * This functions is run via the `data-run`
-   * attribute in the <[@ bitty_tag @]> tag.
-   ******************************************/
+export function init_9EAED_v1() {
   b.mapKey("/", "signal_9EAED_v1", [], { preventDefault: false });
 }
 

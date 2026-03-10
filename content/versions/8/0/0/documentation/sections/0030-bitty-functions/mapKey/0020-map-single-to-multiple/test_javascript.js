@@ -1,10 +1,8 @@
-export const b = {};
+export const b = {
+  init: "init_CFB66_v1",
+};
 
-export function setKey() {
-  /******************************************
-   * This functions is run via the `data-run`
-   * attribute in the <[@ bitty_tag @]> tag.
-   ******************************************/
+export function init_CFB66_v1() {
   b.mapKey("w", "signal_CFB66_v1");
 }
 

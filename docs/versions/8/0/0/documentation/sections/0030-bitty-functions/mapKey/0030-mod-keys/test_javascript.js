@@ -1,10 +1,8 @@
-export const b = {};
+export const b = {
+  init: "init_DE6CE_v1",
+};
 
-export function setKey() {
-  /******************************************
-   * This functions is run via the `data-run`
-   * attribute in the <[@ bitty_tag @]> tag.
-   ******************************************/
+export function init_DE6CE_v1() {
   b.mapKey("e", "signal_DE6CE_v1", ["ctrlKey"]);
 }
 

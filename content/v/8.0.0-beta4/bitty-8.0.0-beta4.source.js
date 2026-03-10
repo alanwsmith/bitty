@@ -446,9 +446,9 @@ class BittyJs extends HTMLElement {
 
   loadPageTemplates(target) {
     target.bitty.template = {};
-    document.querySelectorAll("template").forEach((template) => {
-      if (template.id !== undefined) {
-        target.bitty.template[template.id] = template.content;
+    document.querySelectorAll("script").forEach((script) => {
+      if (script.type === "text/html" && script.id !== undefined) {
+        target.bitty.template[script.id] = script.innerHTML;
       }
     });
   }
@@ -744,6 +744,7 @@ class BittyJs extends HTMLElement {
     const tmpl = document.createElement("div");
     if (typeof input === "string") {
       tmpl.innerHTML = input;
+      // TODO: DEPRECATE anything other that a string as input.
     } else {
       // TODO: Test to verify this works with both
       // elements and document fragments so the

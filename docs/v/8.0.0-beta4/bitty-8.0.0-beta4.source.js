@@ -726,7 +726,6 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-    //
 
     // this.b._updateEvent(ev);
     // const senders = this.b._findSenders(ev.target);

@@ -1,7 +1,12 @@
-export const b = {};
+export const b = {
+  init: "init_235BC_v1",
+};
 
-export function signal_235BC_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+export async function init_235BC_v1(_, __, el) {
+  const t1 = performance.now();
+  await b.sleep(100);
+  const t2 = performance.now();
+  if ((t2 - t1) > 80) {
+    el.innerHTML = b.time();
+  }
 }

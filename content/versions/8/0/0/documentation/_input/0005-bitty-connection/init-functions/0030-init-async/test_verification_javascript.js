@@ -1,10 +1,9 @@
 export const b = {};
 
 export async function runTest() {
-  b.qs("[data-s~=$_SIGNAL_]").click();
   await b.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = b.qsa("[data-r~=$_SIGNAL_]");
+  const checkEls = b.qsa("[data-r~=init_$_TEST_ID_]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

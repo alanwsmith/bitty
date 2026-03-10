@@ -8,4 +8,3 @@ export function signal_EDB2D_v1(_, __, el) {
     el.innerHTML = bitty.time();
   }
 }
-

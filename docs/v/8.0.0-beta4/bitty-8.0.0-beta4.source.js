@@ -751,157 +751,25 @@ class BittyJs extends HTMLElement {
         return tmpWrapper.innerHTML;
       }
     }).join("");
-
     for (const needle of Object.keys(subs)) {
-      const updates = subs[needle] instanceof Array === true
-        ? subs[needle]
-        : [subs[needle]];
-      updates.forEach((update) => {
+      this.bitty.tee(subs);
+      const updates = this.bitty.tee(
+        subs[needle] instanceof Array === true ? subs[needle] : [subs[needle]],
+      );
+      const replacement = updates.map((update) => {
         if (typeof update === "string") {
-          content = content.replaceAll(needle, update);
+          return update;
+        } else {
+          const tmpWrapper = document.createElement("div");
+          tmpWrapper.appendChild(update);
+          return tmpWrapper.innerHTML;
         }
-      });
-
-      // const subsArray = subs[key] instanceof Array === true
-      //   ? subs[key]
-      //   : [subs[key]];
-      // if (
-      //   subsArray[0] instanceof Element
-      // ) {
-      //   content = content.replaceAll(
-      //     key,
-      //     subsArray.map((el) => el.outerHTML).join(""),
-      //   );
-      // } else if (subsArray[0] instanceof DocumentFragment) {
-      //   content = content.replaceAll(
-      //     key,
-      //     subsArray.map((fragment) =>
-      //       // TODO: Verify this work with text nodes.
-      //       [...fragment.children].map((el) => el.outerHTML).join("")
-      //     ).join(""),
-      //   );
-      // } else {
-      //   content = content.replaceAll(key, subsArray.join(""));
-      // }
+      }).join("");
+      content = content.replaceAll(needle, replacement);
     }
-
     const result = document.createElement("template");
     result.innerHTML = content;
     return result.content;
-
-    // if (typeof input[0] === "string") {
-    //   if (this.bitty.template[input] === undefined) {
-    //     content = this.bitty.tee(input);
-    //   } else {
-    //     content = this.bitty.template[input];
-    //   }
-    // } else {
-    //   const tmpWrapper = document.createElement("div");
-    //   tmpWrapper.appendChild(input);
-    //   content = tmpWrapper.innerHTML;
-    // }
-
-    // if (typeof input === "string") {
-    //   if (this.bitty.template[input] === undefined) {
-    //     content = this.bitty.tee(input);
-    //   } else {
-    //     content = this.bitty.template[input];
-    //   }
-    // } else {
-    //   const tmpWrapper = document.createElement("div");
-    //   tmpWrapper.appendChild(input);
-    //   content = tmpWrapper.innerHTML;
-    // }
-
-    // for (const key of Object.keys(subs)) {
-    //   const subsArray = subs[key] instanceof Array === true
-    //     ? subs[key]
-    //     : [subs[key]];
-    //   if (
-    //     subsArray[0] instanceof Element
-    //   ) {
-    //     content = content.replaceAll(
-    //       key,
-    //       subsArray.map((el) => el.outerHTML).join(""),
-    //     );
-    //   } else if (subsArray[0] instanceof DocumentFragment) {
-    //     content = content.replaceAll(
-    //       key,
-    //       subsArray.map((fragment) =>
-    //         // TODO: Verify this work with text nodes.
-    //         [...fragment.children].map((el) => el.outerHTML).join("")
-    //       ).join(""),
-    //     );
-    //   } else {
-    //     content = content.replaceAll(key, subsArray.join(""));
-    //   }
-    // }
-    // const result = document.createElement("template");
-    // result.innerHTML = content;
-    // return result.content;
-
-    // let content = this.bitty.template[key];
-    // for (const sub of Object.keys(subs)) {
-    //   const subsArray = subs[sub] instanceof Array === true
-    //     ? subs[sub]
-    //     : [subs[sub]];
-    //   if (
-    //     subsArray[0] instanceof Element
-    //   ) {
-    //     content = content.replaceAll(
-    //       sub,
-    //       subsArray.map((el) => el.outerHTML).join(""),
-    //     );
-    //   } else if (subsArray[0] instanceof DocumentFragment) {
-    //     content = content.replaceAll(
-    //       sub,
-    //       subsArray.map((fragment) =>
-    //         // TODO: Verify this work with text nodes.
-    //         [...fragment.children].map((el) => el.outerHTML).join("")
-    //       ).join(""),
-    //     );
-    //   } else {
-    //     content = content.replaceAll(sub, subsArray.join(""));
-    //   }
-    // }
-    // const result = document.createElement("template");
-    // result.innerHTML = content;
-    // return result.content;
-
-    // let content;
-    // if (typeof input === "string") {
-    //   content = input;
-    // } else {
-    //   content = tmpl.outerHTML;
-    // }
-    // for (const key of Object.keys(subs)) {
-    //   const subsArray = subs[key] instanceof Array === true
-    //     ? subs[key]
-    //     : [subs[key]];
-    //   if (
-    //     subsArray[0] instanceof Element
-    //   ) {
-    //     content = content.replaceAll(
-    //       key,
-    //       subsArray.map((el) => el.outerHTML).join(""),
-    //     );
-    //   } else if (subsArray[0] instanceof DocumentFragment) {
-    //     content = content.replaceAll(
-    //       key,
-    //       subsArray.map((fragment) =>
-    //         // TODO: Verify this work with text nodes.
-    //         [...fragment.children].map((el) => el.outerHTML).join("")
-    //       ).join(""),
-    //     );
-    //   } else {
-    //     content = content.replaceAll(key, subsArray.join(""));
-    //   }
-    // }
-    // const result = document.createElement("template");
-    // result.innerHTML = content;
-    // return result.content;
-
-    //
   }
 
   _save(key, data) {

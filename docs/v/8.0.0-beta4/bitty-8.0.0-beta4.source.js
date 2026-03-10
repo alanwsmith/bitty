@@ -57,6 +57,13 @@ class BittyJs extends HTMLElement {
   }
 
   __updateElement(el) {
+    // REMINDER: this innerHTMLAsFloat and innerHTMLAsInt
+    // get set every time.
+    if (el.innerHTML !== undefined) {
+      el.innerHTMLAsFloat = parseFloat(el.innerHTML);
+      el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
+    }
+
     // REMINDER: This is only run once for each element to
     // set up the functions. The `.isSender()` and
     // `.isTarget()` are updated in a different

@@ -3,22 +3,16 @@ export const bitty = {};
 let current_station;
 let stations;
 
-function c2f(c) {
-  return Math.round((c * 9 / 5) + 32);
-}
-
 export function changeStation(ev, __, ___) {
   current_station = ev.val;
   bitty.trigger("weather");
 }
 
 export async function loadStations(_, __, el) {
-  stations = await bitty.fetch(
-    "/versions/8/0/0/examples/0060-get-weather/stations.json",
-  );
+  stations = await bitty.fetch(stationsURL());
   if (stations !== undefined) {
     el.replaceWith(bitty.render(
-      bitty.template["select"],
+      "select",
       { "OPTIONS": options() },
     ));
     bitty.trigger("weather");
@@ -27,19 +21,29 @@ export async function loadStations(_, __, el) {
   }
 }
 
+function options() {
+  return Object.keys(stations)
+    .map((state, index) => {
+      if (index === 0) {
+        current_station = stationId(state);
+      }
+      return bitty.render("option", {
+        "ABBREVIATION": state,
+        "CITY": cityName(state),
+        "CODE": stationId(state),
+        "STATE": stateName(state),
+      });
+    });
+}
+
 export async function weather(_, __, el) {
-  const report = await bitty.fetch(
-    `https://api.weather.gov/stations/${current_station}/observations/latest`,
-  );
+  const report = await bitty.fetch(reportURL());
   if (report !== undefined) {
-    const tmpC = report.properties.temperature.value;
-    const tmpF = c2f(report.properties.temperature.value);
-    console.log(report.properties.icon);
     el.replaceChildren(
-      bitty.render(bitty.template["weather"], {
-        "DESCRIPTION": report.properties.textDescription,
-        "TEMP": `${tmpF}°F (${tmpC}°C)`,
-        "IMG_SRC": report.properties.icon,
+      bitty.render("weather", {
+        "DESCRIPTION": weatherDescription(report),
+        "IMG_SRC": weatherIcon(report),
+        "TEMP": tempString(report),
       }),
     );
   } else {
@@ -47,21 +51,44 @@ export async function weather(_, __, el) {
   }
 }
 
-function options() {
-  return Object.keys(stations)
-    .map((state, index) => {
-      const item = stations[state];
-      if (index === 0) {
-        current_station = item.weather_station_id;
-      }
-      return bitty.render(
-        bitty.template["option"],
-        {
-          "ABBREVIATION": state,
-          "CITY": item.city_name,
-          "CODE": item.weather_station_id,
-          "STATE": item.state_name,
-        },
-      );
-    });
+// Helpers
+
+function cityName(state) {
+  return stations[state].city_name;
+}
+
+function reportURL() {
+  return `https://api.weather.gov/stations/${current_station}/observations/latest`;
+}
+
+function stationId(state) {
+  return stations[state].weather_station_id;
+}
+
+function stationsURL() {
+  return "/versions/8/0/0/examples/0060-get-weather/stations.json";
+}
+
+function stateName(state) {
+  return stations[state].state_name;
+}
+
+function tempC(report) {
+  return report.properties.temperature.value;
+}
+
+function tempF(report) {
+  return Math.round((report.properties.temperature.value * 9 / 5) + 32);
+}
+
+function tempString(report) {
+  return `${tempF(report)}°F (${tempC(report)}°C)`;
+}
+
+function weatherDescription(report) {
+  return report.properties.textDescription;
+}
+
+function weatherIcon(report) {
+  return report.properties.icon;
 }

@@ -337,7 +337,7 @@ class BittyJs extends HTMLElement {
   // TODO: Set up to pull <script> tags with
   // `application/json` and an `id` attribute
   // into a `bitty.json` object.
-  async _fetch(url, fallback = null, options = {}) {
+  async _fetchData(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -369,18 +369,18 @@ class BittyJs extends HTMLElement {
           container.innerHTML = content;
           container.querySelectorAll("script").forEach((script) => {
             if (script.type === "text/html" && script.id !== undefined) {
-              templates[script.id] = script.innerHTML.trim();
+              this.bitty.template[script.id] = script.innerHTML.trim();
             }
           });
-          return templates;
+          return true;
         } catch (parseError) {
           console.error(parseError);
-          return undefined;
+          return false;
         }
       }
     } catch (error) {
       console.error(error);
-      return undefined;
+      return false;
     }
   }
 
@@ -735,12 +735,47 @@ class BittyJs extends HTMLElement {
   }
 
   _render(input, subs = {}) {
-    let content;
-    if (typeof input === "string") {
-      content = input;
-    } else {
-      content = tmpl.outerHTML;
+    if (input instanceof Array === false) {
+      input = [input];
     }
+    let content = input.map((item) => {
+      if (typeof item === "string") {
+        if (this.bitty.template[item] === undefined) {
+          return item;
+        } else {
+          return this.bitty.template[item];
+        }
+      } else {
+        const tmpWrapper = document.createElement("div");
+        tmpWrapper.appendChild(item);
+        return tmpWrapper.innerHTML;
+      }
+    });
+
+    // if (typeof input[0] === "string") {
+    //   if (this.bitty.template[input] === undefined) {
+    //     content = this.bitty.tee(input);
+    //   } else {
+    //     content = this.bitty.template[input];
+    //   }
+    // } else {
+    //   const tmpWrapper = document.createElement("div");
+    //   tmpWrapper.appendChild(input);
+    //   content = tmpWrapper.innerHTML;
+    // }
+
+    // if (typeof input === "string") {
+    //   if (this.bitty.template[input] === undefined) {
+    //     content = this.bitty.tee(input);
+    //   } else {
+    //     content = this.bitty.template[input];
+    //   }
+    // } else {
+    //   const tmpWrapper = document.createElement("div");
+    //   tmpWrapper.appendChild(input);
+    //   content = tmpWrapper.innerHTML;
+    // }
+
     for (const key of Object.keys(subs)) {
       const subsArray = subs[key] instanceof Array === true
         ? subs[key]
@@ -767,6 +802,69 @@ class BittyJs extends HTMLElement {
     const result = document.createElement("template");
     result.innerHTML = content;
     return result.content;
+
+    // let content = this.bitty.template[key];
+    // for (const sub of Object.keys(subs)) {
+    //   const subsArray = subs[sub] instanceof Array === true
+    //     ? subs[sub]
+    //     : [subs[sub]];
+    //   if (
+    //     subsArray[0] instanceof Element
+    //   ) {
+    //     content = content.replaceAll(
+    //       sub,
+    //       subsArray.map((el) => el.outerHTML).join(""),
+    //     );
+    //   } else if (subsArray[0] instanceof DocumentFragment) {
+    //     content = content.replaceAll(
+    //       sub,
+    //       subsArray.map((fragment) =>
+    //         // TODO: Verify this work with text nodes.
+    //         [...fragment.children].map((el) => el.outerHTML).join("")
+    //       ).join(""),
+    //     );
+    //   } else {
+    //     content = content.replaceAll(sub, subsArray.join(""));
+    //   }
+    // }
+    // const result = document.createElement("template");
+    // result.innerHTML = content;
+    // return result.content;
+
+    // let content;
+    // if (typeof input === "string") {
+    //   content = input;
+    // } else {
+    //   content = tmpl.outerHTML;
+    // }
+    // for (const key of Object.keys(subs)) {
+    //   const subsArray = subs[key] instanceof Array === true
+    //     ? subs[key]
+    //     : [subs[key]];
+    //   if (
+    //     subsArray[0] instanceof Element
+    //   ) {
+    //     content = content.replaceAll(
+    //       key,
+    //       subsArray.map((el) => el.outerHTML).join(""),
+    //     );
+    //   } else if (subsArray[0] instanceof DocumentFragment) {
+    //     content = content.replaceAll(
+    //       key,
+    //       subsArray.map((fragment) =>
+    //         // TODO: Verify this work with text nodes.
+    //         [...fragment.children].map((el) => el.outerHTML).join("")
+    //       ).join(""),
+    //     );
+    //   } else {
+    //     content = content.replaceAll(key, subsArray.join(""));
+    //   }
+    // }
+    // const result = document.createElement("template");
+    // result.innerHTML = content;
+    // return result.content;
+
+    //
   }
 
   _save(key, data) {

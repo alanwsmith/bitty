@@ -755,12 +755,10 @@ class BittyJs extends HTMLElement {
       const updates = subs[needle] instanceof Array === true
         ? subs[needle]
         : [subs[needle]];
-      console.log(updates);
       const replacement = updates.map((update) => {
         if (typeof update === "string") {
           return update;
         } else {
-          this.bitty.tee(update);
           const tmpWrapper = document.createElement("div");
           tmpWrapper.appendChild(update);
           return tmpWrapper.innerHTML;

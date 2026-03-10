@@ -1,11 +1,11 @@
-export const bitty = {};
+export const b = {};
 
 export async function signal_CD716_v1(ev, sender, el) {
   console.warn(
     "EXPECTED ERROR CD716_v1: The JSON parsing error for this test is expected. It confirms an error is raised if the JSON can't be parsed.",
   );
-  const response = await bitty.fetchData("/versions/8/0/0/documentation/samples/invalid-json.xjson");
+  const response = await b.fetchData("/versions/8/0/0/documentation/samples/invalid-json.xjson");
   if (response === undefined) {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

@@ -1,5 +1,5 @@
-export const bitty = {};
+export const b = {};
 
 export function snippet(_, __, el) {
-  el.innerHTML = bitty.time();
+  el.innerHTML = b.time();
 }

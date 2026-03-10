@@ -1,12 +1,12 @@
 //  DEPRECATED: Remove these _test_trigger_javascript.js files
 //
-//export const bitty = {};
+//export const b = {};
 /*
 
 export async function run_signal_78314_v1() {
-  await bitty.sleep(200);
-  bitty.qs("[data-s~=signal_78314_v1]").click();
-  await bitty.sleep(300);
-  bitty.trigger("verify_signal_78314_v1");
+  await b.sleep(200);
+  b.qs("[data-s~=signal_78314_v1]").click();
+  await b.sleep(300);
+  b.trigger("verify_signal_78314_v1");
 }
 */

@@ -1,7 +1,7 @@
-export const bitty = {};
+export const b = {};
 
 export async function runTest() {
-  await bitty.sleep(200);
+  await b.sleep(200);
   const event_signal_6E38F = new KeyboardEvent("keydown", {
     key: "e",
     ctrlKey: true,
@@ -10,7 +10,7 @@ export async function runTest() {
   });
   document.dispatchEvent(event_signal_6E38F);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_DE6CE_v1]");
+  const checkEls = b.qsa("[data-r~=signal_DE6CE_v1]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

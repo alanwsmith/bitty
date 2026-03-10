@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 const input = document.createDocumentFragment();
 const newEl = document.createElement("div");
@@ -16,9 +16,9 @@ const subs = {
 };
 
 export function signal_76437_v1(ev, sender, el) {
-  const output = bitty.render(input, subs);
+  const output = b.render(input, subs);
   const result = output.firstChild.children[1].innerHTML;
   if (result === "signal_76437_v1") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

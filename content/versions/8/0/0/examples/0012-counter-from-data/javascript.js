@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 export function plusOne(_, __, el) {
   const newCount = el.propAsInt("count") + 1;

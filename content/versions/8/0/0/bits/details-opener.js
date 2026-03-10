@@ -1,10 +1,10 @@
-export const bitty = {};
+export const b = {};
 
 let data = [];
 let key = `details-opener-${window.location.pathname}`;
 
 export function initDetails() {
-  data = bitty.load(key);
+  data = b.load(key);
   document.querySelectorAll("details").forEach((el, index) => {
     el.open = data[index] ? true : false;
     el.addEventListener("toggle", (_) => {
@@ -17,5 +17,5 @@ function updateData() {
   document.querySelectorAll("details").forEach((el, index) => {
     data[index] = el.open;
   });
-  bitty.save(key, data);
+  b.save(key, data);
 }

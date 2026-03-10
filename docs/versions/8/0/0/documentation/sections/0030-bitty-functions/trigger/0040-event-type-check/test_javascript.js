@@ -1,11 +1,11 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_94F67_v1(_, __, ___) {
-  bitty.trigger("signal_94F67_v2");
+  b.trigger("signal_94F67_v2");
 }
 
 export function signal_94F67_v2(ev, __, el) {
   if (ev.type === "bittytrigger") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

@@ -1,13 +1,13 @@
-export const bitty = {};
+export const b = {};
 
 export function setKey_$_SIGNAL_() {
   /******************************************
    * This functions is run via the `data-run`
    * attribute in the <[@ bitty_tag @]> tag.
    ******************************************/
-  bitty.mapKey("/", "$_SIGNAL_", [], { preventDefault: false });
+  b.mapKey("/", "$_SIGNAL_", [], { preventDefault: false });
 }
 
 export function $_SIGNAL_(_, __, el) {
-  el.innerHTML = bitty.time();
+  el.innerHTML = b.time();
 }

@@ -1,8 +1,8 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_24CEF_v1(ev, sender, el) {
-  const check = bitty.svg["svg_signal_24CEF_v1"].querySelector("text");
+  const check = b.svg["svg_signal_24CEF_v1"].querySelector("text");
   if (check.innerHTML === "svg") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

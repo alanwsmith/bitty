@@ -1,6 +1,6 @@
-export const bitty = {};
+export const b = {};
 
 export function snippet(_, __, el) {
-  const output = bitty.render(bitty.template["example"]);
+  const output = b.render(b.template["example"]);
   el.replaceWith(output);
 }

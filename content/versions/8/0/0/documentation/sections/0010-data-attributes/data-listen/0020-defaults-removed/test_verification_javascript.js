@@ -1,10 +1,10 @@
-export const bitty = {};
+export const b = {};
 
 export async function runTest(_, __, ___) {
-  bitty.qs("[data-s~=signal_66EA5_v1]").click();
-  bitty.sleep(200);
+  b.qs("[data-s~=signal_66EA5_v1]").click();
+  b.sleep(200);
   const pattern = /won't change on click/;
-  const checkEls = bitty.qsa("[data-r~=signal_66EA5_v1]");
+  const checkEls = b.qsa("[data-r~=signal_66EA5_v1]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

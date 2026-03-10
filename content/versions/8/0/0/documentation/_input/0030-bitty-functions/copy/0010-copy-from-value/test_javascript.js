@@ -1,5 +1,5 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(_, __, ___) {
-  bitty.copy("#text_$_SIGNAL_");
+  b.copy("#text_$_SIGNAL_");
 }

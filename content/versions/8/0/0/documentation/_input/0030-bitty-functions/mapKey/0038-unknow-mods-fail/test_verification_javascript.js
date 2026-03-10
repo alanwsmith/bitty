@@ -1,8 +1,8 @@
-export const bitty = {};
+export const b = {};
 
 export async function runTestWithErrors() {
-  await bitty.sleep(200);
-  bitty.trigger("setKey_$_SIGNAL_");
+  await b.sleep(200);
+  b.trigger("setKey_$_SIGNAL_");
   const event_signal_6E38F = new KeyboardEvent("keydown", {
     key: "t",
     bubbles: true,
@@ -10,7 +10,7 @@ export async function runTestWithErrors() {
   });
   document.dispatchEvent(event_signal_6E38F);
   const pattern = /there's no output from this example./;
-  const checkEls = bitty.qsa("[data-r~=$_SIGNAL_]");
+  const checkEls = b.qsa("[data-r~=$_SIGNAL_]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

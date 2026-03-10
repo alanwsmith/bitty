@@ -1,11 +1,11 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_DFBBE_v1(_, __, ___) {
-  bitty.trigger("signal_DFBBE_v2");
+  b.trigger("signal_DFBBE_v2");
 }
 
 export function signal_DFBBE_v2(_, __, el) {
   if (el.isTarget === false) {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

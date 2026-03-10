@@ -1,7 +1,7 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(_, __, el) {
-  if (bitty.modKeyAliases().alt === "altKey") {
-    el.innerHTML = bitty.time();
+  if (b.modKeyAliases().alt === "altKey") {
+    el.innerHTML = b.time();
   }
 }

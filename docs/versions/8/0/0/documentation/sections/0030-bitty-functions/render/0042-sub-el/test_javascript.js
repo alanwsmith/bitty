@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 const input = document.createDocumentFragment();
 const newEl = document.createElement("div");
@@ -13,9 +13,9 @@ const subs = {
 };
 
 export function signal_E7902_v1(ev, sender, el) {
-  const output = bitty.render(input, subs);
+  const output = b.render(input, subs);
   const checkEl = output.firstChild;
   if (checkEl.firstChild.innerHTML === "UPDATED_signal_E7902_v1") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

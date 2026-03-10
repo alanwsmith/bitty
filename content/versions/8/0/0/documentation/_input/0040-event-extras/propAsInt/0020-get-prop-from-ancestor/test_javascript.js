@@ -1,7 +1,7 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(ev, __, el) {
   if (ev.propAsInt("key") === 200) {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

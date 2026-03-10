@@ -1,21 +1,21 @@
-export const bitty = {};
+export const b = {};
 
 let current_station;
 let stations;
 
 export function changeStation(ev, __, ___) {
   current_station = ev.val;
-  bitty.trigger("weather");
+  b.trigger("weather");
 }
 
 export async function loadStations(_, __, el) {
-  stations = await bitty.fetch(stationsURL());
+  stations = await b.fetch(stationsURL());
   if (stations !== undefined) {
-    el.replaceWith(bitty.render(
+    el.replaceWith(b.render(
       "select",
       { "OPTIONS": options() },
     ));
-    bitty.trigger("weather");
+    b.trigger("weather");
   } else {
     el.innerHTML = "Could not get station list.";
   }
@@ -27,7 +27,7 @@ function options() {
       if (index === 0) {
         current_station = stationId(state);
       }
-      return bitty.render("option", {
+      return b.render("option", {
         "ABBREVIATION": state,
         "CITY": cityName(state),
         "CODE": stationId(state),
@@ -37,10 +37,10 @@ function options() {
 }
 
 export async function weather(_, __, el) {
-  const report = await bitty.fetch(reportURL());
+  const report = await b.fetch(reportURL());
   if (report !== undefined) {
     el.replaceChildren(
-      bitty.render("weather", {
+      b.render("weather", {
         "DESCRIPTION": weatherDescription(report),
         "IMG_SRC": weatherIcon(report),
         "TEMP": tempString(report),

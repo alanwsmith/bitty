@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_68377_v1(_, __, el) {
   const input = "<div>NEEDLE</div>";
@@ -12,7 +12,7 @@ export function signal_68377_v1(_, __, el) {
   child2.innerHTML = "68377_v3";
   replacements[2].appendChild(child2);
 
-  const output = bitty.render(input, {
+  const output = b.render(input, {
     "NEEDLE": replacements,
   }).firstChild;
   if (
@@ -20,6 +20,6 @@ export function signal_68377_v1(_, __, el) {
     output.children[1].innerHTML === "68377_v2" &&
     output.children[2].innerHTML === "68377_v3"
   ) {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

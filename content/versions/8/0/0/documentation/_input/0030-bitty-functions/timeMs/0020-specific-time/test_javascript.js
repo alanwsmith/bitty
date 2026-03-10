@@ -1,7 +1,7 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(ev, sender, el) {
   const date = new Date(2026, 0, 1, 13, 45, 55);
-  const timestamp = bitty.timeMs(date);
+  const timestamp = b.timeMs(date);
   el.innerHTML = timestamp;
 }

@@ -1,7 +1,7 @@
-export const bitty = {};
+export const b = {};
 
 export async function stars(_, __, el) {
-  const data = await bitty.fetch(
+  const data = await b.fetch(
     "https://api.github.com/repos/alanwsmith/bitty",
   );
   if (data !== undefined) {

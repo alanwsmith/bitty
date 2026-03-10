@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_7F9A6_v1(_, __, el) {
   const input = [
@@ -10,8 +10,8 @@ export function signal_7F9A6_v1(_, __, el) {
   const child1 = document.createElement("div");
   child1.innerHTML = "7F9A6_v1";
   input[1].appendChild(child1);
-  const output = bitty.render(input);
+  const output = b.render(input);
   if (output.children[1].innerHTML === "7F9A6_v1") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

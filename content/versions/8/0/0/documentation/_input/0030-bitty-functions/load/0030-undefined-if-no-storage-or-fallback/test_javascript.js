@@ -1,8 +1,8 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(ev, sender, el) {
-  const result = bitty.load("intentionally-missing-$_SIGNAL_");
+  const result = b.load("intentionally-missing-$_SIGNAL_");
   if (result === undefined) {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

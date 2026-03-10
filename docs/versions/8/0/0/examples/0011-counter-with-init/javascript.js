@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 let count = 0;
 

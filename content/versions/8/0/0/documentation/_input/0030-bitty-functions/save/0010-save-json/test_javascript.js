@@ -1,6 +1,6 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(ev, sender, el) {
-  const result = bitty.save("$_TEST_ID_", {});
-  el.innerHTML = bitty.time();
+  const result = b.save("$_TEST_ID_", {});
+  el.innerHTML = b.time();
 }

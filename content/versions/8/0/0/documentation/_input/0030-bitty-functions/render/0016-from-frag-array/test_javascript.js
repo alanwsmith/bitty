@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 export function $_SIGNAL_(_, __, el) {
   const input = [
@@ -10,8 +10,8 @@ export function $_SIGNAL_(_, __, el) {
   const child1 = document.createElement("div");
   child1.innerHTML = "$_TEST_ID_";
   input[1].appendChild(child1);
-  const output = bitty.render(input);
+  const output = b.render(input);
   if (output.children[1].innerHTML === "$_TEST_ID_") {
-    el.innerHTML = bitty.time();
+    el.innerHTML = b.time();
   }
 }

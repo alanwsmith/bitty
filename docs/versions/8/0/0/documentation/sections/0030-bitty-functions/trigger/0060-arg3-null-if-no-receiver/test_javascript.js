@@ -1,15 +1,15 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_DEF6F_v1(_, __, ___) {
-  bitty.trigger("signal_DEF6F_v2");
+  b.trigger("signal_DEF6F_v2");
 }
 
 export function signal_DEF6F_v2(_, __, el) {
   if (el === null) {
-    bitty.trigger("signal_DEF6F_v3");
+    b.trigger("signal_DEF6F_v3");
   }
 }
 
 export function signal_DEF6F_v3(_, __, el) {
-  el.innerHTML = bitty.time();
+  el.innerHTML = b.time();
 }

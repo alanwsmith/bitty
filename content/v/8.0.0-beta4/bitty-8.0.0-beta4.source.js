@@ -12,28 +12,28 @@ class BittyJs extends HTMLElement {
     if (this.dataset.connect) {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
-      if (incoming.bitty !== undefined) {
-        incoming.bitty._debouncers = {};
+      if (incoming.b !== undefined) {
+        incoming.b._debouncers = {};
         this.loadPageTemplates(incoming);
         this.loadPageData(incoming);
         this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         window.addEventListener("click", (ev) => {
-          incoming.bitty._processEvent(ev);
+          incoming.b._processEvent(ev);
         });
         window.addEventListener("input", (ev) => {
-          incoming.bitty._processEvent(ev);
+          incoming.b._processEvent(ev);
         });
         window.addEventListener("bittysend", (ev) => {
-          incoming.bitty._processBittySend(ev);
+          incoming.b._processBittySend(ev);
         });
         window.addEventListener("bittytrigger", (ev) => {
-          incoming.bitty._processBittyTrigger(ev);
+          incoming.b._processBittyTrigger(ev);
         });
         [...document.querySelectorAll("[data-listen]")].forEach(
           (el) => {
-            incoming.bitty._splitSignalString(el.dataset.listen).forEach(
+            incoming.b._splitSignalString(el.dataset.listen).forEach(
               (listener) => {
                 if (
                   ["click", "input", "bittysend", "bittytrigger"].includes(
@@ -41,7 +41,7 @@ class BittyJs extends HTMLElement {
                   ) === false
                 ) {
                   window.addEventListener(listener, (ev) => {
-                    incoming.bitty._processEvent(ev);
+                    incoming.b._processEvent(ev);
                   });
                 }
               },
@@ -50,7 +50,7 @@ class BittyJs extends HTMLElement {
         );
         if (this.dataset.run) {
           const runString = this.dataset.run.trim();
-          incoming.bitty.trigger(runString);
+          incoming.b.trigger(runString);
         }
       }
     }
@@ -276,13 +276,13 @@ class BittyJs extends HTMLElement {
     Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter((method) =>
       method.substring(0, 1) === "_"
     ).forEach((method) => {
-      target.bitty[method.substring(1)] = this[method].bind(target);
+      target.b[method.substring(1)] = this[method].bind(target);
     });
   }
 
   _addListener(event, signals) {
     window.addEventListener(event, (ev) => {
-      this.bitty._processCustomEvent(ev, signals);
+      this.b._processCustomEvent(ev, signals);
     });
   }
 
@@ -323,11 +323,11 @@ class BittyJs extends HTMLElement {
   }
 
   _debounce(key, signals, ms, payload = {}) {
-    if (this.bitty._debouncers[key]) {
-      window.clearTimeout(this.bitty._debouncers[key]);
+    if (this.b._debouncers[key]) {
+      window.clearTimeout(this.b._debouncers[key]);
     }
-    this.bitty._debouncers[key] = setTimeout(() => {
-      this.bitty.send.apply(this, [payload, signals]);
+    this.b._debouncers[key] = setTimeout(() => {
+      this.b.send.apply(this, [payload, signals]);
     }, ms);
   }
 
@@ -336,7 +336,7 @@ class BittyJs extends HTMLElement {
   //
   // TODO: Set up to pull <script> tags with
   // `application/json` and an `id` attribute
-  // into a `bitty.json` object.
+  // into a `b.json` object.
   async _fetchData(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -369,7 +369,7 @@ class BittyJs extends HTMLElement {
           container.innerHTML = content;
           container.querySelectorAll("script").forEach((script) => {
             if (script.type === "text/html" && script.id !== undefined) {
-              this.bitty.template[script.id] = script.innerHTML.trim();
+              this.b.template[script.id] = script.innerHTML.trim();
             }
           });
           return true;
@@ -427,11 +427,11 @@ class BittyJs extends HTMLElement {
   }
 
   loadPageData(target) {
-    target.bitty.data = {};
+    target.b.data = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "application/json" && script.id !== undefined) {
         try {
-          target.bitty.data[script.id] = JSON.parse(script.innerHTML);
+          target.b.data[script.id] = JSON.parse(script.innerHTML);
         } catch (error) {
           console.error(
             `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,
@@ -442,19 +442,19 @@ class BittyJs extends HTMLElement {
   }
 
   loadPageTemplates(target) {
-    target.bitty.template = {};
+    target.b.template = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
-        target.bitty.template[script.id] = script.innerText.trim();
+        target.b.template[script.id] = script.innerText.trim();
       }
     });
   }
 
   loadPageSVGs(target) {
-    target.bitty.svg = {};
+    target.b.svg = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "image/svg" && script.id !== undefined) {
-        target.bitty.svg[script.id] = script.innerHTML.trim();
+        target.b.svg[script.id] = script.innerHTML.trim();
       }
     });
   }
@@ -501,7 +501,7 @@ class BittyJs extends HTMLElement {
   }
 
   _timeMs(datetime) {
-    return this.bitty.time(datetime, true);
+    return this.b.time(datetime, true);
   }
 
   _mapKey(
@@ -521,8 +521,8 @@ class BittyJs extends HTMLElement {
       options.listener = "keydown";
     }
     for (let i = 0; i < modKeys.length; i += 1) {
-      if (this.bitty.modKeyAliases()[modKeys[i].toLowerCase()] !== undefined) {
-        modKeys[i] = this.bitty.modKeyAliases()[modKeys[i].toLowerCase()];
+      if (this.b.modKeyAliases()[modKeys[i].toLowerCase()] !== undefined) {
+        modKeys[i] = this.b.modKeyAliases()[modKeys[i].toLowerCase()];
       } else {
         console.error(
           `ERROR: Tried to use invalid modifier key '${
@@ -541,7 +541,7 @@ class BittyJs extends HTMLElement {
             }
           }
           ev.preventDefault();
-          this.bitty._processKeypress(ev, signals);
+          this.b._processKeypress(ev, signals);
         }
       });
     } else {
@@ -552,7 +552,7 @@ class BittyJs extends HTMLElement {
               return;
             }
           }
-          this.bitty._processKeypress(ev, signals);
+          this.b._processKeypress(ev, signals);
         }
       });
     }
@@ -582,8 +582,8 @@ class BittyJs extends HTMLElement {
   }
 
   __processBittySend(ev) {
-    this.bitty._updateEvent(ev);
-    const signals = this.bitty._splitSignalString(ev.signals);
+    this.b._updateEvent(ev);
+    const signals = this.b._splitSignalString(ev.signals);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
@@ -591,7 +591,7 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
-            this.bitty._updateElement(receiver);
+            this.b._updateElement(receiver);
             receiver.isSender = false;
             receiver.isTarget = false;
             this[signal](ev.payload, null, receiver);
@@ -604,8 +604,8 @@ class BittyJs extends HTMLElement {
   }
 
   __processBittyTrigger(ev) {
-    this.bitty._updateEvent(ev);
-    const signals = this.bitty._splitSignalString(ev.signals);
+    this.b._updateEvent(ev);
+    const signals = this.b._splitSignalString(ev.signals);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
@@ -613,7 +613,7 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
-            this.bitty._updateElement(receiver);
+            this.b._updateElement(receiver);
             receiver.isSender = false;
             receiver.isTarget = false;
             this[signal](ev, null, receiver);
@@ -626,8 +626,8 @@ class BittyJs extends HTMLElement {
   }
 
   __processCustomEvent(ev, signalsString) {
-    this.bitty._updateEvent(ev);
-    const signals = this.bitty._splitSignalString(signalsString);
+    this.b._updateEvent(ev);
+    const signals = this.b._splitSignalString(signalsString);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
@@ -635,9 +635,9 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
-            this.bitty._updateElement(receiver);
-            this.bitty._checkTargetSender(ev, ev.target, receiver);
-            this.bitty._updateSender(ev.target);
+            this.b._updateElement(receiver);
+            this.b._checkTargetSender(ev, ev.target, receiver);
+            this.b._updateSender(ev.target);
             this[signal](ev, ev.target, receiver);
           }
         } else {
@@ -648,12 +648,12 @@ class BittyJs extends HTMLElement {
   }
 
   __processEvent(ev) {
-    this.bitty._updateEvent(ev);
-    const senders = this.bitty._findSenders(ev.target);
+    this.b._updateEvent(ev);
+    const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
-      this.bitty._updateSender(sender);
-      const signals = this.bitty._splitSignalString(sender.dataset.s);
-      const listeners = this.bitty._splitSignalString(
+      this.b._updateSender(sender);
+      const signals = this.b._splitSignalString(sender.dataset.s);
+      const listeners = this.b._splitSignalString(
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
@@ -664,8 +664,8 @@ class BittyJs extends HTMLElement {
             );
             if (receivers.length > 0) {
               for (const receiver of receivers) {
-                this.bitty._updateElement(receiver);
-                this.bitty._checkTargetSender(ev, sender, receiver);
+                this.b._updateElement(receiver);
+                this.b._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {
@@ -682,8 +682,8 @@ class BittyJs extends HTMLElement {
               );
               if (receivers.length > 0) {
                 for (const receiver of receivers) {
-                  this.bitty._updateElement(receiver);
-                  this.bitty._checkTargetSender(ev, sender, receiver);
+                  this.b._updateElement(receiver);
+                  this.b._checkTargetSender(ev, sender, receiver);
                   this[signal](ev, sender, receiver);
                 }
               } else {
@@ -697,9 +697,9 @@ class BittyJs extends HTMLElement {
   }
 
   __processKeypress(ev, signalString) {
-    this.bitty._updateEvent(ev);
+    this.b._updateEvent(ev);
     const sender = ev.target;
-    const signals = this.bitty._splitSignalString(signalString);
+    const signals = this.b._splitSignalString(signalString);
     for (const signal of signals) {
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
@@ -707,8 +707,8 @@ class BittyJs extends HTMLElement {
         );
         if (receivers.length > 0) {
           for (const receiver of receivers) {
-            this.bitty._updateElement(receiver);
-            this.bitty._checkTargetSender(ev, sender, receiver);
+            this.b._updateElement(receiver);
+            this.b._checkTargetSender(ev, sender, receiver);
             this[signal](ev, sender, receiver);
           }
         } else {
@@ -740,10 +740,10 @@ class BittyJs extends HTMLElement {
     }
     let content = input.map((item) => {
       if (typeof item === "string") {
-        if (this.bitty.template[item] === undefined) {
+        if (this.b.template[item] === undefined) {
           return item;
         } else {
-          return this.bitty.template[item];
+          return this.b.template[item];
         }
       } else {
         const tmpWrapper = document.createElement("div");

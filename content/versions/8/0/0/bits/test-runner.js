@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 let includeErrorTests = true;
 let testsAreRunning = false;
@@ -9,12 +9,12 @@ export async function runTests(_, __, el) {
   }
   testsAreRunning = true;
   el.innerHTML = "started test run";
-  await bitty.sleep(800);
-  bitty.trigger("runTest");
+  await b.sleep(800);
+  b.trigger("runTest");
   if (includeErrorTests === true) {
-    bitty.trigger("runTestWithErrors");
+    b.trigger("runTestWithErrors");
   }
-  await bitty.sleep(2000);
+  await b.sleep(2000);
   testItems();
   el.innerHTML = "testing complete";
   testsAreRunning = false;
@@ -23,7 +23,7 @@ export async function runTests(_, __, el) {
 const levels = ["pass", "todo", "fail"];
 
 function getResults(exampleWrapper) {
-  const results = bitty.qsa("[data-test-status]", exampleWrapper);
+  const results = b.qsa("[data-test-status]", exampleWrapper);
   let level = 1;
   if (results.length > 0) {
     level = 0;
@@ -38,18 +38,18 @@ function getResults(exampleWrapper) {
       level = Math.max(level, result);
     });
   }
-  const exampleStatus = bitty.qs(".example-status", exampleWrapper);
+  const exampleStatus = b.qs(".example-status", exampleWrapper);
   exampleStatus.innerHTML = `[${levels[level]}]`;
   exampleStatus.dataset.testStatus = level;
   return level;
 }
 
 function testItem(itemWrapper) {
-  const examples = bitty.qsa(".example-wrapper", itemWrapper);
+  const examples = b.qsa(".example-wrapper", itemWrapper);
   const results = [...examples].map((exampleWrapper) => {
     return getResults(exampleWrapper);
   });
-  const itemStatus = bitty.qs(".item-status", itemWrapper);
+  const itemStatus = b.qs(".item-status", itemWrapper);
   if (results.length === 0) {
     itemStatus.innerHTML = `[${levels[1]}]`;
     itemStatus.dataset.testStatus = 1;
@@ -61,13 +61,13 @@ function testItem(itemWrapper) {
 }
 
 function testItems() {
-  const soloTests = bitty.qsa("[data-solo]");
+  const soloTests = b.qsa("[data-solo]");
   if (soloTests.length > 0) {
     for (const soloTest of soloTests) {
       testItem(soloTest.closest(".item-wrapper"));
     }
   } else {
-    const itemWrappers = bitty.qsa(".item-wrapper");
+    const itemWrappers = b.qsa(".item-wrapper");
     itemWrappers.forEach((itemWrapper) => {
       testItem(itemWrapper);
     });

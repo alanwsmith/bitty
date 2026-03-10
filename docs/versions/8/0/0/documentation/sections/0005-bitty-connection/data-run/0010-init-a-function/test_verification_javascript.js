@@ -1,9 +1,9 @@
-export const bitty = {};
+export const b = {};
 
 export async function runTest() {
-  await bitty.sleep(200);
+  await b.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = bitty.qsa("[data-r~=signal_E34C9_v1]");
+  const checkEls = b.qsa("[data-r~=signal_E34C9_v1]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

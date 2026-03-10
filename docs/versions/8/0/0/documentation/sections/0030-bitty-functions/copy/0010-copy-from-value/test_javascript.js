@@ -1,5 +1,5 @@
-export const bitty = {};
+export const b = {};
 
 export function signal_D0CD6_v1(_, __, ___) {
-  bitty.copy("#text_signal_D0CD6_v1");
+  b.copy("#text_signal_D0CD6_v1");
 }

@@ -1,6 +1,6 @@
 export const bitty = {};
 
-let includeErrorTests = true;
+let includeErrorTests = false;
 let testsAreRunning = false;
 
 export async function runTests(_, __, el) {

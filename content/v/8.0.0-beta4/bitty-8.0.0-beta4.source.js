@@ -752,14 +752,15 @@ class BittyJs extends HTMLElement {
       }
     }).join("");
     for (const needle of Object.keys(subs)) {
-      this.bitty.tee(subs);
-      const updates = this.bitty.tee(
-        subs[needle] instanceof Array === true ? subs[needle] : [subs[needle]],
-      );
+      const updates = subs[needle] instanceof Array === true
+        ? subs[needle]
+        : [subs[needle]];
+      console.log(updates);
       const replacement = updates.map((update) => {
         if (typeof update === "string") {
           return update;
         } else {
+          this.bitty.tee(update);
           const tmpWrapper = document.createElement("div");
           tmpWrapper.appendChild(update);
           return tmpWrapper.innerHTML;

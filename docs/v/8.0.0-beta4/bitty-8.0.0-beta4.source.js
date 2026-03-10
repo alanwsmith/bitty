@@ -702,20 +702,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  //       if (typeof this[signal] === "function") {
-  //         const receivers = document.querySelectorAll(
-  //           `[data-r~='${signal}']`,
-  //         );
-  //         if (receivers.length > 0) {
-  //           for (const receiver of receivers) {
-  //             this.bitty._updateElement(receiver);
-  //             this.bitty._checkTargetSender(ev, sender, receiver);
-  //             this[signal](ev, sender, receiver);
-  //           }
-  //         } else {
-  //           this[signal](ev, sender, null);
-  //         }
-
   __processKeypress(ev, signalString) {
     this.bitty._updateEvent(ev);
     const sender = ev.target;
@@ -733,37 +719,6 @@ class BittyJs extends HTMLElement {
           }
         } else {
           this[signal](ev, sender, null);
-        }
-      }
-    }
-  }
-
-  // DEPCTAED: in favor of pulling in via
-  // regular processEvent.
-  __processListener(ev) {
-    this.bitty._updateEvent(ev);
-    const senders = this.bitty._findSenders(ev.target);
-    for (const sender of senders) {
-      const signals = this.bitty._splitSignalString(sender.dataset.s);
-      const listeners = this.bitty._splitSignalString(
-        ev.target.dataset.listen,
-      );
-      if (listeners.includes(ev.type)) {
-        for (const signal of signals) {
-          if (typeof this[signal] === "function") {
-            const receivers = document.querySelectorAll(
-              `[data-r~='${signal}']`,
-            );
-            if (receivers.length > 0) {
-              for (const receiver of receivers) {
-                this.bitty._updateElement(receiver);
-                this.bitty._checkTargetSender(ev, sender, receiver);
-                this[signal](ev, sender, receiver);
-              }
-            } else {
-              this[signal](ev, sender, null);
-            }
-          }
         }
       }
     }

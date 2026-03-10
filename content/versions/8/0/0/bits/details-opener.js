@@ -1,4 +1,6 @@
-export const b = {};
+export const b = {
+  init: "initDetails",
+};
 
 let data = [];
 let key = `details-opener-${window.location.pathname}`;

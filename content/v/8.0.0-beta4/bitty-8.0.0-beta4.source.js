@@ -50,10 +50,10 @@ class BittyJs extends HTMLElement {
           },
         );
         // TODO: DEPRECATE in favor of b { init: "signals" }
-        if (this.dataset.run) {
-          const runString = this.dataset.run.trim();
-          incoming.b.trigger(runString);
-        }
+        // if (this.dataset.run) {
+        //   const runString = this.dataset.run.trim();
+        //   incoming.b.trigger(runString);
+        // }
       }
     }
   }

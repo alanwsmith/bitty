@@ -34,11 +34,12 @@ export async function weather(_, __, el) {
   if (report !== undefined) {
     const tmpC = report.properties.temperature.value;
     const tmpF = c2f(report.properties.temperature.value);
+    console.log(report.properties.icon);
     el.replaceChildren(
       bitty.render(bitty.template["weather"], {
         "DESCRIPTION": report.properties.textDescription,
         "TEMP": `${tmpF}°F (${tmpC}°C)`,
-        // "IMG_SRC": `src="xx${report.properties.icon}"`,
+        "IMG_SRC": report.properties.icon,
       }),
     );
   } else {

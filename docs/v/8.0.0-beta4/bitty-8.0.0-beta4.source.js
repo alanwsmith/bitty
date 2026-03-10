@@ -358,7 +358,7 @@ class BittyJs extends HTMLElement {
 
   // TODO: Set this up to accept an array of
   // URLs that are tried before the optional fallback
-  async _fetchHTML(url, options = {}) {
+  async _fetchTemplates(url, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -367,14 +367,11 @@ class BittyJs extends HTMLElement {
           const content = await response.text();
           const container = document.createElement("div");
           container.innerHTML = content;
-          const input = container.querySelectorAll(
-            "div > template",
-          );
-          for (const template of input) {
-            if (template.id !== undefined) {
-              templates[template.id] = template.content;
+          container.querySelectorAll("script").forEach((script) => {
+            if (script.type === "text/html" && script.id !== undefined) {
+              templates[script.id] = script.innerHTML.trim();
             }
-          }
+          });
           return templates;
         } catch (parseError) {
           console.error(parseError);
@@ -448,19 +445,16 @@ class BittyJs extends HTMLElement {
     target.bitty.template = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
-        target.bitty.template[script.id] = script.innerHTML;
+        target.bitty.template[script.id] = script.innerText.trim();
       }
     });
   }
 
   loadPageSVGs(target) {
     target.bitty.svg = {};
-    document.querySelectorAll("template").forEach((template) => {
-      if (template.id !== undefined) {
-        const svg = template.content.querySelector("svg");
-        if (svg) {
-          target.bitty.svg[template.id] = svg;
-        }
+    document.querySelectorAll("script").forEach((script) => {
+      if (script.type === "image/svg" && script.id !== undefined) {
+        target.bitty.svg[script.id] = script.innerHTML.trim();
       }
     });
   }
@@ -741,17 +735,12 @@ class BittyJs extends HTMLElement {
   }
 
   _render(input, subs = {}) {
-    const tmpl = document.createElement("div");
+    let content;
     if (typeof input === "string") {
-      tmpl.innerHTML = input;
-      // TODO: DEPRECATE anything other that a string as input.
+      content = input;
     } else {
-      // TODO: Test to verify this works with both
-      // elements and document fragments so the
-      // incoming template can be used multiple times.
-      tmpl.append(input.cloneNode(true));
+      content = tmpl.outerHTML;
     }
-    let content = [...tmpl.children].map((child) => child.outerHTML).join("");
     for (const key of Object.keys(subs)) {
       const subsArray = subs[key] instanceof Array === true
         ? subs[key]
@@ -767,6 +756,7 @@ class BittyJs extends HTMLElement {
         content = content.replaceAll(
           key,
           subsArray.map((fragment) =>
+            // TODO: Verify this work with text nodes.
             [...fragment.children].map((el) => el.outerHTML).join("")
           ).join(""),
         );

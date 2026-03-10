@@ -1,4 +1,6 @@
-export const b = {};
+export const b = {
+  init: "runTests",
+};
 
 let includeErrorTests = true;
 let testsAreRunning = false;
@@ -8,7 +10,7 @@ export async function runTests(_, __, el) {
     return;
   }
   testsAreRunning = true;
-  el.innerHTML = "started test run";
+  //el.innerHTML = "started test run";
   await b.sleep(800);
   b.trigger("runTest");
   if (includeErrorTests === true) {
@@ -16,7 +18,7 @@ export async function runTests(_, __, el) {
   }
   await b.sleep(2000);
   testItems();
-  el.innerHTML = "testing complete";
+  // el.innerHTML = "testing complete";
   testsAreRunning = false;
 }
 

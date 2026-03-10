@@ -1,7 +1,6 @@
 export const b = {};
 
-export function plusOne(_, __, el) {
-  const newCount = el.propAsInt("count") + 1;
-  el.setProp("count", newCount);
-  el.innerHTML = newCount;
+export function up(_, __, el) {
+  el.setProp("count", el.propAsInt("count") + 1);
+  el.innerHTML = el.prop("count");
 }

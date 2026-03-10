@@ -45,12 +45,12 @@
         <div class="example-content default-flow">
 
           <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
-          [! include [file.parent, "description.html"]|join("/") !]
 
           <h4>example</h4>
 
           <div class="example-block-2">
           [! include [file.parent, "html.html"]|join("/") !]
+          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
           </div>
 
           <h4>html</h4>
@@ -74,11 +74,13 @@
           [@- styles_html -@]
           [!- endif -!]
 
-          <h3>bitty tag html</h3>
-          [!- filter block_highlight("html") -!]
-          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
-          [!- endfilter -!]
-          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
+          [!- set details -!]
+          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if details != "" -!]
+          <h4>details</h4>
+          [@ details @]
+          [!- endif -!]
 
         </div>
 

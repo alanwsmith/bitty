@@ -19,6 +19,7 @@ class BittyJs extends HTMLElement {
         this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
+        incoming.b._processInit();
         window.addEventListener("click", (ev) => {
           incoming.b._processEvent(ev);
         });
@@ -48,6 +49,7 @@ class BittyJs extends HTMLElement {
             );
           },
         );
+        // TODO: DEPRECATE in favor of b { init: "signals" }
         if (this.dataset.run) {
           const runString = this.dataset.run.trim();
           incoming.b.trigger(runString);
@@ -701,6 +703,79 @@ class BittyJs extends HTMLElement {
         }
       }
     }
+  }
+
+  __processInit() {
+    if (this.b.init !== undefined) {
+      const signals = this.b._splitSignalString(this.b.init);
+      for (const signal of signals) {
+        if (typeof this[signal] === "function") {
+          const receivers = document.querySelectorAll(
+            `[data-r~='${signal}']`,
+          );
+          if (receivers.length > 0) {
+            for (const receiver of receivers) {
+              this.b._updateElement(receiver);
+              receiver.isSender = false;
+              receiver.isTarget = false;
+              this[signal]({}, null, receiver);
+            }
+          } else {
+            this[signal]({}, null, null);
+          }
+        }
+      }
+    }
+    //
+
+    // this.b._updateEvent(ev);
+    // const senders = this.b._findSenders(ev.target);
+    // for (const sender of senders) {
+    //   this.b._updateSender(sender);
+    //   const signals = this.b._splitSignalString(sender.dataset.s);
+    //   const listeners = this.b._splitSignalString(
+    //     sender.dataset.listen,
+    //   );
+    //   if (listeners.length === 0) {
+    //     for (const signal of signals) {
+    //       if (typeof this[signal] === "function") {
+    //         const receivers = document.querySelectorAll(
+    //           `[data-r~='${signal}']`,
+    //         );
+    //         if (receivers.length > 0) {
+    //           for (const receiver of receivers) {
+    //             this.b._updateElement(receiver);
+    //             this.b._checkTargetSender(ev, sender, receiver);
+    //             this[signal](ev, sender, receiver);
+    //           }
+    //         } else {
+    //           this[signal](ev, sender, null);
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     if (listeners.includes(ev.type)) {
+    //       for (const signal of signals) {
+    //         if (typeof this[signal] === "function") {
+    //           const receivers = document.querySelectorAll(
+    //             `[data-r~='${signal}']`,
+    //           );
+    //           if (receivers.length > 0) {
+    //             for (const receiver of receivers) {
+    //               this.b._updateElement(receiver);
+    //               this.b._checkTargetSender(ev, sender, receiver);
+    //               this[signal](ev, sender, receiver);
+    //             }
+    //           } else {
+    //             this[signal](ev, sender, null);
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+
+    //
   }
 
   __processKeypress(ev, signalString) {

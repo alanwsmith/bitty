@@ -9,17 +9,6 @@
 [! block main !]
 [! set bitty_tag = vars.bitty_tag !]
 
-[! set runTestsAutomatically = true !]
-[! if runTestsAutomatically == true !]
-<[@ vars.bitty_tag @] 
-  data-connect="/[@ vars.bits_dir @]/test-runner.js"
-  data-run="runTests"
-></[@ vars.bitty_tag @]>
-[! else !]
-<[@ vars.bitty_tag @] 
-  data-connect="/[@ vars.bits_dir @]/test-runner.js"
-></[@ vars.bitty_tag @]>
-[! endif !]
 
 
 
@@ -198,8 +187,8 @@
 
 </ul>
 
-<div>
-  <button data-s="runTests" data-r="runTests testsComplete">run tests</button>
-</div>
+<div data-r="test-controls"></div>
+
+<[@ vars.bitty_tag @] data-connect="/[@ vars.bits_dir @]/docs-test-runner.js"></[@ vars.bitty_tag @]>
 
 [! endblock !]

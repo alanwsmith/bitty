@@ -9,12 +9,9 @@ export function changeStation(ev, __, ___) {
 }
 
 export async function loadStations(_, __, el) {
-  stations = await b.fetch(stationsURL());
+  stations = await b.fetchData(stationsURL());
   if (stations !== undefined) {
-    el.replaceWith(b.render(
-      "select",
-      { "OPTIONS": options() },
-    ));
+    el.replaceWith(b.render("select", { "OPTIONS": options() }));
     b.trigger("weather");
   } else {
     el.innerHTML = "Could not get station list.";
@@ -37,7 +34,7 @@ function options() {
 }
 
 export async function weather(_, __, el) {
-  const report = await b.fetch(reportURL());
+  const report = await b.fetchData(reportURL());
   if (report !== undefined) {
     el.replaceChildren(
       b.render("weather", {

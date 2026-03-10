@@ -31,13 +31,19 @@ class BittyJs extends HTMLElement {
         window.addEventListener("bittytrigger", (ev) => {
           incoming.bitty._processBittyTrigger(ev);
         });
-        [...document.querySelectorAll("[data-listeners]")].forEach(
+        [...document.querySelectorAll("[data-listen]")].forEach(
           (el) => {
-            incoming.bitty._splitSignalString(el.dataset.listeners).forEach(
+            incoming.bitty._splitSignalString(el.dataset.listen).forEach(
               (listener) => {
-                window.addEventListener(listener, (ev) => {
-                  incoming.bitty._processListener(ev);
-                });
+                if (
+                  ["click", "input", "bittysend", "bittytrigger"].includes(
+                    listener,
+                  ) === false
+                ) {
+                  window.addEventListener(listener, (ev) => {
+                    incoming.bitty._processEvent(ev);
+                  });
+                }
               },
             );
           },
@@ -654,7 +660,7 @@ class BittyJs extends HTMLElement {
       this.bitty._updateSender(sender);
       const signals = this.bitty._splitSignalString(sender.dataset.s);
       const listeners = this.bitty._splitSignalString(
-        sender.dataset.listeners,
+        sender.dataset.listen,
       );
       if (listeners.length === 0) {
         for (const signal of signals) {
@@ -673,9 +679,42 @@ class BittyJs extends HTMLElement {
             }
           }
         }
+      } else {
+        if (listeners.includes(ev.type)) {
+          for (const signal of signals) {
+            if (typeof this[signal] === "function") {
+              const receivers = document.querySelectorAll(
+                `[data-r~='${signal}']`,
+              );
+              if (receivers.length > 0) {
+                for (const receiver of receivers) {
+                  this.bitty._updateElement(receiver);
+                  this.bitty._checkTargetSender(ev, sender, receiver);
+                  this[signal](ev, sender, receiver);
+                }
+              } else {
+                this[signal](ev, sender, null);
+              }
+            }
+          }
+        }
       }
     }
   }
+
+  //       if (typeof this[signal] === "function") {
+  //         const receivers = document.querySelectorAll(
+  //           `[data-r~='${signal}']`,
+  //         );
+  //         if (receivers.length > 0) {
+  //           for (const receiver of receivers) {
+  //             this.bitty._updateElement(receiver);
+  //             this.bitty._checkTargetSender(ev, sender, receiver);
+  //             this[signal](ev, sender, receiver);
+  //           }
+  //         } else {
+  //           this[signal](ev, sender, null);
+  //         }
 
   __processKeypress(ev, signalString) {
     this.bitty._updateEvent(ev);
@@ -699,13 +738,15 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // DEPCTAED: in favor of pulling in via
+  // regular processEvent.
   __processListener(ev) {
     this.bitty._updateEvent(ev);
     const senders = this.bitty._findSenders(ev.target);
     for (const sender of senders) {
       const signals = this.bitty._splitSignalString(sender.dataset.s);
       const listeners = this.bitty._splitSignalString(
-        ev.target.dataset.listeners,
+        ev.target.dataset.listen,
       );
       if (listeners.includes(ev.type)) {
         for (const signal of signals) {

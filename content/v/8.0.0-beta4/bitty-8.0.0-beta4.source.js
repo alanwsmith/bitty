@@ -60,7 +60,7 @@ class BittyJs extends HTMLElement {
     // REMINDER: this innerHTMLAsFloat and innerHTMLAsInt
     // get set every time.
     if (el.innerHTML !== undefined) {
-      el.innerHTMLAsFloat = parseFloat(el.innerHTML);
+      el.innerHTMLAsFloat = parseFloat(el.innerHTML.trim().replaceAll(",", ""));
       el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
     }
 

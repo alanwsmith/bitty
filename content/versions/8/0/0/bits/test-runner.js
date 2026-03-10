@@ -1,6 +1,6 @@
 export const b = {};
 
-let includeErrorTests = false;
+let includeErrorTests = true;
 let testsAreRunning = false;
 
 export async function runTests(_, __, el) {

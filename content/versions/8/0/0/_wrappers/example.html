@@ -43,25 +43,43 @@
 
         </div>
         <div class="example-content default-flow">
+
           <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
           [! include [file.parent, "description.html"]|join("/") !]
+
           <h4>example</h4>
+
           <div class="example-block-2">
           [! include [file.parent, "html.html"]|join("/") !]
           </div>
+
           <h4>html</h4>
           [!- filter block_highlight("html") -!]
-          [! include [file.parent, "html.html"]|join("/") !]
-          [! endfilter !]
+          [!- include [file.parent, "html.html"]|join("/") -!]
+          [!- endfilter -!]
+
           <h4>javascript</h4>
           [!- filter block_highlight("js") -!]
-          [! include [file.parent, "javascript.js"]|join("/") !]
-          [! endfilter !]
+          [!- include [file.parent, "javascript.js"]|join("/") -!]
+          [!- endfilter -!]
+
+          [!- set styles_html -!]
+          [!- include [file.parent, "styles.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if styles_html != "" -!]
+          <h4>styles</h4>
+          [!- filter block_highlight("html") -!]
+          [@- styles_html -@]
+          [!- endfilter -!]
+          [@- styles_html -@]
+          [!- endif -!]
+
           <h3>bitty tag html</h3>
           [!- filter block_highlight("html") -!]
-          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
           [!- endfilter -!]
-          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
+
         </div>
 
       </div>

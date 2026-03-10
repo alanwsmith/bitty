@@ -1,4 +1,6 @@
-export const b = {};
+export const b = {
+  init: "loadStations",
+};
 
 let current_station;
 let stations;
@@ -11,10 +13,12 @@ export function changeStation(ev, __, ___) {
 export async function loadStations(_, __, el) {
   stations = await b.fetchData(stationsURL());
   if (stations !== undefined) {
-    el.replaceWith(b.render("select", { "OPTIONS": options() }));
+    options().forEach((option) => {
+      el.appendChild(option);
+    });
     b.trigger("weather");
   } else {
-    el.innerHTML = "Could not get station list.";
+    el.replaceWith(b.render("<div>Error: could not get weather data</div>"));
   }
 }
 
@@ -29,7 +33,7 @@ function options() {
         "CITY": cityName(state),
         "CODE": stationId(state),
         "STATE": stateName(state),
-      });
+      }).firstChild;
     });
 }
 
@@ -44,7 +48,7 @@ export async function weather(_, __, el) {
       }),
     );
   } else {
-    el.innerHTML = "Could not get weather report.";
+    el.innerHTML = `Could not get weather for ${current_station}`;
   }
 }
 

@@ -53,6 +53,40 @@ on the page and build everything
 with b.)
 
 
+## Why put templates in script tags instead of template tags?
+
+Two reasons:
+
+1. `<template>` tags get parsed as HTML when they 
+are ingested. 
+
+    This means trying to do something like this won't 
+work:
+
+    ```html
+    <img IMG_SRC alt="ALT_TEXT" />
+    ```
+
+    Depending on the browser the `SRC` string gets
+turned into `img_src=""` which breaks the 
+find/replace functionality. 
+
+
+2. Browsers may try to load `<img>` tags found inside
+templates. Doing something like this causes 
+404 errors as a result:
+
+    ```html
+    <img src="IMG_SRC" alt="ALT_TEXT" />
+    ```
+
+Using the `<script>` tags eliminates those issues. 
+The content is simply 
+[treated as a block of data](https://html.spec.whatwg.org/dev/scripting.html#the-script-element)
+with no further processing by the browser.  
+
+
+
 [! endfilter !]
 
 

@@ -1,7 +1,9 @@
-export const b = {};
+export const b = {
+  init: "stars",
+};
 
 export async function stars(_, __, el) {
-  const data = await b.fetch(
+  const data = await b.fetchData(
     "https://api.github.com/repos/alanwsmith/bitty",
   );
   if (data !== undefined) {

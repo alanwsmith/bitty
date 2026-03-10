@@ -215,6 +215,32 @@ nice-to-have features.</p>
 with nothing but a single <code>&lt;div&gt;</code>
 on the page and build everything
 with b.)</p>
+<h2>Why put templates in script tags instead of template tags?</h2>
+<p>Two reasons:</p>
+<ol>
+<li>
+<p><code>&lt;template&gt;</code> tags get parsed as HTML when they
+are ingested.</p>
+<p>This means trying to do something like this won't
+work:</p>
+<pre><code class="language-html">&lt;img IMG_SRC alt=&quot;ALT_TEXT&quot; /&gt;
+</code></pre>
+<p>Depending on the browser the <code>SRC</code> string gets
+turned into <code>img_src=&quot;&quot;</code> which breaks the
+find/replace functionality.</p>
+</li>
+<li>
+<p>Browsers may try to load <code>&lt;img&gt;</code> tags found inside
+templates. Doing something like this causes
+404 errors as a result:</p>
+<pre><code class="language-html">&lt;img src=&quot;IMG_SRC&quot; alt=&quot;ALT_TEXT&quot; /&gt;
+</code></pre>
+</li>
+</ol>
+<p>Using the <code>&lt;script&gt;</code> tags eliminates those issues.
+The content is simply
+<a href="https://html.spec.whatwg.org/dev/scripting.html#the-script-element">treated as a block of data</a>
+with no further processing by the browser.</p>
 
 
     </main>

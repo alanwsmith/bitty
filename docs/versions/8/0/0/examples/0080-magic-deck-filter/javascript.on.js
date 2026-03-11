@@ -13,7 +13,7 @@ export async function init() {
 }
 
 export function cardIsLand(card) {
-  return card.card.oracleCard.types[0] === "Land" ? "ture" : "false";
+  return card.card.oracleCard.types[0] === "Land" ? "true" : "false";
 }
 
 export function cardName(card) {
@@ -49,11 +49,7 @@ export function deckError(_, __, el) {
 }
 
 export function filter(ev, __, el) {
-  if (ev.target.checked === true) {
-    el.classList.add("filtered");
-  } else {
-    el.classList.remove("filtered");
-  }
+  el.setProp("filtered", ev.target.checked);
 }
 
 export async function loadData() {
@@ -61,10 +57,9 @@ export async function loadData() {
   if (data === undefined) {
     return false;
   }
-  const loadedTemplates = await b.loadTemplates(
+  return await b.loadTemplates(
     "/versions/8/0/0/examples/0080-magic-deck-filter/templates/",
   );
-  return loadedTemplates;
 }
 
 export function uuid(card) {

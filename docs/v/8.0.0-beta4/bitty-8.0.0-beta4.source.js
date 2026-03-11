@@ -14,9 +14,10 @@ class BittyJs extends HTMLElement {
       const incoming = await import(connString);
       if (incoming.b !== undefined) {
         incoming.b._debouncers = {};
+        incoming.b.svgs = {};
         this.loadPageTemplates(incoming);
         this.loadPageData(incoming);
-        this.loadPageSVGs(incoming);
+        //        this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         incoming.b._processInit();
@@ -127,7 +128,6 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-
   async _loadData(url, fallback = null, options = {}) {
     // TODO: Set this up to accept an array of
     // URLs that are tried before the optional fallback
@@ -153,7 +153,7 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-// DEPRECATE in favor of getTemplates()
+  // DEPRECATE in favor of getTemplates()
   // async _fetchSVG(url, options = {}) {
   //   // TODO: Set this up to accept an array of
   //   // URLs that are tried before the optional fallback
@@ -185,7 +185,6 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-
   loadPageData(target) {
     target.b.data = {};
     document.querySelectorAll("script").forEach((script) => {
@@ -202,22 +201,24 @@ class BittyJs extends HTMLElement {
   }
 
   loadPageTemplates(target) {
-    target.b.template = {};
+    // TODO: Move the b.templates init up so either
+    // this function or loadTemplates can load first.
+    target.b.templates = {};
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
-        target.b.template[script.id] = script.innerText.trim();
+        target.b.templates[script.id] = script.innerText.trim();
       }
     });
   }
 
-  loadPageSVGs(target) {
-    target.b.svg = {};
-    document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "image/svg" && script.id !== undefined) {
-        target.b.svg[script.id] = script.innerHTML.trim();
-      }
-    });
-  }
+  // loadPageSVGs(target) {
+  //   target.b.svg = {};
+  //   document.querySelectorAll("script").forEach((script) => {
+  //     if (script.type === "image/svg" && script.id !== undefined) {
+  //       target.b.svgs[script.id] = script.innerHTML.trim();
+  //     }
+  //   });
+  // }
 
   async _loadTemplates(url, options = {}) {
     // TODO: Set this up to accept an array of
@@ -232,7 +233,13 @@ class BittyJs extends HTMLElement {
           container.innerHTML = content;
           container.querySelectorAll("script").forEach((script) => {
             if (script.type === "text/html" && script.id !== undefined) {
-              this.b.template[script.id] = script.innerHTML.trim();
+              this.b.templates[script.id] = script.innerHTML.trim();
+            }
+            if (script.type === "image/svg" && script.id !== undefined) {
+              this.b.svgs[script.id] = script.innerHTML.trim();
+            }
+            if (script.type === "application/json" && script.id !== undefined) {
+              this.b.data[script.id] = JSON.parse(script.innerHTML.trim());
             }
           });
           return true;
@@ -549,17 +556,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
-
   _render(input, subs = {}) {
     if (input instanceof Array === false) {
       input = [input];
     }
     let content = input.map((item) => {
       if (typeof item === "string") {
-        if (this.b.template[item] === undefined) {
+        if (this.b.templates[item] === undefined) {
           return item;
         } else {
-          return this.b.template[item];
+          return this.b.templates[item];
         }
       } else {
         const tmpWrapper = document.createElement("div");
@@ -671,7 +677,6 @@ class BittyJs extends HTMLElement {
   _timeMs(datetime) {
     return this.b.time(datetime, true);
   }
-
 
   _trigger(signals) {
     const ev = new BittyTrigger(signals);
@@ -908,8 +913,6 @@ class BittyJs extends HTMLElement {
       return self.crypto.randomUUID();
     }
   }
-
-
 }
 
 customElements.define(tagName, BittyJs);

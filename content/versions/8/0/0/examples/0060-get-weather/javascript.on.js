@@ -38,18 +38,20 @@ function options() {
 }
 
 export async function weather(_, __, el) {
+  el.innerHTML = "Loading weather report...";
   const report = await b.loadData(reportURL());
-  if (report !== undefined) {
-    el.replaceChildren(
-      b.render("weather", {
-        "DESCRIPTION": weatherDescription(report),
-        "IMG_SRC": weatherIcon(report),
-        "TEMP": tempString(report),
-      }),
-    );
-  } else {
-    el.innerHTML = `Could not get weather for ${current_station}`;
+  if (report === undefined || weatherIcon(report) === null) {
+    el.innerHTML =
+      `Weather currently unavailable for station ${current_station}`;
+    return;
   }
+  el.replaceChildren(
+    b.render("weather", {
+      "DESCRIPTION": weatherDescription(report),
+      "IMG_SRC": weatherIcon(report),
+      "TEMP": tempString(report),
+    }),
+  );
 }
 
 // Helpers

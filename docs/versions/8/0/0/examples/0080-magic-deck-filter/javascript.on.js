@@ -12,17 +12,22 @@ export async function init() {
   }
 }
 
-export function cardIsLand(card) {
+function cardIsLand(card) {
   return card.card.oracleCard.types[0] === "Land" ? "true" : "false";
 }
 
-export function cardName(card) {
+function cardName(card) {
   return card.card.oracleCard.name;
 }
 
-export function cards() {
+function cards() {
   return data
     .cards
+    .sort((a, b) => {
+      return a.card.oracleCard.name.localeCompare(
+        b.card.oracleCard.name,
+      );
+    })
     .map((card) =>
       b.render("card", {
         "__CHAR1__": charx(card, 1),
@@ -34,7 +39,7 @@ export function cards() {
     );
 }
 
-export function charx(card, num) {
+function charx(card, num) {
   return card.card.uid.substring(num - 1, num);
 }
 
@@ -62,6 +67,6 @@ export async function loadData() {
   );
 }
 
-export function uuid(card) {
+function uuid(card) {
   return card.card.uid;
 }

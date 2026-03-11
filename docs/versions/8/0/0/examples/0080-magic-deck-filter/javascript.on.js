@@ -20,7 +20,11 @@ export function categories() {
 }
 
 export function controls(_, __, el) {
-  b.tee(categories());
+  categories().forEach((category) => {
+    el.appendChild(b.render("control", {
+      "CATEGORY": category,
+    }));
+  });
 }
 
 export function deck(_, __, el) {

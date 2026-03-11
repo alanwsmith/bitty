@@ -13,12 +13,17 @@ export async function init() {
   }
 }
 
+export function cardCategory(card) {
+  return card.card.oracleCard.types[0];
+}
+
 export function cards() {
   return b.tee(
     data
       .cards
       .map((card) =>
         b.render("card", {
+          "__CATEGORY__": cardCategory(card),
           "__CHAR1__": charx(card, 1),
           "__CHAR2__": charx(card, 2),
           "__UUID__": uuid(card),
@@ -40,7 +45,7 @@ export function charx(card, num) {
 export function controls(_, __, el) {
   categories().forEach((category) => {
     el.appendChild(b.render("control", {
-      "CATEGORY": category,
+      "__CATEGORY__": category,
     }));
   });
 }
@@ -64,6 +69,16 @@ export async function loadData() {
     "/versions/8/0/0/examples/0080-magic-deck-filter/templates/",
   );
   return loadedTemplates;
+}
+
+export function update(ev, sender, el) {
+  if (sender.prop("category") === el.prop("category")) {
+    if (ev.target.checked) {
+      el.classList.remove("filtered");
+    } else {
+      el.classList.add("filtered");
+    }
+  }
 }
 
 export function uuid(card) {

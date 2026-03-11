@@ -30,17 +30,11 @@ function cards() {
     })
     .map((card) =>
       b.render("card", {
-        "__CHAR1__": charx(card, 1),
-        "__CHAR2__": charx(card, 2),
         "__IS_LAND__": cardIsLand(card),
         "__NAME__": cardName(card),
         "__UUID__": uuid(card),
       })
     );
-}
-
-function charx(card, num) {
-  return card.card.uid.substring(num - 1, num);
 }
 
 export function deck(_, __, el) {

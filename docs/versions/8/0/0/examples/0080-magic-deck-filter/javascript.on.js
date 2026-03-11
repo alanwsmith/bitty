@@ -13,10 +13,28 @@ export async function init() {
   }
 }
 
+export function cards() {
+  return b.tee(
+    data
+      .cards
+      .map((card) =>
+        b.render("card", {
+          "__CHAR1__": charx(card, 1),
+          "__CHAR2__": charx(card, 2),
+          "__UUID__": uuid(card),
+        })
+      ),
+  );
+}
+
 export function categories() {
   return b.dedup(
     data.cards.map((card) => card.categories[0]),
   ).sort(b.sort);
+}
+
+export function charx(card, num) {
+  return card.card.uid.substring(num - 1, num);
 }
 
 export function controls(_, __, el) {
@@ -28,7 +46,9 @@ export function controls(_, __, el) {
 }
 
 export function deck(_, __, el) {
-  el.innerHTML = "got data";
+  cards().forEach((card) => {
+    el.appendChild(card);
+  });
 }
 
 export function deckError(_, __, el) {
@@ -44,4 +64,8 @@ export async function loadData() {
     "/versions/8/0/0/examples/0080-magic-deck-filter/templates/",
   );
   return loadedTemplates;
+}
+
+export function uuid(card) {
+  return card.card.uid;
 }

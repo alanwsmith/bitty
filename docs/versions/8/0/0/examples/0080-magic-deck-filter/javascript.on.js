@@ -5,7 +5,7 @@ export const b = {
 let data;
 
 export async function init() {
-  if (await getData() === true) {
+  if (await loadData() === true) {
     b.trigger("controls");
     b.trigger("deck");
   } else {
@@ -31,8 +31,8 @@ export function deckError(_, __, el) {
   el.innerHTML = "Error: Could not load remote files";
 }
 
-export async function getData() {
-  data = await b.fetchData("/versions/8/0/0/examples/0080-magic-deck-filter/data.json");
+export async function loadData() {
+  data = await b.loadData("/versions/8/0/0/examples/0080-magic-deck-filter/data.json");
   if (data === undefined) {
     return false;
   }

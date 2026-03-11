@@ -1,5 +1,5 @@
 $SIGNAL_NAME(ev, el) {
-  if (ev.getTargetDataAsFloat("needle") === 3.4) {
+  if (ev.getTarloadDataAsFloat("needle") === 3.4) {
     el.innerHTML = "test passed";
   }
 }

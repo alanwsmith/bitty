@@ -344,7 +344,7 @@ class BittyJs extends HTMLElement {
   // TODO: Set up to pull <script> tags with
   // `application/json` and an `id` attribute
   // into a `b.json` object.
-  async _fetchData(url, fallback = null, options = {}) {
+  async _loadData(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {

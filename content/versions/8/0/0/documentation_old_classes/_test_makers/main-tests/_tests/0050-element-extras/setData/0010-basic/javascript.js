@@ -4,7 +4,7 @@ $SIGNAL_NAME(_, el) {
 }
 
 verify_$SIGNAL_NAME(_, el) {
-  el.innerHTML = el.getData("updated");
+  el.innerHTML = el.loadData("updated");
 }
 
 

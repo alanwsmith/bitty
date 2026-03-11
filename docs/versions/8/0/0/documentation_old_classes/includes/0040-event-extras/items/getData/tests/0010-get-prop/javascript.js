@@ -1,5 +1,5 @@
 signal_290C3(ev, el) {
-  el.innerHTML = ev.getData("needle");
+  el.innerHTML = ev.loadData("needle");
 }
 
 

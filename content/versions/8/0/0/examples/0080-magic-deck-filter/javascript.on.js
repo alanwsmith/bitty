@@ -5,7 +5,7 @@ export const b = {
 let data;
 
 export async function init() {
-  if (await getData() === true) {
+  if (await loadData() === true) {
     b.trigger("controls");
     b.trigger("deck");
   } else {
@@ -31,8 +31,8 @@ export function deckError(_, __, el) {
   el.innerHTML = "Error: Could not load remote files";
 }
 
-export async function getData() {
-  data = await b.fetchData("/[@ file.parent @]/data.json");
+export async function loadData() {
+  data = await b.loadData("/[@ file.parent @]/data.json");
   if (data === undefined) {
     return false;
   }

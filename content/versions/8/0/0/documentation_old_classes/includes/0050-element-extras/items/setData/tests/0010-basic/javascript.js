@@ -4,7 +4,7 @@ signal_CE33E(_, el) {
 }
 
 verify_signal_CE33E(_, el) {
-  el.innerHTML = el.getData("updated");
+  el.innerHTML = el.loadData("updated");
 }
 
 

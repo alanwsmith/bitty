@@ -3,7 +3,7 @@ export const b = {
 };
 
 export async function loop(_, __, el) {
-  const data = await b.fetchData("/v8-bits/example-quotes.json");
+  const data = await b.loadData("/v8-bits/example-quotes.json");
   if (data !== undefined) {
     for (let i = 1; i > 0; i += 1) {
       await b.sleep(4000);

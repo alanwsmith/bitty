@@ -1,5 +1,5 @@
 $SIGNAL_NAME(ev, el) {
-  el.innerHTML = ev.getData("needle");
+  el.innerHTML = ev.loadData("needle");
 }
 
 

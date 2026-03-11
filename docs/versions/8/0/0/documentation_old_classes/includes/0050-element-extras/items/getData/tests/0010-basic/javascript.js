@@ -1,5 +1,5 @@
 signal_66809(_, el) {
-  el.innerHTML = el.getData("needle");
+  el.innerHTML = el.loadData("needle");
 }
 
 

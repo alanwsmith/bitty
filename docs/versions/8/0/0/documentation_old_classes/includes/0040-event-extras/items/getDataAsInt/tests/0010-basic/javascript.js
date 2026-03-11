@@ -1,5 +1,5 @@
 signal_C6191(ev, el) {
-  if (ev.getDataAsInt("needle") === 1) {
+  if (ev.loadDataAsInt("needle") === 1) {
     el.innerHTML = "test passed";
   }
 }

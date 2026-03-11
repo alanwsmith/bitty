@@ -1,5 +1,5 @@
 signal_727C1(ev, el) {
-  if (ev.getTargetDataAsInt("needle") === 4) {
+  if (ev.getTarloadDataAsInt("needle") === 4) {
     el.innerHTML = "test passed";
   }
 }

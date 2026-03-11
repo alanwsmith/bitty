@@ -11,7 +11,7 @@ export function changeStation(ev, __, ___) {
 }
 
 export async function loadStations(_, __, el) {
-  stations = await b.fetchData(stationsURL());
+  stations = await b.loadData(stationsURL());
   if (stations !== undefined) {
     options().forEach((option) => {
       el.appendChild(option);
@@ -38,7 +38,7 @@ function options() {
 }
 
 export async function weather(_, __, el) {
-  const report = await b.fetchData(reportURL());
+  const report = await b.loadData(reportURL());
   if (report !== undefined) {
     el.replaceChildren(
       b.render("weather", {

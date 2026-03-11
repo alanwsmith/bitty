@@ -9,6 +9,7 @@
     [! include vars.styles_dir + "/_includes/initial-styles.html" !]
     <script src="/[@ vars.styles_dir @]/styles.js"></script>
     <link rel="stylesheet" href="/[@ vars.styles_dir @]/main.css" />
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/snippet.css" />
   </head>
   <script type="module" src="[@ vars.bitty_script_path @]"></script>
 <body>
@@ -25,10 +26,30 @@
       <hgroup>
         <h1>snippets</h1>
       </hgroup>
+      <div class="snippet-columns">
+        <div class="snippet-sidebard">
+          <ul>
+          [! for snippet_dir in folders_in_folder(file.path_part_strings[4]) !]
+            <li>
+              [! if snippet_dir == file.parent !]
+              [! include [snippet_dir, "name.html"]|join("/") -!]
+              [! else !]
+              <a href="/[@ snippet_dir @]/">[! include [snippet_dir, "name.html"]|join("/") -!]</a>
+              [! endif !]
+            </li>
+          [! endfor !]
+          </ul>
+        </div>
 
-      <h2>[! include [file.parent, "title.html"]|join("/") !]</h2>
+        <div>
 
-      [! include [[file.parent, "visible-bitty-tag.html"]|join("/"), [file.parent, "bitty-tag.html"]|join("/")] !]
+      <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
+
+      <div class="example-block-2">
+        [! include [file.parent, "html.html"]|join("/") !]
+      </div>
+
+      [! include [file.parent, "bitty-tag.html"]|join("/") !]
 
       [!- set visible_bitty_tag -!]
       [! include [file.parent, "visible-bitty-tag.html"]|join("/") ignore missing !]
@@ -53,14 +74,14 @@
       [! endfilter !]
 
 
-      <h3>output</h3>
-        <div class="example-block-2">
-      [! include [file.parent, "html.html"]|join("/") !]
-        </div>
 
+      </div>
 
       [! block description !][! endblock !]
     </main>
+
+  [! include [vars.wrappers_dir, "includes", "footer.html"]|join("/") !]
+
 
 </body>
 </html>

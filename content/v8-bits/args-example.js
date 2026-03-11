@@ -1,4 +1,4 @@
-export const bitty = {};
+export const b = {};
 
 export function argsExample(ev, sender, el) {
   const eventType = ev.type;

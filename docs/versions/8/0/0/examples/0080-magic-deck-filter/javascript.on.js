@@ -13,11 +13,7 @@ export async function init() {
 }
 
 export function cardIsLand(card) {
-  if (card.card.oracleCard.types[0] === "Land") {
-    return "yes";
-  } else {
-    return "no";
-  }
+  return card.card.oracleCard.types[0] === "Land" ? "ture" : "false";
 }
 
 export function cardName(card) {
@@ -25,25 +21,17 @@ export function cardName(card) {
 }
 
 export function cards() {
-  return b.tee(
-    data
-      .cards
-      .map((card) =>
-        b.render("card", {
-          "__CHAR1__": charx(card, 1),
-          "__CHAR2__": charx(card, 2),
-          "__IS_LAND__": cardIsLand(card),
-          "__NAME__": cardName(card),
-          "__UUID__": uuid(card),
-        })
-      ),
-  );
-}
-
-export function categories() {
-  return b.dedup(
-    data.cards.map((card) => card.categories[0]),
-  ).sort(b.sort);
+  return data
+    .cards
+    .map((card) =>
+      b.render("card", {
+        "__CHAR1__": charx(card, 1),
+        "__CHAR2__": charx(card, 2),
+        "__IS_LAND__": cardIsLand(card),
+        "__NAME__": cardName(card),
+        "__UUID__": uuid(card),
+      })
+    );
 }
 
 export function charx(card, num) {

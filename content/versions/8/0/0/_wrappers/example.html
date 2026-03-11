@@ -48,7 +48,7 @@
 
           <h4>example</h4>
 
-          <div class="example-block-2">
+          <div class="example-block-2 example-output">
           [! include [file.parent, "html.html"]|join("/") !]
           [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
           </div>
@@ -58,20 +58,30 @@
           [!- include [file.parent, "html.html"]|join("/") -!]
           [!- endfilter -!]
 
+          [!- set html2 -!]
+          [!- include [file.parent, "html2.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if html2 != "" -!]
+          [!- filter block_highlight("html") -!]
+          [@ html2 @]
+          [!- endfilter -!]
+          [@ html2 @]
+          [!- endif -!]
+
+
           <h4>javascript</h4>
           [!- filter block_highlight("js") -!]
           [!- include [file.parent, "javascript.js"]|join("/") -!]
           [!- endfilter -!]
 
-          [!- set styles_html -!]
-          [!- include [file.parent, "styles.html"]|join("/") ignore missing -!]
+          [!- set styles_css -!]
+          [!- include [file.parent, "styles.css"]|join("/") ignore missing -!]
           [!- endset -!]
-          [!- if styles_html != "" -!]
+          [!- if styles_css!= "" -!]
           <h4>styles</h4>
-          [!- filter block_highlight("html") -!]
-          [@- styles_html -@]
+          [!- filter block_highlight("css") -!]
+          [@- styles_css-@]
           [!- endfilter -!]
-          [@- styles_html -@]
           [!- endif -!]
 
           [!- set details -!]

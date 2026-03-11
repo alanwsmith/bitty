@@ -1,0 +1,13 @@
+async $SIGNAL_NAME(_, el) {
+  const url = "/[@ file.parent @]/payloads/valid-svg.svg";
+  const result = await this.fetchSVG("el_$HASH", url);
+  if (result.ok === true) {
+    el.innerHTML = "test passed";
+  }
+  this.trigger("view_$SIGNAL_NAME");
+}
+
+view_$SIGNAL_NAME(svg, el) {
+  el.replaceWith(this.renderSVG("el_$HASH"));
+}
+

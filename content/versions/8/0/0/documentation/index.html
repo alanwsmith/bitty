@@ -1,0 +1,198 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+
+[! block main !]
+[! set bitty_tag = vars.bitty_tag !]
+
+<hgroup>
+  <h1>documentation</h1>
+</hgroup>
+
+
+<ul>
+  <li>
+    <details>
+      <summary class="section-name">installation</summary>
+      <div>under construction</div>
+    </details>
+  </li>
+
+[! for sectionFolder in folders !]
+[! if 
+  sectionFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and sectionFolder.path_part_strings[6] 
+  and not sectionFolder.path_part_strings[7] 
+!]
+
+
+<li>
+<details>
+      <summary class="section-name">
+        [@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]
+        <!--
+        <span class="section-id faded-default-color"> [[@ sectionFolder.path_parts[6] @]]</span>
+-->
+</summary>
+
+    <ul>
+[! for itemFolder in folders !]
+[! if 
+  itemFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and sectionFolder.path_parts[6] == itemFolder.path_parts[6] 
+  and itemFolder.path_parts[7]
+  and not itemFolder.path_parts[8]
+!]
+  <li>
+
+
+
+
+          <details class="item-wrapper"><summary class="item-name">
+            <span class="item-status status"></span>
+            [@ get_content(itemFolder.path_part_strings[7], "item_name.html") @] 
+            <!--
+            <span class="faded-default-color">[[@ itemFolder.path_parts[7] @]]</span>
+-->
+          </summary>
+
+            <div class="item-header">Description</div>
+      [@- get_content(itemFolder.path_part_strings[7],  "item_description.html") -@]
+
+            <div class="item-header">Examples</div>
+
+  <ul>
+[! for testFolder in folders !]
+[! if 
+  testFolder.path_part_strings[5] == vars.docs_sections_dir 
+  and itemFolder.path_parts[6] == testFolder.path_parts[6] 
+  and itemFolder.path_parts[7] == testFolder.path_parts[7]
+  and testFolder.path_parts[8] 
+  and not testFolder.path_parts[9]
+!]
+
+          <li>
+            <details class="example-wrapper">
+                  <summary>
+                    <span class="example-status status"></span>
+                    [@ get_content(testFolder.path_part_strings[8],  "test_name.html") @] 
+                    <!--
+                    <span class="faded-default-color">[[@ testFolder.path_parts[8] @]]</span>
+-->
+                  </summary>
+
+                  <div>HTML</div>
+                  <div>
+                  [!- filter block_highlight("html") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
+                  [!- endfilter -!]
+                  </div>
+
+                  <div>JavaScript</div>
+                  <div class="default-flow">
+                    <div class="faded-match-background-color default-border-radius large-bottom-margin">
+
+                      [#
+                      <div class="xsmall-font-size default-inline-padding default-top-padding">
+                        [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
+                      </div>
+                      #]
+                      [!- filter block_highlight("js") -!]
+                      [@- get_content(testFolder.path_part_strings[8],  "test_javascript.js") -@]
+                      [!- endfilter -!]
+                    </div>
+
+                    [!- set second_js_file -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_javascript_2.js") -@]
+                    [!- endset -!]
+
+                    [! if second_js_file != "" !]
+                    <div class="faded-match-background-color default-border-radius large-bottom-margin">
+                      [#
+                      <div class="xsmall-font-size default-inline-padding default-top-padding">
+                        [@- ["", testFolder.path_part_strings[8], "test_javascript_2.js"]|join("/") -@]
+                      </div>
+                      #]
+                      [!- filter block_highlight("js") -!]
+                      [@- second_js_file|safe -@]
+                      [!- endfilter -!]
+                    </div>
+                    [! endif !]
+                  </div>
+
+                  <div class="test-header">Result</div>
+                  <div class="result-wrapper default-flow">
+                    <div class="default-flow">
+                    [@- get_content(testFolder.path_part_strings[8],  "test_html.html") -@]
+                    </div>
+                  </div>
+
+
+                  [!- set notes_content -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_notes.html") -@]
+                  [!- endset -!]
+                  [! if notes_content != "" !]
+                  <div class="test-header">Notes</div>
+                  [@- notes_content @]
+                  [! endif !]
+
+
+                  <details>
+                    <summary>view test harness</summary>
+                    <div>bitty tag for the example</div>
+                  [!- filter block_highlight("html") -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+                  [!- endfilter -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "test_bitty_tags.html") -@]
+                    <div>bitty tag for the test verification</div>
+                    [!- filter block_highlight("html") -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
+                    [!- endfilter -!]
+                    [@- get_content(testFolder.path_part_strings[8],  "test_verification_html.html") -@]
+                    <div>Verification JavaScript</div>
+                    <div class="faded-match-background-color default-border-radius large-bottom-margin">
+                      [#
+                      <div class="xsmall-font-size default-inline-padding default-top-padding">
+                        [@- ["", testFolder.path_part_strings[8], "test_verification_javascript.js"]|join("/") -@]
+                      </div>
+                      #]
+                      [!- filter block_highlight("js") -!]
+                      [@- get_content(testFolder.path_part_strings[8],  "test_verification_javascript.js") -@]
+                      [!- endfilter -!]
+                    </div>
+                  </details>
+
+
+            </details>
+          </li>
+
+[! endif !]
+[! endfor !]
+  </ul>
+
+            [! set notes_content -!]
+      [@- get_content(itemFolder.path_part_strings[7],  "item_notes.html") -@]
+            [!- endset -!]
+            [!- if notes_content != "" -!]
+            <div class="item-header">Notes</div>
+            [@ notes_content @]
+            [!- endif -!]
+
+    </details>
+
+      </li>
+[! endif !]
+[! endfor !]
+    </ul>
+    </details>
+  </li>
+
+[! endif !]
+[! endfor !]
+
+</ul>
+
+<div data-r="test-controls"></div>
+
+<[@ vars.bitty_tag @] data-connect="/[@ vars.bits_dir @]/docs-test-runner.js"></[@ vars.bitty_tag @]>
+
+[! endblock !]

@@ -1,0 +1,65 @@
+[!- include "versions/8/0/0/_wrappers/vars.txt" -!]
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    [! include vars.styles_dir + "/_includes/initial-colors.html" !]
+    [! include vars.styles_dir + "/_includes/initial-styles.html" !]
+    <script src="/[@ vars.styles_dir @]/styles.js"></script>
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/main.css" />
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/snippet.css" />
+  </head>
+  <script type="module" src="[@ vars.bitty_script_path @]"></script>
+  <body>
+    <bitty-8-0 data-connect="/[@ vars.bits_dir @]/details-opener.js"></bitty-8-0>
+
+    <header class="default-wrapper">
+      [! include [vars.wrappers_dir, "includes", "global-nav.html" ]|join("/") !]
+    </header>
+
+    <main class="default-flow [! block main_wrapper !]default-wrapper[! endblock !]">
+      <hgroup>
+        <h1>snippets</h1>
+      </hgroup>
+      <div class="snippet-columns">
+        <div class="snippet-sidebard">
+          <ul class="sidebar-list">
+          [! for snippet_dir in folders_in_folder(file.path_part_strings[4]) !]
+            <li>
+              [! if snippet_dir == file.parent !]
+              [! include [snippet_dir, "name.html"]|join("/") -!]
+              [! else !]
+              <a href="/[@ snippet_dir @]/">[! include [snippet_dir, "name.html"]|join("/") -!]</a>
+              [! endif !]
+            </li>
+          [! endfor !]
+          </ul>
+        </div>
+
+        <div>
+          <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
+          <div class="example-block-2">
+            [! include [file.parent, "html.html"]|join("/") !]
+          </div>
+          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+          <h3>html</h3>
+          [! filter block_highlight("html") !]
+          [! include [file.parent, "html.html"]|join("/") !]
+          [! endfilter !]
+          <h3>javascript</h3>
+          [! filter block_highlight("js") !]
+          [! include [file.parent, "javascript.js"]|join("/") !]
+          [! endfilter !]
+          <h3>Details</h3>
+          <p>work-in-progress</p>
+        </div>
+      </div>
+    </main>
+
+  [! include [vars.wrappers_dir, "includes", "footer.html"]|join("/") !]
+
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+signal_C5BF2(_, el) {
+  const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="green" />
+TARGET_C5BF2
+</svg>`;
+  const template = document.createElement("template");
+  template.innerHTML =
+    `<text x="24" y="24" font-size="20" text-anchor="middle" fill="white">test </text>`;
+  const template2 = document.createElement("template");
+  template2.innerHTML =
+    `<text x="36" y="24" font-size="20" text-anchor="middle" fill="white">passed</text>`;
+  const replacementArray = [
+    template.content.firstChild,
+    template2.content.firstChild,
+  ];
+  const subs = {
+    "TARGET_C5BF2": replacementArray,
+  };
+  this.setLocalLogLevel("none");
+  this.createSVG("el_C5BF2", input);
+  const svg = this.renderSVG("el_C5BF2", subs);
+  const gotString = [
+    svg.querySelectorAll("text")[0].textContent,
+    svg.querySelectorAll("text")[1].textContent,
+  ].join("");
+  el.innerHTML = gotString;
+  this.send(svg, "view_signal_C5BF2");
+}
+
+view_signal_C5BF2(svg, el) {
+  el.replaceWith(svg);
+}

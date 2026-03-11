@@ -1,0 +1,129 @@
+[!- include "versions/8/0/0/_wrappers/vars.txt" -!]
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    [! include vars.styles_dir + "/_includes/initial-colors.html" !]
+    [! include vars.styles_dir + "/_includes/initial-styles.html" !]
+    <script src="/[@ vars.styles_dir @]/styles.js"></script>
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/main.css" />
+    <link rel="stylesheet" href="/[@ vars.styles_dir @]/example.css" />
+  </head>
+  <script type="module" src="[@ vars.bitty_script_path @]"></script>
+<body>
+    <bitty-8-0 data-connect="/[@ vars.bits_dir @]/details-opener.js"></bitty-8-0>
+
+    <header class="default-wrapper">
+      [! include [vars.wrappers_dir, "includes", "global-nav.html" ]|join("/") !]
+    </header>
+
+    <main class="default-flow [! block main_wrapper !]default-wrapper[! endblock !]">
+      <hgroup>
+        <h1>examples</h1>
+      </hgroup>
+      <div class="example-columns">
+        <div class="example-sidebard">
+          <ul class="sidebar-list">
+          [! for example_dir in folders_in_folder(file.path_part_strings[4]) !]
+            <li>
+          [! if example_dir == file.parent !]
+          [! include [example_dir, "name.html"]|join("/") -!]
+          [! else !]
+          <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
+          [! endif !]
+            </li>
+          [! endfor !]
+          </ul>
+        </div>
+
+        <div class="example-content default-flow">
+
+          <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
+
+          <div class="example-block-2 example-output">
+          [! include [file.parent, "html.html"]|join("/") !]
+          [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
+          </div>
+
+          <h4>overview</h4>
+          <p>work-in-progress</p>
+
+          [#
+          [!- set details -!]
+          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if details != "" -!]
+          <h4>details</h4>
+          [@ details @]
+          [!- endif -!]
+          #]
+
+          <h4>html</h4>
+          [!- filter block_highlight("html") -!]
+          [!- include [file.parent, "html.html"]|join("/") -!]
+          [!- endfilter -!]
+
+          [!- set html2 -!]
+          [!- include [file.parent, "html2.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if html2 != "" -!]
+          [!- filter block_highlight("html") -!]
+          [@ html2 @]
+          [!- endfilter -!]
+          [@ html2 @]
+          [!- endif -!]
+
+          <h4>javascript</h4>
+          [!- filter block_highlight("js") -!]
+          [!- include [file.parent, "javascript.on.js"]|join("/") -!]
+          [!- endfilter -!]
+
+          [!- set styles_css -!]
+          [!- include [file.parent, "styles.css"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if styles_css!= "" -!]
+          <h4>styles</h4>
+          [!- filter block_highlight("css") -!]
+          [@- styles_css-@]
+          [!- endfilter -!]
+          [!- endif -!]
+
+          [!- set templates_html -!]
+          [!- include [file.parent, "templates.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if templates_html!= "" -!]
+          <h4>templates.html</h4>
+          [!- filter block_highlight("html") -!]
+          [@- templates_html-@]
+          [!- endfilter -!]
+          [!- endif -!]
+
+          [!- set data_json -!]
+          [!- include [file.parent, "data.json"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if data_json!= "" -!]
+          <details>
+            <summary>data.json</summary>
+          [!- filter block_highlight("json") -!]
+          [@- data_json-@]
+          [!- endfilter -!]
+          </details>
+          [!- endif -!]
+
+
+
+        </div>
+
+      </div>
+
+      <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
+    </main>
+
+    [! include [vars.wrappers_dir, "includes", "footer.html"]|join("/") !]
+
+</body>
+</html>
+
+

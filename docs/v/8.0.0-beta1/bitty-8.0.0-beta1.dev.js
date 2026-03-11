@@ -1,0 +1,768 @@
+const version = [8, 0, 0];
+
+const tagName = `bitty-${version[0]}-${version[1]}`;
+
+class BittyError extends Error {
+  constructor(payload) {
+    super();
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, BittyError);
+    }
+    this.name = "BittyError";
+    for (let [key, value] of Object.entries(payload)) {
+      this[key] = value;
+    }
+  }
+}
+
+class ForwardEvent extends Event {
+  constructor(ev, signal) {
+    super("bittyforward", { bubbles: true });
+    this.forwardedEvent = ev;
+    this.forwardedSignal = signal;
+  }
+}
+
+class LocalTriggerEvent extends Event {
+  constructor(signal, bittyId) {
+    super("bittylocaltrigger", { bubbles: true });
+    this.signal = signal;
+    this.localId = bittyId;
+  }
+}
+
+class RequestResponse {
+  constructor(value, error) {
+    if (value) {
+      this.value = value;
+    }
+    if (error) {
+      this.error = error;
+    }
+  }
+
+  // TODO: Determine if this is the
+  // name and approach you want to
+  // go with.
+  unwrapOr(alt) {
+    if (this.value !== undefined) {
+      return this.value;
+    } else {
+      return alt;
+    }
+  }
+}
+
+class TriggerEvent extends Event {
+  constructor(signal) {
+    super("bittytrigger", { bubbles: true });
+    this.signal = signal;
+  }
+}
+
+/** @internal */
+function findDataKey(el, key) {
+  if (el.dataset === undefined) {
+    return undefined;
+  }
+  if (el.dataset[key] !== undefined) {
+    return el.dataset[key];
+  } else if (
+    el.parentNode
+  ) {
+    return findDataKey(el.parentNode, key);
+  } else {
+    return undefined;
+  }
+}
+
+class BittyJs extends HTMLElement {
+  constructor() {
+    super();
+    /** @internal */
+    this.config = {
+      listeners: ["click", "input"],
+      license: "CC0",
+      version: version,
+    };
+  }
+
+  /** internal */
+  async connectedCallback() {
+    this.dataset.bittyid = self.crypto.randomUUID();
+    this.bittyId = this.dataset.bittyid;
+    await this.makeConnection();
+    if (this.conn) {
+      this.conn.api = this;
+      this.setIds(this);
+      this.handleEventBridge = this.handleEvent.bind(this);
+      this.addEventListeners();
+      this.loadPageData();
+      this.loadPageTemplates();
+      await this.runBittyInit();
+      await this.runBittyReady();
+    }
+  }
+
+  /** internal */
+  addEventListeners() {
+    const listeners = [
+      "bittyforward",
+      "bittylocaltrigger",
+      "bittytrigger",
+    ];
+    if (this.dataset.listeners) {
+      this.trimInput(this.dataset.listeners).forEach((listener) => {
+        listeners.push(listener);
+      });
+    } else {
+      listeners.push("click");
+      listeners.push("input");
+    }
+    listeners.forEach(
+      (listener) => {
+        window.addEventListener(listener, (ev) => {
+          this.handleEventBridge.call(this, ev);
+        });
+      },
+    );
+  }
+
+  /** internal */
+  connectedMoveCallback() {
+    // NOTE: this prevents connectedCallback() from firing
+    // if a bitty component is moved. It doesn't
+    // need to have any functionality at this point.
+  }
+
+  data(id) {
+    return this._data[id];
+  }
+
+  /** internal */
+  doSubs(content, subs) {
+    subs.forEach((sub) => {
+      const outerBaseType = typeof sub[1];
+      const outerDetailType = Object.prototype.toString.call(sub[1]);
+      if (
+        outerBaseType === "object" && outerDetailType === "[object Array]"
+      ) {
+        const newContent = sub[1].map((el) => {
+          const innerBaseType = typeof el;
+          const innerDetailType = Object.prototype.toString.call(el);
+          if (
+            innerBaseType === "object" &&
+            innerDetailType === "[object DocumentFragment]"
+          ) {
+            return [...el.childNodes].map((child) => {
+              if (
+                Object.prototype.toString.call(child) === "[object Text]"
+              ) {
+                return child.wholeText;
+              } else {
+                return child.outerHTML;
+              }
+            }).join("");
+          } else if (innerBaseType === "object") {
+            return el.outerHTML;
+          } else {
+            return el;
+          }
+        }).join("");
+        content = content.replaceAll(sub[0], newContent);
+      } else if (
+        outerBaseType === "object" &&
+        outerDetailType === "[object DocumentFragment]"
+      ) {
+        const subContent = [];
+        [...sub[1].childNodes].forEach((child) => {
+          if (
+            Object.prototype.toString.call(child) === "[object Text]"
+          ) {
+            subContent.push(child.wholeText);
+          } else {
+            subContent.push(child.outerHTML);
+          }
+        });
+        content = content.replaceAll(sub[0], subContent.join(""));
+      } else if (typeof sub[1] === "object") {
+        content = content.replaceAll(sub[0], sub[1].outerHTML);
+      } else {
+        content = content.replaceAll(sub[0], sub[1]);
+      }
+    });
+    return content;
+  }
+
+  elementFromTemplate(key, subs = []) {
+    // TODO: Documenation: alias for
+    // this.api.makeElement(this.api.template(key), subs))
+    return this.makeElement(this.template(key), subs);
+  }
+
+  /** internal */
+  expandElement(ev, el) {
+    if (ev !== null) {
+      el.isTarget = ev.target.dataset.bittyid === el.dataset.bittyid;
+      el.isSender = ev.sender.dataset.bittyid === el.dataset.bittyid;
+    }
+
+    // TODO: Verify the behavior of this when
+    // the incoming element is a bitty tag.
+    // If the tag is nested, it should return
+    // the parent bitty tag. If the tag isn't
+    // nested it should return undefined.
+    // This can then be used to do things
+    // like checking for `bittyready` signals
+    // to determine when everything is loaded
+    // by having parent bitty elements collect
+    // the `bittyready` signals from only
+    // their children and then create thier
+    // own events which go up to the root
+    // for a single element to collect and
+    // count.
+    el.bittyParent = this.getBittyParent(el);
+
+    el.copyTEXT = async () => {
+      const text = el.value !== undefined ? el.value : el.innerHTML;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (error) {
+        // TODO: Add this to the global bitty errors
+        // when those come online.
+        console.error("Could not copy text to clipboard");
+      }
+    };
+
+    el.prop = (x) => {
+      return findDataKey.call(null, el, x);
+    };
+
+    el.propAsInt = (x) => {
+      const finder = findDataKey.call(null, el, x);
+      if (finder !== undefined) {
+        return parseInt(finder, 10);
+      } else {
+        return finder;
+      }
+    };
+
+    el.propAsFloat = (x) => {
+      const finder = findDataKey.call(null, el, x);
+      if (finder !== undefined) {
+        return parseFloat(finder);
+      } else {
+        return finder;
+      }
+    };
+
+    if (el.value !== undefined) {
+      el.valueAsInt = parseInt(el.value, 10);
+      el.valueAsFloat = parseFloat(el.value);
+    }
+
+    el.propMatchesTarget = (x) => {
+      const evKey = findDataKey.call(null, ev.target, x);
+      const elKey = findDataKey.call(null, el, x);
+      if (evKey === undefined || elKey === undefined) {
+        return false;
+      }
+      return evKey === elKey;
+    };
+
+    el.propMatchesSender = (x) => {
+      const evKey = findDataKey.call(null, ev.sender, x);
+      const elKey = findDataKey.call(null, el, x);
+      if (evKey === undefined || elKey === undefined) {
+        return false;
+      }
+      return evKey === elKey;
+    };
+
+    el.setProp = (key, value) => {
+      // TODO: scrub this input to make sure
+      // it's valid for an attribute.
+      if (el.dataset[key] === undefined || el.dataset[key] !== value) {
+        /** internal */
+        el.dataset[key] = value;
+      }
+    };
+  }
+
+  /** internal */
+  expandEvent(ev) {
+    ev.sender = this.findSender(ev.target);
+    if (ev.sender && ev.sender.dataset && ev.sender.dataset.bittyid) {
+      ev.sender.bittyId = ev.sender.dataset.bittyid;
+    }
+
+    // NOTE: Move the dataset.send into `sendPayload`
+    // so this.api.forward() can change .sendPayload
+    // without affecting the original dataset.
+    if (ev.sender.dataset && ev.sender.dataset.send) {
+      //** internal */
+      ev.sendPayload = ev.sender.dataset.send;
+    }
+
+    if (ev.sender && ev.sender.value) {
+      ev.sender.valueAsInt = parseInt(ev.sender.value, 10);
+      ev.sender.valueAsFloat = parseFloat(ev.sender.value);
+    }
+
+    if (ev.sender) {
+      ev.sender.prop = (x) => {
+        return findDataKey.call(null, ev.sender, x);
+      };
+      ev.sender.propAsInt = (x) => {
+        return parseInt(findDataKey.call(null, ev.sender, x), 10);
+      };
+      ev.sender.propAsFloat = (x) => {
+        return parseFloat(findDataKey.call(null, ev.sender, x));
+      };
+    }
+
+    if (ev.target.value !== undefined) {
+      ev.value = ev.target.value;
+      ev.valueAsInt = parseInt(ev.target.value, 10);
+      ev.valueAsFloat = parseFloat(event.target.value);
+    }
+
+    ev.bittyId = ev.target.dataset.bittyid;
+
+    ev.prop = (x) => {
+      return findDataKey.call(null, ev.target, x);
+    };
+
+    ev.propAsInt = (x) => {
+      const finder = findDataKey.call(null, ev.target, x);
+      if (finder !== undefined) {
+        return parseInt(finder, 10);
+      } else {
+        return finder;
+      }
+    };
+
+    ev.propAsFloat = (x) => {
+      const finder = findDataKey.call(null, ev.target, x);
+      if (finder !== undefined) {
+        return parseFloat(finder);
+      } else {
+        return undefined;
+      }
+    };
+  }
+
+  /** internal */
+  findSender(evTarget) {
+    if (evTarget.dataset && evTarget.dataset.send) {
+      return evTarget;
+    } else if (evTarget.parentNode) {
+      return this.findSender(evTarget.parentNode);
+    } else {
+      return this;
+    }
+  }
+
+  forward(ev, signal) {
+    const forwardEvent = new ForwardEvent(ev, signal);
+    this.dispatchEvent(forwardEvent);
+  }
+
+  /** internal */
+  getBittyParent(el) {
+    if (el.localName.toLowerCase() === tagName) {
+      return el;
+    } else if (el.parentNode) {
+      return this.getBittyParent(el.parentNode);
+    } else {
+      // TODO: Add test to confirm this
+      // pulls the current element if another
+      // one isn't found.
+      // TODO: Check funcionatlity of
+      // one bitty element calling
+      // this. TBD on if it should return
+      // itself or a parent if there's one
+      // above it? Probably itself since
+      // there isn't guaranteeded to
+      // be one above it.
+      return this;
+    }
+  }
+
+  async getElement(url, subs = [], options = {}) {
+    const response = await this.getHTML(url, subs, options, "getElement");
+    if (response.value) {
+      const el = response.value.firstChild;
+      const payload = { value: el };
+      return payload;
+    } else {
+      return response;
+    }
+  }
+
+  async getHTML(url, subs = [], options = {}) {
+    const response = await this.getTEXT(url, subs, options, "getHTML");
+    if (response.error) {
+      return response;
+    } else {
+      return { value: this.makeHTML(response.value, subs) };
+    }
+  }
+
+  async getJSON(url, subs = [], options = {}) {
+    const response = await this.getTEXT(url, subs, options, "getJSON");
+    if (response.error) {
+      return response;
+    } else {
+      try {
+        const data = JSON.parse(response.value);
+        return new RequestResponse(data);
+        // const payload = { value: data };
+        // return payload;
+      } catch (error) {
+        let payloadError = new BittyError({ type: "parsing" });
+        const payload = { error: payloadError };
+        return payload;
+      }
+    }
+  }
+
+  async getSVG(url, subs = [], options = {}) {
+    const response = await this.getTEXT(url, subs, options, "getSVG");
+    if (response.error) {
+      return response;
+    } else {
+      const tmpl = document.createElement("template");
+      tmpl.innerHTML = response.value;
+      const wrapper = tmpl.content.cloneNode(true);
+      const svg = wrapper.querySelector("svg");
+      const payload = { value: svg };
+      return payload;
+    }
+  }
+
+  async getTEXT(url, subs = [], options = {}, incomingMethod = "getTEXT") {
+    let response = await fetch(url, options);
+    try {
+      if (!response.ok) {
+        throw new BittyError({
+          type: "fetching",
+          message:
+            `${incomingMethod}() returned ${response.status} [${response.statusText}] in:\n${incomingMethod}(${response.url}, ${
+              JSON.stringify(subs)
+            }, ${JSON.stringify(options)})`,
+          statusText: response.statusText,
+          status: response.status,
+          url: response.url,
+          incomingMethod: incomingMethod,
+          subs: subs,
+          options: options,
+        });
+      } else {
+        const content = this.doSubs(await response.text(), subs);
+        return new RequestResponse(content);
+      }
+    } catch (error) {
+      console.error(`BittyError: ${error.message}`);
+      return new RequestResponse(null, error);
+    }
+  }
+
+  /** internal */
+  async handleEvent(ev) {
+    if (
+      ev.type === "bittyforward"
+    ) {
+      const forwardedEv = ev.forwardedEvent;
+      forwardedEv.sendPayload = ev.forwardedSignal;
+      await this.processEvent(forwardedEv);
+    } else {
+      this.expandEvent(ev);
+      if (
+        ev.type === "bittylocaltrigger"
+      ) {
+        //** internal */
+        ev.sendPayload = ev.signal;
+        await this.processEvent(ev);
+      } else if (
+        ev.type === "bittytrigger"
+      ) {
+        //** internal */
+        ev.sendPayload = ev.signal;
+        await this.processEvent(ev);
+      } else {
+        // NOTE data-use was remove from here, this
+        // can be collapsed when that work is finihed.
+        if (ev.sender.dataset.send) {
+          //** internal */
+          ev.sendPayload = ev.sender.dataset.send;
+          await this.processEvent(ev);
+        }
+      }
+    }
+  }
+
+  htmlFromTemplate(key, subs = []) {
+    // TODO: Documenation: alias for
+    // this.api.makeHTML(this.api.template(key), subs))
+    return this.makeHTML(this.template(key), subs);
+  }
+
+  async loadCSS(url, subs = [], options = {}) {
+    const response = await this.getTEXT(url, subs, options, "loadCSS");
+    if (response.error) {
+      return response;
+    } else {
+      const newStylesheet = new CSSStyleSheet();
+      newStylesheet.replaceSync(response.value);
+      document.adoptedStyleSheets.push(newStylesheet);
+      return { value: response.value };
+    }
+  }
+
+  /** internal */
+  loadPageData() {
+    this._data = {};
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "application/json" && el.id !== undefined) {
+        try {
+          this._data[el.id] = JSON.parse(el.text);
+        } catch (error) {
+          // TODO: make test for error state
+          // in test unit-tests test suite.
+          console.log(error);
+        }
+      }
+    });
+  }
+
+  /** internal */
+  loadPageTemplates() {
+    this._templates = {};
+    document.querySelectorAll("script").forEach((el) => {
+      if (el.type === "text/html" && el.id !== undefined) {
+        this._templates[el.id] = el.text;
+      }
+      if (el.type === "text/plain" && el.id !== undefined) {
+        // TODO: Note in docs that the text is trimmed.
+        this._templates[el.id] = el.text.trim();
+      }
+    });
+  }
+
+  localTrigger(signal) {
+    const ev = new LocalTriggerEvent(signal, this.bittyId);
+    this.dispatchEvent(ev);
+  }
+
+  /** internal */
+  async makeConnection() {
+    try {
+      if (!this.dataset.connect) {
+        if (window.BittyClass) {
+          this.conn = new window.BittyClass();
+        } else {
+          console.error(
+            `${tagName} error: Could not find "window.BittyClass" on the page to connect to (which is needed because there is no "data-connect" attribute).`,
+          );
+        }
+      } else {
+        let connParts = this.trimInput(this.dataset.connect);
+        if (typeof window[connParts[0]] !== "undefined") {
+          this.conn = new window[connParts[0]]();
+        } else {
+          if (connParts[0].substring(0, 1) === "/") {
+            const windowURL = new URL(window.location.href);
+            connParts[0] = new URL(connParts[0], windowURL.origin).toString();
+          }
+          if (connParts[0].substring(0, 4) === "http") {
+            const mod = await import(connParts[0]);
+            if (connParts[1] === undefined) {
+              try {
+                this.conn = new mod.default();
+              } catch (error) {
+                console.error(
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${this.dataset.connect}" to make sure it has an "export default class {}"`,
+                );
+              }
+            } else {
+              try {
+                this.conn = new mod[connParts[1]]();
+              } catch (error) {
+                console.error(
+                  `${tagName} error [${error}] - data-connect="${this.dataset.connect}" failed - Check the file "${
+                    connParts[0]
+                  }" to make sure it has an "export class ${connParts[1]} {}"`,
+                );
+              }
+            }
+          } else {
+            console.error(
+              `${tagName} error: Tried to use 'data-connect="${this.dataset.connect}" which did not match a class on the page which means an attempt to use it as a URL was made. It failed becasue the URL version of 'data-connect' must start with 'http' or '/'. Other URLs are not currently supported`,
+            );
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`${tagName} error: [${error}] - ${this.dataset.connect}`);
+    }
+  }
+
+  makeElement(template, subs = []) {
+    const el = this.makeHTML(template, subs).firstChild;
+    return el;
+  }
+
+  makeHTML(template, subs = []) {
+    const skeleton = document.createElement("template");
+    skeleton.innerHTML = this.makeTEXT(template, subs).trim();
+    const el = skeleton.content.cloneNode(true);
+    this.setIds(el);
+    return el;
+  }
+
+  makeSVG(template, subs = []) {
+    const tmpl = document.createElement("template");
+    tmpl.innerHTML = this.makeTEXT(template, subs).trim();
+    const wrapper = tmpl.content.cloneNode(true);
+    const svg = wrapper.querySelector("svg");
+    return svg;
+  }
+
+  makeTEXT(template, subs = []) {
+    return this.doSubs(template, subs);
+  }
+
+  mapKeyToSignals(key, signals) {
+    // TODO: TKTKTK
+  }
+
+  /** internal */
+  async processEvent(ev) {
+    // skip things flagged as local that aren't
+    if (ev.localId && ev.localId !== this.bittyId) {
+      return null;
+    }
+    if (ev.sendPayload) {
+      const signals = this.trimInput(ev.sendPayload);
+      for (let signal of signals) {
+        let doAwait = false;
+        const iSigParts = signal.split(":");
+        if (iSigParts.length === 2 && iSigParts[0] === "await") {
+          doAwait = true;
+          signal = iSigParts[1];
+        }
+        if (this.conn[signal]) {
+          let foundReceiver = false;
+          const receiverNodes = this.querySelectorAll("[data-receive]");
+          const receivers = [...receiverNodes];
+          if (this.dataset.receive) {
+            receivers.push(this);
+          }
+          for (let receiver of receivers) {
+            const receptors = this.trimInput(receiver.dataset.receive);
+            for (let receptor of receptors) {
+              const rSignalParts = receptor.split(":");
+              if (
+                rSignalParts.length === 2 && rSignalParts[0] === "await"
+              ) {
+                receptor = rSignalParts[1];
+                doAwait == true;
+              }
+              if (receptor === signal) {
+                foundReceiver = true;
+                this.expandElement(ev, receiver);
+                if (doAwait) {
+                  await this.conn[signal](ev, receiver);
+                } else {
+                  this.conn[signal](ev, receiver);
+                }
+              }
+            }
+          }
+          if (foundReceiver === false) {
+            if (doAwait) {
+              await this.conn[signal](ev, null);
+            } else {
+              this.conn[signal](ev, null);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /** internal */
+  async runBittyInit() {
+    if (typeof this.conn.bittyInit === "function") {
+      if (this.conn.bittyInit[Symbol.toStringTag] === "AsyncFunction") {
+        await this.conn.bittyInit();
+      } else {
+        this.conn.bittyInit();
+      }
+    }
+  }
+
+  /** internal */
+  async runBittyReady() {
+    if (typeof this.conn.bittyReady === "function") {
+      if (this.conn.bittyReady[Symbol.toStringTag] === "AsyncFunction") {
+        await this.conn.bittyReady();
+      } else {
+        this.conn.bittyReady();
+      }
+    }
+  }
+
+  send(payload, signals) {
+    // TODO: Implement.
+  }
+
+  setCSS(key, value) {
+    document.documentElement.style.setProperty(key, value);
+  }
+
+  /** internal */
+  setIds(input) {
+    input.querySelectorAll("*").forEach((el) => {
+      if (!el.dataset.bittyid) {
+        el.dataset.bittyid = self.crypto.randomUUID();
+      }
+      if (!el.bittyId) {
+        el.bittyId = el.dataset.bittyid;
+      }
+    });
+  }
+
+  async sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  svgFromTemplate(key, subs = []) {
+    return this.api.makeSVG(this.api.template(key), subs);
+  }
+
+  template(id) {
+    return this._templates[id];
+  }
+
+  trigger(signal) {
+    const ev = new TriggerEvent(signal);
+    this.dispatchEvent(ev);
+  }
+
+  /** internal */
+  trimInput(input) {
+    return input
+      .trim()
+      .split(/\s+/m)
+      .map((l) => l.trim());
+  }
+
+  /* *
+   * Anything in the experimental phase goes
+   * below here
+   */
+}
+
+customElements.define(tagName, BittyJs);

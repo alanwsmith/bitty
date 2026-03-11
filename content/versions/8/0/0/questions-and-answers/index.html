@@ -1,0 +1,95 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+[! block main !]
+[! set bitty_tag = vars.bitty_tag !]
+<hgroup>
+  <h1>questions and answers</h1>
+</hgroup>
+
+[! filter markdown|safe !]
+## What is bitty's goal?
+
+To make it easier to make things on the web. 
+
+## What's the main idea?
+
+<blockquote>
+Common things should be easy, uncommon things should be possible.
+</blockquote>
+
+This is [Lea Verou's](https://lea.verou.me/) quote paraphrasing 
+[Alan Key's](https://en.wikipedia.org/wiki/Alan_Kay)
+&quot;Simple things should be easy, complex things should be possible.&quot;
+
+
+## What approaches support the goal?
+
+1. Use native HTML and JavaScript. 
+1. Don't require dependencies. 
+1. Don't require build tools.
+
+## Why no JSX?
+
+JSX increases the barrier to entry
+for getting started. You have to
+pick up a third thing beyond HTML 
+and JavaScript.
+
+Sure, there are a few things you have to
+learn about bitty to use it, but they
+are all vanilla JS.
+
+## What about progressive enhancement?
+
+bitty was designed specifically to support
+progressive enhancement. That's part
+of the reason it relies on native
+HTML and JavaScript. You can have
+100% of your content in HTML 
+with bitty only providing 
+nice-to-have features. 
+
+Of course, you can also start
+with nothing but a single `<div>`
+on the page and build everything
+with bitty too.
+
+
+## Why put templates in script tags instead of template tags?
+
+Two reasons:
+
+1. `<template>` tags get parsed as HTML when they 
+are ingested. 
+
+    This means trying to do something like this won't 
+work:
+
+    ```html
+    <img IMG_SRC alt="ALT_TEXT" />
+    ```
+
+    Depending on the browser the `SRC` string gets
+turned into `img_src=""` which breaks the 
+find/replace functionality. 
+
+
+2. Browsers may try to load `<img>` tags found inside
+templates. Doing something like this causes 
+404 errors as a result:
+
+    ```html
+    <img src="IMG_SRC" alt="ALT_TEXT" />
+    ```
+
+Using the `<script>` tags eliminates those issues. 
+The content is simply 
+[treated as a block of data](https://html.spec.whatwg.org/dev/scripting.html#the-script-element)
+with no further processing by the browser.  
+
+
+
+[! endfilter !]
+
+
+[! endblock !]

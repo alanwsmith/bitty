@@ -1,0 +1,20 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+[! block main !]
+[! set bitty_tag = vars.bitty_tag !]
+<hgroup>
+  <h1>snippets</h1>
+</hgroup>
+
+<ul class="sidebar-list">
+  [! for fldr in folders_in_folder(file.parent) !]
+  <li>
+    <a href="/[@ [fldr, 'index.html']|join("/") @]/">
+      [! include [fldr, "name.html"]|join("/") !]
+    </a>
+  </li>
+  [! endfor !]
+</ul>
+
+[! endblock !]
+

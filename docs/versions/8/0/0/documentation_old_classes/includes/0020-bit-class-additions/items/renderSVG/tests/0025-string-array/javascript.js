@@ -1,0 +1,21 @@
+
+
+signal_F7B2A(_, el) {
+  const input = `
+<svg version="1.1" width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="green" />
+<text x="30" y="24" font-size="20" text-anchor="middle" fill="white">TARGET_F7B2A</text>
+</svg>`;
+  this.setLocalLogLevel("none");
+  this.createSVG("el_F7B2A", input);
+  const subs = {
+    "TARGET_F7B2A": ["test ", "passed"],
+  };
+  const svg = this.renderSVG("el_F7B2A", subs);
+  el.innerHTML = svg.querySelector("text").innerHTML;
+  this.send(svg, "view_signal_F7B2A");
+}
+
+view_signal_F7B2A(svg, el) {
+  el.replaceWith(svg);
+}

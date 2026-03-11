@@ -1,0 +1,47 @@
+[!- set vars = namespace() !]
+[!- set vars.major_version = json.config.versions.current.major|string !]
+[!- set vars.minor_version = json.config.versions.current.minor|string !]
+[!- set vars.patch_version = json.config.versions.current.patch|string !]
+[!- set vars.tag_version = json.config.versions.current.tag !]
+
+[!- set vars.version_dir = ["versions/", vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
+
+[!- set vars.wrappers_dir = [vars.version_dir, "_wrappers"]|join("/") !]
+
+[!- set vars.bitty_tag = ["bitty-", vars.major_version, "-", vars.minor_version]|join("") !]
+[!- set vars.bits_dir = [vars.version_dir, "/bits"]|join("") !]
+[!- set vars.bitty_script_path =  [
+    "/v/", vars.major_version, ".", vars.minor_version, ".", vars.patch_version,
+    vars.tag_version, "/", "bitty-", vars.major_version, ".", vars.minor_version, ".",
+    vars.patch_version, vars.tag_version, ".source.js"
+    ]|join("") 
+!]
+[!- set vars.docs_dir = [vars.version_dir, "/documentation"]|join("") !]
+[!- set vars.docs_sections_dir = [vars.docs_dir, "/sections"]|join("") !]
+[!- set vars.docs_wrappers_dir = [vars.docs_dir, "/_wrappers"]|join("") !]
+[!- set vars.styles_dir = [vars.version_dir, "/styles"]|join("") !]
+[!- set vars.qa_dir = [vars.version_dir, "/questions-and-answers"]|join("") !]
+[!- set vars.installation_dir = [vars.version_dir, "installation"]|join("/") !]
+
+[!- set vars.version_string = [vars.major_version, "/", vars.minor_version, "/", vars.patch_version]|join("") !]
+
+[!- set vars.tutorials_dir = [vars.version_dir, "/tutorials"]|join("") !]
+[!- set vars.examples_dir = [vars.version_dir, "/examples"]|join("") !]
+[!- set vars.snippets_dir = [vars.version_dir, "/snippets"]|join("") !]
+
+
+[! macro get_content(folder, key, bitty_tag = vars.bitty_tag) -!]
+    [!- set default_content !]
+        [!- include [folder, "/_", key]|join("") ignore missing !]
+    [!- endset !]
+    [!- set custom_content !]
+        [!- include [folder, "/", key]|join("") ignore missing !]
+    [!- endset !]
+    [!- if custom_content == "" !]
+        [@- default_content @]
+    [!- else !]
+        [@- custom_content @]
+    [!- endif !]
+[!- endmacro !]
+
+

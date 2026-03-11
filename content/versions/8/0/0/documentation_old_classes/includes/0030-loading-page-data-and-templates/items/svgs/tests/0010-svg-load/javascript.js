@@ -1,0 +1,16 @@
+#key = "key_signal_1521B";
+
+signal_1521B(input, el) {
+  const svg = this.renderSVG("el_1521B");
+  // el.innerHTML = svg.querySelector("text").innerHTML;
+  // this.send(svg, "view_signal_1521B");
+}
+
+view_signal_1521B(svg, el) {
+  el.replaceWith(svg);
+}
+
+
+bittyReady() {
+  this.trigger("signal_1521B");
+}

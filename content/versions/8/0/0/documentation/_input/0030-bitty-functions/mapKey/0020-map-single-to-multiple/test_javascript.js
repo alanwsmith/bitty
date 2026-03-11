@@ -1,0 +1,11 @@
+export const b = {
+  init: "init_$_TEST_ID_",
+};
+
+export function init_$_TEST_ID_() {
+  b.mapKey("w", "$_SIGNAL_");
+}
+
+export function $_SIGNAL_(_, __, el) {
+  el.innerHTML = b.time();
+}

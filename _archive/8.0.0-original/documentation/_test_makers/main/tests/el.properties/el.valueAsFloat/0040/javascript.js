@@ -1,0 +1,14 @@
+  #incomingValue = null;
+
+  bittyReady() {
+    this.api.localTrigger("[@ method_name @]");
+  }
+
+  [@ method_name @](_, el) {
+    this.#incomingValue = el.valueAsFloat;
+    this.api.localTrigger("[@ method_name @]Output");
+  }
+
+  [@ method_name @]Output(_, el) {
+    el.innerHTML = this.#incomingValue;
+  }

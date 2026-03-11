@@ -1,0 +1,22 @@
+window.$CLASS_NAME = class {
+  #gotSignal = false;
+  #gotNull = false;
+
+  bittyReady() {
+    this.api.trigger("test_$SIGNAL_NAME");
+  }
+
+  test_$SIGNAL_NAME(_, x) {
+    this.#gotSignal = true;
+    if (x === null) {
+      this.#gotNull = true;
+    }
+    this.api.trigger("verify_$SIGNAL_NAME");
+  }
+
+  verify_$SIGNAL_NAME(_, el) {
+    if (this.#gotSignal === true && this.#gotNull === true) {
+      el.innerHTML = "ok";
+    }
+  }
+};

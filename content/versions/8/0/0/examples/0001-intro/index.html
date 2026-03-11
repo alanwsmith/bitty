@@ -1,0 +1,49 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+[! block main !]
+<hgroup>
+  <h1>examples</h1>
+</hgroup>
+
+<link rel="stylesheet" href="/[@ vars.styles_dir @]/example.css" />
+
+<div class="example-columns">
+  <div class="example-sidebard">
+    <ul class="sidebar-list">
+    [! for example_dir in folders_in_folder(file.path_part_strings[4]) !]
+      <li>
+        [! if example_dir == file.parent !]
+        [! include [example_dir, "name.html"]|join("/") -!]
+        [! else !]
+        <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
+        [! endif !]
+      </li>
+    [! endfor !]
+    </ul>
+  </div>
+
+  <div class="default-flow">
+    <h2>introduction</h2>
+    <p>
+      These examples show some practical 
+      things you can do with bitty. They
+      start off simple and get more complex
+      as you to down the page. 
+    </p>
+    <p>
+      Each page provides a working example 
+      powered by the HTML and JavaScript below it. 
+    </p>
+    <h4>script and bitty tags</h4>
+    <p>
+      Each page contains these tags:
+      [! filter block_highlight("html") !]<script type="module" src="/bitty-#-#-#.js"></script>
+<[@ vars.bitty_tag @] data-connect="/path/to/module.js"></[@ vars.bitty_tag @]>[! endfilter !]
+    <p>They aren't shown to avoid unnecessary repetition.</p>
+
+
+  </div>
+</div>
+[! endblock !]
+
+

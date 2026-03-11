@@ -1,0 +1,53 @@
+[! extends file.path_part_strings[3] + "/_wrappers/main-wrapper.html" !]
+
+[! block main !]
+<hgroup>
+  <h1>snippets</h1>
+</hgroup>
+
+<link rel="stylesheet" href="/[@ vars.styles_dir @]/snippet.css" />
+
+<div class="snippet-columns">
+  <div class="snippet-sidebard">
+    <ul class="sidebar-list">
+    [! for snippet_dir in folders_in_folder(file.path_part_strings[4]) !]
+      <li>
+        [! if snippet_dir == file.parent !]
+        [! include [snippet_dir, "name.html"]|join("/") -!]
+        [! else !]
+        <a href="/[@ snippet_dir @]/">[! include [snippet_dir, "name.html"]|join("/") -!]</a>
+        [! endif !]
+      </li>
+    [! endfor !]
+    </ul>
+  </div>
+
+  <div class="default-flow">
+    <h2>introduction</h2>
+    <p>
+      These snippets demonstrate
+      specific techniques for using bitty. 
+      Each one focuses on accomplishing
+      a specific goal. 
+    </p>
+    <p>
+      Each pages includes a live example
+      of the technique powered by the
+      HTML and JavaScript below it. 
+    </p>
+    <h4>script and bitty tags</h4>
+    <p>
+      Each page contains the:
+    </p>
+      [! filter block_highlight("html") !]<script type="module" src="/bitty-#-#-#.js"></script>[! endfilter !]
+    <p>and:</p>
+[! filter block_highlight("html") !]<[@ vars.bitty_tag @] data-connect="/module.js"></[@ vars.bitty_tag @]>[! endfilter !]
+    <p> tags that load bitty and connect to the module. These aren't shown
+to avoid unnecessary repetition. 
+    </p>
+
+
+  </div>
+</div>
+[! endblock !]
+

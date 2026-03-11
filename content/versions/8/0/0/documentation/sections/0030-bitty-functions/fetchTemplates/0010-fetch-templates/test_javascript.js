@@ -1,7 +1,7 @@
 export const b = {};
 
 export async function signal_56B48_v1(_, __, el) {
-  await b.fetchTemplates(
+  await b.loadTemplates(
     "/versions/8/0/0/documentation/samples/valid-templates/index.html",
   );
   const output = b.render("alfa");

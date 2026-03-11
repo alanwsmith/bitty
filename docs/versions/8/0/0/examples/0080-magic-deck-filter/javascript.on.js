@@ -36,7 +36,7 @@ export async function loadData() {
   if (data === undefined) {
     return false;
   }
-  const loadedTemplates = await b.fetchTemplates(
+  const loadedTemplates = await b.loadTemplates(
     "/versions/8/0/0/examples/0080-magic-deck-filter/templates/",
   );
   return loadedTemplates;

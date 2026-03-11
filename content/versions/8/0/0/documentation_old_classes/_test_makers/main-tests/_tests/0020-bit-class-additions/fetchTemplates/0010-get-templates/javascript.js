@@ -1,6 +1,6 @@
 async $SIGNAL_NAME(input, el) {
   const url = "/[@ file.parent @]/payloads/valid-templates/";
-  await this.fetchTemplates(url);
+  await this.loadTemplates(url);
   el.replaceWith(this.renderElement("elementTemplate"));
   this.trigger("view_$SIGNAL_NAME");
 }

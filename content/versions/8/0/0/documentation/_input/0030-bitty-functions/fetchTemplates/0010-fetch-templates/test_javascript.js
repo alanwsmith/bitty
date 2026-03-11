@@ -1,7 +1,7 @@
 export const b = {};
 
 export async function $_SIGNAL_(_, __, el) {
-  await b.fetchTemplates(
+  await b.loadTemplates(
     "$_SAMPLES_DIR_/valid-templates/index.html",
   );
   const output = b.render("alfa");

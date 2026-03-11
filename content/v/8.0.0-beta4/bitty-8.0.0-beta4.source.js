@@ -365,7 +365,7 @@ class BittyJs extends HTMLElement {
 
   // TODO: Set this up to accept an array of
   // URLs that are tried before the optional fallback
-  async _fetchTemplates(url, options = {}) {
+  async _loadTemplates(url, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {

@@ -36,7 +36,7 @@ export async function loadData() {
   if (data === undefined) {
     return false;
   }
-  const loadedTemplates = await b.fetchTemplates(
+  const loadedTemplates = await b.loadTemplates(
     "/[@ file.parent @]/templates/",
   );
   return loadedTemplates;

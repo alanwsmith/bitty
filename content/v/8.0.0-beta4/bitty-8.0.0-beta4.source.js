@@ -14,6 +14,7 @@ class BittyJs extends HTMLElement {
       const incoming = await import(connString);
       if (incoming.b !== undefined) {
         incoming.b._debouncers = {};
+        incoming.b._marks = {};
         incoming.b.svgs = {};
         incoming.b.templates = {};
         incoming.b.data = {};
@@ -252,6 +253,15 @@ class BittyJs extends HTMLElement {
           this.b._processKeypress(ev, signals);
         }
       });
+    }
+  }
+
+  _mark(key, note = null) {
+    try {
+      this.b._marks[key].push([performance.now(), note]);
+    } catch (_) {
+      this.b._marks[key] = [];
+      this.b._marks[key].push([performance.now(), note]);
     }
   }
 

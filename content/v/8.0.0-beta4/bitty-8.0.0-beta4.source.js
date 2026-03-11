@@ -18,9 +18,6 @@ class BittyJs extends HTMLElement {
         incoming.b.templates = {};
         incoming.b.data = {};
         this.loadPageAssets(incoming);
-        //this.loadPageTemplates(incoming);
-        // this.loadPageData(incoming);
-        //        this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
         incoming.b._processInit();
@@ -156,54 +153,6 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  // DEPRECATE in favor of getTemplates()
-  // async _fetchSVG(url, options = {}) {
-  //   // TODO: Set this up to accept an array of
-  //   // URLs that are tried before the optional fallback
-  //   let response = await fetch(url, options);
-  //   try {
-  //     if (response.ok === true) {
-  //       try {
-  //         const svgs = {};
-  //         const content = await response.text();
-  //         const container = document.createElement("div");
-  //         container.innerHTML = content;
-  //         const input = container.querySelectorAll(
-  //           "div > svg",
-  //         );
-  //         for (const svg of input) {
-  //           if (svg.id !== undefined) {
-  //             svgs[svg.id] = svg;
-  //           }
-  //         }
-  //         return svgs;
-  //       } catch (parseError) {
-  //         console.error(parseError);
-  //         return undefined;
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     return undefined;
-  //   }
-  // }
-
-  // TODO: Depcrate in favor of loadpageassets
-  // loadPageData(target) {
-  //   target.b.data = {};
-  //   document.querySelectorAll("script").forEach((script) => {
-  //     if (script.type === "application/json" && script.id !== undefined) {
-  //       try {
-  //         target.b.data[script.id] = JSON.parse(script.innerHTML);
-  //       } catch (error) {
-  //         console.error(
-  //           `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,
-  //         );
-  //       }
-  //     }
-  //   });
-  // }
-
   loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
@@ -215,33 +164,8 @@ class BittyJs extends HTMLElement {
       if (script.type === "application/json" && script.id !== undefined) {
         target.b.data[script.id] = JSON.parse(script.innerHTML.trim());
       }
-
-      // if (script.type === "text/html" && script.id !== undefined) {
-      //   target.b.templates[script.id] = script.innerText.trim();
-      // }
     });
   }
-
-  // // TODO: Deprecate in favor of loadPageAssets
-  // loadPageTemplates(target) {
-  //   // TODO: Move the b.templates init up so either
-  //   // this function or loadTemplates can load first.
-  //   target.b.templates = {};
-  //   document.querySelectorAll("script").forEach((script) => {
-  //     if (script.type === "text/html" && script.id !== undefined) {
-  //       target.b.templates[script.id] = script.innerText.trim();
-  //     }
-  //   });
-  // }
-
-  // loadPageSVGs(target) {
-  //   target.b.svg = {};
-  //   document.querySelectorAll("script").forEach((script) => {
-  //     if (script.type === "image/svg" && script.id !== undefined) {
-  //       target.b.svgs[script.id] = script.innerHTML.trim();
-  //     }
-  //   });
-  // }
 
   async _loadTemplates(url, options = {}) {
     // TODO: Set this up to accept an array of

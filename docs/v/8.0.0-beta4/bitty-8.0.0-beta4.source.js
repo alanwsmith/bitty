@@ -15,8 +15,11 @@ class BittyJs extends HTMLElement {
       if (incoming.b !== undefined) {
         incoming.b._debouncers = {};
         incoming.b.svgs = {};
-        this.loadPageTemplates(incoming);
-        this.loadPageData(incoming);
+        incoming.b.templates = {};
+        incoming.b.data = {};
+        this.loadPageAssets(incoming);
+        //this.loadPageTemplates(incoming);
+        // this.loadPageData(incoming);
         //        this.loadPageSVGs(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
@@ -185,31 +188,51 @@ class BittyJs extends HTMLElement {
   //   }
   // }
 
-  loadPageData(target) {
-    target.b.data = {};
+  // TODO: Depcrate in favor of loadpageassets
+  // loadPageData(target) {
+  //   target.b.data = {};
+  //   document.querySelectorAll("script").forEach((script) => {
+  //     if (script.type === "application/json" && script.id !== undefined) {
+  //       try {
+  //         target.b.data[script.id] = JSON.parse(script.innerHTML);
+  //       } catch (error) {
+  //         console.error(
+  //           `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,
+  //         );
+  //       }
+  //     }
+  //   });
+  // }
+
+  loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "application/json" && script.id !== undefined) {
-        try {
-          target.b.data[script.id] = JSON.parse(script.innerHTML);
-        } catch (error) {
-          console.error(
-            `ERROR: Could not load data from script tag on page with id "${script.id}. Error message: ${error}.`,
-          );
-        }
+      if (script.type === "text/html" && script.id !== undefined) {
+        target.b.templates[script.id] = script.innerHTML.trim();
       }
+      if (script.type === "image/svg" && script.id !== undefined) {
+        target.b.svgs[script.id] = script.innerHTML.trim();
+      }
+      if (script.type === "application/json" && script.id !== undefined) {
+        target.b.data[script.id] = JSON.parse(script.innerHTML.trim());
+      }
+
+      // if (script.type === "text/html" && script.id !== undefined) {
+      //   target.b.templates[script.id] = script.innerText.trim();
+      // }
     });
   }
 
-  loadPageTemplates(target) {
-    // TODO: Move the b.templates init up so either
-    // this function or loadTemplates can load first.
-    target.b.templates = {};
-    document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "text/html" && script.id !== undefined) {
-        target.b.templates[script.id] = script.innerText.trim();
-      }
-    });
-  }
+  // // TODO: Deprecate in favor of loadPageAssets
+  // loadPageTemplates(target) {
+  //   // TODO: Move the b.templates init up so either
+  //   // this function or loadTemplates can load first.
+  //   target.b.templates = {};
+  //   document.querySelectorAll("script").forEach((script) => {
+  //     if (script.type === "text/html" && script.id !== undefined) {
+  //       target.b.templates[script.id] = script.innerText.trim();
+  //     }
+  //   });
+  // }
 
   // loadPageSVGs(target) {
   //   target.b.svg = {};

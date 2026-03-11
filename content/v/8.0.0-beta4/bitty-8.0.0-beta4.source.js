@@ -60,7 +60,6 @@ class BittyJs extends HTMLElement {
       el.innerHTMLAsFloat = parseFloat(el.innerHTML.trim().replaceAll(",", ""));
       el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
     }
-
     // REMINDER: This is only run once for each element to
     // set up the functions. The `.isSender()` and
     // `.isTarget()` are updated in a different
@@ -333,6 +332,10 @@ class BittyJs extends HTMLElement {
     this.b._debouncers[key] = setTimeout(() => {
       this.b.send.apply(this, [payload, signals]);
     }, ms);
+  }
+
+  _dedup(array) {
+    return [...new Set(array)];
   }
 
   // TODO: Set this up to accept an array of

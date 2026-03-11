@@ -1,9 +1,43 @@
 export const b = {
-  init: "deck",
+  init: "init",
 };
 
-export async function deck(_, __, el) {
-  // const data = await b.fetchData("/versions/8/0/0/examples/0080-magic-deck-filter/data.json");
-  // await b.fetchTemplates("/versions/8/0/0/examples/0080-magic-deck-filter/templates.html");
-  el.innerHTML = "versions/8/0/0/examples/0080-magic-deck-filter";
+let data;
+
+export async function init() {
+  if (await getData() === true) {
+    b.trigger("controls");
+    b.trigger("deck");
+  } else {
+    b.trigger("deckError");
+  }
+}
+
+export function categories() {
+  return b.dedup(
+    data.cards.map((card) => card.categories[0]),
+  ).sort(b.sort);
+}
+
+export function controls(_, __, el) {
+  b.tee(categories());
+}
+
+export function deck(_, __, el) {
+  el.innerHTML = "got data";
+}
+
+export function deckError(_, __, el) {
+  el.innerHTML = "Error: Could not load remote files";
+}
+
+export async function getData() {
+  data = await b.fetchData("/versions/8/0/0/examples/0080-magic-deck-filter/data.json");
+  if (data === undefined) {
+    return false;
+  }
+  const loadedTemplates = await b.fetchTemplates(
+    "/versions/8/0/0/examples/0080-magic-deck-filter/templates/",
+  );
+  return loadedTemplates;
 }

@@ -1,9 +1,10 @@
 export const b = { init: "init" };
 
 let quotes;
+const url = "/[@ file.parent @]/data.json";
 
 export async function init() {
-  const data = await b.loadData("/[@ file.parent @]/data.json");
+  const data = await b.loadData(url);
   if (data !== undefined) {
     quotes = data.quotes;
     b.trigger("loop");

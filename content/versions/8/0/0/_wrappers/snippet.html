@@ -12,11 +12,8 @@
     <link rel="stylesheet" href="/[@ vars.styles_dir @]/snippet.css" />
   </head>
   <script type="module" src="[@ vars.bitty_script_path @]"></script>
-<body>
-    <bitty-8-0 
-      data-connect="/[@ vars.bits_dir @]/details-opener.js"
-      data-run="initDetails"
-    ></bitty-8-0>
+  <body>
+    <bitty-8-0 data-connect="/[@ vars.bits_dir @]/details-opener.js"></bitty-8-0>
 
     <header class="default-wrapper">
       [! include [vars.wrappers_dir, "includes", "global-nav.html" ]|join("/") !]
@@ -42,46 +39,26 @@
         </div>
 
         <div>
-
-      <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
-
-      <div class="example-block-2">
-        [! include [file.parent, "html.html"]|join("/") !]
+          <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
+          <div class="example-block-2">
+            [! include [file.parent, "html.html"]|join("/") !]
+          </div>
+          [! include [file.parent, "bitty-tag.html"]|join("/") !]
+          <h3>html</h3>
+          [! filter block_highlight("html") !]
+          [! include [file.parent, "html.html"]|join("/") !]
+          [! endfilter !]
+          <h3>javascript</h3>
+          [! filter block_highlight("js") !]
+          [! include [file.parent, "javascript.js"]|join("/") !]
+          [! endfilter !]
+          <h3>Details</h3>
+          <p>work-in-progress</p>
+        </div>
       </div>
-
-      [! include [file.parent, "bitty-tag.html"]|join("/") !]
-
-      [!- set visible_bitty_tag -!]
-      [! include [file.parent, "visible-bitty-tag.html"]|join("/") ignore missing !]
-      [!- endset -!]
-
-      [!- if visible_bitty_tag != "" -!]
-      <h3>bitty tag</h3>
-      [!- filter block_highlight("html") -!]
-      [@- visible_bitty_tag -@]
-      [!- endfilter -!]
-      [!- endif -!]
-
-      <h3>html</h3>
-      [! filter block_highlight("html") !]
-      [! include [file.parent, "html.html"]|join("/") !]
-      [! endfilter !]
-
-
-      <h3>javascript</h3>
-      [! filter block_highlight("js") !]
-      [! include [file.parent, "javascript.js"]|join("/") !]
-      [! endfilter !]
-
-
-
-      </div>
-
-      [! block description !][! endblock !]
     </main>
 
   [! include [vars.wrappers_dir, "includes", "footer.html"]|join("/") !]
-
 
 </body>
 </html>

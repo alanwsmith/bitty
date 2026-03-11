@@ -1,14 +1,13 @@
-export const b = {
-  init: "init",
-};
+export const b = { init: "init" };
 
 let data;
 
 export async function init() {
-  if (await loadData() === true) {
-    b.trigger("deck");
-  } else {
+  data = await b.loadData("/[@ file.parent @]/data.json");
+  if (data === undefined) {
     b.trigger("deckError");
+  } else {
+    b.trigger("deck");
   }
 }
 
@@ -49,16 +48,6 @@ export function deckError(_, __, el) {
 
 export function filter(ev, __, el) {
   el.setProp("filtered", ev.target.checked);
-}
-
-export async function loadData() {
-  data = await b.loadData("/[@ file.parent @]/data.json");
-  if (data === undefined) {
-    return false;
-  }
-  return await b.loadTemplates(
-    "/[@ file.parent @]/templates/",
-  );
 }
 
 function uuid(card) {

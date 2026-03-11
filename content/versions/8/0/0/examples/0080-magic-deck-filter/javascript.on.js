@@ -6,15 +6,22 @@ let data;
 
 export async function init() {
   if (await loadData() === true) {
-    b.trigger("controls");
     b.trigger("deck");
   } else {
     b.trigger("deckError");
   }
 }
 
-export function cardCategory(card) {
-  return card.card.oracleCard.types[0];
+export function cardIsLand(card) {
+  if (card.card.oracleCard.types[0] === "Land") {
+    return "yes";
+  } else {
+    return "no";
+  }
+}
+
+export function cardName(card) {
+  return card.card.oracleCard.name;
 }
 
 export function cards() {
@@ -23,9 +30,10 @@ export function cards() {
       .cards
       .map((card) =>
         b.render("card", {
-          "__CATEGORY__": cardCategory(card),
           "__CHAR1__": charx(card, 1),
           "__CHAR2__": charx(card, 2),
+          "__IS_LAND__": cardIsLand(card),
+          "__NAME__": cardName(card),
           "__UUID__": uuid(card),
         })
       ),
@@ -42,14 +50,6 @@ export function charx(card, num) {
   return card.card.uid.substring(num - 1, num);
 }
 
-export function controls(_, __, el) {
-  categories().forEach((category) => {
-    el.appendChild(b.render("control", {
-      "__CATEGORY__": category,
-    }));
-  });
-}
-
 export function deck(_, __, el) {
   cards().forEach((card) => {
     el.appendChild(card);
@@ -58,6 +58,14 @@ export function deck(_, __, el) {
 
 export function deckError(_, __, el) {
   el.innerHTML = "Error: Could not load remote files";
+}
+
+export function filter(ev, __, el) {
+  if (ev.target.checked === true) {
+    el.classList.add("filtered");
+  } else {
+    el.classList.remove("filtered");
+  }
 }
 
 export async function loadData() {
@@ -69,16 +77,6 @@ export async function loadData() {
     "/[@ file.parent @]/templates/",
   );
   return loadedTemplates;
-}
-
-export function update(ev, sender, el) {
-  if (sender.prop("category") === el.prop("category")) {
-    if (ev.target.checked) {
-      el.classList.remove("filtered");
-    } else {
-      el.classList.add("filtered");
-    }
-  }
 }
 
 export function uuid(card) {

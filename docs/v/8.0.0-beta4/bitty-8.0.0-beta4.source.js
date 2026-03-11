@@ -129,6 +129,10 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
+  _getMarks(key) {
+    return this.b._marks[key];
+  }
+
   async _loadData(url, fallback = null, options = {}) {
     // TODO: Set this up to accept an array of
     // URLs that are tried before the optional fallback

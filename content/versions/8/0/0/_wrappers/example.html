@@ -46,12 +46,18 @@
 
           <h3>[! include [file.parent, "name.html"]|join("/") !]</h3>
 
-          <h4>example</h4>
-
           <div class="example-block-2 example-output">
           [! include [file.parent, "html.html"]|join("/") !]
           [!- include [file.parent, "bitty-tag.html"]|join("/") -!]
           </div>
+
+          [!- set details -!]
+          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if details != "" -!]
+          <h4>details</h4>
+          [@ details @]
+          [!- endif -!]
 
           <h4>html</h4>
           [!- filter block_highlight("html") -!]
@@ -68,10 +74,9 @@
           [@ html2 @]
           [!- endif -!]
 
-
           <h4>javascript</h4>
           [!- filter block_highlight("js") -!]
-          [!- include [file.parent, "javascript.js"]|join("/") -!]
+          [!- include [file.parent, "javascript.on.js"]|join("/") -!]
           [!- endfilter -!]
 
           [!- set styles_css -!]
@@ -84,13 +89,31 @@
           [!- endfilter -!]
           [!- endif -!]
 
-          [!- set details -!]
-          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- set templates_html -!]
+          [!- include [file.parent, "templates.html"]|join("/") ignore missing -!]
           [!- endset -!]
-          [!- if details != "" -!]
-          <h4>details</h4>
-          [@ details @]
+          [!- if templates_html!= "" -!]
+          <details>
+            <summary>templates.html</summary>
+          [!- filter block_highlight("html") -!]
+          [@- templates_html-@]
+          [!- endfilter -!]
+          </details>
           [!- endif -!]
+
+          [!- set data_json -!]
+          [!- include [file.parent, "data.json"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if data_json!= "" -!]
+          <details>
+            <summary>data.json</summary>
+          [!- filter block_highlight("json") -!]
+          [@- data_json-@]
+          [!- endfilter -!]
+          </details>
+          [!- endif -!]
+
+
 
         </div>
 

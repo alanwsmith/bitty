@@ -1,6 +1,4 @@
-export const b = {
-  init: "grid",
-};
+export const b = { init: "grid" };
 
 export function grid(_, __, el) {
   for (let i = 0; i < 16; i += 1) {

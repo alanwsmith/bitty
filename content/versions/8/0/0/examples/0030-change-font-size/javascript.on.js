@@ -1,6 +1,4 @@
-export const b = {
-  init: "initFontSize",
-};
+export const b = { init: "initFontSize" };
 
 export function initFontSize(_, __, el) {
   el.value = 1;

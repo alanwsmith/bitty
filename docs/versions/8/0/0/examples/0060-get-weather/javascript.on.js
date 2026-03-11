@@ -1,6 +1,4 @@
-export const b = {
-  init: "loadStations",
-};
+export const b = { init: "loadStations" };
 
 let current_station;
 let stations;

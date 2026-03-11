@@ -12,19 +12,20 @@ export async function init() {
 }
 
 function cardIsLand(card) {
-  return card.card.oracleCard.types[0] === "Land" ? "true" : "false";
+  return card.oracleCard.types[0] === "Land" ? "true" : "false";
 }
 
 function cardName(card) {
-  return card.card.oracleCard.name;
+  return card.oracleCard.name;
 }
 
 function cards() {
   return data
     .cards
+    .map((content) => content.card)
     .sort((a, b) => {
-      return a.card.oracleCard.name.localeCompare(
-        b.card.oracleCard.name,
+      return a.oracleCard.name.localeCompare(
+        b.oracleCard.name,
       );
     })
     .map((card) =>
@@ -51,5 +52,5 @@ export function filter(ev, __, el) {
 }
 
 function uuid(card) {
-  return card.card.uid;
+  return card.uid;
 }

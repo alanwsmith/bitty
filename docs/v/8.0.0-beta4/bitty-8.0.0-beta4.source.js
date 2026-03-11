@@ -466,7 +466,7 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  _load(key, fallback = null) {
+  _restore(key, fallback = null) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       try {

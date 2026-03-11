@@ -6,7 +6,7 @@ let data;
 let key = `details-opener-${window.location.pathname}`;
 
 export function initDetails() {
-  data = b.load(key, []);
+  data = b.restore(key, []);
   document.querySelectorAll("details").forEach((el, index) => {
     el.open = data[index] ? true : false;
     el.addEventListener("toggle", (_) => {

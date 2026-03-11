@@ -5,7 +5,95 @@
   <h1>installation</h1>
 </hgroup>
 
+<h2>the steps</h2>
 
-<div class="xxlarge-margin text-align-center">under construction</p>
+<ol>
+<li>
+<p>Adding bitty to a page is done by including it via a
+  script tag. Start by downloading it:</p>
+
+<p class="text-align-center"><a href="/v/8.0.0-beta4/bitty-8.0.0-beta4.source.js" download>download bitty v8.0.0-beta4</a></p>
+</li>
+
+<li>
+<p>Put the file on your server. Then, call it from your pages with:</p>
+
+[! filter block_highlight("html") !]
+<script type="module" src="/path/to/bitty-8.0.0-beta4.source.js"></script>
+[! endfilter !]
+
+</li>
+
+<li>
+<p>Once the script tag is on your page you can use bitty tags like:</p>
+
+[! filter block_highlight("html") !]
+<bitty-8-0 data-connect="/path/to/module.js"></bitty-8-0>
+[! endfilter !]
+
+</li>
+</ol>
+
+
+<h2>hello, bitty</h2>
+
+<p>
+  You can use these two files for a complete example to
+  get you started (the only thing you'll need to do is
+  adjust the paths to point to your actual file locations).
+</p>
+
+<p>index.html</p>
+
+[! filter block_highlight("html") !]
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <bitty-8-0 data-connect="/path/to/example-bit.js"></bitty-8-0>
+
+    <div data-r="hello"></div>
+    <button data-s="hello">say hello</button>
+
+    <script type="module" src="/path/to/bitty-8.0.0-beta4.source.js"></script>
+  </body>
+</html>
+[! endfilter !]
+
+
+<p>example-bit.js</p>
+
+[! filter block_highlight("js") !]
+const b = {};
+
+export function hello(_, __, el) {
+  el.innerHTML = "hello, bitty!";
+}
+[! endfilter !]
+
+
+<h2>using bitty with other software</h2>
+
+<p>
+  bitty is designed to play nice with other software.
+  As long as the framework/app/whatever doesn't interfere with 
+  loading scripts on a page or calling
+  modules bitty will work just fine. 
+</p>
+
+<p>
+  bitty will have problems if other software
+  modifies the way things are loaded. 
+  Work-arounds may be possible. Figuring 
+  out what can work with bitty and what
+  can't is on the roadmap. 
+</p>
+
+
+
+
 [! endblock !]
 

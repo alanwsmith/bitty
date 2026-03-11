@@ -53,228 +53,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  __updateElement(el) {
-    // REMINDER: this innerHTMLAsFloat and innerHTMLAsInt
-    // get set every time.
-    if (el.innerHTML !== undefined) {
-      el.innerHTMLAsFloat = parseFloat(el.innerHTML.trim().replaceAll(",", ""));
-      el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
-    }
-    // REMINDER: This is only run once for each element to
-    // set up the functions. The `.isSender()` and
-    // `.isTarget()` are updated in a different
-    // function each time the element becomes a receiver.
-    if (el.bittyUpdated === true) {
-      return;
-    }
-    el.copy = async function () {
-      if (el.value) {
-        try {
-          await navigator.clipboard.writeText(el.value);
-        } catch (error) {
-          console.error(`Could not copy .value from el.`);
-          return false;
-        }
-      } else {
-        try {
-          await navigator.clipboard.writeText(el.innerHTML);
-        } catch (error) {
-          console.error(`Could not copy .innerHTML from el.`);
-          return false;
-        }
-      }
-      return true;
-    };
-    el.prop = (key) => {
-      if (
-        el.dataset && el.dataset[key] !== undefined
-      ) {
-        return el.dataset[key];
-      }
-      const propAncestor = el.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return propAncestor.dataset[key];
-      }
-      return undefined;
-    };
-    el.propAsFloat = (key) => {
-      if (
-        el && el.dataset && el.dataset[key] !== undefined
-      ) {
-        return parseFloat(el.dataset[key]);
-      }
-      const propAncestor = el.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseFloat(propAncestor.dataset[key]);
-      }
-      return undefined;
-    };
-    el.propAsInt = (key) => {
-      if (
-        el && el.dataset && el.dataset[key] !== undefined
-      ) {
-        return parseInt(el.dataset[key], 10);
-      }
-      const propAncestor = el.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseInt(propAncestor.dataset[key], 10);
-      }
-      return undefined;
-    };
-    el.setProp = (key, value) => {
-      el.dataset[key] = value;
-    };
-    el.val = el.value;
-    el.valAsFloat = parseFloat(el.value);
-    el.valAsInt = parseInt(el.value, 10);
-    el.bittyUpdated = true;
-  }
-
-  __updateEvent(ev) {
-    if (ev.bittyUpdated === true) {
-      return;
-    }
-    ev.copy = async function () {
-      if (ev.target.value) {
-        try {
-          await navigator.clipboard.writeText(ev.target.value);
-        } catch (error) {
-          console.error(`Could not copy .value from event.`);
-          return false;
-        }
-      } else {
-        try {
-          await navigator.clipboard.writeText(ev.target.innerHTML);
-        } catch (error) {
-          console.error(`Could not copy .innerHTML from event.`);
-          return false;
-        }
-      }
-      return true;
-    };
-    ev.prop = (key) => {
-      if (
-        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-      ) {
-        return ev.target.dataset[key];
-      }
-      const propAncestor = ev.target.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return propAncestor.dataset[key];
-      }
-      return undefined;
-    };
-    ev.propAsFloat = (key) => {
-      if (
-        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-      ) {
-        return parseFloat(ev.target.dataset[key]);
-      }
-      const propAncestor = ev.target.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseFloat(propAncestor.dataset[key]);
-      }
-      return undefined;
-    };
-    ev.propAsInt = (key) => {
-      if (
-        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-      ) {
-        return parseInt(ev.target.dataset[key], 10);
-      }
-      const propAncestor = ev.target.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseInt(propAncestor.dataset[key], 10);
-      }
-      return undefined;
-    };
-    ev.setProp = (key, value) => {
-      ev.target.dataset[key] = value;
-    };
-    if (ev.target === undefined) {
-      ev.val = undefined;
-      ev.valAsFloat = undefined;
-      ev.valAsInt = undefined;
-    } else {
-      ev.val = ev.target.value;
-      ev.valAsFloat = parseFloat(ev.target.value);
-      ev.valAsInt = parseInt(ev.target.value, 10);
-    }
-    ev.bittyUpdated = true;
-  }
-
-  __updateSender(sender) {
-    if (sender.bittyUpdated === true) {
-      return;
-    }
-    sender.copy = async function () {
-      if (sender.value) {
-        try {
-          await navigator.clipboard.writeText(sender.value);
-        } catch (error) {
-          console.error(`Could not copy .value from sender.`);
-          return false;
-        }
-      } else {
-        try {
-          await navigator.clipboard.writeText(sender.innerHTML);
-        } catch (error) {
-          console.error(`Could not copy .innerHTML from sender.`);
-          return false;
-        }
-      }
-      return true;
-    };
-    sender.prop = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return sender.dataset[key];
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return propAncestor.dataset[key];
-      }
-      return undefined;
-    };
-    sender.propAsFloat = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return parseFloat(sender.dataset[key]);
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseFloat(propAncestor.dataset[key]);
-      }
-      return undefined;
-    };
-    sender.propAsInt = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return parseInt(sender.dataset[key], 10);
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseInt(propAncestor.dataset[key], 10);
-      }
-      return undefined;
-    };
-    sender.setProp = (key, value) => {
-      sender.dataset[key] = value;
-    };
-    if (sender === undefined) {
-      sender.val = undefined;
-      sender.valAsFloat = undefined;
-      sender.valAsInt = undefined;
-    } else {
-      sender.val = sender.value;
-      sender.valAsFloat = parseFloat(sender.value);
-      sender.valAsInt = parseInt(sender.value, 10);
-    }
-  }
-
   addBittyClasses(target) {
     Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter((method) =>
       method.substring(0, 1) === "_"
@@ -338,13 +116,25 @@ class BittyJs extends HTMLElement {
     return [...new Set(array)];
   }
 
-  // TODO: Set this up to accept an array of
-  // URLs that are tried before the optional fallback
-  //
-  // TODO: Set up to pull <script> tags with
-  // `application/json` and an `id` attribute
-  // into a `b.json` object.
+  __findSenders(el) {
+    const senders = [];
+    while (el) {
+      if (el.dataset !== undefined && el.dataset.s !== undefined) {
+        senders.push(el);
+      }
+      el = el.parentElement;
+    }
+    return senders;
+  }
+
+
   async _loadData(url, fallback = null, options = {}) {
+    // TODO: Set this up to accept an array of
+    // URLs that are tried before the optional fallback
+    //
+    // TODO: Set up to pull <script> tags with
+    // `application/json` and an `id` attribute
+    // into a `b.json` object.
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -363,75 +153,38 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  // TODO: Set this up to accept an array of
-  // URLs that are tried before the optional fallback
-  async _loadTemplates(url, options = {}) {
-    let response = await fetch(url, options);
-    try {
-      if (response.ok === true) {
-        try {
-          const templates = {};
-          const content = await response.text();
-          const container = document.createElement("div");
-          container.innerHTML = content;
-          container.querySelectorAll("script").forEach((script) => {
-            if (script.type === "text/html" && script.id !== undefined) {
-              this.b.template[script.id] = script.innerHTML.trim();
-            }
-          });
-          return true;
-        } catch (parseError) {
-          console.error(parseError);
-          return false;
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }
+// DEPRECATE in favor of getTemplates()
+  // async _fetchSVG(url, options = {}) {
+  //   // TODO: Set this up to accept an array of
+  //   // URLs that are tried before the optional fallback
+  //   let response = await fetch(url, options);
+  //   try {
+  //     if (response.ok === true) {
+  //       try {
+  //         const svgs = {};
+  //         const content = await response.text();
+  //         const container = document.createElement("div");
+  //         container.innerHTML = content;
+  //         const input = container.querySelectorAll(
+  //           "div > svg",
+  //         );
+  //         for (const svg of input) {
+  //           if (svg.id !== undefined) {
+  //             svgs[svg.id] = svg;
+  //           }
+  //         }
+  //         return svgs;
+  //       } catch (parseError) {
+  //         console.error(parseError);
+  //         return undefined;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     return undefined;
+  //   }
+  // }
 
-  // TODO: Set this up to accept an array of
-  // URLs that are tried before the optional fallback
-  async _fetchSVG(url, options = {}) {
-    let response = await fetch(url, options);
-    try {
-      if (response.ok === true) {
-        try {
-          const svgs = {};
-          const content = await response.text();
-          const container = document.createElement("div");
-          container.innerHTML = content;
-          const input = container.querySelectorAll(
-            "div > svg",
-          );
-          for (const svg of input) {
-            if (svg.id !== undefined) {
-              svgs[svg.id] = svg;
-            }
-          }
-          return svgs;
-        } catch (parseError) {
-          console.error(parseError);
-          return undefined;
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      return undefined;
-    }
-  }
-
-  __findSenders(el) {
-    const senders = [];
-    while (el) {
-      if (el.dataset !== undefined && el.dataset.s !== undefined) {
-        senders.push(el);
-      }
-      el = el.parentElement;
-    }
-    return senders;
-  }
 
   loadPageData(target) {
     target.b.data = {};
@@ -466,49 +219,32 @@ class BittyJs extends HTMLElement {
     });
   }
 
-  _restore(key, fallback = null) {
-    const storage = localStorage.getItem(key);
-    if (storage !== null) {
-      try {
-        return JSON.parse(storage);
-      } catch (error) {
-        console.error(error);
-        return undefined;
+  async _loadTemplates(url, options = {}) {
+    // TODO: Set this up to accept an array of
+    // URLs that are tried before the optional fallback
+    let response = await fetch(url, options);
+    try {
+      if (response.ok === true) {
+        try {
+          const templates = {};
+          const content = await response.text();
+          const container = document.createElement("div");
+          container.innerHTML = content;
+          container.querySelectorAll("script").forEach((script) => {
+            if (script.type === "text/html" && script.id !== undefined) {
+              this.b.template[script.id] = script.innerHTML.trim();
+            }
+          });
+          return true;
+        } catch (parseError) {
+          console.error(parseError);
+          return false;
+        }
       }
+    } catch (error) {
+      console.error(error);
+      return false;
     }
-    if (fallback !== null) {
-      return fallback;
-    }
-    return undefined;
-  }
-
-  _time(datetime = new Date(), ms = false) {
-    const options = {
-      day: "2-digit",
-      fractionalSecondDigits: 3,
-      hour: "2-digit",
-      hour12: false,
-      minute: "2-digit",
-      month: "2-digit",
-      second: "2-digit",
-      year: "numeric",
-    };
-    const parts = {};
-    new Intl.DateTimeFormat(undefined, options)
-      .formatToParts(datetime)
-      .filter((part) => part.type !== "literal")
-      .forEach((part) => parts[part.type] = part.value);
-    const date = [parts.year, parts.month, parts.day].join("-");
-    const time = [parts.hour, parts.minute, parts.second].join(":");
-    if (ms === true) {
-      return `${date}T${time}.${parts.fractionalSecond}`;
-    } else {
-      return `${date}T${time}`;
-    }
-  }
-
-  _timeMs(datetime) {
-    return this.b.time(datetime, true);
   }
 
   _mapKey(
@@ -813,6 +549,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+
   _render(input, subs = {}) {
     if (input instanceof Array === false) {
       input = [input];
@@ -848,6 +585,22 @@ class BittyJs extends HTMLElement {
     const result = document.createElement("template");
     result.innerHTML = content;
     return result.content;
+  }
+
+  _restore(key, fallback = null) {
+    const storage = localStorage.getItem(key);
+    if (storage !== null) {
+      try {
+        return JSON.parse(storage);
+      } catch (error) {
+        console.error(error);
+        return undefined;
+      }
+    }
+    if (fallback !== null) {
+      return fallback;
+    }
+    return undefined;
   }
 
   _save(key, data) {
@@ -890,9 +643,261 @@ class BittyJs extends HTMLElement {
     return input;
   }
 
+  _time(datetime = new Date(), ms = false) {
+    const options = {
+      day: "2-digit",
+      fractionalSecondDigits: 3,
+      hour: "2-digit",
+      hour12: false,
+      minute: "2-digit",
+      month: "2-digit",
+      second: "2-digit",
+      year: "numeric",
+    };
+    const parts = {};
+    new Intl.DateTimeFormat(undefined, options)
+      .formatToParts(datetime)
+      .filter((part) => part.type !== "literal")
+      .forEach((part) => parts[part.type] = part.value);
+    const date = [parts.year, parts.month, parts.day].join("-");
+    const time = [parts.hour, parts.minute, parts.second].join(":");
+    if (ms === true) {
+      return `${date}T${time}.${parts.fractionalSecond}`;
+    } else {
+      return `${date}T${time}`;
+    }
+  }
+
+  _timeMs(datetime) {
+    return this.b.time(datetime, true);
+  }
+
+
   _trigger(signals) {
     const ev = new BittyTrigger(signals);
     dispatchEvent(ev);
+  }
+
+  __updateElement(el) {
+    // REMINDER: this innerHTMLAsFloat and innerHTMLAsInt
+    // get set every time.
+    if (el.innerHTML !== undefined) {
+      el.innerHTMLAsFloat = parseFloat(el.innerHTML.trim().replaceAll(",", ""));
+      el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
+    }
+    // REMINDER: This is only run once for each element to
+    // set up the functions. The `.isSender()` and
+    // `.isTarget()` are updated in a different
+    // function each time the element becomes a receiver.
+    if (el.bittyUpdated === true) {
+      return;
+    }
+    el.copy = async function () {
+      if (el.value) {
+        try {
+          await navigator.clipboard.writeText(el.value);
+        } catch (error) {
+          console.error(`Could not copy .value from el.`);
+          return false;
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(el.innerHTML);
+        } catch (error) {
+          console.error(`Could not copy .innerHTML from el.`);
+          return false;
+        }
+      }
+      return true;
+    };
+    el.prop = (key) => {
+      if (
+        el.dataset && el.dataset[key] !== undefined
+      ) {
+        return el.dataset[key];
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return propAncestor.dataset[key];
+      }
+      return undefined;
+    };
+    el.propAsFloat = (key) => {
+      if (
+        el && el.dataset && el.dataset[key] !== undefined
+      ) {
+        return parseFloat(el.dataset[key]);
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseFloat(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
+    el.propAsInt = (key) => {
+      if (
+        el && el.dataset && el.dataset[key] !== undefined
+      ) {
+        return parseInt(el.dataset[key], 10);
+      }
+      const propAncestor = el.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseInt(propAncestor.dataset[key], 10);
+      }
+      return undefined;
+    };
+    el.setProp = (key, value) => {
+      el.dataset[key] = value;
+    };
+    el.val = el.value;
+    el.valAsFloat = parseFloat(el.value);
+    el.valAsInt = parseInt(el.value, 10);
+    el.bittyUpdated = true;
+  }
+
+  __updateEvent(ev) {
+    if (ev.bittyUpdated === true) {
+      return;
+    }
+    ev.copy = async function () {
+      if (ev.target.value) {
+        try {
+          await navigator.clipboard.writeText(ev.target.value);
+        } catch (error) {
+          console.error(`Could not copy .value from event.`);
+          return false;
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(ev.target.innerHTML);
+        } catch (error) {
+          console.error(`Could not copy .innerHTML from event.`);
+          return false;
+        }
+      }
+      return true;
+    };
+    ev.prop = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return ev.target.dataset[key];
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return propAncestor.dataset[key];
+      }
+      return undefined;
+    };
+    ev.propAsFloat = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return parseFloat(ev.target.dataset[key]);
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseFloat(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
+    ev.propAsInt = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return parseInt(ev.target.dataset[key], 10);
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseInt(propAncestor.dataset[key], 10);
+      }
+      return undefined;
+    };
+    ev.setProp = (key, value) => {
+      ev.target.dataset[key] = value;
+    };
+    if (ev.target === undefined) {
+      ev.val = undefined;
+      ev.valAsFloat = undefined;
+      ev.valAsInt = undefined;
+    } else {
+      ev.val = ev.target.value;
+      ev.valAsFloat = parseFloat(ev.target.value);
+      ev.valAsInt = parseInt(ev.target.value, 10);
+    }
+    ev.bittyUpdated = true;
+  }
+
+  __updateSender(sender) {
+    if (sender.bittyUpdated === true) {
+      return;
+    }
+    sender.copy = async function () {
+      if (sender.value) {
+        try {
+          await navigator.clipboard.writeText(sender.value);
+        } catch (error) {
+          console.error(`Could not copy .value from sender.`);
+          return false;
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(sender.innerHTML);
+        } catch (error) {
+          console.error(`Could not copy .innerHTML from sender.`);
+          return false;
+        }
+      }
+      return true;
+    };
+    sender.prop = (key) => {
+      if (
+        sender && sender.dataset && sender.dataset[key] !== undefined
+      ) {
+        return sender.dataset[key];
+      }
+      const propAncestor = sender.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return propAncestor.dataset[key];
+      }
+      return undefined;
+    };
+    sender.propAsFloat = (key) => {
+      if (
+        sender && sender.dataset && sender.dataset[key] !== undefined
+      ) {
+        return parseFloat(sender.dataset[key]);
+      }
+      const propAncestor = sender.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseFloat(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
+    sender.propAsInt = (key) => {
+      if (
+        sender && sender.dataset && sender.dataset[key] !== undefined
+      ) {
+        return parseInt(sender.dataset[key], 10);
+      }
+      const propAncestor = sender.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return parseInt(propAncestor.dataset[key], 10);
+      }
+      return undefined;
+    };
+    sender.setProp = (key, value) => {
+      sender.dataset[key] = value;
+    };
+    if (sender === undefined) {
+      sender.val = undefined;
+      sender.valAsFloat = undefined;
+      sender.valAsInt = undefined;
+    } else {
+      sender.val = sender.value;
+      sender.valAsFloat = parseFloat(sender.value);
+      sender.valAsInt = parseInt(sender.value, 10);
+    }
   }
 
   _uuid(dashes = true) {
@@ -903,6 +908,8 @@ class BittyJs extends HTMLElement {
       return self.crypto.randomUUID();
     }
   }
+
+
 }
 
 customElements.define(tagName, BittyJs);

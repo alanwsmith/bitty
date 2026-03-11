@@ -46,33 +46,23 @@
 <p>index.html</p>
 
 [! filter block_highlight("html") !]
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <bitty-8-0 data-connect="/path/to/example-bit.js"></bitty-8-0>
-
-    <div data-r="hello"></div>
-    <button data-s="hello">say hello</button>
-
-    <script type="module" src="/path/to/bitty-8.0.0-beta4.source.js"></script>
-  </body>
-</html>
+[! include [file.parent, "example.html"]|join("/") !]
 [! endfilter !]
 
 
 <p>example-bit.js</p>
 
 [! filter block_highlight("js") !]
-const b = {};
-
-export function hello(_, __, el) {
-  el.innerHTML = "hello, bitty!";
-}
+[! include [file.parent, "example-bit.js"]|join("/") !]
 [! endfilter !]
+
+
+<h2>using unpkg.com</h2>
+<p>Work is in progress to host bitty
+  on unpkg.com so it can be used without
+  having to put the file directly
+  on your server. 
+</p>
 
 
 <h2>using bitty with other software</h2>

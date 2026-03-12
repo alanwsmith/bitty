@@ -21,21 +21,13 @@ function cardName(card) {
 }
 
 function cards() {
-  return data
-    .cards
-    .map((content) => content.card)
-    .sort((a, b) => {
-      return a.oracleCard.name.localeCompare(
-        b.oracleCard.name,
-      );
+  return sortedCards().map((card) =>
+    b.render("card", {
+      "__IS_LAND__": cardIsLand(card),
+      "__NAME__": cardName(card),
+      "__UUID__": uuid(card),
     })
-    .map((card) =>
-      b.render("card", {
-        "__IS_LAND__": cardIsLand(card),
-        "__NAME__": cardName(card),
-        "__UUID__": uuid(card),
-      })
-    );
+  );
 }
 
 export function deck(_, __, el) {
@@ -48,6 +40,17 @@ export function deckError(_, __, el) {
 
 export function filter(ev, __, el) {
   el.setProp("filtered", ev.target.checked);
+}
+
+function sortedCards() {
+  return data
+    .cards
+    .map((content) => content.card)
+    .sort((a, b) => {
+      return a.oracleCard.name.localeCompare(
+        b.oracleCard.name,
+      );
+    });
 }
 
 function uuid(card) {

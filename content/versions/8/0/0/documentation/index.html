@@ -10,12 +10,6 @@
 
 
 <ul>
-  <li>
-    <details>
-      <summary class="section-name">installation</summary>
-      <div>under construction</div>
-    </details>
-  </li>
 
 [! for sectionFolder in folders !]
 [! if 
@@ -188,8 +182,22 @@
 
 [! endif !]
 [! endfor !]
-
 </ul>
+
+
+<h2>Release Notes</h2>
+
+[! for f in files_in_folder("release-notes/entries")|reverse !]
+<details>
+  [! set name_parts = f|split("/") !]
+<summary>[@ name_parts[2] @]</summary>
+  [! filter markdown|safe !]
+[! include f !]
+  [! endfilter !]
+</details>
+[! endfor !]
+
+
 
 <div data-r="test-controls"></div>
 

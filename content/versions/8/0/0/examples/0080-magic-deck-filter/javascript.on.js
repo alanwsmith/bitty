@@ -1,9 +1,10 @@
 export const b = { init: "init" };
 
 let data;
+let url = "/[@ file.parent @]/data.json";
 
 export async function init() {
-  data = await b.loadData("/[@ file.parent @]/data.json");
+  data = await b.loadData(url);
   if (data === undefined) {
     b.trigger("deckError");
   } else {
@@ -38,9 +39,7 @@ function cards() {
 }
 
 export function deck(_, __, el) {
-  cards().forEach((card) => {
-    el.appendChild(card);
-  });
+  el.replaceChildren(...cards());
 }
 
 export function deckError(_, __, el) {

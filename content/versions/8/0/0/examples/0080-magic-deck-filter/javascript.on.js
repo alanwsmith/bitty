@@ -20,18 +20,16 @@ function cardName(card) {
   return card.oracleCard.name;
 }
 
-function cards() {
-  return sortedCards().map((card) =>
-    b.render("card", {
-      "__IS_LAND__": cardIsLand(card),
-      "__NAME__": cardName(card),
-      "__UUID__": uuid(card),
-    })
-  );
-}
-
 export function deck(_, __, el) {
-  el.replaceChildren(...cards());
+  el.replaceChildren(
+    ...sortedCards().map((card) =>
+      b.render("card", {
+        "__IS_LAND__": cardIsLand(card),
+        "__NAME__": cardName(card),
+        "__UUID__": uuid(card),
+      })
+    ),
+  );
 }
 
 export function deckError(_, __, el) {

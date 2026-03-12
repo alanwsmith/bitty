@@ -1,6 +1,4 @@
-export const b = {
-  init: "controls",
-};
+export const b = { init: "controls" };
 
 const colors = ["red", "green", "blue"];
 

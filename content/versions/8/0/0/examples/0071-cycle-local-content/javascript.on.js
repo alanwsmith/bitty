@@ -5,7 +5,7 @@ let quotes;
 export async function loop(_, __, el) {
   quotes = b.data.quotes.list;
   for (let count = 1; count > 0; count += 1) {
-    await b.sleep(3000);
+    await b.sleep(2000);
     b.setCSS("--text-color", "var(--match-color)");
     await b.sleep(1200);
     changeQuote(count, el);

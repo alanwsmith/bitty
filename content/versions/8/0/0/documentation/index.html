@@ -9,14 +9,6 @@
 </hgroup>
 
 
-<ul>
-  <li>
-    <details>
-      <summary class="section-name">installation</summary>
-      <div>under construction</div>
-    </details>
-  </li>
-
 [! for sectionFolder in folders !]
 [! if 
   sectionFolder.path_part_strings[5] == vars.docs_sections_dir 
@@ -25,7 +17,6 @@
 !]
 
 
-<li>
 <details>
       <summary class="section-name">
         [@ get_content(sectionFolder.path_part_strings[6],  "section_name.html") @]
@@ -34,7 +25,6 @@
 -->
 </summary>
 
-    <ul>
 [! for itemFolder in folders !]
 [! if 
   itemFolder.path_part_strings[5] == vars.docs_sections_dir 
@@ -42,7 +32,6 @@
   and itemFolder.path_parts[7]
   and not itemFolder.path_parts[8]
 !]
-  <li>
 
 
 
@@ -60,7 +49,7 @@
 
             <div class="item-header">Examples</div>
 
-  <ul>
+  <ul class="no-markers">
 [! for testFolder in folders !]
 [! if 
   testFolder.path_part_strings[5] == vars.docs_sections_dir 
@@ -160,14 +149,10 @@
                       [!- endfilter -!]
                     </div>
                   </details>
-
-
             </details>
-          </li>
 
 [! endif !]
 [! endfor !]
-  </ul>
 
             [! set notes_content -!]
       [@- get_content(itemFolder.path_part_strings[7],  "item_notes.html") -@]
@@ -184,12 +169,28 @@
 [! endfor !]
     </ul>
     </details>
-  </li>
 
 [! endif !]
 [! endfor !]
 
-</ul>
+
+<h2>Release Notes</h2>
+
+<details>
+  <summary>view release notes</summary>
+
+[! for f in files_in_folder("release-notes/entries")|reverse !]
+<details>
+  [! set name_parts = f|split("/") !]
+<summary>[@ name_parts[2] @]</summary>
+  [! filter markdown|safe !]
+[! include f !]
+  [! endfilter !]
+</details>
+[! endfor !]
+
+</details>
+
 
 <div data-r="test-controls"></div>
 

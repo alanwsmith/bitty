@@ -517,6 +517,24 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  _randomFloat(min, max) {
+    const seeker = new Uint32Array(1);
+    crypto.getRandomValues(seeker);
+    const base = seeker[0] / (0xFFFFFFFF + 1);
+    const distance = Math.abs(max - min);
+    let result = (base * distance) + Math.min(min, max);
+    return result;
+  }
+
+  _randomInt(min, max) {
+    const seeker = new Uint32Array(1);
+    crypto.getRandomValues(seeker);
+    const base = seeker[0];
+    const modder = Math.abs(max - min) + 1;
+    let result = (base % modder) + Math.min(min, max);
+    return result;
+  }
+
   _render(input, subs = {}) {
     if (input instanceof Array === false) {
       input = [input];

@@ -5,10 +5,10 @@ let url = "/[@ file.parent @]/data.json";
 
 export async function init() {
   data = await b.loadData(url);
-  if (data === undefined) {
-    b.trigger("deckError");
-  } else {
+  if (data) {
     b.trigger("deck");
+  } else {
+    b.trigger("deckError");
   }
 }
 
@@ -24,9 +24,9 @@ export function deck(_, __, el) {
   el.replaceChildren(
     ...sortedCards().map((card) =>
       b.render("card", {
-        "__IS_LAND__": cardIsLand(card),
-        "__NAME__": cardName(card),
-        "__UUID__": uuid(card),
+        __IS_LAND__: cardIsLand(card),
+        __NAME__: cardName(card),
+        __UUID__: uuid(card),
       })
     ),
   );

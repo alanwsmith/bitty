@@ -129,10 +129,6 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-  _getMarks(key) {
-    return this.b._marks[key];
-  }
-
   async _get(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -150,6 +146,10 @@ class BittyJs extends HTMLElement {
       console.error(error);
     }
     return undefined;
+  }
+
+  _getMarks(key) {
+    return this.b._marks[key];
   }
 
   loadPageAssets(target) {

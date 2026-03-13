@@ -64,6 +64,17 @@
           <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
           [!- endif -!]
 
+
+          [!- set templates_html -!]
+          [!- include [file.parent, "templates.html"]|join("/")  ignore missing -!]
+          [!- endset !]
+          [! if templates_html != "" !]
+          <h3>templates.html</h3>
+          [!- filter block_highlight("html") -!]
+          [@- templates_html @]
+          [!- endfilter !]
+          [!- endif !]
+
           [!- set data_json -!]
           [!- include [file.parent, "data.json"]|join("/") ignore missing -!]
           [!- endset !]

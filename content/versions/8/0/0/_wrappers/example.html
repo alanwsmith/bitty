@@ -12,6 +12,14 @@
     <link rel="stylesheet" href="/[@ vars.styles_dir @]/example.css" />
   </head>
   <script type="module" src="[@ vars.bitty_script_path @]"></script>
+
+    [!- set styles_css -!]
+    [!- include [file.parent, "styles.css"]|join("/") ignore missing -!]
+    [!- endset -!]
+    [! if styles_css != "" !]
+    <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
+    [! endif !]
+
 <body>
     <bitty-8-0 data-connect="/[@ vars.bits_dir @]/details-opener.js"></bitty-8-0>
 
@@ -83,15 +91,12 @@
           [!- include [file.parent, "javascript.on.js"]|join("/") -!]
           [!- endfilter -!]
 
-          [!- set styles_css -!]
-          [!- include [file.parent, "styles.css"]|join("/") ignore missing -!]
-          [!- endset -!]
+
           [!- if styles_css!= "" -!]
           <h4>styles</h4>
           [!- filter block_highlight("css") -!]
           [@- styles_css-@]
           [!- endfilter -!]
-          <link rel="stylesheet" href="/[@ [file.parent, 'styles.css']|join("/") @]" />
           [!- endif -!]
 
           [!- set templates_html -!]

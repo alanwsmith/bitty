@@ -17,6 +17,6 @@ export function object(data) {
     __TITLE__: data.title,
     __IMG_SRC__: data.primaryImage,
     __ALT__:
-      `A photo of a piece entitled 'data.title' from The Met's online gallery.`,
+      `A photo of a piece entitled '${data.title}' from The Met's online gallery.`,
   });
 }

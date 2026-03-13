@@ -1,5 +1,15 @@
-[!- extends "_wrappers/7/0/0/main-wrapper.html" -!] 
+[!-  extends 
+  [
+    "versions",
+    json.config.versions.current.major|string,
+    json.config.versions.current.minor|string,
+    json.config.versions.current.patch|string,
+    "_wrappers",
+    "main-wrapper.html"
+  ]|join("/")
+-!] 
 
+[#
 [!- block bittyOpenTag -!]
 [!- include wrapper_root + "includes/bitty-open-tags.html" -!]
 [!- endblock -!]
@@ -36,7 +46,6 @@
   [! endif !]
   [! endfor !]
 
-[#
   <details><summary>Target Audience</summary>
   <div class="small-width default-flow">
   [! filter markdown|safe !]
@@ -60,10 +69,10 @@
   [! endfilter !]
   </div>
   </details>
-#]
 
 
 
 </main>
 [!- endblock !]
 
+#]

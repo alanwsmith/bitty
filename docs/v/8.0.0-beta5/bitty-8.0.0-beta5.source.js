@@ -129,10 +129,6 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-  _getMarks(key) {
-    return this.b._marks[key];
-  }
-
   async _get(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
@@ -152,23 +148,11 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  loadPageAssets(target) {
-    document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "text/html" && script.id !== undefined) {
-        target.b.templates[script.id] = script.innerHTML.trim();
-      }
-      if (script.type === "image/svg" && script.id !== undefined) {
-        target.b.svgs[script.id] = script.innerHTML.trim();
-      }
-      if (script.type === "application/json" && script.id !== undefined) {
-        target.b.data[script.id] = JSON.parse(script.innerHTML.trim());
-      }
-    });
+  _getMarks(key) {
+    return this.b._marks[key];
   }
 
-  async _loadTemplates(url, options = {}) {
-    // TODO: Set this up to accept an array of
-    // URLs that are tried before the optional fallback
+  async _getTemplates(url, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -198,6 +182,20 @@ class BittyJs extends HTMLElement {
       console.error(error);
       return false;
     }
+  }
+
+  loadPageAssets(target) {
+    document.querySelectorAll("script").forEach((script) => {
+      if (script.type === "text/html" && script.id !== undefined) {
+        target.b.templates[script.id] = script.innerHTML.trim();
+      }
+      if (script.type === "image/svg" && script.id !== undefined) {
+        target.b.svgs[script.id] = script.innerHTML.trim();
+      }
+      if (script.type === "application/json" && script.id !== undefined) {
+        target.b.data[script.id] = JSON.parse(script.innerHTML.trim());
+      }
+    });
   }
 
   _mapKey(

@@ -6,8 +6,26 @@
   <h1>examples</h1>
 </hgroup>
 
-<ul>
-  <li><a href="/[@ vars.examples_dir @]/0010-counter/">counter</a></li>
-</ul>
+<div class="example-columns">
+  <div class="example-sidebard">
+    <ul class="sidebar-list">
+    [! for example_dir in folders_in_folder(file.path_part_strings[4]) !]
+      <li>
+    [! if example_dir == file.parent !]
+    [! include [example_dir, "name.html"]|join("/") -!]
+    [! else !]
+    <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
+    [! endif !]
+      </li>
+    [! endfor !]
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
 
 [! endblock !]

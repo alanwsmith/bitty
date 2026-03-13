@@ -1,13 +1,13 @@
 export const b = {};
 
 export function alfa(_, __, el) {
-  el.innerHTML = `alfa: ${b.time()}`;
+  el.innerHTML = "alfa";
 }
 
 export function bravo(_, __, el) {
-  el.innerHTML = `bravo: ${b.time()}`;
+  el.innerHTML = "bravo";
 }
 
 export function charlie(_, __, el) {
-  el.innerHTML = `charlie: ${b.time()}`;
+  el.innerHTML = "charlie";
 }

@@ -11,11 +11,11 @@ export function changeStation(ev, __, ___) {
 
 export async function loadStations(_, __, el) {
   stations = await b.get(stationsURL);
-  if (stations === undefined) {
-    b.trigger("weatherError");
-  } else {
+  if (stations) {
     el.replaceChildren(...options());
     b.trigger("weather");
+  } else {
+    b.trigger("weatherError");
   }
 }
 
@@ -26,10 +26,10 @@ function options() {
         current_station = stationId(state);
       }
       return b.render("option", {
-        "ABBREVIATION": state,
-        "CITY": cityName(state),
-        "CODE": stationId(state),
-        "STATE": stateName(state),
+        __ABBREVIATION__: state,
+        __CITY__: cityName(state),
+        __CODE__: stationId(state),
+        __STATE__: stateName(state),
       }).firstChild;
     });
 }
@@ -44,9 +44,9 @@ export async function weather(_, __, el) {
   }
   el.replaceChildren(
     b.render("weather", {
-      "DESCRIPTION": weatherDescription(report),
-      "IMG_SRC": weatherIcon(report),
-      "TEMP": tempString(report),
+      __DESCRIPTION__: weatherDescription(report),
+      __IMG_SRC__: weatherIcon(report),
+      __TEMP__: tempString(report),
     }),
   );
 }

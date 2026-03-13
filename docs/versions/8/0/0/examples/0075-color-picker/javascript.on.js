@@ -6,7 +6,7 @@ export function controls(_, __, el) {
   el.replaceChildren(
     ...colors.map((color) =>
       b.render("slider", {
-        "COLOR": color,
+        __COLOR__: color,
       })
     ),
   );

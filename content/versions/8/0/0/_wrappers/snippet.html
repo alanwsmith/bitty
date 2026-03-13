@@ -50,10 +50,20 @@
           [! endfilter !]
           <h3>javascript</h3>
           [! filter block_highlight("js") !]
-          [! include [file.parent, "javascript.js"]|join("/") !]
+          [! include [file.parent, "javascript.on.js"]|join("/") !]
           [! endfilter !]
-          <h3>Details</h3>
-          <p>work-in-progress</p>
+
+          [!- set data_json -!]
+          [!- include [file.parent, "data.json"]|join("/") ignore missing -!]
+          [!- endset !]
+          [! if data_json != "" !]
+          <h3>data.json</h3>
+          [!- filter block_highlight("json") -!]
+          [@- data_json @]
+          [!- endfilter !]
+          [!- endif !]
+
+
         </div>
       </div>
     </main>

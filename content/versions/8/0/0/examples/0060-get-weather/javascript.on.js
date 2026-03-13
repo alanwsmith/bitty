@@ -2,6 +2,7 @@ export const b = { init: "loadStations" };
 
 let current_station;
 let stations;
+const stationsURL = "/versions/8/0/0/examples/0060-get-weather/stations.json";
 
 export function changeStation(ev, __, ___) {
   current_station = ev.val;
@@ -9,14 +10,12 @@ export function changeStation(ev, __, ___) {
 }
 
 export async function loadStations(_, __, el) {
-  stations = await b.loadData(stationsURL());
-  if (stations !== undefined) {
-    options().forEach((option) => {
-      el.appendChild(option);
-    });
-    b.trigger("weather");
+  stations = await b.loadData(stationsURL);
+  if (stations === undefined) {
+    b.trigger("weatherError");
   } else {
-    el.replaceWith(b.render("<div>Error: could not get weather data</div>"));
+    el.replaceChildren(...options());
+    b.trigger("weather");
   }
 }
 
@@ -52,6 +51,10 @@ export async function weather(_, __, el) {
   );
 }
 
+export function weatherError(_, __, el) {
+  el.innerHTML = "Error: could not get weather data";
+}
+
 // Helpers
 
 function cityName(state) {
@@ -64,10 +67,6 @@ function reportURL() {
 
 function stationId(state) {
   return stations[state].weather_station_id;
-}
-
-function stationsURL() {
-  return "/versions/8/0/0/examples/0060-get-weather/stations.json";
 }
 
 function stateName(state) {

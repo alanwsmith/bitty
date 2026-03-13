@@ -1,5 +1,5 @@
 export const b = {};
 
 export function snippet(_, __, el) {
-  el.innerHTML = b.time();
+  el.replaceWith(b.render("example"));
 }

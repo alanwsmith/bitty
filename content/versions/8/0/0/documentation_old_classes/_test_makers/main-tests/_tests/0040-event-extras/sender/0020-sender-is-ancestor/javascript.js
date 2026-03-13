@@ -1,9 +1,0 @@
-bittyReady() {
-  document.querySelector("#$ID_NAME").click();
-}
-
-$SIGNAL_NAME(ev, el) {
-  if (ev.sender.dataset.needle === "value_$HASH") {
-    el.innerHTML = "test passed";
-  }
-}

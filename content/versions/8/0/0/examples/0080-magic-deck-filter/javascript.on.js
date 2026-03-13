@@ -4,7 +4,7 @@ let data;
 let url = "/[@ file.parent @]/data.json";
 
 export async function init() {
-  data = await b.loadData(url);
+  data = await b.get(url);
   if (data) {
     b.trigger("deck");
   } else {

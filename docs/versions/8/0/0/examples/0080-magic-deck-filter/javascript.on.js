@@ -4,7 +4,7 @@ let data;
 let url = "/versions/8/0/0/examples/0080-magic-deck-filter/data.json";
 
 export async function init() {
-  data = await b.loadData(url);
+  data = await b.get(url);
   if (data) {
     b.trigger("deck");
   } else {

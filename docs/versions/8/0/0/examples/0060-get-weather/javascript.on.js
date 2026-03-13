@@ -10,7 +10,7 @@ export function changeStation(ev, __, ___) {
 }
 
 export async function loadStations(_, __, el) {
-  stations = await b.loadData(stationsURL);
+  stations = await b.get(stationsURL);
   if (stations === undefined) {
     b.trigger("weatherError");
   } else {
@@ -36,7 +36,7 @@ function options() {
 
 export async function weather(_, __, el) {
   el.innerHTML = "Loading weather report...";
-  const report = await b.loadData(reportURL());
+  const report = await b.get(reportURL());
   if (report === undefined || weatherIcon(report) === null) {
     el.innerHTML =
       `Weather currently unavailable for station ${current_station}`;

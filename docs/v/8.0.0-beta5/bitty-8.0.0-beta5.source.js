@@ -133,13 +133,7 @@ class BittyJs extends HTMLElement {
     return this.b._marks[key];
   }
 
-  async _loadData(url, fallback = null, options = {}) {
-    // TODO: Set this up to accept an array of
-    // URLs that are tried before the optional fallback
-    //
-    // TODO: Set up to pull <script> tags with
-    // `application/json` and an `id` attribute
-    // into a `b.json` object.
+  async _get(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {

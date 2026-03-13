@@ -4,7 +4,7 @@ let quotes;
 const url = "/versions/8/0/0/examples/0070-cycle-remote-content/data.json";
 
 export async function init() {
-  const data = await b.loadData(url);
+  const data = await b.get(url);
   if (data !== undefined) {
     quotes = data.quotes;
     b.trigger("loop");

@@ -513,6 +513,56 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // const el = document.querySelector(selector);
+  // if (el.value !== undefined) {
+  //   try {
+  //     await navigator.clipboard.writeText(el.value);
+  //   } catch (error) {
+  //     console.error(`Could not copy .value from ${selector}`);
+  //     return false;
+  //   }
+  // } else {
+  //   try {
+  //     await navigator.clipboard.writeText(el.innerHTML);
+  //   } catch (error) {
+  //     console.error(`Could not copy .innerHTML from ${selector}`);
+  //     return false;
+  //   }
+  // }
+  // return true;
+
+  async _quickCopy(el, sender) {
+    if (sender.copyId === undefined) {
+      sender.copyId === this.b.uuid();
+    }
+    if (this.b._debouncers[sender.copyId]) {
+      window.clearTimeout(this.b._debouncers[sender.copyId]);
+    }
+    const copyPayload = el.value !== undefined ? el.value : el.innerHTML;
+    try {
+      await navigator.clipboard.writeText(copyPayload);
+      if (sender.originalInnerHTML === undefined) {
+        sender.originalInnerHTML = JSON.stringify({ value: sender.innerHTML });
+        sender.innerHTML = "Copied";
+      }
+      this.b._debouncers[sender.copyId] = setTimeout(() => {
+        sender.innerHTML = JSON.parse(sender.originalInnerHTML).value;
+        delete sender.originalInnerHTML;
+      }, 2000);
+      return true;
+    } catch (error) {
+      if (sender.originalInnerHTML === undefined) {
+        sender.originalInnerHTML = JSON.stringify({ value: sender.innerHTML });
+        sender.innerHTML = "Could not copy";
+      }
+      this.b._debouncers[sender.copyId] = setTimeout(() => {
+        sender.innerHTML = JSON.parse(sender.originalInnerHTML).value;
+        delete sender.originalInnerHTML;
+      }, 2000);
+      return false;
+    }
+  }
+
   _randomFloat(min, max) {
     const seeker = new Uint32Array(1);
     crypto.getRandomValues(seeker);

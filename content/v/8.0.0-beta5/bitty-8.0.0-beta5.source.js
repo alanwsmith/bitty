@@ -513,25 +513,16 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // const el = document.querySelector(selector);
-  // if (el.value !== undefined) {
-  //   try {
-  //     await navigator.clipboard.writeText(el.value);
-  //   } catch (error) {
-  //     console.error(`Could not copy .value from ${selector}`);
-  //     return false;
-  //   }
-  // } else {
-  //   try {
-  //     await navigator.clipboard.writeText(el.innerHTML);
-  //   } catch (error) {
-  //     console.error(`Could not copy .innerHTML from ${selector}`);
-  //     return false;
-  //   }
-  // }
-  // return true;
-
-  async _quickCopy(el, sender) {
+  async _quickCopy(el, sender, options = {}) {
+    if (options.success === undefined) {
+      options.success = "Copied";
+    }
+    if (options.failed === undefined) {
+      options.failed = "Could not copy";
+    }
+    if (options.ms === undefined) {
+      options.ms = 2000;
+    }
     if (sender.copyId === undefined) {
       sender.copyId === this.b.uuid();
     }
@@ -543,22 +534,22 @@ class BittyJs extends HTMLElement {
       await navigator.clipboard.writeText(copyPayload);
       if (sender.originalInnerHTML === undefined) {
         sender.originalInnerHTML = JSON.stringify({ value: sender.innerHTML });
-        sender.innerHTML = "Copied";
+        sender.innerHTML = options.success;
       }
       this.b._debouncers[sender.copyId] = setTimeout(() => {
         sender.innerHTML = JSON.parse(sender.originalInnerHTML).value;
         delete sender.originalInnerHTML;
-      }, 2000);
+      }, options.ms);
       return true;
     } catch (error) {
       if (sender.originalInnerHTML === undefined) {
         sender.originalInnerHTML = JSON.stringify({ value: sender.innerHTML });
-        sender.innerHTML = "Could not copy";
+        sender.innerHTML = options.failed;
       }
       this.b._debouncers[sender.copyId] = setTimeout(() => {
         sender.innerHTML = JSON.parse(sender.originalInnerHTML).value;
         delete sender.originalInnerHTML;
-      }, 2000);
+      }, options.ms);
       return false;
     }
   }

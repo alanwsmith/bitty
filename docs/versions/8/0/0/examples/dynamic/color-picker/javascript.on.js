@@ -1,10 +1,6 @@
 export const b = { init: "controls" };
 
-const colors = {
-  red: 90,
-  green: 40,
-  blue: 150,
-};
+const colors = { red: 90, green: 40, blue: 150 };
 
 export function controls(_, __, el) {
   el.replaceChildren(
@@ -25,10 +21,6 @@ export function copy(_, sender, el) {
 
 export function output(_, __, el) {
   el.innerHTML = `rgb(${colors.red} ${colors.green} ${colors.blue})`;
-}
-
-export function restoreText(_, __, el) {
-  el.innerHTML = "Copy";
 }
 
 export function updateColor(ev, __, ___) {

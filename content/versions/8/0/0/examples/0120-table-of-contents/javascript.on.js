@@ -42,16 +42,44 @@ function addItem(heading, level, array) {
   }
 }
 
+function addLevel(heading, level, el) {
+  if (level === 0) {
+    const li = b.ce("li");
+    li.innerHTML = heading.innerText.trim();
+    el.appendChild(li);
+  } else {
+    let uls = b.qsa("li ul", el);
+    if (uls.length === 0) {
+      const ul = b.ce("ul");
+      el.appendChild(ul);
+      addLevel(heading, level - 1, ul);
+    } else {
+      addLevel(heading, level - 1, uls[uls.length - 1]);
+    }
+  }
+}
+
 export function toc(_, __, el) {
   const root = b.ce("ul");
   const contentEl = b.qs("[data-r=content]");
   const headings = b.qsa("h2, h3, h4, h5, h6", contentEl);
   const structure = [];
+
   headings.forEach((heading) => {
     const level = parseInt(heading.tagName.replace("H", "")) - 2;
-    addItem(heading, level, structure);
+    addLevel(heading, level, root);
   });
-  console.log(structure);
+
+  console.log(root);
+
+  el.replaceChildren(root);
+
+  // headings.forEach((heading) => {
+  //   const level = parseInt(heading.tagName.replace("H", "")) - 2;
+  //   addItem(heading, level, structure);
+  // });
+
+  //console.log(structure);
 
   //const level = parseInt(heading.tagName.replace("H", ""));
   //for (let i = level + 1; i <= 6; i += 1) {

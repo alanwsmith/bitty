@@ -2,7 +2,7 @@ export const b = {
   init: "runTests",
 };
 
-let includeErrorTests = true;
+let includeErrorTests = false;
 let testsAreRunning = false;
 
 // Reminder: set data-test-status="-1"

@@ -1,5 +1,5 @@
 export const b = {};
 
-export function signal_7AF58_v1(_, __, el) {
+export function $_SIGNAL_(_, __, el) {
   el.innerHTML = b.time();
 }

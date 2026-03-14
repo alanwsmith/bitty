@@ -415,6 +415,11 @@ class BittyJs extends HTMLElement {
         if (sender.isContentEditable === true && ev.type === "click") {
           return;
         } else if (
+          sender.type && sender.type.toLowerCase() === "checkbox" &&
+          ev.type === "click"
+        ) {
+          return;
+        } else if (
           sender.tagName.toLowerCase() === "form" && ev.type === "click"
         ) {
           return;

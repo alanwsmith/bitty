@@ -69,6 +69,10 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  _ce(tag, options = {}) {
+    return document.createElement(tag, options);
+  }
+
   __checkTargetSender(ev, sender, el) {
     if (sender && sender.nodeType !== undefined && sender.isSameNode(el)) {
       el.isSender = true;

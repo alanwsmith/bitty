@@ -50,9 +50,16 @@
 
           <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
 
+          [!- set html_html -!]
+          [!- include [file.parent, "html.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+
+          [! if html_html != "" !]
           <div class="example-block-2 example-output">
           [! include [file.parent, "html.html"]|join("/") !]
           </div>
+          [! endif !]
+
 
           [#
           <h4>overview</h4>
@@ -70,6 +77,8 @@
           [!- endif -!]
           #]
 
+
+          [! if html_html  != "" !]
           <h4>html</h4>
           [!- filter block_highlight("html") -!]
           [!- include [file.parent, "html.html"]|join("/") -!]
@@ -84,6 +93,7 @@
           [!- endfilter -!]
           [@ html2 @]
           [!- endif -!]
+          [! endif !]
 
           <h4>javascript</h4>
           [!- filter block_highlight("js") -!]
@@ -107,6 +117,21 @@
           [@- templates_html-@]
           [!- endfilter -!]
           [!- endif -!]
+
+
+          [!- set html3 -!]
+          [!- include [file.parent, "html3.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [! if html3 != "" !]
+          <h4>html</h4>
+          [!- filter block_highlight("html") -!]
+          [@- html3 -@]
+          [! endfilter !]
+          <div class="example-block-2 example-output">
+          [@- html3 -@]
+          </div>
+          [! endif !]
+
 
           [!- set data_json -!]
           [!- include [file.parent, "data.json"]|join("/") ignore missing -!]

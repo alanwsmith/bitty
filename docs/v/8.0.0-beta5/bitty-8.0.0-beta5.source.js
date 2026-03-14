@@ -485,6 +485,10 @@ class BittyJs extends HTMLElement {
         ) {
           return;
         } else if (
+          sender.type && sender.type.toLowerCase() === "datetime-local"
+        ) {
+          return;
+        } else if (
           sender.type && sender.type.toLowerCase() === "checkbox" &&
           ev.type === "click"
         ) {
@@ -625,6 +629,10 @@ class BittyJs extends HTMLElement {
           return;
         } else if (
           sender.type && sender.type.toLowerCase() === "date"
+        ) {
+          return;
+        } else if (
+          sender.type && sender.type.toLowerCase() === "datetime-local"
         ) {
           return;
         } else if (

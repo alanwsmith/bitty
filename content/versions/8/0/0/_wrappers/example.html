@@ -123,15 +123,18 @@
           [!- include [file.parent, "html3.html"]|join("/") ignore missing -!]
           [!- endset -!]
           [! if html3 != "" !]
-          <h4>html</h4>
-          [!- filter block_highlight("html") -!]
-          [@- html3 -@]
-          [! endfilter !]
+          <h4>output</h4>
           <div class="example-block-2 example-output">
           [@- html3 -@]
           </div>
-          [! endif !]
 
+
+          <details><summary>view source</summary>
+          [!- filter block_highlight("html") -!]
+          [@- html3 -@]
+          [! endfilter !]
+          </details>
+          [! endif !]
 
           [!- set data_json -!]
           [!- include [file.parent, "data.json"]|join("/") ignore missing -!]

@@ -10,5 +10,5 @@
 A MiniJinja error occurred
 
 Could not render template:
-template not found: tried to include non-existing template "versions/8/0/0/examples/dynamic/name.html" (in versions/8/0/0/examples/00-intro/index.html:18)</p>
+undefined value (in versions/8/0/0/examples/progressive-enhancement/details-opener/javascript-include.on.js:1)</p>
 </pre></body></html>

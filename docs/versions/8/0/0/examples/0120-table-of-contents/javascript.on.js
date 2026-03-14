@@ -1,14 +1,5 @@
 export const b = { init: "toc" };
 
-const url = `/versions/8/0/0/examples/0120-table-of-contents/content/`;
-
-export async function content(_, __, el) {
-  if (await b.getTemplates(url)) {
-    el.appendChild(b.render("content"));
-    b.trigger("toc");
-  }
-}
-
 function addLevel(heading, level, el) {
   if (level === 0) {
     const linkString = encodeURI(heading.innerText.trim().toLowerCase());

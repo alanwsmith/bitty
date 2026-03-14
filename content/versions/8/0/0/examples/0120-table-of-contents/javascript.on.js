@@ -1,14 +1,5 @@
 export const b = { init: "toc" };
 
-const url = `/[@ [file.parent, "content/"]|join("/") @]`;
-
-export async function content(_, __, el) {
-  if (await b.getTemplates(url)) {
-    el.appendChild(b.render("content"));
-    b.trigger("toc");
-  }
-}
-
 function addLevel(heading, level, el) {
   if (level === 0) {
     const linkString = encodeURI(heading.innerText.trim().toLowerCase());

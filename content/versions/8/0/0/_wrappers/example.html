@@ -76,22 +76,12 @@
           </div>
           [! endif !]
 
-
-          [#
-          <h4>overview</h4>
-          <p>work-in-progress</p>
-          #]
-
-
-          [#
-          [!- set details -!]
-          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- set description_html -!]
+          [!- include [file.parent, "description.html"]|join("/") ignore missing -!]
           [!- endset -!]
-          [!- if details != "" -!]
-          <h4>details</h4>
-          [@ details @]
+          [!- if description_html!= "" -!]
+          [@ description_html @]
           [!- endif -!]
-          #]
 
 
           [! if html_html  != "" !]
@@ -99,6 +89,7 @@
           [!- filter block_highlight("html") -!]
           [!- include [file.parent, "html.html"]|join("/") -!]
           [!- endfilter -!]
+
 
           [!- set html2 -!]
           [!- include [file.parent, "html2.html"]|join("/") ignore missing -!]
@@ -110,6 +101,22 @@
           [@ html2 @]
           [!- endif -!]
           [! endif !]
+
+
+          [!- set html3 -!]
+          [!- include [file.parent, "html3.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [! if html3 != "" !]
+          <div class="example-block-2 example-output">
+          [@- html3 -@]
+          </div>
+          <details><summary>view source</summary>
+          [!- filter block_highlight("html") -!]
+          [@- html3 -@]
+          [! endfilter !]
+          </details>
+          [! endif !]
+
 
           [!- set javascript_js -!]
           [!- include [file.parent, "javascript.on.js"]|join("/") ignore missing -!]
@@ -129,6 +136,13 @@
           [!- filter block_highlight("js") -!]
           [!- include [file.parent, "javascript-include.on.js"]|join("/") -!]
           [!- endfilter -!]
+          [!- endif -!]
+
+          [!- set js_md -!]
+          [!- include [file.parent, "js.md"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if js_md != "" -!]
+          [@ js_md @]
           [!- endif -!]
 
 
@@ -151,22 +165,7 @@
           [!- endif -!]
 
 
-          [!- set html3 -!]
-          [!- include [file.parent, "html3.html"]|join("/") ignore missing -!]
-          [!- endset -!]
-          [! if html3 != "" !]
-          <h4>output</h4>
-          <div class="example-block-2 example-output">
-          [@- html3 -@]
-          </div>
 
-
-          <details><summary>view source</summary>
-          [!- filter block_highlight("html") -!]
-          [@- html3 -@]
-          [! endfilter !]
-          </details>
-          [! endif !]
 
           [!- set data_json -!]
           [!- include [file.parent, "data.json"]|join("/") ignore missing -!]

@@ -1,14 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
-    }
-    </style></head><body><pre>
-A MiniJinja error occurred
 
-Could not render template:
-undefined value (in versions/8/0/0/examples/progressive-enhancement/details-opener/javascript-include.on.js:1)</p>
-</pre></body></html>
+
+
+
+export const b = { init: "initDetails" };
+
+let data;
+let key = `details-opener-${window.location.pathname}`;
+
+export function initDetails() {
+  data = b.restore(key, []);
+  document.querySelectorAll("details").forEach((el, index) => {
+    el.open = data[index] ? true : false;
+    el.addEventListener("toggle", (_) => {
+      updateData();
+    });
+  });
+}
+
+function updateData() {
+  document.querySelectorAll("details").forEach((el, index) => {
+    data[index] = el.open;
+  });
+  b.save(key, data);
+}

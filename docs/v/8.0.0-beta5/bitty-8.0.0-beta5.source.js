@@ -11,11 +11,14 @@ const changeFormElements = [
   "image",
   "month",
   "number",
+  "option",
   "password",
   "radio",
   "search",
+  "select",
   "tel",
   "text",
+  "textarea",
   "time",
   "url",
   "week",
@@ -495,7 +498,9 @@ class BittyJs extends HTMLElement {
         if (sender.isContentEditable === true && ev.type === "click") {
           return;
         } else if (
-          sender.tagName.toLowerCase() === "form" && ev.type === "click"
+          sender.tagName &&
+          changeFormElements.includes(sender.tagName.toLowerCase()) &&
+          ev.type === "click"
         ) {
           return;
         } else if (
@@ -652,7 +657,8 @@ class BittyJs extends HTMLElement {
       );
       if (listeners.length === 0) {
         if (
-          sender.tagName && sender.tagName.toLowerCase() === "form"
+          sender.tagName &&
+          changeFormElements.includes(sender.tagName.toLowerCase())
         ) {
           return;
         } else if (

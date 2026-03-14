@@ -1,6 +1,4 @@
-export const b = {
-  init: "init_273EF_v1",
-};
+export const b = {};
 
 export function init_273EF_v1() {
   console.warn(

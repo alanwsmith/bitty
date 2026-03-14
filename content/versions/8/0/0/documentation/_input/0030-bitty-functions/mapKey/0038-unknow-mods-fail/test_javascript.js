@@ -1,6 +1,4 @@
-export const b = {
-  init: "init_$_TEST_ID_",
-};
+export const b = {};
 
 export function init_$_TEST_ID_() {
   console.warn(

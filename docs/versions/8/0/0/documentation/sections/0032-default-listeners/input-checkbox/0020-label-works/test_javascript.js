@@ -2,7 +2,7 @@ export const b = {};
 
 let activations = 0;
 
-export function $_SIGNAL_(ev, sender, el) {
+export function signal_1B139_v1(ev, sender, el) {
   console.log(ev);
   activations += 1;
   if (activations === 1 && ev.type === "change") {

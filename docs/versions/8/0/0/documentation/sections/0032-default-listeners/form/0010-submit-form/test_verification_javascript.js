@@ -1,7 +1,7 @@
 export const b = {};
 
 export async function runTest() {
-  b.qs("#target_3B25A_v1]").click();
+  b.qs("[data-s~=signal_3B25A_v1]").click();
   await b.sleep(200);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
   const checkEls = b.qsa("[data-r~=signal_3B25A_v1]");

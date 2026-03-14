@@ -37,6 +37,24 @@ class BittyJs extends HTMLElement {
           incoming.b._processEvent(ev);
         });
 
+        [...document.querySelectorAll("[data-listen]")].forEach(
+          (el) => {
+            incoming.b._splitSignalString(el.dataset.listen).forEach(
+              (listener) => {
+                if (
+                  ["click", "input", "bittysend", "bittytrigger"].includes(
+                    listener,
+                  ) === false
+                ) {
+                  window.addEventListener(listener, (ev) => {
+                    incoming.b._processEvent(ev);
+                  });
+                }
+              },
+            );
+          },
+        );
+
         // window.addEventListener("change", (ev) => {
         //   incoming.b._processEvent(ev);
         // });
@@ -54,6 +72,7 @@ class BittyJs extends HTMLElement {
         // window.addEventListener("bittytrigger", (ev) => {
         //   incoming.b._processBittyTrigger(ev);
         // });
+        //
         // [...document.querySelectorAll("[data-listen]")].forEach(
         //   (el) => {
         //     incoming.b._splitSignalString(el.dataset.listen).forEach(
@@ -71,6 +90,7 @@ class BittyJs extends HTMLElement {
         //     );
         //   },
         // );
+        //
         // // END: Original Listeners
 
         incoming.b._processInit();
@@ -380,10 +400,6 @@ class BittyJs extends HTMLElement {
   __processEvent(ev) {
     this.b._updateEvent(ev);
 
-    if (ev.target.isContentEditable === true && ev.type === "click") {
-      return;
-    }
-
     const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
       this.b._updateSender(sender);
@@ -392,6 +408,10 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
+        if (ev.target.isContentEditable === true && ev.type === "click") {
+          return;
+        }
+
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(

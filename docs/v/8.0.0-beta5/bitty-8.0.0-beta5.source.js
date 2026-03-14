@@ -21,35 +21,58 @@ class BittyJs extends HTMLElement {
         this.loadPageAssets(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
-        window.addEventListener("click", (ev) => {
-          incoming.b._processEvent(ev);
-        });
-        window.addEventListener("input", (ev) => {
-          incoming.b._processEvent(ev);
-        });
+
         window.addEventListener("bittysend", (ev) => {
           incoming.b._processBittySend(ev);
         });
         window.addEventListener("bittytrigger", (ev) => {
           incoming.b._processBittyTrigger(ev);
         });
-        [...document.querySelectorAll("[data-listen]")].forEach(
-          (el) => {
-            incoming.b._splitSignalString(el.dataset.listen).forEach(
-              (listener) => {
-                if (
-                  ["click", "input", "bittysend", "bittytrigger"].includes(
-                    listener,
-                  ) === false
-                ) {
-                  window.addEventListener(listener, (ev) => {
-                    incoming.b._processEvent(ev);
-                  });
-                }
-              },
-            );
-          },
-        );
+
+        window.addEventListener("click", (ev) => {
+          incoming.b._processEvent(ev);
+        });
+
+        window.addEventListener("input", (ev) => {
+          incoming.b._processEvent(ev);
+        });
+
+        // window.addEventListener("change", (ev) => {
+        //   incoming.b._processEvent(ev);
+        // });
+
+        // // START: Original listeners
+        // window.addEventListener("click", (ev) => {
+        //   incoming.b._processEvent(ev);
+        // });
+        // window.addEventListener("input", (ev) => {
+        //   incoming.b._processEvent(ev);
+        // });
+        // window.addEventListener("bittysend", (ev) => {
+        //   incoming.b._processBittySend(ev);
+        // });
+        // window.addEventListener("bittytrigger", (ev) => {
+        //   incoming.b._processBittyTrigger(ev);
+        // });
+        // [...document.querySelectorAll("[data-listen]")].forEach(
+        //   (el) => {
+        //     incoming.b._splitSignalString(el.dataset.listen).forEach(
+        //       (listener) => {
+        //         if (
+        //           ["click", "input", "bittysend", "bittytrigger"].includes(
+        //             listener,
+        //           ) === false
+        //         ) {
+        //           window.addEventListener(listener, (ev) => {
+        //             incoming.b._processEvent(ev);
+        //           });
+        //         }
+        //       },
+        //     );
+        //   },
+        // );
+        // // END: Original Listeners
+
         incoming.b._processInit();
       }
     }
@@ -356,6 +379,11 @@ class BittyJs extends HTMLElement {
 
   __processEvent(ev) {
     this.b._updateEvent(ev);
+
+    if (ev.target.isContentEditable === true && ev.type === "click") {
+      return;
+    }
+
     const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
       this.b._updateSender(sender);

@@ -1,0 +1,22 @@
+[! filter markdown|safe !]
+- [] Elements with `contenteditable` pass `input` events. 
+
+It would be preferable to pass `change` events. But, those
+aren't provided by `contenteditable`. 
+
+It's not possible to listen for `blur` events at the top of 
+the DOM either. Those events don't bubble.
+
+For brief testing it looks like an 
+`ev.inputType === "insertParagraph"` check can be used
+as a proxy for when the enter key is hit that could
+stand in for a `change` event if the element
+should only provide a single line. That needs
+more investigation though. 
+
+- [] TBD: Figure out if adding a `data-listen="blur"`
+on a `contenteditable` works. 
+
+[! endfilter !]
+
+

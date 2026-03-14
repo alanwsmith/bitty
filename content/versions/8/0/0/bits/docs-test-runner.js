@@ -5,6 +5,9 @@ export const b = {
 let includeErrorTests = true;
 let testsAreRunning = false;
 
+// Reminder: set data-test-status="-1"
+// to indicate manual tests.
+
 export async function runTests(_, __, el) {
   if (testsAreRunning === true) {
     return;
@@ -37,11 +40,19 @@ function getResults(exampleWrapper) {
         return num;
       }
     }).forEach((result) => {
-      level = Math.max(level, result);
+      if (result === -1) {
+        level = -1;
+      } else {
+        level = Math.max(level, result);
+      }
     });
   }
   const exampleStatus = b.qs(".example-status", exampleWrapper);
-  exampleStatus.innerHTML = `[${levels[level]}]`;
+  if (level === -1) {
+    exampleStatus.innerHTML = `[manual]`;
+  } else {
+    exampleStatus.innerHTML = `[${levels[level]}]`;
+  }
   exampleStatus.dataset.testStatus = level;
   return level;
 }

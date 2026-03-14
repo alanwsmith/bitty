@@ -1,0 +1,17 @@
+<ul>
+<li>[] Elements with <code>contenteditable</code> pass <code>input</code> events.</li>
+</ul>
+<p>It would be preferable to pass <code>change</code> events. But, those
+aren't provided by <code>contenteditable</code>.</p>
+<p>It's not possible to listen for <code>blur</code> events at the top of
+the DOM either. Those events don't bubble.</p>
+<p>For brief testing it looks like an
+<code>ev.inputType === &quot;insertParagraph&quot;</code> check can be used
+as a proxy for when the enter key is hit that could
+stand in for a <code>change</code> event if the element
+should only provide a single line. That needs
+more investigation though.</p>
+<ul>
+<li>[] TBD: Figure out if adding a <code>data-listen=&quot;blur&quot;</code>
+on a <code>contenteditable</code> works.</li>
+</ul>

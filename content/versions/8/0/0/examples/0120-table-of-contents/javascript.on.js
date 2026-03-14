@@ -44,8 +44,10 @@ function addItem(heading, level, array) {
 
 function addLevel(heading, level, el) {
   if (level === 0) {
+    const linkString = encodeURI(heading.innerText.trim().toLowerCase());
     const li = b.ce("li");
-    li.innerHTML = heading.innerText.trim();
+    li.innerHTML = `<a href="#${linkString}">${heading.innerText.trim()}</a>`;
+    heading.id = linkString;
     el.appendChild(li);
   } else {
     let uls = b.qsa("li ul", el);
@@ -63,15 +65,10 @@ export function toc(_, __, el) {
   const root = b.ce("ul");
   const contentEl = b.qs("[data-r=content]");
   const headings = b.qsa("h2, h3, h4, h5, h6", contentEl);
-  const structure = [];
-
   headings.forEach((heading) => {
     const level = parseInt(heading.tagName.replace("H", "")) - 2;
     addLevel(heading, level, root);
   });
-
-  console.log(root);
-
   el.replaceChildren(root);
 
   // headings.forEach((heading) => {

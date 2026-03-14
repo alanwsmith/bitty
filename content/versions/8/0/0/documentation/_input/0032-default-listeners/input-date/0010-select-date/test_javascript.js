@@ -3,6 +3,7 @@ export const b = {};
 let activations = 0;
 
 export function $_SIGNAL_(ev, __, el) {
+  console.log(ev);
   activations += 1;
   if (activations === 1 && ev.type === "change") {
     el.innerHTML = b.time();

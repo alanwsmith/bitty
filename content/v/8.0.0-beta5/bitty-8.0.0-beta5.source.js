@@ -1,6 +1,26 @@
 const version = [8, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
+const changeFormElements = [
+  "checkbox",
+  "color",
+  "date",
+  "datetime-local",
+  "email",
+  "file",
+  "image",
+  "month",
+  "number",
+  "password",
+  "radio",
+  "search",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week",
+];
+
 class BittyJs extends HTMLElement {
   static bits = [];
 
@@ -475,37 +495,41 @@ class BittyJs extends HTMLElement {
         if (sender.isContentEditable === true && ev.type === "click") {
           return;
         } else if (
-          sender.type && sender.type.toLowerCase() === "color" &&
-          ev.type === "click"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "date" &&
-          ev.type === "click"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "datetime-local"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "email"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "file"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "checkbox" &&
-          ev.type === "click"
-        ) {
-          return;
-        } else if (
           sender.tagName.toLowerCase() === "form" && ev.type === "click"
         ) {
           return;
+        } else if (
+          sender.type && changeFormElements.includes(sender.type.toLowerCase())
+        ) {
+          return;
         }
+
+        // ev.type === "click"
+        // ) {
+        // return;
+        // } else if (
+        // sender.type && sender.type.toLowerCase() === "date" &&
+        // ev.type === "click"
+        // ) {
+        // return;
+        // } else if (
+        // sender.type && sender.type.toLowerCase() === "datetime-local"
+        // ) {
+        // return;
+        // } else if (
+        // sender.type && sender.type.toLowerCase() === "email"
+        // ) {
+        // return;
+        // } else if (
+        // sender.type && sender.type.toLowerCase() === "file"
+        // ) {
+        // return;
+        // } else if (
+        // sender.type && sender.type.toLowerCase() === "checkbox" &&
+        // ev.type === "click"
+        // ) {
+        // return;
+
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(
@@ -628,34 +652,15 @@ class BittyJs extends HTMLElement {
       );
       if (listeners.length === 0) {
         if (
-          sender.type && sender.type.toLowerCase() === "checkbox"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "color"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "date"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "datetime-local"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "email"
-        ) {
-          return;
-        } else if (
-          sender.type && sender.type.toLowerCase() === "file"
-        ) {
-          return;
-        } else if (
           sender.tagName && sender.tagName.toLowerCase() === "form"
         ) {
           return;
+        } else if (
+          sender.type && changeFormElements.includes(sender.type.toLowerCase())
+        ) {
+          return;
         }
+
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(

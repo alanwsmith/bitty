@@ -1,7 +1,8 @@
 export const b = {};
 
 export function signal_FDC74_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+  const newEl = b.ce("div");
+  if (newEl.tagName.toLowerCase() === "div") {
+    el.innerHTML = b.time();
+  }
 }

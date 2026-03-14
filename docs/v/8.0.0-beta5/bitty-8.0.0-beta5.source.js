@@ -480,6 +480,11 @@ class BittyJs extends HTMLElement {
         ) {
           return;
         } else if (
+          sender.type && sender.type.toLowerCase() === "date" &&
+          ev.type === "click"
+        ) {
+          return;
+        } else if (
           sender.type && sender.type.toLowerCase() === "checkbox" &&
           ev.type === "click"
         ) {
@@ -616,6 +621,10 @@ class BittyJs extends HTMLElement {
           return;
         } else if (
           sender.type && sender.type.toLowerCase() === "color"
+        ) {
+          return;
+        } else if (
+          sender.type && sender.type.toLowerCase() === "date"
         ) {
           return;
         } else if (

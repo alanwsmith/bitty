@@ -2,7 +2,7 @@ export const b = {};
 
 let activations = 0;
 
-export function signal_6934D_v1(ev, __, el) {
+export function $_SIGNAL_(ev, __, el) {
   activations += 1;
   if (activations === 1 && ev.type === "change") {
     el.innerHTML = b.time();

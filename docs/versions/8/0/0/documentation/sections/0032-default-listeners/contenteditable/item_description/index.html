@@ -1,6 +1,6 @@
 <ul>
-<li>[] Elements with <code>contenteditable</code> pass <code>input</code> events.</li>
-</ul>
+<li>
+<p>[] Elements with <code>contenteditable</code> pass <code>input</code> events.</p>
 <p>It would be preferable to pass <code>change</code> events. But, those
 aren't provided by <code>contenteditable</code>.</p>
 <p>It's not possible to listen for <code>blur</code> events at the top of
@@ -11,7 +11,12 @@ as a proxy for when the enter key is hit that could
 stand in for a <code>change</code> event if the element
 should only provide a single line. That needs
 more investigation though.</p>
-<ul>
-<li>[] TBD: Figure out if adding a <code>data-listen=&quot;blur&quot;</code>
-on a <code>contenteditable</code> works.</li>
+<p>It's possible to listen for <code>blur</code> events by
+attaching the listener directly to an element.
+bitty doesn't try to do that because race
+conditions may occur when adding elements
+and trying to coordinate between multiple
+possible bitty instances on a page
+is outside of scope.</p>
+</li>
 </ul>

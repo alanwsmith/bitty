@@ -68,7 +68,11 @@ function testItem(itemWrapper) {
     itemStatus.dataset.testStatus = 1;
   } else {
     const level = Math.max(...results);
-    itemStatus.innerHTML = `[${levels[level]}]`;
+    if (level === -1) {
+      itemStatus.innerHTML = `[manual]`;
+    } else {
+      itemStatus.innerHTML = `[${levels[level]}]`;
+    }
     itemStatus.dataset.testStatus = level;
   }
 }

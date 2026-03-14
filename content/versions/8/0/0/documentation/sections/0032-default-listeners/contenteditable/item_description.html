@@ -1,21 +1,26 @@
 [! filter markdown|safe !]
 - [] Elements with `contenteditable` pass `input` events. 
 
-It would be preferable to pass `change` events. But, those
+  It would be preferable to pass `change` events. But, those
 aren't provided by `contenteditable`. 
 
-It's not possible to listen for `blur` events at the top of 
+  It's not possible to listen for `blur` events at the top of 
 the DOM either. Those events don't bubble.
 
-For brief testing it looks like an 
+  For brief testing it looks like an 
 `ev.inputType === "insertParagraph"` check can be used
 as a proxy for when the enter key is hit that could
 stand in for a `change` event if the element
 should only provide a single line. That needs
 more investigation though. 
 
-- [] TBD: Figure out if adding a `data-listen="blur"`
-on a `contenteditable` works. 
+  It's possible to listen for `blur` events by 
+attaching the listener directly to an element. 
+bitty doesn't try to do that because race
+conditions may occur when adding elements
+and trying to coordinate between multiple
+possible bitty instances on a page 
+is outside of scope. 
 
 [! endfilter !]
 

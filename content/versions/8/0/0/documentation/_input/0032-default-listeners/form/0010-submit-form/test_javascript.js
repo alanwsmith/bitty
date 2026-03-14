@@ -1,7 +1,9 @@
 export const b = {};
 
-export function $_SIGNAL_(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+export function $_SIGNAL_(ev, __, el) {
+  console.log(ev);
+  if (ev.type === "submit") {
+    el.innerHTML = b.time();
+    ev.preventDefault();
+  }
 }

@@ -37,6 +37,10 @@ class BittyJs extends HTMLElement {
           incoming.b._processEvent(ev);
         });
 
+        document.addEventListener("submit", (ev) => {
+          incoming.b._processEvent(ev);
+        });
+
         [...document.querySelectorAll("[data-listen]")].forEach(
           (el) => {
             incoming.b._splitSignalString(el.dataset.listen).forEach(
@@ -408,7 +412,11 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
-        if (ev.target.isContentEditable === true && ev.type === "click") {
+        if (sender.isContentEditable === true && ev.type === "click") {
+          return;
+        } else if (
+          sender.tagName.toLowerCase() === "form" && ev.type === "click"
+        ) {
           return;
         }
 

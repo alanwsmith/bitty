@@ -95,10 +95,26 @@
           [!- endif -!]
           [! endif !]
 
+          [!- set javascript_js -!]
+          [!- include [file.parent, "javascript.on.js"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [! if javascript_js != "" !]
           <h4>javascript</h4>
           [!- filter block_highlight("js") -!]
           [!- include [file.parent, "javascript.on.js"]|join("/") -!]
           [!- endfilter -!]
+          [!- endif -!]
+
+          [!- set javascript_include_js -!]
+          [!- include [file.parent, "javascript-include.on.js"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [! if javascript_include_js != "" !]
+          <h4>javascript</h4>
+          [!- filter block_highlight("js") -!]
+          [!- include [file.parent, "javascript-include.on.js"]|join("/") -!]
+          [!- endfilter -!]
+          [!- endif -!]
+
 
 
           [!- if styles_css!= "" -!]

@@ -461,6 +461,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  // TODO: Migrate this to `__processClickEvent()`
   __processEvent(ev) {
     this.b._updateEvent(ev);
     const senders = this.b._findSenders(ev.target);
@@ -472,6 +473,11 @@ class BittyJs extends HTMLElement {
       );
       if (listeners.length === 0) {
         if (sender.isContentEditable === true && ev.type === "click") {
+          return;
+        } else if (
+          sender.type && sender.type.toLowerCase() === "color" &&
+          ev.type === "click"
+        ) {
           return;
         } else if (
           sender.type && sender.type.toLowerCase() === "checkbox" &&
@@ -606,6 +612,10 @@ class BittyJs extends HTMLElement {
       if (listeners.length === 0) {
         if (
           sender.type && sender.type.toLowerCase() === "checkbox"
+        ) {
+          return;
+        } else if (
+          sender.type && sender.type.toLowerCase() === "color"
         ) {
           return;
         } else if (

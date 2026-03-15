@@ -1,5 +1,5 @@
 export const b = {
-  init: "runTests",
+  //  init: "runTests",
 };
 
 let includeErrorTests = true;

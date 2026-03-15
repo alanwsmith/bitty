@@ -28,7 +28,7 @@ export function deck(_, __, el) {
         __NAME__: cardName(card),
         __UUID__: uuid(card),
       };
-      b.render("card", subs);
+      return b.render("card", subs);
     }),
   );
 }

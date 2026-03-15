@@ -22,13 +22,14 @@ function cardName(card) {
 
 export function deck(_, __, el) {
   el.replaceChildren(
-    ...sortedCards().map((card) =>
-      b.render("card", {
+    ...sortedCards().map((card) => {
+      const subs = {
         __IS_LAND__: cardIsLand(card),
         __NAME__: cardName(card),
         __UUID__: uuid(card),
-      })
-    ),
+      };
+      b.render("card", subs);
+    }),
   );
 }
 

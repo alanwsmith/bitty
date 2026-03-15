@@ -6,10 +6,11 @@ export function controls(_, __, el) {
   el.replaceChildren(
     ...Object.keys(colors).map((color) => {
       b.setCSS(`--${color}`, colors[color]);
-      return b.render("slider", {
+      const subs = {
         __COLOR__: color,
         __VALUE__: `${colors[color]}`,
-      });
+      };
+      return b.render("slider", subs);
     }),
   );
   b.trigger("output");

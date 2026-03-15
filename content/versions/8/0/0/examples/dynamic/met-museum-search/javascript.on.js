@@ -13,13 +13,12 @@ export async function images(_, __, el) {
   for (let i = 0; i < Math.min(10, data.objectIDs.length); i += 1) {
     const item = await b.get(`${itemURL}/${data.objectIDs[i]}`);
     if (item && item.primaryImage) {
-      el.appendChild(
-        b.render("image", {
-          __IMG_SRC__: item.primaryImage,
-          __TITLE__: `${item.title} - ${item.medium}`,
-          __URL__: item.objectURL,
-        }),
-      );
+      const subs = {
+        __IMG_SRC__: item.primaryImage,
+        __TITLE__: `${item.title} - ${item.medium}`,
+        __URL__: item.objectURL,
+      };
+      el.appendChild(b.render("image", subs));
     }
   }
 }

@@ -25,12 +25,13 @@ function options() {
       if (index === 0) {
         current_station = stationId(state);
       }
-      return b.render("option", {
+      const subs = {
         __ABBREVIATION__: state,
         __CITY__: cityName(state),
         __CODE__: stationId(state),
         __STATE__: stateName(state),
-      }).firstChild;
+      };
+      return b.render("option", subs);
     });
 }
 
@@ -42,13 +43,12 @@ export async function weather(_, __, el) {
       `Weather currently unavailable for station ${current_station}`;
     return;
   }
-  el.replaceChildren(
-    b.render("weather", {
-      __DESCRIPTION__: weatherDescription(report),
-      __IMG_SRC__: weatherIcon(report),
-      __TEMP__: tempString(report),
-    }),
-  );
+  const subs = {
+    __DESCRIPTION__: weatherDescription(report),
+    __IMG_SRC__: weatherIcon(report),
+    __TEMP__: tempString(report),
+  };
+  el.replaceChildren(b.render("weather", subs));
 }
 
 export function weatherError(_, __, el) {

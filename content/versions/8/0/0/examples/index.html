@@ -9,32 +9,7 @@
 
 <div class="example-columns">
   <div class="example-sidebard">
-
-    <div>dynamic</div>
-    <ul class="sidebar-list">
-    [! for example_dir in folders_in_folder([vars.version_dir, "examples", "dynamic"]|join("/")) !]
-      <li>
-        [! if example_dir == file.parent !]
-        [! include [example_dir, "name.html"]|join("/") -!]
-        [! else !]
-        <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
-        [! endif !]
-      </li>
-    [! endfor !]
-    </ul>
-    <div>progressive enhancement</div>
-    <ul class="sidebar-list">
-    [! for example_dir in folders_in_folder([vars.version_dir, "examples", "progressive-enhancement"]|join("/")) !]
-      <li>
-        [! if example_dir == file.parent !]
-        [! include [example_dir, "name.html"]|join("/") -!]
-        [! else !]
-        <a href="/[@ example_dir @]/">[! include [example_dir, "name.html"]|join("/") -!]</a>
-        [! endif !]
-      </li>
-    [! endfor !]
-    </ul>
-
+      [! include [vars.version_dir, "examples", "_includes", "sidebar.html"]|join("/") !]
   </div>
 
 

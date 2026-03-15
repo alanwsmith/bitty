@@ -10,7 +10,6 @@ function shuffleWithCrypto(array) {
     const j = r[0] % i;
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array;
 }
 
 function shuffleWithMath(array) {
@@ -18,17 +17,25 @@ function shuffleWithMath(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array;
 }
 
 export async function mathCheck(_, __, el) {
+  await runTests(shuffleWithMath, el, "math");
+  b.trigger("cryptoCheck");
+}
+
+export async function cryptoCheck(_, __, el) {
+  runTests(shuffleWithCrypto, el, "crypto");
+}
+
+export async function runTests(fn, el, kind) {
   const times = [];
   const items = new Array(arraySize);
   items.fill("the quick brown fox", 0, arraySize - 1);
   for (let iter = 0; iter < iterations; iter += 1) {
-    const key = `math${iter}`;
+    const key = `${kind}${iter}`;
     b.mark(key);
-    shuffleWithMath(items);
+    fn(items);
     b.mark(key);
     const time = parseInt(b.getMarks(key)[1][0] - b.getMarks(key)[0][0], 10);
     times.push(time);
@@ -38,10 +45,10 @@ export async function mathCheck(_, __, el) {
     await b.sleep(50);
   }
   // el.innerHTML = iters(b.getMarks("math"));
-  b.trigger("cryptoCheck");
+  //  b.trigger("cryptoCheck");
 }
 
-export async function cryptoCheck(_, __, el) {
+export async function x_cryptoCheck(_, __, el) {
   const times = [];
   const items = new Array(arraySize);
   items.fill("the quick brown fox", 0, arraySize - 1);

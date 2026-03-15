@@ -870,6 +870,21 @@ class BittyJs extends HTMLElement {
     document.documentElement.style.setProperty(key, value);
   }
 
+  _shuffle(array) {
+    let currentIndex = array.length;
+    let randomIndex;
+    while (currentIndex != 0) {
+      const seeker = new Uint32Array(1);
+      crypto.getRandomValues(seeker);
+      randomIndex = seeker[0] % currentIndex;
+      currentIndex -= 1;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+  }
+
   async _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }

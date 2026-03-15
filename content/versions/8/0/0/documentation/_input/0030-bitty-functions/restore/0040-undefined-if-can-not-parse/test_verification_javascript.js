@@ -1,4 +1,4 @@
-export const b = {};
+export const b = { init: "loadSampleData$_SIGNAL_" };
 
 export function loadSampleData$_SIGNAL_() {
   localStorage.setItem("invalid_$_SIGNAL_", "not a valid json string");

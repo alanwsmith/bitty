@@ -8,6 +8,7 @@ const changeFormElements = [
   "datetime-local",
   "email",
   "file",
+  "form",
   "image",
   "month",
   "number",
@@ -423,6 +424,11 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
+        if (
+          sender.tagName && sender.tagName.toLowerCase() === "form"
+        ) {
+          return;
+        }
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(
@@ -666,7 +672,6 @@ class BittyJs extends HTMLElement {
         ) {
           return;
         }
-
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(

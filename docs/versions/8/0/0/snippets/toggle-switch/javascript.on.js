@@ -1,18 +1,22 @@
-export const b = {
-  init: "addStyles",
-};
+export const b = { init: "addStyles" };
+
+export function toggleSnippet(_, sender, el) {
+  console.log("toggling");
+  const isOn = sender.getAttribute("aria-checked") === "true" ? true : false;
+  sender.setAttribute("aria-checked", isOn ? false : true);
+}
 
 export function addStyles() {
-  const css = `
+  b.addStyles(`
 :root {
   --brightest: #fff;
   --bright: #757580;
   --positive: #0a0;
 }
 
-[role="switch"] {  
+button [role="switch"] {  
   padding: 0;
-  width: 2.6rem;
+  width: 1rem;
   height: 1.5rem;
   border: 0;
   border-radius: 1rem;
@@ -36,5 +40,5 @@ export function addStyles() {
 
 [role="switch"][aria-checked="true"] :last-child,[role="switch"][aria-checked="false"] :first-child {
   background: var(--brightest);
-}`;
+}`);
 }

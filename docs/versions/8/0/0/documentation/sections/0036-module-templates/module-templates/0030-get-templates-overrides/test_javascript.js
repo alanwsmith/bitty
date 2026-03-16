@@ -1,7 +1,19 @@
-export const b = {};
+export const b = {
+  init: "init_D5306_v1",
+  templates: {
+    moduleTemplateOverwrite:
+      `<div>Error loading page template in D5306_v1</div>`,
+  },
+};
 
-export function signal_D5306_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+export async function init_D5306_v1(_, __, el) {
+  const url = `/versions/8/0/0/documentation/samples/module-template-override/`;
+  await b.getTemplates(url);
+  el.replaceChildren(
+    b.render("moduleTemplateOverwrite"),
+  );
+}
+
+export function signal_moduleTemplateOverwrite(_, __, el) {
+  el.innerHTML = b.time();
 }

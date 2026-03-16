@@ -1,10 +1,11 @@
 export const b = {};
 
 export async function runTest() {
-  b.qs("[data-s~=$_SIGNAL_]").click();
   await b.sleep(200);
+  b.qs("[data-s~=signal_moduleTemplateOverwrite]").click();
+  await b.sleep(400);
   const pattern = /\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d/;
-  const checkEls = b.qsa("[data-r~=$_SIGNAL_]");
+  const checkEls = b.qsa("[data-r~=signal_moduleTemplateOverwrite]");
   checkEls.forEach((checkEl) => {
     if (checkEl.innerHTML === "todo") {
       checkEl.dataset.testStatus = 1;

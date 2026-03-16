@@ -38,16 +38,28 @@
           </ul>
         </div>
 
-        <div>
+        <div class="default-flow">
           <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
           <div class="example-block-2">
             [! include [file.parent, "html.html"]|join("/") !]
           </div>
           <[@ vars.bitty_tag @] data-connect="/[@ [file.parent, "javascript.on.js"]|join("/")|safe @]"></[@ vars.bitty_tag @]>
+
+          [!- set overview_html -!]
+          [!- include [file.parent, "overview.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if overview_html != "" -!]
+          [@- overview_html -@]
+          [!- endif -!]
+
           <h3>html</h3>
           [! filter block_highlight("html") !]
           [! include [file.parent, "html.html"]|join("/") !]
           [! endfilter !]
+
+
+
+
           <h3>javascript</h3>
           [! filter block_highlight("js") !]
           [! include [file.parent, "javascript.on.js"]|join("/") !]

@@ -153,6 +153,13 @@ class BittyJs extends HTMLElement {
     });
   }
 
+  _addStyles(css) {
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(css);
+    document.adoptedStyleSheets.push(sheet);
+    return sheet;
+  }
+
   _ce(tag, options = {}) {
     return document.createElement(tag, options);
   }

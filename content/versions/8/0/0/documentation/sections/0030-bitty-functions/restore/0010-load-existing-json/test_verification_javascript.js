@@ -1,10 +1,4 @@
-export const b = {
-  init: "loadSampleData_83167_v1",
-};
-
-export function loadSampleData_83167_v1() {
-  b.save("83167_v1", { alfa: "bravo" });
-}
+export const b = {};
 
 export async function runTest() {
   b.qs("[data-s~=signal_83167_v1]").click();

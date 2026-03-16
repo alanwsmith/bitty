@@ -863,7 +863,7 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  _restore(key, fallback = null) {
+  _restorePage(key, fallback = null) {
     const url = new URL(window.location.href);
     key = `${url.pathname}-${key}`;
     const storage = localStorage.getItem(key);

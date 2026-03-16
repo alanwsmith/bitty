@@ -40,7 +40,9 @@ class BittyJs extends HTMLElement {
         incoming.b._debouncers = {};
         incoming.b._marks = {};
         incoming.b.svgs = {};
-        incoming.b.templates = {};
+        if (incoming.b.templates === undefined) {
+          incoming.b.templates = {};
+        }
         incoming.b.data = {};
         this.loadPageAssets(incoming);
         this.addBittyClasses(incoming);
@@ -814,10 +816,10 @@ class BittyJs extends HTMLElement {
     }
     let content = input.map((item) => {
       if (typeof item === "string") {
-        if (this.b.templates[item] === undefined) {
-          return item;
-        } else {
+        if (this.b.templates[item] !== undefined) {
           return this.b.templates[item];
+        } else {
+          return item;
         }
       } else {
         const tmpWrapper = document.createElement("div");
@@ -861,7 +863,32 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
+  _restore(key, fallback = null) {
+    const url = new URL(window.location.href);
+    key = `${url.pathname}-${key}`;
+    const storage = localStorage.getItem(key);
+    if (storage !== null) {
+      try {
+        return JSON.parse(storage);
+      } catch (error) {
+        console.error(error);
+        return undefined;
+      }
+    }
+    if (fallback !== null) {
+      return fallback;
+    }
+    return undefined;
+  }
+
   _save(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+    return true;
+  }
+
+  _savePage(key, data) {
+    const url = new URL(window.location.href);
+    key = `${url.pathname}-${key}`;
     localStorage.setItem(key, JSON.stringify(data));
     return true;
   }

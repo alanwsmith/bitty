@@ -1,9 +1,9 @@
 export const b = { init: "addStyles" };
 
 export function toggleSnippet(_, sender, el) {
-  console.log("toggling");
   const isOn = sender.getAttribute("aria-checked") === "true" ? true : false;
   sender.setAttribute("aria-checked", isOn ? false : true);
+  el.innerHTML = !isOn;
 }
 
 export function addStyles() {

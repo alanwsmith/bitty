@@ -1,21 +1,19 @@
 export const b = { init: "initDetails" };
 
 let data;
-let key = `details-opener-${window.location.pathname}`;
+let key = `details-opener`;
 
 export function initDetails() {
-  data = b.restore(key, []);
-  document.querySelectorAll("details").forEach((el, index) => {
+  data = b.loadPage(key, []);
+  b.qsa("details").forEach((el, index) => {
     el.open = data[index] ? true : false;
-    el.addEventListener("toggle", (_) => {
-      updateData();
-    });
+    el.addEventListener("toggle", (_) => updateData());
   });
 }
 
 function updateData() {
-  document.querySelectorAll("details").forEach((el, index) => {
+  b.qsa("details").forEach((el, index) => {
     data[index] = el.open;
   });
-  b.save(key, data);
+  b.savePage(key, data);
 }

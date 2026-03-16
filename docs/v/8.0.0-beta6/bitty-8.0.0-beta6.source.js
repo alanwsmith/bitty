@@ -854,7 +854,7 @@ class BittyJs extends HTMLElement {
     return result.content;
   }
 
-  _restore(key, fallback) {
+  _load(key, fallback) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       try {
@@ -870,9 +870,9 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  _restorePage(key, fallback) {
+  _loadPage(key, fallback) {
     const url = new URL(window.location.href);
-    return this.b.restore(`${url.pathname}-${key}`, fallback);
+    return this.b.load(`${url.pathname}-${key}`, fallback);
   }
 
   _save(key, data) {

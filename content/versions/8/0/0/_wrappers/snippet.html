@@ -58,6 +58,12 @@
           [! include [file.parent, "html.html"]|join("/") !]
           [! endfilter !]
 
+          [!- set details_html -!]
+          [!- include [file.parent, "details.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if details_html != "" -!]
+          [@- details_html -@]
+          [!- endif -!]
 
 
 
@@ -65,6 +71,15 @@
           [! filter block_highlight("js") !]
           [! include [file.parent, "javascript.on.js"]|join("/") !]
           [! endfilter !]
+
+          [!- set javascript_html -!]
+          [!- include [file.parent, "javascript.html"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if javascript_html != "" -!]
+          [@- javascript_html -@]
+          [!- endif -!]
+
+
 
           [!- set styles_css -!]
           [!- include [file.parent, "styles.css"]|join("/") ignore missing -!]

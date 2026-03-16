@@ -1,11 +1,11 @@
 export const b = { init: "addStyles" };
 
 export function toggleSnippet(_, sender, el) {
-  const newStatus = sender.getAttribute("aria-checked") === "true"
+  const newState = sender.getAttribute("aria-checked") === "true"
     ? false
     : true;
-  sender.setAttribute("aria-checked", newStatus);
-  el.innerHTML = newStatus ? "on" : "off";
+  sender.setAttribute("aria-checked", newState);
+  el.innerHTML = newState ? "on" : "off";
 }
 
 export function addStyles() {

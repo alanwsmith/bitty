@@ -16,7 +16,7 @@ export function addStyles() {
   --toggle-text: white;
 }
 
-[role="switch"] {  
+.toggle-snippet {  
   background-color: var(--toggle-off);
   border: 1px solid rgb(255 255 255 / 0);
   border-radius: 1rem;
@@ -28,24 +28,24 @@ export function addStyles() {
   width: 3.1rem;
 }
 
-[role="switch"]:hover {  
+.toggle-snippet:hover {  
   border: 1px solid var(--toggle-text);
   color: var(--toggle-text);
 }
 
-[role="switch"][aria-checked="true"]  {
+.toggle-snippet[aria-checked="true"]  {
   background-color: var(--toggle-on);
 }
 
-.switch-label:after,
-.switch-label:before {
+.toggle-snippet-label:after,
+.toggle-snippet-label:before {
   position: absolute;
   top: 50%;
   transform: translateY(-53%);
 }
 
-.switch-position:after,
-.switch-position:before {
+.toggle-snippet-position:after,
+.toggle-snippet-position:before {
   border-radius: 1rem;
   height: 1rem;
   width: 1rem;
@@ -55,22 +55,22 @@ export function addStyles() {
   transform: translateY(-50%);
 }
 
-[role="switch"][aria-checked="true"] .switch-label:before {
+.toggle-snippet[aria-checked="true"] .toggle-snippet-label:before {
   content: "on";
   left: 0.35rem;
 }
 
-[role="switch"][aria-checked="true"] .switch-position:before{
+.toggle-snippet[aria-checked="true"] .toggle-snippet-position:before{
   background: var(--toggle-text);
   right: 0.25rem;
 }
 
-[role="switch"][aria-checked="false"] .switch-label:after {
+.toggle-snippet[aria-checked="false"] .toggle-snippet-label:after {
   content: "off";
   right: 0.35rem;
 }
 
-[role="switch"][aria-checked="false"] .switch-position:after {
+.toggle-snippet[aria-checked="false"] .toggle-snippet-position:after {
   background: var(--toggle-text);
   left: 0.25rem;
 }`);

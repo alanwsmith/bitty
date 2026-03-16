@@ -1,7 +1,8 @@
 export const b = {
   init: "testControls",
   templates: {
-    controls: `<button data-s="runTests">Run Tests</button>`,
+    controls: `
+<button data-s="runTests">Run Tests</button>`,
   },
 };
 
@@ -12,6 +13,7 @@ let testsAreRunning = false;
 
 export function testControls(_, __, el) {
   el.replaceChildren(b.render("controls"));
+  const testTrigger = b.loadPage("autorun", { doIt: false });
 }
 
 // Reminder: set data-test-status="-1"

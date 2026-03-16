@@ -1,7 +1,7 @@
 export const b = {};
 
-export function signal_F15CA_v1(ev, sender, el) {
-  const key = "data_F15CA_v1";
+export function $_SIGNAL_(ev, sender, el) {
+  const key = "data_$_TEST_ID_";
   b.savePage(key, { alfa: "bravo" });
   const data = b.restorePage(key);
   if (data.alfa === "bravo") {

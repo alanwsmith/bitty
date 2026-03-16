@@ -1,7 +1,10 @@
 export const b = {};
 
 export function signal_AC404_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+  const key = "data_AC404_v1";
+  b.savePage(key, { alfa: "bravo" });
+  const data = b.restorePage(key);
+  if (data.alfa === "bravo") {
+    el.innerHTML = b.time();
+  }
 }

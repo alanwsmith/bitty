@@ -847,7 +847,7 @@ class BittyJs extends HTMLElement {
     return result.content;
   }
 
-  _restore(key, fallback = null) {
+  _restore(key, fallback) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       try {
@@ -857,28 +857,15 @@ class BittyJs extends HTMLElement {
         return undefined;
       }
     }
-    if (fallback !== null) {
+    if (fallback !== undefined) {
       return fallback;
     }
     return undefined;
   }
 
-  _restorePage(key, fallback = null) {
+  _restorePage(key, fallback) {
     const url = new URL(window.location.href);
-    key = `${url.pathname}-${key}`;
-    const storage = localStorage.getItem(key);
-    if (storage !== null) {
-      try {
-        return JSON.parse(storage);
-      } catch (error) {
-        console.error(error);
-        return undefined;
-      }
-    }
-    if (fallback !== null) {
-      return fallback;
-    }
-    return undefined;
+    return this.b.restore(`${url.pathname}-${key}`, fallback);
   }
 
   _save(key, data) {
@@ -888,9 +875,7 @@ class BittyJs extends HTMLElement {
 
   _savePage(key, data) {
     const url = new URL(window.location.href);
-    key = `${url.pathname}-${key}`;
-    localStorage.setItem(key, JSON.stringify(data));
-    return true;
+    return this.b.save(`${url.pathname}-${key}`, data);
   }
 
   _send(payload, signals) {

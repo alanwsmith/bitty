@@ -5320,11 +5320,8 @@ a race condition with undefined behaviour).</li>
 
             <div class="item-header">Description</div>
     <ul>
-<li>[] Loads JSON data from localStorage if it exists and returns it.</li>
-<li>[] The key is prepended with the <code>.pathname()</code> for the current page from the URL.</li>
-<li>[] Provides for an optional object fallback to use if there's nothing in storage with the given key.</li>
-<li>[] Returns undefined if the localStorage doesn't exist and there's no fallback.</li>
-<li>[] Returns undefined if the value in localStorage can't be parsed as JSON.</li>
+<li>[x] Appends the <code>.pagename()</code> from the current URL to the <code>key</code> then
+passes it to <code>b.restore(key, fallback)</code>.</li>
 </ul>
 
 
@@ -5338,7 +5335,7 @@ a race condition with undefined behaviour).</li>
             <details class="example-wrapper">
                   <summary>
                     <span class="example-status status"></span>
-                    TKTKTK: Test name 
+                    Restore page data.  
                   </summary>
 
                   <div>HTML</div>
@@ -5352,10 +5349,13 @@ a race condition with undefined behaviour).</li>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="storage type js">const</span> <span class="variable other readwrite js">b</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="variable other readwrite js">function</span> </span><span class="meta function-call js"><span class="variable function js">signal_AC404_v1</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">ev</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">sender</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.dataset.solo = true;
-<span class="line-marker"></span></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>todo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = b.time();
-<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">key</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>data_AC404_v1<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">savePage</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">key</span><span class="punctuation separator comma js">,</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span> <span class="meta object-literal key js">alfa</span><span class="punctuation separator key-value js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span> <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">data</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">restorePage</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">alfa</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">time</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
 
                   <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">
@@ -5490,10 +5490,11 @@ a race condition with undefined behaviour).</li>
 
             <div class="item-header">Description</div>
     <ul>
-<li>[] Saves data into localStorage.</li>
-<li>[] The key is prepended with the <code>.pathname()</code> for the current page from the URL.</li>
-<li>[] Data is saved after passing it through <code>JSON.stringify</code></li>
+<li>[x] Saves data into localStorage.</li>
+<li>[x] The key is prepended with the <code>.pathname()</code> for the current page from the URL.</li>
+<li>[x] The save is done by using the prepended key to <code>b.save(key, data)</code>.</li>
 </ul>
+
 
 
 
@@ -5507,7 +5508,7 @@ a race condition with undefined behaviour).</li>
             <details class="example-wrapper">
                   <summary>
                     <span class="example-status status"></span>
-                    TKTKTK: Test name 
+                    Save page data.  
                   </summary>
 
                   <div>HTML</div>
@@ -5521,10 +5522,13 @@ a race condition with undefined behaviour).</li>
 <pre class="code-block"><code><span class="line-marker"></span><span class="source js"><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="storage type js">const</span> <span class="variable other readwrite js">b</span> <span class="keyword operator assignment js">=</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span><span class="punctuation section block js">}</span></span></span><span class="punctuation terminator statement js">;</span>
 <span class="line-marker"></span>
 <span class="line-marker"></span><span class="meta export js"><span class="keyword control import-export js">export</span> <span class="variable other readwrite js">function</span> </span><span class="meta function-call js"><span class="variable function js">signal_F15CA_v1</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">ev</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">sender</span><span class="punctuation separator comma js">,</span> <span class="variable other readwrite js">el</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.dataset.solo = true;
-<span class="line-marker"></span></span>  <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>todo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
-<span class="line-marker"></span>  <span class="comment line double-slash js"><span class="punctuation definition comment js">//</span> el.innerHTML = b.time();
-<span class="line-marker"></span></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">key</span> <span class="keyword operator assignment js">=</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>data_F15CA_v1<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">savePage</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">key</span><span class="punctuation separator comma js">,</span> <span class="meta object-literal js"><span class="punctuation section block js">{</span> <span class="meta object-literal key js">alfa</span><span class="punctuation separator key-value js">:</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span> <span class="punctuation section block js">}</span></span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="storage type js">const</span> <span class="variable other readwrite js">data</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">restorePage</span><span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other readwrite js">key</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  <span class="meta conditional js"><span class="keyword control conditional js">if</span> <span class="meta group js"><span class="punctuation section group js">(</span><span class="variable other object js">data</span><span class="punctuation accessor js">.</span><span class="meta property object js">alfa</span> <span class="keyword operator comparison js">===</span> <span class="string quoted double js"><span class="punctuation definition string begin js">&quot;</span>bravo<span class="punctuation definition string end js">&quot;</span></span><span class="punctuation section group js">)</span></span> <span class="meta block js"><span class="punctuation section block js">{</span>
+<span class="line-marker"></span>    <span class="variable other object js">el</span><span class="punctuation accessor js">.</span><span class="meta property object js">innerHTML</span> <span class="keyword operator assignment js">=</span> <span class="variable other object js">b</span><span class="punctuation accessor js">.</span><span class="meta function-call method js"><span class="variable function js">time</span><span class="meta group js"><span class="punctuation section group js">(</span></span><span class="meta group js"><span class="punctuation section group js">)</span></span></span><span class="punctuation terminator statement js">;</span>
+<span class="line-marker"></span>  </span><span class="meta block js"><span class="punctuation section block js">}</span></span></span>
+<span class="line-marker"></span><span class="punctuation section block js">}</span></span></span></code></pre></div>                  </div>
 
                   <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">

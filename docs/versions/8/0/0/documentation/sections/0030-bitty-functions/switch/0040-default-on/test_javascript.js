@@ -3,7 +3,7 @@ export const b = { init: "init_6CE21_v1" };
 export function init_6CE21_v1(_, __, el) {
   const subs = {
     __STATE__: "true",
-    __S__: "signal_6CE21_v1",
+    __SEND__: "signal_6CE21_v1",
   };
   el.replaceWith(b.switch(subs));
 }

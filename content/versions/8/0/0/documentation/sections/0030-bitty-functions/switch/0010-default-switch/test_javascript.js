@@ -1,7 +1,7 @@
 export const b = { init: "init_09C63_v1" };
 
 export function init_09C63_v1(_, __, el) {
-  const subs = { __S__: "signal_09C63_v1" };
+  const subs = { __SEND__: "signal_09C63_v1" };
   el.replaceWith(b.switch(subs));
 }
 

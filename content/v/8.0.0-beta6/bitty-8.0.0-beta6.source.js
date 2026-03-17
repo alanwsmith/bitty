@@ -165,9 +165,9 @@ class BittyJs extends HTMLElement {
 
   addToggleSwitchTemplate(target) {
     target.b.templates.switch = `
-<label for="__ID__" class="__CLASS__" data-key="__KEY__" data-r="__R__">
+<label for="__ID__" class="__CLASS__" data-key="__KEY__" data-r="__RECEIVE__">
   __FRONT_LABEL__
-  <button id="__ID__" data-s="__S__" role="switch" aria-checked="__STATE__">
+  <button id="__ID__" data-s="__SEND__" role="switch" aria-checked="__STATE__">
     <span></span><span></span>
   </button>
   __BACK_LABEL__

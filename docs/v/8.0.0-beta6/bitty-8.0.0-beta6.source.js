@@ -37,6 +37,8 @@ class BittyJs extends HTMLElement {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
       if (incoming.b !== undefined) {
+        incoming.b._trueValues = ["true", "yes", "on"];
+        incoming.b._falseValues = ["false", "no", "off"];
         incoming.b._debouncers = {};
         incoming.b._marks = {};
         incoming.b.svgs = {};
@@ -1141,6 +1143,27 @@ class BittyJs extends HTMLElement {
     if (sender.bittyUpdated === true) {
       return;
     }
+    sender.ariaBool = (key) => {
+      const value = sender.getAttribute(`aria-${key}`);
+      if (value === undefined) {
+        return undefined;
+      }
+      const checkNum = parseInt(value, 10);
+      if (checkNum !== NaN && checkNum > 0) {
+        return true;
+      }
+      if (checkNum !== NaN && checkNum <= 0) {
+        return false;
+      }
+      const lcValue = value.toLowerCase();
+      if (this.b._trueValues.includes(lcValue)) {
+        return true;
+      }
+      if (this.b._falseValues.includes(lcValue)) {
+        return false;
+      }
+      return undefined;
+    };
     sender.copy = async function () {
       if (sender.value) {
         try {
@@ -1195,6 +1218,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
+
     sender.setProp = (key, value) => {
       sender.dataset[key] = value;
     };

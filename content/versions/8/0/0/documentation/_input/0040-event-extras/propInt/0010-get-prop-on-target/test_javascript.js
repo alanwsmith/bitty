@@ -1,7 +1,7 @@
 export const b = {};
 
 export function $_SIGNAL_(ev, __, el) {
-  if (ev.propAsInt("key") === 100) {
+  if (ev.propInt("key") === 100) {
     el.innerHTML = b.time();
   }
 }

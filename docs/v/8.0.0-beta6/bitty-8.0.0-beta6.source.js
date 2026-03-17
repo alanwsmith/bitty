@@ -1058,7 +1058,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    el.propAsFloat = (key) => {
+    el.propFloat = (key) => {
       if (
         el && el.dataset && el.dataset[key] !== undefined
       ) {
@@ -1070,7 +1070,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    el.propAsInt = (key) => {
+    el.propInt = (key) => {
       if (
         el && el.dataset && el.dataset[key] !== undefined
       ) {
@@ -1125,7 +1125,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    ev.propAsFloat = (key) => {
+    ev.propFloat = (key) => {
       if (
         ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
       ) {
@@ -1137,7 +1137,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    ev.propAsInt = (key) => {
+    ev.propInt = (key) => {
       if (
         ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
       ) {
@@ -1219,7 +1219,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    sender.propAsFloat = (key) => {
+    sender.propFloat = (key) => {
       if (
         sender && sender.dataset && sender.dataset[key] !== undefined
       ) {
@@ -1231,7 +1231,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    sender.propAsInt = (key) => {
+    sender.propInt = (key) => {
       if (
         sender && sender.dataset && sender.dataset[key] !== undefined
       ) {

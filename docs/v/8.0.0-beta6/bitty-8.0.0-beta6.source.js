@@ -1247,26 +1247,18 @@ class BittyJs extends HTMLElement {
     if (sender.bittyUpdated === true) {
       return;
     }
+    sender.aria = (key) => {
+      return sender.getAttribute(`aria-${key}`);
+    };
     sender.ariaBool = (key) => {
       const value = sender.getAttribute(`aria-${key}`);
-      if (value === undefined) {
-        return undefined;
-      }
-      const checkNum = parseInt(value, 10);
-      if (checkNum !== NaN && checkNum > 0) {
-        return true;
-      }
-      if (checkNum !== NaN && checkNum <= 0) {
-        return false;
-      }
-      const lcValue = value.toLowerCase();
-      if (this.b._trueValues.includes(lcValue)) {
-        return true;
-      }
-      if (this.b._falseValues.includes(lcValue)) {
-        return false;
-      }
-      return undefined;
+      return this.b._getBool(value);
+    };
+    sender.ariaFloat = (key) => {
+      return parseFloat(sender.getAttribute(`aria-${key}`));
+    };
+    sender.ariaInt = (key) => {
+      return parseInt(sender.getAttribute(`aria-${key}`), 10);
     };
     sender.copy = async function () {
       if (sender.value) {

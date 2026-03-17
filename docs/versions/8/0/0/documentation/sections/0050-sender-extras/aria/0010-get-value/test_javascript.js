@@ -1,7 +1,7 @@
 export const b = {};
 
-export function signal_46BA9_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+export function signal_46BA9_v1(_, sender, el) {
+  if (sender.aria("label") === "46BA9_v1") {
+    el.innerHTML = b.time();
+  }
 }

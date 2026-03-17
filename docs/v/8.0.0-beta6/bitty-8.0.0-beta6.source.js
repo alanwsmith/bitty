@@ -297,6 +297,9 @@ class BittyJs extends HTMLElement {
     if (value === undefined) {
       return undefined;
     }
+    if (value === null) {
+      return undefined;
+    }
     const checkNum = parseInt(value, 10);
     if (checkNum !== NaN && checkNum > 0) {
       return true;
@@ -1049,6 +1052,10 @@ class BittyJs extends HTMLElement {
     if (el.bittyUpdated === true) {
       return;
     }
+    el.ariaBool = (key) => {
+      const value = el.getAttribute(`aria-${key}`);
+      return this.b._getBool(value);
+    };
     el.copy = async function () {
       if (el.value) {
         try {
@@ -1102,6 +1109,9 @@ class BittyJs extends HTMLElement {
         return parseInt(propAncestor.dataset[key], 10);
       }
       return undefined;
+    };
+    el.setAria = (key, value) => {
+      el.setAttribute(`aria-${key}`, value);
     };
     el.setProp = (key, value) => {
       el.dataset[key] = value;

@@ -921,12 +921,16 @@ class BittyJs extends HTMLElement {
         ? subs[needle]
         : [subs[needle]];
       const replacement = updates.map((update) => {
-        if (typeof update === "string") {
-          return update;
-        } else {
+        if (update instanceof DocumentFragment) {
           const tmpWrapper = document.createElement("div");
           tmpWrapper.appendChild(update);
           return tmpWrapper.innerHTML;
+        } else if (update instanceof Element) {
+          const tmpWrapper = document.createElement("div");
+          tmpWrapper.appendChild(update);
+          return tmpWrapper.innerHTML;
+        } else {
+          return update;
         }
       }).join("");
       content = content.replaceAll(needle, replacement);

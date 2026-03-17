@@ -14,7 +14,7 @@ export async function init() {
 }
 
 function cardIsLand(card) {
-  return card.oracleCard.types[0] === "Land" ? "true" : "false";
+  return card.oracleCard.types[0] === "Land";
 }
 
 function cardName(card) {

@@ -7,7 +7,7 @@ export function grid(_, __, el) {
 }
 
 export function clicked(_, __, el) {
-  if (el.isSender === true) {
+  if (el.isSender() === true) {
     el.innerHTML = "HERE";
   } else {
     el.innerHTML = "-";

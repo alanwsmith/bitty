@@ -6,7 +6,6 @@ export function init_09C63_v1(_, __, el) {
 }
 
 export function signal_09C63_v1(_, sender, el) {
-  console.log(b.templates.switch);
   const newState = sender.getAttribute("aria-checked") === "true"
     ? "false"
     : "true";

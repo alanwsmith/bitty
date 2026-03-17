@@ -1,7 +1,10 @@
 export const b = { init: "init_$_TEST_ID_" };
 
 export function init_$_TEST_ID_(_, __, el) {
-  const subs = { __S__: "$_SIGNAL_" };
+  const subs = {
+    __FRONT_LABEL__: "test $_TEST_ID_",
+    __S__: "$_SIGNAL_",
+  };
   el.replaceWith(b.switch(subs));
 }
 

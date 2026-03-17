@@ -180,17 +180,25 @@ class BittyJs extends HTMLElement {
 
   __checkTargetSender(ev, sender, el) {
     if (sender && sender.nodeType !== undefined && sender.isSameNode(el)) {
-      el.isSender = true;
+      el.isSender = () => {
+        return true;
+      };
     } else {
-      el.isSender = false;
+      el.isSender = () => {
+        return false;
+      };
     }
     if (
       ev && ev.target && ev.target.nodeType !== undefined &&
       ev.target.isSameNode(el)
     ) {
-      el.isTarget = true;
+      el.isTarget = () => {
+        return true;
+      };
     } else {
-      el.isTarget = false;
+      el.isTarget = () => {
+        return false;
+      };
     }
   }
 
@@ -428,8 +436,12 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.b._updateElement(receiver);
-            receiver.isSender = false;
-            receiver.isTarget = false;
+            receiver.isSender = () => {
+              return false;
+            };
+            receiver.isTarget = () => {
+              return false;
+            };
             this[signal](ev.payload, null, receiver);
           }
         } else {
@@ -450,8 +462,12 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.b._updateElement(receiver);
-            receiver.isSender = false;
-            receiver.isTarget = false;
+            receiver.isSender = () => {
+              return false;
+            };
+            receiver.isTarget = () => {
+              return false;
+            };
             this[signal](ev, null, receiver);
           }
         } else {
@@ -638,8 +654,12 @@ class BittyJs extends HTMLElement {
           if (receivers.length > 0) {
             for (const receiver of receivers) {
               this.b._updateElement(receiver);
-              receiver.isSender = false;
-              receiver.isTarget = false;
+              receiver.isSender = () => {
+                return false;
+              };
+              receiver.isTarget = () => {
+                return false;
+              };
               this[signal]({}, null, receiver);
             }
           } else {

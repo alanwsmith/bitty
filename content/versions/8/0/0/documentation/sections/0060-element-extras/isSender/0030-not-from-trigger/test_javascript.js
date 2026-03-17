@@ -5,7 +5,7 @@ export function signal_514EC_v1(_, __, ___) {
 }
 
 export function signal_514EC_v2(_, __, el) {
-  if (el.isSender === false) {
+  if (el.isSender() === false) {
     el.innerHTML = b.time();
   }
 }

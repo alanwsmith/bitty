@@ -5,7 +5,7 @@ export function $_SIGNAL_(_, __, ___) {
 }
 
 export function $_SIGNAL2_(_, __, el) {
-  if (el.isTarget === false) {
+  if (el.isTarget() === false) {
     el.innerHTML = b.time();
   }
 }

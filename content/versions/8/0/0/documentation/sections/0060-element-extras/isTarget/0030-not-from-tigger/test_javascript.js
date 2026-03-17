@@ -5,7 +5,7 @@ export function signal_DFBBE_v1(_, __, ___) {
 }
 
 export function signal_DFBBE_v2(_, __, el) {
-  if (el.isTarget === false) {
+  if (el.isTarget() === false) {
     el.innerHTML = b.time();
   }
 }

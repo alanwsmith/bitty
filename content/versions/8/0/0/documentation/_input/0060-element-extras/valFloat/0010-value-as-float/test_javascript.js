@@ -1,7 +1,7 @@
 export const b = {};
 
 export function $_SIGNAL_(_, __, el) {
-  if (el.valFloat === 1.1) {
+  if (el.valFloat() === 1.1) {
     b.trigger("$_SIGNAL2_");
   }
 }

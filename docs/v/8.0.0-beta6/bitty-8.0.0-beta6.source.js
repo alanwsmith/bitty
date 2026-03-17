@@ -1290,6 +1290,18 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
+    sender.propBool = (key) => {
+      if (
+        sender && sender.dataset && sender.dataset[key] !== undefined
+      ) {
+        return this.b._getBool(sender.dataset[key]);
+      }
+      const propAncestor = sender.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return this.b._getBool(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
     sender.propFloat = (key) => {
       if (
         sender && sender.dataset && sender.dataset[key] !== undefined

@@ -1,8 +1,38 @@
-export const b = {};
+export const b = { init: "initDocTests" };
+
+let config;
+
+export function initDocTests(_, __, el) {
+  config = b.loadPage("config", {});
+  el.replaceChildren(b.switch({
+    __APPEND__: "Autorun tests",
+    __SEND__: "switchAutorun",
+    __STATE__: `${config.autorun}`,
+  }));
+  el.appendChild(b.switch({
+    __APPEND__: "Run test with errors",
+    __SEND__: "switchRunErrors",
+    __STATE__: `${config.runErrors}`,
+  }));
+  if (config.autorun === true) {
+    b.trigger("runTests");
+  }
+}
+
+export function switchRunErrors(_, sender, ___) {
+  sender.setAria("checked", !sender.ariaBool("checked"));
+  config.runErrors = sender.ariaBool("checked");
+  b.savePage("config", config);
+}
+
+export function switchAutorun(_, sender, ___) {
+  sender.setAria("checked", !sender.ariaBool("checked"));
+  config.autorun = sender.ariaBool("checked");
+  b.savePage("config", config);
+}
 
 const levels = ["pass", "todo", "fail"];
 
-let includeErrorTests = true;
 let testsAreRunning = false;
 
 export function testControls(_, __, el) {
@@ -18,15 +48,15 @@ export async function runTests(_, __, el) {
     return;
   }
   testsAreRunning = true;
-  //el.innerHTML = "started test run";
+  el.innerHTML = "... Running ...";
   await b.sleep(800);
   b.trigger("runTest");
-  if (includeErrorTests === true) {
+  if (config.runErrors === true) {
     b.trigger("runTestWithErrors");
   }
   await b.sleep(2000);
   testItems();
-  // el.innerHTML = "testing complete";
+  el.innerHTML = "Run Tests";
   testsAreRunning = false;
 }
 

@@ -166,11 +166,11 @@ class BittyJs extends HTMLElement {
   addToggleSwitchTemplate(target) {
     target.b.templates.switch = `
 <label for="__ID__" class="__CLASS__" data-key="__KEY__" data-r="__RECEIVE__">
-  __FRONT_LABEL__
+  __PREPEND__
   <button id="__ID__" data-s="__SEND__" role="switch" aria-checked="__STATE__">
     <span></span><span></span>
   </button>
-  __BACK_LABEL__
+  __APPEND__
 </label>`;
   }
 
@@ -915,11 +915,11 @@ class BittyJs extends HTMLElement {
   }
 
   _switch(subs = {}) {
-    subs.__BACK_LABEL__ = subs.__BACK_LABEL__ ? subs.__BACK_LABEL__ : "";
+    subs.__APPEND__ = subs.__APPEND__ ? subs.__APPEND__ : "";
     subs.__CLASS__ = subs.__CLASS__ ? subs.__CLASS__ : "bitty-switch";
-    subs.__FRONT_LABEL__ = subs.__FRONT_LABEL__ ? subs.__FRONT_LABEL__ : "";
     subs.__ID__ = subs.__ID__ ? subs.__ID__ : `switch_${this.b.uuid(false)}`;
     subs.__KEY__ = subs.__KEY__ ? subs.__KEY__ : "";
+    subs.__PREPEND__ = subs.__PREPEND__ ? subs.__PREPEND__ : "";
     subs.__R__ = subs.__R__ ? subs.__R__ : "";
     subs.__S__ = subs.__S__ ? subs.__S__ : "";
     subs.__STATE__ = subs.__STATE__ ? subs.__STATE__ : "false";

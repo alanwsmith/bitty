@@ -1,12 +1,18 @@
 [! filter markdown|safe !]
 - [x] Input can be the key for a template in `b.templates` in which case that template gets used. 
-- [x] Input can be an HTML string.
+- [x] Input can be the key for a template in `b.svgs` in which case an SVG is generated. 
+- [x] Input can be a HTML string.
 - [x] Input can be an array of HTML strings which get joined via `.join("")`.
 - [x] Input can be an HTML element.
 - [x] Input can be an array of HTML element.
 - [x] Input can be a document fragment.
 - [x] Input can be an array of document fragments.
 - [x] Input can be an array of different types (i.e. strings, elements, and document fragments).
+- [x] If the input is a string, it's first checked to see if it matches a key in `b.templates`. If not, bitty looks for
+a key in `b.svgs`. If one isn't found there either then the string is processed as a raw input string.
+(Inputs processed as strings are always treated as HTML. SVGs can only be rendered by including them in `b.svgs`
+which can be loaded via `script type="image/svg"` tags on the page, from `b.getTemplates()`, or by adding
+one to `b.svgs` by hand.)
 - [x] An object with find/replace values can be sent as an optional section argument. 
 - [x] The keys in the object are the values to find. 
 - [x] The values in the object are what replaces the found keys. 
@@ -19,8 +25,7 @@
 - [x] Replacement values can be an array of Document Fragments.
 - [x] Replacement values can be an array of different types (i.e. strings, elements, and document fragments).
 - [x] Elements and document fragments are turned into strings for find/replace (i.e. if you hold them in a variable and update the variable the replaced values does not change.)
-- [x] The output is always returns a document fragment. 
+- [x] The output is a document fragment if the input is an HTML template, strings, html elements, or document fragments. 
+- [x] The output is an SVG element if the input is an template from `b.svgs`.
 [! endfilter !]
-
-
 

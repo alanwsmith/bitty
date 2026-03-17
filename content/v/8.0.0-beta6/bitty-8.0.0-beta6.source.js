@@ -1218,7 +1218,9 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-
+    sender.setAria = (key, value) => {
+      sender.setAttribute(`aria-${key}`, value);
+    };
     sender.setProp = (key, value) => {
       sender.dataset[key] = value;
     };

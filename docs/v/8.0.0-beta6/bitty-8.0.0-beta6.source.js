@@ -921,7 +921,9 @@ class BittyJs extends HTMLElement {
         ? subs[needle]
         : [subs[needle]];
       const replacement = updates.map((update) => {
-        if (update instanceof DocumentFragment) {
+        if (update === null) {
+          return "null";
+        } else if (update instanceof DocumentFragment) {
           const tmpWrapper = document.createElement("div");
           tmpWrapper.appendChild(update);
           return tmpWrapper.innerHTML;

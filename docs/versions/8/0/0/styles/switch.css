@@ -1,0 +1,64 @@
+:root {
+  --bitty-switch-off: #778;
+  --bitty-switch-on: #0a0;
+  --bitty-switch-text: white;
+}
+
+.bitty-switch button {  
+  background-color: var(--bitty-switch-off);
+  border: 1px solid rgb(255 255 255 / 0);
+  border-radius: 1rem;
+  color: var(--bitty-switch-text);
+  height: 1.2rem;
+  padding: 0;
+  position: relative;
+  transform: translateY(0.25rem);
+  width: 3.1rem;
+}
+
+.bitty-switch button:hover {  
+  border: 1px solid var(--bitty-switch-text);
+  color: var(--bitty-switch-text);
+}
+
+.bitty-switch button[aria-checked="true"]  {
+  background-color: var(--bitty-switch-on);
+}
+
+.bitty-switch button :nth-child(1):after,
+.bitty-switch button :nth-child(1):before {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-53%);
+}
+
+.bitty-switch button :nth-child(2):after,
+.bitty-switch button :nth-child(2):before {
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bitty-switch button[aria-checked="true"] :nth-child(1):before {
+  content: "on";
+  left: 0.35rem;
+}
+
+.bitty-switch button[aria-checked="true"] :nth-child(2):before {
+  background: var(--bitty-switch-text);
+  right: 0.25rem;
+}
+
+.bitty-switch button[aria-checked="false"] :nth-child(1):after {
+  content: "off";
+  right: 0.35rem;
+}
+
+.bitty-switch button[aria-checked="false"] :nth-child(2):after {
+  background: var(--bitty-switch-text);
+  left: 0.25rem;
+}

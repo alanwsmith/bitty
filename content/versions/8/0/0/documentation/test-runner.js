@@ -1,10 +1,4 @@
-export const b = {
-  init: "testControls",
-  templates: {
-    controls: `
-<button data-s="runTests">Run Tests</button>`,
-  },
-};
+export const b = {};
 
 const levels = ["pass", "todo", "fail"];
 

@@ -43,6 +43,7 @@ class BittyJs extends HTMLElement {
         if (incoming.b.templates === undefined) {
           incoming.b.templates = {};
         }
+        this.addToggleSwitchTemplate(incoming);
         incoming.b.data = {};
         this.loadPageAssets(incoming);
         this.addBittyClasses(incoming);
@@ -158,6 +159,17 @@ class BittyJs extends HTMLElement {
     sheet.replaceSync(css);
     document.adoptedStyleSheets.push(sheet);
     return sheet;
+  }
+
+  addToggleSwitchTemplate(target) {
+    target.b.templates.switch = `
+<label for="__ID__" class="__CLASS__" data-key="__KEY__" data-r="__R__">
+  __FRONT_LABEL__
+  <button id="__ID__" data-s="__S__" role="switch" aria-checked="__STATE__">
+    <span></span><span></span>
+  </button>
+  __BACK_LABEL__
+</label>`;
   }
 
   _ce(tag, options = {}) {
@@ -873,6 +885,18 @@ class BittyJs extends HTMLElement {
   _loadPage(key, fallback) {
     const url = new URL(window.location.href);
     return this.b.load(`${url.pathname}-${key}`, fallback);
+  }
+
+  _switch(subs = {}) {
+    subs.__BACK_LABEL__ = subs.__BACK_LABEL__ ? subs.__BACK_LABEL__ : "";
+    subs.__CLASS__ = subs.__CLASS__ ? subs.__CLASS__ : "bitty-switch";
+    subs.__FRONT_LABEL__ = subs.__FRONT_LABEL__ ? subs.__FRONT_LABEL__ : "";
+    subs.__ID__ = subs.__ID__ ? subs.__ID__ : `switch_${this.b.uuid(false)}`;
+    subs.__KEY__ = subs.__KEY__ ? subs.__KEY__ : "";
+    subs.__R__ = subs.__R__ ? subs.__R__ : "";
+    subs.__S__ = subs.__S__ ? subs.__S__ : "";
+    subs.__STATE__ = subs.__STATE__ ? subs.__STATE__ : "false";
+    return this.b.render("switch", subs);
   }
 
   _save(key, data) {

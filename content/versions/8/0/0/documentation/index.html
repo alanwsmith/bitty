@@ -86,7 +86,6 @@
                   <div>JavaScript</div>
                   <div class="default-flow">
                     <div class="faded-match-background-color default-border-radius large-bottom-margin">
-
                       [#
                       <div class="xsmall-font-size default-inline-padding default-top-padding">
                         [@- ["", testFolder.path_part_strings[8], "test_javascript.js"]|join("/") -@]
@@ -114,6 +113,21 @@
                     </div>
                     [! endif !]
                   </div>
+
+                  [!- set styles_css -!]
+                  [@- get_content(testFolder.path_part_strings[8],  "styles.on.css") -@]
+                  [!- endset -!]
+                  [!- if styles_css != "" !]
+                  <div>CSS</div>
+                  <div class="default-flow">
+                    <div class="faded-match-background-color default-border-radius large-bottom-margin">
+                      [!- filter block_highlight("css") -!]
+                      [@- styles_css -@]
+                      [!- endfilter -!]
+                    </div>
+                  </div>
+                  [!- endif -!]
+
 
                   <div class="test-header">Result</div>
                   <div class="result-wrapper default-flow">
@@ -199,7 +213,11 @@
 </details>
 
 
-<div data-r="testControls"></div>
+<button data-s="runTests">Run Tests</button>
+
+
+
+
 
 
 <[@ vars.bitty_tag @] data-connect="/[@ vars.version_dir @]/documentation/test-runner.js"></[@ vars.bitty_tag @]>

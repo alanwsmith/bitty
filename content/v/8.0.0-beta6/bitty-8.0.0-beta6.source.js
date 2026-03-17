@@ -293,6 +293,27 @@ class BittyJs extends HTMLElement {
     }
   }
 
+  __getBool(value) {
+    if (value === undefined) {
+      return undefined;
+    }
+    const checkNum = parseInt(value, 10);
+    if (checkNum !== NaN && checkNum > 0) {
+      return true;
+    }
+    if (checkNum !== NaN && checkNum <= 0) {
+      return false;
+    }
+    const lcValue = value.toLowerCase();
+    if (this.b._trueValues.includes(lcValue)) {
+      return true;
+    }
+    if (this.b._falseValues.includes(lcValue)) {
+      return false;
+    }
+    return undefined;
+  }
+
   loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
@@ -1088,6 +1109,9 @@ class BittyJs extends HTMLElement {
     el.val = () => {
       return el.value;
     };
+    el.valBool = () => {
+      return this.b._getBool(el.value);
+    };
     el.valFloat = () => {
       return parseFloat(el.value);
     };
@@ -1162,6 +1186,9 @@ class BittyJs extends HTMLElement {
       ev.val = () => {
         return undefined;
       };
+      ev.valBool = () => {
+        return undefined;
+      };
       ev.valFloat = () => {
         return undefined;
       };
@@ -1171,6 +1198,9 @@ class BittyJs extends HTMLElement {
     } else {
       ev.val = () => {
         return ev.target.value;
+      };
+      ev.valBool = () => {
+        return this.b._getBool(ev.target.value);
       };
       ev.valFloat = () => {
         return parseFloat(ev.target.value);
@@ -1271,6 +1301,9 @@ class BittyJs extends HTMLElement {
       sender.val = () => {
         return undefined;
       };
+      sender.valBool = () => {
+        return undefined;
+      };
       sender.valFloat = () => {
         return undefined;
       };
@@ -1280,6 +1313,9 @@ class BittyJs extends HTMLElement {
     } else {
       sender.val = () => {
         return sender.value;
+      };
+      sender.valBool = () => {
+        return this.b._getBool(sender.value);
       };
       sender.valFloat = () => {
         return parseFloat(sender.value);

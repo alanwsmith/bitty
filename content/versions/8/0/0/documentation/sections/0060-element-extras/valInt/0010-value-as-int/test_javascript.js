@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_2FC46_v1(_, __, el) {
-  if (el.valAsInt === 100) {
+  if (el.valInt === 100) {
     b.trigger("signal_2FC46_v2");
   }
 }

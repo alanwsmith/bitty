@@ -1,7 +1,7 @@
 export const b = {};
 
 export function $_SIGNAL_(_, sender, el) {
-  if (sender.valAsFloat === 1.1) {
+  if (sender.valFloat === 1.1) {
     el.innerHTML = b.time();
   }
 }

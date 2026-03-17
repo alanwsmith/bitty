@@ -1086,8 +1086,8 @@ class BittyJs extends HTMLElement {
       el.dataset[key] = value;
     };
     el.val = el.value;
-    el.valAsFloat = parseFloat(el.value);
-    el.valAsInt = parseInt(el.value, 10);
+    el.valFloat = parseFloat(el.value);
+    el.valInt = parseInt(el.value, 10);
     el.bittyUpdated = true;
   }
 
@@ -1154,12 +1154,12 @@ class BittyJs extends HTMLElement {
     };
     if (ev.target === undefined) {
       ev.val = undefined;
-      ev.valAsFloat = undefined;
-      ev.valAsInt = undefined;
+      ev.valFloat = undefined;
+      ev.valInt = undefined;
     } else {
       ev.val = ev.target.value;
-      ev.valAsFloat = parseFloat(ev.target.value);
-      ev.valAsInt = parseInt(ev.target.value, 10);
+      ev.valFloat = parseFloat(ev.target.value);
+      ev.valInt = parseInt(ev.target.value, 10);
     }
     ev.bittyUpdated = true;
   }
@@ -1251,12 +1251,12 @@ class BittyJs extends HTMLElement {
     };
     if (sender === undefined) {
       sender.val = undefined;
-      sender.valAsFloat = undefined;
-      sender.valAsInt = undefined;
+      sender.valFloat = undefined;
+      sender.valInt = undefined;
     } else {
       sender.val = sender.value;
-      sender.valAsFloat = parseFloat(sender.value);
-      sender.valAsInt = parseInt(sender.value, 10);
+      sender.valFloat = parseFloat(sender.value);
+      sender.valInt = parseInt(sender.value, 10);
     }
   }
 

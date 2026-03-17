@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_2EE27_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+  if (ev.ariaFloat("label") === 1.1) {
+    el.innerHTML = b.time();
+  }
 }

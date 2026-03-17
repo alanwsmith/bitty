@@ -1156,6 +1156,19 @@ class BittyJs extends HTMLElement {
     if (ev.bittyUpdated === true) {
       return;
     }
+    ev.aria = (key) => {
+      return ev.target.getAttribute(`aria-${key}`);
+    };
+    ev.ariaBool = (key) => {
+      const value = ev.target.getAttribute(`aria-${key}`);
+      return this.b._getBool(value);
+    };
+    ev.ariaFloat = (key) => {
+      return parseFloat(ev.target.getAttribute(`aria-${key}`));
+    };
+    ev.ariaInt = (key) => {
+      return parseInt(ev.target.getAttribute(`aria-${key}`), 10);
+    };
     ev.copy = async function () {
       if (ev.target.value) {
         try {

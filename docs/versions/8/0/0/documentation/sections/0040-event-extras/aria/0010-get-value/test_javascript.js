@@ -1,7 +1,7 @@
 export const b = {};
 
-export function signal_98ACA_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+export function signal_98ACA_v1(ev, __, el) {
+  if (ev.aria("label") === "98ACA_v1") {
+    el.innerHTML = b.time();
+  }
 }

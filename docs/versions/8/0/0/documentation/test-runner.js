@@ -3,7 +3,10 @@ export const b = { init: "initDocTests" };
 let config;
 
 export function initDocTests(_, __, el) {
-  config = b.loadPage("config", {});
+  config = b.loadPage("config", {
+    autorun: false,
+    runErrors: false,
+  });
   el.replaceChildren(b.switch({
     __APPEND__: "Autorun tests",
     __SEND__: "switchAutorun",

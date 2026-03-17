@@ -6,9 +6,6 @@ export function init_09C63_v1(_, __, el) {
 }
 
 export function signal_09C63_v1(_, sender, el) {
-  const newState = sender.getAttribute("aria-checked") === "true"
-    ? "false"
-    : "true";
-  sender.setAttribute("aria-checked", newState);
+  sender.setAria("checked", !sender.ariaBool("checked"));
   el.innerHTML = b.time();
 }

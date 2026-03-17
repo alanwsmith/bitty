@@ -9,9 +9,6 @@ export function init_$_TEST_ID_(_, __, el) {
 }
 
 export function $_SIGNAL_(_, sender, el) {
-  const newState = sender.getAttribute("aria-checked") === "true"
-    ? "false"
-    : "true";
-  sender.setAttribute("aria-checked", newState);
+  sender.setAria("checked", !sender.ariaBool("checked"));
   el.innerHTML = b.time();
 }

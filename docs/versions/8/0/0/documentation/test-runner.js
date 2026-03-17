@@ -5,7 +5,7 @@ let config;
 export function initDocTests(_, __, el) {
   config = b.loadPage("config", {
     autorun: false,
-    runErrors: false,
+    runErrors: true,
   });
   el.replaceChildren(b.switch({
     __APPEND__: "Autorun tests",
@@ -13,7 +13,7 @@ export function initDocTests(_, __, el) {
     __STATE__: `${config.autorun}`,
   }));
   el.appendChild(b.switch({
-    __APPEND__: "Run test with errors",
+    __APPEND__: "Run intentional console error tests",
     __SEND__: "switchRunErrors",
     __STATE__: `${config.runErrors}`,
   }));

@@ -1199,6 +1199,18 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
+    ev.propBool = (key) => {
+      if (
+        ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
+      ) {
+        return this.b._getBool(ev.target.dataset[key]);
+      }
+      const propAncestor = ev.target.closest(`[data-${key}]`);
+      if (propAncestor !== null) {
+        return this.b._getBool(propAncestor.dataset[key]);
+      }
+      return undefined;
+    };
     ev.propFloat = (key) => {
       if (
         ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
@@ -1222,6 +1234,9 @@ class BittyJs extends HTMLElement {
         return parseInt(propAncestor.dataset[key], 10);
       }
       return undefined;
+    };
+    ev.setAria = (key, value) => {
+      ev.target.setAttribute(`aria-${key}`, value);
     };
     ev.setProp = (key, value) => {
       ev.target.dataset[key] = value;

@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_60839_v1(_, sender, el) {
-  if (sender.valFloat === 1.1) {
+  if (sender.valFloat() === 1.1) {
     el.innerHTML = b.time();
   }
 }

@@ -1159,13 +1159,25 @@ class BittyJs extends HTMLElement {
       ev.target.dataset[key] = value;
     };
     if (ev.target === undefined) {
-      ev.val = undefined;
-      ev.valFloat = undefined;
-      ev.valInt = undefined;
+      ev.val = () => {
+        return undefined;
+      };
+      ev.valFloat = () => {
+        return undefined;
+      };
+      ev.valInt = () => {
+        return undefined;
+      };
     } else {
-      ev.val = ev.target.value;
-      ev.valFloat = parseFloat(ev.target.value);
-      ev.valInt = parseInt(ev.target.value, 10);
+      ev.val = () => {
+        return ev.target.value;
+      };
+      ev.valFloat = () => {
+        return parseFloat(ev.target.value);
+      };
+      ev.valInt = () => {
+        return parseInt(ev.target.value, 10);
+      };
     }
     ev.bittyUpdated = true;
   }
@@ -1256,13 +1268,25 @@ class BittyJs extends HTMLElement {
       sender.dataset[key] = value;
     };
     if (sender === undefined) {
-      sender.val = undefined;
-      sender.valFloat = undefined;
-      sender.valInt = undefined;
+      sender.val = () => {
+        return undefined;
+      };
+      sender.valFloat = () => {
+        return undefined;
+      };
+      sender.valInt = () => {
+        return undefined;
+      };
     } else {
-      sender.val = sender.value;
-      sender.valFloat = parseFloat(sender.value);
-      sender.valInt = parseInt(sender.value, 10);
+      sender.val = () => {
+        return sender.value;
+      };
+      sender.valFloat = () => {
+        return parseFloat(sender.value);
+      };
+      sender.valInt = () => {
+        return parseInt(sender.value, 10);
+      };
     }
   }
 

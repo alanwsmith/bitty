@@ -457,7 +457,7 @@ class BittyJs extends HTMLElement {
     this.b._updateEvent(ev);
     const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
-      this.b._updateSender(sender);
+      this.b._updateElement(sender);
       const signals = this.b._splitSignalString(sender.dataset.s);
       const listeners = this.b._splitSignalString(
         sender.dataset.listen,
@@ -516,7 +516,7 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.b._updateElement(receiver);
-            this.b._updateSender(ev.target);
+            this.b._updateElement(ev.target);
             this[signal](ev, ev.target, receiver);
           }
         } else {
@@ -531,7 +531,7 @@ class BittyJs extends HTMLElement {
     this.b._updateEvent(ev);
     const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
-      this.b._updateSender(sender);
+      this.b._updateElement(sender);
       const signals = this.b._splitSignalString(sender.dataset.s);
       const listeners = this.b._splitSignalString(
         sender.dataset.listen,
@@ -643,7 +643,7 @@ class BittyJs extends HTMLElement {
     // this.b._updateEvent(ev);
     // const senders = this.b._findSenders(ev.target);
     // for (const sender of senders) {
-    //   this.b._updateSender(sender);
+    //   this.b._updateElement(sender);
     //   const signals = this.b._splitSignalString(sender.dataset.s);
     //   const listeners = this.b._splitSignalString(
     //     sender.dataset.listen,
@@ -694,7 +694,7 @@ class BittyJs extends HTMLElement {
     this.b._updateEvent(ev);
     const senders = this.b._findSenders(ev.target);
     for (const sender of senders) {
-      this.b._updateSender(sender);
+      this.b._updateElement(sender);
       const signals = this.b._splitSignalString(sender.dataset.s);
       const listeners = this.b._splitSignalString(
         sender.dataset.listen,
@@ -1091,7 +1091,7 @@ class BittyJs extends HTMLElement {
     };
     el.propBool = (key) => {
       if (
-        el && el.dataset && el.dataset[key] !== undefined
+        el.dataset && el.dataset[key] !== undefined
       ) {
         return this.b._getBool(el.dataset[key]);
       }
@@ -1103,7 +1103,7 @@ class BittyJs extends HTMLElement {
     };
     el.propFloat = (key) => {
       if (
-        el && el.dataset && el.dataset[key] !== undefined
+        el.dataset && el.dataset[key] !== undefined
       ) {
         return parseFloat(el.dataset[key]);
       }
@@ -1115,7 +1115,7 @@ class BittyJs extends HTMLElement {
     };
     el.propInt = (key) => {
       if (
-        el && el.dataset && el.dataset[key] !== undefined
+        el.dataset && el.dataset[key] !== undefined
       ) {
         return parseInt(el.dataset[key], 10);
       }
@@ -1265,123 +1265,123 @@ class BittyJs extends HTMLElement {
     ev.bittyUpdated = true;
   }
 
-  __updateSender(sender) {
-    if (sender.bittyUpdated === true) {
-      return;
-    }
-    sender.aria = (key) => {
-      return sender.getAttribute(`aria-${key}`);
-    };
-    sender.ariaBool = (key) => {
-      const value = sender.getAttribute(`aria-${key}`);
-      return this.b._getBool(value);
-    };
-    sender.ariaFloat = (key) => {
-      return parseFloat(sender.getAttribute(`aria-${key}`));
-    };
-    sender.ariaInt = (key) => {
-      return parseInt(sender.getAttribute(`aria-${key}`), 10);
-    };
-    sender.copy = async function () {
-      if (sender.value) {
-        try {
-          await navigator.clipboard.writeText(sender.value);
-        } catch (error) {
-          console.error(`Could not copy .value from sender.`);
-          return false;
-        }
-      } else {
-        try {
-          await navigator.clipboard.writeText(sender.innerHTML);
-        } catch (error) {
-          console.error(`Could not copy .innerHTML from sender.`);
-          return false;
-        }
-      }
-      return true;
-    };
-    sender.prop = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return sender.dataset[key];
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return propAncestor.dataset[key];
-      }
-      return undefined;
-    };
-    sender.propBool = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return this.b._getBool(sender.dataset[key]);
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return this.b._getBool(propAncestor.dataset[key]);
-      }
-      return undefined;
-    };
-    sender.propFloat = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return parseFloat(sender.dataset[key]);
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseFloat(propAncestor.dataset[key]);
-      }
-      return undefined;
-    };
-    sender.propInt = (key) => {
-      if (
-        sender && sender.dataset && sender.dataset[key] !== undefined
-      ) {
-        return parseInt(sender.dataset[key], 10);
-      }
-      const propAncestor = sender.closest(`[data-${key}]`);
-      if (propAncestor !== null) {
-        return parseInt(propAncestor.dataset[key], 10);
-      }
-      return undefined;
-    };
-    sender.setAria = (key, value) => {
-      sender.setAttribute(`aria-${key}`, value);
-    };
-    sender.setProp = (key, value) => {
-      sender.dataset[key] = value;
-    };
-    if (sender === undefined) {
-      sender.val = () => {
-        return undefined;
-      };
-      sender.valBool = () => {
-        return undefined;
-      };
-      sender.valFloat = () => {
-        return undefined;
-      };
-      sender.valInt = () => {
-        return undefined;
-      };
-    } else {
-      sender.val = () => {
-        return sender.value;
-      };
-      sender.valBool = () => {
-        return this.b._getBool(sender.value);
-      };
-      sender.valFloat = () => {
-        return parseFloat(sender.value);
-      };
-      sender.valInt = () => {
-        return parseInt(sender.value, 10);
-      };
-    }
-  }
+  // __updateElement(sender) {
+  //   if (sender.bittyUpdated === true) {
+  //     return;
+  //   }
+  //   sender.aria = (key) => {
+  //     return sender.getAttribute(`aria-${key}`);
+  //   };
+  //   sender.ariaBool = (key) => {
+  //     const value = sender.getAttribute(`aria-${key}`);
+  //     return this.b._getBool(value);
+  //   };
+  //   sender.ariaFloat = (key) => {
+  //     return parseFloat(sender.getAttribute(`aria-${key}`));
+  //   };
+  //   sender.ariaInt = (key) => {
+  //     return parseInt(sender.getAttribute(`aria-${key}`), 10);
+  //   };
+  //   sender.copy = async function () {
+  //     if (sender.value) {
+  //       try {
+  //         await navigator.clipboard.writeText(sender.value);
+  //       } catch (error) {
+  //         console.error(`Could not copy .value from sender.`);
+  //         return false;
+  //       }
+  //     } else {
+  //       try {
+  //         await navigator.clipboard.writeText(sender.innerHTML);
+  //       } catch (error) {
+  //         console.error(`Could not copy .innerHTML from sender.`);
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   };
+  //   sender.prop = (key) => {
+  //     if (
+  //       sender && sender.dataset && sender.dataset[key] !== undefined
+  //     ) {
+  //       return sender.dataset[key];
+  //     }
+  //     const propAncestor = sender.closest(`[data-${key}]`);
+  //     if (propAncestor !== null) {
+  //       return propAncestor.dataset[key];
+  //     }
+  //     return undefined;
+  //   };
+  //   sender.propBool = (key) => {
+  //     if (
+  //       sender && sender.dataset && sender.dataset[key] !== undefined
+  //     ) {
+  //       return this.b._getBool(sender.dataset[key]);
+  //     }
+  //     const propAncestor = sender.closest(`[data-${key}]`);
+  //     if (propAncestor !== null) {
+  //       return this.b._getBool(propAncestor.dataset[key]);
+  //     }
+  //     return undefined;
+  //   };
+  //   sender.propFloat = (key) => {
+  //     if (
+  //       sender && sender.dataset && sender.dataset[key] !== undefined
+  //     ) {
+  //       return parseFloat(sender.dataset[key]);
+  //     }
+  //     const propAncestor = sender.closest(`[data-${key}]`);
+  //     if (propAncestor !== null) {
+  //       return parseFloat(propAncestor.dataset[key]);
+  //     }
+  //     return undefined;
+  //   };
+  //   sender.propInt = (key) => {
+  //     if (
+  //       sender && sender.dataset && sender.dataset[key] !== undefined
+  //     ) {
+  //       return parseInt(sender.dataset[key], 10);
+  //     }
+  //     const propAncestor = sender.closest(`[data-${key}]`);
+  //     if (propAncestor !== null) {
+  //       return parseInt(propAncestor.dataset[key], 10);
+  //     }
+  //     return undefined;
+  //   };
+  //   sender.setAria = (key, value) => {
+  //     sender.setAttribute(`aria-${key}`, value);
+  //   };
+  //   sender.setProp = (key, value) => {
+  //     sender.dataset[key] = value;
+  //   };
+  //   if (sender === undefined) {
+  //     sender.val = () => {
+  //       return undefined;
+  //     };
+  //     sender.valBool = () => {
+  //       return undefined;
+  //     };
+  //     sender.valFloat = () => {
+  //       return undefined;
+  //     };
+  //     sender.valInt = () => {
+  //       return undefined;
+  //     };
+  //   } else {
+  //     sender.val = () => {
+  //       return sender.value;
+  //     };
+  //     sender.valBool = () => {
+  //       return this.b._getBool(sender.value);
+  //     };
+  //     sender.valFloat = () => {
+  //       return parseFloat(sender.value);
+  //     };
+  //     sender.valInt = () => {
+  //       return parseInt(sender.value, 10);
+  //     };
+  //   }
+  // }
 
   _uuid(dashes = true) {
     if (dashes === false) {

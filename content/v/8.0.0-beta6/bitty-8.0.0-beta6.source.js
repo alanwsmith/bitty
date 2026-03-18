@@ -178,30 +178,6 @@ class BittyJs extends HTMLElement {
     return document.createElement(tag, options);
   }
 
-  __checkTargetSender(ev, sender, el) {
-    if (sender && sender.nodeType !== undefined && sender.isSameNode(el)) {
-      el.isSender = () => {
-        return true;
-      };
-    } else {
-      el.isSender = () => {
-        return false;
-      };
-    }
-    if (
-      ev && ev.target && ev.target.nodeType !== undefined &&
-      ev.target.isSameNode(el)
-    ) {
-      el.isTarget = () => {
-        return true;
-      };
-    } else {
-      el.isTarget = () => {
-        return false;
-      };
-    }
-  }
-
   async _copy(selector) {
     const el = document.querySelector(selector);
     if (el.value !== undefined) {
@@ -500,7 +476,6 @@ class BittyJs extends HTMLElement {
             if (receivers.length > 0) {
               for (const receiver of receivers) {
                 this.b._updateElement(receiver);
-                this.b._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {
@@ -518,7 +493,6 @@ class BittyJs extends HTMLElement {
               if (receivers.length > 0) {
                 for (const receiver of receivers) {
                   this.b._updateElement(receiver);
-                  this.b._checkTargetSender(ev, sender, receiver);
                   this[signal](ev, sender, receiver);
                 }
               } else {
@@ -542,7 +516,6 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.b._updateElement(receiver);
-            this.b._checkTargetSender(ev, ev.target, receiver);
             this.b._updateSender(ev.target);
             this[signal](ev, ev.target, receiver);
           }
@@ -612,7 +585,6 @@ class BittyJs extends HTMLElement {
             if (receivers.length > 0) {
               for (const receiver of receivers) {
                 this.b._updateElement(receiver);
-                this.b._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {
@@ -630,7 +602,6 @@ class BittyJs extends HTMLElement {
               if (receivers.length > 0) {
                 for (const receiver of receivers) {
                   this.b._updateElement(receiver);
-                  this.b._checkTargetSender(ev, sender, receiver);
                   this[signal](ev, sender, receiver);
                 }
               } else {
@@ -747,7 +718,6 @@ class BittyJs extends HTMLElement {
             if (receivers.length > 0) {
               for (const receiver of receivers) {
                 this.b._updateElement(receiver);
-                this.b._checkTargetSender(ev, sender, receiver);
                 this[signal](ev, sender, receiver);
               }
             } else {
@@ -765,7 +735,6 @@ class BittyJs extends HTMLElement {
               if (receivers.length > 0) {
                 for (const receiver of receivers) {
                   this.b._updateElement(receiver);
-                  this.b._checkTargetSender(ev, sender, receiver);
                   this[signal](ev, sender, receiver);
                 }
               } else {
@@ -790,7 +759,6 @@ class BittyJs extends HTMLElement {
         if (receivers.length > 0) {
           for (const receiver of receivers) {
             this.b._updateElement(receiver);
-            this.b._checkTargetSender(ev, sender, receiver);
             this[signal](ev, sender, receiver);
           }
         } else {

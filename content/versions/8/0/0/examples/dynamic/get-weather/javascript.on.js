@@ -5,7 +5,7 @@ let stations;
 const stationsURL = `/[@ [file.parent, "stations.json"]|join("/") @]`;
 
 export function changeStation(ev, __, ___) {
-  current_station = ev.val;
+  current_station = ev.val();
   b.trigger("weather");
 }
 

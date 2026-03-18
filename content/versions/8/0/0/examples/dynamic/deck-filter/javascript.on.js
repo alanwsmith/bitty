@@ -6,8 +6,7 @@ let url = "/[@ file.parent @]/data.json";
 export async function init() {
   data = await b.get(url);
   if (data) {
-    b.trigger("deck");
-    b.trigger("controls");
+    b.trigger("deck controls");
   } else {
     b.trigger("deckError");
   }
@@ -22,7 +21,7 @@ function cardName(card) {
 }
 
 export function controls(_, __, el) {
-  const subs = { __FRONT_LABEL__: "Hightlight Cards", __SEND__: "filter" };
+  const subs = { __PREPEND__: "Hightlight Cards", __SEND__: "filter" };
   el.replaceChildren(b.switch(subs));
 }
 

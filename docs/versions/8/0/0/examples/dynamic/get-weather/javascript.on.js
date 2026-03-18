@@ -5,7 +5,7 @@ let stations;
 const stationsURL = `/versions/8/0/0/examples/dynamic/get-weather/stations.json`;
 
 export function changeStation(ev, __, ___) {
-  current_station = ev.val;
+  current_station = ev.val();
   b.trigger("weather");
 }
 

@@ -1,5 +1,5 @@
 export const b = {};
 
-export async function copyText(ev, __, ___) {
+export async function copier(_, __, ___) {
   await b.copy("#targetDiv");
 }

@@ -25,7 +25,7 @@ export function output(_, __, el) {
 }
 
 export function updateColor(ev, __, ___) {
-  colors[ev.prop("color")] = ev.valFloat;
-  b.setCSS(`--${ev.prop("color")}`, ev.val);
+  colors[ev.prop("color")] = ev.valInt();
+  b.setCSS(`--${ev.prop("color")}`, ev.valInt());
   b.trigger("output");
 }

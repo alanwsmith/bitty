@@ -1006,8 +1006,6 @@ class BittyJs extends HTMLElement {
     };
     el.toggleAria = (key) => {
       const ariaEl = el.closest(`[aria-${key}]`);
-      console.log(`here1`);
-      console.log(ariaEl);
       if (ariaEl) {
         let index = this.b._trueValues.indexOf(
           ariaEl.getAttribute(`aria-${key}`).toLowerCase(),

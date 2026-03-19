@@ -37,8 +37,8 @@ class BittyJs extends HTMLElement {
       const connString = this.dataset.connect.trim();
       const incoming = await import(connString);
       if (incoming.b !== undefined) {
-        incoming.b._trueValues = ["true", "yes", "on"];
-        incoming.b._falseValues = ["false", "no", "off"];
+        incoming.b._trueValues = ["true", "yes", "on", "1"];
+        incoming.b._falseValues = ["false", "no", "off", "0"];
         incoming.b._debouncers = {};
         incoming.b._marks = {};
         incoming.b.svgs = {};
@@ -994,10 +994,36 @@ class BittyJs extends HTMLElement {
       return undefined;
     };
     el.setAria = (key, value) => {
-      el.setAttribute(`aria-${key}`, value);
+      const ariaEl = el.closest(`[aria-${key}]`);
+      if (ariaEl) {
+        ariaEl.setAttribute(`aria-${key}`, value);
+      } else {
+        el.setAttribute(`aria-${key}`, value);
+      }
     };
     el.setProp = (key, value) => {
       el.dataset[key] = value;
+    };
+    el.toggleAria = (key) => {
+      const ariaEl = el.closest(`[aria-${key}]`);
+      console.log(`here1`);
+      console.log(ariaEl);
+      if (ariaEl) {
+        let index = this.b._trueValues.indexOf(
+          ariaEl.getAttribute(`aria-${key}`).toLowerCase(),
+        );
+        if (index >= 0) {
+          ariaEl.setAttribute(`aria-${key}`, this.b._falseValues[index]);
+          return;
+        }
+        index = this.b._falseValues.indexOf(
+          ariaEl.getAttribute(`aria-${key}`).toLowerCase(),
+        );
+        if (index >= 0) {
+          ariaEl.setAttribute(`aria-${key}`, this.b._trueValues[index]);
+          return;
+        }
+      }
     };
     el.valueBool = () => {
       return this.b._getBool(el.value);

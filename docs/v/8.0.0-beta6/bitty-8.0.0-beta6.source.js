@@ -791,7 +791,6 @@ class BittyJs extends HTMLElement {
       try {
         return JSON.parse(storage);
       } catch (error) {
-        console.error(error);
         return undefined;
       }
     }
@@ -812,8 +811,8 @@ class BittyJs extends HTMLElement {
     subs.__ID__ = subs.__ID__ ? subs.__ID__ : `switch_${this.b.uuid(false)}`;
     subs.__KEY__ = subs.__KEY__ ? subs.__KEY__ : "";
     subs.__PREPEND__ = subs.__PREPEND__ ? subs.__PREPEND__ : "";
-    subs.__R__ = subs.__R__ ? subs.__R__ : "";
-    subs.__S__ = subs.__S__ ? subs.__S__ : "";
+    subs.__RECEIVE__ = subs.__RECEIVE__ ? subs.__RECEIVE__ : "";
+    subs.__SEND__ = subs.__SEND__ ? subs.__SEND__ : "";
     subs.__STATE__ = subs.__STATE__ ? subs.__STATE__ : "false";
     return this.b.render("switch", subs);
   }

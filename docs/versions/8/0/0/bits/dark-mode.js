@@ -1,13 +1,15 @@
 export const b = { init: "initDarkMode" };
 
+let data;
+
 export function initDarkMode(_, __, el) {
-  const subs = {
-    __PREPEND__: "dark mode",
-    __SEND__: "toggleDarkMode",
-  };
-  el.replaceChildren(b.switch(subs));
+  data = b.load("colorMode");
+  el.replaceChildren(
+    b.render("modeButtons"),
+  );
 }
 
-export function toggleDarkMode(_, __, el) {
-  console.log("dark");
+export function setMode(_, sender, __) {
+  b.save("colorMode", { theme: sender.prop("mode"), contrast: "" });
+  switchColorStyles();
 }

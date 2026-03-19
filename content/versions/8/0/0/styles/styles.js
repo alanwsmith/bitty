@@ -279,17 +279,25 @@ function addSheet(content) {
 }
 
 function switchColorStyles() {
-  const contrast = localStorage.getItem("contrast")
-    ? localStorage.getItem("contrast")
-    : "";
-  const theme = localStorage.getItem("theme")
-    ? localStorage.getItem("theme")
-    : "";
+  const mode = localStorage.getItem("colorMode")
+    ? JSON.parse(localStorage.getItem("colorMode"))
+    : {
+      theme: "auto",
+      contrast: "",
+    };
 
-  if (theme === "auto") {
+  // const contrast = localStorage.getItem("contrast")
+  //   ? JSON.parse(localStorage.getItem("contrast"))
+  //   : "";
+  // const theme = localStorage.getItem("theme")
+  //   ? JSON.parse(localStorage.getItem("theme"))
+  //   : "";
+
+  if (mode.theme === "auto") {
     document.documentElement.style.removeProperty(`--switch--background-image`);
   } else {
-    const backgroundImage = `var(--${contrast}${theme}--background-image)`;
+    const backgroundImage =
+      `var(--${mode.contrast}${mode.theme}--background-image)`;
     document.documentElement.style.setProperty(
       `--switch--background-image`,
       backgroundImage,
@@ -299,10 +307,11 @@ function switchColorStyles() {
   styleKeys.forEach((styleKey) => {
     prefixes.forEach((prefix) => {
       const key = `--switch--${prefix}${styleKey}`;
-      if (theme === "auto") {
+      if (mode.theme === "auto") {
         document.documentElement.style.removeProperty(key);
       } else {
-        const value = `var(--${contrast}${theme}--${prefix}${styleKey})`;
+        const value =
+          `var(--${mode.contrast}${mode.theme}--${prefix}${styleKey})`;
         document.documentElement.style.setProperty(
           key,
           value,

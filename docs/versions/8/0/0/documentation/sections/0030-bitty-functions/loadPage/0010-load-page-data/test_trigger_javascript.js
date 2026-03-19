@@ -3,10 +3,10 @@
 //export const b = {};
 /*
 
-export async function run_signal_CFCDD_v1() {
+export async function run_signal_B615C_v1() {
   await b.sleep(200);
-  b.qs("[data-s~=signal_CFCDD_v1]").click();
+  b.qs("[data-s~=signal_B615C_v1]").click();
   await b.sleep(300);
-  b.trigger("verify_signal_CFCDD_v1");
+  b.trigger("verify_signal_B615C_v1");
 }
 */

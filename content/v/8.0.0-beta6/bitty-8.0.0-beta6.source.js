@@ -50,30 +50,24 @@ class BittyJs extends HTMLElement {
         this.loadPageAssets(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
-
         window.addEventListener("bittysend", (ev) => {
           incoming.b._processBittySend(ev);
         });
         window.addEventListener("bittytrigger", (ev) => {
           incoming.b._processBittyTrigger(ev);
         });
-
         window.addEventListener("click", (ev) => {
           incoming.b._processEvent(ev);
         });
-
         window.addEventListener("input", (ev) => {
           incoming.b._processInputEvent(ev);
         });
-
         window.addEventListener("change", (ev) => {
           incoming.b._processChangeEvent(ev);
         });
-
         document.addEventListener("submit", (ev) => {
           incoming.b._processEvent(ev);
         });
-
         [...document.querySelectorAll("[data-listen]")].forEach(
           (el) => {
             incoming.b._splitSignalString(el.dataset.listen).forEach(
@@ -98,45 +92,6 @@ class BittyJs extends HTMLElement {
             );
           },
         );
-
-        // window.addEventListener("change", (ev) => {
-        //   incoming.b._processEvent(ev);
-        // });
-
-        // // START: Original listeners
-        // window.addEventListener("click", (ev) => {
-        //   incoming.b._processEvent(ev);
-        // });
-        // window.addEventListener("input", (ev) => {
-        //   incoming.b._processEvent(ev);
-        // });
-        // window.addEventListener("bittysend", (ev) => {
-        //   incoming.b._processBittySend(ev);
-        // });
-        // window.addEventListener("bittytrigger", (ev) => {
-        //   incoming.b._processBittyTrigger(ev);
-        // });
-        //
-        // [...document.querySelectorAll("[data-listen]")].forEach(
-        //   (el) => {
-        //     incoming.b._splitSignalString(el.dataset.listen).forEach(
-        //       (listener) => {
-        //         if (
-        //           ["click", "input", "bittysend", "bittytrigger"].includes(
-        //             listener,
-        //           ) === false
-        //         ) {
-        //           window.addEventListener(listener, (ev) => {
-        //             incoming.b._processEvent(ev);
-        //           });
-        //         }
-        //       },
-        //     );
-        //   },
-        // );
-        //
-        // // END: Original Listeners
-
         incoming.b._processInit();
       }
     }
@@ -526,7 +481,6 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  // TODO: Migrate this to `__processClickEvent()`
   __processEvent(ev) {
     this.b._updateElement(ev.target);
     const senders = this.b._findSenders(ev.target);
@@ -550,33 +504,6 @@ class BittyJs extends HTMLElement {
         ) {
           return;
         }
-
-        // ev.type === "click"
-        // ) {
-        // return;
-        // } else if (
-        // sender.type && sender.type.toLowerCase() === "date" &&
-        // ev.type === "click"
-        // ) {
-        // return;
-        // } else if (
-        // sender.type && sender.type.toLowerCase() === "datetime-local"
-        // ) {
-        // return;
-        // } else if (
-        // sender.type && sender.type.toLowerCase() === "email"
-        // ) {
-        // return;
-        // } else if (
-        // sender.type && sender.type.toLowerCase() === "file"
-        // ) {
-        // return;
-        // } else if (
-        // sender.type && sender.type.toLowerCase() === "checkbox" &&
-        // ev.type === "click"
-        // ) {
-        // return;
-
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(
@@ -639,55 +566,6 @@ class BittyJs extends HTMLElement {
         }
       }
     }
-
-    // this.b._updateElement(ev);
-    // const senders = this.b._findSenders(ev.target);
-    // for (const sender of senders) {
-    //   this.b._updateElement(sender);
-    //   const signals = this.b._splitSignalString(sender.dataset.s);
-    //   const listeners = this.b._splitSignalString(
-    //     sender.dataset.listen,
-    //   );
-    //   if (listeners.length === 0) {
-    //     for (const signal of signals) {
-    //       if (typeof this[signal] === "function") {
-    //         const receivers = document.querySelectorAll(
-    //           `[data-r~='${signal}']`,
-    //         );
-    //         if (receivers.length > 0) {
-    //           for (const receiver of receivers) {
-    //             this.b._updateElement(receiver);
-    //             this.b._checkTargetSender(ev, sender, receiver);
-    //             this[signal](ev, sender, receiver);
-    //           }
-    //         } else {
-    //           this[signal](ev, sender, null);
-    //         }
-    //       }
-    //     }
-    //   } else {
-    //     if (listeners.includes(ev.type)) {
-    //       for (const signal of signals) {
-    //         if (typeof this[signal] === "function") {
-    //           const receivers = document.querySelectorAll(
-    //             `[data-r~='${signal}']`,
-    //           );
-    //           if (receivers.length > 0) {
-    //             for (const receiver of receivers) {
-    //               this.b._updateElement(receiver);
-    //               this.b._checkTargetSender(ev, sender, receiver);
-    //               this[signal](ev, sender, receiver);
-    //             }
-    //           } else {
-    //             this[signal](ev, sender, null);
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    //
   }
 
   __processInputEvent(ev) {
@@ -847,7 +725,6 @@ class BittyJs extends HTMLElement {
     if (input instanceof Array === false) {
       input = [input];
     }
-    // See if it's an SVG first:
     if (typeof input[0] === "string" && this.b.svgs[input[0]] !== undefined) {
       let content = this.b.svgs[input[0]];
       for (const needle of Object.keys(subs)) {
@@ -1136,243 +1013,6 @@ class BittyJs extends HTMLElement {
     };
     el.bittyUpdated = true;
   }
-
-  // __updateEvent(ev) {
-  //   if (ev.bittyUpdated === true) {
-  //     return;
-  //   }
-  //   ev.aria = (key) => {
-  //     return ev.target.getAttribute(`aria-${key}`);
-  //   };
-  //   ev.ariaBool = (key) => {
-  //     const value = ev.target.getAttribute(`aria-${key}`);
-  //     return this.b._getBool(value);
-  //   };
-  //   ev.ariaFloat = (key) => {
-  //     return parseFloat(ev.target.getAttribute(`aria-${key}`));
-  //   };
-  //   ev.ariaInt = (key) => {
-  //     return parseInt(ev.target.getAttribute(`aria-${key}`), 10);
-  //   };
-  //   ev.copy = async function () {
-  //     if (ev.target.value) {
-  //       try {
-  //         await navigator.clipboard.writeText(ev.target.value);
-  //       } catch (error) {
-  //         console.error(`Could not copy .value from event.`);
-  //         return false;
-  //       }
-  //     } else {
-  //       try {
-  //         await navigator.clipboard.writeText(ev.target.innerHTML);
-  //       } catch (error) {
-  //         console.error(`Could not copy .innerHTML from event.`);
-  //         return false;
-  //       }
-  //     }
-  //     return true;
-  //   };
-  //   ev.prop = (key) => {
-  //     if (
-  //       ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-  //     ) {
-  //       return ev.target.dataset[key];
-  //     }
-  //     const propAncestor = ev.target.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return propAncestor.dataset[key];
-  //     }
-  //     return undefined;
-  //   };
-  //   ev.propBool = (key) => {
-  //     if (
-  //       ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-  //     ) {
-  //       return this.b._getBool(ev.target.dataset[key]);
-  //     }
-  //     const propAncestor = ev.target.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return this.b._getBool(propAncestor.dataset[key]);
-  //     }
-  //     return undefined;
-  //   };
-  //   ev.propFloat = (key) => {
-  //     if (
-  //       ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-  //     ) {
-  //       return parseFloat(ev.target.dataset[key]);
-  //     }
-  //     const propAncestor = ev.target.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return parseFloat(propAncestor.dataset[key]);
-  //     }
-  //     return undefined;
-  //   };
-  //   ev.propInt = (key) => {
-  //     if (
-  //       ev.target && ev.target.dataset && ev.target.dataset[key] !== undefined
-  //     ) {
-  //       return parseInt(ev.target.dataset[key], 10);
-  //     }
-  //     const propAncestor = ev.target.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return parseInt(propAncestor.dataset[key], 10);
-  //     }
-  //     return undefined;
-  //   };
-  //   ev.setAria = (key, value) => {
-  //     ev.target.setAttribute(`aria-${key}`, value);
-  //   };
-  //   ev.setProp = (key, value) => {
-  //     ev.target.dataset[key] = value;
-  //   };
-  //   if (ev.target === undefined) {
-  //     ev.val = () => {
-  //       return undefined;
-  //     };
-  //     ev.valBool = () => {
-  //       return undefined;
-  //     };
-  //     ev.valFloat = () => {
-  //       return undefined;
-  //     };
-  //     ev.valInt = () => {
-  //       return undefined;
-  //     };
-  //   } else {
-  //     ev.val = () => {
-  //       return ev.target.value;
-  //     };
-  //     ev.valBool = () => {
-  //       return this.b._getBool(ev.target.value);
-  //     };
-  //     ev.valFloat = () => {
-  //       return parseFloat(ev.target.value);
-  //     };
-  //     ev.valInt = () => {
-  //       return parseInt(ev.target.value, 10);
-  //     };
-  //   }
-  //   ev.bittyUpdated = true;
-  // }
-
-  // __updateSender(sender) {
-  //   if (sender.bittyUpdated === true) {
-  //     return;
-  //   }
-  //   sender.aria = (key) => {
-  //     return sender.getAttribute(`aria-${key}`);
-  //   };
-  //   sender.ariaBool = (key) => {
-  //     const value = sender.getAttribute(`aria-${key}`);
-  //     return this.b._getBool(value);
-  //   };
-  //   sender.ariaFloat = (key) => {
-  //     return parseFloat(sender.getAttribute(`aria-${key}`));
-  //   };
-  //   sender.ariaInt = (key) => {
-  //     return parseInt(sender.getAttribute(`aria-${key}`), 10);
-  //   };
-  //   sender.copy = async function () {
-  //     if (sender.value) {
-  //       try {
-  //         await navigator.clipboard.writeText(sender.value);
-  //       } catch (error) {
-  //         console.error(`Could not copy .value from sender.`);
-  //         return false;
-  //       }
-  //     } else {
-  //       try {
-  //         await navigator.clipboard.writeText(sender.innerHTML);
-  //       } catch (error) {
-  //         console.error(`Could not copy .innerHTML from sender.`);
-  //         return false;
-  //       }
-  //     }
-  //     return true;
-  //   };
-  //   sender.prop = (key) => {
-  //     if (
-  //       sender && sender.dataset && sender.dataset[key] !== undefined
-  //     ) {
-  //       return sender.dataset[key];
-  //     }
-  //     const propAncestor = sender.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return propAncestor.dataset[key];
-  //     }
-  //     return undefined;
-  //   };
-  //   sender.propBool = (key) => {
-  //     if (
-  //       sender && sender.dataset && sender.dataset[key] !== undefined
-  //     ) {
-  //       return this.b._getBool(sender.dataset[key]);
-  //     }
-  //     const propAncestor = sender.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return this.b._getBool(propAncestor.dataset[key]);
-  //     }
-  //     return undefined;
-  //   };
-  //   sender.propFloat = (key) => {
-  //     if (
-  //       sender && sender.dataset && sender.dataset[key] !== undefined
-  //     ) {
-  //       return parseFloat(sender.dataset[key]);
-  //     }
-  //     const propAncestor = sender.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return parseFloat(propAncestor.dataset[key]);
-  //     }
-  //     return undefined;
-  //   };
-  //   sender.propInt = (key) => {
-  //     if (
-  //       sender && sender.dataset && sender.dataset[key] !== undefined
-  //     ) {
-  //       return parseInt(sender.dataset[key], 10);
-  //     }
-  //     const propAncestor = sender.closest(`[data-${key}]`);
-  //     if (propAncestor !== null) {
-  //       return parseInt(propAncestor.dataset[key], 10);
-  //     }
-  //     return undefined;
-  //   };
-  //   sender.setAria = (key, value) => {
-  //     sender.setAttribute(`aria-${key}`, value);
-  //   };
-  //   sender.setProp = (key, value) => {
-  //     sender.dataset[key] = value;
-  //   };
-  //   if (sender === undefined) {
-  //     sender.val = () => {
-  //       return undefined;
-  //     };
-  //     sender.valBool = () => {
-  //       return undefined;
-  //     };
-  //     sender.valFloat = () => {
-  //       return undefined;
-  //     };
-  //     sender.valInt = () => {
-  //       return undefined;
-  //     };
-  //   } else {
-  //     sender.val = () => {
-  //       return sender.value;
-  //     };
-  //     sender.valBool = () => {
-  //       return this.b._getBool(sender.value);
-  //     };
-  //     sender.valFloat = () => {
-  //       return parseFloat(sender.value);
-  //     };
-  //     sender.valInt = () => {
-  //       return parseInt(sender.value, 10);
-  //     };
-  //   }
-  // }
 
   _uuid(dashes = true) {
     if (dashes === false) {

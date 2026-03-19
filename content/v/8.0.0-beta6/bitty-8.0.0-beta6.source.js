@@ -911,17 +911,37 @@ class BittyJs extends HTMLElement {
       return;
     }
     el.aria = (key) => {
-      return el.getAttribute(`aria-${key}`);
+      const ariaEl = el.closest(`[aria-${key}]`);
+      if (ariaEl) {
+        return ariaEl.getAttribute(`aria-${key}`);
+      } else {
+        return undefined;
+      }
     };
     el.ariaBool = (key) => {
-      const value = el.getAttribute(`aria-${key}`);
-      return this.b._getBool(value);
+      const ariaEl = el.closest(`[aria-${key}]`);
+      if (ariaEl) {
+        const value = ariaEl.getAttribute(`aria-${key}`);
+        return this.b._getBool(value);
+      } else {
+        return undefined;
+      }
     };
     el.ariaFloat = (key) => {
-      return parseFloat(el.getAttribute(`aria-${key}`));
+      const ariaEl = el.closest(`[aria-${key}]`);
+      if (ariaEl) {
+        return parseFloat(ariaEl.getAttribute(`aria-${key}`));
+      } else {
+        return undefined;
+      }
     };
     el.ariaInt = (key) => {
-      return parseInt(el.getAttribute(`aria-${key}`), 10);
+      const ariaEl = el.closest(`[aria-${key}]`);
+      if (ariaEl) {
+        return parseInt(ariaEl.getAttribute(`aria-${key}`), 10);
+      } else {
+        return undefined;
+      }
     };
     el.copy = async function () {
       if (el.value) {

@@ -1,5 +1,5 @@
 export const b = {};
 
-export function theTime(_, __, el) {
+export function theTime(ev, sender, el) {
   el.innerHTML = b.time();
 }

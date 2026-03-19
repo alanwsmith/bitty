@@ -285,14 +285,6 @@ function switchColorStyles() {
       theme: "auto",
       contrast: "",
     };
-
-  // const contrast = localStorage.getItem("contrast")
-  //   ? JSON.parse(localStorage.getItem("contrast"))
-  //   : "";
-  // const theme = localStorage.getItem("theme")
-  //   ? JSON.parse(localStorage.getItem("theme"))
-  //   : "";
-
   if (mode.theme === "auto") {
     document.documentElement.style.removeProperty(`--switch--background-image`);
   } else {

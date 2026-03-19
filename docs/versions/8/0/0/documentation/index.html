@@ -6,7 +6,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bitty</title>
 <style>
 :root {
   --light--background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwMCAzMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIzLjgiIG51bU9jdGF2ZXM9IjQiIHN0aXRjaFRpbGVzPSJzdGl0Y2giIHJlc3VsdD0ibm9pc2UiIC8+CiAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIiByZXN1bHQ9ImdyYXlzY2FsZSIgLz4KICAgIDxmZU1lcmdlPgogICAgICA8ZmVNZXJnZU5vZGUgaW49Im5vaXNlIiAvPgogICAgICA8ZmVNZXJnZU5vZGUgaW49ImdyYXlzY2FsZSIgLz4KICAgIDwvZmVNZXJnZT4KICA8L2ZpbHRlcj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBvcGFjaXR5PSIwLjQ4IiBmaWx0ZXI9InVybCgjbm9pc2VGaWx0ZXIpIi8+Cjwvc3ZnPg==");
@@ -167,7 +166,15 @@ body {
 <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
 <link rel="shortcut icon" href="/favicons/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-<link rel="manifest" href="/favicons/site.webmanifest" />  </head>
+<link rel="manifest" href="/favicons/site.webmanifest" /><title>bitty</title>
+<meta property="og:title" content="bitty">
+<meta property="og:description" content="a front-end framework for the web">
+<meta name="description" content="a front-end framework for the web">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bittyjs.com/images/og-images/og-image-7.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+  </head>
 <body>
   <bitty-8-0 data-connect="/versions&#x2f;8&#x2f;0&#x2f;0&#x2f;bits/details-opener.js"></bitty-8-0>
 
@@ -12558,30 +12565,30 @@ for the switch is stored in <code>b.templates.switch</code>
 so it can be overwritten.</p>
 </li>
 <li>
-<p>TODO: Moved additional bitty features from being
+<p>Moved additional bitty features from being
 placed on the <code>ev</code> event to the <code>ev.target</code>
-element itself. This keeps the
-API consistent across <code>ev.target</code>, <code>sender</code>,
-and <code>el</code>.</p>
+element itself. This keeps the API consistent
+across <code>ev.target</code>, <code>sender</code>, and <code>el</code>.</p>
 </li>
 <li>
-<p>Renamed <code>.propAsFloat(key)</code> to <code>.propFloat(key)</code>
-for <code>ev</code>, <code>sender</code>, and <code>el</code>.</p>
+<p>Renamed <code>.propAsFloat(key)</code> to <code>.propFloat(key)</code>.</p>
 </li>
 <li>
-<p>Renamed <code>.propAsInt(key)</code> to <code>.propInt(key)</code>
-for <code>ev</code>, <code>sender</code>, and <code>el</code>.</p>
+<p>Renamed <code>.propAsInt(key)</code> to <code>.propInt(key)</code>.</p>
 </li>
 <li>
-<p>Added <code>.propBool(key)</code>
-to <code>ev</code>, <code>sender</code>, and <code>el</code>.</p>
+<p>Added <code>.propBool(key)</code> to get a dataset
+property as a boolean.</p>
 </li>
 <li>
 <p>Added <code>.toggleProp(key)</code> which lowercases
 the value of an <code>data-*</code> attribute and
 if it's <code>true</code>, <code>on</code>, <code>yes</code>, or <code>1</code>,
 then it toggles it to <code>false</code>, <code>off</code>,
-<code>no</code>, or <code>0</code>, respectively.</p>
+<code>no</code>, or <code>0</code>, respectively. The method
+uses <code>.closest()</code> to update the property
+either directly on the element or
+on an ancestor if one is available.</p>
 </li>
 <li>
 <p>Updated <code>.setProp(key, value)</code> so that
@@ -12593,22 +12600,14 @@ the element itself is given the dataset
 key with the value.</p>
 </li>
 <li>
-<p>Converted <code>.val</code> and <code>.valXXX</code>
-properties to <code>.val()</code> and <code>.valXXX()</code>
-methods as part of making
-everything on <code>el</code> a method.</p>
+<p>Added <code>.valBool()</code> to get the value
+of an element as a boolean.</p>
 </li>
 <li>
-<p>Added <code>.valBool()</code> to <code>ev</code>, <code>sender</code>,
-and <code>el</code>.</p>
+<p>Renamed <code>.valAsFloat()</code> to <code>.valFloat()</code></p>
 </li>
 <li>
-<p>Renamed <code>.valAsFloat()</code> to <code>.valFloat()</code>
-for <code>ev</code>, <code>sender</code>, and <code>el</code>.</p>
-</li>
-<li>
-<p>Renamed <code>.valAsInt()</code> to <code>.valInt()</code>
-for <code>ev</code>, <code>sender</code>, and <code>el</code>.</p>
+<p>Renamed <code>.valAsInt()</code> to <code>.valInt()</code></p>
 </li>
 <li>
 <p>Added <code>.aria(key)</code>
@@ -12633,6 +12632,12 @@ as a float.</p>
 to <code>ev</code>, <code>sender</code>, and <code>el</code>.
 It returns the value from <code>aria-key</code>
 as an integer.</p>
+</li>
+<li>
+<p>The <code>.ariaXXX()</code> methods use
+<code>.closest()</code> to pull the value from
+the current element or the nearest
+ancestor depending on what's available.</p>
 </li>
 <li>
 <p>Added <code>.setAria(key, value)</code>

@@ -21,7 +21,7 @@ export async function runTests(fn, el, kind) {
     b.mark(key);
     fn(items);
     b.mark(key);
-    const time = parseInt(b.getMarks(key)[1][0] - b.getMarks(key)[0][0], 10);
+    const time = parseInt(b.getMarks(key)[1] - b.getMarks(key)[0], 10);
     times.push(time);
     window.requestAnimationFrame(() => {
       el.innerHTML = `${el.innerHTML}\n${time}ms`;

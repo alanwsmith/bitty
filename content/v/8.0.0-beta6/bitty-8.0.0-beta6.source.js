@@ -1002,7 +1002,12 @@ class BittyJs extends HTMLElement {
       }
     };
     el.setProp = (key, value) => {
-      el.dataset[key] = value;
+      const propEl = el.closest(`[data-${key}]`);
+      if (propEl) {
+        propEl.dataset[key] = value;
+      } else {
+        el.dataset[key] = value;
+      }
     };
     el.toggleAria = (key) => {
       const ariaEl = el.closest(`[aria-${key}]`);

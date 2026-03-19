@@ -1033,16 +1033,6 @@ class BittyJs extends HTMLElement {
   }
 
   __updateElement(el) {
-    // REMINDER: this innerHTMLAsFloat and innerHTMLAsInt
-    // get set every time.
-    if (el.innerHTML !== undefined) {
-      el.innerHTMLAsFloat = parseFloat(el.innerHTML.trim().replaceAll(",", ""));
-      el.innerHTMLAsInt = parseInt(el.innerHTML.trim().replaceAll(",", ""), 10);
-    }
-    // REMINDER: This is only run once for each element to
-    // set up the functions. The `.isSender()` and
-    // `.isTarget()` are updated in a different
-    // function each time the element becomes a receiver.
     if (el.bittyUpdated === true) {
       return;
     }
@@ -1077,10 +1067,20 @@ class BittyJs extends HTMLElement {
       }
       return true;
     };
+    el.innerHTMLBool = () => {
+      if (el.innerHTML !== undefined) {
+        return this.b._getBool(el.innerHTML);
+      }
+      return undefined;
+    };
+    el.innerHTMLFloat = () => {
+      return parseFloat(el.innerHTML.trim().replace(",", ""));
+    };
+    el.innerHTMLInt = () => {
+      return parseInt(el.innerHTML.trim().replace(",", ""), 10);
+    };
     el.prop = (key) => {
-      if (
-        el.dataset && el.dataset[key] !== undefined
-      ) {
+      if (el.dataset && el.dataset[key] !== undefined) {
         return el.dataset[key];
       }
       const propAncestor = el.closest(`[data-${key}]`);
@@ -1090,9 +1090,7 @@ class BittyJs extends HTMLElement {
       return undefined;
     };
     el.propBool = (key) => {
-      if (
-        el.dataset && el.dataset[key] !== undefined
-      ) {
+      if (el.dataset && el.dataset[key] !== undefined) {
         return this.b._getBool(el.dataset[key]);
       }
       const propAncestor = el.closest(`[data-${key}]`);
@@ -1102,9 +1100,7 @@ class BittyJs extends HTMLElement {
       return undefined;
     };
     el.propFloat = (key) => {
-      if (
-        el.dataset && el.dataset[key] !== undefined
-      ) {
+      if (el.dataset && el.dataset[key] !== undefined) {
         return parseFloat(el.dataset[key]);
       }
       const propAncestor = el.closest(`[data-${key}]`);
@@ -1114,9 +1110,7 @@ class BittyJs extends HTMLElement {
       return undefined;
     };
     el.propInt = (key) => {
-      if (
-        el.dataset && el.dataset[key] !== undefined
-      ) {
+      if (el.dataset && el.dataset[key] !== undefined) {
         return parseInt(el.dataset[key], 10);
       }
       const propAncestor = el.closest(`[data-${key}]`);
@@ -1131,16 +1125,13 @@ class BittyJs extends HTMLElement {
     el.setProp = (key, value) => {
       el.dataset[key] = value;
     };
-    el.val = () => {
-      return el.value;
-    };
-    el.valBool = () => {
+    el.valueBool = () => {
       return this.b._getBool(el.value);
     };
-    el.valFloat = () => {
+    el.valueFloat = () => {
       return parseFloat(el.value);
     };
-    el.valInt = () => {
+    el.valueInt = () => {
       return parseInt(el.value, 10);
     };
     el.bittyUpdated = true;

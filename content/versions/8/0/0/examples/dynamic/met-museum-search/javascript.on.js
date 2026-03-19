@@ -29,7 +29,7 @@ export function searchError(_, __, el) {
 
 export async function query(ev, __, el) {
   ev.preventDefault();
-  data = await b.get(`${searchURL}${encodeURI(el.val())}`);
+  data = await b.get(`${searchURL}${encodeURI(el.value)}`);
   if (data === undefined) {
     b.trigger("searchError");
   } else {

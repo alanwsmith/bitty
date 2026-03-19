@@ -11,7 +11,7 @@ export function initSwitches(_, __, el) {
         __BACK_LABEL__: key,
         __KEY__: key,
         __SEND__: "toggle",
-        __STATE__: `${data[key]}`, // TODO: Update so `true` can be passed without making it a string.
+        __STATE__: data[key],
         __DISPLAY__: data[key] ? "on" : "off",
       };
       const switchEl = b.switch(subs);

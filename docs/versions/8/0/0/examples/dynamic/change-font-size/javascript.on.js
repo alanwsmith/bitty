@@ -7,6 +7,6 @@ export function initFontSize(_, __, el) {
 
 export function setSize(ev, __, ___) {
   window.requestAnimationFrame(() => {
-    b.setCSS("--custom-size", `${ev.valFloat()}rem`);
+    b.setCSS("--custom-size", `${ev.target.valueFloat()}rem`);
   });
 }

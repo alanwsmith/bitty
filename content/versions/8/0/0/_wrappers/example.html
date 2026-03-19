@@ -34,11 +34,21 @@
         <h1>examples</h1>
       </hgroup>
       <div class="example-columns">
+
         <div class="example-sidebard">
           [! include [vars.version_dir, "examples", "_includes", "sidebar.html"]|join("/") !]
         </div>
 
         <div class="example-content default-flow">
+
+          [!- set hidden_css -!]
+          [!- include [file.parent, "hidden.css"]|join("/") ignore missing -!]
+          [!- endset -!]
+          [!- if hidden_css != "" -!]
+          <style>
+          [@- hidden_css-@]
+          </style>
+          [!- endif -!]
 
           <h2>[! include [file.parent, "name.html"]|join("/") !]</h2>
 

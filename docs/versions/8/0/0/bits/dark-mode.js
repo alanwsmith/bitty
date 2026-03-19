@@ -1,9 +1,7 @@
 export const b = { init: "initDarkMode" };
 
-let data;
-
 export function initDarkMode(_, __, el) {
-  data = b.load("colorMode", { theme: "auto", contrast: "" });
+  const data = b.load("colorMode", { theme: "auto", contrast: "" });
   const themes = ["auto", "light", "dark"];
   el.replaceChildren(
     ...themes.map((theme) => {
@@ -11,7 +9,6 @@ export function initDarkMode(_, __, el) {
         __ACTIVE__: data.theme === theme,
         __THEME__: theme,
       };
-      console.log(subs);
       return b.render("modeButton", subs);
     }),
   );

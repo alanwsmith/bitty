@@ -7,8 +7,8 @@ export function controls(_, __, el) {
 export function sort(ev, __, el) {
   const books = [...b.qsa(".book", el)]
     .sort((alfa, bravo) => {
-      return b.qs(`.${ev.val()}`, alfa).textContent.localeCompare(
-        b.qs(`.${ev.val()}`, bravo).textContent,
+      return b.qs(`.${ev.target.value}`, alfa).textContent.localeCompare(
+        b.qs(`.${ev.target.value}`, bravo).textContent,
       );
     });
   el.replaceChildren(...books);

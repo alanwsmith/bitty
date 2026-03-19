@@ -324,7 +324,7 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  _mark(key, note = null) {
+  _mark(key) {
     try {
       this.b._marks[key].push(performance.now());
     } catch (_) {
@@ -746,7 +746,6 @@ class BittyJs extends HTMLElement {
       tmpWrapper.innerHTML = content;
       return tmpWrapper.firstChild;
     }
-
     let content = input.map((item) => {
       if (typeof item === "string") {
         if (this.b.templates[item] !== undefined) {
@@ -760,7 +759,6 @@ class BittyJs extends HTMLElement {
         return tmpWrapper.innerHTML;
       }
     }).join("");
-
     for (const needle of Object.keys(subs)) {
       const updates = subs[needle] instanceof Array === true
         ? subs[needle]
@@ -782,7 +780,6 @@ class BittyJs extends HTMLElement {
       }).join("");
       content = content.replaceAll(needle, replacement);
     }
-
     const result = document.createElement("template");
     result.innerHTML = content;
     return result.content;

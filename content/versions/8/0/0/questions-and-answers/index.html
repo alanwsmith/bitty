@@ -87,6 +87,40 @@ The content is simply
 [treated as a block of data](https://html.spec.whatwg.org/dev/scripting.html#the-script-element)
 with no further processing by the browser.  
 
+## How fast is bitty?
+
+bitty's primary functionality breaks down to:
+
+- Listening for events to trigger signals.
+- Using query selectors find elements that receive a given signal. 
+
+bitty's performance is based largely on how well
+browsers are optimized for those functions. 
+
+To provide a concrete number, here's an example:
+
+1. Renders 1,000 text/button pairs from a template
+where each render contains both a sender and
+a receiver. 
+2. Clicks a button to determine how long it 
+takes to process a signal across all the 
+items. 
+
+<style>
+[! include "v8-bits/performance.css" !]
+</style>
+
+
+[! include "v8-bits/performance.html" !]
+
+<[@ vars.bitty_tag @] data-connect="/v8-bits/performance.js"></[@ vars.bitty_tag @]>
+
+
+
+
+
+
+
 
 
 [! endfilter !]

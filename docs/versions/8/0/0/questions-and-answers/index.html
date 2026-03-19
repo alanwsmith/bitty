@@ -242,6 +242,50 @@ templates. Doing something like this causes
 The content is simply
 <a href="https://html.spec.whatwg.org/dev/scripting.html#the-script-element">treated as a block of data</a>
 with no further processing by the browser.</p>
+<h2>How fast is bitty?</h2>
+<p>bitty's primary functionality breaks down to:</p>
+<ul>
+<li>Listening for events to trigger signals.</li>
+<li>Using query selectors find elements that receive a given signal.</li>
+</ul>
+<p>bitty's performance is based largely on how well
+browsers are optimized for those functions.</p>
+<p>To provide a concrete number, here's an example:</p>
+<ol>
+<li>Renders 1,000 text/button pairs from a template
+where each render contains both a sender and
+a receiver.</li>
+<li>Clicks a button to determine how long it
+takes to process a signal across all the
+items.</li>
+</ol>
+<style>
+[data-r=run] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  height: 14rem;
+  overflow-y: scroll;
+}
+
+
+</style>
+<p><button data-s="run">Run Benchmark</button></p>
+<div class="example-block-2">
+  <div data-r="run">waiting</div>
+</div>
+<div data-r="report"></div>
+<script type="text/html" id="benchItem">
+  <div data-key="key-__NUM__">
+    <div data-r="benchmark">_</div>
+    <button data-s="benchmark" id="button-__NUM__">ping</button>
+  </div>
+</script>
+<script type="text/html" id="report">
+  <div>Time to create elements: __CREATE__</div>
+  <div>Time to process signal: __BENCH__</div>
+</script>
+<p><bitty-8-0 data-connect="/v8-bits/performance.js"></bitty-8-0></p>
 
 
   </main>

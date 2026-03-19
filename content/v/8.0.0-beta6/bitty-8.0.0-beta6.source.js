@@ -326,10 +326,10 @@ class BittyJs extends HTMLElement {
 
   _mark(key, note = null) {
     try {
-      this.b._marks[key].push([performance.now(), note]);
+      this.b._marks[key].push(performance.now());
     } catch (_) {
       this.b._marks[key] = [];
-      this.b._marks[key].push([performance.now(), note]);
+      this.b._marks[key].push(performance.now());
     }
   }
 

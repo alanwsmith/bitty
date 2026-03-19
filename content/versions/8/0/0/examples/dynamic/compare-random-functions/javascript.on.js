@@ -1,7 +1,7 @@
 export const b = { init: "mathCheck" };
 
 const arraySize = 1000000;
-const iterations = 10;
+const iterations = 5;
 
 export async function cryptoCheck(_, __, el) {
   runTests(shuffleWithCrypto, el, "crypto");

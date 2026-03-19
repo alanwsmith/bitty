@@ -1028,6 +1028,25 @@ class BittyJs extends HTMLElement {
         }
       }
     };
+    el.toggleProp = (key) => {
+      const propEl = el.closest(`[data-${key}]`);
+      if (propEl) {
+        let index = this.b._trueValues.indexOf(
+          propEl.getAttribute(`data-${key}`).toLowerCase(),
+        );
+        if (index >= 0) {
+          propEl.setAttribute(`data-${key}`, this.b._falseValues[index]);
+          return;
+        }
+        index = this.b._falseValues.indexOf(
+          propEl.getAttribute(`data-${key}`).toLowerCase(),
+        );
+        if (index >= 0) {
+          propEl.setAttribute(`data-${key}`, this.b._trueValues[index]);
+          return;
+        }
+      }
+    };
     el.valueBool = () => {
       return this.b._getBool(el.value);
     };

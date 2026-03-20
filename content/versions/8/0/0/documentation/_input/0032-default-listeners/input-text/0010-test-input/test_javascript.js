@@ -1,13 +1,14 @@
 export const b = {};
 
-let activations = 0;
+let gotBadEvent = false;
 
-export function $_SIGNAL_(ev, __, el) {
-  activations += 1;
-  if (activations === 1) {
-    el.innerHTML = b.time();
+export function $_SIGNAL_(ev, sender, el) {
+  if (ev.type !== "keydown") {
+    gotBadEvent = true;
+  }
+  if (gotBadEvent === true) {
+    el.innerHTML = "got an invalid event";
   } else {
-    el.innerHTML =
-      "got more than one activation or something other than a change event";
+    el.innerHTML = b.time();
   }
 }

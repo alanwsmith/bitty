@@ -1,30 +1,36 @@
 const version = [8, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
-const textInputFields = [
-  "email",
-  "month",
-  "password",
-  "tel",
-  "text",
-  "url",
-  "week",
-];
-
-const changeFormElements = [
+const changeFormTypes = [
   "checkbox",
   "color",
   "date",
   "datetime-local",
   "file",
   "form",
-  "number",
   "option",
   "radio",
   "search",
   "select",
   "textarea",
   "time",
+];
+
+const enterFormTypes = [
+  "email",
+  "month",
+  "number",
+  "password",
+  "search",
+  "tel",
+  "text",
+  "url",
+  "week",
+];
+
+const inputFormTypes = [
+  "range",
+  "search",
 ];
 
 class BittyJs extends HTMLElement {
@@ -61,9 +67,9 @@ class BittyJs extends HTMLElement {
         window.addEventListener("click", (ev) => {
           incoming.b._processEvent(ev);
         });
-        // window.addEventListener("input", (ev) => {
-        //   incoming.b._processInputEvent(ev);
-        // });
+        window.addEventListener("input", (ev) => {
+          incoming.b._processInputEvent(ev);
+        });
         window.addEventListener("change", (ev) => {
           incoming.b._processChangeEvent(ev);
         });
@@ -78,7 +84,7 @@ class BittyJs extends HTMLElement {
             ev.target.tagName.toLowerCase() === "input"
           ) {
             const checkAttr = ev.target.getAttribute("type");
-            if (checkAttr.toLowerCase() === "text") {
+            if (enterFormTypes.includes(checkAttr.toLowerCase())) {
               incoming.b._processInputTextEnter(ev);
             }
           }
@@ -93,7 +99,6 @@ class BittyJs extends HTMLElement {
                     "bittytrigger",
                     "change",
                     "click",
-                    "keydown",
                     "input",
                     "submit",
                   ].includes(
@@ -434,8 +439,11 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
-        const checkType = sender.getAttribute("type");
-        if (checkType && checkType.toLowerCase() === "text") {
+        const checkAttr = sender.getAttribute("type");
+        if (checkAttr && enterFormTypes.includes(checkAttr.toLowerCase())) {
+          return;
+        }
+        if (checkAttr && inputFormTypes.includes(checkAttr.toLowerCase())) {
           return;
         }
         if (
@@ -512,33 +520,45 @@ class BittyJs extends HTMLElement {
       );
       if (listeners.length === 0) {
         if (ev.target) {
-          const checkArg = sender.getAttribute("type");
-          if (checkArg && checkArg.toLowerCase() === "text") {
+          const checkAttr = sender.getAttribute("type");
+          if (checkAttr && changeFormTypes.includes(checkAttr.toLowerCase())) {
             return;
           }
-          if (checkArg && checkArg.toLowerCase() === "month") {
+          if (checkAttr && enterFormTypes.includes(checkAttr.toLowerCase())) {
             return;
           }
-          if (checkArg && checkArg.toLowerCase() === "password") {
+          if (checkAttr && inputFormTypes.includes(checkAttr.toLowerCase())) {
             return;
           }
-          if (
-            checkArg &&
-            changeFormElements.includes(checkArg.toLowerCase())
-          ) {
-            return;
-          }
+
+          // if (checkArg && checkArg.toLowerCase() === "text") {
+          //   return;
+          // }
+          // if (checkArg && checkArg.toLowerCase() === "month") {
+          //   return;
+          // }
+          // if (checkArg && checkArg.toLowerCase() === "password") {
+          //   return;
+          // }
+
+          // if (
+          //   checkArg &&
+          //   changeFormTypes.includes(checkArg.toLowerCase())
+          // ) {
+          //   return;
+          // }
         }
         if (sender.isContentEditable === true && ev.type === "click") {
           return;
         }
-        if (
-          sender.tagName &&
-          changeFormElements.includes(sender.tagName.toLowerCase()) &&
-          ev.type === "click"
-        ) {
-          return;
-        }
+
+        // if (
+        //   sender.tagName &&
+        //   changeFormTypes.includes(sender.tagName.toLowerCase()) &&
+        //   ev.type === "click"
+        // ) {
+        //   return;
+        // }
 
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
@@ -614,16 +634,22 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
-        if (
-          sender.tagName &&
-          changeFormElements.includes(sender.tagName.toLowerCase())
-        ) {
-          return;
-        } else if (
-          sender.type && changeFormElements.includes(sender.type.toLowerCase())
-        ) {
+        const checkAttr = sender.getAttribute("type");
+        if (checkAttr && !inputFormTypes.includes(checkAttr.toLowerCase())) {
           return;
         }
+
+        // if (
+        //   sender.tagName &&
+        //   changeFormTypes.includes(sender.tagName.toLowerCase())
+        // ) {
+        //   return;
+        // } else if (
+        //   sender.type && changeFormTypes.includes(sender.type.toLowerCase())
+        // ) {
+        //   return;
+        // }
+
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(
@@ -671,14 +697,8 @@ class BittyJs extends HTMLElement {
         sender.dataset.listen,
       );
       if (listeners.length === 0) {
-        if (
-          sender.tagName &&
-          changeFormElements.includes(sender.tagName.toLowerCase())
-        ) {
-          return;
-        } else if (
-          sender.type && changeFormElements.includes(sender.type.toLowerCase())
-        ) {
+        const checkAttr = sender.getAttribute("type");
+        if (checkAttr && !enterFormTypes.includes(checkAttr.toLowerCase())) {
           return;
         }
         for (const signal of signals) {

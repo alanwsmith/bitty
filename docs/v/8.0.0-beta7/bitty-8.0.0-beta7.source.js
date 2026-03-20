@@ -52,6 +52,9 @@ class BittyJs extends HTMLElement {
         if (incoming.b.templates === undefined) {
           incoming.b.templates = {};
         }
+        if (incoming.b.debugging === undefined) {
+          incoming.b.debugging = false;
+        }
         this.addToggleSwitchTemplate(incoming);
         incoming.b.data = {};
         this.loadPageAssets(incoming);
@@ -180,6 +183,12 @@ class BittyJs extends HTMLElement {
     this.b._debouncers[key] = setTimeout(() => {
       this.b.send.apply(this, [payload, signals]);
     }, ms);
+  }
+
+  _debug(payload) {
+    if (this.b.debugging === true) {
+      console.log(payload);
+    }
   }
 
   _dedup(array) {
@@ -1069,6 +1078,17 @@ class BittyJs extends HTMLElement {
         return undefined;
       }
     };
+    el.ariaOrNull = (key) => {
+      const ariaSearch = el.closest(`[aria-${key}]`);
+      if (ariaSearch === null) {
+        return undefined;
+      }
+      const ariaValue = araiSearch.getAttribute(key);
+      if (ariaValue.trim() === "") {
+        return null;
+      }
+      return ariaValue;
+    };
     el.copy = async function () {
       if (el.value) {
         try {
@@ -1088,16 +1108,25 @@ class BittyJs extends HTMLElement {
       return true;
     };
     el.innerHTMLBool = () => {
-      if (el.innerHTML !== undefined) {
-        return this.b._getBool(el.innerHTML);
+      if (el.innerHTML === undefined) {
+        return undefined;
       }
-      return undefined;
+      return this.b._getBool(el.innerHTML);
     };
     el.innerHTMLFloat = () => {
       return parseFloat(el.innerHTML.trim().replace(",", ""));
     };
     el.innerHTMLInt = () => {
       return parseInt(el.innerHTML.trim().replace(",", ""), 10);
+    };
+    el.innerHTMLOrNull = () => {
+      if (el.innerHTML !== undefined) {
+        return undefined;
+      }
+      if (el.innerHTML.trim() === "") {
+        return null;
+      }
+      return el.innerHTML;
     };
     el.prop = (key) => {
       if (el.dataset && el.dataset[key] !== undefined) {
@@ -1138,6 +1167,16 @@ class BittyJs extends HTMLElement {
         return parseInt(propAncestor.dataset[key], 10);
       }
       return undefined;
+    };
+    el.propOrNull = (key) => {
+      const propSearch = el.closest(`[data-${key}]`);
+      if (propSearch === null) {
+        return undefined;
+      }
+      if (propSearch.dataset[key].trim() === "") {
+        return null;
+      }
+      return propSearch.dataset[key];
     };
     el.setAria = (key, value) => {
       const ariaEl = el.closest(`[aria-${key}]`);
@@ -1201,6 +1240,13 @@ class BittyJs extends HTMLElement {
     };
     el.valueInt = () => {
       return parseInt(el.value, 10);
+    };
+    el.valueOrNull = () => {
+      if (el.value && el.value.trim() === "") {
+        return null;
+      } else {
+        return el.value;
+      }
     };
     el.bittyUpdated = true;
   }

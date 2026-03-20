@@ -1,14 +1,19 @@
-<!DOCTYPE html><html lang="en"><head><style>
-    body { background-color: black; color: goldenrod; }
-    pre {
-      white-space: pre-wrap; 
-      overflow-wrap: anywhere;
-      overflow-x: auto;
-      overscroll-behavior-x: auto;
-    }
-    </style></head><body><pre>
-A MiniJinja error occurred
 
-Could not render template:
-undefined value (in versions/8/0/0/snippets/copy-with-quick-copy/overview.html:12)</p>
-</pre></body></html>
+
+
+
+<ul>
+<li>bitty provides a <code>b.quickCopy(el, sender, options = {})</code> feature.</li>
+<li>It starts by grabbing the <code>.innerHTML</code> of the <code>sender</code>, storing it, the
+changing it to <code>Copied</code>.</li>
+<li>The text from the <code>el</code> is copied (either the <code>.value</code> if it's available
+or the <code>.innerHTML</code> if it's not).</li>
+<li>After 2 seconds the original <code>.innerHTML</code> is restored to
+the <code>sender</code>.</li>
+<li>The feature is also debounced. Each time you click the button
+it'll copy the text and reset the 2 second timer before restoring
+the <code>sender</code> text.</li>
+<li>Check the <a href="/versions/8/0/0/documentation/">documentation</a> for available options.</li>
+<li>This feature is designed to cover the 80/20 happy path.
+The <code>b.copy()</code> features can be used if more controls is required.</li>
+</ul>

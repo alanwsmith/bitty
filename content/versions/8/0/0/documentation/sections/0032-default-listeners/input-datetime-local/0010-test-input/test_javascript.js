@@ -1,13 +1,16 @@
 export const b = {};
 
-let activations = 0;
+const targetType = "change";
+let gotBadEvent = false;
 
-export function signal_57616_v1(ev, __, el) {
-  activations += 1;
-  if (activations === 1 && ev.type === "change") {
-    el.innerHTML = b.time();
+export function signal_57616_v1(ev, sender, el) {
+  if (ev.type !== targetType) {
+    gotBadEvent = true;
+  }
+  if (gotBadEvent === true) {
+    el.innerHTML = `got an invalid event that is not ` + targetType;
   } else {
-    el.innerHTML =
-      "got more than one activation or something other than a change event";
+    el.innerHTML = b.time();
   }
 }
+

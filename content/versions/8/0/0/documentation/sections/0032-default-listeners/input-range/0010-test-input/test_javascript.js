@@ -1,14 +1,16 @@
 export const b = {};
 
-let gotSomethingWrong = false;
+const targetType = "input";
+let gotBadEvent = false;
 
-export function signal_33821_v1(ev, __, el) {
-  if (ev.type !== "input") {
-    gotSomethingWrong = true;
+export function signal_33821_v1(ev, sender, el) {
+  if (ev.type !== targetType) {
+    gotBadEvent = true;
   }
-  if (gotSomethingWrong === true) {
-    el.innerHTML = "got something other than an input event";
+  if (gotBadEvent === true) {
+    el.innerHTML = `got an invalid event that is not ` + targetType;
   } else {
     el.innerHTML = b.time();
   }
 }
+

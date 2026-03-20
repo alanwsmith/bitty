@@ -11,8 +11,6 @@ const changeFormTypes = [
   "option",
   "radio",
   "search",
-  "select",
-  "textarea",
   "time",
 ];
 
@@ -31,6 +29,7 @@ const enterFormTypes = [
 const inputFormTypes = [
   "range",
   "search",
+  "number",
 ];
 
 class BittyJs extends HTMLElement {
@@ -302,7 +301,7 @@ class BittyJs extends HTMLElement {
       modKeys = [];
     }
     if (options.preventDefault === undefined) {
-      options.preventDefault = true;
+      options.preventDefault = false;
     }
     if (options.listener === undefined) {
       options.listener = "keydown";
@@ -530,6 +529,16 @@ class BittyJs extends HTMLElement {
           if (checkAttr && inputFormTypes.includes(checkAttr.toLowerCase())) {
             return;
           }
+          if (
+            sender.tagName && sender.tagName.toLowerCase() === "select"
+          ) {
+            return;
+          }
+          if (
+            sender.tagName && sender.tagName.toLowerCase() === "textarea"
+          ) {
+            return;
+          }
 
           // if (checkArg && checkArg.toLowerCase() === "text") {
           //   return;
@@ -636,6 +645,11 @@ class BittyJs extends HTMLElement {
       if (listeners.length === 0) {
         const checkAttr = sender.getAttribute("type");
         if (checkAttr && !inputFormTypes.includes(checkAttr.toLowerCase())) {
+          return;
+        }
+        if (
+          sender.tagName && sender.tagName.toLowerCase() === "select"
+        ) {
           return;
         }
 

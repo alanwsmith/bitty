@@ -1,27 +1,30 @@
 const version = [8, 0, 0];
 const tagName = `bitty-${version[0]}-${version[1]}`;
 
+const textInputFields = [
+  "email",
+  "month",
+  "password",
+  "tel",
+  "text",
+  "url",
+  "week",
+];
+
 const changeFormElements = [
   "checkbox",
   "color",
   "date",
   "datetime-local",
-  "email",
   "file",
   "form",
-  "image",
-  "month",
   "number",
   "option",
-  "password",
   "radio",
   "search",
   "select",
-  "tel",
   "textarea",
   "time",
-  "url",
-  "week",
 ];
 
 class BittyJs extends HTMLElement {
@@ -511,6 +514,12 @@ class BittyJs extends HTMLElement {
         if (ev.target) {
           const checkArg = sender.getAttribute("type");
           if (checkArg && checkArg.toLowerCase() === "text") {
+            return;
+          }
+          if (checkArg && checkArg.toLowerCase() === "month") {
+            return;
+          }
+          if (checkArg && checkArg.toLowerCase() === "password") {
             return;
           }
           if (

@@ -509,24 +509,28 @@ class BittyJs extends HTMLElement {
       );
       if (listeners.length === 0) {
         if (ev.target) {
-          const checkArg = ev.target.getAttribute("type");
+          const checkArg = sender.getAttribute("type");
           if (checkArg && checkArg.toLowerCase() === "text") {
+            return;
+          }
+          if (
+            checkArg &&
+            changeFormElements.includes(checkArg.toLowerCase())
+          ) {
             return;
           }
         }
         if (sender.isContentEditable === true && ev.type === "click") {
           return;
-        } else if (
+        }
+        if (
           sender.tagName &&
           changeFormElements.includes(sender.tagName.toLowerCase()) &&
           ev.type === "click"
         ) {
           return;
-        } else if (
-          sender.type && changeFormElements.includes(sender.type.toLowerCase())
-        ) {
-          return;
         }
+
         for (const signal of signals) {
           if (typeof this[signal] === "function") {
             const receivers = document.querySelectorAll(

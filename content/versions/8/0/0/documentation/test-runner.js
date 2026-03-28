@@ -3,7 +3,7 @@ export const b = { init: "initDocTests" };
 let config;
 
 export function initDocTests(_, __, el) {
-  config = b.loadPage("config", {
+  config = b.loadPageData("config", {
     autorun: false,
     runErrors: true,
   });
@@ -25,13 +25,13 @@ export function initDocTests(_, __, el) {
 export function switchRunErrors(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   config.runErrors = sender.ariaAsBool("checked");
-  b.savePage("config", config);
+  b.savePageData(config, "config");
 }
 
 export function switchAutorun(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   config.autorun = sender.ariaAsBool("checked");
-  b.savePage("config", config);
+  b.savePageData(config, "config");
 }
 
 const levels = ["pass", "todo", "fail"];

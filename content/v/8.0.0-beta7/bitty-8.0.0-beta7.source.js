@@ -276,6 +276,36 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
+  _getValues() {
+    const keys = [
+      "checked",
+      "diabled",
+      "hidden",
+      "readOnly",
+      "spellcheck",
+      "value",
+    ];
+    return [...this.b.qsa(`[data-save][id]`)]
+      .filter((el) => el.dataset.save === "true")
+      .map((el) => {
+        const item = {
+          id: el.id,
+          aria: {},
+          keys: {},
+        };
+        for (const key of keys) {
+          if (el[key]) item.keys[key] = el[key];
+        }
+        for (const attr of el.attributes) {
+          if (attr.name.startsWith("aria-")) {
+            const ariaKey = attr.name.replace("aria-", "");
+            item.aria[ariaKey] = attr.value;
+          }
+        }
+        return item;
+      });
+  }
+
   loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
       if (script.type === "text/html" && script.id !== undefined) {
@@ -912,7 +942,21 @@ class BittyJs extends HTMLElement {
     return result.content;
   }
 
-  _load(key, fallback) {
+  _setValues(payload) {
+    for (const item of payload) {
+      const el = this.b.qs(`#${item.id}`);
+      if (el) {
+        for (const key in item.keys) {
+          el[key] = item.keys[key];
+        }
+        for (const key in item.aria) {
+          el.setAttribute(`aria-${key}`, item.aria[key]);
+        }
+      }
+    }
+  }
+
+  _loadData(key, fallback) {
     const storage = localStorage.getItem(key);
     if (storage !== null) {
       try {
@@ -927,9 +971,9 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  _loadPage(key, fallback) {
+  _loadPageData(key, fallback) {
     const url = new URL(window.location.href);
-    return this.b.load(`${url.pathname}-${key}`, fallback);
+    return this.b.loadData(`${url.pathname}-${key}`, fallback);
   }
 
   _switch(subs = {}) {
@@ -952,14 +996,14 @@ class BittyJs extends HTMLElement {
     return this.b.render("switch", subs);
   }
 
-  _save(data, key) {
+  _saveData(data, key) {
     localStorage.setItem(key, JSON.stringify(data));
     return true;
   }
 
-  _savePage(data, key) {
+  _savePageData(data, key) {
     const url = new URL(window.location.href);
-    return this.b.save(data, `${url.pathname}-${key}`);
+    return this.b.saveData(data, `${url.pathname}-${key}`);
   }
 
   _send(payload, signals) {
@@ -1095,16 +1139,16 @@ class BittyJs extends HTMLElement {
       }
       return true;
     };
-    el.innerHTMLBool = () => {
+    el.innerHTMLAsBool = () => {
       if (el.innerHTML === undefined) {
         return undefined;
       }
       return this.b._getBool(el.innerHTML);
     };
-    el.innerHTMLFloat = () => {
+    el.innerHTMLAsFloat = () => {
       return parseFloat(el.innerHTML.trim().replace(",", ""));
     };
-    el.innerHTMLInt = () => {
+    el.innerHTMLAsInt = () => {
       return parseInt(el.innerHTML.trim().replace(",", ""), 10);
     };
     el.prop = (key) => {
@@ -1117,7 +1161,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    el.propBool = (key) => {
+    el.propAsBool = (key) => {
       if (el.dataset && el.dataset[key] !== undefined) {
         return this.b._getBool(el.dataset[key]);
       }
@@ -1127,7 +1171,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    el.propFloat = (key) => {
+    el.propAsFloat = (key) => {
       if (el.dataset && el.dataset[key] !== undefined) {
         return parseFloat(el.dataset[key]);
       }
@@ -1137,7 +1181,7 @@ class BittyJs extends HTMLElement {
       }
       return undefined;
     };
-    el.propInt = (key) => {
+    el.propAsInt = (key) => {
       if (el.dataset && el.dataset[key] !== undefined) {
         return parseInt(el.dataset[key], 10);
       }

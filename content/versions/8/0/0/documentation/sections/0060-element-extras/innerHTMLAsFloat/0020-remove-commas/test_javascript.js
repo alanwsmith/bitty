@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_69365_v1(_, __, el) {
-  if (el.innerHTMLFloat() === 9000.1) {
+  if (el.innerHTMLAsFloat() === 9000.1) {
     b.trigger("signal_69365_v2");
   }
 }

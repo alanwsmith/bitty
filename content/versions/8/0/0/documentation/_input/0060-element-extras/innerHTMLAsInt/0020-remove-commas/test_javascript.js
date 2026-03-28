@@ -1,7 +1,7 @@
 export const b = {};
 
 export function $_SIGNAL_(_, __, el) {
-  if (el.innerHTMLInt() === 9000) {
+  if (el.innerHTMLAsInt() === 9000) {
     b.trigger("$_SIGNAL2_");
   }
 }

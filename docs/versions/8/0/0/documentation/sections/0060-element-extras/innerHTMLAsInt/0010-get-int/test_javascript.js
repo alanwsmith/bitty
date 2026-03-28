@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_C7219_v1(_, __, el) {
-  if (el.innerHTMLInt() === 100) {
+  if (el.innerHTMLAsInt() === 100) {
     b.trigger("signal_C7219_v2");
   }
 }

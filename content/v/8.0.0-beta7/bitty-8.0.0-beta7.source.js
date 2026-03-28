@@ -32,7 +32,6 @@ const inputFormTypes = [
   "number",
 ];
 
-const DB_NAME = "bitty_site_db";
 const STORE_NAME = "bitty_store";
 const DB_VERSION = 1;
 
@@ -339,7 +338,7 @@ class BittyJs extends HTMLElement {
     const url = new URL(window.location.href);
     const pageID = btoa(url.pathname);
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(`${DB_NAME}_${pageID}`, DB_VERSION);
+      const request = indexedDB.open(`bitty_page_db_${pageID}`, DB_VERSION);
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.result);
       request.onupgradeneeded = (event) => {
@@ -353,7 +352,7 @@ class BittyJs extends HTMLElement {
 
   async __initSiteDB() {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      const request = indexedDB.open("bitty_site_db", DB_VERSION);
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.result);
       request.onupgradeneeded = (event) => {
@@ -862,17 +861,17 @@ class BittyJs extends HTMLElement {
     }
   }
 
-  async __putValueInSiteDB(value, key) {
-    const db = await this.b._initSiteDB();
-    return new Promise((resolve, reject) => {
-      const store = db
-        .transaction(STORE_NAME, "readwrite")
-        .objectStore(STORE_NAME);
-      const request = store.put(value, key);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.result);
-    });
-  }
+  // async __putValueInSiteDB(value, key) {
+  //   const db = await this.b._initSiteDB();
+  //   return new Promise((resolve, reject) => {
+  //     const store = db
+  //       .transaction(STORE_NAME, "readwrite")
+  //       .objectStore(STORE_NAME);
+  //     const request = store.put(value, key);
+  //     request.onsuccess = () => resolve(request.result);
+  //     request.onerror = () => reject(request.result);
+  //   });
+  // }
 
   _qs(selector, el = null) {
     if (el === null) {
@@ -1044,7 +1043,16 @@ class BittyJs extends HTMLElement {
     // return undefined;
   }
 
-  _loadPageData(key, fallback) {
+  async _loadPageData(key, fallback) {
+    const db = await this.b._initPageDB();
+    return new Promise((resolve, reject) => {
+      const store = db
+        .transaction(STORE_NAME, "readonly")
+        .objectStore(STORE_NAME);
+      const request = store.get(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.result);
+    });
     // const url = new URL(window.location.href);
     // return this.b.loadData(`${url.pathname}-${key}`, fallback);
   }
@@ -1086,8 +1094,22 @@ class BittyJs extends HTMLElement {
   }
 
   async _saveSiteData(value, key) {
-    const result = await this.b._putValueInPageDB(value, key);
+    const db = await this.b._initSiteDB();
+    const result = await new Promise((resolve, reject) => {
+      const store = db
+        .transaction(STORE_NAME, "readwrite")
+        .objectStore(STORE_NAME);
+      const request = store.put(value, key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.result);
+    });
     return result;
+
+    // TODO: Pull _pubValueInPageDB code here instead
+    // of calling out to it since it's not used
+    // anywhere else.
+    //const result = await this.b._putValueInSiteDB(value, key);
+    //return result;
     // localStorage.setItem(key, JSON.stringify(data));
     //return true;
   }

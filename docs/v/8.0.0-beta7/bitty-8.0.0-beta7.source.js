@@ -213,7 +213,7 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-  async _get(url, fallback = null, options = {}) {
+  async _getData(url, fallback = null, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {

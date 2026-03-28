@@ -8,6 +8,6 @@ export async function signal_80ADA_v1(_, __, el) {
   if (result === "80ADA_v1" && data === value) {
     el.innerHTML = b.time();
   } else {
-    el.innerHTML = "could not save page data";
+    el.innerHTML = "error loading page data.";
   }
 }

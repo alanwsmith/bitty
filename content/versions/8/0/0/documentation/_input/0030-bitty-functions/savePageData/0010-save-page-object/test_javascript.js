@@ -7,6 +7,6 @@ export async function $_SIGNAL_(_, __, el) {
   if (result === "$_TEST_ID_" && data.alfa === "bravo") {
     el.innerHTML = b.time();
   } else {
-    el.innerHTML = "could not save page data";
+    el.innerHTML = "error loading page data.";
   }
 }

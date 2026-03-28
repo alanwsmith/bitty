@@ -7,6 +7,6 @@ export async function signal_09889_v1(_, __, el) {
   if (result === "09889_v1" && data.alfa === "bravo") {
     el.innerHTML = b.time();
   } else {
-    el.innerHTML = "could not save page data";
+    el.innerHTML = "error loading page data.";
   }
 }

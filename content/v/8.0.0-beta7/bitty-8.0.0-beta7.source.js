@@ -1053,6 +1053,9 @@ class BittyJs extends HTMLElement {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.result);
     });
+    if (result === undefined && fallback !== undefined) {
+      return fallback;
+    }
     return result;
 
     // const url = new URL(window.location.href);

@@ -1054,6 +1054,7 @@ class BittyJs extends HTMLElement {
       request.onerror = () => reject(request.result);
     });
     if (result === undefined && fallback !== undefined) {
+      await this.b.savePageData(fallback, key);
       return fallback;
     }
     return result;

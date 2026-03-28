@@ -1,7 +1,7 @@
 export const b = {};
 
-export async function signal_23ABD_v1(_, __, el) {
-  const key = "23ABD_v1";
+export async function $_SIGNAL_(_, __, el) {
+  const key = "$_TEST_ID_";
   await b.loadPageData(key, []);
   const data = await b.loadPageData(key);
   if (JSON.stringify(data) === "[]") {

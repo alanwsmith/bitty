@@ -292,17 +292,17 @@ class BittyJs extends HTMLElement {
     return undefined;
   }
 
-  async __getValueFromSiteDB(key) {
-    const db = await this.b._initSiteDB();
-    return new Promise((resolve, reject) => {
-      const store = db
-        .transaction(STORE_NAME, "readonly")
-        .objectStore(STORE_NAME);
-      const request = store.get(key);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.result);
-    });
-  }
+  // async __getValueFromSiteDB(key) {
+  //   const db = await this.b._initSiteDB();
+  //   return new Promise((resolve, reject) => {
+  //     const store = db
+  //       .transaction(STORE_NAME, "readonly")
+  //       .objectStore(STORE_NAME);
+  //     const request = store.get(key);
+  //     request.onsuccess = () => resolve(request.result);
+  //     request.onerror = () => reject(request.result);
+  //   });
+  // }
 
   _getValues() {
     const keys = [
@@ -1027,8 +1027,23 @@ class BittyJs extends HTMLElement {
   }
 
   async _loadSiteData(key, fallback) {
-    const result = await this.b._getValueFromSiteDB(key);
+    const db = await this.b._initSiteDB();
+    const result = await new Promise((resolve, reject) => {
+      const store = db
+        .transaction(STORE_NAME, "readonly")
+        .objectStore(STORE_NAME);
+      const request = store.get(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.result);
+    });
+    if (result === undefined && fallback !== undefined) {
+      await this.b.saveSiteData(fallback, key);
+      return fallback;
+    }
     return result;
+
+    // const result = await this.b._getValueFromSiteDB(key);
+    // return result;
     // const storage = localStorage.getItem(key);
     // if (storage !== null) {
     //   try {

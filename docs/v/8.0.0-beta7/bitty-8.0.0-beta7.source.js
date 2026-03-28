@@ -1045,7 +1045,7 @@ class BittyJs extends HTMLElement {
 
   async _loadPageData(key, fallback) {
     const db = await this.b._initPageDB();
-    return new Promise((resolve, reject) => {
+    const result = await new Promise((resolve, reject) => {
       const store = db
         .transaction(STORE_NAME, "readonly")
         .objectStore(STORE_NAME);
@@ -1053,6 +1053,8 @@ class BittyJs extends HTMLElement {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.result);
     });
+    return result;
+
     // const url = new URL(window.location.href);
     // return this.b.loadData(`${url.pathname}-${key}`, fallback);
   }

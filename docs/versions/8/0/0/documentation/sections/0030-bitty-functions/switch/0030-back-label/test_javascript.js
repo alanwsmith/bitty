@@ -9,6 +9,6 @@ export function init_28678_v1(_, __, el) {
 }
 
 export function signal_28678_v1(_, sender, el) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
   el.innerHTML = b.time();
 }

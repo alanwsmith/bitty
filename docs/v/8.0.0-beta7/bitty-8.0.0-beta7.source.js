@@ -1052,7 +1052,7 @@ class BittyJs extends HTMLElement {
         return undefined;
       }
     };
-    el.ariaBool = (key) => {
+    el.ariaAsBool = (key) => {
       const ariaEl = el.closest(`[aria-${key}]`);
       if (ariaEl) {
         const value = ariaEl.getAttribute(`aria-${key}`);
@@ -1061,7 +1061,7 @@ class BittyJs extends HTMLElement {
         return undefined;
       }
     };
-    el.ariaFloat = (key) => {
+    el.ariaAsFloat = (key) => {
       const ariaEl = el.closest(`[aria-${key}]`);
       if (ariaEl) {
         return parseFloat(ariaEl.getAttribute(`aria-${key}`));
@@ -1069,24 +1069,13 @@ class BittyJs extends HTMLElement {
         return undefined;
       }
     };
-    el.ariaInt = (key) => {
+    el.ariaAsInt = (key) => {
       const ariaEl = el.closest(`[aria-${key}]`);
       if (ariaEl) {
         return parseInt(ariaEl.getAttribute(`aria-${key}`), 10);
       } else {
         return undefined;
       }
-    };
-    el.ariaOrNull = (key) => {
-      const ariaSearch = el.closest(`[aria-${key}]`);
-      if (ariaSearch === null) {
-        return undefined;
-      }
-      const ariaValue = araiSearch.getAttribute(key);
-      if (ariaValue.trim() === "") {
-        return null;
-      }
-      return ariaValue;
     };
     el.copy = async function () {
       if (el.value) {
@@ -1117,15 +1106,6 @@ class BittyJs extends HTMLElement {
     };
     el.innerHTMLInt = () => {
       return parseInt(el.innerHTML.trim().replace(",", ""), 10);
-    };
-    el.innerHTMLOrNull = () => {
-      if (el.innerHTML !== undefined) {
-        return undefined;
-      }
-      if (el.innerHTML.trim() === "") {
-        return null;
-      }
-      return el.innerHTML;
     };
     el.prop = (key) => {
       if (el.dataset && el.dataset[key] !== undefined) {
@@ -1166,16 +1146,6 @@ class BittyJs extends HTMLElement {
         return parseInt(propAncestor.dataset[key], 10);
       }
       return undefined;
-    };
-    el.propOrNull = (key) => {
-      const propSearch = el.closest(`[data-${key}]`);
-      if (propSearch === null) {
-        return undefined;
-      }
-      if (propSearch.dataset[key].trim() === "") {
-        return null;
-      }
-      return propSearch.dataset[key];
     };
     el.setAria = (key, value) => {
       const ariaEl = el.closest(`[aria-${key}]`);
@@ -1239,13 +1209,6 @@ class BittyJs extends HTMLElement {
     };
     el.valueInt = () => {
       return parseInt(el.value, 10);
-    };
-    el.valueOrNull = () => {
-      if (el.value && el.value.trim() === "") {
-        return null;
-      } else {
-        return el.value;
-      }
     };
     el.bittyUpdated = true;
   }

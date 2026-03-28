@@ -6,6 +6,6 @@ export function init_$_TEST_ID_(_, __, el) {
 }
 
 export function $_SIGNAL_(_, sender, el) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
   el.innerHTML = b.time();
 }

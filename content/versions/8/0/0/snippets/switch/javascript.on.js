@@ -9,6 +9,6 @@ export function initSwitch(_, __, el) {
 }
 
 export function toggle(_, sender, el) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
-  el.innerHTML = sender.ariaBool("checked") ? "on" : "off";
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  el.innerHTML = sender.ariaAsBool("checked") ? "on" : "off";
 }

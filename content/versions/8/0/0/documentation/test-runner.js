@@ -23,14 +23,14 @@ export function initDocTests(_, __, el) {
 }
 
 export function switchRunErrors(_, sender, ___) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
-  config.runErrors = sender.ariaBool("checked");
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  config.runErrors = sender.ariaAsBool("checked");
   b.savePage("config", config);
 }
 
 export function switchAutorun(_, sender, ___) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
-  config.autorun = sender.ariaBool("checked");
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  config.autorun = sender.ariaAsBool("checked");
   b.savePage("config", config);
 }
 

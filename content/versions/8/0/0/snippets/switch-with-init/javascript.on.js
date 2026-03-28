@@ -22,8 +22,8 @@ export function initSwitches(_, __, el) {
 }
 
 export function toggle(_, sender, ___) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
-  data[sender.prop("key")] = sender.ariaBool("checked");
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  data[sender.prop("key")] = sender.ariaAsBool("checked");
   b.savePage("state", data);
   b.send(sender.prop("key"), "display");
 }

@@ -43,8 +43,8 @@ export function deckError(_, __, el) {
 }
 
 export function filter(_, sender, el) {
-  sender.setAria("checked", !sender.ariaBool("checked"));
-  el.setProp("filtered", sender.ariaBool("checked"));
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  el.setProp("filtered", sender.ariaAsBool("checked"));
 }
 
 function sortedCards() {

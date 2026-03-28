@@ -1,10 +1,10 @@
 export const b = {};
 
-export async function signal_054ED_v1(_, __, el) {
-  const key = "054ED_v1";
+export async function $_SIGNAL_(_, __, el) {
+  const key = "$_TEST_ID_";
   const result = await b.savePageData("bravo", key);
   const data = await b.loadPageData(key);
-  if (result === "054ED_v1" && data === "bravo") {
+  if (result === "$_TEST_ID_" && data === "bravo") {
     el.innerHTML = b.time();
   } else {
     el.innerHTML = "error loading page data.";

@@ -52,9 +52,6 @@ class BittyJs extends HTMLElement {
         if (incoming.b.templates === undefined) {
           incoming.b.templates = {};
         }
-        if (incoming.b.debugging === undefined) {
-          incoming.b.debugging = false;
-        }
         this.addToggleSwitchTemplate(incoming);
         incoming.b.data = {};
         this.loadPageAssets(incoming);
@@ -143,9 +140,9 @@ class BittyJs extends HTMLElement {
 
   addToggleSwitchTemplate(target) {
     target.b.templates.switch = `
-<label for="__ID__" class="__CLASS__">
+<label for="__ID__" class="__CLASS__"__KEY_ATTR__>
   __PREPEND__
-  <button id="__ID__" role="switch" __SEND_ATTR__ __RECEIVE_ATTR__ __KEY_ATTR__ aria-checked="__STATE__">
+  <button id="__ID__" role="switch"__SEND_ATTR____RECEIVE_ATTR____KEY_ATTR____SAVE_ATTR__ aria-checked="__STATE__">
     <span></span><span></span>
   </button>
   __APPEND__
@@ -183,12 +180,6 @@ class BittyJs extends HTMLElement {
     this.b._debouncers[key] = setTimeout(() => {
       this.b.send.apply(this, [payload, signals]);
     }, ms);
-  }
-
-  _debug(payload) {
-    if (this.b.debugging === true) {
-      console.log(payload);
-    }
   }
 
   _dedup(array) {
@@ -953,21 +944,22 @@ class BittyJs extends HTMLElement {
     // values. They are converted into the full attribute
     // strings here. The prevents outputting empty attributes.
     subs.__RECEIVE_ATTR__ = subs.__RECEIVE__
-      ? `data-r="${subs.__RECEIVE__}"`
+      ? ` data-r="${subs.__RECEIVE__}"`
       : "";
-    subs.__SEND_ATTR__ = subs.__SEND__ ? `data-s="${subs.__SEND__}"` : "";
-    subs.__KEY_ATTR__ = subs.__KEY__ ? `data-s="${subs.__KEY__}"` : "";
+    subs.__SEND_ATTR__ = subs.__SEND__ ? ` data-s="${subs.__SEND__}"` : "";
+    subs.__KEY_ATTR__ = subs.__KEY__ ? ` data-s="${subs.__KEY__}"` : "";
+    subs.__SAVE_ATTR__ = subs.__SAVE__ ? ` data-save="${subs.__SAVE__}"` : "";
     return this.b.render("switch", subs);
   }
 
-  _save(key, data) {
+  _save(data, key) {
     localStorage.setItem(key, JSON.stringify(data));
     return true;
   }
 
-  _savePage(key, data) {
+  _savePage(data, key) {
     const url = new URL(window.location.href);
-    return this.b.save(`${url.pathname}-${key}`, data);
+    return this.b.save(data, `${url.pathname}-${key}`);
   }
 
   _send(payload, signals) {

@@ -13306,27 +13306,8 @@ with the key, then toggle the value on an ancestor if one exists.
 <summary>v8.0.0-beta7.md</summary>
 <h2>Version 8.0.0-beta-7</h2>
 <p>DATE: TBD</p>
+<h2>TODO</h2>
 <ul>
-<li>
-<p>Updated form input listeners for
-better defaults. Text style fields
-listen for the enter key.
-<code>type=&quot;search&quot;</code> listens for
-both <code>input</code> and the enter key.
-Other inputs listen for <code>change</code>
-events.</p>
-</li>
-<li>
-<p>Set the default for <code>b.mapKey()</code>
-to not <code>.preventDefault</code> on the
-event. It'll be up to
-the signal function to make
-that switch. (The option
-still exists to implement
-<code>.prevendDefault</code> when defining
-the <code>b.mapKey()</code> through its
-options.)</p>
-</li>
 <li>
 <p>TODO: <code>data-listen</code> attributes
 attach their listeners directly to
@@ -13340,15 +13321,6 @@ and define new listeners when
 added via <code>b.render()</code></p>
 </li>
 <li>
-<p>TODO: Added a <code>b.debugging</code> property
-that's set to <code>false</code> by default.</p>
-</li>
-<li>
-<p>TODO: Added a <code>b.debug()</code> method
-that forwards to <code>console.log()</code>
-if <code>b.debugging</code> is set to <code>true</code>.</p>
-</li>
-<li>
 <p>TODO: Signals can be called
 with regular expressions for the names.</p>
 </li>
@@ -13358,23 +13330,6 @@ switch template so that it doesn't
 output empty <code>data-r</code>, <code>data-s</code>,
 or <code>data-key</code> attributes if
 no values are provided for them.</p>
-</li>
-<li>
-<p>TODO: Renamed <code>.valueInt()</code> to <code>.valueAsInt()</code>
-and similar for <code>.prop...()</code>, <code>.aria...()</code>,
-and <code>.innerHTML...()</code></p>
-</li>
-<li>
-<p>TODO: Set up templates to use
-<code>data-key</code> instead of <code>id</code> to get the
-key for the template to avoid potential
-conflict with elements that have
-the same <code>id</code> on the page.</p>
-</li>
-<li>
-<p>TODO: Added <code>b.prop(key, el)</code>, <code>b.aria(key, el)</code>
-<code>b.innerHTML(el)</code>, <code>b.value(el)</code> and related
-(e.g. <code>b.valueAsInt(el)</code>) to <code>b</code></p>
 </li>
 <li>
 <p>TODO: Added <code>__SAVE__</code> to <code>b.switch()</code>
@@ -13403,38 +13358,6 @@ is different from the order of
 That order feels less natural though.
 Putting the value first is also
 the way that indexedDB works.</p>
-</li>
-<li>
-<p>Removed <code>b.debugging</code> flag
-and <code>b.debug()</code> method. It's
-not worth adding the complexity
-because the different things to do
-with debugging are so varied. It
-also avoids having to pull out
-the debug value from a saved state
-object which could otherwise
-be used directly.</p>
-</li>
-<li>
-<p>TODO: Renamed <code>b.save()</code> to
-<code>b.saveData()</code>.</p>
-</li>
-<li>
-<p>TODO: Renamed <code>b.savePage()</code>
-to <code>b.savePageData()</code>.</p>
-</li>
-<li>
-<p>TODO: Renamed <code>b.load()</code>
-to <code>b.loadData()</code>.</p>
-</li>
-<li>
-<p>TODO: Renamed <code>b.loadData()</code>
-to <code>b.loadPageData()</code>.</p>
-</li>
-<li>
-<p>TODO: Switched backend for
-<code>b.save()</code> and friends to
-from localStorage to IndexedDB.</p>
 </li>
 <li>
 <p>TODO: Added <code>b.deleteData()</code>
@@ -13486,12 +13409,68 @@ returns a boolean from
 the <code>.value</code> or <code>.innerHTML</code>
 of the selected element.</p>
 </li>
-<li>
-<p>TODO: Renamed <code>b.get()</code>
-to <code>b.getData()</code>.</p>
-</li>
 </ul>
-</details>
+<h2>Done</h2>
+<ul>
+<li>
+<p>Updated form input listeners for
+better defaults. Text style fields
+listen for the enter key.
+<code>type=&quot;search&quot;</code> listens for
+both <code>input</code> and the enter key.
+Other inputs listen for <code>change</code>
+events.</p>
+</li>
+<li>
+<p>Renamed <code>b.get()</code>
+to <code>b.getData()</code> for clarity.</p>
+</li>
+<li>
+<p>Switched backend for
+<code>b.save()</code> and friends to
+from localStorage to IndexedDB.
+The methods use a default
+database and allow sending
+in key/value pairs.</p>
+</li>
+<li>
+<p>Renamed <code>b.save()</code> to
+<code>b.saveData()</code>
+for clarity.</p>
+</li>
+<li>
+<p>Renamed <code>b.savePage()</code>
+to <code>b.savePageData()</code>
+for clarity.</p>
+</li>
+<li>
+<p>Renamed <code>b.load()</code>
+to <code>b.loadData()</code>
+for clarity.</p>
+</li>
+<li>
+<p>Renamed <code>b.loadData()</code>
+to <code>b.loadPageData()</code>
+for clarity.</p>
+</li>
+<li>
+<p>Set the default for <code>b.mapKey()</code>
+to not <code>.preventDefault</code> on the
+event. It'll be up to
+the signal function to make
+that switch. (The option
+still exists to implement
+<code>.prevendDefault</code> when defining
+the <code>b.mapKey()</code> through its
+options.)</p>
+</li>
+<li>
+<p>Renamed <code>.valueInt()</code> to <code>.valueAsInt()</code>
+and similar for <code>.prop...()</code>, <code>.aria...()</code>,
+and <code>.innerHTML...()</code> with <code>...AsBool()</code>
+and <code>...AsFloat()</code>.</p>
+</li>
+</ul></details>
 <details>
 <summary>v8.0.0-beta6.md</summary>
 <h2>Version 8.0.0-beta-6</h2>

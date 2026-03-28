@@ -2,8 +2,8 @@ export const b = { init: "initDocTests" };
 
 let config;
 
-export function initDocTests(_, __, el) {
-  config = b.loadPageData("config", {
+export async function initDocTests(_, __, el) {
+  config = await b.loadPageData("config", {
     autorun: false,
     runErrors: true,
   });
@@ -22,25 +22,25 @@ export function initDocTests(_, __, el) {
   }
 }
 
-export function switchRunErrors(_, sender, ___) {
+export async function switchRunErrors(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   config.runErrors = sender.ariaAsBool("checked");
-  b.savePageData(config, "config");
+  await b.savePageData(config, "config");
 }
 
-export function switchAutorun(_, sender, ___) {
+export async function switchAutorun(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   config.autorun = sender.ariaAsBool("checked");
-  b.savePageData(config, "config");
+  await b.savePageData(config, "config");
 }
 
 const levels = ["pass", "todo", "fail"];
 
 let testsAreRunning = false;
 
-export function testControls(_, __, el) {
+export async function testControls(_, __, el) {
   el.replaceChildren(b.render("controls"));
-  const testTrigger = b.loadPageData("autorun", { doIt: false });
+  const testTrigger = await b.loadPageData("autorun", { doIt: false });
 }
 
 // Reminder: set data-test-status="-1"

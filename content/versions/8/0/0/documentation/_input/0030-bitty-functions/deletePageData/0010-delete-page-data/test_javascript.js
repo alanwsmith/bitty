@@ -1,7 +1,7 @@
 export const b = {};
 
-export async function signal_C1884_v1(_, __, el) {
-  const key = "C1884_v1";
+export async function $_SIGNAL_(_, __, el) {
+  const key = "$_TEST_ID_";
   const value = "alfa";
   await b.savePageData(value, key);
   const result1 = await b.loadPageData(key);

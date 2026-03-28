@@ -189,6 +189,30 @@ class BittyJs extends HTMLElement {
     return [...new Set(array)];
   }
 
+  async _deletePageData(key) {
+    const db = await this.b._initPageDB();
+    return new Promise((resolve, reject) => {
+      const store = db
+        .transaction(STORE_NAME, "readwrite")
+        .objectStore(STORE_NAME);
+      const request = store.delete(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.result);
+    });
+  }
+
+  async _deleteSiteData(key) {
+    const db = await this.b._initSiteDB();
+    return new Promise((resolve, reject) => {
+      const store = db
+        .transaction(STORE_NAME, "readwrite")
+        .objectStore(STORE_NAME);
+      const request = store.delete(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.result);
+    });
+  }
+
   // TODO: Needs testing.
   async __deleteValueFromSiteDB(key) {
     const db = await this.b._initSiteDB();

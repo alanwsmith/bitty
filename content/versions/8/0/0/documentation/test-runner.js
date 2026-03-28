@@ -40,7 +40,7 @@ let testsAreRunning = false;
 
 export function testControls(_, __, el) {
   el.replaceChildren(b.render("controls"));
-  const testTrigger = b.loadPage("autorun", { doIt: false });
+  const testTrigger = b.loadPageData("autorun", { doIt: false });
 }
 
 // Reminder: set data-test-status="-1"

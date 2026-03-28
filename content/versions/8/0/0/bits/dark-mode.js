@@ -1,7 +1,7 @@
 export const b = { init: "initDarkMode" };
 
 export function initDarkMode(_, __, el) {
-  const data = b.loadData("colorMode", { theme: "auto", contrast: "" });
+  const data = b.loadSiteData("colorMode", { theme: "auto", contrast: "" });
   const themes = ["auto", "light", "dark"];
   el.replaceChildren(
     ...themes.map((theme) => {
@@ -15,7 +15,7 @@ export function initDarkMode(_, __, el) {
 }
 
 export function setMode(_, sender, el) {
-  b.saveData("colorMode", { theme: sender.prop("theme"), contrast: "" });
+  b.saveSiteData("colorMode", { theme: sender.prop("theme"), contrast: "" });
   switchColorStyles();
   if (sender.prop("theme") === el.prop("theme")) {
     el.setProp("active", "true");

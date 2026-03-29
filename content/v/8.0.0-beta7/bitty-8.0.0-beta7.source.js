@@ -59,27 +59,30 @@ class BittyJs extends HTMLElement {
           incoming.b.config = {};
         }
         if (incoming.b.config.getState === undefined) {
-          incoming.b.config.getState = [
-            "ariaAutoComplete",
-            "ariaChecked",
-            "ariaDisabled",
-            "ariaExpended",
-            "ariaHidden",
-            "ariaPressed",
-            "ariaReadOnly",
-            "ariaSelected",
-            "ariaValueNow",
-            "ariaValueText",
-            "checked",
-            "diabled",
-            "hidden",
-            "readOnly",
-            // TODO: Confirm selected is what to look for
-            // for options.
-            "selected",
-            "spellcheck",
-            "value",
-          ];
+          incoming.b.config.getState = {
+            attributes: [
+              "ariaAutoComplete",
+              "ariaChecked",
+              "ariaDisabled",
+              "ariaExpended",
+              "ariaHidden",
+              "ariaPressed",
+              "ariaReadOnly",
+              "ariaSelected",
+              "ariaValueNow",
+              "ariaValueText",
+              "checked",
+              "diabled",
+              "hidden",
+              "readOnly",
+              // TODO: Confirm selected is what to look for
+              // for options.
+              "selected",
+              "spellcheck",
+              "value",
+            ],
+            dataset: [],
+          };
         }
         this.addToggleSwitchTemplate(incoming);
         incoming.b.data = {};
@@ -372,9 +375,17 @@ class BittyJs extends HTMLElement {
       .filter((el) => el.dataset.save === "true")
       .map((el) => {
         const item = { id: el.id, attributes: {}, dataset: {} };
-        for (const attr of this.b.config.getState) {
+        for (const attr of this.b.config.getState.attributes) {
           if (el[attr]) item.attributes[attr] = el[attr];
         }
+        for (const attr of this.b.config.getState.dataset) {
+          if (el.dataset[attr]) item.dataset[attr] = el.dataset[attr];
+        }
+
+        // for (const attr of this.b.config.getState) {
+        //   if (el[attr]) item.attributes[attr] = el[attr];
+        // }
+
         // for (const attr of this.b.config.getState.attributes) {
         //   if (el[attr]) item.attributes[attr] = el[attr];
         // }

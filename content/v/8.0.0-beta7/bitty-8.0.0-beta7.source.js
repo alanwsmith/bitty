@@ -91,6 +91,8 @@ class BittyJs extends HTMLElement {
             }
           }
         });
+        // TODO: Attach data listeners directly to elements
+        // instead of to window.
         [...document.querySelectorAll("[data-listen]")].forEach(
           (el) => {
             incoming.b._splitSignalString(el.dataset.listen).forEach(
@@ -143,9 +145,9 @@ class BittyJs extends HTMLElement {
 
   addToggleSwitchTemplate(target) {
     target.b.templates.switch = `
-<label for="__ID__" class="__CLASS__"__KEY_ATTR__>
+<label for="__ID__" class="__CLASS__"__KEY_ATTR____LABLE_MISC__>
   __PREPEND__
-  <button id="__ID__" role="switch"__SEND_ATTR____RECEIVE_ATTR____KEY_ATTR____SAVE_ATTR__ aria-checked="__STATE__">
+  <button id="__ID__" role="switch"__SEND_ATTR____RECEIVE_ATTR____KEY_ATTR____SAVE_ATTR__ aria-checked="__STATE__"__BUTTON_MISC__>
     <span></span><span></span>
   </button>
   __APPEND__
@@ -972,6 +974,9 @@ class BittyJs extends HTMLElement {
     return result;
   }
 
+  // TODO: Look for incoming `data-listen` attributes
+  // and attach listeners directly to respective
+  // elements.
   _render(input, subs = {}) {
     if (input instanceof Array === false) {
       input = [input];
@@ -1119,6 +1124,10 @@ class BittyJs extends HTMLElement {
     subs.__SEND_ATTR__ = subs.__SEND__ ? ` data-s="${subs.__SEND__}"` : "";
     subs.__KEY_ATTR__ = subs.__KEY__ ? ` data-s="${subs.__KEY__}"` : "";
     subs.__SAVE_ATTR__ = subs.__SAVE__ ? ` data-save="${subs.__SAVE__}"` : "";
+    subs.__LABEL_MISC__ = subs.__LABEL_MISC__ ? ` ${subs.__LABEL_MISC__}` : "";
+    subs.__BUTTON_MISC__ = subs.__BUTTON_MISC__
+      ? ` ${subs.__BUTTON_MISC__}`
+      : "";
     return this.b.render("switch", subs);
   }
 
@@ -1398,13 +1407,13 @@ class BittyJs extends HTMLElement {
         }
       }
     };
-    el.valueBool = () => {
+    el.valueAsBool = () => {
       return this.b._getBool(el.value);
     };
-    el.valueFloat = () => {
+    el.valueAsFloat = () => {
       return parseFloat(el.value);
     };
-    el.valueInt = () => {
+    el.valueAsInt = () => {
       return parseInt(el.value, 10);
     };
     el.bittyUpdated = true;

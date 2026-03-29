@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_72290_v1(_, __, el) {
-  if (el.valueBool() === true) {
+  if (el.valueAsBool() === true) {
     b.trigger("signal_72290_v2");
   }
 }

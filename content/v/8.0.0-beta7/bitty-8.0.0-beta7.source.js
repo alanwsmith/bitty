@@ -61,16 +61,18 @@ class BittyJs extends HTMLElement {
         if (incoming.b.config.getState === undefined) {
           incoming.b.config.getState = {
             attributes: [
-              "ariaAutoComplete",
-              "ariaChecked",
-              "ariaDisabled",
-              "ariaExpended",
-              "ariaHidden",
-              "ariaPressed",
-              "ariaReadOnly",
-              "ariaSelected",
-              "ariaValueNow",
-              "ariaValueText",
+              "aria-autoComplete",
+              "aria-checked",
+              "aria-disabled",
+              "aria-expended",
+              "aria-hidden",
+              "aria-pressed",
+              "aria-read-only",
+              "aria-selected",
+              "aria-value-now",
+              "aria-value-text",
+            ],
+            keys: [
               "checked",
               "diabled",
               "hidden",
@@ -81,7 +83,6 @@ class BittyJs extends HTMLElement {
               "spellcheck",
               "value",
             ],
-            dataset: [],
           };
         }
         this.addToggleSwitchTemplate(incoming);
@@ -1085,10 +1086,12 @@ class BittyJs extends HTMLElement {
     for (const item of payload) {
       const el = this.b.qs(`#${item.id}`);
       if (el) {
-        for (const key in item) {
-          el[key] = item[key];
+        for (const attribute in item.attributes) {
+          el.setAttribute(attribute, item.attributes[attribute]);
         }
-
+        for (const key in item.keys) {
+          el[key] = item.keys[key];
+        }
         // for (const key in item.keys) {
         //   el[key] = item.keys[key];
         // }

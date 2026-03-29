@@ -371,9 +371,9 @@ class BittyJs extends HTMLElement {
       // instead of just lower case true.
       .filter((el) => el.dataset.save === "true")
       .map((el) => {
-        const item = { id: el.id };
+        const item = { id: el.id, attributes: {}, dataset: {} };
         for (const attr of this.b.config.getState) {
-          if (el[attr]) item[attr] = el[attr];
+          if (el[attr]) item.attributes[attr] = el[attr];
         }
         // for (const attr of this.b.config.getState.attributes) {
         //   if (el[attr]) item.attributes[attr] = el[attr];
@@ -1070,16 +1070,20 @@ class BittyJs extends HTMLElement {
     return result.content;
   }
 
-  _setValues(payload) {
+  _setState(payload) {
     for (const item of payload) {
       const el = this.b.qs(`#${item.id}`);
       if (el) {
-        for (const key in item.keys) {
-          el[key] = item.keys[key];
+        for (const key in item) {
+          el[key] = item[key];
         }
-        for (const key in item.aria) {
-          el.setAttribute(`aria-${key}`, item.aria[key]);
-        }
+
+        // for (const key in item.keys) {
+        //   el[key] = item.keys[key];
+        // }
+        // for (const key in item.aria) {
+        //   el.setAttribute(`aria-${key}`, item.aria[key]);
+        // }
       }
     }
   }

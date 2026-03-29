@@ -55,6 +55,32 @@ class BittyJs extends HTMLElement {
         if (incoming.b.templates === undefined) {
           incoming.b.templates = {};
         }
+        if (incoming.b.config === undefined) {
+          incoming.b.config = {};
+        }
+        if (incoming.b.config.getState === undefined) {
+          incoming.b.config.getState = [
+            "ariaAutoComplete",
+            "ariaChecked",
+            "ariaDisabled",
+            "ariaExpended",
+            "ariaHidden",
+            "ariaPressed",
+            "ariaReadOnly",
+            "ariaSelected",
+            "ariaValueNow",
+            "ariaValueText",
+            "checked",
+            "diabled",
+            "hidden",
+            "readOnly",
+            // TODO: Confirm selected is what to look for
+            // for options.
+            "selected",
+            "spellcheck",
+            "value",
+          ];
+        }
         this.addToggleSwitchTemplate(incoming);
         incoming.b.data = {};
         this.loadPageAssets(incoming);
@@ -330,32 +356,35 @@ class BittyJs extends HTMLElement {
   //   });
   // }
 
-  _getValues() {
-    const keys = [
-      "checked",
-      "diabled",
-      "hidden",
-      "readOnly",
-      "spellcheck",
-      "value",
-    ];
+  _getState() {
+    // const keys = [
+    //   "checked",
+    //   "diabled",
+    //   "hidden",
+    //   "readOnly",
+    //   "spellcheck",
+    //   "value",
+    // ];
+
     return [...this.b.qsa(`[data-save][id]`)]
+      // TODO: Set this up to check for general booleans
+      // instead of just lower case true.
       .filter((el) => el.dataset.save === "true")
       .map((el) => {
-        const item = {
-          id: el.id,
-          aria: {},
-          keys: {},
-        };
-        for (const key of keys) {
-          if (el[key]) item.keys[key] = el[key];
+        const item = { id: el.id };
+        for (const attr of this.b.config.getState) {
+          if (el[attr]) item[attr] = el[attr];
         }
-        for (const attr of el.attributes) {
-          if (attr.name.startsWith("aria-")) {
-            const ariaKey = attr.name.replace("aria-", "");
-            item.aria[ariaKey] = attr.value;
-          }
-        }
+        // for (const attr of this.b.config.getState.attributes) {
+        //   if (el[attr]) item.attributes[attr] = el[attr];
+        // }
+
+        // for (const attr of el.attributes) {
+        //   if (attr.name.startsWith("aria-")) {
+        //     const ariaKey = attr.name.replace("aria-", "");
+        //     item.aria[ariaKey] = attr.value;
+        //   }
+        // }
         return item;
       });
   }

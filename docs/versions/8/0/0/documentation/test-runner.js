@@ -22,15 +22,15 @@ export async function initDocTests(_, __, el) {
   }
 }
 
-export async function switchRunErrors(_, sender, ___) {
-  sender.setAria("checked", !sender.ariaAsBool("checked"));
-  config.runErrors = sender.ariaAsBool("checked");
-  await b.savePageData(config, "config");
-}
-
 export async function switchAutorun(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   config.autorun = sender.ariaAsBool("checked");
+  await b.savePageData(config, "config");
+}
+
+export async function switchRunErrors(_, sender, ___) {
+  sender.setAria("checked", !sender.ariaAsBool("checked"));
+  config.runErrors = sender.ariaAsBool("checked");
   await b.savePageData(config, "config");
 }
 

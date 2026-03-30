@@ -1,6 +1,6 @@
 export default class {
   // TODO: Update this with `el.prop(KEY)` etc...
-  // when bitty-8-0 is fully built.
+  // when bitty-8 is fully built.
 
   async bittyReady() {
     await this.sleep(300);

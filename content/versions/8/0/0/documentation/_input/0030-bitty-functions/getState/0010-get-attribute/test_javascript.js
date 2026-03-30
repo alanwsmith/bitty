@@ -1,15 +1,17 @@
 export const b = {};
 
 export function $_SIGNAL_(_, __, el) {
-  // const pageState = b.getState();
-  // for (const savedValues of pageState) {
-  //   if (savedValues.id === "target_$_TEST_ID_") {
-  //     if (
-  //       savedValues.attributes.value === "value_$_TEST_ID_" &&
-  //       savedValues.attributes.ariaHidden === "false"
-  //     ) {
-  //       el.innerHTML = b.time();
-  //     }
-  //   }
-  // }
+  b.config.getState.attributes.push("data-key");
+  const pageState = b.getState();
+  for (const savedValues of pageState) {
+    if (savedValues.id === "target_$_TEST_ID_") {
+      if (
+        savedValues.keys.value === "value_$_TEST_ID_" &&
+        savedValues.attributes["aria-hidden"] === "false" &&
+        savedValues.attributes["data-key"] === "key_$_TEST_ID_"
+      ) {
+        el.innerHTML = b.time();
+      }
+    }
+  }
 }

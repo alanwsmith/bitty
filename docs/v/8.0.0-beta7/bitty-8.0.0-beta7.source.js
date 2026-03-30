@@ -361,27 +361,27 @@ class BittyJs extends HTMLElement {
   // }
 
   _getState() {
-    // const keys = [
-    //   "checked",
-    //   "diabled",
-    //   "hidden",
-    //   "readOnly",
-    //   "spellcheck",
-    //   "value",
-    // ];
-
     return [...this.b.qsa(`[data-save][id]`)]
       // TODO: Set this up to check for general booleans
       // instead of just lower case true.
       .filter((el) => el.dataset.save === "true")
       .map((el) => {
-        const item = { id: el.id, attributes: {}, dataset: {} };
+        const item = { id: el.id, attributes: {}, keys: {} };
+
         for (const attr of this.b.config.getState.attributes) {
-          if (el[attr]) item.attributes[attr] = el[attr];
+          if (el.getAttribute(attr)) {
+            item.attributes[attr] = el.getAttribute(attr);
+          }
         }
-        for (const attr of this.b.config.getState.dataset) {
-          if (el.dataset[attr]) item.dataset[attr] = el.dataset[attr];
+        for (const key of this.b.config.getState.keys) {
+          if (el[key]) {
+            item.keys[key] = el[key];
+          }
         }
+
+        // for (const attr of this.b.config.getState.dataset) {
+        //   if (el.dataset[attr]) item.dataset[attr] = el.dataset[attr];
+        // }
 
         // for (const attr of this.b.config.getState) {
         //   if (el[attr]) item.attributes[attr] = el[attr];
@@ -397,6 +397,7 @@ class BittyJs extends HTMLElement {
         //     item.aria[ariaKey] = attr.value;
         //   }
         // }
+
         return item;
       });
   }

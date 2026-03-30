@@ -190,7 +190,7 @@ class BittyJs extends HTMLElement {
 
   async _copy(selector) {
     const el = document.querySelector(selector);
-    if (el.value !== undefined) {
+    if (el.value !== undefined && el.value !== "") {
       try {
         await navigator.clipboard.writeText(el.value);
       } catch (error) {
@@ -199,7 +199,7 @@ class BittyJs extends HTMLElement {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(el.innerHTML);
+        await navigator.clipboard.writeText(el.innerText);
       } catch (error) {
         console.error(`Could not copy .innerHTML from ${selector}`);
         return false;

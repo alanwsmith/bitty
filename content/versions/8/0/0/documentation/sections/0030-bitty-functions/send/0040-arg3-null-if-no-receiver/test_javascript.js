@@ -5,7 +5,7 @@ export function signal_03E2A_v1(_, __, ___) {
 }
 
 export function signal_03E2A_v2(_, __, el) {
-  if (el === null) {
+  if (el === undefined) {
     b.send({}, "signal_03E2A_v3");
   }
 }

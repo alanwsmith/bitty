@@ -90,6 +90,9 @@ class BittyJs extends HTMLElement {
         this.loadPageAssets(incoming);
         this.addBittyClasses(incoming);
         this.constructor.bits.push(incoming);
+        window.addEventListener("bittyforwardsender", (ev) => {
+          incoming.b._processBittyForwardSender(ev);
+        });
         window.addEventListener("bittysend", (ev) => {
           incoming.b._processBittySend(ev);
         });
@@ -217,7 +220,7 @@ class BittyJs extends HTMLElement {
     }, ms);
   }
 
-  _dedup(array) {
+  _dedupe(array) {
     return [...new Set(array)];
   }
 
@@ -269,7 +272,12 @@ class BittyJs extends HTMLElement {
     return senders;
   }
 
-  async _getData(url, fallback = null, options = {}) {
+  _forwardSender(el, signals) {
+    const ev = new BittyForwardSender(el, signals);
+    dispatchEvent(ev);
+  }
+
+  async _getData(url, fallback = undefined, options = {}) {
     let response = await fetch(url, options);
     try {
       if (response.ok === true) {
@@ -532,6 +540,33 @@ class BittyJs extends HTMLElement {
     };
   }
 
+  __processBittyForwardSender(ev) {
+    this.b._updateElement(ev.sender);
+    const signals = this.b._splitSignalString(ev.signals);
+    for (const signal of signals) {
+      console.log(signal);
+      if (typeof this[signal] === "function") {
+        const receivers = document.querySelectorAll(
+          `[data-r~='${signal}']`,
+        );
+        if (receivers.length > 0) {
+          for (const receiver of receivers) {
+            this.b._updateElement(receiver);
+            receiver.isSender = () => {
+              return false;
+            };
+            receiver.isTarget = () => {
+              return false;
+            };
+            this[signal](undefined, ev.sender, receiver);
+          }
+        } else {
+          this[signal](undefined, ev.sender, undefined);
+        }
+      }
+    }
+  }
+
   __processBittySend(ev) {
     this.b._updateElement(ev.target);
     const signals = this.b._splitSignalString(ev.signals);
@@ -549,10 +584,10 @@ class BittyJs extends HTMLElement {
             receiver.isTarget = () => {
               return false;
             };
-            this[signal](ev.payload, null, receiver);
+            this[signal](ev.payload, undefined, receiver);
           }
         } else {
-          this[signal](ev.payload, null, null);
+          this[signal](ev.payload, undefined, undefined);
         }
       }
     }
@@ -575,10 +610,10 @@ class BittyJs extends HTMLElement {
             receiver.isTarget = () => {
               return false;
             };
-            this[signal](ev, null, receiver);
+            this[signal](ev, undefined, receiver);
           }
         } else {
-          this[signal](ev, null, null);
+          this[signal](ev, undefined, undefined);
         }
       }
     }
@@ -617,7 +652,7 @@ class BittyJs extends HTMLElement {
                 this[signal](ev, sender, receiver);
               }
             } else {
-              this[signal](ev, sender, null);
+              this[signal](ev, sender, undefined);
             }
           }
         }
@@ -634,7 +669,7 @@ class BittyJs extends HTMLElement {
                   this[signal](ev, sender, receiver);
                 }
               } else {
-                this[signal](ev, sender, null);
+                this[signal](ev, sender, undefined);
               }
             }
           }
@@ -658,7 +693,7 @@ class BittyJs extends HTMLElement {
             this[signal](ev, ev.target, receiver);
           }
         } else {
-          this[signal](ev, null, null);
+          this[signal](ev, undefined, undefined);
         }
       }
     }
@@ -736,7 +771,7 @@ class BittyJs extends HTMLElement {
                 this[signal](ev, sender, receiver);
               }
             } else {
-              this[signal](ev, sender, null);
+              this[signal](ev, sender, undefined);
             }
           }
         }
@@ -753,7 +788,7 @@ class BittyJs extends HTMLElement {
                   this[signal](ev, sender, receiver);
                 }
               } else {
-                this[signal](ev, sender, null);
+                this[signal](ev, sender, undefined);
               }
             }
           }
@@ -779,10 +814,10 @@ class BittyJs extends HTMLElement {
               receiver.isTarget = () => {
                 return false;
               };
-              this[signal]({}, null, receiver);
+              this[signal]({}, undefined, receiver);
             }
           } else {
-            this[signal]({}, null, null);
+            this[signal]({}, undefined, undefined);
           }
         }
       }
@@ -831,7 +866,7 @@ class BittyJs extends HTMLElement {
                 this[signal](ev, sender, receiver);
               }
             } else {
-              this[signal](ev, sender, null);
+              this[signal](ev, sender, undefined);
             }
           }
         }
@@ -848,7 +883,7 @@ class BittyJs extends HTMLElement {
                   this[signal](ev, sender, receiver);
                 }
               } else {
-                this[signal](ev, sender, null);
+                this[signal](ev, sender, undefined);
               }
             }
           }
@@ -882,7 +917,7 @@ class BittyJs extends HTMLElement {
                 this[signal](ev, sender, receiver);
               }
             } else {
-              this[signal](ev, sender, null);
+              this[signal](ev, sender, undefined);
             }
           }
         }
@@ -899,7 +934,7 @@ class BittyJs extends HTMLElement {
                   this[signal](ev, sender, receiver);
                 }
               } else {
-                this[signal](ev, sender, null);
+                this[signal](ev, sender, undefined);
               }
             }
           }
@@ -923,7 +958,7 @@ class BittyJs extends HTMLElement {
             this[signal](ev, sender, receiver);
           }
         } else {
-          this[signal](ev, sender, null);
+          this[signal](ev, sender, undefined);
         }
       }
     }
@@ -941,16 +976,16 @@ class BittyJs extends HTMLElement {
   //   });
   // }
 
-  _qs(selector, el = null) {
-    if (el === null) {
+  _qs(selector, el) {
+    if (el === undefined) {
       return document.querySelector(selector);
     } else {
       return el.querySelector(selector);
     }
   }
 
-  _qsa(selector, el = null) {
-    if (el === null) {
+  _qsa(selector, el) {
+    if (el === undefined) {
       return document.querySelectorAll(selector);
     } else {
       return el.querySelectorAll(selector);
@@ -1479,9 +1514,10 @@ class BittyJs extends HTMLElement {
 
 customElements.define(tagName, BittyJs);
 
-class BittyTrigger extends Event {
-  constructor(signals) {
-    super("bittytrigger", { bubbles: true });
+class BittyForwardSender extends Event {
+  constructor(el, signals) {
+    super("bittyforwardsender", { bubbles: true });
+    this.sender = el;
     this.signals = signals;
   }
 }
@@ -1490,6 +1526,13 @@ class BittySend extends Event {
   constructor(payload, signals) {
     super("bittysend", { bubbles: true });
     this.payload = payload;
+    this.signals = signals;
+  }
+}
+
+class BittyTrigger extends Event {
+  constructor(signals) {
+    super("bittytrigger", { bubbles: true });
     this.signals = signals;
   }
 }

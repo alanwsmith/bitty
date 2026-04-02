@@ -544,7 +544,6 @@ class BittyJs extends HTMLElement {
     this.b._updateElement(ev.sender);
     const signals = this.b._splitSignalString(ev.signals);
     for (const signal of signals) {
-      console.log(signal);
       if (typeof this[signal] === "function") {
         const receivers = document.querySelectorAll(
           `[data-r~='${signal}']`,

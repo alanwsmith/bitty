@@ -1,7 +1,7 @@
 export const b = {};
 
 export function signal_3A374_v1(ev, sender, el) {
-  // el.dataset.solo = true;
-  el.innerHTML = "todo";
-  // el.innerHTML = b.time();
+  if (b.data.data_3A374_v1.key === "value_3A374_v1") {
+    el.innerHTML = b.time();
+  }
 }

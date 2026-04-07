@@ -1204,7 +1204,7 @@ class BittyJs extends HTMLElement {
       ? ` data-r="${subs.__RECEIVE__}"`
       : "";
     subs.__SEND_ATTR__ = subs.__SEND__ ? ` data-s="${subs.__SEND__}"` : "";
-    subs.__KEY_ATTR__ = subs.__KEY__ ? ` data-s="${subs.__KEY__}"` : "";
+    subs.__KEY_ATTR__ = subs.__KEY__ ? ` data-key="${subs.__KEY__}"` : "";
     subs.__SAVE_ATTR__ = subs.__SAVE__ ? ` data-save="${subs.__SAVE__}"` : "";
     subs.__LABEL_MISC__ = subs.__LABEL_MISC__ ? ` ${subs.__LABEL_MISC__}` : "";
     subs.__BUTTON_MISC__ = subs.__BUTTON_MISC__

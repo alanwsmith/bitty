@@ -4,7 +4,7 @@ let quotes;
 const url = "/[@ file.parent @]/data.json";
 
 export async function init() {
-  const data = await b.get(url);
+  const data = await b.getData(url);
   if (data !== undefined) {
     quotes = data.quotes;
     b.trigger("loop");

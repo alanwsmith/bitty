@@ -3,7 +3,7 @@ export const b = { init: "stars" };
 const url = "https://api.github.com/repos/alanwsmith/bitty";
 
 export async function stars(_, __, el) {
-  const data = await b.get(url);
+  const data = await b.getData(url);
   if (data) {
     el.innerHTML = data.stargazers_count;
   } else {

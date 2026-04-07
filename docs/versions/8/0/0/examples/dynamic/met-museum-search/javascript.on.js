@@ -11,7 +11,7 @@ let data;
 export async function images(_, __, el) {
   el.replaceChildren();
   for (let i = 0; i < Math.min(10, data.objectIDs.length); i += 1) {
-    const item = await b.get(`${itemURL}/${data.objectIDs[i]}`);
+    const item = await b.getData(`${itemURL}/${data.objectIDs[i]}`);
     if (item && item.primaryImage) {
       const subs = {
         __IMG_SRC__: item.primaryImage,
@@ -29,11 +29,13 @@ export function searchError(_, __, el) {
 
 export async function query(ev, __, el) {
   ev.preventDefault();
-  data = await b.get(`${searchURL}${encodeURI(el.value)}`);
-  if (data === undefined) {
-    b.trigger("searchError");
-  } else {
-    b.shuffle(data.objectIDs);
-    b.trigger("images");
+  if (el.value.trim() !== "") {
+    data = await b.getData(`${searchURL}${encodeURI(el.value)}`);
+    if (data === undefined) {
+      b.trigger("searchError");
+    } else {
+      b.shuffle(data.objectIDs);
+      b.trigger("images");
+    }
   }
 }

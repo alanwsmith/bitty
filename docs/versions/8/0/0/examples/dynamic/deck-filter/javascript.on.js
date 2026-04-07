@@ -4,7 +4,7 @@ let data;
 let url = "/versions/8/0/0/examples/dynamic/deck-filter/data.json";
 
 export async function init() {
-  data = await b.get(url);
+  data = await b.getData(url);
   if (data) {
     b.trigger("deck controls");
   } else {

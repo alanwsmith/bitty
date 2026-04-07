@@ -2,13 +2,13 @@ export const b = { init: "addStyles initSwitches" };
 
 let data;
 
-export function initSwitches(_, __, el) {
-  const defaults = { alfa: false, bravo: false, charlie: false, delta: false };
-  data = b.loadPage("state", defaults);
+export async function initSwitches(_, __, el) {
+  const defaults = { alfa: false, bravo: true, charlie: true, delta: false };
+  data = await b.loadPageData("state", defaults);
   el.replaceChildren(
     ...Object.keys(data).map((key) => {
       const subs = {
-        __BACK_LABEL__: key,
+        __PREPEND__: key,
         __KEY__: key,
         __SEND__: "toggle",
         __STATE__: data[key],
@@ -21,10 +21,12 @@ export function initSwitches(_, __, el) {
   );
 }
 
-export function toggle(_, sender, ___) {
+export async function toggle(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   data[sender.prop("key")] = sender.ariaAsBool("checked");
-  b.savePage("state", data);
+  console.log(sender);
+  console.log(sender.prop("key"));
+  await b.savePageData(data, "state");
   b.send(sender.prop("key"), "display");
 }
 

@@ -2,7 +2,7 @@ export const b = { init: "art" };
 
 export async function art(_, __, el) {
   const url = `/data/met/${b.randomInt(1, 10)}.json`;
-  const data = await b.get(url);
+  const data = await b.getData(url);
   if (data) {
     el.replaceChildren(artObject(data));
   } else {

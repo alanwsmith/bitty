@@ -2,7 +2,7 @@ export const b = { init: "initSwitch" };
 
 export function initSwitch(_, __, el) {
   const subs = {
-    __BACK_LABEL__: "snippet switch",
+    __PREPEND__: "snippet switch",
     __SEND__: "toggle",
   };
   el.replaceChildren(b.switch(subs));

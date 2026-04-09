@@ -310,14 +310,23 @@ class BittyJs extends HTMLElement {
           const container = document.createElement("div");
           container.innerHTML = content;
           container.querySelectorAll("script").forEach((script) => {
-            if (script.type === "text/html" && script.id !== undefined) {
-              this.b.templates[script.id] = script.innerHTML.trim();
+            if (
+              script.type === "text/html" && script.dataset.id !== undefined
+            ) {
+              this.b.templates[script.dataset.id] = script.innerHTML.trim();
             }
-            if (script.type === "image/svg" && script.id !== undefined) {
-              this.b.svgs[script.id] = script.innerHTML.trim();
+            if (
+              script.type === "image/svg" && script.dataset.id !== undefined
+            ) {
+              this.b.svgs[script.dataset.id] = script.innerHTML.trim();
             }
-            if (script.type === "application/json" && script.id !== undefined) {
-              this.b.data[script.id] = JSON.parse(script.innerHTML.trim());
+            if (
+              script.type === "application/json" &&
+              script.dataset.id !== undefined
+            ) {
+              this.b.data[script.dataset.id] = JSON.parse(
+                script.innerHTML.trim(),
+              );
             }
           });
           return true;
@@ -442,14 +451,16 @@ class BittyJs extends HTMLElement {
 
   loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "text/html" && script.id !== undefined) {
-        target.b.templates[script.id] = script.innerHTML.trim();
+      if (script.type === "text/html" && script.dataset.id !== undefined) {
+        target.b.templates[script.dataset.id] = script.innerHTML.trim();
       }
-      if (script.type === "image/svg" && script.id !== undefined) {
-        target.b.svgs[script.id] = script.innerHTML.trim();
+      if (script.type === "image/svg" && script.dataset.id !== undefined) {
+        target.b.svgs[script.dataset.id] = script.innerHTML.trim();
       }
-      if (script.type === "application/json" && script.id !== undefined) {
-        target.b.data[script.id] = JSON.parse(script.innerHTML.trim());
+      if (
+        script.type === "application/json" && script.dataset.id !== undefined
+      ) {
+        target.b.data[script.dataset.id] = JSON.parse(script.innerHTML.trim());
       }
     });
   }

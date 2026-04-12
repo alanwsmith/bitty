@@ -311,20 +311,23 @@ class BittyJs extends HTMLElement {
           container.innerHTML = content;
           container.querySelectorAll("script").forEach((script) => {
             if (
-              script.type === "text/html" && script.dataset.id !== undefined
+              script.type === "text/html" &&
+              script.dataset.template !== undefined
             ) {
-              this.b.templates[script.dataset.id] = script.innerHTML.trim();
+              this.b.templates[script.dataset.template] = script.innerHTML
+                .trim();
             }
             if (
-              script.type === "image/svg" && script.dataset.id !== undefined
+              script.type === "image/svg" &&
+              script.dataset.template !== undefined
             ) {
-              this.b.svgs[script.dataset.id] = script.innerHTML.trim();
+              this.b.svgs[script.dataset.template] = script.innerHTML.trim();
             }
             if (
               script.type === "application/json" &&
-              script.dataset.id !== undefined
+              script.dataset.template !== undefined
             ) {
-              this.b.data[script.dataset.id] = JSON.parse(
+              this.b.data[script.dataset.template] = JSON.parse(
                 script.innerHTML.trim(),
               );
             }
@@ -451,16 +454,23 @@ class BittyJs extends HTMLElement {
 
   loadPageAssets(target) {
     document.querySelectorAll("script").forEach((script) => {
-      if (script.type === "text/html" && script.dataset.id !== undefined) {
-        target.b.templates[script.dataset.id] = script.innerHTML.trim();
-      }
-      if (script.type === "image/svg" && script.dataset.id !== undefined) {
-        target.b.svgs[script.dataset.id] = script.innerHTML.trim();
+      if (
+        script.type === "text/html" && script.dataset.template !== undefined
+      ) {
+        target.b.templates[script.dataset.template] = script.innerHTML.trim();
       }
       if (
-        script.type === "application/json" && script.dataset.id !== undefined
+        script.type === "image/svg" && script.dataset.template !== undefined
       ) {
-        target.b.data[script.dataset.id] = JSON.parse(script.innerHTML.trim());
+        target.b.svgs[script.dataset.template] = script.innerHTML.trim();
+      }
+      if (
+        script.type === "application/json" &&
+        script.dataset.template !== undefined
+      ) {
+        target.b.data[script.dataset.template] = JSON.parse(
+          script.innerHTML.trim(),
+        );
       }
     });
   }

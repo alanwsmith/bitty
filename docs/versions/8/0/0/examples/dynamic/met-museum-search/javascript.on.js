@@ -30,12 +30,16 @@ export function searchError(_, __, el) {
 export async function query(ev, __, el) {
   ev.preventDefault();
   if (el.value.trim() !== "") {
-    data = await b.getData(`${searchURL}${encodeURI(el.value)}`);
-    if (data === undefined) {
-      b.trigger("searchError");
-    } else {
-      b.shuffle(data.objectIDs);
-      b.trigger("images");
-    }
+    b.debounce("dataGetter", "getter", 500, el);
+  }
+}
+
+export async function getter(payload, __, el) {
+  data = await b.getData(`${searchURL}${encodeURI(payload.value)}`);
+  if (data === undefined) {
+    b.trigger("searchError");
+  } else {
+    b.shuffle(data.objectIDs);
+    b.trigger("images");
   }
 }

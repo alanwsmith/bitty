@@ -1,14 +1,15 @@
 export const b = { init: "art" };
 
 export async function art(_, __, el) {
-  const url = `/data/met/${b.randomInt(1, 10)}.json`;
+  const dataId = b.randomInt(1, 10);
+  const url = `/data/met/${dataId}.json`;
   const data = await b.getData(url);
   if (data) {
     el.replaceChildren(artObject(data));
   } else {
     el.innerHTML = "Error: Could not fetch art data";
   }
-  await b.sleep(2400);
+  await b.sleep(3000);
   b.trigger("art");
 }
 

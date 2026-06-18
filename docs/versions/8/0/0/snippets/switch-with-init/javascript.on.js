@@ -24,8 +24,6 @@ export async function initSwitches(_, __, el) {
 export async function toggle(_, sender, ___) {
   sender.setAria("checked", !sender.ariaAsBool("checked"));
   data[sender.prop("key")] = sender.ariaAsBool("checked");
-  console.log(sender);
-  console.log(sender.prop("key"));
   await b.savePageData(data, "state");
   b.send(sender.prop("key"), "display");
 }

@@ -6,7 +6,5 @@ export async function stars(_, __, el) {
   const data = await b.getData(url);
   if (data) {
     el.innerHTML = data.stargazers_count;
-  } else {
-    el.innerHTML = "could not get api data";
   }
 }

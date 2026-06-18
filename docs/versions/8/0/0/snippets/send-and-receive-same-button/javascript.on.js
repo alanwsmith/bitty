@@ -1,5 +1,5 @@
 export const b = {};
 
-export function snippet(_, __, el) {
+export function exampleSignal(_, __, el) {
   el.innerHTML = el.innerHTMLAsInt() + 1;
 }
